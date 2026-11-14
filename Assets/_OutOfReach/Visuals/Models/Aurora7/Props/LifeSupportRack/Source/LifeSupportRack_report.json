@@ -1,0 +1,87 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/LifeSupportRack_BaseColor.png",
+    "Metallic": "textures/LifeSupportRack_Metallic.png",
+    "Roughness": "textures/LifeSupportRack_Roughness.png",
+    "Occlusion": "textures/LifeSupportRack_Occlusion.png",
+    "MetallicSmoothness": "textures/LifeSupportRack_MetallicSmoothness.png",
+    "Labels": "textures/LifeSupportRack_Labels.png"
+  },
+  "texture_size": 2048,
+  "label_font": "Inter (SIL OFL 1.1, bundled with Blender)",
+  "dimensions_m": {
+    "width_x": 0.8,
+    "depth_y": 0.26,
+    "height_z": 1.4
+  },
+  "bounds_min": [
+    -0.4,
+    -0.13,
+    0.0
+  ],
+  "bounds_max": [
+    0.4,
+    0.13,
+    1.4
+  ],
+  "triangles": {
+    "Body": 5518,
+    "CanisterA": 766,
+    "CanisterB": 766,
+    "FanRotor": 68,
+    "StatusIndicators": 180
+  },
+  "triangles_total": 7298,
+  "object_origins": {
+    "Body": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "CanisterA": [
+      -0.165,
+      -0.029,
+      0.87
+    ],
+    "CanisterB": [
+      0.165,
+      -0.029,
+      0.87
+    ],
+    "FanRotor": [
+      -0.165,
+      -0.02,
+      0.47
+    ],
+    "StatusIndicators": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "materials": {
+    "Body": [
+      "LS_LifeSupportRack",
+      "LS_Labels"
+    ],
+    "CanisterA": [
+      "LS_LifeSupportRack",
+      "LS_Labels"
+    ],
+    "CanisterB": [
+      "LS_LifeSupportRack",
+      "LS_Labels"
+    ],
+    "FanRotor": [
+      "LS_LifeSupportRack"
+    ],
+    "StatusIndicators": [
+      "LS_Indicator_Cyan",
+      "LS_Indicator_Amber",
+      "LS_Indicator_Red"
+    ]
+  }
+}
