@@ -1,0 +1,13 @@
+# NASA GMAT star graphics derivative
+
+Source: [NASA General Mission Analysis Tool](https://github.com/nasa/GMAT), `application/data/graphics/stars/inp_StarCatalog.txt`, commit `b8aec552a8f34a9212063adc3f249bd2315397a3`. The input numerical subset and exact source retrieval metadata are in `source/`.
+
+Copyright (c) 2002-2026 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+
+The GMAT source distribution is supplied under Apache License 2.0; the complete licence is `source/gmat-LICENSE.txt`. Preserve that licence and this notice with redistributed texture derivatives. The source graphics asset does not identify its original measurement provenance or stellar observation epoch. The repository/application licence is the licensing basis; this does not cover unrelated GMAT third-party assets or dependencies.
+
+Modifications by OUT OF REACH, 2026-11-14: selected magnitude <=5.5 plus the first Polaris marker row; converted source RA/Dec to Unity celestial directions and relative flux in the committed research package; coalesced exact repeated coordinate pairs at their brightest source magnitude; projected those directions into six 1024-pixel cube faces; applied disclosed artistic point spread, exposure, tone response and neutral sRGB rendering. No original source coordinate or magnitude was substituted. No BSC catalogue data, fictional random stars, external image or color catalogue is included.
+
+The cube orientation evidence contains extracted coordinate/UV facts from the installed Unity 6000.3.28f1 reference mesh. It does not redistribute that Unity mesh or its renderer source code. This is an independent educational application; attribution does not imply NASA or Unity endorsement.
+
+Suggested game credit after actual integration: Star directions from NASA GMAT star graphics data, Apache-2.0, converted for OUT OF REACH. Approximate source magnitudes; artistic exposure and point spread; stellar epoch unspecified.

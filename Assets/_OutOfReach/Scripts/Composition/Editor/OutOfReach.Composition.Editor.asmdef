@@ -11,6 +11,8 @@
     "OutOfReach.Presentation",
     "OutOfReach.Cinematics",
     "OutOfReach.Presentation.Lighting",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Presentation.Hands",
     "OutOfReach.Audio",
     "OutOfReach.UI",
     "UnityEngine.UI"

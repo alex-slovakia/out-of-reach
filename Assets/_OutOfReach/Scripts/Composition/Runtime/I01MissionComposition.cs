@@ -7,6 +7,8 @@ using OutOfReach.Interaction;
 using OutOfReach.Presentation.Audio;
 using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.Lighting;
+using OutOfReach.Presentation.Motion;
+using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.UI;
 using OutOfReach.Simulation;
 using UnityEngine;
@@ -26,6 +28,9 @@ namespace OutOfReach.Composition
         [SerializeField] private I01SessionControls controls;
         [SerializeField] private I01AirlockDoorView airlockDoors;
         [SerializeField] private ShipLightingPresenter shipLighting;
+        [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
+        [SerializeField] private Transform firstPersonMotionPivot;
+        [SerializeField] private AstronautHandsPresenter astronautHands;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
         [Tooltip("Parent of the cinematic offset. This transform is used only to frame Planning.")]
@@ -90,6 +95,33 @@ namespace OutOfReach.Composition
             workingLights = working;
             emergencyLights = emergency;
         }
+
+        public void ConfigureWalkMotion(FirstPersonMotionPresenter presenter, Transform visualOffset)
+        {
+            if (Application.isPlaying && attached)
+                throw new InvalidOperationException("Configure walk motion before enabling composition.");
+            firstPersonMotion = presenter;
+            firstPersonMotionPivot = visualOffset;
+        }
+
+        // This is queried by the visual presenter in LateUpdate, after camera sequences update.
+        // Read the real controller's gate; never replace it or introduce another input/movement authority.
+        private bool CanPresentWalkMotion() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && runtime.Player && runtime.Player.ControlAllowed && !runtime.Player.IsOnRoute
+            && cinematics && !cinematics.IsPlaying;
+
+        public void ConfigureHands(AstronautHandsPresenter presenter)
+        {
+            if (Application.isPlaying && attached)
+                throw new InvalidOperationException("Configure hand presentation before enabling composition.");
+            astronautHands = presenter;
+        }
+
+        // EVA is allowed here: these gloves depict an actually worn suit, including its exterior phase.
+        private bool CanPresentHands() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && runtime.Player && runtime.Player.ControlAllowed && cinematics && !cinematics.IsPlaying;
 
         private void Start()
         {
@@ -180,6 +212,16 @@ namespace OutOfReach.Composition
             flightBoard.enabled = true;
             cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
             cinematics.enabled = true;
+            if (astronautHands)
+                astronautHands.ConfigureSession(runtime.EvaStatus, runtime.GameState, runtime.Clock, CanPresentHands);
+            if (firstPersonMotion && firstPersonMotionPivot && runtime.Player)
+            {
+                firstPersonMotion.Configure(runtime.Player.GetComponent<CharacterController>(), firstPersonMotionPivot,
+                    runtime.GameState, runtime.Clock, runtime.EvaStatus, CanPresentWalkMotion,
+                    astronautHands && astronautHands.IsBound ? astronautHands.MotionMount : null);
+                firstPersonMotion.SetReducedMotion(cinematics.ReducedEffects);
+                firstPersonMotion.SetSuppressed(false);
+            }
             boundEvents.PhaseChanged += OnPhaseChanged;
             boundEvents.SystemConditionChanged += OnSystemConditionChanged;
             boundEvents.CinematicRequested += OnCinematicRequested;
@@ -197,6 +239,8 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (firstPersonMotion) firstPersonMotion.ClearBinding();
+            if (astronautHands) astronautHands.ClearBinding();
             if (boundEvents != null)
             {
                 boundEvents.PhaseChanged -= OnPhaseChanged;
@@ -261,7 +305,11 @@ namespace OutOfReach.Composition
 
         public void Resume() { if (runtime) runtime.SetPaused(false); }
         public void Restart() { if (runtime) runtime.RestartMission(); }
-        public void SetReducedEffects(bool reduced) { if (cinematics) cinematics.ReducedEffects = reduced; }
+        public void SetReducedEffects(bool reduced)
+        {
+            if (cinematics) cinematics.ReducedEffects = reduced;
+            if (firstPersonMotion) firstPersonMotion.SetReducedMotion(reduced);
+        }
 
         private void OnPauseChanged(bool paused)
         {

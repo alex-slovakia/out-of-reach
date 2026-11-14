@@ -1,0 +1,88 @@
+{
+  "package_id": "GmatSkyboxV01",
+  "status": "Staged; Unity render and integration pending",
+  "resolution": [
+    1024,
+    1024
+  ],
+  "format": "RGB8 PNG, sRGB, neutral stars, black background",
+  "artistic_parameters": {
+    "sigma_radians": 0.0009,
+    "support_sigma": 5.0,
+    "exposure": 4.0,
+    "response": "1-exp(-linear flux); sRGB encoding",
+    "seams": "Clamp edge texels sample exact cube boundaries"
+  },
+  "BSC_data_used": false,
+  "Earth_Mars_added": false,
+  "files": {
+    "AUTHORING-HANDOFF.md": {
+      "bytes": 3559,
+      "sha256": "b02713f62de3e7a1150428a8fa6303979864d04532b5397d89488b18c28cfb66"
+    },
+    "README.md": {
+      "bytes": 5014,
+      "sha256": "c9028e98d2e39c0f61ed43ade647cb9a5064317d4388e526212aba9535a1b7e5"
+    },
+    "THIRD-PARTY-NOTICE.md": {
+      "bytes": 2024,
+      "sha256": "4e529043da149b2f47b11d3886f24cb08b2a51aa10daa4cee2dd5004da519b09"
+    },
+    "calculated-star-projection.png": {
+      "bytes": 106046,
+      "sha256": "4710f7786690b672c9690425b6094ab12553f099611c8630b29ac35387f9d223"
+    },
+    "generate_sky.py": {
+      "bytes": 13576,
+      "sha256": "7d31cdb4481d63181196ce881400736b2d4eb1d36fc1d348764f4915e120d68e"
+    },
+    "input-provenance.json": {
+      "bytes": 3888,
+      "sha256": "580fb42bb64f24beaf2e666b8fb42911580f933760bd0b41c257c2398189a713"
+    },
+    "source/gmat-LICENSE.txt": {
+      "bytes": 10201,
+      "sha256": "b9ea20f6e648554b46334d2322b9c237657febc746d862f52e47ea1bfacb87be"
+    },
+    "source/gmat-retrieval.json": {
+      "bytes": 1745,
+      "sha256": "47732e9b0ac916ff60eaf22c9a67cb242104adf0c778753e234f89536d12d2d5"
+    },
+    "source/gmat-stars.json": {
+      "bytes": 271504,
+      "sha256": "7077c2df92e8b5e53772ceef200dce3f6b9a5e0c3665ff83c4ea44d7bae5ce20"
+    },
+    "textures/StarsBack.png": {
+      "bytes": 21285,
+      "sha256": "217d9dfcc4f5b1a3d97dc22536a2e3f787d83abec4cee9da4e395815e8ba5045"
+    },
+    "textures/StarsDown.png": {
+      "bytes": 36235,
+      "sha256": "e8f4e23bb5bf3c6703c62db3a2db35385323ea1ca1a1f9d590ef4842cb115490"
+    },
+    "textures/StarsFront.png": {
+      "bytes": 22853,
+      "sha256": "444ebec0669a735569b5365b4ba0aaff04c87c5926e502fd6d2cbcf018769a3c"
+    },
+    "textures/StarsLeft.png": {
+      "bytes": 32212,
+      "sha256": "37a37abb3cfb6dbcac5d33b0d14768c65c12a13686e282ad846493c7e4294ad2"
+    },
+    "textures/StarsRight.png": {
+      "bytes": 31745,
+      "sha256": "b320f070342026f1dbf52a9947ab149c85043e7e8e968390ba024b0c9499c81f"
+    },
+    "textures/StarsUp.png": {
+      "bytes": 28842,
+      "sha256": "db65a505b927cf0d96e7b530c5cf4ab51c72509a32eb7b8454ee7192a04c641c"
+    },
+    "unity-orientation-evidence.json": {
+      "bytes": 3718,
+      "sha256": "72dd09f0c5175242c198e329c6090765f7ca39c0082fb5ca87eeda77c1192932"
+    },
+    "verification.json": {
+      "bytes": 2227,
+      "sha256": "bc82a6a80eb3eb2276c9b289777e8b7fe8facf8cdb9f0ac2e5ad91c8fe440da1"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "created_at_utc": "2026-11-14T13:19:58.029135+00:00",
+  "source_repo_revision_observed": "38b2b09b9a9dbd00e9aacbee2cc6ece266679411",
+  "source_path": "docs/data/gmat-starfield-v01/gmat-stars.json",
+  "source_json_sha256": "7077c2df92e8b5e53772ceef200dce3f6b9a5e0c3665ff83c4ea44d7bae5ce20",
+  "source_manifest_sha256": "3ada9d090bf0d2fb97fa93ba3509007498667cbd0187a48226ce9482209d2cea",
+  "gmat_commit": "b8aec552a8f34a9212063adc3f249bd2315397a3",
+  "gmat_raw_sha256": "d6b66913176142dd12610fa5c2220f6c0f85e1ed2bd817230cf5619ab8f569f5",
+  "observed_material_sha256": "7e39e9e56e7fe69d049e3137dd8d68994813af4c8903318bd94ac4e35e9e8089",
+  "source_input_files": {
+    "gmat-LICENSE.txt": {
+      "bytes": 10201,
+      "sha256": "b9ea20f6e648554b46334d2322b9c237657febc746d862f52e47ea1bfacb87be"
+    },
+    "gmat-retrieval.json": {
+      "bytes": 1745,
+      "sha256": "47732e9b0ac916ff60eaf22c9a67cb242104adf0c778753e234f89536d12d2d5"
+    },
+    "gmat-stars.json": {
+      "bytes": 271504,
+      "sha256": "7077c2df92e8b5e53772ceef200dce3f6b9a5e0c3665ff83c4ea44d7bae5ce20"
+    }
+  },
+  "copy_mapping": [
+    {
+      "output": "textures/StarsFront.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsFront.png",
+      "material_property": "_FrontTex",
+      "preserve_existing_meta_guid": "288d1d0a6e1223242ad13f29a766469f",
+      "observed_meta_sha256": "3993cde502b4545468a2c805c80f401d2e71acfd8a2a70a945ed15a38278fe48",
+      "observed_texture_sha256": "a39ef1f8c607cf63941d75e1fae6673e368b9433ed5ce0e51c84124bef1ee0fe"
+    },
+    {
+      "output": "textures/StarsBack.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsBack.png",
+      "material_property": "_BackTex",
+      "preserve_existing_meta_guid": "9188c4fd2c3afb64e92e34ffb3b5861b",
+      "observed_meta_sha256": "a29f38cf1c3407bf0a60a49e27b8333a16329094328c382edc2d05b14d170263",
+      "observed_texture_sha256": "1df6d8d497b25d7f156b5bf08dacf699334c0e295672e5904f24e0c7dfeb9ad6"
+    },
+    {
+      "output": "textures/StarsLeft.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsLeft.png",
+      "material_property": "_LeftTex",
+      "preserve_existing_meta_guid": "6df8e368146db5943b61cdad402bbd6f",
+      "observed_meta_sha256": "7405ded69bb063901a07c06dae746b84c512085e66e6fa7472cb4583556ed98d",
+      "observed_texture_sha256": "cf30d4de929560410392c0dabaf3ad0377c960ea2b55f743b2afa86ac3f124aa"
+    },
+    {
+      "output": "textures/StarsRight.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsRight.png",
+      "material_property": "_RightTex",
+      "preserve_existing_meta_guid": "a4f5652dc64847641944fa5de5d6647e",
+      "observed_meta_sha256": "a64b6a2501f5ec79c78740d1acf51027985dfb4a5ce62f599ce35e5355a2b633",
+      "observed_texture_sha256": "8f25ec52086501da7661bbaf8912df5f60f1ef8b34ddad8f7987cbd0a2cf1525"
+    },
+    {
+      "output": "textures/StarsUp.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsUp.png",
+      "material_property": "_UpTex",
+      "preserve_existing_meta_guid": "0a05c8a0e9bf2f04dba95ad16fbd2bdc",
+      "observed_meta_sha256": "d9322c3cd55883f7ecb6d35cdd186aac6398a3ecbf1124acad49410863dd3bc4",
+      "observed_texture_sha256": "6752937c5dd6d4b7958778bcfaf4027adb50e7a921f2c21efaf39235597bf142"
+    },
+    {
+      "output": "textures/StarsDown.png",
+      "destination": "Assets/_OutOfReach/Visuals/Space/StarsDown.png",
+      "material_property": "_DownTex",
+      "preserve_existing_meta_guid": "3ed15f160363dd243941e818645d7745",
+      "observed_meta_sha256": "d1aa523fdca5a4ef91f5bddabedf118bef925fcbbc909bb93e16028b475c0153",
+      "observed_texture_sha256": "056d6a96e1685033812f16ed3550d6dcfca9a785a1e296aa7cdb64b218465b3c"
+    }
+  ],
+  "BSC_data_used": false,
+  "Unity_execution": "NOT RUN",
+  "allowed_copy": "Only the six PNG payloads; preserve all existing .meta files and material bindings."
+}

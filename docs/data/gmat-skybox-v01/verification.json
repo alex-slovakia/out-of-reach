@@ -1,0 +1,73 @@
+{
+  "executed_at_utc": "2026-11-14T13:23:49.827403+00:00",
+  "command": "python -B generate_sky.py --build",
+  "report": {
+    "result": "PASS",
+    "catalogue_rows": 2797,
+    "unique_directions": 2785,
+    "discarded_exact_position_duplicates": 12,
+    "source_rows_per_primary_face": {
+      "Front": 342,
+      "Back": 313,
+      "Left": 570,
+      "Right": 507,
+      "Up": 459,
+      "Down": 594
+    },
+    "double_precision_max_round_trip_component_error": 3.3306690738754696e-16,
+    "unity_mesh_vertices_verified": 36,
+    "axis_pole_checks": 6,
+    "exact_matching_face_edge_pairs": 12,
+    "matching_edge_samples_per_pair": 1024,
+    "all_rgb_channels_neutral": true,
+    "translation_parallax": "Direction-only skybox data; no camera position input. Actual Unity walk test pending.",
+    "Unity_render": "NOT RUN",
+    "face_metrics": {
+      "Front": {
+        "source_rows_touching_face": 346,
+        "nonblack_pixels": 5140,
+        "pixels_at_least_128": 20,
+        "max_srgb_value": 207,
+        "mean_srgb_value": 0.089874267578125
+      },
+      "Back": {
+        "source_rows_touching_face": 324,
+        "nonblack_pixels": 4670,
+        "pixels_at_least_128": 34,
+        "max_srgb_value": 249,
+        "mean_srgb_value": 0.08514785766601562
+      },
+      "Left": {
+        "source_rows_touching_face": 579,
+        "nonblack_pixels": 7769,
+        "pixels_at_least_128": 67,
+        "max_srgb_value": 255,
+        "mean_srgb_value": 0.14831161499023438
+      },
+      "Right": {
+        "source_rows_touching_face": 510,
+        "nonblack_pixels": 7671,
+        "pixels_at_least_128": 52,
+        "max_srgb_value": 249,
+        "mean_srgb_value": 0.14385700225830078
+      },
+      "Up": {
+        "source_rows_touching_face": 470,
+        "nonblack_pixels": 6789,
+        "pixels_at_least_128": 56,
+        "max_srgb_value": 248,
+        "mean_srgb_value": 0.1267242431640625
+      },
+      "Down": {
+        "source_rows_touching_face": 599,
+        "nonblack_pixels": 8880,
+        "pixels_at_least_128": 83,
+        "max_srgb_value": 254,
+        "mean_srgb_value": 0.17414093017578125
+      }
+    },
+    "png_byte_identical_regeneration": true,
+    "Pillow": "10.3.0",
+    "NumPy": "1.23.3"
+  }
+}

@@ -10,6 +10,8 @@ using OutOfReach.Presentation;
 using OutOfReach.Presentation.Audio;
 using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.Lighting;
+using OutOfReach.Presentation.Motion;
+using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.UI;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
@@ -33,6 +35,8 @@ namespace OutOfReach.Composition.Editor
         public const string PlayerPath = "Assets/_OutOfReach/Scripts/Player/PlayerRig.prefab";
         public const string BoardPath = "Assets/_OutOfReach/UI/Generated/MissionFlightBoard.prefab";
         public const string AudioPath = "Assets/_OutOfReach/Audio/Runtime/MissionAudioPresenter.prefab";
+        public const string HandsPath = "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands.prefab";
+        public const string HandsRigPath = "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands_rig.json";
 
         [MenuItem("OUT OF REACH/Integration/Build I01 Bootstrap in verification project")]
         public static void BuildAndValidate()
@@ -47,6 +51,8 @@ namespace OutOfReach.Composition.Editor
             GameObject playerAsset = Required<GameObject>(PlayerPath);
             GameObject boardAsset = Required<GameObject>(BoardPath);
             GameObject audioAsset = Required<GameObject>(AudioPath);
+            GameObject handsAsset = Required<GameObject>(HandsPath);
+            TextAsset handsRig = Required<TextAsset>(HandsRigPath);
             Font font = Required<Font>("Assets/_OutOfReach/UI/Typography/SourceSans3-Regular.otf");
             if (shipAsset.GetComponentsInChildren<Camera>(true).Length != 0 || shipAsset.GetComponentsInChildren<AudioListener>(true).Length != 0)
                 throw new InvalidOperationException("The ship input must not contain a camera or listener.");
@@ -76,7 +82,8 @@ namespace OutOfReach.Composition.Editor
             player.Teleport(anchors.PlayerSpawn.position, anchors.PlayerSpawn.eulerAngles.y);
             Transform planningPivot = Child("Planning framing", player.ViewPivot);
             Transform cinematicPivot = Child("Cinematic offset", planningPivot);
-            Transform cameraTransform = Child("Player camera", cinematicPivot);
+            Transform motionPivot = Child("First person visual motion", cinematicPivot);
+            Transform cameraTransform = Child("Player camera", motionPivot);
             Camera camera = cameraTransform.gameObject.AddComponent<Camera>();
             camera.tag = "MainCamera";
             camera.fieldOfView = 68;
@@ -87,7 +94,19 @@ namespace OutOfReach.Composition.Editor
             camera.allowHDR = true;
             camera.allowMSAA = true;
             cameraTransform.gameObject.AddComponent<AudioListener>();
-            player.Interaction.Configure(cameraTransform, player.transform, 2f);
+            // Keep the previous aim pose above the camera-only walk offset.
+            player.Interaction.Configure(cinematicPivot, player.transform, 2f);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(player.Interaction);
+
+            // Keep the delivered asset untouched. Its model root and both arms remain separate from the camera.
+            Transform handsMount = Child("Hands visual motion", cameraTransform);
+            GameObject handsObject = (GameObject)PrefabUtility.InstantiatePrefab(handsAsset, scene);
+            handsObject.transform.SetParent(handsMount, false);
+            handsObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            handsObject.transform.localScale = Vector3.one;
+            handsObject.SetActive(false); // No gloved hands in the unsuited cabin or first Planning frame.
+            PrefabUtility.RecordPrefabInstancePropertyModifications(handsObject);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(handsObject.transform);
 
             Transform overview = Child("Planning cockpit overview", null);
             overview.position = new Vector3(1.8f, 2.15f, 2.15f);
@@ -129,6 +148,9 @@ namespace OutOfReach.Composition.Editor
                 throw new InvalidOperationException("Audio prefab needs valid explicit music/SFX bindings.");
 
             Transform presentationRoot = Child("I01 presentation", null);
+            FirstPersonMotionPresenter walkMotion = presentationRoot.gameObject.AddComponent<FirstPersonMotionPresenter>();
+            AstronautHandsPresenter hands = presentationRoot.gameObject.AddComponent<AstronautHandsPresenter>();
+            hands.ConfigureModel(handsObject.transform, handsMount, handsRig);
             CreateShipLighting(ship, presentationRoot, out Light[] workingLights, out Light[] emergencyLights);
             ShipLightingPresenter shipLighting = presentationRoot.gameObject.AddComponent<ShipLightingPresenter>();
             var lightingFields = new SerializedObject(shipLighting);
@@ -175,6 +197,8 @@ namespace OutOfReach.Composition.Editor
             composition.Configure(runtime, board, cinematics, audio, player.Interaction, controls,
                 planningPivot, overview, powerLight, lifeLight);
             composition.ConfigureShipPresentation(doors, shipLighting, workingLights, emergencyLights);
+            composition.ConfigureWalkMotion(walkMotion, motionPivot);
+            composition.ConfigureHands(hands);
             BindApprovedDialogue(composition, cinematics);
 
             // Preview the actual Planning framing in the Editor too, with one camera. Runtime resets it on Intro.
@@ -295,12 +319,31 @@ namespace OutOfReach.Composition.Editor
             AudioListener listener = ExactlyOne<AudioListener>(roots);
             MissionRuntime runtime = ExactlyOne<MissionRuntime>(roots);
             FirstPersonController player = ExactlyOne<FirstPersonController>(roots);
-            ExactlyOne<I01MissionComposition>(roots);
+            I01MissionComposition composition = ExactlyOne<I01MissionComposition>(roots);
+            FirstPersonMotionPresenter walkMotion = ExactlyOne<FirstPersonMotionPresenter>(roots);
             ExactlyOne<MissionFlightBoard>(roots);
-            ExactlyOne<MissionCinematicPresenter>(roots);
+            MissionCinematicPresenter cinematic = ExactlyOne<MissionCinematicPresenter>(roots);
             ExactlyOne<MissionAudioPresenter>(roots);
+            AstronautHandsPresenter hands = ExactlyOne<AstronautHandsPresenter>(roots);
+            if (!hands.ModelRoot || !hands.MotionMount || !hands.RigDefinition
+                || hands.ModelRoot.parent != hands.MotionMount || hands.MotionMount.parent != camera.transform
+                || hands.ModelRoot.localPosition != Vector3.zero || hands.ModelRoot.localRotation != Quaternion.identity
+                || hands.ModelRoot.localScale != Vector3.one || hands.ModelRoot.gameObject.activeSelf)
+                throw new InvalidOperationException("Hands must use the delivered JSON, a separate camera child mount and a neutral, initially hidden prefab root.");
             if (camera.GetComponent<AudioListener>() != listener || !camera.transform.IsChildOf(player.ViewPivot))
                 throw new InvalidOperationException("The sole camera and listener must share the PlayerRig ViewPivot hierarchy.");
+            var compositionFields = new SerializedObject(composition);
+            var cinematicFields = new SerializedObject(cinematic);
+            var resolverFields = new SerializedObject(player.Interaction);
+            Transform motionPivot = compositionFields.FindProperty("firstPersonMotionPivot").objectReferenceValue as Transform;
+            Transform cinematicPivot = cinematicFields.FindProperty("cameraOffsetPivot").objectReferenceValue as Transform;
+            if (compositionFields.FindProperty("firstPersonMotion").objectReferenceValue != walkMotion
+                || !motionPivot || !cinematicPivot || motionPivot == cinematicPivot
+                || motionPivot.parent != cinematicPivot || camera.transform.parent != motionPivot
+                || resolverFields.FindProperty("viewOrigin").objectReferenceValue != cinematicPivot
+                || motionPivot.localPosition != Vector3.zero || motionPivot.localRotation != Quaternion.identity
+                || camera.transform.localPosition != Vector3.zero || camera.transform.localRotation != Quaternion.identity)
+                throw new InvalidOperationException("Walk motion requires its own neutral child pivot and an unbobbed interaction origin.");
             if (!runtime.DriveFromUpdate || runtime.Player != player)
                 throw new InvalidOperationException("The sole MissionRuntime must drive and bind the player.");
             ShipVisualAnchors anchors = ExactlyOne<ShipVisualAnchors>(roots);
@@ -404,6 +447,16 @@ namespace OutOfReach.Composition.Editor
             RenderSettings.ambientIntensity = 1;
             RenderSettings.reflectionIntensity = .25f;
             RenderSettings.fog = false;
+            // Authored solar direction/exposure, not a sampled Sun ephemeris or calibrated irradiance.
+            // It is independent of ship power; exterior sunlight must not vanish with a cabin fault.
+            var sun = new GameObject("Sunlight - authored direction").AddComponent<Light>();
+            sun.type = LightType.Directional;
+            sun.transform.rotation = Quaternion.Euler(34f, -55f, 0f);
+            sun.color = new Color(1f, .97f, .91f);
+            sun.intensity = 1.05f;
+            sun.shadows = LightShadows.Hard;
+            sun.shadowStrength = 1f;
+            RenderSettings.sun = sun;
         }
 
         private static T Required<T>(string path) where T : Object

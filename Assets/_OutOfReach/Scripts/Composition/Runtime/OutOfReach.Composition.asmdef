@@ -5,10 +5,13 @@
     "OutOfReach.Contracts",
     "OutOfReach.Core",
     "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
     "OutOfReach.Simulation",
     "OutOfReach.Interaction",
     "OutOfReach.Cinematics",
     "OutOfReach.Presentation.Lighting",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Presentation.Hands",
     "OutOfReach.Audio",
     "OutOfReach.UI",
     "OutOfReach.UI.Report"
