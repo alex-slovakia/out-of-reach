@@ -36,6 +36,15 @@ namespace OutOfReach.Tests.PlayMode
         public static readonly Vector3 WorkbenchPosition = new Vector3(-4f, 1.4f, 2f);
         public static readonly Vector3 PayloadRackPosition = new Vector3(4f, 1.4f, 2f);
         public static readonly Vector3 AbsorberBayPosition = new Vector3(4f, 1.4f, -2f);
+
+        // Optional C06 targets (Build with survival): stowage and berth on the far west wall, grow module on the far east.
+        public static readonly Vector3 RationPosition = new Vector3(-6f, 1.4f, -1.5f);
+        public static readonly Vector3 WaterPosition = new Vector3(-6f, 1.4f, -3f);
+        public static readonly Vector3 SleepPosition = new Vector3(-6f, 1.4f, -4.5f);
+        public static readonly Vector3 BeaconPosition = new Vector3(-6f, 1.4f, 3.5f);
+        public static readonly Vector3 GrowBuildPosition = new Vector3(6f, 1.4f, -1.5f);
+        public static readonly Vector3 GrowPlantPosition = new Vector3(6f, 1.4f, -3f);
+        public static readonly Vector3 GrowHarvestPosition = new Vector3(6f, 1.4f, -4.5f);
         public const float PalletRowZ = 8f;
         public const float BayRowZ = 5f;
         public static readonly Vector3 PreflightSpawnPosition = new Vector3(0f, 0.02f, 6.5f);
@@ -90,6 +99,21 @@ namespace OutOfReach.Tests.PlayMode
 
         public InteractableTarget AbsorberBay { get; private set; }
 
+        /// <summary>C06 targets; null unless the harness was built with survival.</summary>
+        public InteractableTarget Ration { get; private set; }
+
+        public InteractableTarget Water { get; private set; }
+
+        public InteractableTarget Sleep { get; private set; }
+
+        public InteractableTarget Beacon { get; private set; }
+
+        public InteractableTarget GrowBuild { get; private set; }
+
+        public InteractableTarget GrowPlant { get; private set; }
+
+        public InteractableTarget GrowHarvest { get; private set; }
+
         public GameplayGate InnerGate { get; private set; }
 
         public GameplayGate OuterGate { get; private set; }
@@ -122,9 +146,10 @@ namespace OutOfReach.Tests.PlayMode
         /// <summary>
         /// Builds the layout. With scripted input the player is driven by tests; for authoring (the saved harness
         /// scene) the real Input System bindings and the debug overlay are used instead. With preflight the player
-        /// starts on the pad and may walk and load crates during Planning.
+        /// starts on the pad and may walk and load crates during Planning. With survival the optional post-contact
+        /// chapter is enabled for every session of this runtime and its C06 interaction targets are placed.
         /// </summary>
-        public static RepairLoopHarness Build(bool authoring = false, bool preflight = false)
+        public static RepairLoopHarness Build(bool authoring = false, bool preflight = false, bool survival = false)
         {
             var harness = new RepairLoopHarness();
             harness.Root = new GameObject("RepairLoopHarness");
@@ -166,6 +191,17 @@ namespace OutOfReach.Tests.PlayMode
             harness.Workbench = CreateTarget(root, "Workbench", InteractionIds.Workbench, WorkbenchPosition, new Vector3(0.3f, 1f, 0.8f));
             harness.PayloadRack = CreateTarget(root, "PayloadRack", InteractionIds.SalvagePayload, PayloadRackPosition, new Vector3(0.3f, 1f, 0.8f));
             harness.AbsorberBay = CreateTarget(root, "AbsorberBay", InteractionIds.AbsorberBay, AbsorberBayPosition, new Vector3(0.3f, 1f, 0.8f));
+
+            if (survival)
+            {
+                harness.Ration = CreateTarget(root, "RationStowage", InteractionIds.ConsumeRation, RationPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.Water = CreateTarget(root, "WaterDispenser", InteractionIds.DrinkWater, WaterPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.Sleep = CreateTarget(root, "SleepBerth", InteractionIds.SurvivalSleep, SleepPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.Beacon = CreateTarget(root, "RecoveryBeacon", InteractionIds.RecoveryBeacon, BeaconPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.GrowBuild = CreateTarget(root, "GrowBuild", InteractionIds.BuildGrowModule, GrowBuildPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.GrowPlant = CreateTarget(root, "GrowPlant", InteractionIds.PlantSeedlings, GrowPlantPosition, new Vector3(0.3f, 1f, 0.8f));
+                harness.GrowHarvest = CreateTarget(root, "GrowHarvest", InteractionIds.HarvestCrop, GrowHarvestPosition, new Vector3(0.3f, 1f, 0.8f));
+            }
 
             // Preflight pad: pallets in the far row, bay stacks in the near row, the player walks between them.
             harness.PreflightSpawn = CreatePoint(root, "PreflightSpawn", PreflightSpawnPosition, 0f);
@@ -211,6 +247,14 @@ namespace OutOfReach.Tests.PlayMode
                 harness.AirlockControls, harness.EvaExit, harness.EvaReturn, harness.Antenna,
                 harness.PayloadRack, harness.Workbench, harness.AbsorberBay,
             };
+            if (survival)
+            {
+                targets.AddRange(new[]
+                {
+                    harness.Ration, harness.Water, harness.Sleep, harness.Beacon, harness.GrowBuild, harness.GrowPlant, harness.GrowHarvest,
+                });
+            }
+
             foreach (string equipmentId in CargoEquipmentIds)
             {
                 targets.Add(harness.CargoSupply[equipmentId]);
@@ -221,6 +265,7 @@ namespace OutOfReach.Tests.PlayMode
             harness.Runtime.ConfigureEva(new[] { harness.InnerGate, harness.OuterGate }, harness.Route, reentry);
             harness.Runtime.ConfigurePreflight(preflight, harness.PreflightSpawn);
             harness.Runtime.RestartMode = MissionRestartMode.RebuildInPlace;
+            harness.Runtime.ConfigureSurvivalExtension(survival);
             harness.Listener = mission.AddComponent<MissionStatusListener>();
             harness.Listener.Configure(harness.Runtime, harness.Resolver, authoring);
 
@@ -244,6 +289,33 @@ namespace OutOfReach.Tests.PlayMode
             {
                 Session.Events.Publish(new CinematicFinished(Session.Cinematics.ActiveCinematic, Session.Cinematics.ActiveSequenceId, false));
             }
+        }
+
+        /// <summary>
+        /// EXPLICIT TEST SHORTCUT to Earth's reply, through domain commands only (covered by their own tests): stabilize,
+        /// one EVA that repairs the antenna, the link diagnostic and its cinematic, the distress call and the light-time
+        /// wait. With survival enabled the mission is then in Survival.
+        /// </summary>
+        public void ReachContact()
+        {
+            ReachStabilized();
+            MissionSession session = Session;
+            Require(session.Eva.TryPrepareSuit(), "suit");
+            Require(session.Eva.TryBeginEva(), "begin EVA");
+            Require(session.AdvanceSimulation(session.Eva.Spec.DepressurizationSeconds), "depressurize");
+            Require(session.Eva.TryGoOutside(), "go outside");
+            Require(session.Systems.Antenna.TryRepair(session.Resources), "antenna repair");
+            Require(session.Eva.TryReturnInside(), "return inside");
+            Require(session.Eva.TryEndEva(), "end EVA");
+            Require(session.AdvanceSimulation(session.Eva.Spec.RepressurizationSeconds), "repressurize");
+            Require(session.Director.TryRunLinkDiagnostic(), "link diagnostic");
+            if (session.Cinematics.IsWaiting)
+            {
+                session.Events.Publish(new CinematicFinished(session.Cinematics.ActiveCinematic, session.Cinematics.ActiveSequenceId, false));
+            }
+
+            Require(session.Communications.TryTransmit(), "transmit");
+            Require(session.AdvanceSimulation(session.Communications.ReplyDelaySimulationSeconds), "reply");
         }
 
         /// <summary>Emergency with power and life support repaired through the domain: the mission is in Repair.</summary>
