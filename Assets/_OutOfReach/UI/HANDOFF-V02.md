@@ -1,128 +1,110 @@
-# V02 planner and resource HUD
+# V02 planner and HUD redesign handoff
 
-Owner: Codex. Branch: `feature/visuals-cinematics`. Scope: UI only; accident presentation is separate.
+Owner: Codex UI writer. Task: V02 visual replacement. Branch: `feature/visuals-cinematics`.
+Base commit: `656d96265c4b79f2164ced6ffbac46d95540d0e2`; this redesign is an uncommitted source handoff.
+The integrator owns the final revision, Unity verification, scene composition and commit.
 
-## Composition
+## Delivered design
 
-Run `Tools > Out of Reach > UI > Build Planner and HUD Prefab`, or invoke
-`OutOfReach.Presentation.UI.Editor.MissionUiBuilder.Build` in the verification project.
-It creates `Generated/MissionPanelSettings.asset` and `Generated/MissionFlightBoard.prefab` here.
-It does not save the open scene or shared project settings, or flush unrelated dirty assets.
+The planner now leaves the scene visible behind a restrained mission title and one 472 logical-pixel
+payload surface at the right, inset 24 pixels. Seven compact equipment rows show authoritative unit
+mass, fictional credits and power load with persistent +/- controls. Current/limit mass, budget and
+load/generation are compact; one ivory launch button remains pinned below validation and rejected
+command explanations. The `Reserves & launch details` disclosure contains all six initial reserves,
+the timed/practice rule, all last-valid counts (including zero), and the fictional/simplified assumptions.
+Expanding details scrolls this content; the launch action stays visible. No ship illustration is drawn.
 
-The coordinated integrator instantiates that prefab in Bootstrap and explicitly calls:
+HUD: phase-based purpose at top left, actual elapsed mission time and simulation scale/pause at top
+right, then unframed oxygen reserve / battery / cabin CO2 instruments at bottom left. `Systems` is a
+real disclosure button; holding Tab also reveals water, food and spare parts. Every value continues
+updating while hidden. No UI resource counters or danger thresholds are invented. The six readings
+remain under `.hud-readouts`; each cell has `resource-0` through `resource-5` matching the canonical
+snapshot order (oxygen, water, food, battery, parts, CO2). Visual order puts oxygen/battery/CO2 first.
+
+Captions use white 20-pixel text, a 14-pixel speaker label, a 760-pixel maximum measure and minimal
+backing. Their position follows actual instrument height to preserve a gap when telemetry expands.
+The rest of the HUD ignores picking; the Systems button alone accepts pointer input.
+
+Typography uses the integrator-supplied Source Sans 3 Regular/Semibold assets under `UI/Typography`.
+Those fonts, licenses and metadata are owned by the integrator. Secondary text is at least 14 logical
+pixels. Panel reference resolution remains 1280x720. Metadata and generated prefab/settings are
+unchanged by this writer.
+
+## Files changed by this writer
+
+- `Runtime/FlightBoardView.cs`
+- `Runtime/MissionFlightBoard.cs`
+- `Runtime/OutOfReach.UI.asmdef`
+- `Styles/MissionFlightBoard.uss`
+- `HANDOFF-V02.md`
+
+No Core, simulation, inventory, player, interaction, contract, scene, package or project settings changes.
+`Unity.InputSystem` is now an assembly reference for the already installed Input System package; no
+new package was introduced. The UI still consumes only `OutOfReach.Contracts` for domain behavior.
+
+## Integration and API
+
+Existing public signatures are retained. Composition still explicitly calls:
 
 ```csharp
 flightBoard.Configure(planner, resources, gameState, eventBus);
-flightBoard.ConfigureTiming(clock, planningDeadline); // Optional read-only contracts; either may be null.
+flightBoard.ConfigureTiming(clock, planningDeadline);
 ```
 
-The component type is `OutOfReach.Presentation.UI.MissionFlightBoard`. The four arguments are
-`IMissionPlanner`, `IResourceSystem`, `IGameState`, `IMissionEventBus`, in that order. The prefab
-contains only UIDocument, its panel reference and the presenter with the owned stylesheet.
-Runtime assembly `OutOfReach.UI` references only `OutOfReach.Contracts` as a domain dependency.
-No Core, Inventory or Simulation types are consumed.
+Type: `OutOfReach.Presentation.UI.MissionFlightBoard`. The existing generated prefab still references
+the presenter and stylesheet. `MissionUiBuilder.Build` remains the optional UI-only regeneration entry.
+No scene lookup, camera, listener, cursor lock, input action ownership or service locator is introduced.
 
-Configure may be called before or after OnEnable. Reconfiguration detaches the old bus first;
-OnDisable and Dispose detach all listeners. Re-enabling reads current snapshots and subscribes
-again. Dispose is terminal; instantiate a fresh view or simply disable/reconfigure the existing
-view for a session restart. The composition root must configure the replacement session explicitly.
-When replacing IGameState, Configure clears the previous clock/deadline and subtitle; call
-ConfigureTiming after Configure for each new session. Null timing inputs hide unavailable values.
-
-Subscriptions: PhaseChanged, ResourceChanged, MissionEnded. No authoritative events are published.
-Only TrySetEquipment and TryLaunch commands are issued from user input. Every command is followed
-by a fresh Draft read; validation controls launch availability and failures display Explanation.
-No clock, deadline, physics, resource consumption, outcome selection or phase transition is driven here.
-LateUpdate only rereads the optional timing contracts; there is no local elapsed counter or countdown.
-
-## Interaction and display
-
-- Planning shows catalog names, qualitative purposes, authoritative unit mass/load/credits, +/- counts,
-  draft totals/limits and draft initial reserves. Maxima and numeric equipment effects are not duplicated.
-- +/- can reach the Core-owned maximum and receive its explanation; the contract does not expose maxima.
-- English text maps the seven stable C01 equipment IDs; unknown IDs remain visible with generic text.
-- All non-Planning phases show a compact HUD. The center remains clear and the HUD ignores pointer picking.
-- The player adapter/composition root owns cursor unlock and movement/input gating while Planning.
-  The UI does not change Cursor.lockState or player controls.
-- Readouts: stored oxygen kg, water L, food kg, battery kWh, integer spare parts, cabin CO2 ppm.
-  No oxygen percentage or guessed safety threshold is shown.
-- Optional ISimulationClock supplies the visible HUD simulation scale and PAUSED state. Its values
-  are read directly each frame; presentation never advances time or assumes 1x when unbound.
-- Optional IPlanningDeadline supplies timed planning: ceil(RemainingRealSeconds), calm amber urgency
-  at 15 seconds, and an explicit automatic-launch rule. The right-hand review scroll includes every
-  catalog item's last-valid count (including zero), plus any additional selected ID. It reads the
-  immutable LastValidConfiguration; an invalid current draft is never silently reset by this UI.
-- UsedLastValidLoadoutAtDeadline produces a visible post-launch notice. When the deadline is disabled,
-  the planner says Untimed Planning. No mode-changing command or Practice/Timed selector is invented:
-  the pre-start choice awaits Claude's exact runtime method and integration.
-- Future report/communications views are outside this change. A late-bound outcome can read the enum,
-  but the reason is available only from a MissionEnded event, not the current state snapshot.
-
-## Subtitle bridge
+New presentation-only public methods on BOTH MissionFlightBoard and FlightBoardView:
 
 ```csharp
-flightBoard.ShowSubtitle(exactEnglishCueText, speakerLabel);
-flightBoard.ClearSubtitle();
+ShowInteractionPrompt(string text, bool available);
+ClearInteractionPrompt();
 ```
 
-These methods are presentation-only and start no timer. Audio/cinematic presentation owns cue duration,
-replacement, skip and stop, and must call ClearSubtitle when a cue ends. Empty text clears it. Labels
-do not interpret rich text, wrap within the caption panel, and retain the supplied wording. Caption
-text uses 22 logical pixels; the speaker uses 16. The panel is centered above the measured resource
-HUD, ignores picking and adds no player input or camera control. Text can be supplied before OnEnable;
-it remains presentation state until cleared. Restart binding and Dispose clear it.
+The player/composition adapter supplies the exact prompt including any desired control hint. The UI
+shows it and marks unavailable wording amber; it never invokes an interaction or invents a binding.
+Empty text clears the prompt. Configure clears an old session's prompt. A prompt supplied before
+OnEnable is retained as presentation state and applied when the view is created.
 
-The panel reference resolution is 1280x720; text is at least 16 logical pixels, scaling at 1920x1080.
-Both planner columns scroll independently when needed; launch and its validation stay visible.
-Colors use graphite, warm white, cyan
-readings and amber constraints. No external fonts, images or packages are required.
+New public FlightBoardView methods used by the presenter:
 
-## Preview and verification
+```csharp
+SetSimulationElapsedTime(bool available, double elapsedSimulationSeconds);
+SetSystemsHeld(bool held);
+```
 
-### Integrator verification — 14 November 2026
+Elapsed text formats the injected `ISimulationClock.ElapsedSimulationSeconds` directly. LateUpdate
+reads Core timing, then reads `Keyboard.current.tabKey.isPressed` only for non-Planning telemetry
+presentation. It advances no clock and consumes no input command. The Systems button pins/unpins
+telemetry; releasing Tab closes it only when not pinned. Entering Planning resets that disclosure.
 
-The commit containing this handoff includes the generated panel settings/prefab, preserving their metadata.
-Unity 6000.3.28f1 imported and compiled the UI, generated its assets, and ran a temporary Play-mode
-integration harness against exact C01 `caee234` sources plus the new canonical timing interfaces.
-The harness stays under the ignored verification project; it does not replace Claude-owned tests or Bootstrap.
+All original lifecycle rules remain: snapshots before subscription, PhaseChanged/ResourceChanged/
+MissionEnded listeners detached on disable/disposal/rebind, no domain publication, only
+TrySetEquipment and TryLaunch commands. Replacement state clears prior timing references and
+requires ConfigureTiming again. Subtitle replacement/clear remains owned by the audio presenter.
 
-**24 checks passed, process exit 0** (`.local/unity-baseline-check/v02-ui-play-qa-3.log`): actual catalog,
-valid launch availability, Core-rejected quantity limit with visible explanation, successful quantity
-change, stable control identity, invalid draft/disabled launch, corrected draft, real Planning→Intro
-launch, live reserve update, real Core pause display, disable/enable without duplicate resource listeners,
-replacement session with the actual redundancy preset, old-bus detachment and final disposal.
-The harness uses a read-only wrapper of the existing C01 clock; no alternate elapsed-time model.
+Timed planning still reads IPlanningDeadline. Countdown uses ceil and unpaused real seconds, with
+amber urgency at 15 seconds. The rule and immutable last-valid counts are available in launch
+details. Post-launch fallback remains visible. There is no mode selector until the composition root
+binds the actual supported runtime choice; this change does not invent a mode-changing contract.
 
-Actual runtime UI render-texture captures are under that project's `.local/v02-ui-qa/`: planner at
-1280x720 and 1920x1080, invalid draft, HUD, and wrapped subtitles above the HUD. Planner and HUD/subtitle
-images were inspected. The capture target explicitly clears between frames; this avoids retaining the
-previous planner pixels when switching to a transparent HUD. Scrollbars follow the graphite/cyan theme.
+## Evidence and required verification
 
-This proves contract interaction and these display/lifecycle cases, **not a complete mission or a Windows
-player build**. Physical mouse/gamepad play, player input gating, timed expiry/fallback with C02's actual
-deadline, Practice/Timed selection and final Bootstrap integration remain pending. The 24 checks do not
-establish the deadline owner's correctness or final visual quality.
+Source checks on 14 November 2026:
 
-`Tools > Out of Reach > UI > Open Read-only Layout Preview` opens an editor-only window with an
-explicit static-preview banner and disabled mission buttons. Its two layout tabs only change the view.
-It implements no fake domain interfaces, creates no scene and is excluded from player builds.
-Preview numbers are authoring examples, never production defaults. Production remains unbound with
-dash readouts until Configure supplies actual services.
+- Both rejected baseline captures were inspected before replacement.
+- Canonical contracts, all seven mandatory project documents and the supplied craft floor were read.
+- `git diff --check`: passed.
+- `python tools/verify_repository.py`: passed, 246 asset GUIDs at this checkpoint.
+- `python tools/nasa/horizons_snapshot.py`: passed, 32 samples with source/hash/vector/light-time checks.
+- This writer launched no Unity process and claims no compile, render, player build or playtest pass.
 
-Source handoff verification: original and timing contract signatures inspected; no Unity editor/process was launched by
-the UI writer. Repository verifier passed (209 asset GUIDs at the time of the check); NASA offline
-verification passed (32 samples, hashes and exact regeneration). The integrator must record the
-actual revision and results after compiling, generating
-assets, checking USS imports and reviewing 1280x720 / 1920x1080. Verify invalid draft, rejected + at
-item limit, valid launch, live reserve changes, disable/enable, reconfiguration and restart. Keyboard
-focus must remain on the same +/- control after a valid edit, and gameplay input must be restored by
-the owning runtime adapter. For timing, verify ceil rounding, pause, multiple simulation scales,
-expired-invalid fallback disclosure, full last-valid counts, null timing inputs and fresh-session
-rebinding. Check short and wrapped subtitles, replacement, clear and visible gap above the HUD.
-The UI writer's source-only assessment below is superseded for the specific verified cases above;
-unlisted cases remain pending. No complete-mission or Windows-build claim is made here.
-
-Timing/subtitle enhancement source check: UI metadata and JSON remain valid. A later whole-repository
-verification encountered missing metadata in concurrently authored Audio/Runtime and
-Scripts/Presentation/Cinematics files, outside UI ownership; those were not modified by this writer.
-Re-run the repository check after the parallel writers finish.
+The earlier 24-check integration harness and baseline captures establish behavior only for the old
+layout. They do not verify this replacement. The integrator must inspect actual in-scene captures at
+1280x720 and 1920x1080: all seven rows, explicit limits and costs, open reserves/fallback details,
+invalid loadout and disabled launch, visible rejected maximum, keyboard focus retained after edits,
+real launch, live resources, Systems click and hold/release Tab, pause/scale/elapsed display, prompt
+available/unavailable/clear, wrapped subtitles, and lifecycle/rebind. Inspect USS import warnings and
+confirm the two real fonts are applied. Confirm the planner camera presents authentic ship geometry
+through the transparent majority of the view. No visual acceptance or complete-mission claim yet.

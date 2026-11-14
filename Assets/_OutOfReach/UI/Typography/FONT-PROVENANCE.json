@@ -1,0 +1,27 @@
+{
+  "family": "Source Sans 3",
+  "author": "Adobe",
+  "license": "SIL Open Font License 1.1",
+  "repository": "https://github.com/adobe-fonts/source-sans",
+  "revision": "87b37a2daaed80fcb8e8ccb0085c4d72ddade12e",
+  "files": [
+    {
+      "path": "SourceSans3-Regular.otf",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e/OTF/SourceSans3-Regular.otf",
+      "sha256": "08df266400933d3178d081a45f94a08814c3e55b4b7dd2e0ff69cb1329f13ab6",
+      "bytes": 334924
+    },
+    {
+      "path": "SourceSans3-Semibold.otf",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e/OTF/SourceSans3-Semibold.otf",
+      "sha256": "36f1cd2c344aa3109e64429bce41a41e4b2b923beb2db19b8dbf9bb56f05a4f9",
+      "bytes": 339636
+    },
+    {
+      "path": "OFL.txt",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e/LICENSE.md",
+      "sha256": "56af9b9c6715597e458284a474dc118a50a4150e9d547c70f7b4a33c3e6a9328",
+      "bytes": 4486
+    }
+  ]
+}

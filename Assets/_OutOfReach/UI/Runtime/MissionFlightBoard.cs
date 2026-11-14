@@ -1,6 +1,7 @@
 using System;
 using OutOfReach.Contracts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace OutOfReach.Presentation.UI
@@ -24,6 +25,8 @@ namespace OutOfReach.Presentation.UI
         private string commandExplanation = string.Empty;
         private string subtitleText = string.Empty;
         private string subtitleSpeaker = string.Empty;
+        private string interactionPrompt = string.Empty;
+        private bool interactionAvailable;
 
         public void Configure(IMissionPlanner missionPlanner, IResourceSystem resourceSystem,
             IGameState gameState, IMissionEventBus eventBus)
@@ -47,6 +50,7 @@ namespace OutOfReach.Presentation.UI
             events = eventBus;
             commandExplanation = string.Empty;
             ClearSubtitle();
+            ClearInteractionPrompt();
             if (!isActiveAndEnabled) return;
             CreateView();
             Refresh(); // Read current snapshots before listening, including mid-mission binding.
@@ -78,11 +82,31 @@ namespace OutOfReach.Presentation.UI
             view?.ClearSubtitle();
         }
 
+        /// <summary>Presentation-only target prompt. The player adapter supplies the wording and availability.</summary>
+        public void ShowInteractionPrompt(string text, bool available)
+        {
+            if (disposed) return;
+            interactionPrompt = text ?? string.Empty;
+            interactionAvailable = available;
+            view?.ShowInteractionPrompt(interactionPrompt, available);
+        }
+
+        public void ClearInteractionPrompt()
+        {
+            interactionPrompt = string.Empty;
+            interactionAvailable = false;
+            view?.ClearInteractionPrompt();
+        }
+
         private void LateUpdate()
         {
             // These interfaces have no change events. Read Core's values after its frame update;
             // never integrate deltaTime, decrement a deadline or infer elapsed simulation time.
-            if (!disposed) RefreshTiming();
+            if (disposed) return;
+            RefreshTiming();
+            // Tab reveals telemetry only. It never changes player, camera, cursor or mission authority.
+            view?.SetSystemsHeld(state != null && state.Phase != GamePhase.Planning
+                && Keyboard.current != null && Keyboard.current.tabKey.isPressed);
         }
 
         private void OnEnable()
@@ -125,6 +149,7 @@ namespace OutOfReach.Presentation.UI
             deadline = null;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
+            interactionPrompt = string.Empty;
         }
 
         private void CreateView()
@@ -137,6 +162,7 @@ namespace OutOfReach.Presentation.UI
             view.QuantityChangeRequested += ChangeQuantity;
             view.LaunchRequested += Launch;
             view.ShowSubtitle(subtitleText, subtitleSpeaker);
+            view.ShowInteractionPrompt(interactionPrompt, interactionAvailable);
         }
 
         private void ReleaseView()
@@ -204,6 +230,7 @@ namespace OutOfReach.Presentation.UI
             bool hasClock = bound && clock != null;
             bool hasDeadline = bound && deadline != null;
             view.SetSimulationTiming(hasClock, hasClock && clock.IsPaused, hasClock ? clock.TimeScale : 0);
+            view.SetSimulationElapsedTime(hasClock, hasClock ? clock.ElapsedSimulationSeconds : 0);
             view.SetPlanningTiming(hasDeadline, hasDeadline && deadline.IsEnabled,
                 hasDeadline ? deadline.RemainingRealSeconds : 0, hasClock && clock.IsPaused,
                 hasDeadline ? deadline.LastValidConfiguration : null, bound ? planner.Catalog : null);

@@ -1,0 +1,14 @@
+{
+  "name": "OutOfReach.Audio.Editor",
+  "rootNamespace": "OutOfReach.Presentation.Audio.Editor",
+  "references": ["OutOfReach.Audio"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

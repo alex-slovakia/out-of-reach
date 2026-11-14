@@ -1,0 +1,30 @@
+{
+  "deterministic_rebuild": true,
+  "three_wav_hashes": {
+    "mx01_isolation.wav": "6d6d5f689514a983262ea3bc3ebddc6f6a6bcb9ab984ea10d740e5b151ea2fe5",
+    "mx02_tension.wav": "3e082d38b79bb6b90a2ff963cab67dbd22dd132fe49f825560ca7b5da802262d",
+    "mx03_emergency.wav": "10b27d13533541340978c514bb66051e5ab06fde5e599095d34e7295b94c4f2e"
+  },
+  "total_wav_bytes": 18432132,
+  "all_numerical_seams_pass": true,
+  "all_true_peaks_below_minus6": true,
+  "total_clipped_samples": 0,
+  "human_listening_verified": false,
+  "stereo_mono_checks": [
+    {
+      "id": "mx01_isolation",
+      "stereo_correlation": 0.64971,
+      "mono_fold_down_rms_loss_db": -0.837
+    },
+    {
+      "id": "mx02_tension",
+      "stereo_correlation": 0.79716,
+      "mono_fold_down_rms_loss_db": -0.4953
+    },
+    {
+      "id": "mx03_emergency",
+      "stereo_correlation": 0.84039,
+      "mono_fold_down_rms_loss_db": -0.3875
+    }
+  ]
+}

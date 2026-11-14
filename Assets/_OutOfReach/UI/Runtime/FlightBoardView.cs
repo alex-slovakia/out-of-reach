@@ -7,38 +7,25 @@ using UnityEngine.UIElements;
 
 namespace OutOfReach.Presentation.UI
 {
-    /// <summary>Visual elements only. Values are supplied by the bound presenter or an explicit editor preview.</summary>
+    /// <summary>Visual elements only. The bound presenter supplies every mission value.</summary>
     public sealed class FlightBoardView : IDisposable
     {
         public event Action<string, int> QuantityChangeRequested;
         public event Action LaunchRequested;
 
-        private readonly VisualElement root;
-        private readonly VisualElement planner;
-        private readonly VisualElement hud;
-        private readonly ScrollView equipmentList;
+        private readonly VisualElement root, planner, hud, equipmentList;
         private readonly Dictionary<string, EquipmentRow> equipmentRows = new Dictionary<string, EquipmentRow>();
-        private readonly Label mass;
-        private readonly Label budget;
-        private readonly Label power;
-        private readonly Label validation;
-        private readonly Label commandFeedback;
-        private readonly Label phase;
-        private readonly Label outcomeReason;
-        private readonly Label simulationTiming;
-        private readonly Label deadlineFallback;
-        private readonly VisualElement planningTiming;
-        private readonly Label deadlineCountdown;
-        private readonly Label deadlineRule;
-        private readonly VisualElement lastValidDetail;
-        private readonly Label lastValidCounts;
+        private readonly Label mass, budget, power, validation, commandFeedback;
+        private readonly Label phase, objective, outcomeReason, simulationTiming, elapsedTime, deadlineFallback;
+        private readonly VisualElement planningTiming, lastValidDetail;
+        private readonly Label deadlineCountdown, deadlineRule, lastValidCounts;
         private IMissionConfiguration displayedLastValid;
-        private readonly VisualElement instrumentStrip;
-        private readonly VisualElement subtitleOverlay;
-        private readonly Label subtitleSpeaker;
-        private readonly Label subtitleText;
-        private readonly Label[] planningResources;
-        private readonly Label[] hudResources;
+        private readonly VisualElement instruments, expandedTelemetry;
+        private readonly Button systems;
+        private bool systemsPinned, systemsHeld, showingPlanning;
+        private readonly VisualElement interactionPrompt, subtitleOverlay;
+        private readonly Label interactionText, subtitleSpeaker, subtitleText;
+        private readonly Label[] planningResources, hudResources;
         private readonly Button launch;
         private readonly bool commandsEnabled;
 
@@ -56,90 +43,118 @@ namespace OutOfReach.Presentation.UI
             root.Add(planner);
             var heading = Element("planner-heading");
             planner.Add(heading);
-            heading.Add(Text("AURORA-7 / MISSION PREPARATION", "eyebrow"));
-            heading.Add(Text("Configure the mission", "title"));
-            heading.Add(Text("Balance research equipment with the reserves and parts you may need to survive.", "intro"));
+            heading.Add(Text("Out of reach", "title"));
+            heading.Add(Text("Prepare AURORA-7 for deep space.\nWhat you bring determines what comes next.", "intro"));
+            IgnorePicking(heading);
+
+            var payload = Element("payload-panel");
+            planner.Add(payload);
+            var payloadHeader = Element("payload-header");
+            payload.Add(payloadHeader);
+            payloadHeader.Add(Text("Payload", "payload-title"));
             planningTiming = Element("planning-timing");
-            heading.Add(planningTiming);
+            payloadHeader.Add(planningTiming);
             deadlineCountdown = Text(string.Empty, "deadline-countdown");
             planningTiming.Add(deadlineCountdown);
-            deadlineRule = Text(string.Empty, "deadline-rule");
-            planningTiming.Add(deadlineRule);
 
-            var columns = Element("planner-columns");
-            planner.Add(columns);
-            var manifest = Element("equipment-column");
-            columns.Add(manifest);
-            manifest.Add(Text("01  /  EQUIPMENT MANIFEST", "section-heading"));
-            equipmentList = new ScrollView(ScrollViewMode.Vertical)
+            var constraints = Element("constraints");
+            payload.Add(constraints);
+            mass = AddConstraint(constraints, "Mass");
+            budget = AddConstraint(constraints, "Budget");
+            power = AddConstraint(constraints, "Load / generation");
+            power.parent.AddToClassList("power-constraint");
+
+            var payloadScroll = new ScrollView(ScrollViewMode.Vertical)
             {
                 horizontalScrollerVisibility = ScrollerVisibility.Hidden,
                 verticalScrollerVisibility = ScrollerVisibility.Auto
             };
-            equipmentList.AddToClassList("equipment-list");
-            manifest.Add(equipmentList);
+            payloadScroll.AddToClassList("payload-scroll");
+            payload.Add(payloadScroll);
+            equipmentList = Element("equipment-list");
+            payloadScroll.Add(equipmentList);
 
-            var overview = Element("overview");
-            columns.Add(overview);
-            overview.Add(Text("02  /  LAUNCH REVIEW", "section-heading"));
-            var reviewDetails = new ScrollView(ScrollViewMode.Vertical)
-            {
-                horizontalScrollerVisibility = ScrollerVisibility.Hidden,
-                verticalScrollerVisibility = ScrollerVisibility.Auto
-            };
-            reviewDetails.AddToClassList("overview-scroll");
-            overview.Add(reviewDetails);
-            mass = AddConstraint(reviewDetails, "PAYLOAD MASS");
-            budget = AddConstraint(reviewDetails, "BUDGET / FICTIONAL CREDITS");
-            power = AddConstraint(reviewDetails, "LOAD / GENERATION");
-            reviewDetails.Add(Text("RESERVES AT LAUNCH", "reserves-heading"));
+            var details = new Foldout { text = "Reserves & launch details", value = false };
+            details.AddToClassList("launch-details");
+            payloadScroll.Add(details);
+            details.Add(Text("Initial reserves", "details-title"));
             var reserves = Element("planning-reserves");
-            reviewDetails.Add(reserves);
+            details.Add(reserves);
             planningResources = AddResources(reserves);
-            reviewDetails.Add(Text("Oxygen is a stored reserve. CO₂ is cabin concentration.", "small-note"));
+            details.Add(Text("Oxygen is stored reserve; CO₂ is cabin concentration. Equipment is locked at launch.", "small-note"));
+            deadlineRule = Text(string.Empty, "deadline-rule");
+            details.Add(deadlineRule);
             lastValidDetail = Element("last-valid-detail");
-            reviewDetails.Add(lastValidDetail);
-            lastValidDetail.Add(Text("LAST VALID LOADOUT / AUTOMATIC BACKUP", "reserves-heading"));
+            details.Add(lastValidDetail);
+            lastValidDetail.Add(Text("Last valid loadout", "details-title"));
             lastValidCounts = Text(string.Empty, "last-valid-counts");
             lastValidDetail.Add(lastValidCounts);
+            details.Add(Text("A fictional research mission. Credits, engineering limits and resource behaviour are simplified for gameplay.", "small-note"));
+
             var actions = Element("launch-review-actions");
-            overview.Add(actions);
+            payload.Add(actions);
             validation = Text(string.Empty, "validation");
             actions.Add(validation);
             commandFeedback = Text(string.Empty, "command-feedback");
             actions.Add(commandFeedback);
-            launch = new Button(() => LaunchRequested?.Invoke()) { text = "BEGIN MISSION" };
+            launch = new Button(() => LaunchRequested?.Invoke()) { text = "Begin mission" };
             launch.AddToClassList("launch-button");
-            launch.tooltip = "Validate this loadout and begin the mission.";
+            launch.tooltip = "Validate this payload and begin the mission. Equipment choices lock at launch.";
             actions.Add(launch);
-            actions.Add(Text("Your equipment choices are locked at launch.", "small-note"));
-
-            var footer = Element("planner-footer");
-            planner.Add(footer);
-            footer.Add(Text("A FICTIONAL RESEARCH VESSEL", "footer-label"));
-            footer.Add(Text("Mission limits and resource behavior are simplified for gameplay.", "footer-note"));
 
             hud = Element("hud");
             root.Add(hud);
             var header = Element("hud-header");
             hud.Add(header);
-            header.Add(Text("AURORA-7", "hud-vessel"));
-            phase = Text("WAITING FOR MISSION", "hud-phase");
+            phase = Text("Waiting for mission", "hud-phase");
             header.Add(phase);
-            simulationTiming = Text(string.Empty, "simulation-timing");
-            header.Add(simulationTiming);
+            objective = Text(string.Empty, "hud-objective");
+            header.Add(objective);
             deadlineFallback = Text(string.Empty, "deadline-fallback");
-            hud.Add(deadlineFallback);
+            header.Add(deadlineFallback);
             outcomeReason = Text(string.Empty, "outcome-reason");
-            hud.Add(outcomeReason);
-            instrumentStrip = Element("hud-instruments");
-            hud.Add(instrumentStrip);
-            instrumentStrip.Add(Text("ONBOARD RESERVES / CABIN", "hud-strip-title"));
+            header.Add(outcomeReason);
+
+            var timing = Element("hud-timing");
+            hud.Add(timing);
+            elapsedTime = Text(string.Empty, "elapsed-time");
+            timing.Add(elapsedTime);
+            simulationTiming = Text(string.Empty, "simulation-timing");
+            timing.Add(simulationTiming);
+
+            instruments = Element("hud-instruments");
+            hud.Add(instruments);
             var readouts = Element("hud-readouts");
-            instrumentStrip.Add(readouts);
-            hudResources = AddResources(readouts);
-            instrumentStrip.Add(Text("Oxygen: stored reserve   /   CO₂: cabin concentration", "hud-note"));
+            instruments.Add(readouts);
+            var primary = Element("primary-telemetry");
+            readouts.Add(primary);
+            expandedTelemetry = Element("expanded-telemetry");
+            readouts.Add(expandedTelemetry);
+            hudResources = new Label[6];
+            hudResources[0] = AddResource(primary, "Oxygen reserve", 0);
+            hudResources[3] = AddResource(primary, "Battery", 3);
+            hudResources[5] = AddResource(primary, "Cabin CO₂", 5);
+            hudResources[1] = AddResource(expandedTelemetry, "Water", 1);
+            hudResources[2] = AddResource(expandedTelemetry, "Food", 2);
+            hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
+            systems = new Button(() => { systemsPinned = !systemsPinned; RefreshTelemetry(); })
+            {
+                text = "Systems",
+                tooltip = "Show or hide water, food and spare parts. Hold Tab for a quick look."
+            };
+            systems.AddToClassList("systems-button");
+            instruments.Add(systems);
+            instruments.Add(Text("Hold Tab to inspect", "systems-hint"));
             IgnorePicking(hud);
+            systems.pickingMode = PickingMode.Position;
+            RefreshTelemetry();
+
+            interactionPrompt = Element("interaction-prompt");
+            hud.Add(interactionPrompt);
+            interactionText = Text(string.Empty, "interaction-text");
+            interactionPrompt.Add(interactionText);
+            IgnorePicking(interactionPrompt);
+            ClearInteractionPrompt();
 
             subtitleOverlay = Element("subtitle-overlay");
             root.Add(subtitleOverlay);
@@ -150,7 +165,7 @@ namespace OutOfReach.Presentation.UI
             subtitleText = Text(string.Empty, "subtitle-text");
             subtitleBox.Add(subtitleText);
             IgnorePicking(subtitleOverlay);
-            instrumentStrip.RegisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
+            instruments.RegisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
             ClearSubtitle();
             ShowUnbound();
         }
@@ -158,37 +173,49 @@ namespace OutOfReach.Presentation.UI
         public void ShowUnbound()
         {
             ShowPlanning(false);
-            phase.text = "WAITING FOR MISSION";
+            phase.text = "Waiting for mission";
+            objective.text = string.Empty;
             outcomeReason.text = string.Empty;
             foreach (var value in hudResources) value.text = "—";
             launch.SetEnabled(false);
             SetSimulationTiming(false, false, 0);
+            SetSimulationElapsedTime(false, 0);
             SetPlanningTiming(false, false, 0, false, null, null);
             SetDeadlineFallback(false);
+            ClearInteractionPrompt();
         }
 
         public void ShowPlanning(bool show)
         {
+            showingPlanning = show;
             planner.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
             hud.style.display = show ? DisplayStyle.None : DisplayStyle.Flex;
+            if (show)
+            {
+                systemsHeld = false;
+                systemsPinned = false;
+                RefreshTelemetry();
+                ClearInteractionPrompt();
+            }
         }
 
         public void SetPhase(GamePhase current, MissionOutcome outcome)
         {
             switch (current)
             {
-                case GamePhase.Planning: phase.text = "MISSION PREPARATION"; break;
-                case GamePhase.Intro: phase.text = "DEPARTURE"; break;
-                case GamePhase.Emergency: phase.text = "EMERGENCY"; break;
-                case GamePhase.Repair: phase.text = "SYSTEM REPAIRS"; break;
-                case GamePhase.Eva: phase.text = "EXTRAVEHICULAR OPERATIONS"; break;
-                case GamePhase.Transmission: phase.text = "COMMUNICATIONS"; break;
+                case GamePhase.Planning: phase.text = "Mission preparation"; objective.text = string.Empty; break;
+                case GamePhase.Intro: phase.text = "Departure"; objective.text = "AURORA-7"; break;
+                case GamePhase.Emergency: phase.text = "Emergency"; objective.text = "Stabilise the ship."; break;
+                case GamePhase.Repair: phase.text = "Restore essential systems"; objective.text = "Power and life support"; break;
+                case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = "Exterior operations"; break;
+                case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = "Communications"; break;
                 case GamePhase.Outcome:
                 case GamePhase.Report:
-                    phase.text = outcome == MissionOutcome.RecoveryPossible ? "RECOVERY PLANNING POSSIBLE"
-                        : outcome == MissionOutcome.Lost ? "MISSION LOST" : "MISSION REPORT";
+                    phase.text = outcome == MissionOutcome.RecoveryPossible ? "Contact restored"
+                        : outcome == MissionOutcome.Lost ? "Mission lost" : "Mission report";
+                    objective.text = outcome == MissionOutcome.RecoveryPossible ? "Recovery planning is possible. Rescue is not confirmed." : string.Empty;
                     break;
-                default: phase.text = "MISSION STATUS"; break;
+                default: phase.text = "Mission status"; objective.text = string.Empty; break;
             }
             phase.EnableInClassList("constraint-exceeded", current == GamePhase.Emergency || outcome == MissionOutcome.Lost);
             if (current != GamePhase.Outcome && current != GamePhase.Report) outcomeReason.text = string.Empty;
@@ -200,36 +227,45 @@ namespace OutOfReach.Presentation.UI
         {
             bool validScale = !double.IsNaN(timeScale) && !double.IsInfinity(timeScale) && timeScale > 0;
             simulationTiming.style.display = available && (paused || validScale) ? DisplayStyle.Flex : DisplayStyle.None;
-            string scale = validScale ? Number(timeScale, "0.##") + "× SIMULATION" : string.Empty;
-            simulationTiming.text = paused ? "PAUSED" + (validScale ? " / " + scale : string.Empty) : scale;
+            string scale = validScale ? Number(timeScale, "0.##") + "× simulation" : string.Empty;
+            simulationTiming.text = paused ? "Paused" + (validScale ? " · " + scale : string.Empty) : scale;
             simulationTiming.EnableInClassList("timing-paused", paused);
+        }
+
+        /// <summary>Formats Core's elapsed value; never integrates or advances time.</summary>
+        public void SetSimulationElapsedTime(bool available, double elapsedSimulationSeconds)
+        {
+            bool valid = available && !double.IsNaN(elapsedSimulationSeconds)
+                && !double.IsInfinity(elapsedSimulationSeconds) && elapsedSimulationSeconds >= 0;
+            elapsedTime.style.display = valid ? DisplayStyle.Flex : DisplayStyle.None;
+            if (!valid) return;
+            double seconds = Math.Floor(elapsedSimulationSeconds);
+            double hours = Math.Floor(seconds / 3600);
+            elapsedTime.text = "Mission " + Number(hours, "00") + ":"
+                + Number(Math.Floor(seconds / 60) % 60, "00") + ":" + Number(seconds % 60, "00");
         }
 
         public void SetPlanningTiming(bool available, bool enabled, double remainingRealSeconds, bool paused,
             IMissionConfiguration lastValid, IReadOnlyList<EquipmentSelection> catalog)
         {
             planningTiming.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
+            deadlineRule.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
             lastValidDetail.style.display = available && enabled ? DisplayStyle.Flex : DisplayStyle.None;
-            if (!available)
-            {
-                displayedLastValid = null;
-                return;
-            }
+            if (!available) { displayedLastValid = null; return; }
             if (!enabled)
             {
-                deadlineCountdown.text = "UNTIMED PLANNING";
+                deadlineCountdown.text = "Untimed";
                 deadlineCountdown.style.display = DisplayStyle.Flex;
                 deadlineCountdown.RemoveFromClassList("deadline-urgent");
-                deadlineRule.text = "Launch when your loadout is ready. No automatic launch.";
+                deadlineRule.text = "Launch when your payload is ready. No automatic launch.";
                 return;
             }
-
             bool validRemaining = !double.IsNaN(remainingRealSeconds) && !double.IsInfinity(remainingRealSeconds);
             deadlineCountdown.style.display = validRemaining ? DisplayStyle.Flex : DisplayStyle.None;
-            deadlineCountdown.text = (paused ? "PLANNING PAUSED / " : "PLANNING / ")
-                + Number(Math.Ceiling(Math.Max(0, remainingRealSeconds)), "0") + " s remaining";
+            deadlineCountdown.text = (paused ? "Paused · " : "Launch in ")
+                + Number(Math.Ceiling(Math.Max(0, remainingRealSeconds)), "0") + " s";
             deadlineCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 15);
-            deadlineRule.text = "At zero, your valid loadout launches automatically. If it is invalid, the last valid loadout in Launch Review launches instead.";
+            deadlineRule.text = "At zero, this payload launches automatically if valid. Otherwise, the last valid loadout below launches. The deadline uses unpaused real time.";
             if (lastValid == null)
             {
                 displayedLastValid = null;
@@ -246,16 +282,43 @@ namespace OutOfReach.Presentation.UI
         {
             deadlineFallback.style.display = usedLastValidLoadout ? DisplayStyle.Flex : DisplayStyle.None;
             deadlineFallback.text = usedLastValidLoadout
-                ? "Planning time expired. The mission launched with your last valid loadout." : string.Empty;
+                ? "Planning time expired. Your last valid loadout was launched." : string.Empty;
+        }
+
+        /// <summary>Presentation-only disclosure. The caller owns keyboard input and player authority.</summary>
+        public void SetSystemsHeld(bool held)
+        {
+            bool next = held && !showingPlanning;
+            if (systemsHeld == next) return;
+            systemsHeld = next;
+            RefreshTelemetry();
+        }
+
+        private void RefreshTelemetry()
+        {
+            expandedTelemetry.style.display = systemsPinned || systemsHeld ? DisplayStyle.Flex : DisplayStyle.None;
+            systems.text = systemsPinned ? "Hide systems" : "Systems";
+            systems.EnableInClassList("systems-open", systemsPinned || systemsHeld);
+        }
+
+        /// <summary>Displays supplied interaction wording without issuing or simulating a command.</summary>
+        public void ShowInteractionPrompt(string text, bool available)
+        {
+            if (string.IsNullOrWhiteSpace(text)) { ClearInteractionPrompt(); return; }
+            interactionText.text = text;
+            interactionText.EnableInClassList("constraint-exceeded", !available);
+            interactionPrompt.style.display = DisplayStyle.Flex;
+        }
+
+        public void ClearInteractionPrompt()
+        {
+            interactionPrompt.style.display = DisplayStyle.None;
+            interactionText.text = string.Empty;
         }
 
         public void ShowSubtitle(string text, string speakerLabel)
         {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                ClearSubtitle();
-                return;
-            }
+            if (string.IsNullOrWhiteSpace(text)) { ClearSubtitle(); return; }
             subtitleText.text = text;
             subtitleSpeaker.text = speakerLabel ?? string.Empty;
             subtitleSpeaker.style.display = string.IsNullOrWhiteSpace(speakerLabel) ? DisplayStyle.None : DisplayStyle.Flex;
@@ -271,8 +334,9 @@ namespace OutOfReach.Presentation.UI
 
         private void OnInstrumentGeometryChanged(GeometryChangedEvent change)
         {
-            // Keep captions above the actual HUD height, including wrapped labels or scaled text.
-            if (change.newRect.height > 0) subtitleOverlay.style.bottom = change.newRect.height + 44f;
+            // Leave a real gap above both collapsed and expanded telemetry at the current panel scale.
+            if (change.newRect.height > 0)
+                subtitleOverlay.style.bottom = Math.Max(112f, change.newRect.height + 48f);
         }
 
         private static string FormatLoadoutCounts(IReadOnlyList<EquipmentSelection> selections,
@@ -343,8 +407,8 @@ namespace OutOfReach.Presentation.UI
 
         public void SetValidation(bool succeeded, string explanation, string rejectedCommand)
         {
-            validation.text = succeeded ? "Loadout meets mission requirements."
-                : string.IsNullOrWhiteSpace(explanation) ? "Review your loadout before launch." : explanation;
+            validation.text = succeeded ? "Ready for launch."
+                : string.IsNullOrWhiteSpace(explanation) ? "Review your payload before launch." : explanation;
             validation.EnableInClassList("constraint-exceeded", !succeeded);
             commandFeedback.text = rejectedCommand ?? string.Empty;
             commandFeedback.style.display = string.IsNullOrWhiteSpace(rejectedCommand) ? DisplayStyle.None : DisplayStyle.Flex;
@@ -355,7 +419,7 @@ namespace OutOfReach.Presentation.UI
         {
             QuantityChangeRequested = null;
             LaunchRequested = null;
-            instrumentStrip.UnregisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
+            instruments.UnregisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
             root.RemoveFromHierarchy();
         }
 
@@ -371,17 +435,21 @@ namespace OutOfReach.Presentation.UI
 
         private static Label[] AddResources(VisualElement parent)
         {
-            string[] names = { "STORED OXYGEN", "WATER", "FOOD", "BATTERY", "SPARE PARTS", "CABIN CO₂" };
+            string[] names = { "Oxygen reserve", "Water", "Food", "Battery", "Spare parts", "Cabin CO₂" };
             var values = new Label[names.Length];
-            for (int i = 0; i < names.Length; i++)
-            {
-                var cell = Element("resource-cell");
-                cell.Add(Text(names[i], "resource-label"));
-                values[i] = Text("—", "resource-value");
-                cell.Add(values[i]);
-                parent.Add(cell);
-            }
+            for (int i = 0; i < names.Length; i++) values[i] = AddResource(parent, names[i], i);
             return values;
+        }
+
+        private static Label AddResource(VisualElement parent, string title, int index)
+        {
+            var cell = Element("resource-cell");
+            cell.name = "resource-" + index;
+            cell.Add(Text(title, "resource-label"));
+            var value = Text("—", "resource-value");
+            cell.Add(value);
+            parent.Add(cell);
+            return value;
         }
 
         private static void SetResources(Label[] values, ResourceSnapshot snapshot)
@@ -428,36 +496,44 @@ namespace OutOfReach.Presentation.UI
         private sealed class EquipmentRow
         {
             public VisualElement Element { get; }
-            private readonly Label costs;
-            private readonly Label quantity;
-            private readonly Button remove;
-            private readonly Button add;
+            private readonly Label costs, quantity;
+            private readonly Button remove, add;
+            private readonly string description;
 
             public EquipmentRow(string id, Action onRemove, Action onAdd)
             {
                 Element = FlightBoardView.Element("equipment-row");
+                Element.name = id;
+                description = EquipmentCopy.Description(id);
                 var copy = FlightBoardView.Element("equipment-copy");
                 Element.Add(copy);
                 copy.Add(Text(EquipmentCopy.Name(id), "equipment-name"));
-                copy.Add(Text(EquipmentCopy.Description(id), "equipment-description"));
                 costs = Text(string.Empty, "equipment-costs");
                 copy.Add(costs);
                 var stepper = FlightBoardView.Element("stepper");
                 Element.Add(stepper);
-                remove = new Button(onRemove) { text = "−", tooltip = "Remove one " + EquipmentCopy.Name(id) };
+                remove = new Button(onRemove) { text = "−" };
                 remove.AddToClassList("quantity-button");
                 stepper.Add(remove);
                 quantity = Text("0", "quantity-value");
                 stepper.Add(quantity);
-                add = new Button(onAdd) { text = "+", tooltip = "Add one " + EquipmentCopy.Name(id) };
+                add = new Button(onAdd) { text = "+" };
                 add.AddToClassList("quantity-button");
                 stepper.Add(add);
+                remove.RegisterCallback<FocusInEvent>(_ => Element.AddToClassList("equipment-focused"));
+                remove.RegisterCallback<FocusOutEvent>(_ => Element.RemoveFromClassList("equipment-focused"));
+                add.RegisterCallback<FocusInEvent>(_ => Element.AddToClassList("equipment-focused"));
+                add.RegisterCallback<FocusOutEvent>(_ => Element.RemoveFromClassList("equipment-focused"));
             }
 
             public void Render(EquipmentSelection item, int count, bool editable)
             {
-                costs.text = Number(item.UnitMassKg, "0.#") + " kg  /  " + Number(item.UnitPowerWatts, "0.#")
-                    + " W load  /  " + Number(item.UnitBudgetCredits, "0.#") + " cr per unit";
+                costs.text = Number(item.UnitMassKg, "0.#") + " kg · " + Number(item.UnitBudgetCredits, "0.#")
+                    + " cr · " + Number(item.UnitPowerWatts, "0.#") + " W load";
+                string detail = description + " Per unit: " + costs.text + ".";
+                Element.tooltip = detail;
+                remove.tooltip = "Remove one " + EquipmentCopy.Name(item.EquipmentId) + ". " + detail;
+                add.tooltip = "Add one " + EquipmentCopy.Name(item.EquipmentId) + ". " + detail;
                 quantity.text = count.ToString(CultureInfo.InvariantCulture);
                 remove.SetEnabled(editable && count > 0);
                 add.SetEnabled(editable && count < int.MaxValue);

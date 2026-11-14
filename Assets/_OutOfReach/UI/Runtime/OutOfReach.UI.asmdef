@@ -1,7 +1,7 @@
 {
   "name": "OutOfReach.UI",
   "rootNamespace": "OutOfReach.Presentation.UI",
-  "references": ["OutOfReach.Contracts"],
+  "references": ["OutOfReach.Contracts", "Unity.InputSystem"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
