@@ -639,5 +639,68 @@ namespace OutOfReach.Tests.EditMode
                 }
             }
         }
+
+        // Codex 6881239000: waking restores the rate from before the rest; a disabled runtime leaves no rest behind.
+        [Test]
+        public void EveryWayARestEnds_RestoresTheRateTheClockHadBeforeIt()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                Require(session.Clock.TrySetTimeScale(777d));
+
+                Require(recovery.TryBeginRest(1d));
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(SurvivalRecovery.RestTimeScale));
+                Require(recovery.TryWake());
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(777d), "woken");
+
+                Require(recovery.TryBeginRest(1d));
+                Require(session.AdvanceSimulation(Hour));
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.Completed));
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(777d), "completed");
+
+                SpendDown(session, ResourceId.FoodKg, FoodPerSecond(session) * 60d);
+                Require(recovery.TryBeginRest(1d));
+                Require(session.AdvanceSimulation(120d));
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.FoodStoreEmpty));
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(777d), "a danger stop");
+            }
+        }
+
+        [Test]
+        public void ADisabledRuntime_WakesTheCrewEvenWhilePaused_ButPauseAloneKeepsTheRest()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                double survivalScale = session.Clock.TimeScale;
+                Require(recovery.TryBeginRest(SurvivalRecovery.MaximumRestHours));
+                Require(session.Tick(1d));
+
+                Require(session.Clock.Pause());
+                Assert.That(recovery.IsResting, Is.True, "pause alone keeps the rest");
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(SurvivalRecovery.RestTimeScale));
+                double remaining = recovery.RestRemainingSimulationSeconds;
+
+                // What MissionRuntime.OnDisable calls.
+                recovery.ReleaseForDisabledRuntime();
+                Assert.That(recovery.IsResting, Is.False);
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.Woken));
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(survivalScale), "no 3,600x scale outlives the runtime");
+                Assert.That(session.Clock.IsPaused, Is.True, "the pause itself is untouched");
+                Assert.That(recovery.RestedSimulationSeconds, Is.EqualTo((SurvivalRecovery.MaximumRestHours * Hour) - remaining).Within(1e-6));
+
+                int entries = session.Director.Journal.Snapshot().Count;
+                recovery.ReleaseForDisabledRuntime();
+                Assert.That(session.Director.Journal.Snapshot().Count, Is.EqualTo(entries), "releasing an awake crew does nothing");
+
+                // Re-enabled: the session continues awake and a new rest works as before.
+                Require(session.Clock.Resume());
+                Require(session.Tick(1d));
+                Assert.That(recovery.IsResting, Is.False);
+                Require(recovery.TryBeginRest(1d));
+                Assert.That(recovery.IsResting, Is.True);
+            }
+        }
     }
 }

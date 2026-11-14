@@ -468,6 +468,13 @@ namespace OutOfReach.Core.Runtime
 
         private void OnDisable()
         {
+            // A disabled runtime no longer drives the clock: wake a resting crew so that no 3,600x rest outlives it.
+            // Pause alone keeps a rest.
+            if (Session != null && Session.SurvivalRecovery != null)
+            {
+                Session.SurvivalRecovery.ReleaseForDisabledRuntime();
+            }
+
             UnsubscribePlayer();
             if (activeInstance == this)
             {

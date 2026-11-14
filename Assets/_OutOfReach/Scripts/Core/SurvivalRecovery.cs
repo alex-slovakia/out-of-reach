@@ -37,7 +37,10 @@ namespace OutOfReach.Core
         /// </summary>
         public const double MaximumRestHours = 8.5d;
 
-        /// <summary>GAME ASSUMPTION: simulated seconds per real second while resting (one simulated hour per second).</summary>
+        /// <summary>
+        /// GAME ASSUMPTION: simulated seconds per real second while resting (one simulated hour per second). Any stop
+        /// restores the rate the clock had when the rest began (the chapter's intended speed, 300 by default).
+        /// </summary>
         public const double RestTimeScale = 3600d;
 
         /// <summary>GAME ASSUMPTION: a rest stops once cabin CO2 would reach the loss limit within this many simulated seconds.</summary>
@@ -79,6 +82,7 @@ namespace OutOfReach.Core
         private double restElapsedSeconds;
         private double restedBeforeSeconds;
         private GrowModuleStage cropStageAtRestStart;
+        private double scaleBeforeRest;
         private RecoveryStage stage = RecoveryStage.NotStarted;
         private double? contactAt;
         private double? beaconRequestAt;
@@ -214,6 +218,7 @@ namespace OutOfReach.Core
                 LastRestStop = RestStopReason.None;
                 RestCount++;
                 survival.NeedsPaused = true;
+                scaleBeforeRest = clock.TimeScale;
                 clock.TrySetTimeScale(RestTimeScale);
                 ratesChanged?.Invoke();
                 log?.Invoke(string.Format(CultureInfo.InvariantCulture,
@@ -476,6 +481,16 @@ namespace OutOfReach.Core
             }
         }
 
+        /// <summary>
+        /// The runtime that drives the clock was disabled: a resting crew wakes (Woken) and the rate from before the
+        /// rest returns, even while paused, so no accelerated rest outlives the runtime. Pause alone keeps a rest.
+        /// Nothing happens when the crew is awake.
+        /// </summary>
+        public void ReleaseForDisabledRuntime()
+        {
+            StopRest(RestStopReason.Woken);
+        }
+
         internal void OnMissionEnded()
         {
             StopRest(RestStopReason.MissionEnded);
@@ -620,7 +635,7 @@ namespace OutOfReach.Core
                 survival.NeedsPaused = false;
                 if (!disposed && state.IsSimulationRunning && state.Phase == GamePhase.Survival)
                 {
-                    clock.TrySetTimeScale(survival.Spec.TimeScale);
+                    clock.TrySetTimeScale(IsSupportedScale(scaleBeforeRest) ? scaleBeforeRest : survival.Spec.TimeScale);
                 }
 
                 ratesChanged?.Invoke();
@@ -628,6 +643,11 @@ namespace OutOfReach.Core
                     MissionDay, rested / SecondsPerHour, Describe(reason)));
                 Notify();
             }
+        }
+
+        private static bool IsSupportedScale(double scale)
+        {
+            return !double.IsNaN(scale) && scale > 0d && scale <= SimulationClock.MaximumTimeScale;
         }
 
         private static double Earlier(double boundary, double candidate)
