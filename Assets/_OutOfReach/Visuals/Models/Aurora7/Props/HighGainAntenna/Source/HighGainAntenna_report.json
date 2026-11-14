@@ -1,0 +1,90 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/HighGainAntenna_BaseColor.png",
+    "Metallic": "textures/HighGainAntenna_Metallic.png",
+    "Roughness": "textures/HighGainAntenna_Roughness.png",
+    "Occlusion": "textures/HighGainAntenna_Occlusion.png",
+    "MetallicSmoothness": "textures/HighGainAntenna_MetallicSmoothness.png",
+    "Labels": "textures/HighGainAntenna_Labels.png"
+  },
+  "texture_size": 2048,
+  "label_font": "Inter (SIL OFL 1.1, bundled with Blender)",
+  "dimensions_m": {
+    "width_x": 1.6,
+    "depth_y": 1.055,
+    "height_z": 2.2
+  },
+  "bounds_min": [
+    -0.8,
+    -0.845,
+    0.0
+  ],
+  "bounds_max": [
+    0.8,
+    0.21,
+    2.2
+  ],
+  "triangles": {
+    "Base": 1928,
+    "Azimuth": 982,
+    "Elevation": 3602,
+    "ElectronicsBox": 944,
+    "StatusIndicators": 180
+  },
+  "triangles_total": 7636,
+  "object_origins": {
+    "Base": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Azimuth": [
+      0.0,
+      0.0,
+      0.8
+    ],
+    "Elevation": [
+      0.0,
+      0.0,
+      1.4
+    ],
+    "ElectronicsBox": [
+      0.0,
+      -0.09,
+      0.125
+    ],
+    "StatusIndicators": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "hierarchy": {
+    "Elevation": "Azimuth"
+  },
+  "materials": {
+    "Base": [
+      "HG_HighGainAntenna",
+      "HG_Labels"
+    ],
+    "Azimuth": [
+      "HG_HighGainAntenna",
+      "HG_Labels"
+    ],
+    "Elevation": [
+      "HG_HighGainAntenna"
+    ],
+    "ElectronicsBox": [
+      "HG_HighGainAntenna",
+      "HG_Labels"
+    ],
+    "StatusIndicators": [
+      "HG_Indicator_Cyan",
+      "HG_Indicator_Amber",
+      "HG_Indicator_Red"
+    ]
+  }
+}
