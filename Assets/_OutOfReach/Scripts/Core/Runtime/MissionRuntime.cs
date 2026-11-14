@@ -145,8 +145,16 @@ namespace OutOfReach.Core.Runtime
         public CommunicationSystem CommunicationDetails => Session != null ? Session.Communications : null;
 
         /// <summary>
+        /// Read-only field-modification state for the HUD: payload salvaged, cartridges carried, absorber installed
+        /// and its remaining time. A modification is offered only when its targets are bound in this scene:
+        /// salvage-payload for the salvage; workbench and absorber-bay together for the cartridge.
+        /// </summary>
+        public IFieldModifications FieldModifications => Session != null ? Session.FieldModifications : null;
+
+        /// <summary>
         /// Preflight crate handling for presentation: the crate in hands (CarriedEquipmentId), the carry speed
         /// factor, the supply left per type and a Changed event. The bay's content is IMissionPlanner.Draft.
+        /// The returned object implements the shared ICargoLoading.
         /// </summary>
         public CargoLoading Cargo => Session != null ? Session.Cargo : null;
 
@@ -515,6 +523,10 @@ namespace OutOfReach.Core.Runtime
                 }
             }
 
+            Session.EnableFieldModifications(
+                IsTargetBound(InteractionIds.SalvagePayload),
+                IsTargetBound(InteractionIds.Workbench) && IsTargetBound(InteractionIds.AbsorberBay));
+
             if (gates != null)
             {
                 foreach (GameplayGate gate in gates)
@@ -553,7 +565,7 @@ namespace OutOfReach.Core.Runtime
                 return;
             }
 
-            player.SpeedMultiplier = (float)Session.Cargo.CarrySpeedFactor;
+            player.SpeedMultiplier = Session.Cargo.CarrySpeedFactor;
             if (!playerInPreflight || Session.State.Phase == GamePhase.Planning)
             {
                 return;
@@ -564,6 +576,24 @@ namespace OutOfReach.Core.Runtime
             {
                 player.Teleport(playerSpawn.position, playerSpawn.eulerAngles.y);
             }
+        }
+
+        private bool IsTargetBound(string interactionId)
+        {
+            if (interactionTargets == null)
+            {
+                return false;
+            }
+
+            foreach (InteractableTarget target in interactionTargets)
+            {
+                if (target != null && target.InteractionId == interactionId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsPlayerControlAllowed()

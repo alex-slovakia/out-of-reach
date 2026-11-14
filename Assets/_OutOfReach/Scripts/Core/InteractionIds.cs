@@ -28,6 +28,15 @@ namespace OutOfReach.Core
         /// <summary>At the outer hatch, outside: enter the airlock.</summary>
         public const string EvaReturn = "eva-return";
 
+        /// <summary>At the science instrument's mount: dismantle it for spare parts (the science objective is lost).</summary>
+        public const string SalvagePayload = "salvage-payload";
+
+        /// <summary>Compact workbench: build a CO2 absorber cartridge from a spare part and energy.</summary>
+        public const string Workbench = "workbench";
+
+        /// <summary>Fixed slot on the life-support unit: install a CO2 absorber cartridge.</summary>
+        public const string AbsorberBay = "absorber-bay";
+
         /// <summary>Prefix of a type's supply pallet during preflight: "cargo-supply:" + equipment ID.</summary>
         public const string CargoSupplyPrefix = "cargo-supply:";
 

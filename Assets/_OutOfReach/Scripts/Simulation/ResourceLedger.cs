@@ -170,6 +170,41 @@ namespace OutOfReach.Simulation
             return Ok("Consumed " + totals.Describe() + ".");
         }
 
+        /// <summary>
+        /// Salvage: debits the costs and adds whole spare parts in one all-or-nothing step, publishing exactly one
+        /// ResourceChanged. Spare parts are the only reserve that can ever be credited, and only by converting
+        /// something that was carried; oxygen, water, food and energy cannot be created this way.
+        /// </summary>
+        public CommandResult TryExchangeForSpareParts(IReadOnlyList<ResourceAmount> costs, int sparePartsGained)
+        {
+            if (sparePartsGained <= 0)
+            {
+                return Fail(CommandFailure.InvalidInput, "A salvage must yield at least one spare part.");
+            }
+
+            CommandResult check = Evaluate(costs, out CostTotals totals);
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
+            long partsAfter = (long)spareParts - totals.SpareParts + sparePartsGained;
+            if (partsAfter > int.MaxValue)
+            {
+                return Fail(CommandFailure.InvalidInput, "The spare parts count is too large to represent.");
+            }
+
+            double now = ElapsedSimulationSeconds;
+            oxygenKg = Debit(oxygenKg, totals.OxygenKg, ResourceId.OxygenKg, now);
+            waterLitres = Debit(waterLitres, totals.WaterLitres, ResourceId.WaterLitres, now);
+            foodKg = Debit(foodKg, totals.FoodKg, ResourceId.FoodKg, now);
+            batteryKWh = Debit(batteryKWh, totals.BatteryKWh, ResourceId.BatteryKWh, now);
+            spareParts = (int)partsAfter;
+            depletedAt[(int)ResourceId.SparePartsCount] = null;
+            events.Publish(new ResourceChanged(Snapshot));
+            return Ok(string.Format(CultureInfo.InvariantCulture, "Salvaged {0} spare part(s).", sparePartsGained));
+        }
+
         /// <summary>Replaces the constant rates used by later steps (for example after damage or a repair).</summary>
         public CommandResult TrySetRates(ResourceRates newRates)
         {

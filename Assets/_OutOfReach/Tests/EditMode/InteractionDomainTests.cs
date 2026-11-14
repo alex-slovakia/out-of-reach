@@ -25,7 +25,8 @@ namespace OutOfReach.Tests.EditMode
                     InteractionIds.RepairAntenna, InteractionIds.SuitLocker, InteractionIds.AirlockControls,
                     InteractionIds.EvaExit, InteractionIds.EvaReturn,
                 }), "the mission's own interactions keep their order");
-                Assert.That(ids.Skip(8), Is.EqualTo(new[]
+                Assert.That(ids.Skip(8).Take(3), Is.EqualTo(new[] { "salvage-payload", "workbench", "absorber-bay" }), "field modifications");
+                Assert.That(ids.Skip(11), Is.EqualTo(new[]
                 {
                     "cargo-supply:oxygen-tank", "cargo-bay:oxygen-tank",
                     "cargo-supply:water-tank", "cargo-bay:water-tank",

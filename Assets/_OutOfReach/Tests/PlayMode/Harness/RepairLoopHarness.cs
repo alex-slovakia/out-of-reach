@@ -33,6 +33,9 @@ namespace OutOfReach.Tests.PlayMode
         public static readonly Vector3 EvaReturnPosition = new Vector3(-0.9f, 1.4f, -7.3f);
         public static readonly Vector3 AntennaPosition = new Vector3(3f, 1.4f, -13.2f);
         public static readonly Vector3 ReentryPosition = new Vector3(0f, 0.02f, -6f);
+        public static readonly Vector3 WorkbenchPosition = new Vector3(-4f, 1.4f, 2f);
+        public static readonly Vector3 PayloadRackPosition = new Vector3(4f, 1.4f, 2f);
+        public static readonly Vector3 AbsorberBayPosition = new Vector3(4f, 1.4f, -2f);
         public const float PalletRowZ = 8f;
         public const float BayRowZ = 5f;
         public static readonly Vector3 PreflightSpawnPosition = new Vector3(0f, 0.02f, 6.5f);
@@ -80,6 +83,12 @@ namespace OutOfReach.Tests.PlayMode
         public InteractableTarget EvaReturn { get; private set; }
 
         public InteractableTarget Antenna { get; private set; }
+
+        public InteractableTarget Workbench { get; private set; }
+
+        public InteractableTarget PayloadRack { get; private set; }
+
+        public InteractableTarget AbsorberBay { get; private set; }
 
         public GameplayGate InnerGate { get; private set; }
 
@@ -153,6 +162,11 @@ namespace OutOfReach.Tests.PlayMode
             harness.Route = routeObject.AddComponent<TetheredRoute>();
             harness.Route.Configure(waypoints, 0.5f, 1f);
 
+            // Field modifications: bench on the west wall, instrument rack and absorber bay on the east wall.
+            harness.Workbench = CreateTarget(root, "Workbench", InteractionIds.Workbench, WorkbenchPosition, new Vector3(0.3f, 1f, 0.8f));
+            harness.PayloadRack = CreateTarget(root, "PayloadRack", InteractionIds.SalvagePayload, PayloadRackPosition, new Vector3(0.3f, 1f, 0.8f));
+            harness.AbsorberBay = CreateTarget(root, "AbsorberBay", InteractionIds.AbsorberBay, AbsorberBayPosition, new Vector3(0.3f, 1f, 0.8f));
+
             // Preflight pad: pallets in the far row, bay stacks in the near row, the player walks between them.
             harness.PreflightSpawn = CreatePoint(root, "PreflightSpawn", PreflightSpawnPosition, 0f);
             foreach (string equipmentId in CargoEquipmentIds)
@@ -195,6 +209,7 @@ namespace OutOfReach.Tests.PlayMode
             {
                 harness.Console, harness.PowerPanel, harness.LifeSupportPanel, harness.SuitLocker,
                 harness.AirlockControls, harness.EvaExit, harness.EvaReturn, harness.Antenna,
+                harness.PayloadRack, harness.Workbench, harness.AbsorberBay,
             };
             foreach (string equipmentId in CargoEquipmentIds)
             {

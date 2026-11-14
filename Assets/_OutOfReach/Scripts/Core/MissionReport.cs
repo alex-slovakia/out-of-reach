@@ -28,7 +28,10 @@ namespace OutOfReach.Core
         });
     }
 
-    /// <summary>What one kind of activity cost. Battery energy may be negative for "over time" (net charging).</summary>
+    /// <summary>
+    /// What one kind of activity cost. Battery energy may be negative for "over time" (net charging) and spare
+    /// parts may be negative for "field modifications" (a net gain from salvage).
+    /// </summary>
     public readonly struct ReportExpenditure
     {
         public ReportExpenditure(string purpose, double oxygenKg, double waterLitres, double foodKg, double batteryKWh, int spareParts)
@@ -281,6 +284,16 @@ namespace OutOfReach.Core
         public bool ScienceDataReturned { get; internal set; }
 
         public ReportCommunication Communication { get; internal set; }
+
+        /// <summary>True when the science instrument was dismantled for spare parts: its objective is abandoned.</summary>
+        public bool SciencePayloadSalvaged { get; internal set; }
+
+        public int AbsorberCartridgesBuilt { get; internal set; }
+
+        public int AbsorberCartridgesInstalled { get; internal set; }
+
+        /// <summary>CO2 taken up by absorber cartridges, kg.</summary>
+        public double AbsorbedCarbonDioxideKg { get; internal set; }
 
         /// <summary>True when the link diagnostic ran: the false signal was an old local recording, not a reply.</summary>
         public bool FalseSignalReplayed { get; internal set; }

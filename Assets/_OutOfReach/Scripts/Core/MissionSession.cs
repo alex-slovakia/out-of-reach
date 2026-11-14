@@ -72,6 +72,11 @@ namespace OutOfReach.Core
             Interactions.Add(new DelegatedInteraction(InteractionIds.EvaExit, eva.CheckGoOutside, eva.TryGoOutside));
             Interactions.Add(new DelegatedInteraction(InteractionIds.EvaReturn, eva.CheckReturnInside, eva.TryReturnInside));
 
+            FieldModifications mods = Director.FieldModifications;
+            Interactions.Add(new DelegatedInteraction(InteractionIds.SalvagePayload, mods.CheckSalvagePayload, mods.TrySalvagePayload));
+            Interactions.Add(new DelegatedInteraction(InteractionIds.Workbench, mods.CheckBuildCartridge, mods.TryBuildCartridge));
+            Interactions.Add(new DelegatedInteraction(InteractionIds.AbsorberBay, mods.CheckInstallCartridge, mods.TryInstallCartridge));
+
             Cargo = new CargoLoading(Definition, Planner, State, Events, text => Director.Journal.Record(0d, text));
             foreach (EquipmentDefinition item in Definition.Catalog.Definitions)
             {
@@ -116,6 +121,9 @@ namespace OutOfReach.Core
         /// <summary>Mission date on the simulation clock.</summary>
         public MissionCalendar Calendar => Director.Calendar;
 
+        /// <summary>Payload salvage and the CO2 absorber cartridge (implements IFieldModifications).</summary>
+        public FieldModifications FieldModifications => Director.FieldModifications;
+
         /// <summary>Preflight crate handling: the crate in hands and the carry speed. The bay itself is the planner's draft.</summary>
         public CargoLoading Cargo { get; }
 
@@ -152,6 +160,17 @@ namespace OutOfReach.Core
 
                 return cachedReport;
             }
+        }
+
+        /// <summary>
+        /// Says which field modifications this ship physically offers. Both are off until this is called: a scene
+        /// without the instrument target, or without the workbench and the absorber bay, plays exactly as before.
+        /// The Unity runtime calls it from the scene bindings.
+        /// </summary>
+        public void EnableFieldModifications(bool payloadSalvage, bool absorberCartridge)
+        {
+            Director.FieldModifications.SalvageEnabled = payloadSalvage;
+            Director.FieldModifications.AbsorberEnabled = absorberCartridge;
         }
 
         /// <summary>Builds a report from the current state at any time (IsFinal is false while the mission runs).</summary>
@@ -315,6 +334,7 @@ namespace OutOfReach.Core
                     Resources.AdvanceTime(step);
                     State.AdvanceTime(step);
                     Director.Eva.AdvanceTime(step);
+                    Director.FieldModifications.AdvanceTime(step);
                     remaining -= step;
                     Director.AfterSimulationStep(step);
                 }

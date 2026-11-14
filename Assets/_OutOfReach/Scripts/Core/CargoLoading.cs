@@ -7,8 +7,8 @@ using OutOfReach.Inventory;
 namespace OutOfReach.Core
 {
     /// <summary>
-    /// Physical preflight loading: the player carries one crate at a time between a type's supply pallet and its
-    /// bay stack. This class keeps no inventory of its own.
+    /// Physical preflight loading (implements <see cref="ICargoLoading"/>): the player carries one crate at a time
+    /// between a type's supply pallet and its bay stack. This class keeps no inventory of its own.
     /// <list type="bullet">
     /// <item>A crate in a bay stack is one unit in the planner's draft. Loading and unloading go through
     /// <see cref="MissionPlanner.TrySetEquipment"/>, so mass, budget, power and supply validation, the planning
@@ -21,7 +21,7 @@ namespace OutOfReach.Core
     /// </list>
     /// Only during Planning. Every rejected command changes nothing.
     /// </summary>
-    public sealed class CargoLoading
+    public sealed class CargoLoading : ICargoLoading
     {
         /// <summary>GAMEPLAY TUNING: a crate this heavy (or heavier) halves the walk speed.</summary>
         public const double MassForSlowestCarryKg = 90d;
@@ -54,13 +54,13 @@ namespace OutOfReach.Core
         /// <summary>
         /// Walk-speed multiplier while carrying, from the crate's authoritative unit mass; 1 with empty hands.
         /// </summary>
-        public double CarrySpeedFactor
+        public float CarrySpeedFactor
         {
             get
             {
                 return CarriedEquipmentId != null && definition.Catalog.TryGet(CarriedEquipmentId, out EquipmentDefinition item)
-                    ? SpeedFactorForMass(item.UnitMassKg)
-                    : 1d;
+                    ? (float)SpeedFactorForMass(item.UnitMassKg)
+                    : 1f;
             }
         }
 

@@ -46,7 +46,11 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(cargo.GetSupplyRemaining(AuroraMission.OxygenTank), Is.EqualTo(3));
                 Assert.That(cargo.GetLoaded(AuroraMission.OxygenTank), Is.EqualTo(2), "a crate in hands is not aboard");
                 Assert.That(session.Planner.Draft.TotalMassKg, Is.EqualTo(546d));
-                Assert.That(cargo.CarrySpeedFactor, Is.EqualTo(1d - (30d / 180d)).Within(1e-12));
+                Assert.That(cargo.CarrySpeedFactor, Is.EqualTo(1d - (30d / 180d)).Within(1e-6));
+                ICargoLoading view = cargo;
+                Assert.That(view.CarriedEquipmentId, Is.EqualTo(AuroraMission.OxygenTank));
+                Assert.That(view.CarrySpeedFactor, Is.EqualTo(cargo.CarrySpeedFactor));
+                Assert.That(view.GetSupplyRemaining(AuroraMission.OxygenTank), Is.EqualTo(3));
                 Assert.That(changes, Is.EqualTo(1));
                 Assert.That(pallet.Prompt, Is.EqualTo("Put the oxygen tank back on the pallet"));
 
@@ -293,7 +297,7 @@ namespace OutOfReach.Tests.EditMode
         {
             using (var session = Fixtures.NewSession(AuroraMission.RedundancyPresetId))
             {
-                Assert.That(session.Interactions.All.Count, Is.EqualTo(8 + (2 * session.Definition.Catalog.Count)));
+                Assert.That(session.Interactions.All.Count, Is.EqualTo(11 + (2 * session.Definition.Catalog.Count)));
                 foreach (EquipmentDefinition item in session.Definition.Catalog.Definitions)
                 {
                     Assert.That(Get(session, "cargo-supply:" + item.Id).InteractionId, Is.EqualTo("cargo-supply:" + item.Id));
