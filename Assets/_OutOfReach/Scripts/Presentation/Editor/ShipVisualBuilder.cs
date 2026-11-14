@@ -29,6 +29,7 @@ namespace OutOfReach.Presentation.Editor
             EnsureFolder(ShipPath + "/Materials");
             EnsureFolder(ShipPath + "/Modules");
             EnsureFolder("Assets/_OutOfReach/Scenes/Visual");
+            ShipArtAssets.Prepare();
             MakePalette();
             labelFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             if (!labelFont) throw new InvalidOperationException("Unity's built-in label font was not available.");
@@ -43,7 +44,7 @@ namespace OutOfReach.Presentation.Editor
             SaveModule(cockpit, "Cockpit");
 
             var engineering = NewGroup("02_Engineering", ship.transform, new Vector3(0, 0, 7));
-            Room(engineering, 4.8f, 8f, "02 / ENGINEERING", "POWER + LIFE SUPPORT", "amber");
+            Room(engineering, 4.8f, 8f, "02 / ENGINEERING", "POWER + LIFE SUPPORT", "amber", true, 1);
             Engineering(engineering);
             SaveModule(engineering, "Engineering");
 
@@ -53,7 +54,7 @@ namespace OutOfReach.Presentation.Editor
             SaveModule(storage, "Storage");
 
             var airlock = NewGroup("04_Airlock", ship.transform, new Vector3(0, 0, 19));
-            Room(airlock, 4.8f, 4f, "04 / AIRLOCK", "SUIT CHECK REQUIRED", "amber");
+            Room(airlock, 4.8f, 4f, "04 / AIRLOCK", "SUIT CHECK REQUIRED", "amber", true, 0);
             Airlock(airlock);
             SaveModule(airlock, "Airlock");
 
@@ -99,17 +100,17 @@ namespace OutOfReach.Presentation.Editor
         {
             RenderSettings.skybox = null;
             RenderSettings.ambientMode = AmbientMode.Flat;
-            RenderSettings.ambientLight = new Color(0.25f, 0.27f, 0.29f);
+            RenderSettings.ambientLight = new Color(0.18f, 0.20f, 0.23f);
             RenderSettings.ambientIntensity = 1;
             RenderSettings.reflectionIntensity = 0.25f;
             RenderSettings.fog = false;
         }
 
-        private static void Room(Transform parent, float width, float length, string title, string subtitle, string accent, bool entrancePortal = true)
+        private static void Room(Transform parent, float width, float length, string title, string subtitle, string accent, bool entrancePortal = true, int shadowFixtureIndex = -1)
         {
             var structure = NewGroup("Structure", parent, Vector3.zero);
             Box("Pressure floor", structure, new Vector3(0, -0.12f, 0), new Vector3(width, 0.24f, length), "hull", true);
-            Box("Pressure ceiling", structure, new Vector3(0, 3.22f, 0), new Vector3(width, 0.2f, length), "panel", true);
+            Box("Pressure ceiling", structure, new Vector3(0, 3.22f, 0), new Vector3(width, 0.2f, length), "ceiling", true);
             for (var side = -1; side <= 1; side += 2)
             {
                 Box("Pressure wall", structure, new Vector3(side * (width / 2 + 0.06f), 1.5f, 0), new Vector3(0.12f, 3.2f, length), "hull", true);
@@ -131,11 +132,13 @@ namespace OutOfReach.Presentation.Editor
                 for (var i = 0; i < 5; i++)
                     Box("Grip inset", parent, new Vector3(-0.52f + i * 0.26f, 0.013f, z), new Vector3(0.09f, 0.01f, 0.7f), "hull");
             }
+            int fixtureIndex = 0;
             for (float z = -length / 2 + 1.4f; z < length / 2; z += 3)
             {
                 Box("Ceiling fixture", parent, new Vector3(0, 3.03f, z), new Vector3(1.3f, 0.12f, 0.42f), "steel");
                 Box("Ceiling diffuser", parent, new Vector3(0, 2.96f, z), new Vector3(1.12f, 0.015f, 0.28f), "warm");
-                PointLight(parent, "Neutral practical", new Vector3(0, 2.65f, z), new Color(0.9f, 0.95f, 1), 3.4f, 5.5f);
+                PracticalLight(parent, new Vector3(0, 2.86f, z), fixtureIndex == shadowFixtureIndex);
+                fixtureIndex++;
             }
             if (entrancePortal) Portal(parent, -length / 2, width, title, subtitle, accent);
         }
@@ -199,7 +202,7 @@ namespace OutOfReach.Presentation.Editor
 
         private static void Engineering(Transform parent)
         {
-            EquipmentRack(parent, new Vector3(-2.02f, 0, -0.9f), -90, "PWR / 01", "POWER DISTRIBUTION", "amber");
+            EquipmentRack(parent, new Vector3(-2.02f, 0, -0.9f), -90, "PWR / 01", "POWER DISTRIBUTION", "amber", true);
             EquipmentRack(parent, new Vector3(2.02f, 0, 1.1f), 90, "ECLSS / 02", "LIFE SUPPORT", "cyan");
             for (var side = -1; side <= 1; side += 2)
             {
@@ -226,15 +229,40 @@ namespace OutOfReach.Presentation.Editor
             }
         }
 
-        private static void EquipmentRack(Transform parent, Vector3 position, float yaw, string id, string title, string accent)
+        private static void EquipmentRack(Transform parent, Vector3 position, float yaw, string id, string title, string accent, bool detailedPowerBox = false)
         {
             var rack = NewGroup(title, parent, position);
             rack.localRotation = Quaternion.Euler(0, yaw, 0);
-            Box("Cabinet body", rack, new Vector3(0, 1.15f, 0), new Vector3(1.6f, 2.3f, 0.58f), "hull", true);
-            Box("Access face", rack, new Vector3(0, 1.15f, -0.31f), new Vector3(1.45f, 2.12f, 0.05f), "panel");
+            var body = Box("Cabinet body", rack, new Vector3(0, 1.15f, 0), new Vector3(1.6f, 2.3f, 0.58f), "hull", true);
+            if (detailedPowerBox)
+            {
+                // Keep the exact original collision envelope, but open its visual face for the service assembly.
+                body.GetComponent<Renderer>().enabled = false;
+                Box("Power rack backing", rack, new Vector3(0, 1.15f, 0.23f), new Vector3(1.6f, 2.3f, 0.12f), "hull");
+                for (int side = -1; side <= 1; side += 2)
+                    Box("Power rack side", rack, new Vector3(side * 0.75f, 1.15f, 0), new Vector3(0.1f, 2.3f, 0.58f), "hull");
+                Box("Power rack lower panel", rack, new Vector3(0, 0.4f, -0.31f), new Vector3(1.45f, 0.7f, 0.05f), "panel");
+                Box("Power rack header", rack, new Vector3(0, 1.96f, -0.31f), new Vector3(1.45f, 0.35f, 0.05f), "panel");
+            }
+            else Box("Access face", rack, new Vector3(0, 1.15f, -0.31f), new Vector3(1.45f, 2.12f, 0.05f), "panel");
             Box("Identification stripe", rack, new Vector3(-0.67f, 1.15f, -0.345f), new Vector3(0.035f, 2.05f, 0.015f), accent);
             Label(rack, id, new Vector3(0, 2.03f, -0.35f), Quaternion.identity, 0.11f, "ink");
             Label(rack, title, new Vector3(0, 1.82f, -0.35f), Quaternion.identity, 0.05f, "ink");
+            Box("Recessed service lamp", rack, new Vector3(0, 1.76f, -0.39f), new Vector3(0.75f, 0.025f, 0.06f), "warm");
+            var serviceLight = NewGroup("Service task light", rack, new Vector3(0, 1.76f, -0.52f)).gameObject.AddComponent<Light>();
+            serviceLight.type = LightType.Spot;
+            serviceLight.transform.localRotation = Quaternion.LookRotation(new Vector3(0, -0.8f, 0.32f));
+            serviceLight.color = new Color(1, 0.93f, 0.82f);
+            serviceLight.intensity = 0.55f;
+            serviceLight.range = 1.7f;
+            serviceLight.spotAngle = 100;
+            serviceLight.innerSpotAngle = 65;
+            serviceLight.shadows = LightShadows.None;
+            if (detailedPowerBox)
+            {
+                ShipArtAssets.AddPowerBox(rack);
+                return;
+            }
             var screen = NewGroup("Unbound diagnostic display", rack, new Vector3(0, 1.45f, -0.36f));
             Display(screen, 1.1f, 0.42f, "DIAGNOSTICS", "CONNECT DOMAIN AT INTEGRATION", accent);
             for (var i = 0; i < 6; i++)
@@ -380,6 +408,27 @@ namespace OutOfReach.Presentation.Editor
             light.renderMode = LightRenderMode.ForcePixel;
         }
 
+        private static void PracticalLight(Transform parent, Vector3 position, bool castsShadow)
+        {
+            var light = NewGroup("Directed practical", parent, position).gameObject.AddComponent<Light>();
+            light.type = LightType.Spot;
+            light.transform.localRotation = Quaternion.Euler(90, 0, 0);
+            light.color = new Color(0.9f, 0.95f, 1);
+            light.intensity = 3.0f;
+            light.range = 4.5f;
+            light.spotAngle = 115;
+            light.innerSpotAngle = 80;
+            light.shadows = castsShadow ? LightShadows.Soft : LightShadows.None;
+            light.shadowResolution = LightShadowResolution.Medium;
+            light.shadowBias = 0.04f;
+            light.shadowNormalBias = 0.15f;
+            light.renderMode = LightRenderMode.ForcePixel;
+            // A restrained indirect-light approximation keeps working-height panels readable without
+            // the former point source immediately under the ceiling and its clipped upward hotspot.
+            PointLight(parent, "Practical indirect fill", new Vector3(position.x, 1.9f, position.z),
+                new Color(0.82f, 0.88f, 0.94f), 0.65f, 4.3f);
+        }
+
         private static void SaveModule(Transform room, string fileName)
         {
             // Save module at local origin; restore the assembly placement without modifying existing metadata.
@@ -394,7 +443,8 @@ namespace OutOfReach.Presentation.Editor
         {
             Materials.Clear();
             MakeMaterial("hull", new Color(0.08f, 0.1f, 0.12f), 0.3f, 0.35f);
-            MakeMaterial("panel", new Color(0.72f, 0.72f, 0.68f), 0.05f, 0.22f);
+            MakeMaterial("panel", new Color(0.58f, 0.59f, 0.56f), 0.05f, 0.22f);
+            MakeMaterial("ceiling", new Color(0.42f, 0.44f, 0.43f), 0, 0.18f);
             MakeMaterial("edge", new Color(0.25f, 0.29f, 0.3f), 0.6f, 0.4f);
             MakeMaterial("deck", new Color(0.12f, 0.15f, 0.16f), 0.4f, 0.25f);
             MakeMaterial("steel", new Color(0.39f, 0.44f, 0.46f), 0.65f, 0.48f);
@@ -405,7 +455,7 @@ namespace OutOfReach.Presentation.Editor
             MakeMaterial("cyan", new Color(0.22f, 0.68f, 0.78f), 0, 0.15f, 0.5f);
             MakeMaterial("amber", new Color(0.9f, 0.56f, 0.2f), 0, 0.15f, 0.4f);
             MakeMaterial("red", new Color(0.95f, 0.18f, 0.12f), 0.1f, 0.4f, 1.5f);
-            MakeMaterial("warm", new Color(0.9f, 0.95f, 1), 0, 0.15f, 1.4f);
+            MakeMaterial("warm", new Color(0.9f, 0.95f, 1), 0, 0.15f, 0.65f);
             MakeMaterial("screen", new Color(0.012f, 0.025f, 0.035f), 0, 0.05f, 0.12f);
             Materials["screen"].SetFloat("_SpecularHighlights", 0);
             Materials["screen"].EnableKeyword("_SPECULARHIGHLIGHTS_OFF");
@@ -446,6 +496,9 @@ namespace OutOfReach.Presentation.Editor
             material.SetFloat("_Metallic", metal);
             material.SetFloat("_Smoothness", smoothness);
             material.SetColor("_EmissionColor", color * emission);
+            // URP's import validator derives the emission keyword from these flags. Without an emissive
+            // flag it clears _EMISSION on the next import, extinguishing fixtures in a fresh process.
+            material.globalIlluminationFlags = emission > 0 ? MaterialGlobalIlluminationFlags.BakedEmissive : MaterialGlobalIlluminationFlags.EmissiveIsBlack;
             if (emission > 0) material.EnableKeyword("_EMISSION");
             else material.DisableKeyword("_EMISSION");
             material.enableInstancing = true;
@@ -490,7 +543,11 @@ namespace OutOfReach.Presentation.Editor
                 Require(GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject) == 0, "Missing script: " + t.name);
             foreach (Renderer renderer in view.GetComponentsInChildren<Renderer>(true))
                 foreach (Material material in renderer.sharedMaterials)
+                {
                     Require(material && material.shader && material.shader.name != "Hidden/InternalErrorShader", "Missing material or shader: " + renderer.name);
+                    if (material.HasProperty("_EmissionColor") && material.GetColor("_EmissionColor").maxColorComponent > 0.01f)
+                        Require(material.IsKeywordEnabled("_EMISSION"), "Emission was lost during import: " + material.name);
+                }
             Require(roots.SelectMany(root => root.GetComponentsInChildren<Camera>(true)).Count() == 1, "Preview must have one camera.");
             Require(!roots.SelectMany(root => root.GetComponentsInChildren<AudioListener>(true)).Any(), "Silent visual preview must not contain an audio listener.");
             Require(roots.Single(root => root.name.StartsWith("PREVIEW ONLY", StringComparison.Ordinal)).CompareTag("EditorOnly"), "Preview rig must be EditorOnly.");
@@ -554,7 +611,10 @@ namespace OutOfReach.Presentation.Editor
                 {
                     camera.transform.position = positions[i];
                     camera.transform.LookAt(targets[i]);
-                    RenderPipeline.SubmitRenderRequest(camera, new RenderPipeline.StandardRequest { destination = target });
+                    // Initialise SRP light/shadow buffers for this camera before reading the still. The
+                    // first synchronous render after a cold scene load is not a stable capture frame.
+                    for (int warmup = 0; warmup < 3; warmup++)
+                        RenderPipeline.SubmitRenderRequest(camera, new RenderPipeline.StandardRequest { destination = target });
                     RenderTexture.active = target;
                     var image = new Texture2D(target.width, target.height, TextureFormat.RGB24, false);
                     image.ReadPixels(new Rect(0, 0, target.width, target.height), 0, 0);

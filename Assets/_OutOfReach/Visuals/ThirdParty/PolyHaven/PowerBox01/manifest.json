@@ -1,0 +1,70 @@
+{
+  "asset_id": "power_box_01",
+  "asset_name": "Power Box 01",
+  "authors": {
+    "Rico Cilliers": "Modeling & Texturing",
+    "Yann Kervran": "Rigging"
+  },
+  "source_page": "https://polyhaven.com/a/power_box_01",
+  "metadata_url": "https://api.polyhaven.com/files/power_box_01",
+  "info_url": "https://api.polyhaven.com/info/power_box_01",
+  "provider_license_url": "https://polyhaven.com/license",
+  "license": "CC0-1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "resolution": "2k",
+  "selected_format": "fbx",
+  "asset_bytes": 15734451.0,
+  "acquired_utc": "2026-11-14T09:06:17.4933524Z",
+  "files": [
+    {
+      "relative_name": "power_box_01_2k.fbx",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/2k/power_box_01/power_box_01_2k.fbx",
+      "expected_bytes": 1099948,
+      "actual_bytes": 1099948,
+      "provider_md5": "554c847419fedd6dbbed84acf0f682b8",
+      "verified_md5": "554c847419fedd6dbbed84acf0f682b8",
+      "sha256": "4e3cf0ec5235f1d427bb96022747b8b19b8d9d17143bc951ab144b98f728d73a",
+      "downloaded_utc": "2026-11-14T09:06:35.0774852Z"
+    },
+    {
+      "relative_name": "textures/power_box_01_nor_gl_2k.exr",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/power_box_01/power_box_01_nor_gl_2k.exr",
+      "expected_bytes": 6421294,
+      "actual_bytes": 6421294,
+      "provider_md5": "a46a31c8307561060b246fc9f85ea96c",
+      "verified_md5": "a46a31c8307561060b246fc9f85ea96c",
+      "sha256": "9131bb1fffb641f9326658c23ab8471f977f57a013b8c41a0b2c34fb8ee379bb",
+      "downloaded_utc": "2026-11-14T09:06:43.8394190Z"
+    },
+    {
+      "relative_name": "textures/power_box_01_metal_2k.exr",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/power_box_01/power_box_01_metal_2k.exr",
+      "expected_bytes": 1440535,
+      "actual_bytes": 1440535,
+      "provider_md5": "be02c7e16a4640efb69097add5f0bee6",
+      "verified_md5": "be02c7e16a4640efb69097add5f0bee6",
+      "sha256": "3863b97a069ef332b59c3dd7ed4400a3528b6f98614a9b988414d378720ef11e",
+      "downloaded_utc": "2026-11-14T09:06:45.5644867Z"
+    },
+    {
+      "relative_name": "textures/power_box_01_diff_2k.jpg",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/power_box_01/power_box_01_diff_2k.jpg",
+      "expected_bytes": 1883678,
+      "actual_bytes": 1883678,
+      "provider_md5": "c911f1ffb29ea558069498a01d5ccc5a",
+      "verified_md5": "c911f1ffb29ea558069498a01d5ccc5a",
+      "sha256": "045f04100a6a95bf6d43ea0989545b52008c84dd1d1d238ad0d7fa89789f8d0b",
+      "downloaded_utc": "2026-11-14T09:06:47.4973472Z"
+    },
+    {
+      "relative_name": "textures/power_box_01_rough_2k.exr",
+      "source_url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/power_box_01/power_box_01_rough_2k.exr",
+      "expected_bytes": 4888996,
+      "actual_bytes": 4888996,
+      "provider_md5": "9a0b1052ede22d56bafc73b0700eb496",
+      "verified_md5": "9a0b1052ede22d56bafc73b0700eb496",
+      "sha256": "eca502e7f85da502df868f177dd59407c7ca55155c257391828aceff6e10bd38",
+      "downloaded_utc": "2026-11-14T09:06:53.8512462Z"
+    }
+  ]
+}

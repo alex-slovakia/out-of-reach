@@ -12,7 +12,9 @@ Checkpoint revision: the commit containing this file. This is a visual foundatio
 - `ShipLabelAtlasBinder` plus `Visuals/Ship/Shaders/ShipDepthLabel.shader`: depth-tested text with a live font atlas, including after a fresh editor launch.
 - `Scripts/Presentation/Editor/ShipVisualBuilder.cs`: reproducible builder, scene validator and GPU still capture. Uses the existing URP package and Unity built-in font; no packages added.
 
-All geometry is original primitive authoring geometry. It has no external model or texture dependency. Detailed licensed props and more directional lighting are a separate art pass. Player-facing labels are English; diagnostic placeholders explicitly disclose that they are unbound.
+The structure remains original primitive authoring geometry. This checkpoint adds one detailed CC0 Poly Haven Power Box 01 service assembly, with source hashes, license evidence and adaptation notes in `Visuals/ThirdParty/PolyHaven/PowerBox01/`. Its original model/texture bytes are unchanged; URP material and packed metallic/smoothness map are derived locally. Player-facing labels are English; diagnostic placeholders explicitly disclose that they are unbound.
+
+**User-directed handoff, 14 November:** further ship modeling/remodeling belongs to Claude/Fable under `Visuals/Models/Aurora7/**`; see CODEX-006 and coordination issue #7. Codex retains lighting/presentation and integrates delivered models. This blockout is a fallback, not the final ship design. Keep the anchor/clearance contract below or coordinate an exact migration before moving it.
 
 ## Integration anchors
 
@@ -39,16 +41,17 @@ Import only the ship prefab into Bootstrap. The preview camera is not inside it.
 
 Environment: Windows, Unity **6000.3.28f1**, existing URP settings, isolated copy `.local/unity-baseline-check` so the user's open editor was not reused by a second process.
 
-- `ShipVisualBuilder.BuildAndValidate`: Unity exit 0, `V01_BUILD_COMPLETE` and `V01_VALIDATION_PASS`. Log: `.local/unity-baseline-check/v01-build-refined.log`.
+- `ShipVisualBuilder.BuildAndValidate`: Unity exit 0, `V01_BUILD_COMPLETE` and `V01_VALIDATION_PASS`. Latest log: `.local/unity-baseline-check/v01-lighting-build-1.log`.
 - Validator: 10 uniquely named anchors, all 14 serialized references, no missing scripts/materials, no camera/listener inside ship, 405 interior standing-capsule/floor samples, repair/spawn standing areas, and collider-free visual door leaves.
-- Fresh-process `ShipVisualBuilder.CapturePreview`: Unity exit 0 and five actual 1600 x 900 GPU renders. Log: `.local/unity-baseline-check/v01-render-refined.log`; images under that project's `.local/v01-captures/`.
-- Corridor, cockpit and engineering captures visually inspected. Fixed text rendering through walls and overlapping front-cockpit signage. GPU stills demonstrate rendering, not interactive play or performance.
-- `python tools/verify_repository.py`: PASS after import, 82 asset GUIDs before adding this handoff.
+- Fresh-process `ShipVisualBuilder.CapturePreview`: Unity exit 0 and five actual 1600 x 900 GPU renders. Latest log: `.local/unity-baseline-check/v01-lighting-render-1.log`; images under that project's `.local/v01-captures/`. Each capture submits three SRP frames before readback.
+- Corridor, engineering and storage captures visually inspected after the lighting change. Practical spotlights and neutral fill make passage surfaces visible; the task-light hotspot is reduced. Correct emission GI flags preserve lit fixtures after fresh import. Dark ink on some dim panels still has weak contrast. GPU stills demonstrate rendering, not interactive play or performance.
+- Source manifest validation confirms the five reviewed Power Box binaries by SHA-256 before import. Existing metadata GUIDs were checked before copying generated assets back.
+- Repository hygiene and the committed NASA snapshot offline verifier both pass after copy-back. Source/document whitespace checks pass; Unity-generated YAML retains the editor's blank-value spacing.
 
 The verified source and generated scene/prefabs were copied back from that isolated project with metadata preserved. Run the same builder/validator after changing geometry. The builder asks before replacing an unsaved scene in interactive use.
 
 ## Remaining work and limits
 
-This is still a primitive interior blockout. Lighting is uniform and surface detail is limited. The screens have no bound telemetry. No exterior walkable route, EVA gate, playable controller, cinematic sequencing, audio playback, UI, resource simulation or outcome is included. No Windows executable, gameplay tests, end-to-end run, performance measurement or second-machine launch has passed for this checkpoint.
+This is still a primitive interior blockout awaiting Claude/Fable's remodel. One detailed service prop and directional lighting do not establish final visual quality; surface detail remains limited. The screens have no bound telemetry. No exterior walkable route, EVA gate, playable controller, cinematic sequencing, audio playback, UI, resource simulation or outcome is included in V01. No Windows executable, gameplay tests, end-to-end run, performance measurement or second-machine launch has passed for this checkpoint.
 
 V01 does not change contracts, Bootstrap, shared documentation, datasets, project settings or Claude-owned paths. Integration and merge remain subject to the coordinated process in INTEGRATION.md.

@@ -1,0 +1,18 @@
+Poly Haven asset acquisition evidence
+
+Primary licensing source: https://polyhaven.com/license
+CC0 deed: https://creativecommons.org/publicdomain/zero/1.0/
+License identifier: CC0-1.0
+
+Verified grant: Poly Haven identifies its downloadable assets as CC0, permits commercial use and redistribution, and does not require attribution. CC0 permits modification. Optional author credits are preserved below. The website branding and example renders are outside the downloaded asset license; none were acquired.
+
+Utility Box 01: https://polyhaven.com/a/utility_box_01
+Author credit: James Ray Cock (All)
+Power Box 01: https://polyhaven.com/a/power_box_01
+Author credits: Rico Cilliers (Modeling & Texturing); Yann Kervran (Rigging)
+
+Acquisition scope: the exact public API FBX 2K selections and their four included texture dependencies only. No archives, executables, source project or add-on. Assets remain unmodified staging files. All downloaded asset sizes and provider MD5 checksums matched; SHA-256 values are recorded per file in manifest.json.
+
+Art caveat: these are terrestrial industrial electrical props, not NASA hardware or flight-certified spacecraft designs. Unity material adaptation, scale, normals, collider choice and any reuse of visible source labels require review before final scene integration.
+Acquired UTC: 2026-11-14T09:06:17.4933524Z
+
