@@ -396,6 +396,32 @@ wrapped stay instant, and Core repair/resource authority is untouched (no Contra
   new E starts from zero. Events: `Started`, `Progressed(progress01)`, `Finished(result)`, `Cancelled(reason)`.
 - Show `Finished` yourself: the resolver's `InteractionAttempted` only reports the start of the work.
 
+## QUIT-TO-DESKTOP-01: "Quit to desktop" in every menu (root GO 6885087868)
+
+Written in root's `Scripts/Composition/Runtime/I01SessionControls.cs` on root's explicit GO (root does not edit it
+until handoff). No scene, UI file, Core or Contracts change.
+
+- The session menu gets a third action, **Quit to desktop**, after the two existing ones, with the same
+  `ActionButton` (classes, hover and focus cue, keyboard/gamepad navigation). It shows in all three menu contexts:
+  "Choose planning mode", "Paused" and "Mission ended".
+- When the mission record replaces the menu, its end card gets the same action after **Plan again**
+  (`AddRecordQuitButton`, found by the name `reportEndActions`, styled `recorder-button`; no UI file is changed).
+- Two steps: the first press only arms it ("Click again to quit") for 3 real seconds (`QuitConfirmSeconds`,
+  unscaled time, so it works while paused); a second press inside the window quits once ("Quitting…", disabled).
+  The window passing, another menu context or a released menu disarms it.
+- Action: `Application.Quit()`, plus leaving Play Mode under `UNITY_EDITOR`. `ConfigureQuitAction(action)` replaces
+  it for native checks and tests (null restores the real one); `IsQuitArmed` and `QuitRequested` expose the state.
+  UI Toolkit still delivers submit (Enter, gamepad South) to a focused button inside a hidden menu, so a press on a
+  hidden quit button neither arms nor quits; the two existing menu actions got the same guard, so a stray Enter in
+  play can no longer resume, start or restart through a closed menu.
+- Pause help (root 6885223398), only in the existing Paused hint, chosen by `ControlsHintFor(floating, onRoute,
+  suited)` from the actual player: walking "WASD move · Shift sprint"; tether route "W/S move along the tether";
+  floating: click a surface in reach to push off, WASD only aims a push, Space foot push only on support, and for a
+  suited player only, rail grip and release. No WASD thrust and no bare-hand grip is promised.
+- Tests: new isolated PlayMode assembly `Tests/Composition` (`OutOfReach.Tests.Composition`): the confirmation
+  logic with explicit times, the pause help per mode, and the menu and record buttons through real UI Toolkit
+  submit events in a runtime panel.
+
 ## C05-B: payload salvage and the CO₂ absorber cartridge
 
 Two field modifications. Both only convert what was carried; nothing is created. **Each is offered only where its
