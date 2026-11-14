@@ -32,6 +32,8 @@ namespace OutOfReach.Tests.EditMode
 
         public List<AirlockState> Airlock { get; } = new List<AirlockState>();
 
+        public List<CommunicationChanged> Communications { get; } = new List<CommunicationChanged>();
+
         public List<CinematicRequested> CinematicRequests { get; } = new List<CinematicRequested>();
 
         public List<CinematicFinished> CinematicFinishes { get; } = new List<CinematicFinished>();
@@ -73,6 +75,7 @@ namespace OutOfReach.Tests.EditMode
         private void OnCommunicationChanged(CommunicationChanged message)
         {
             Order.Add(nameof(CommunicationChanged));
+            Communications.Add(message);
         }
 
         private void OnCinematicRequested(CinematicRequested message)

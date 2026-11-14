@@ -19,7 +19,9 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(recorder.Order, Is.EqualTo(new[]
                 {
                     "CinematicRequested", "SystemConditionChanged", "SystemConditionChanged", "SystemConditionChanged",
+                    "CommunicationChanged",
                 }));
+                Assert.That(recorder.Communications[0].State, Is.EqualTo(CommunicationState.Offline), "the impact takes the link down");
                 Assert.That(recorder.CinematicRequests[0].Cinematic, Is.EqualTo(CinematicId.Impact));
                 Assert.That(session.Systems.Power.Condition01, Is.EqualTo(0.2d));
                 Assert.That(session.Systems.LifeSupport.Condition01, Is.EqualTo(0d));
@@ -28,15 +30,15 @@ namespace OutOfReach.Tests.EditMode
 
                 CommandResult duringCinematic = session.Director.TryCompleteCockpitCheck();
                 Assert.That(duringCinematic.Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
-                Assert.That(recorder.Total, Is.EqualTo(4), "no duplicate damage or second cinematic");
+                Assert.That(recorder.Total, Is.EqualTo(5), "no duplicate damage or second cinematic");
 
                 Fixtures.AcknowledgeActiveCinematic(session);
 
                 Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Emergency));
-                Assert.That(recorder.Order.GetRange(4, 2), Is.EqualTo(new[] { "CinematicFinished", "PhaseChanged" }));
+                Assert.That(recorder.Order.GetRange(5, 2), Is.EqualTo(new[] { "CinematicFinished", "PhaseChanged" }));
                 Assert.That(session.Director.TryCompleteCockpitCheck().Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
                 Assert.That(session.Systems.Power.Condition01, Is.EqualTo(0.2d), "damage is never applied twice");
-                Assert.That(recorder.Total, Is.EqualTo(6));
+                Assert.That(recorder.Total, Is.EqualTo(7));
             }
         }
 

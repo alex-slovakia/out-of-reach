@@ -268,10 +268,13 @@ namespace OutOfReach.Tests.EditMode
         {
             using (var session = Fixtures.StabilizedSession(AuroraMission.ScienceFocusPresetId))
             {
-                Assert.That(session.Resources.TryConsume(new[] { Amount(ResourceId.SparePartsCount, 1d) }).Succeeded, Is.True);
                 Fixtures.SuitUp(session);
                 Fixtures.OpenOuterHatch(session);
                 Fixtures.GoOutside(session);
+
+                // Not enough stored energy for the realignment: an obstacle the ship recovers from by recharging.
+                double battery = session.Resources.Snapshot.BatteryKWh;
+                Assert.That(session.Resources.TryConsume(new[] { Amount(ResourceId.BatteryKWh, battery - 0.25d) }).Succeeded, Is.True);
                 ResourceSnapshot before = session.Resources.Snapshot;
 
                 CommandResult repair = Fixtures.Repair(session, ShipSystemId.Antenna);
@@ -281,8 +284,9 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(session.Systems.Antenna.IsOperational, Is.False);
 
                 Fixtures.ReturnAndRepressurize(session);
-                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair));
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair), "a second EVA is still possible once the battery has recharged");
                 Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None));
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(3), "the parts for the antenna are untouched");
             }
         }
 

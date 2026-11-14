@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
+using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
 {
@@ -106,7 +107,10 @@ namespace OutOfReach.Core
             IEnumerable<ShipSystemSpec> systems,
             MissionPacing pacing,
             double impactCinematicTimeoutRealSeconds = CinematicCoordinator.DefaultTimeoutRealSeconds,
-            EvaSpec eva = null)
+            EvaSpec eva = null,
+            CommunicationSpec communication = null,
+            DateTime? missionEpochAtStartUtc = null,
+            double endingCinematicTimeoutRealSeconds = DefaultEndingCinematicTimeoutRealSeconds)
         {
             if (systems == null)
             {
@@ -138,11 +142,24 @@ namespace OutOfReach.Core
                 throw new ArgumentOutOfRangeException(nameof(impactCinematicTimeoutRealSeconds), impactCinematicTimeoutRealSeconds, "Timeout must be finite and non-negative.");
             }
 
+            if (double.IsNaN(endingCinematicTimeoutRealSeconds) || double.IsInfinity(endingCinematicTimeoutRealSeconds) || endingCinematicTimeoutRealSeconds < 0d)
+            {
+                throw new ArgumentOutOfRangeException(nameof(endingCinematicTimeoutRealSeconds), endingCinematicTimeoutRealSeconds, "Timeout must be finite and non-negative.");
+            }
+
             Systems = ordered.AsReadOnly();
             Pacing = pacing ?? throw new ArgumentNullException(nameof(pacing));
             ImpactCinematicTimeoutRealSeconds = impactCinematicTimeoutRealSeconds;
             Eva = eva ?? new EvaSpec();
+            Communication = communication ?? new CommunicationSpec();
+            MissionEpochAtStartUtc = missionEpochAtStartUtc.HasValue
+                ? DateTime.SpecifyKind(missionEpochAtStartUtc.Value, DateTimeKind.Utc)
+                : (DateTime?)null;
+            EndingCinematicTimeoutRealSeconds = endingCinematicTimeoutRealSeconds;
         }
+
+        /// <summary>Fallback for each ending cinematic: long enough for a reply voice-over or a final camera move.</summary>
+        public const double DefaultEndingCinematicTimeoutRealSeconds = 90d;
 
         public IReadOnlyList<ShipSystemSpec> Systems { get; }
 
@@ -153,6 +170,18 @@ namespace OutOfReach.Core
 
         /// <summary>Suit and airlock assumptions for the EVA.</summary>
         public EvaSpec Eva { get; }
+
+        /// <summary>Earth processing time and transmit energy for the distress call.</summary>
+        public CommunicationSpec Communication { get; }
+
+        /// <summary>
+        /// Mission clock T0, UTC: the calendar date at zero elapsed simulated seconds. Null means the first epoch
+        /// of the packaged Earth-Mars reference, so the mission date always starts inside the reviewed data.
+        /// </summary>
+        public DateTime? MissionEpochAtStartUtc { get; }
+
+        /// <summary>Unpaused real seconds Core waits for each ending cinematic before continuing without it.</summary>
+        public double EndingCinematicTimeoutRealSeconds { get; }
 
         public ShipSystemSpec GetSystem(ShipSystemId systemId)
         {

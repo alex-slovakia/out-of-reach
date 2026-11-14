@@ -50,7 +50,12 @@ namespace OutOfReach.Tests.EditMode
 
                 Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Emergency));
                 Assert.That(console.Prompt, Is.EqualTo("Communications offline: antenna damaged"));
-                Assert.That(console.TryInteract().Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
+                Assert.That(console.CanInteract, Is.False);
+                CommandResult afterImpact = console.TryInteract();
+                Assert.That(afterImpact.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "after the impact the console is the communications panel");
+                Assert.That(afterImpact.Explanation, Is.EqualTo("Communications offline: antenna damaged"));
+                Assert.That(session.Director.TryCompleteCockpitCheck().Failure, Is.EqualTo(CommandFailure.AlreadyComplete), "the impact cannot be triggered again");
+                Assert.That(session.Systems.Power.Condition01, Is.EqualTo(0.2d), "no second damage");
             }
         }
 

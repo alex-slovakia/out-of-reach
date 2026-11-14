@@ -12,7 +12,13 @@ namespace OutOfReach.Simulation
         FoodDepleted,
 
         /// <summary>The sealed suit ran out of oxygen before the crew was back in a pressurized cabin.</summary>
-        SuitOxygenDepleted
+        SuitOxygenDepleted,
+
+        /// <summary>
+        /// The ship is stable but the antenna can never be repaired (spare parts cannot be replenished), so no
+        /// contact with Earth and no recovery plan is possible. Decided by Core, not by a reserve running out.
+        /// </summary>
+        ContactImpossible
     }
 
     /// <summary>

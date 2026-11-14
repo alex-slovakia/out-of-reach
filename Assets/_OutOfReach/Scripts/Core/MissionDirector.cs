@@ -17,7 +17,14 @@ namespace OutOfReach.Core
     /// <item>The first interior repair moves Emergency to Repair. An EVA needs power and life support operational.</item>
     /// <item>After every simulation step and every repair the rates are recomputed from one model
     /// (<see cref="EmergencyResourceModel"/>), so a battery that runs flat stops the scrubbers at that exact moment.</item>
-    /// <item>Survival rules end the mission as Lost with a causal explanation; nothing is skipped across long steps.</item>
+    /// <item>Survival rules end the mission as Lost with a causal explanation; nothing is skipped across long steps.
+    /// A stabilized ship that can never repair its antenna is also Lost: no contact, no recovery plan.</item>
+    /// <item>In Transmission the console first runs a link diagnostic, once: Core requests the FalseSignal
+    /// cinematic (the damaged receive buffer replays an old local recording). It grants nothing and is not a reply.
+    /// Only then can the distress call be sent, once; when Earth's reply is received the mission ends as
+    /// RecoveryPossible. If a loss and the reply fall on the same instant, the loss wins.</item>
+    /// <item>After any ending Core requests the ending cinematics (CommunicationRestored then EndingPullback after
+    /// a recovery, EndingPullback after a loss) and then enters Report by itself.</item>
     /// </list>
     /// </summary>
     public sealed class MissionDirector : IDisposable
@@ -29,6 +36,7 @@ namespace OutOfReach.Core
         private readonly ResourceLedger resources;
         private readonly SimulationClock clock;
         private readonly CinematicCoordinator cinematics;
+        private readonly Dictionary<ShipSystemId, double> repairedAt = new Dictionary<ShipSystemId, double>();
         private bool impactSequenceFinished;
         private bool disposed;
 
@@ -49,6 +57,23 @@ namespace OutOfReach.Core
             this.clock = clock ?? throw new ArgumentNullException(nameof(clock));
             this.cinematics = cinematics ?? throw new ArgumentNullException(nameof(cinematics));
 
+            EarthMarsReference reference = EarthMarsReference.Embedded;
+            if (!string.Equals(definition.Parameters.AstronomicalReferenceId, reference.DatasetId, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(
+                    $"The mission names astronomical reference '{definition.Parameters.AstronomicalReferenceId}' but the packaged dataset is '{reference.DatasetId}'.");
+            }
+
+            DateTime epochAtStart = definition.Scenario.MissionEpochAtStartUtc ?? reference.FirstEpochUtc;
+            if (epochAtStart < reference.FirstEpochUtc || epochAtStart > reference.LastEpochUtc)
+            {
+                throw new InvalidOperationException(
+                    $"Mission clock T0 {MissionCalendar.Format(epochAtStart)} is outside the packaged reference ({MissionCalendar.Format(reference.FirstEpochUtc)} to {MissionCalendar.Format(reference.LastEpochUtc)}).");
+            }
+
+            Journal = new MissionJournal(() => this.state.ElapsedSimulationSeconds);
+            Calendar = new MissionCalendar(epochAtStart, () => this.state.ElapsedSimulationSeconds);
+
             var systems = new List<ShipSystem>();
             foreach (ShipSystemSpec spec in definition.Scenario.Systems)
             {
@@ -56,15 +81,36 @@ namespace OutOfReach.Core
             }
 
             Systems = new ShipSystems(systems);
-            Eva = new EvaOperations(definition.Scenario.Eva, events, state, resources, Systems, RefreshRates);
+            Eva = new EvaOperations(definition.Scenario.Eva, events, state, resources, Systems, RefreshRates, Journal.Record);
+            Communications = new CommunicationSystem(
+                events,
+                resources,
+                reference,
+                definition.Scenario.Communication,
+                () => Calendar.NowUtc,
+                () => this.state.ElapsedSimulationSeconds,
+                CheckTransmitPrerequisites,
+                IsLinkPowered,
+                events.DeferDispatch);
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
+            events.CommunicationChanged += OnCommunicationChanged;
+            events.MissionEnded += OnMissionEnded;
         }
 
         public ShipSystems Systems { get; }
 
         /// <summary>Suit, airlock and outside state for the EVA.</summary>
         public EvaOperations Eva { get; }
+
+        /// <summary>The link to Earth: reference distance, light time, the one transmission and the reply timer.</summary>
+        public CommunicationSystem Communications { get; }
+
+        /// <summary>Mission date for the simulation clock (T0 + elapsed simulated time).</summary>
+        public MissionCalendar Calendar { get; }
+
+        /// <summary>What happened and when, for the report's timeline.</summary>
+        public MissionJournal Journal { get; }
 
         /// <summary>True once the scripted impact has been applied. It can never be applied twice.</summary>
         public bool AccidentTriggered { get; private set; }
@@ -79,9 +125,25 @@ namespace OutOfReach.Core
         /// <summary>Loss cause decided by the survival rules, or None.</summary>
         public SurvivalFailure LossCause { get; private set; }
 
+        /// <summary>Highest cabin CO2 concentration since launch, ppm.</summary>
+        public double PeakCarbonDioxidePpm { get; private set; }
+
+        /// <summary>True once the console's link diagnostic was started (the false-signal beat). It runs only once.</summary>
+        public bool LinkDiagnosticRequested { get; private set; }
+
+        /// <summary>True once the FalseSignal sequence was acknowledged, skipped or timed out: transmitting is possible.</summary>
+        public bool LinkDiagnosticCompleted { get; private set; }
+
+        /// <summary>Simulation time of a system's first repair, or null if it was never repaired.</summary>
+        public double? GetRepairTime(ShipSystemId systemId)
+        {
+            return repairedAt.TryGetValue(systemId, out double at) ? at : (double?)null;
+        }
+
         /// <summary>
         /// Completes the routine cockpit check and triggers the impact. Intro only, once. Delivers
-        /// CinematicRequested(Impact) first, then one SystemConditionChanged per damaged system.
+        /// CinematicRequested(Impact) first, then one SystemConditionChanged per damaged system, then
+        /// CommunicationChanged(Offline).
         /// </summary>
         public CommandResult TryCompleteCockpitCheck()
         {
@@ -110,15 +172,19 @@ namespace OutOfReach.Core
                 AccidentTriggered = true;
                 AccidentAtSimulationSeconds = state.ElapsedSimulationSeconds;
                 CommandResult requested = cinematics.TryRequest(CinematicId.Impact, OnImpactSequenceFinished, definition.Scenario.ImpactCinematicTimeoutRealSeconds);
+                var damage = new List<string>();
                 foreach (ShipSystemSpec spec in definition.Scenario.Systems)
                 {
                     if (spec.ConditionAfterAccident01 < 1d)
                     {
                         Systems.Get(spec.SystemId).TryDamage(spec.ConditionAfterAccident01);
+                        damage.Add(string.Format(CultureInfo.InvariantCulture, "{0} {1:0} %", spec.DisplayName, spec.ConditionAfterAccident01 * 100d));
                     }
                 }
 
+                Journal.Record("Debris impact. Condition after the strike: " + string.Join(", ", damage) + ".");
                 RefreshRates();
+                Communications.RefreshState();
                 if (!requested.Succeeded)
                 {
                     // No cinematic could be requested: never leave the mission stuck in Intro.
@@ -129,6 +195,63 @@ namespace OutOfReach.Core
             return Ok("Cockpit check complete. Impact detected.");
         }
 
+        /// <summary>Explains whether the link diagnostic can run now, without changing anything.</summary>
+        public CommandResult CheckLinkDiagnostic()
+        {
+            if (disposed || state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
+            if (LinkDiagnosticRequested)
+            {
+                return Fail(CommandFailure.AlreadyComplete, LinkDiagnosticCompleted
+                    ? "The link diagnostic has already run."
+                    : "The link diagnostic is still running.");
+            }
+
+            CommandResult hardware = CheckLinkHardware();
+            if (!hardware.Succeeded)
+            {
+                return hardware;
+            }
+
+            if (cinematics.IsWaiting)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Another sequence is still playing.");
+            }
+
+            return Ok("Run communications diagnostic");
+        }
+
+        /// <summary>
+        /// The false-hope beat, owned by Core: the first console action after the return. The damaged receive buffer
+        /// replays an old local recording and Core requests the FalseSignal cinematic (acknowledge, skip or
+        /// fallback timeout). It is not a reply from Earth: the link state, the reserves and the light-time model
+        /// are untouched, nothing is published on CommunicationChanged, and it can never run twice.
+        /// </summary>
+        public CommandResult TryRunLinkDiagnostic()
+        {
+            CommandResult check = CheckLinkDiagnostic();
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
+            using (events.DeferDispatch())
+            {
+                LinkDiagnosticRequested = true;
+                Journal.Record("Link diagnostic: the damaged receive buffer replayed an old local recording. It was not a reply from Earth.");
+                CommandResult requested = cinematics.TryRequest(CinematicId.FalseSignal, OnFalseSignalFinished, CinematicCoordinator.DefaultTimeoutRealSeconds);
+                if (!requested.Succeeded)
+                {
+                    OnFalseSignalFinished(default(CinematicCompletion));
+                }
+            }
+
+            return Ok("Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.");
+        }
+
         /// <summary>Ends the mission with the reserves as they are now. Only Core calls this.</summary>
         public CommandResult TryEndMission(MissionOutcome outcome, string reason)
         {
@@ -137,7 +260,8 @@ namespace OutOfReach.Core
 
         /// <summary>
         /// Simulated seconds until a rule boundary the step loop must not jump over (cabin CO2 reaching the loss
-        /// limit); +Infinity when there is none ahead.
+        /// limit, the cabin oxygen buffer ending, an airlock or suit boundary, Earth's reply becoming due);
+        /// +Infinity when there is none ahead.
         /// </summary>
         public double TimeToNextBoundary()
         {
@@ -158,14 +282,29 @@ namespace OutOfReach.Core
                 }
             }
 
-            return Math.Min(boundary, Eva.TimeToNextBoundary());
+            boundary = Math.Min(boundary, Eva.TimeToNextBoundary());
+            return Math.Min(boundary, Communications.TimeToNextBoundary());
         }
 
-        /// <summary>Called by the session after each simulation sub-step: keeps rates and survival consistent.</summary>
-        public void AfterSimulationStep()
+        /// <summary>
+        /// Called by the session after each simulation sub-step: keeps rates consistent, applies the survival rules
+        /// and only then lets the link receive a due reply, so a loss at the same instant is never skipped.
+        /// </summary>
+        public void AfterSimulationStep(double stepSeconds = 0d)
         {
             RefreshRates();
+            TrackPeakCarbonDioxide();
             EvaluateSurvival();
+            if (!state.IsSimulationRunning)
+            {
+                return;
+            }
+
+            Communications.AdvanceTime(stepSeconds);
+            if (Communications.State == CommunicationState.ReplyReceived && state.Outcome == MissionOutcome.None)
+            {
+                TryEndMission(MissionOutcome.RecoveryPossible, DescribeRecovery());
+            }
         }
 
         public void Dispose()
@@ -177,7 +316,14 @@ namespace OutOfReach.Core
 
             disposed = true;
             events.PhaseChanged -= OnPhaseChanged;
+            events.CommunicationChanged -= OnCommunicationChanged;
+            events.MissionEnded -= OnMissionEnded;
             state.SetTransitionGuard(null);
+        }
+
+        private void OnFalseSignalFinished(CinematicCompletion completion)
+        {
+            LinkDiagnosticCompleted = true;
         }
 
         private void OnImpactSequenceFinished(CinematicCompletion completion)
@@ -191,7 +337,14 @@ namespace OutOfReach.Core
 
         private void OnSystemRepaired(ShipSystem system)
         {
+            if (!repairedAt.ContainsKey(system.SystemId))
+            {
+                repairedAt[system.SystemId] = state.ElapsedSimulationSeconds;
+            }
+
+            Journal.Record(Capitalize(system.DisplayName) + " repaired: " + system.DescribeCosts() + ".");
             RefreshRates();
+            Communications.RefreshState();
             bool interior = !definition.Scenario.GetSystem(system.SystemId).RepairRequiresEva;
             if (interior && state.Phase == GamePhase.Emergency)
             {
@@ -210,9 +363,93 @@ namespace OutOfReach.Core
                 if (launched != null)
                 {
                     resources.TrySetCarbonDioxideFloor(launched.InitialResources.CarbonDioxidePpm);
+                    PeakCarbonDioxidePpm = launched.InitialResources.CarbonDioxidePpm;
+                    Journal.Record(0d, string.Format(CultureInfo.InvariantCulture,
+                        "Launch on {0}: {1:0} kg payload, {2:0} credits, {3:0} W load on {4:0} W generation.",
+                        MissionCalendar.Format(Calendar.EpochAtStartUtc), launched.TotalMassKg, launched.TotalBudgetCredits,
+                        launched.RequiredPowerWatts, launched.AvailablePowerWatts));
                 }
 
                 RefreshRates();
+            }
+
+            if (message.Current == GamePhase.Report)
+            {
+                // The report was reached (by Core or by a skip): no ending cinematic may still hold the session.
+                cinematics.Cancel();
+            }
+        }
+
+        private void OnCommunicationChanged(CommunicationChanged message)
+        {
+            if (message.State == CommunicationState.AwaitingReply && Communications.TransmittedAtSimulationSeconds.HasValue)
+            {
+                EarthMarsSample sample = Communications.ReferenceSample;
+                Journal.Record(Communications.TransmittedAtSimulationSeconds.Value, string.Format(CultureInfo.InvariantCulture,
+                    "Distress call transmitted on mission day {0}. Reference sample {1}: Earth {2} away, one-way light time {3}, earliest reply after {4}.",
+                    MissionCalendar.DayNumberAt(Communications.TransmittedAtSimulationSeconds.Value),
+                    MissionCalendar.Format(sample.EpochUtc),
+                    CommunicationSystem.FormatDistance(sample.DistanceKm),
+                    CommunicationSystem.FormatDuration(sample.OneWayLightSeconds),
+                    CommunicationSystem.FormatDuration(Communications.ReplyDelaySimulationSeconds)));
+            }
+            else if (message.State == CommunicationState.ReplyReceived && Communications.ReplyReceivedAtSimulationSeconds.HasValue)
+            {
+                Journal.Record(Communications.ReplyReceivedAtSimulationSeconds.Value, "Reply from Earth received.");
+            }
+        }
+
+        private void OnMissionEnded(MissionEnded message)
+        {
+            double endedAt = state.EndedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
+            Journal.Record(endedAt, message.Outcome == MissionOutcome.RecoveryPossible
+                ? "Mission outcome: recovery possible."
+                : "Mission outcome: lost.");
+            BeginEndingSequence(message.Outcome);
+        }
+
+        /// <summary>
+        /// Ending cinematics, then Report. An unfinished earlier sequence (for example the Impact) is superseded;
+        /// its late acknowledgement is ignored as stale. Each request has the scenario's fallback timeout and
+        /// completes immediately when no presentation listens, so the session can never hang in Outcome.
+        /// </summary>
+        private void BeginEndingSequence(MissionOutcome outcome)
+        {
+            if (disposed || state.Phase != GamePhase.Outcome)
+            {
+                return;
+            }
+
+            cinematics.Cancel();
+            if (outcome == MissionOutcome.RecoveryPossible)
+            {
+                RequestEndingCinematic(CinematicId.CommunicationRestored, () => RequestEndingCinematic(CinematicId.EndingPullback, EnterReport));
+            }
+            else
+            {
+                RequestEndingCinematic(CinematicId.EndingPullback, EnterReport);
+            }
+        }
+
+        private void RequestEndingCinematic(CinematicId cinematic, Action next)
+        {
+            if (disposed || state.Phase != GamePhase.Outcome)
+            {
+                return;
+            }
+
+            CommandResult requested = cinematics.TryRequest(cinematic, completion => next(), definition.Scenario.EndingCinematicTimeoutRealSeconds);
+            if (!requested.Succeeded)
+            {
+                next();
+            }
+        }
+
+        private void EnterReport()
+        {
+            if (!disposed && state.Phase == GamePhase.Outcome)
+            {
+                state.TryTransition(GamePhase.Report);
             }
         }
 
@@ -239,6 +476,75 @@ namespace OutOfReach.Core
             return state.Phase == GamePhase.Emergency || state.Phase == GamePhase.Repair
                 ? Ok("Interior repair allowed.")
                 : Fail(CommandFailure.WrongPhase, $"The {system.DisplayName} cannot be repaired during {state.Phase}.");
+        }
+
+        /// <summary>Operational prerequisites for sending the distress call (the link supplies date and energy checks).</summary>
+        private CommandResult CheckTransmitPrerequisites()
+        {
+            if (disposed || state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
+            CommandResult hardware = CheckLinkHardware();
+            if (!hardware.Succeeded)
+            {
+                return hardware;
+            }
+
+            if (!LinkDiagnosticRequested)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Run the communications diagnostic at the console first.");
+            }
+
+            if (!LinkDiagnosticCompleted)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "The link diagnostic is still running.");
+            }
+
+            return Ok("Link ready.");
+        }
+
+        /// <summary>Phase, antenna and power conditions shared by the diagnostic and the transmission.</summary>
+        private CommandResult CheckLinkHardware()
+        {
+            if (!state.IsSimulationRunning)
+            {
+                return Fail(CommandFailure.WrongPhase, $"The link cannot be used during {state.Phase}.");
+            }
+
+            if (!AccidentTriggered)
+            {
+                return Fail(CommandFailure.WrongPhase, "Communications nominal: no distress call is needed.");
+            }
+
+            if (!Systems.Antenna.IsOperational)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Communications offline: antenna damaged");
+            }
+
+            if (!Systems.Power.IsOperational)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Communications offline: power distribution damaged");
+            }
+
+            if (PowerState.Brownout)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Communications offline: brownout, the battery is empty");
+            }
+
+            if (state.Phase != GamePhase.Transmission)
+            {
+                return Fail(CommandFailure.WrongPhase, "Antenna repaired. Return through the airlock before transmitting.");
+            }
+
+            return Ok("Link hardware ready.");
+        }
+
+        /// <summary>True while the antenna and the power bus can carry a signal in either direction.</summary>
+        private bool IsLinkPowered()
+        {
+            return !disposed && !state.IsClosed && Systems.Antenna.IsOperational && Systems.Power.IsOperational && !PowerState.Brownout;
         }
 
         private CommandResult CheckTransition(GamePhase from, GamePhase to)
@@ -296,6 +602,14 @@ namespace OutOfReach.Core
             resources.TrySetRates(PowerState.Rates);
         }
 
+        private void TrackPeakCarbonDioxide()
+        {
+            if (resources.IsInitialized)
+            {
+                PeakCarbonDioxidePpm = Math.Max(PeakCarbonDioxidePpm, resources.Snapshot.CarbonDioxidePpm);
+            }
+        }
+
         private void EvaluateSurvival()
         {
             if (!state.IsSimulationRunning)
@@ -317,13 +631,85 @@ namespace OutOfReach.Core
                 resources.GetDepletionTime(ResourceId.OxygenKg),
                 resources.ElapsedSimulationSeconds,
                 definition.CrewCount);
-            if (failure == SurvivalFailure.None)
+            if (failure != SurvivalFailure.None)
             {
+                LossCause = failure;
+                TryEndMission(MissionOutcome.Lost, DescribeLoss(failure) + DescribePendingReply());
                 return;
             }
 
-            LossCause = failure;
-            TryEndMission(MissionOutcome.Lost, DescribeLoss(failure));
+            if (IsContactImpossible(out int needed, out int available))
+            {
+                LossCause = SurvivalFailure.ContactImpossible;
+                TryEndMission(MissionOutcome.Lost, DescribeContactImpossible(needed, available));
+            }
+        }
+
+        /// <summary>
+        /// The stable-but-doomed state: back inside with power and life support running, the antenna still
+        /// damaged and fewer spare parts than its repair needs. Parts are never replenished, so contact can never be
+        /// restored; without this rule the mission would only end weeks of simulated time later.
+        /// </summary>
+        private bool IsContactImpossible(out int needed, out int available)
+        {
+            needed = 0;
+            foreach (ResourceAmount cost in Systems.Antenna.RepairCosts)
+            {
+                if (cost.Resource == ResourceId.SparePartsCount)
+                {
+                    needed += (int)cost.Quantity;
+                }
+            }
+
+            available = resources.Snapshot.SparePartsCount;
+            return state.Phase == GamePhase.Repair
+                && !Systems.Antenna.IsOperational
+                && Systems.Power.IsOperational
+                && Systems.LifeSupport.IsOperational
+                && available < needed;
+        }
+
+        private string DescribeContactImpossible(int needed, int available)
+        {
+            HoldingEstimate holding = HoldingEstimate.Compute(resources.Snapshot, resources.Rates);
+            string reserves = holding.IsBounded
+                ? string.Format(CultureInfo.InvariantCulture, " Reserves cover about {0:0} more days.", Math.Floor(holding.Days))
+                : string.Empty;
+            return string.Format(CultureInfo.InvariantCulture,
+                "Mission objective unrecoverable: the {0} needs {1} spare parts and only {2} remain{3}, so contact with Earth can never be restored. The crew is alive and the ship is stable, but no recovery can be planned.{4}",
+                Systems.Antenna.DisplayName, needed, available, available == 1 ? "s" : string.Empty, reserves);
+        }
+
+        private string DescribeRecovery()
+        {
+            EarthMarsSample sample = Communications.ReferenceSample;
+            double sentAt = Communications.TransmittedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
+            double receivedAt = Communications.ReplyReceivedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
+            HoldingEstimate holding = HoldingEstimate.Compute(resources.Snapshot, resources.Rates);
+            string reserves = holding.IsBounded
+                ? string.Format(CultureInfo.InvariantCulture, " At current use the reserves cover about {0:0} days ({1} runs out first).", Math.Floor(holding.Days), holding.LimitedBy)
+                : string.Empty;
+            return string.Format(CultureInfo.InvariantCulture,
+                "Earth answered {0} after the distress call: twice the {1} light time across {2}, plus {3} on Earth. Contact is restored and a recovery trajectory can be assessed. Rescue has not arrived; the ship must hold.{4}",
+                CommunicationSystem.FormatDuration(receivedAt - sentAt),
+                CommunicationSystem.FormatDuration(sample.OneWayLightSeconds),
+                CommunicationSystem.FormatDistance(sample.DistanceKm),
+                CommunicationSystem.FormatDuration(Communications.EarthProcessingSeconds),
+                reserves);
+        }
+
+        /// <summary>Extra sentence for a loss that happened while the reply was still travelling.</summary>
+        private string DescribePendingReply()
+        {
+            if (Communications.State != CommunicationState.AwaitingReply)
+            {
+                return string.Empty;
+            }
+
+            double remaining = Communications.ReplyRemainingSimulationSeconds;
+            return remaining > 0d
+                ? " The distress call had been sent; Earth's reply could not arrive for another " + CommunicationSystem.FormatDuration(remaining, true) + "."
+                : " The distress call had been sent, but the unpowered link could not receive Earth's reply.";
         }
 
         private string DescribeLoss(SurvivalFailure failure)
@@ -356,6 +742,11 @@ namespace OutOfReach.Core
                 default:
                     return "Mission lost.";
             }
+        }
+
+        private static string Capitalize(string text)
+        {
+            return string.IsNullOrEmpty(text) ? text : char.ToUpperInvariant(text[0]) + text.Substring(1);
         }
 
         private static string FormatDuration(double seconds)

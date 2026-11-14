@@ -193,7 +193,9 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Outcome));
                 Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Lost));
                 Assert.That(session.State.OutcomeReason, Is.EqualTo("Oxygen reserve depleted."));
-                Assert.That(recorder.Order, Is.EqualTo(new[] { "PhaseChanged", "MissionEnded" }));
+                Assert.That(recorder.Order, Is.EqualTo(new[] { "PhaseChanged", "MissionEnded", "CinematicRequested" }),
+                    "the outcome is published once, then Core starts the ending sequence");
+                Assert.That(recorder.CinematicRequests[0].Cinematic, Is.EqualTo(CinematicId.EndingPullback));
                 Assert.That(recorder.Endings[0].Outcome, Is.EqualTo(MissionOutcome.Lost));
                 Assert.That(recorder.Endings[0].Reason, Is.EqualTo("Oxygen reserve depleted."));
 

@@ -3,8 +3,10 @@
 Branch `feature/survival-simulation`. Owner: Claude (Apoliak). This file is the running handoff for the
 integrator; root documentation stays integrator-owned. Status and requests live on issue #7.
 
-**Done:** C01 (mission foundation), C02 (first playable repair loop) and C03 (suit, airlock, constrained EVA,
-antenna repair). **Not yet:** communications, outcomes for success, report data (C04).
+**Done:** C01 (mission foundation), C02 (first playable repair loop), C03 (suit, airlock, constrained EVA,
+antenna repair) and C04 (NASA/JPL-driven reply delay, the one transmission, both outcomes, the ending sequence,
+report data, restart). The gameplay loop is complete from planning to report. **Not yet:** adoption of the
+shared `IMissionReport` / `IEvaStatus` contracts (waiting for the integrator's commit).
 
 ## Assemblies
 
@@ -30,7 +32,8 @@ antenna repair). **Not yet:** communications, outcomes for success, report data 
 | `IRepairable` | `OutOfReach.Simulation.ShipSystem` (Power, LifeSupport, Antenna) |
 | `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `RepairInteraction`, `DelegatedInteraction` |
 | `AirlockState` / `AirlockStateChanged` | published by `OutOfReach.Core.EvaOperations` |
-| `ICommunicationSystem` | C04 (not yet) |
+| `ICommunicationSystem` | `OutOfReach.Simulation.CommunicationSystem` |
+| `IMissionReport` (accepted on #7, not committed yet) | `OutOfReach.Core.MissionReport` has the same members |
 | `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
 | `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
 
@@ -93,7 +96,8 @@ with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRi
   - Intro → Emergency: only after the impact sequence finished.
   - Emergency → Repair: automatic on the first interior repair.
   - → Eva: power and life support operational (C03 adds suit and airlock).
-  - → Outcome: only Core. Report is terminal; restart builds a new session.
+  - → Outcome: only Core. Outcome → Report: Core, after the ending cinematics (presentation may also request
+    it to skip them). Report is terminal; restart builds a new session.
 - **Accident.** The cockpit check triggers it once. Order of events: `CinematicRequested(Impact)`, then
   `SystemConditionChanged` for Power (0.2), LifeSupport (0) and Antenna (0), then after the cinematic
   `CinematicFinished` and `PhaseChanged(Intro → Emergency)`.
@@ -110,7 +114,7 @@ with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRi
   it; other trigger volumes are ignored. Nothing is targetable while the player has no control.
 - **Clock.** Runs only in Intro…Transmission. `Pause` discards real time and blocks both `Tick` and
   `AdvanceSimulation`. Time scale per phase (GAMEPLAY TUNING, must be shown on the HUD): Intro ×1,
-  Emergency/Repair ×300 (1 s = 5 min), Eva ×60 and Transmission ×60 (placeholders until C03/C04). Maximum ×86,400.
+  Emergency/Repair ×300 (1 s = 5 min), Eva ×60 and Transmission ×60 (1 s = 1 min). Maximum ×86,400.
 - **Chapter jumps.** `MissionSession.AdvanceSimulation(seconds)` splits exactly at every reserve depletion and
   at the CO₂ limit, re-evaluates the rates and applies the survival rules synchronously after each part. A
   jump that crosses a fatal boundary ends the mission at that exact time and discards the rest.
@@ -189,6 +193,117 @@ Until it exists, the integrator can adapt the properties. Airlock door visuals o
 A solo EVA is itself a fictional emergency: the cited protocol requires two crew members. The report (C04)
 should say so. Time scale in the Eva phase is ×60 (placeholder; tuning in `MissionPacing`).
 
+## C04: communication, outcomes and the report
+
+### What the player does
+
+1. Back inside with the antenna repaired, the mission is in `Transmission`. The **cockpit console**
+   (`cockpit-console`, the same target as the cockpit check) now reads "Run communications diagnostic".
+2. **False signal, once.** That first use makes Core publish `CinematicRequested(FalseSignal)`. It is the damaged
+   receive buffer replaying an old local recording: not a reply, no `CommunicationChanged`, no cost, no timer.
+   Core waits for the matching `CinematicFinished` (skip allowed, 45 s fallback, immediate with no listener).
+3. **The one transmission.** The console then reads, for example,
+   `Transmit distress call: 0.5 kWh. Earth is 197,708,000 km away; earliest reply in 31 min 59 s.` Using it draws
+   the energy, freezes the reference sample and starts the reply clock.
+4. **The wait.** The console reads `Awaiting reply from Earth: 31 min 59 s (simulated)`. At the disclosed ×60 this
+   is about 32 real seconds. Reserves keep draining; a failure during the wait ends the mission as `Lost`.
+5. **Reply.** `RecoveryPossible`: contact and recovery planning, not a rescue. Then the ending sequence and Report.
+
+### How the delay is computed (functional NASA/JPL integration)
+
+- **Mission date** = mission clock T0 + elapsed simulated time (`MissionCalendar`). T0 is the first epoch of the
+  packaged snapshot, 2026-11-14 08:00 UTC, unless a scenario sets another one inside the snapshot.
+- **Sample** = the last row at or before the mission date (`EarthMarsReference.TrySelect`). No interpolation. A
+  date outside the snapshot has no reviewed distance: transmitting is refused with that explanation.
+- **Distance** = that row's `earth_mars_distance_km` (NASA/JPL data). **One-way light time** = distance /
+  299,792.458 km/s (`SignalDelay`, derived at load; the file's own light-time columns are only cross-checked).
+- **Earliest reply** = 2 × one-way + Earth processing. Processing is 600 s, a GAME ASSUMPTION in `CommunicationSpec`.
+- A normal run transmits on mission day 1: 197,707,976 km, 659.483 s one way, 1,918.966 s to the reply.
+  Nothing is tied to November: after three simulated days the Nov 17 row is used, and a scenario starting on
+  2026-12-14 uses row 30 (17 min 39 s round trip). Both are tested.
+- **Packaged copy:** `Scripts/Simulation/HorizonsEarthMars2026Snapshot.cs` holds the normalized CSV text line by
+  line (no file or network access at runtime). `EarthMarsReference.Embedded` recomputes its SHA-256 and refuses to
+  load unless it equals the manifest's `normalized_sha256` (`694f3606…e5af`). A test compares the text byte for
+  byte with `docs/data/horizons/*.csv` and the IDs and hashes with `manifest.json`. The mission cannot start if
+  `IMissionConfiguration.AstronomicalReferenceId` differs from the packaged dataset ID.
+
+### Guarantees
+
+- **Never early.** The reply is due at an absolute time on the mission clock, so pause, time scale and chapter
+  jumps all act on it through the one clock. `ICommunicationSystem.AdvanceTime` is validated but cannot move the
+  reply: only the mission clock does (a stray second call changes nothing).
+- **One transmission.** A repeated send is `AlreadyComplete` and cannot restart the timer. A rejected send (wrong
+  phase, damaged antenna or power, diagnostic not run, too little battery, date outside the snapshot) spends
+  nothing and publishes nothing.
+- **No skipped failure.** A jump is split at the reply time and at every failure boundary. Survival is evaluated
+  before the reply at each split, so a loss at the same instant wins. A loss during the wait says how long the
+  reply still needed.
+- **Unpowered link** (cannot occur in this scenario once power is repaired, but implemented): the reply is not
+  received while antenna or power is down; the state stays `AwaitingReply` and it is received when power
+  returns (ASSUMPTION: the ground keeps repeating its answer).
+- **Unrecoverable objective.** Back inside with power and life support running, the antenna still damaged and
+  fewer spare parts than its repair needs: the mission ends as `Lost` with "Mission objective unrecoverable …
+  The crew is alive and the ship is stable …" (`SurvivalFailure.ContactImpossible`). No death is claimed. Without
+  this rule such a ship would idle for simulated weeks.
+
+### Events the finale can rely on
+
+| Moment | Events, in order |
+|---|---|
+| Impact | …, `SystemConditionChanged` ×3, `CommunicationChanged(Offline, 0)` |
+| Antenna repaired (outside) | `ResourceChanged`, `SystemConditionChanged(Antenna, 1)`, `CommunicationChanged(Ready, 0)` |
+| Diagnostic | `CinematicRequested(FalseSignal)` only |
+| Transmission | `ResourceChanged`, `CommunicationChanged(AwaitingReply, replyDelay)` |
+| Reply | `CommunicationChanged(ReplyReceived, 0)`, `PhaseChanged(Transmission → Outcome)`, `MissionEnded(RecoveryPossible, reason, reserves)`, `CinematicRequested(CommunicationRestored)` |
+| After that cinematic | `CinematicRequested(EndingPullback)`, then `PhaseChanged(Outcome → Report)` |
+| Any loss | `PhaseChanged(→ Outcome)`, `MissionEnded(Lost, reason, reserves)`, `CinematicRequested(EndingPullback)`, then `PhaseChanged(Outcome → Report)` |
+
+`CommunicationChanged` is published on state changes only. For the countdown poll
+`ICommunicationSystem.ReplyRemainingSimulationSeconds` and show `ISimulationClock.TimeScale` beside it. Each ending
+cinematic has a 90 s fallback (`MissionScenario.EndingCinematicTimeoutRealSeconds`); an unfinished earlier
+sequence is superseded and its late completion is ignored as stale.
+
+### Bindings for V04 and I02 (`MissionRuntime`)
+
+| Member | Use |
+|---|---|
+| `Communications` (`ICommunicationSystem`) | state, `ReferenceDistanceKm`, `OneWayLightSeconds`, `EarthProcessingSeconds`, `ReplyRemainingSimulationSeconds`, `AstronomicalReferenceId` |
+| `CommunicationDetails` (`CommunicationSystem`) | not in the contract: `ReferenceEpochUtc`, `ReplyDelaySimulationSeconds`, `TransmitEnergyKWh`, `IsReferenceAvailable`, `CheckTransmit()`, transmission and reply times |
+| `Calendar` (`MissionCalendar`) | `NowUtc`, `DayNumber` (1-based), `EpochAtStartUtc` for date and "mission day" labels |
+| `Report` (`MissionReport`) | null until an outcome exists; read it on `MissionEnded` or on `PhaseChanged(→ Report)` |
+| `BuildReportPreview()` | the same report mid-mission (`IsFinal = false`) |
+| `SkipSimulatedTime(seconds)` | chapter cards and "skip the wait": advances reserves and the reply clock together |
+| `RestartMission()` | unchanged: a new session; nothing of the old mission survives |
+
+No new scene anchor is needed: the transmission uses the existing `cockpit-console` target.
+
+### Report (`MissionReport`)
+
+`Outcome`, `IsFinal`, `Headline`, `OutcomeReason`, `ElapsedSimulationSeconds` and `Sections` are the report
+contract accepted on #7; `Sections` is display-ready text (`Label`, `Value`) under stable IDs, so a UI can render
+it without knowing the fields. Section IDs, in order (`MissionReportSections`): `outcome`, `mission-design`,
+`resources`, `systems`, `science`, `communication`, `timeline`, `nasa-data`, `derived-physics`,
+`fictional-scenario`, `time-compression`. The last four keep NASA/JPL data, derived physics, the fictional
+scenario and gameplay time compression apart, as `NASA-DATA.md` requires. Runtime strings are plain ASCII.
+
+Typed facts carry the same content: loadout name (preset ID or `custom`), totals and limits, the timed-planning
+fallback flag, reserves at launch and at the end, expenditures by purpose (their sums equal launch minus end),
+peak cabin CO₂, each system's damage and repair time, EVA counts, science objective and `ScienceDataReturned`
+(payload carried and contact restored), `Communication` (dataset ID and SHA-256, sample epoch and row, distance,
+light time, processing, earliest reply, transmission and reply times), `Holding` (ESTIMATE of days of reserves at
+the final rates), `Timeline`, real play time and simulated time passed in chapter jumps.
+
+### Communication assumptions (GAME ASSUMPTIONS)
+
+| Value | Used | Basis |
+|---|---|---|
+| Earth processing | 600 simulated seconds | none; fictional turnaround |
+| Transmit energy | 0.5 kWh, once | none; burst plus receiver for the reply window |
+| Mission clock T0 | 2026-11-14 08:00 UTC | first epoch of the snapshot |
+| Mars-centre range as the ship's range | labelled proxy | `NASA-DATA.md` scenario decision |
+
+Not modelled: link availability, occultation, acquisition, message length, body motion during propagation.
+
 ## Emergency model (one model for nominal flight and the accident)
 
 | Input | Effect |
@@ -213,6 +328,7 @@ should say so. Time scale in the Eva phase is ×60 (placeholder; tuning in `Miss
 | Water or food | Reserve exhausted (simplification) |
 | Battery | Never an ending by itself; it stops the scrubbers, then CO₂ decides |
 | Suit oxygen | A sealed suit runs empty before repressurization completes |
+| Contact impossible | Stable ship, antenna damaged, too few spare parts for it: unrecoverable objective, no death claimed |
 
 ## Sources and labels
 
@@ -261,28 +377,38 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 
 ## Open points
 
-1. **Wait-to-fail pacing.** A player who cannot repair anything waits for CO₂ (about 4 real minutes at ×300).
-   Options for I01: a "rest" interaction that jumps time, or a faster scale. Tuning lives in `MissionPacing`.
-2. **Prompt contract.** The focus prompt is exposed through UnityEvents and properties, not a contract. A small
-   read-only contract can be proposed if Codex prefers code binding.
-3. **Report data (C04)** still needs the small read-only report contract.
-4. **PlayerRig camera.** The integrator parents the Bootstrap camera under `ViewPivot`; the rig never creates one.
-5. **Suit-up time jump.** The 2 h 20 min preparation is a real jump of simulated time with no event of its own.
-   A chapter card can key on the `suit-locker` interaction result or on `EvaOperations.Changed`.
-6. **EVA anchors.** `airlock-controls` and `suit-locker` have no anchor in the visual prefab yet, and the route
+1. **Shared contracts.** `IMissionReport` and `IEvaStatus` are accepted on #7 but not committed. Once the
+   integrator names the commit, `MissionReport` and `EvaOperations` implement them and the two Core structs
+   `MissionReportLine` / `MissionReportSection` are replaced by the contract ones.
+2. **Slow losses.** With life support repaired but power never repaired, the loss (battery, then CO₂) takes
+   about 10 real minutes at ×300. `MissionRuntime.SkipSimulatedTime` or `MissionPacing` can shorten it.
+3. **End of the snapshot.** After 2026-12-15 08:00 UTC of mission time no call can be sent. A normal run is
+   weeks away from that; a run that idles that long ends by food a few days later.
+4. **False signal lock.** Player input is locked while `FalseSignal` is active. A presentation that listens to
+   `CinematicRequested` but never answers this ID holds the player for the 45 s fallback.
+5. **Prompt contract.** The focus prompt is exposed through UnityEvents and properties, not a contract.
+6. **PlayerRig camera.** The integrator parents the Bootstrap camera under `ViewPivot`; the rig never creates one.
+7. **EVA anchors.** `airlock-controls` and `suit-locker` have no anchor in the visual prefab yet, and the route
    needs waypoint transforms along the hull from `EvaStart` to the antenna (V03).
+8. **Citations.** The BVAD references and the communication assumptions above should be added to `NASA-DATA.md`
+   by the integrator; its "runtime integration pending" status can now be updated.
 
-## Evidence (C03, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
+## Evidence (C04, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 152 passed, 0 failed.** 145 domain tests (18 new for the suit and the airlock), 5 route geometry
-  tests and 2 fixture checks of the regenerated scene and prefab.
-- **PlayMode: 13 passed, 0 failed.** The 8 repair-loop tests plus 5 for the EVA: gates following the airlock,
-  refused exit without the airlock cycle, a full EVA driven through the interactions (suit, depressurize, exit,
-  traverse, repair, return, repressurize), suit running empty outside, and restart while outside.
-- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` and
+- **EditMode: 214 passed, 0 failed, 0 skipped.** 62 new: the packaged snapshot (identity, byte equality with the
+  canonical CSV, manifest, known rows, units, selection, 11 damaged-table rejections), the link alone (timing,
+  early-reply prevention, repeated and rejected sends, stray advance, unpowered link, dates), the whole finale
+  (console steps, event order, exact reply time in a jump and frame by frame, pause, low battery, loss before /
+  at / after the reply, ending cinematics with stale completions and timeouts, mission-day sampling, end of the
+  snapshot, unrecoverable objective) and the report (both outcomes, expenditure sums, timeline, loadout names,
+  planning fallback, restart).
+- **PlayMode: 15 passed, 0 failed.** New: the finale through the console interaction with the wait driven by
+  runtime steps to the report and a clean restart, and `SkipSimulatedTime`.
+- The run machine uses a decimal-comma culture, so invariant parsing and formatting were exercised for real.
+- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` (147 GUIDs) and
   `tools/nasa/horizons_snapshot.py` PASS.
-- Earlier checkpoints: C02 at `91e6215` was 129 EditMode / 8 PlayMode, also verified independently in a separate clone.
-- **Not verified:** integration with Codex's ship, exterior and UI, a Windows build, a human play-through of the
-  harness scene (generated and validated in batch mode only), performance.
+- Earlier checkpoints: C03 at `e36343a` 152 / 13 and C02 at `91e6215` 129 / 8, both also verified independently.
+- **Not verified:** an independent run of this revision, integration with Codex's ship, UI and cinematics, a
+  Windows build, a human play-through, performance, the report rendered in a real UI.
 - Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
   `ProjectSettings/SceneTemplateSettings.json`.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OutOfReach.Contracts;
 using OutOfReach.Interaction;
 using OutOfReach.Player;
+using OutOfReach.Simulation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -118,6 +119,28 @@ namespace OutOfReach.Core.Runtime
         /// shared contract for it yet; the integrator can adapt these read-only properties.
         /// </summary>
         public EvaOperations Eva => Session != null ? Session.Eva : null;
+
+        /// <summary>
+        /// The link to Earth for the console and finale views: state, NASA/JPL reference distance, one-way light
+        /// time, Earth processing time and the remaining reply wait. CommunicationChanged is published on state
+        /// changes only, so a countdown polls ReplyRemainingSimulationSeconds and shows Clock.TimeScale next to it.
+        /// </summary>
+        public ICommunicationSystem Communications => Session != null ? Session.Communications : null;
+
+        /// <summary>
+        /// The same link with the facts the contract does not carry yet: reference sample epoch, transmit energy,
+        /// whether the mission date still has a reference sample, and the transmission and reply times.
+        /// </summary>
+        public CommunicationSystem CommunicationDetails => Session != null ? Session.Communications : null;
+
+        /// <summary>Mission date on the simulation clock (T0 + elapsed simulated time), for date and "mission day" labels.</summary>
+        public MissionCalendar Calendar => Session != null ? Session.Calendar : null;
+
+        /// <summary>
+        /// The final mission report once an outcome is decided, otherwise null. Read it when MissionEnded arrives
+        /// or when the phase becomes Report. Sections are display-ready; typed members carry the same facts.
+        /// </summary>
+        public MissionReport Report => Session != null ? Session.Report : null;
 
         public MissionRestartMode RestartMode
         {
@@ -322,6 +345,30 @@ namespace OutOfReach.Core.Runtime
 
             lastStepFrame = Time.frameCount;
             return Session.TickFrame(unscaledRealSeconds, hitchClampRealSeconds);
+        }
+
+        /// <summary>
+        /// Chapter jump for a chapter card or a "skip the wait" control: advances reserves, the airlock, the suit
+        /// and the communication clock by the same simulated seconds, exactly like many frames would. A failure
+        /// or the reply inside the jump ends the mission at its exact time. Rejected while paused and outside
+        /// flight phases. The jump is disclosed in the report's time-compression section.
+        /// </summary>
+        public CommandResult SkipSimulatedTime(double simulationSeconds)
+        {
+            if (Session == null)
+            {
+                return new CommandResult(false, CommandFailure.WrongPhase, "No mission session is running.");
+            }
+
+            CommandResult result = Session.AdvanceSimulation(simulationSeconds);
+            SyncScene();
+            return result;
+        }
+
+        /// <summary>A report built from the current state at any time (IsFinal is false while the mission runs).</summary>
+        public MissionReport BuildReportPreview()
+        {
+            return Session != null ? Session.BuildReport() : null;
         }
 
         public bool TryGetInteractable(string interactionId, out IInteractable interactable)

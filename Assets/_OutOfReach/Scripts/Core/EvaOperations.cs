@@ -30,10 +30,12 @@ namespace OutOfReach.Core
         private readonly ResourceLedger resources;
         private readonly ShipSystems systems;
         private readonly Action ratesChanged;
+        private readonly Action<string> log;
         private Func<double, CommandResult> advanceSimulation;
 
-        internal EvaOperations(EvaSpec spec, MissionEventBus events, MissionGameState state, ResourceLedger resources, ShipSystems systems, Action ratesChanged)
+        internal EvaOperations(EvaSpec spec, MissionEventBus events, MissionGameState state, ResourceLedger resources, ShipSystems systems, Action ratesChanged, Action<string> log = null)
         {
+            this.log = log;
             this.spec = spec ?? throw new ArgumentNullException(nameof(spec));
             this.events = events ?? throw new ArgumentNullException(nameof(events));
             this.state = state ?? throw new ArgumentNullException(nameof(state));
@@ -70,6 +72,12 @@ namespace OutOfReach.Core
 
         /// <summary>Completed airlock cycles (out and back).</summary>
         public int CompletedEvaCount { get; private set; }
+
+        /// <summary>Times the suit was put on; each one drew the purge and tank oxygen and took the preparation time.</summary>
+        public int SuitPreparationCount { get; private set; }
+
+        /// <summary>Airlock cycles started; each one charged the vented air and the pump energy.</summary>
+        public int AirlockCycleCount { get; private set; }
 
         /// <summary>Raised after any suit, airlock or outside change, for views without a contract event.</summary>
         public event Action Changed;
@@ -141,6 +149,9 @@ namespace OutOfReach.Core
 
                 IsSuitOn = true;
                 SuitOxygenKg = spec.SuitOxygenChargeKg;
+                SuitPreparationCount++;
+                Log(string.Format(CultureInfo.InvariantCulture, "EVA suit preparation started: {0:0.##} kg oxygen, {1}.",
+                    spec.SuitPreparationOxygenKg, FormatDuration(spec.SuitPreparationSeconds)));
                 RaiseChanged();
                 if (advanceSimulation != null && spec.SuitPreparationSeconds > 0d)
                 {
@@ -219,6 +230,9 @@ namespace OutOfReach.Core
                 AirlockTransitionRemainingSeconds = spec.DepressurizationSeconds;
                 SetAirlock(AirlockState.Depressurizing);
                 IsSuitSealed = true;
+                AirlockCycleCount++;
+                Log(string.Format(CultureInfo.InvariantCulture, "Inner hatch sealed, airlock depressurizing: {0:0.##} kg oxygen, {1:0.##} kWh. Breathing suit oxygen.",
+                    spec.AirlockCycleOxygenLossKg, spec.AirlockCycleEnergyKWh));
                 CommandResult entered = state.TryTransition(GamePhase.Eva);
                 if (!entered.Succeeded)
                 {
@@ -267,6 +281,7 @@ namespace OutOfReach.Core
             }
 
             IsOutside = true;
+            Log("Outside the ship on the tether.");
             RaiseChanged();
             return Ok("Outside on the tether.");
         }
@@ -292,6 +307,7 @@ namespace OutOfReach.Core
             }
 
             IsOutside = false;
+            Log("Back inside the airlock.");
             RaiseChanged();
             return Ok("Inside the airlock.");
         }
@@ -397,6 +413,9 @@ namespace OutOfReach.Core
             IsSuitOn = false;
             SuitOxygenKg = 0d;
             CompletedEvaCount++;
+            Log(systems.Antenna.IsOperational
+                ? "Airlock repressurized: EVA complete, antenna repaired."
+                : "Airlock repressurized: EVA ended without repairing the antenna.");
             if (state.Phase == GamePhase.Eva)
             {
                 state.TryTransition(systems.Antenna.IsOperational ? GamePhase.Transmission : GamePhase.Repair);
@@ -438,6 +457,14 @@ namespace OutOfReach.Core
             if (ratesChanged != null)
             {
                 ratesChanged();
+            }
+        }
+
+        private void Log(string text)
+        {
+            if (log != null)
+            {
+                log(text);
             }
         }
 

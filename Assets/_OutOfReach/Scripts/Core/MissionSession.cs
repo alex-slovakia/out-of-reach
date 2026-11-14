@@ -12,7 +12,8 @@ namespace OutOfReach.Core
     /// call <see cref="AdvanceSimulation"/>.
     /// Presentation binds to the shared contracts these services implement: Events (IMissionEventBus),
     /// State (IGameState), Planner (IMissionPlanner), Resources (IResourceSystem), Configuration,
-    /// Systems.Repairables (IRepairable) and Interactions (IInteractable by ID).
+    /// Systems.Repairables (IRepairable), Communications (ICommunicationSystem) and Interactions (IInteractable
+    /// by ID). The debrief is <see cref="Report"/>.
     /// Restart = Dispose this session and construct a new one; nothing carries over between missions, and a
     /// disposed session rejects every command.
     /// </summary>
@@ -24,6 +25,10 @@ namespace OutOfReach.Core
         private static readonly CommandResult Advanced = new CommandResult(true, CommandFailure.None, "Simulation advanced.");
         private static readonly CommandResult PausedResult = new CommandResult(true, CommandFailure.None, "Paused: real time discarded.");
         private static readonly CommandResult FrozenResult = new CommandResult(true, CommandFailure.None, "Simulation clock is stopped in this phase.");
+
+        private MissionReport cachedReport;
+        private int cachedReportJournalCount = -1;
+        private GamePhase cachedReportPhase;
 
         public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null)
         {
@@ -43,7 +48,7 @@ namespace OutOfReach.Core
             Director.Eva.BindSimulationAdvance(AdvanceSimulation);
 
             Interactions = new InteractionCatalog();
-            Interactions.Add(new CockpitConsoleInteraction(Director, State));
+            Interactions.Add(new CockpitConsoleInteraction(Director, State, Director.Communications));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairPower, Director.Systems.Power, Resources));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairLifeSupport, Director.Systems.LifeSupport, Resources));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairAntenna, Director.Systems.Antenna, Resources));
@@ -86,7 +91,49 @@ namespace OutOfReach.Core
         /// <summary>Suit, airlock and outside state for the EVA.</summary>
         public EvaOperations Eva => Director.Eva;
 
+        /// <summary>The link to Earth (implements ICommunicationSystem): NASA/JPL reference distance, light time, reply timer.</summary>
+        public CommunicationSystem Communications => Director.Communications;
+
+        /// <summary>Mission date on the simulation clock.</summary>
+        public MissionCalendar Calendar => Director.Calendar;
+
         public InteractionCatalog Interactions { get; }
+
+        /// <summary>Unpaused real seconds this session was driven through flight phases by <see cref="Tick"/>.</summary>
+        public double PlayedRealSeconds { get; private set; }
+
+        /// <summary>Simulated seconds that passed in chapter jumps (<see cref="AdvanceSimulation"/>) instead of frames.</summary>
+        public double JumpedSimulationSeconds { get; private set; }
+
+        /// <summary>
+        /// The final mission report once an outcome is decided, otherwise null. Immutable; the same instance is
+        /// returned until the mission records something new. Use <see cref="BuildReport"/> for a mid-mission preview.
+        /// </summary>
+        public MissionReport Report
+        {
+            get
+            {
+                if (State.Outcome == MissionOutcome.None)
+                {
+                    return null;
+                }
+
+                if (cachedReport == null || cachedReportJournalCount != Director.Journal.Count || cachedReportPhase != State.Phase)
+                {
+                    cachedReport = MissionReportBuilder.Build(this);
+                    cachedReportJournalCount = Director.Journal.Count;
+                    cachedReportPhase = State.Phase;
+                }
+
+                return cachedReport;
+            }
+        }
+
+        /// <summary>Builds a report from the current state at any time (IsFinal is false while the mission runs).</summary>
+        public MissionReport BuildReport()
+        {
+            return MissionReportBuilder.Build(this);
+        }
 
         public bool IsDisposed { get; private set; }
 
@@ -158,7 +205,8 @@ namespace OutOfReach.Core
                 return FrozenResult;
             }
 
-            return AdvanceSimulation(simulationSeconds);
+            PlayedRealSeconds += realSeconds;
+            return Advance(simulationSeconds);
         }
 
         /// <summary>
@@ -168,8 +216,22 @@ namespace OutOfReach.Core
         /// listener). One long jump therefore equals many small frames, and a failure inside the jump ends the
         /// mission at its exact time; the rest of the jump is discarded. Events are delivered after the whole
         /// advance has been committed. Rejected outside running phases, while paused, and when time would overflow.
+        /// This public entry is the chapter jump (suit preparation, a chapter card skip); the time that actually
+        /// passed is added to <see cref="JumpedSimulationSeconds"/> for the report.
         /// </summary>
         public CommandResult AdvanceSimulation(double simulationSeconds)
+        {
+            double before = State.ElapsedSimulationSeconds;
+            CommandResult result = Advance(simulationSeconds);
+            if (result.Succeeded)
+            {
+                JumpedSimulationSeconds += State.ElapsedSimulationSeconds - before;
+            }
+
+            return result;
+        }
+
+        private CommandResult Advance(double simulationSeconds)
         {
             if (!IsFiniteNonNegative(simulationSeconds))
             {
@@ -217,7 +279,7 @@ namespace OutOfReach.Core
                     State.AdvanceTime(step);
                     Director.Eva.AdvanceTime(step);
                     remaining -= step;
-                    Director.AfterSimulationStep();
+                    Director.AfterSimulationStep(step);
                 }
             }
 

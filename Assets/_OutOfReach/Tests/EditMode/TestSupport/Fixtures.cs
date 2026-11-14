@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OutOfReach.Contracts;
 using OutOfReach.Core;
+using OutOfReach.Simulation;
 
 namespace OutOfReach.Tests.EditMode
 {
@@ -100,6 +103,108 @@ namespace OutOfReach.Tests.EditMode
             Assert.That(ended.Succeeded, Is.True, ended.Explanation);
             Assert.That(session.AdvanceSimulation(session.Eva.Spec.RepressurizationSeconds).Succeeded, Is.True);
             Assert.That(session.Eva.Airlock, Is.EqualTo(AirlockState.InnerOpen));
+        }
+
+        /// <summary>
+        /// Stabilized, antenna repaired on one EVA and the crew back inside: the mission is in Transmission.
+        /// No frames pass, so the elapsed time is exactly suit preparation + depressurization + repressurization.
+        /// </summary>
+        public static MissionSession TransmissionSession(string presetId = null, MissionDefinition definition = null)
+        {
+            MissionSession session = definition == null ? StabilizedSession(presetId) : Stabilize(new MissionSession(definition, null, presetId));
+            CompleteEva(session);
+            return session;
+        }
+
+        /// <summary>One EVA that repairs the antenna and returns: Repair to Transmission.</summary>
+        public static void CompleteEva(MissionSession session)
+        {
+            SuitUp(session);
+            OpenOuterHatch(session);
+            GoOutside(session);
+            RepairOrFail(session, ShipSystemId.Antenna);
+            ReturnAndRepressurize(session);
+            Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Transmission));
+        }
+
+        /// <summary>Launches a fresh session, applies the impact and repairs power and life support.</summary>
+        public static MissionSession Stabilize(MissionSession session)
+        {
+            CommandResult launch = session.Planner.TryLaunch();
+            Assert.That(launch.Succeeded, Is.True, launch.Explanation);
+            TriggerImpact(session);
+            RepairOrFail(session, ShipSystemId.Power);
+            RepairOrFail(session, ShipSystemId.LifeSupport);
+            Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair));
+            return session;
+        }
+
+        /// <summary>Runs the one-time link diagnostic and acknowledges its FalseSignal sequence.</summary>
+        public static void RunLinkDiagnostic(MissionSession session)
+        {
+            CommandResult diagnostic = session.Director.TryRunLinkDiagnostic();
+            Assert.That(diagnostic.Succeeded, Is.True, diagnostic.Explanation);
+            AcknowledgeActiveCinematic(session);
+            Assert.That(session.Director.LinkDiagnosticCompleted, Is.True);
+        }
+
+        /// <summary>Runs the link diagnostic if it has not run yet, then sends the distress call.</summary>
+        public static void Transmit(MissionSession session)
+        {
+            if (!session.Director.LinkDiagnosticRequested)
+            {
+                RunLinkDiagnostic(session);
+            }
+
+            CommandResult sent = session.Communications.TryTransmit();
+            Assert.That(sent.Succeeded, Is.True, sent.Explanation);
+            Assert.That(session.Communications.State, Is.EqualTo(CommunicationState.AwaitingReply));
+        }
+
+        /// <summary>Transmits and waits exactly the reply delay: the mission ends as RecoveryPossible.</summary>
+        public static MissionSession RecoveredSession(string presetId = null)
+        {
+            MissionSession session = TransmissionSession(presetId);
+            Transmit(session);
+            Assert.That(session.AdvanceSimulation(session.Communications.ReplyDelaySimulationSeconds).Succeeded, Is.True);
+            Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.RecoveryPossible), session.State.OutcomeReason);
+            return session;
+        }
+
+        /// <summary>Acknowledges every ending cinematic the way presentation would, until none is active.</summary>
+        public static void FinishCinematics(MissionSession session, int limit = 8)
+        {
+            for (int i = 0; i < limit && session.Cinematics.IsWaiting; i++)
+            {
+                AcknowledgeActiveCinematic(session);
+            }
+        }
+
+        /// <summary>The AURORA-7 definition with a different scenario (same catalog, limits and presets).</summary>
+        public static MissionDefinition DefinitionWith(MissionScenario scenario)
+        {
+            MissionDefinition aurora = AuroraMission.CreateDefinition();
+            var presets = new List<KeyValuePair<string, IReadOnlyDictionary<string, int>>>();
+            foreach (string id in aurora.PresetIds)
+            {
+                presets.Add(new KeyValuePair<string, IReadOnlyDictionary<string, int>>(id, aurora.GetPreset(id)));
+            }
+
+            return new MissionDefinition(aurora.Catalog, aurora.Parameters, aurora.CrewCount, presets, aurora.DefaultPresetId, scenario);
+        }
+
+        /// <summary>The AURORA-7 scenario with a different mission clock T0 and/or communication assumptions.</summary>
+        public static MissionScenario ScenarioWith(DateTime? missionEpochAtStartUtc = null, CommunicationSpec communication = null, MissionPacing pacing = null)
+        {
+            MissionScenario aurora = AuroraMission.CreateScenario();
+            return new MissionScenario(
+                aurora.Systems,
+                pacing ?? aurora.Pacing,
+                aurora.ImpactCinematicTimeoutRealSeconds,
+                aurora.Eva,
+                communication ?? aurora.Communication,
+                missionEpochAtStartUtc,
+                aurora.EndingCinematicTimeoutRealSeconds);
         }
 
         public static void AssertSnapshot(ResourceSnapshot expected, ResourceSnapshot actual, double tolerance = Tolerance)

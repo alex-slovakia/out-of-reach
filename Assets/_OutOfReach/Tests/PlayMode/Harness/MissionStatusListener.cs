@@ -4,6 +4,7 @@ using OutOfReach.Contracts;
 using OutOfReach.Core;
 using OutOfReach.Core.Runtime;
 using OutOfReach.Interaction;
+using OutOfReach.Simulation;
 using UnityEngine;
 
 namespace OutOfReach.Tests.PlayMode
@@ -22,6 +23,7 @@ namespace OutOfReach.Tests.PlayMode
 
         private IMissionEventBus boundBus;
         private string lastInteraction = string.Empty;
+        private Vector2 reportScroll;
 
         public int PhaseEvents { get; private set; }
 
@@ -165,7 +167,7 @@ namespace OutOfReach.Tests.PlayMode
             CultureInfo c = CultureInfo.InvariantCulture;
             var lines = new List<string>
             {
-                "OUT OF REACH - C02 repair-loop harness (test fixture, not game UI)",
+                "OUT OF REACH - gameplay harness (test fixture, not game UI)",
                 "Enter: launch default loadout | WASD + mouse | E: interact | Esc: pause | R: restart",
                 string.Format(c, "Phase {0} | time x{1:0} | elapsed {2:0.0} h{3}", session.State.Phase, session.Clock.TimeScale,
                     session.State.ElapsedSimulationSeconds / 3600d, session.Clock.IsPaused ? " | PAUSED" : string.Empty),
@@ -180,6 +182,13 @@ namespace OutOfReach.Tests.PlayMode
                 eva.IsSuitOn ? "on" : "off",
                 eva.IsSuitOn ? string.Format(c, " {0:0.00} kg O2 ({1:0} min)", eva.SuitOxygenKg, eva.SuitOxygenSecondsRemaining / 60d) : string.Empty,
                 eva.IsOutside ? " | OUTSIDE on the tether" : string.Empty));
+            CommunicationSystem link = session.Communications;
+            lines.Add(string.Format(c, "Day {0} ({1}) | link {2} | Earth {3}, one-way {4}{5}", session.Calendar.DayNumber,
+                MissionCalendar.Format(session.Calendar.NowUtc), link.State, CommunicationSystem.FormatDistance(link.ReferenceDistanceKm),
+                CommunicationSystem.FormatDuration(link.OneWayLightSeconds),
+                link.State == CommunicationState.AwaitingReply
+                    ? " | reply in " + CommunicationSystem.FormatDuration(link.ReplyRemainingSimulationSeconds, true) + " simulated"
+                    : string.Empty));
             if (session.State.Outcome != MissionOutcome.None)
             {
                 lines.Add("OUTCOME " + session.State.Outcome + ": " + session.State.OutcomeReason);
@@ -195,7 +204,21 @@ namespace OutOfReach.Tests.PlayMode
                 lines.Add(lastInteraction);
             }
 
-            GUI.Label(new Rect(12f, 12f, Screen.width - 24f, 24f * lines.Count + 12f), string.Join("\n", lines));
+            float height = 24f * lines.Count + 12f;
+            GUI.Label(new Rect(12f, 12f, Screen.width - 24f, height), string.Join("\n", lines));
+
+            MissionReport report = session.State.Phase == GamePhase.Report ? runtime.Report : null;
+            if (report == null)
+            {
+                return;
+            }
+
+            string text = report.ToPlainText();
+            var view = new Rect(12f, height + 24f, Screen.width - 24f, Screen.height - height - 36f);
+            float contentHeight = GUI.skin.label.CalcHeight(new GUIContent(text), view.width - 24f);
+            reportScroll = GUI.BeginScrollView(view, reportScroll, new Rect(0f, 0f, view.width - 24f, contentHeight));
+            GUI.Label(new Rect(0f, 0f, view.width - 24f, contentHeight), text);
+            GUI.EndScrollView();
         }
     }
 }
