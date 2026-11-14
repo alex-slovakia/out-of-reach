@@ -1,5 +1,6 @@
 using System;
 using OutOfReach.Contracts;
+using OutOfReach.Localization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -80,7 +81,8 @@ namespace OutOfReach.Interaction
             nextPromptRefreshTime = Time.unscaledTime + PromptRefreshSeconds;
             InteractableTarget target = ResolutionEnabled ? FindTarget() : null;
             IInteractable interactable = target != null ? target.Interactable : null;
-            string prompt = interactable != null ? interactable.Prompt ?? string.Empty : string.Empty;
+            // LANG-01: the domain prompt is English; it is shown in the player's language.
+            string prompt = interactable != null ? GameText.Translate(interactable.Prompt ?? string.Empty) : string.Empty;
             bool canInteract = interactable != null && interactable.CanInteract;
             if (target == CurrentTarget && canInteract == CurrentCanInteract && string.Equals(prompt, CurrentPrompt, StringComparison.Ordinal))
             {
@@ -107,7 +109,7 @@ namespace OutOfReach.Interaction
                 : new CommandResult(false, CommandFailure.PreconditionsNotMet, "Nothing to interact with is in reach.");
             LastResult = result;
             Interacted?.Invoke(result);
-            interactionAttempted.Invoke(result.Succeeded, result.Explanation);
+            interactionAttempted.Invoke(result.Succeeded, GameText.Translate(result.Explanation));
             Refresh();
             return result;
         }
@@ -122,8 +124,22 @@ namespace OutOfReach.Interaction
             }
         }
 
+        private void OnEnable()
+        {
+            GameText.Changed += OnLanguageChanged;
+        }
+
+        private void OnLanguageChanged()
+        {
+            if (isActiveAndEnabled)
+            {
+                Refresh();
+            }
+        }
+
         private void OnDisable()
         {
+            GameText.Changed -= OnLanguageChanged;
             if (CurrentTarget == null && CurrentPrompt.Length == 0)
             {
                 return;

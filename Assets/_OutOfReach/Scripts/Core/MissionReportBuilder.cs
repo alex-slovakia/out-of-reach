@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using OutOfReach.Contracts;
 using OutOfReach.Inventory;
+using OutOfReach.Localization;
 using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
@@ -45,8 +46,9 @@ namespace OutOfReach.Core
             {
                 Outcome = state.Outcome,
                 IsFinal = final,
-                Headline = Headline(state.Outcome),
-                OutcomeReason = state.OutcomeReason,
+                // LANG-01: the report is built in the player's language; the state keeps the English text.
+                Headline = GameText.Translate(Headline(state.Outcome)),
+                OutcomeReason = GameText.Translate(state.OutcomeReason),
                 ElapsedSimulationSeconds = elapsed,
                 MissionId = configuration.MissionId,
                 LossCause = director.LossCause,
@@ -722,12 +724,12 @@ namespace OutOfReach.Core
 
         private static MissionReportSection Section(string id, string title, List<MissionReportLine> lines)
         {
-            return new MissionReportSection(id, title, lines.AsReadOnly());
+            return new MissionReportSection(id, GameText.Translate(title), lines.AsReadOnly());
         }
 
         private static MissionReportLine Line(string label, string value)
         {
-            return new MissionReportLine(label, value);
+            return new MissionReportLine(GameText.Translate(label), GameText.Translate(value));
         }
 
         private static string Capitalize(string text)

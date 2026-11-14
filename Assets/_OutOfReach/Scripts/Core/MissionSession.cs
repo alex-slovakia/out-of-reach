@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
 using OutOfReach.Inventory;
+using OutOfReach.Localization;
 using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
@@ -31,6 +32,7 @@ namespace OutOfReach.Core
         private MissionReport cachedReport;
         private int cachedReportJournalCount = -1;
         private GamePhase cachedReportPhase;
+        private GameLanguage cachedReportLanguage;
 
         /// <param name="definition">Mission to play; null means AURORA-7.</param>
         /// <param name="subscriberErrorSink">Receives exceptions thrown by event subscribers.</param>
@@ -188,11 +190,13 @@ namespace OutOfReach.Core
                     return null;
                 }
 
-                if (cachedReport == null || cachedReportJournalCount != Director.Journal.Count || cachedReportPhase != State.Phase)
+                if (cachedReport == null || cachedReportJournalCount != Director.Journal.Count || cachedReportPhase != State.Phase
+                    || cachedReportLanguage != GameText.Current)
                 {
                     cachedReport = MissionReportBuilder.Build(this);
                     cachedReportJournalCount = Director.Journal.Count;
                     cachedReportPhase = State.Phase;
+                    cachedReportLanguage = GameText.Current;
                 }
 
                 return cachedReport;

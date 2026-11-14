@@ -2,7 +2,8 @@
   "name": "OutOfReach.Interaction",
   "rootNamespace": "OutOfReach.Interaction",
   "references": [
-    "OutOfReach.Contracts"
+    "OutOfReach.Contracts",
+    "OutOfReach.Localization"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

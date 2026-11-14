@@ -1,0 +1,35 @@
+{
+ "exact": {
+  "). It was not counted: only the sealed loadout is aboard.": "). No se contó: solo la carga sellada va a bordo.",
+  "Loading closed with a crate still in hand (": "Carga cerrada con una caja aún en la mano (",
+  "Loading closed. Board and secure your seat.": "Carga cerrada. Embarca y asegura tu asiento.",
+  "Loading is still open.": "La carga sigue abierta.",
+  "Only an unlaunched Planning loadout can be sealed.": "Solo se puede sellar una carga de planificación aún no lanzada.",
+  "oxygen": "oxígeno",
+  "water": "agua",
+  "food": "alimentos",
+  "repairs": "reparaciones",
+  "transmission": "transmisión",
+  "nothing": "nada",
+  "unknown": "desconocido"
+ },
+ "formats": {
+  "Loading closed with a crate still in hand ({0}). It was not counted: only the sealed loadout is aboard.": "Carga cerrada con una caja aún en la mano ({0}). No se contó: solo la carga sellada va a bordo.",
+  "Secure your seat and launch: {0:0} of {1:0} kg, {2:0} of {3:0} credits": "Asegurar el asiento y lanzar: {0:0} de {1:0} kg, {2:0} de {3:0} créditos",
+  "EVA suit on: {0} kg oxygen in the tank": "Traje EVA puesto: {0} kg de oxígeno en el tanque",
+  "{0}: repaired": "{0}: reparación completada",
+  "{0}: nominal": "{0}: estado nominal",
+  "Budget {0} credits exceeds the {1}-credit limit by {2} credits.": "El presupuesto de {0} créditos supera el límite de {1} créditos en {2} créditos.",
+  "Debris impact. Condition after the strike: {0}.": "Impacto de escombros. Estado tras el impacto: {0}.",
+  "Electrical load {0} W exceeds available generation {1} W by {2} W.": "La carga eléctrica de {0} W supera la generación disponible de {1} W en {2} W.",
+  "Food reserve {0} kg is below the {1} kg required for {2} planned crew-days.": "La reserva de alimentos de {0} kg es inferior a los {1} kg necesarios para {2} días-tripulante previstos.",
+  "Insufficient reserves: {0}.": "Reservas insuficientes: {0}.",
+  "Mass {0} kg exceeds the {1} kg launch limit by {2} kg.": "La masa de {0} kg supera el límite de lanzamiento de {1} kg en {2} kg.",
+  "Oxygen reserve {0} kg is below the {1} kg required for {2} planned crew-days.": "La reserva de oxígeno de {0} kg es inferior a los {1} kg necesarios para {2} días-tripulante previstos.",
+  "Spent on {0}": "Gastado en {0}",
+  "Water reserve {0} L is below the {1} L required for {2} planned crew-days.": "La reserva de agua de {0} L es inferior a los {1} L necesarios para {2} días-tripulante previstos.",
+  "{0} back on the pallet.": "{0}: de vuelta en el palé.",
+  "{0} loaded.": "{0}: a bordo.",
+  "Preset '{0}'": "Preajuste '{0}'"
+ }
+}

@@ -1,0 +1,2526 @@
+{
+ "exact": [
+  " (Earth-Mars range, used as a Mars-vicinity proxy)",
+  " (game assumption)",
+  " (over the limit)",
+  " = 2 x light time + processing",
+  " The battery ran flat and the scrubbers stopped.",
+  " The battery ran flat because power distribution was not repaired, so the repaired scrubbers stopped.",
+  " The damaged life-support loop kept leaking stored oxygen because it was never repaired.",
+  " The distress call had been sent, but the unpowered link could not receive Earth's reply.",
+  " The distress call had been sent; Earth's reply could not arrive for another ",
+  " and an EVA",
+  " and checked against this hash when the mission starts. The game makes no network request.",
+  " back on the pallet",
+  " back on the pallet.",
+  " during the EVA",
+  " in flight phases (pauses and cinematics excluded).",
+  " is already aboard",
+  " kg oxygen in the tank",
+  " kg oxygen.",
+  " of capacity left",
+  " of simulated time passed in jumps",
+  "). It was not counted: only the frozen loadout is aboard.",
+  "). It was not counted: only the sealed loadout is aboard.",
+  "+10 kWh storage to ride out a power loss.",
+  "+12 kg stored oxygen for breathing and suit refills.",
+  "+27 kg packaged food (about 15 crew-days).",
+  "+3 spare parts for field repairs.",
+  "+40 L water.",
+  "+600 W generation; recharges batteries and is needed to power the spectrometer.",
+  ". Controlled conditions support growth; food is not available now.",
+  ". Nothing can be returned.",
+  ". One pre-grown seedling kit is available as scenario equipment.",
+  ". Reserves and the communication clock advanced through them.",
+  ". This is a supplement, not a complete diet or measured leaf caloric content.",
+  "3 days late after the missed beacon window",
+  ": nominal",
+  ": repaired",
+  "; there is no reviewed sample for ",
+  "A configuration is required.",
+  "A cost list is required.",
+  "A mission ending must be RecoveryPossible or Lost.",
+  "A one-person EVA is a fictional emergency: the cited procedures require two crew members. Suit and airlock figures follow published references for other designs.",
+  "A reply permits recovery planning. It does not show that a rescue is feasible.",
+  "A resource system is required.",
+  "A salvage must yield at least one spare part.",
+  "A sealed suit and a depressurized airlock are required to go outside.",
+  "AURORA-7",
+  "AURORA-7 and its mission are fictional. No trajectory is computed: the Earth-Mars range stands in for a ship in Mars vicinity.",
+  "Abandoned: the instrument was dismantled for spare parts at ",
+  "About ",
+  "Accident",
+  "Affordable: ",
+  "Airlock repressurized: EVA complete, antenna repaired.",
+  "Airlock repressurized: EVA ended without repairing the antenna.",
+  "Already inside.",
+  "Already outside.",
+  "An EVA starts at the airlock controls with the suit on.",
+  "Another sequence is still playing.",
+  "Antenna repaired. Return through the airlock before transmitting.",
+  "At launch a crate was still in hand (",
+  "Atmospheric spectrometer",
+  "Attribution",
+  "Awaiting reply from Earth: ",
+  "Awake, food and drinking water were spent by crew commands; while resting they were drawn at the BVAD crew-day rates. Crop irrigation and power used the same ledger. Net use includes building, planting and the one harvest credit; actions are in the timeline.",
+  "Back inside the airlock.",
+  "Battery",
+  "Battery capacity must be finite and at least the initial charge.",
+  "Battery module",
+  "Budget",
+  "Build the grow module before planting its single seedling kit.",
+  "CO2 absorber",
+  "CO2 absorber cartridge built at the workbench.",
+  "CO2 absorber cartridge built. Install it in the absorber bay.",
+  "CO2 absorber cartridge installed.",
+  "CO2 absorber cartridge installed: it takes up the crew's CO2 output without power while cabin CO2 would rise.",
+  "CO2 absorber cartridge spent.",
+  "CO2 absorber working: ",
+  "Cabin CO2",
+  "Cabin CO2 change rate must be finite.",
+  "Carbon dioxide: the cabin reached the emergency level.",
+  "Carrying ",
+  "Cartridge spent. Build a new one at the workbench.",
+  "Cause",
+  "Chapter jumps",
+  "Clip tether and go outside.",
+  "Close outer hatch and repressurize.",
+  "Cockpit check complete. Impact detected.",
+  "Communication",
+  "Communications nominal: no distress call is needed.",
+  "Communications offline: antenna damaged",
+  "Communications offline: brownout, the battery is empty",
+  "Communications offline: power distribution damaged",
+  "Compiled into the game from ",
+  "Condition must be between 0 and 1.",
+  "Console offline",
+  "Console on standby until launch",
+  "Consumed ",
+  "Contact and recovery planning, not a rescue. No craft has arrived; the ship must hold on its own reserves.",
+  "Contact restored. Survival continues while a nearby fictional recovery vehicle's rendezvous is assessed; no arrival is guaranteed. Rations and drinking now require crew actions.",
+  "Contact with Earth is already restored: the one distress call has been answered.",
+  "Contact with Earth restored",
+  "Contact with Earth restored: Earth's reply has been received",
+  "Content",
+  "Credits are fictional, not cost estimates.",
+  "Crew consumption",
+  "Crop supplement added to stored food.",
+  "Custom loadout",
+  "Dataset",
+  "Debris impact. Condition after the strike: ",
+  "Deployable solar wing",
+  "Depressurizing: ",
+  "Derived physics",
+  "Drink stored water",
+  "EVA",
+  "EVA suit on. Tank: ",
+  "EVA suit on: ",
+  "EVA suit required before depressurizing.",
+  "Earliest reply",
+  "Earth body center (399), DE441",
+  "Earth distance",
+  "Earth processing",
+  "Earth's reply has been received.",
+  "Earth-Mars reference ephemeris: NASA/JPL Horizons. AURORA-7 uses a fictional Mars-vicinity distance approximation. Life-support behavior is simplified for education. Mission timing may be compressed.",
+  "Eat stored ration",
+  "Elapsed simulation time would overflow.",
+  "Empty absorber bay. Build a cartridge at the workbench.",
+  "Ended by mission control.",
+  "Energy",
+  "Enter the airlock.",
+  "Exterior repair allowed.",
+  "False signal",
+  "Fictional scenario and simplifications",
+  "Field modifications",
+  "Food",
+  "Food and water assume full BVAD crew-day portions, not the zero automatic meal rate. This estimate is not a rescue ETA.",
+  "Food locker",
+  "Food use",
+  "Food: the reserve ran out.",
+  "Frame time and hitch clamp must be finite and non-negative.",
+  "Grow module",
+  "Grow module failed: controlled conditions or irrigation were interrupted. No harvest was credited.",
+  "Hands full: carrying ",
+  "Harvest credit must be finite and positive.",
+  "Harvest requires an active mission.",
+  "Holding margin",
+  "Holding projection",
+  "Horizons UT (UTC for these post-1962 dates; preserve source future leap-second caveat)",
+  "ICRF, REF_PLANE=FRAME",
+  "Impact detected",
+  "Initial reserves must be finite and non-negative.",
+  "Inner hatch sealed. Depressurizing.",
+  "Inside the airlock.",
+  "Install CO2 absorber cartridge: cabin CO2 stops rising for up to ",
+  "Insufficient reserves: ",
+  "Interior repair allowed.",
+  "Keep irrigation water after the planting cost.",
+  "Launch reserves loaded.",
+  "Launch reserves were already loaded.",
+  "Launch through IMissionPlanner.TryLaunch so the loadout is validated and frozen.",
+  "Launched automatically at the planning deadline with the last valid loadout.",
+  "Launched automatically at the planning deadline with the loadout as drafted.",
+  "Launched by the crew inside the timed planning window.",
+  "Launched by the crew; planning was not timed.",
+  "Life support",
+  "Light time",
+  "Link availability, occultation, acquisition and message length are not modelled. Processing time on Earth and transmit energy are game assumptions.",
+  "Link diagnostic",
+  "Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+  "Link diagnostic: the damaged receive buffer replayed an old local recording. It was not a reply from Earth.",
+  "Link hardware ready.",
+  "Link ready.",
+  "Loading closed with a crate still in hand (",
+  "Loading closed. Board and secure your seat.",
+  "Loading is still open.",
+  "Loadout",
+  "Loadout is within the mass, budget, power and supply limits.",
+  "MISSION IN PROGRESS",
+  "MISSION LOST",
+  "Mars body center (499), mar099",
+  "Measure Martian upper-atmosphere composition",
+  "Mission date",
+  "Mission date at transmission",
+  "Mission design",
+  "Mission lost.",
+  "Mission outcome: lost.",
+  "Mission outcome: recovered by the fictional recovery craft.",
+  "Mission outcome: recovery possible.",
+  "Mission time",
+  "NASA Environmental Control and Life Support Systems: https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/",
+  "NASA Mars Communications Disruption and Delay: https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf",
+  "NASA-01",
+  "NASA-02",
+  "NASA-03",
+  "NASA/JPL Horizons API: https://ssd-api.jpl.nasa.gov/doc/horizons.html",
+  "NASA/JPL Horizons, dataset ",
+  "NASA/JPL Solar System Dynamics, Horizons",
+  "NASA/JPL data",
+  "NONE; geometric simultaneous state vectors",
+  "Net electrical load must be finite.",
+  "Net use including survival actions",
+  "No ",
+  "No EVA is needed: the antenna is operational.",
+  "No EVA was attempted.",
+  "No Earth-Mars reference sample exists before ",
+  "No distress call was sent.",
+  "No mature crop is ready to harvest.",
+  "No mission session is running.",
+  "No ration is needed yet.",
+  "No recovery plan yet",
+  "No rest now: ",
+  "No science payload aboard",
+  "No science payload was carried: its mass, power and budget went to reserves and spares.",
+  "No water portion is needed yet.",
+  "None possible.",
+  "None.",
+  "Not damaged.",
+  "Not needed before the emergency.",
+  "Not possible during an EVA.",
+  "Not received: it could not arrive for another ",
+  "Not received: the link had no power when the reply arrived.",
+  "Not returned: the mission was lost without contact, so the data never reached Earth.",
+  "Nothing to consume.",
+  "Nothing to interact with is in reach.",
+  "Objective",
+  "One-way light time",
+  "Only Core decides a mission outcome.",
+  "Only an unlaunched Planning loadout can be sealed.",
+  "Outcome",
+  "Outer hatch closed. Repressurizing.",
+  "Outside on the tether.",
+  "Outside the ship on the tether.",
+  "Oxygen",
+  "Oxygen tank",
+  "Oxygen use",
+  "Oxygen: the stored reserve and then the cabin air ran out.",
+  "Packaged copy",
+  "Paused: real time discarded.",
+  "Payload mass",
+  "Pending: nothing can be returned until contact is restored.",
+  "Planning",
+  "Planting needs operational power and life support.",
+  "Power",
+  "Power and life support must be operational before an EVA.",
+  "Preset '",
+  "Provider",
+  "Put the ",
+  "RECOVERED",
+  "RECOVERY POSSIBLE",
+  "Rates apply only after launch.",
+  "Rates updated: ",
+  "Real play time",
+  "Real time must be finite and non-negative.",
+  "Recovery beacon",
+  "Recovery beacon powered: the rendezvous stays on schedule.",
+  "Reference",
+  "Reference sample",
+  "Reply",
+  "Reply from Earth received.",
+  "Reply received",
+  "Reply waiting: the link has no power",
+  "Repressurizing: ",
+  "Requested, not powered yet",
+  "Reserves are already loaded; start a new mission session instead.",
+  "Reserves are unavailable until the mission launches.",
+  "Reserves cannot be spent after the mission has ended.",
+  "Resources",
+  "Rest",
+  "Result",
+  "Resume before waking the crew.",
+  "Resume crew control before acting.",
+  "Resume crew control first.",
+  "Return through the airlock and repressurize first.",
+  "Returned: with the link restored, the instrument's data can be sent to Earth.",
+  "Run cockpit systems check",
+  "Run communications diagnostic",
+  "Run the communications diagnostic at the console first.",
+  "SHA-256",
+  "Science",
+  "Science instrument dismantled",
+  "Science payload: 300 W continuous load and no survival value.",
+  "Science return",
+  "Shown to the player",
+  "Simplified for education. Consumption follows the cited NASA document; damage, leak and scrubber rates and repair costs are gameplay tuning. Loss levels are game rules anchored to cited operational levels, not medical limits.",
+  "Simulated mission time",
+  "Simulation advanced.",
+  "Simulation clock is stopped in this phase.",
+  "Simulation paused.",
+  "Simulation resumed.",
+  "Simulation time must be finite and non-negative.",
+  "Solo EVA",
+  "Spacecraft",
+  "Spare parts",
+  "Spare parts at launch",
+  "Spare parts kit",
+  "Spent on ",
+  "Stabilize power or life support first.",
+  "Stabilize the ship before preparing an EVA.",
+  "Status",
+  "Suit oxygen: the tank ran empty before the crew was back in a pressurized cabin.",
+  "Survival accounting",
+  "Survival action available.",
+  "Systems and repairs",
+  "The CO2 floor must be a finite, non-negative concentration.",
+  "The EVA is already under way.",
+  "The EVA suit is already on.",
+  "The Earth-Mars reference snapshot ends on ",
+  "The airlock can only be cycled once the ship is stabilized.",
+  "The airlock is not pressurized and idle.",
+  "The airlock is not ready.",
+  "The antenna must be repaired before transmitting.",
+  "The beacon is already powered for the recovery craft.",
+  "The beacon window has passed; the rendezvous has slipped.",
+  "The cargo bay is sealed after launch.",
+  "The combined cost is too large to represent.",
+  "The crew is already resting.",
+  "The crew is awake.",
+  "The crew is not resting.",
+  "The crew is resting. Wake up first.",
+  "The debris strike and the damage it does are authored events.",
+  "The distress call is on its way. Earliest reply in ",
+  "The emergency begins only after the impact sequence.",
+  "The fallback timeout must be finite and non-negative.",
+  "The impact has already happened.",
+  "The link diagnostic has already run.",
+  "The link diagnostic is still running.",
+  "The loadout can only change during Planning; it is frozen after launch.",
+  "The mission has already launched; the loadout is frozen.",
+  "The mission is still running; this is a preview.",
+  "The mission session has ended.",
+  "The mission was already advanced this frame.",
+  "The one grow module has already been built.",
+  "The only ",
+  "The optional survival chapter starts only after actual restored contact.",
+  "The outer hatch is closed.",
+  "The outer hatch is not open.",
+  "The planning deadline must be a finite number of seconds greater than zero.",
+  "The pre-grown crop reached its nominal harvest age after sustained cultivation. Collect the small supplement.",
+  "The recovery craft has not asked for the beacon yet.",
+  "The salvage yield and the cartridge's cost and capacity are game assumptions. The capacity is stated in crew-hours of the cited metabolic CO2 output; it is not sized from or rated like a real lithium-hydroxide canister.",
+  "The scaled simulation time is too large to represent.",
+  "The science instrument cannot be reached in this ship.",
+  "The signal found before the transmission was the damaged receive buffer replaying an old local recording. It was not a reply from Earth and changed nothing.",
+  "The signal heard before the transmission is a story beat: a damaged local buffer replaying an old recording. It is not an echo from space and not a model of a NASA link.",
+  "The simulation is already paused.",
+  "The simulation is not paused.",
+  "The simulation is paused; resume before advancing time.",
+  "The spare parts count is too large to represent.",
+  "This action belongs to the enabled post-contact survival chapter.",
+  "This belongs to the post-contact survival chapter.",
+  "This ship has no workbench and absorber bay.",
+  "Time compression",
+  "Time scale must be greater than zero and at most 86,400x; use Pause to stop time.",
+  "Time scales",
+  "Timed planning can only start during Planning.",
+  "Timed planning is already running.",
+  "Timed planning needs a valid starting loadout to fall back to.",
+  "Timed planning started.",
+  "Timeline",
+  "Transition allowed.",
+  "Transmission",
+  "Transmitted",
+  "Unmet food demand reached the scenario's game viability limit; not a medical starvation threshold.",
+  "Unmet water demand reached the scenario's game viability limit; not a medical dehydration threshold.",
+  "Unrecoverable mission objective: too few spare parts to repair the antenna. The crew was alive when the mission was closed.",
+  "Used over time",
+  "Wake the crew",
+  "Water",
+  "Water tank",
+  "Water use",
+  "Water: the reserve ran out.",
+  "What it means",
+  "Why",
+  "You are still outside: enter the airlock first.",
+  "a crate",
+  "an unknown time",
+  "battery energy",
+  "before repressurization completed",
+  "before the return to the airlock",
+  "cabin CO2",
+  "cabin CO2 is close to the loss limit",
+  "earliest reply = 2 x one-way light time + processing on Earth, with the distance frozen at the transmission",
+  "field modifications",
+  "food",
+  "geometric state vectors without light-time correction",
+  "high-gain antenna",
+  "in the airlock",
+  "kWh = watts x seconds / 3,600,000",
+  "life support",
+  "no effect",
+  "no materials",
+  "no reason",
+  "nothing",
+  "on schedule with the beacon powered",
+  "one-way seconds = distance in km / 299,792.458 km/s",
+  "outside the ship",
+  "over time",
+  "oxygen",
+  "power distribution",
+  "power is lost: the battery is empty and generation is below the load",
+  "repairs",
+  "science instrument dismantled for spare parts",
+  "science payload",
+  "the EVA",
+  "the crew was woken",
+  "the crop is ready to harvest",
+  "the food store is empty",
+  "the grow module failed",
+  "the mission ended",
+  "the planned rest is complete",
+  "the recovery craft needs the crew",
+  "the stored oxygen is used up; only the cabin air is left",
+  "the transmission",
+  "the water store is empty",
+  "transmission",
+  "unknown",
+  "water",
+  "yyyy-MM-dd HH:mm"
+ ],
+ "formats": [
+  " (each suit preparation is {0})",
+  " At current use the reserves cover about {0:0} days ({1} runs out first).",
+  " Reserves cover about {0:0} more days.",
+  " The distress call had been sent; Earth's reply could not arrive for another {0}.",
+  " Warning: that leaves {0} spare part{1}; the antenna needs {2}.",
+  " of simulated time passed in jumps{0}. Reserves and the communication clock advanced through them.",
+  " repaired: {0}.",
+  "'{0}' allows at most {1} unit(s).",
+  "'{0}' allows at most {1} unit(s); {2} requested.",
+  "'{0}' cannot have a negative quantity ({1}).",
+  "'{0}' is already set to {1}.",
+  "+{0:0.##} L water",
+  "+{0:0.##} kWh battery",
+  "+{0:0.##} kg food",
+  "+{0:0.##} kg oxygen",
+  "+{0:0} W generation",
+  "+{0} spare part{1}",
+  ", {0:0} W load",
+  "A fictional recovery craft already in transit docked {0} after contact ({1}); the crew transferred aboard, and onward travel to Mars is a later chapter. This timeline is a game assumption, not derived from the NASA Earth-Mars data.",
+  "A mission cannot end during {0}.",
+  "A rest lasts more than 0 and at most {0:0.#} simulated hours.",
+  "About {0:0} days at current use; {1} runs out first (estimate).",
+  "About {0} in flight phases (pauses and cinematics excluded).",
+  "Affordable: {0}.",
+  "Already in {0}.",
+  "At launch a crate was still in hand ({0}). It was not counted: only the frozen loadout is aboard.",
+  "At x{0:0.##} the {1} wait takes about {2:0} real seconds.",
+  "Awaiting reply from Earth: {0} (simulated)",
+  "Beacon window missed: the recovery craft's rendezvous is delayed {0:0} days, to mission day {1}.",
+  "Begin mission: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
+  "Budget {0} credits exceeds the {1}-credit limit by {2} credits.",
+  "Build CO2 absorber cartridge: {0} spare part{1}, {2:0.##} kWh.{3}",
+  "Build grow module: {0} spare part(s), {1:0.##} kWh",
+  "CO2 absorber working: {0} of capacity left",
+  "CO2 floor {0:0.#} ppm.",
+  "Cabin CO2 reached the {0} ppm emergency level {1} after launch.",
+  "Cabin CO2 reached the {0} ppm emergency level {1} after launch. Life support was not repaired, so nothing removed the crew's CO2.",
+  "Cannot repair {0}: {1}.",
+  "Carrying {0}.",
+  "Cinematic {0} (sequence {1}) is still active.",
+  "Cockpit check x{0:0.##}; emergency and repair x{1:0.##}; EVA x{2:0.##}; transmission x{3:0.##} (simulated seconds per real second).",
+  "Compiled into the game from {0} and checked against this hash when the mission starts. The game makes no network request.",
+  "Consumed {0}.",
+  "Cost {0} ({1}) must be a finite, non-negative quantity; got {2}.",
+  "Cost {0} names an unknown resource ({1}). Cabin CO2 is not spendable.",
+  "Cost {0}: spare parts are whole units; got {1}.",
+  "Debris impact. Condition after the strike: {0}.",
+  "Depressurizing: {0} left",
+  "Dismantle science instrument: +{0} spare parts for {1:0.##} kWh. The science objective is abandoned for good.",
+  "Distress call transmitted on mission day {0}. Reference sample {1}: Earth {2} away, one-way light time {3}, earliest reply after {4}.",
+  "Distress call transmitted. Earliest reply in {0}: 2 x {1} light time + {2} on Earth.",
+  "EVA suit on: {0} kg oxygen in the tank",
+  "EVA suit preparation started: {0:0.##} kg oxygen, {1}.",
+  "Earth answered {0} after the distress call: twice the {1} light time across {2}, plus {3} on Earth. Contact is restored and a recovery trajectory can be assessed. Rescue has not arrived; the ship must hold.{4}",
+  "Earth relays a recovery plan: a fictional recovery craft already in transit nearby can rendezvous {0:0} days after contact, on mission day {1}, and will ask for the ship's beacon on mission day {2}. This timeline is a game assumption, not derived from the NASA Earth-Mars data.",
+  "Electrical load {0} W exceeds available generation {1} W by {2} W.",
+  "Food reserve exhausted {0} after launch.",
+  "Food reserve {0} kg is below the {1} kg required for {2} planned crew-days.",
+  "Go outside to reach the {0}.",
+  "Hands full: carrying {0}",
+  "Harvest small supplement: {0:0.###} kg ration-equivalent game credit",
+  "Inner hatch sealed, airlock depressurizing: {0:0.##} kg oxygen, {1:0.##} kWh. Breathing suit oxygen.",
+  "Insufficient reserves: {0}.",
+  "Launch on {0}: {1:0} kg payload, {2:0} credits, {3:0} W load on {4:0} W generation.",
+  "Launch requires Planning; current phase is {0}.",
+  "Load {0}: payload {1:0} -> {2:0} of {3:0} kg{4}",
+  "Loading closed with a crate still in hand ({0}). It was not counted: only the sealed loadout is aboard.",
+  "Mass {0} kg exceeds the {1} kg launch limit by {2} kg.",
+  "Missed: the rendezvous slipped {0:0} days, to mission day {1}",
+  "Mission clock T0 {0} is outside the packaged reference ({1} to {2}).",
+  "Mission ended: {0}.",
+  "Mission objective unrecoverable: the {0} needs {1} spare parts and only {2} remain{3}, so contact with Earth can never be restored. The crew is alive and the ship is stable, but no recovery can be planned.{4}",
+  "NASA Life Support Baseline Values and Assumptions Document (NASA/TP-2015-218570/REV2): oxygen {0:0.00} kg, water {1:0.0} L, food {2:0.00} kg and CO2 output {3:0.00} kg per crew-day.",
+  "NASA/JPL Horizons, dataset {0}",
+  "No Earth-Mars reference sample exists before {0}.",
+  "No rest now: {0}.",
+  "No {0} aboard",
+  "No {0} left on the pallet: all {1} are aboard",
+  "None: the snapshot ends on {0}. No call could be sent after that date.",
+  "Not available during {0}.",
+  "Not received: it could not arrive for another {0}.",
+  "Not requested yet (mission day {0})",
+  "O2 {0:G6} kg/s, water {1:G6} L/s, food {2:G6} kg/s, net load {3:0.#} W, CO2 {4:G6} ppm/s",
+  "Oxygen reserve {0} kg is below the {1} kg required for {2} planned crew-days.",
+  "Pick up {0}: {1:0} kg, {2:0} credits, {3} ({4} on the pallet)",
+  "Plant {0:0.#}-day seedlings: {1:0.##} L; {2:0.#} further days, {3:0.#} W and {4:0.###} L/day",
+  "Power the recovery beacon: {0:0.##} kWh; the window closes in {1}",
+  "Powered on mission day {0} ({1:0.##} kWh)",
+  "Preset '{0}'",
+  "Put on EVA suit: {0:0.##} kg oxygen, {1} of preparation.",
+  "Put the {0} back on the pallet",
+  "Quantity cannot be negative ({0}).",
+  "Rates updated: {0}.",
+  "Recovery beacon powered on mission day {0} ({1:0.##} kWh): the rendezvous stays on mission day {2}.",
+  "Removed '{0}'.",
+  "Repair {0}: {1}.",
+  "Repressurizing: {0} left",
+  "Requested {0} (sequence {1}).",
+  "Rest began on mission day {0}: up to {1:0.##} h; food and water are drawn at the BVAD crew-day rates while the crew rests.",
+  "Rest ended on mission day {0} after {1:0.##} h: {2}.",
+  "Rest up to {0:0.##} h: about {1:0.###} kg food and {2:0.###} L water at the BVAD crew-day rates; any danger wakes the crew",
+  "Salvaged {0} spare part(s).",
+  "Science instrument dismantled: +{0} spare parts, {1:0} W off the bus. The science objective is abandoned.",
+  "Science instrument dismantled: +{0} spare parts. Its {1:0} W load is off the bus.",
+  "Seal inner hatch and depressurize: {0:0.##} kg oxygen, {1:0.##} kWh.",
+  "Secure your seat and launch: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
+  "Set '{0}' to {1}.",
+  "Spent on {0}",
+  "Stored oxygen ran out {0} after launch. The cabin's own air stayed above the impairment level for another {1}; then the mission was lost.",
+  "Suit oxygen ran out {0} {1} after launch, {2}.",
+  "T+{0} d {1:00} h {2:00} min",
+  "T+{0} h {1:00} min",
+  "The Earth-Mars reference snapshot ends on {0}; there is no reviewed sample for ",
+  "The cockpit check belongs to Intro; current phase is {0}.",
+  "The link cannot be used during {0}.",
+  "The mission already ended ({0}).",
+  "The mission names astronomical reference '{0}' but the packaged dataset is '{1}'.",
+  "The only {0} is already aboard",
+  "The recovery craft asks for the ship's beacon on mission day {0}: power it within {1:0} h ({2:0.##} kWh), or the rendezvous is delayed {3:0} days.",
+  "The recovery craft docked on mission day {0}; the crew transfers aboard.",
+  "The simulation clock does not run during {0}.",
+  "The {0} can only be repaired outside, during an EVA.",
+  "The {0} cannot be repaired during {1}.",
+  "This stack takes {0}; you are carrying {1}",
+  "Time scale {0:0.###}x.",
+  "Transmit distress call: {0:0.##} kWh. Earth is {1} away; earliest reply in {2}.",
+  "Unknown cinematic value {0}.",
+  "Unknown equipment '{0}'.",
+  "Unknown phase value {0}.",
+  "Unload one {0} ({1} aboard)",
+  "Unmet food demand reached the scenario's game viability limit {0} after launch. This is a mission failure assumption, not a medical starvation threshold.",
+  "Unmet water demand reached the scenario's game viability limit {0} after launch. This is a mission failure assumption, not a medical dehydration threshold.",
+  "Water reserve exhausted {0} after launch.",
+  "Water reserve {0} L is below the {1} L required for {2} planned crew-days.",
+  "battery net {0:0.00} kWh drawn",
+  "battery net {0:0.00} kWh recharged",
+  "needs {0}, {1} available",
+  "net +{0} spare part{1}",
+  "net {0} spare part{1} used",
+  "ppm from the ideal gas law for a {0:0} m3 cabin at {1:0.0} kPa and {2:0} K (cabin figures are game assumptions)",
+  "{0:#,0} W load on {1:#,0} W generation",
+  "{0:#,0} ppm at launch, {1:#,0} ppm at the end, peak {2:#,0} ppm (action level {3:#,0}, loss limit {4:#,0})",
+  "{0:0.###} L water",
+  "{0:0.###} kWh battery energy",
+  "{0:0.###} kg food",
+  "{0:0.###} kg oxygen",
+  "{0:0.##} L water",
+  "{0:0.##} kWh",
+  "{0:0.##} kg food",
+  "{0:0.##} kg oxygen",
+  "{0:0.00} kWh",
+  "{0:0.00} kWh at launch, {1:0.00} kWh left",
+  "{0:0.00} kg at launch, {1:0.00} kg left",
+  "{0:0.00} kg oxygen",
+  "{0:0.00} kg oxygen, {1:0.0} L water, {2:0.0} kg food; {3}",
+  "{0:0.0} L at launch, {1:0.0} L left",
+  "{0:0.0} L water",
+  "{0:0.0} days",
+  "{0:0.0} kg at launch, {1:0.0} kg left",
+  "{0:0.0} kg food",
+  "{0:0} % after the impact; never repaired (needs {1}{2}).",
+  "{0:0} % after the impact; repaired at {1} for {2}{3}.",
+  "{0:0} W load",
+  "{0:0} kg, {1:0} credits{2}",
+  "{0:0} of {1:0} credits (fictional)",
+  "{0:0} of {1:0} kg",
+  "{0:0} spare part{1}",
+  "{0} (mission day {1})",
+  "{0} (row {1} of {2}; last sample at or before the mission date)",
+  "{0} CO2 absorber cartridge{1} built",
+  "{0} at launch, {1} left",
+  "{0} back on the pallet.",
+  "{0} cannot transition to {1}.",
+  "{0} completed; the suit was put on {1} time{2} and the airlock cycled {3} time{4}.",
+  "{0} daily samples, {1} to {2}: Mars centre relative to Earth centre, km, {3}; {4}.",
+  "{0} damaged.",
+  "{0} h {1:00} min",
+  "{0} h {1:00} min {2:00} s",
+  "{0} h {1} min",
+  "{0} is already at or below that condition.",
+  "{0} is operational.",
+  "{0} launched with {1} equipment line(s).",
+  "{0} loaded.",
+  "{0} min",
+  "{0} min {1:00} s",
+  "{0} must be finite and non-negative ({1} {2}).",
+  "{0} of {1} built cartridge{2} installed; {3:0.00} kg CO2 taken up. GAME ASSUMPTION: {4:0.000} kg per cartridge, stated as {5:0.##} crew-hours of the cited {6:0.00} kg per crew-day; not a rated scrubber.",
+  "{0} repaired ({1}).",
+  "{0} rest{1}, {2:0.#} h in total; food and water drawn at the BVAD crew-day rates while resting",
+  "{0} spare part(s)",
+  "{0} spare part(s) needed, {1} available",
+  "{0} spare part{1}",
+  "{0} {1:0.###} {2} needed, {3:0.###} {2} available",
+  "{0}, mission day {1} ({2})",
+  "{0}, using {1:0.##} kWh",
+  "{0}, {1} after the transmission",
+  "{0}: nominal",
+  "{0}: repaired",
+  "{0}; the three repairs need {1}",
+  "{0}; {1}, {2:0.00} kWh"
+ ],
+ "sources": {
+  " (Earth-Mars range, used as a Mars-vicinity proxy)": [
+   "Core/MissionReportBuilder.cs:586"
+  ],
+  " (each suit preparation is {0})": [
+   "Core/MissionReportBuilder.cs:712"
+  ],
+  " (game assumption)": [
+   "Core/MissionReportBuilder.cs:589"
+  ],
+  " (over the limit)": [
+   "Core/CargoLoading.cs:177"
+  ],
+  " = 2 x light time + processing": [
+   "Core/MissionReportBuilder.cs:590"
+  ],
+  " At current use the reserves cover about {0:0} days ({1} runs out first).": [
+   "Core/MissionDirector.cs:775"
+  ],
+  " Reserves cover about {0:0} more days.": [
+   "Core/MissionDirector.cs:761"
+  ],
+  " The battery ran flat and the scrubbers stopped.": [
+   "Core/MissionDirector.cs:822"
+  ],
+  " The battery ran flat because power distribution was not repaired, so the repaired scrubbers stopped.": [
+   "Core/MissionDirector.cs:821"
+  ],
+  " The damaged life-support loop kept leaking stored oxygen because it was never repaired.": [
+   "Core/MissionDirector.cs:811"
+  ],
+  " The distress call had been sent, but the unpowered link could not receive Earth's reply.": [
+   "Core/MissionDirector.cs:797"
+  ],
+  " The distress call had been sent; Earth's reply could not arrive for another ": [
+   "Core/MissionDirector.cs:796"
+  ],
+  " The distress call had been sent; Earth's reply could not arrive for another {0}.": [
+   "Core/MissionDirector.cs:796"
+  ],
+  " Warning: that leaves {0} spare part{1}; the antenna needs {2}.": [
+   "Core/FieldModifications.cs:264"
+  ],
+  " and an EVA": [
+   "Core/MissionReportBuilder.cs:496"
+  ],
+  " and checked against this hash when the mission starts. The game makes no network request.": [
+   "Core/MissionReportBuilder.cs:650"
+  ],
+  " back on the pallet": [
+   "Core/CargoLoading.cs:126"
+  ],
+  " back on the pallet.": [
+   "Core/CargoLoading.cs:147"
+  ],
+  " during the EVA": [
+   "Core/MissionReportBuilder.cs:491"
+  ],
+  " in flight phases (pauses and cinematics excluded).": [
+   "Core/MissionReportBuilder.cs:702"
+  ],
+  " is already aboard": [
+   "Core/CargoLoading.cs:121"
+  ],
+  " kg oxygen in the tank": [
+   "Core/MissionSession.cs:76"
+  ],
+  " kg oxygen.": [
+   "Core/EvaOperations.cs:163"
+  ],
+  " of capacity left": [
+   "Core/FieldModifications.cs:309"
+  ],
+  " of simulated time passed in jumps": [
+   "Core/MissionReportBuilder.cs:715"
+  ],
+  " of simulated time passed in jumps{0}. Reserves and the communication clock advanced through them.": [
+   "Core/MissionReportBuilder.cs:715"
+  ],
+  " repaired: {0}.": [
+   "Core/MissionDirector.cs:394"
+  ],
+  "'{0}' allows at most {1} unit(s).": [
+   "Core/MissionPlanner.cs:108"
+  ],
+  "'{0}' allows at most {1} unit(s); {2} requested.": [
+   "Inventory/MissionConfiguration.cs:159"
+  ],
+  "'{0}' cannot have a negative quantity ({1}).": [
+   "Inventory/MissionConfiguration.cs:126"
+  ],
+  "'{0}' is already set to {1}.": [
+   "Core/MissionPlanner.cs:113"
+  ],
+  "). It was not counted: only the frozen loadout is aboard.": [
+   "Core/CargoLoading.cs:283"
+  ],
+  "). It was not counted: only the sealed loadout is aboard.": [
+   "Core/CargoLoading.cs:299"
+  ],
+  "+10 kWh storage to ride out a power loss.": [
+   "Core/AuroraMission.cs:67"
+  ],
+  "+12 kg stored oxygen for breathing and suit refills.": [
+   "Core/AuroraMission.cs:58"
+  ],
+  "+27 kg packaged food (about 15 crew-days).": [
+   "Core/AuroraMission.cs:64"
+  ],
+  "+3 spare parts for field repairs.": [
+   "Core/AuroraMission.cs:73"
+  ],
+  "+40 L water.": [
+   "Core/AuroraMission.cs:61"
+  ],
+  "+600 W generation; recharges batteries and is needed to power the spectrometer.": [
+   "Core/AuroraMission.cs:70"
+  ],
+  "+{0:0.##} L water": [
+   "Core/CargoLoading.cs:220"
+  ],
+  "+{0:0.##} kWh battery": [
+   "Core/CargoLoading.cs:222"
+  ],
+  "+{0:0.##} kg food": [
+   "Core/CargoLoading.cs:221"
+  ],
+  "+{0:0.##} kg oxygen": [
+   "Core/CargoLoading.cs:219"
+  ],
+  "+{0:0} W generation": [
+   "Core/CargoLoading.cs:223"
+  ],
+  "+{0} spare part{1}": [
+   "Core/CargoLoading.cs:226"
+  ],
+  ", {0:0} W load": [
+   "Core/MissionReportBuilder.cs:322"
+  ],
+  ". Controlled conditions support growth; food is not available now.": [
+   "Core/SurvivalExtension.cs:203"
+  ],
+  ". Nothing can be returned.": [
+   "Core/MissionReportBuilder.cs:539"
+  ],
+  ". One pre-grown seedling kit is available as scenario equipment.": [
+   "Core/SurvivalExtension.cs:173"
+  ],
+  ". Reserves and the communication clock advanced through them.": [
+   "Core/MissionReportBuilder.cs:715"
+  ],
+  ". This is a supplement, not a complete diet or measured leaf caloric content.": [
+   "Core/SurvivalExtension.cs:228"
+  ],
+  "3 days late after the missed beacon window": [
+   "Core/SurvivalRecovery.cs:347"
+  ],
+  ": nominal": [
+   "Core/RepairInteraction.cs:39"
+  ],
+  ": repaired": [
+   "Core/RepairInteraction.cs:39"
+  ],
+  "; there is no reviewed sample for ": [
+   "Simulation/EarthMarsReference.cs:187"
+  ],
+  "A configuration is required.": [
+   "Core/MissionPlanner.cs:138"
+  ],
+  "A cost list is required.": [
+   "Simulation/ResourceLedger.cs:415"
+  ],
+  "A fictional recovery craft already in transit docked {0} after contact ({1}); the crew transferred aboard, and onward travel to Mars is a later chapter. This timeline is a game assumption, not derived from the NASA Earth-Mars data.": [
+   "Core/SurvivalRecovery.cs:345"
+  ],
+  "A mission cannot end during {0}.": [
+   "Core/MissionGameState.cs:136"
+  ],
+  "A mission ending must be RecoveryPossible or Lost.": [
+   "Core/MissionGameState.cs:126"
+  ],
+  "A one-person EVA is a fictional emergency: the cited procedures require two crew members. Suit and airlock figures follow published references for other designs.": [
+   "Core/MissionReportBuilder.cs:681"
+  ],
+  "A reply permits recovery planning. It does not show that a rescue is feasible.": [
+   "Core/MissionReportBuilder.cs:686"
+  ],
+  "A resource system is required.": [
+   "Simulation/ShipSystem.cs:124"
+  ],
+  "A rest lasts more than 0 and at most {0:0.#} simulated hours.": [
+   "Core/SurvivalRecovery.cs:188"
+  ],
+  "A salvage must yield at least one spare part.": [
+   "Simulation/ResourceLedger.cs:182"
+  ],
+  "A sealed suit and a depressurized airlock are required to go outside.": [
+   "Core/EvaOperations.cs:265"
+  ],
+  "AURORA-7": [
+   "Core/AuroraMission.cs:16"
+  ],
+  "AURORA-7 and its mission are fictional. No trajectory is computed: the Earth-Mars range stands in for a ship in Mars vicinity.": [
+   "Core/MissionReportBuilder.cs:679"
+  ],
+  "Abandoned: the instrument was dismantled for spare parts at ": [
+   "Core/MissionReportBuilder.cs:538"
+  ],
+  "About ": [
+   "Core/MissionReportBuilder.cs:702"
+  ],
+  "About {0:0} days at current use; {1} runs out first (estimate).": [
+   "Core/MissionReportBuilder.cs:259"
+  ],
+  "About {0} in flight phases (pauses and cinematics excluded).": [
+   "Core/MissionReportBuilder.cs:702"
+  ],
+  "Accident": [
+   "Core/MissionReportBuilder.cs:680"
+  ],
+  "Affordable: ": [
+   "Simulation/ResourceLedger.cs:493"
+  ],
+  "Affordable: {0}.": [
+   "Simulation/ResourceLedger.cs:493"
+  ],
+  "Airlock repressurized: EVA complete, antenna repaired.": [
+   "Core/EvaOperations.cs:418"
+  ],
+  "Airlock repressurized: EVA ended without repairing the antenna.": [
+   "Core/EvaOperations.cs:419"
+  ],
+  "Already in {0}.": [
+   "Core/MissionGameState.cs:52"
+  ],
+  "Already inside.": [
+   "Core/EvaOperations.cs:298"
+  ],
+  "Already outside.": [
+   "Core/EvaOperations.cs:260"
+  ],
+  "An EVA starts at the airlock controls with the suit on.": [
+   "Core/MissionDirector.cs:625"
+  ],
+  "Another sequence is still playing.": [
+   "Core/MissionDirector.cs:188",
+   "Core/MissionDirector.cs:242"
+  ],
+  "Antenna repaired. Return through the airlock before transmitting.": [
+   "Core/MissionDirector.cs:594"
+  ],
+  "At launch a crate was still in hand (": [
+   "Core/CargoLoading.cs:283"
+  ],
+  "At launch a crate was still in hand ({0}). It was not counted: only the frozen loadout is aboard.": [
+   "Core/CargoLoading.cs:283"
+  ],
+  "At x{0:0.##} the {1} wait takes about {2:0} real seconds.": [
+   "Core/MissionReportBuilder.cs:621"
+  ],
+  "Atmospheric spectrometer": [
+   "Core/AuroraMission.cs:75"
+  ],
+  "Attribution": [
+   "Core/MissionReportBuilder.cs:688"
+  ],
+  "Awaiting reply from Earth: ": [
+   "Core/CockpitConsoleInteraction.cs:74"
+  ],
+  "Awaiting reply from Earth: {0} (simulated)": [
+   "Core/CockpitConsoleInteraction.cs:74"
+  ],
+  "Awake, food and drinking water were spent by crew commands; while resting they were drawn at the BVAD crew-day rates. Crop irrigation and power used the same ledger. Net use includes building, planting and the one harvest credit; actions are in the timeline.": [
+   "Core/MissionReportBuilder.cs:415"
+  ],
+  "Back inside the airlock.": [
+   "Core/EvaOperations.cs:311"
+  ],
+  "Battery": [
+   "Core/MissionReportBuilder.cs:380"
+  ],
+  "Battery capacity must be finite and at least the initial charge.": [
+   "Simulation/ResourceLedger.cs:79"
+  ],
+  "Battery module": [
+   "Core/AuroraMission.cs:66"
+  ],
+  "Beacon window missed: the recovery craft's rendezvous is delayed {0:0} days, to mission day {1}.": [
+   "Core/SurvivalRecovery.cs:539"
+  ],
+  "Begin mission: {0:0} of {1:0} kg, {2:0} of {3:0} credits": [
+   "Core/CockpitConsoleInteraction.cs:87"
+  ],
+  "Budget": [
+   "Core/MissionReportBuilder.cs:329",
+   "Core/MissionReportBuilder.cs:687"
+  ],
+  "Budget {0} credits exceeds the {1}-credit limit by {2} credits.": [
+   "Inventory/MissionConfiguration.cs:226"
+  ],
+  "Build CO2 absorber cartridge: {0} spare part{1}, {2:0.##} kWh.{3}": [
+   "Core/FieldModifications.cs:268"
+  ],
+  "Build grow module: {0} spare part(s), {1:0.##} kWh": [
+   "Core/SurvivalExtension.cs:161"
+  ],
+  "Build the grow module before planting its single seedling kit.": [
+   "Core/SurvivalExtension.cs:184"
+  ],
+  "CO2 absorber": [
+   "Core/MissionReportBuilder.cs:510"
+  ],
+  "CO2 absorber cartridge built at the workbench.": [
+   "Core/FieldModifications.cs:291"
+  ],
+  "CO2 absorber cartridge built. Install it in the absorber bay.": [
+   "Core/FieldModifications.cs:296"
+  ],
+  "CO2 absorber cartridge installed.": [
+   "Core/FieldModifications.cs:338"
+  ],
+  "CO2 absorber cartridge installed: it takes up the crew's CO2 output without power while cabin CO2 would rise.": [
+   "Core/FieldModifications.cs:335"
+  ],
+  "CO2 absorber cartridge spent.": [
+   "Core/FieldModifications.cs:384"
+  ],
+  "CO2 absorber working: ": [
+   "Core/FieldModifications.cs:309"
+  ],
+  "CO2 absorber working: {0} of capacity left": [
+   "Core/FieldModifications.cs:309"
+  ],
+  "CO2 floor {0:0.#} ppm.": [
+   "Simulation/ResourceLedger.cs:249"
+  ],
+  "Cabin CO2": [
+   "Core/MissionReportBuilder.cs:382",
+   "Core/MissionReportBuilder.cs:669"
+  ],
+  "Cabin CO2 change rate must be finite.": [
+   "Simulation/ResourceRates.cs:65"
+  ],
+  "Cabin CO2 reached the {0} ppm emergency level {1} after launch.": [
+   "Core/MissionDirector.cs:819"
+  ],
+  "Cabin CO2 reached the {0} ppm emergency level {1} after launch. Life support was not repaired, so nothing removed the crew's CO2.": [
+   "Core/MissionDirector.cs:816"
+  ],
+  "Cannot repair {0}: {1}.": [
+   "Simulation/ShipSystem.cs:144"
+  ],
+  "Carbon dioxide: the cabin reached the emergency level.": [
+   "Core/MissionReportBuilder.cs:289"
+  ],
+  "Carrying ": [
+   "Core/CargoLoading.cs:143",
+   "Core/CargoLoading.cs:207"
+  ],
+  "Carrying {0}.": [
+   "Core/CargoLoading.cs:143",
+   "Core/CargoLoading.cs:207"
+  ],
+  "Cartridge spent. Build a new one at the workbench.": [
+   "Core/FieldModifications.cs:315"
+  ],
+  "Cause": [
+   "Core/MissionReportBuilder.cs:265"
+  ],
+  "Chapter jumps": [
+   "Core/MissionReportBuilder.cs:714",
+   "Core/MissionReportBuilder.cs:719"
+  ],
+  "Cinematic {0} (sequence {1}) is still active.": [
+   "Core/CinematicCoordinator.cs:69"
+  ],
+  "Clip tether and go outside.": [
+   "Core/EvaOperations.cs:273"
+  ],
+  "Close outer hatch and repressurize.": [
+   "Core/EvaOperations.cs:334"
+  ],
+  "Cockpit check complete. Impact detected.": [
+   "Core/MissionDirector.cs:216"
+  ],
+  "Cockpit check x{0:0.##}; emergency and repair x{1:0.##}; EVA x{2:0.##}; transmission x{3:0.##} (simulated seconds per real second).": [
+   "Core/MissionReportBuilder.cs:706"
+  ],
+  "Communication": [
+   "Core/MissionReportBuilder.cs:625",
+   "Core/MissionReportBuilder.cs:683"
+  ],
+  "Communications nominal: no distress call is needed.": [
+   "Core/MissionDirector.cs:574"
+  ],
+  "Communications offline: antenna damaged": [
+   "Core/MissionDirector.cs:579"
+  ],
+  "Communications offline: brownout, the battery is empty": [
+   "Core/MissionDirector.cs:589"
+  ],
+  "Communications offline: power distribution damaged": [
+   "Core/MissionDirector.cs:584"
+  ],
+  "Compiled into the game from ": [
+   "Core/MissionReportBuilder.cs:650"
+  ],
+  "Compiled into the game from {0} and checked against this hash when the mission starts. The game makes no network request.": [
+   "Core/MissionReportBuilder.cs:650"
+  ],
+  "Condition must be between 0 and 1.": [
+   "Simulation/ShipSystem.cs:105"
+  ],
+  "Console offline": [
+   "Core/CockpitConsoleInteraction.cs:58"
+  ],
+  "Console on standby until launch": [
+   "Core/CockpitConsoleInteraction.cs:51"
+  ],
+  "Consumed ": [
+   "Simulation/ResourceLedger.cs:170"
+  ],
+  "Consumed {0}.": [
+   "Simulation/ResourceLedger.cs:170"
+  ],
+  "Contact and recovery planning, not a rescue. No craft has arrived; the ship must hold on its own reserves.": [
+   "Core/MissionReportBuilder.cs:249"
+  ],
+  "Contact restored. Survival continues while a nearby fictional recovery vehicle's rendezvous is assessed; no arrival is guaranteed. Rations and drinking now require crew actions.": [
+   "Core/SurvivalExtension.cs:82"
+  ],
+  "Contact with Earth is already restored: the one distress call has been answered.": [
+   "Core/CockpitConsoleInteraction.cs:157"
+  ],
+  "Contact with Earth restored": [
+   "Core/CockpitConsoleInteraction.cs:57"
+  ],
+  "Contact with Earth restored: Earth's reply has been received": [
+   "Core/CockpitConsoleInteraction.cs:24"
+  ],
+  "Content": [
+   "Core/MissionReportBuilder.cs:646"
+  ],
+  "Cost {0} ({1}) must be a finite, non-negative quantity; got {2}.": [
+   "Simulation/ResourceLedger.cs:430"
+  ],
+  "Cost {0} names an unknown resource ({1}). Cabin CO2 is not spendable.": [
+   "Simulation/ResourceLedger.cs:458"
+  ],
+  "Cost {0}: spare parts are whole units; got {1}.": [
+   "Simulation/ResourceLedger.cs:451"
+  ],
+  "Credits are fictional, not cost estimates.": [
+   "Core/MissionReportBuilder.cs:687"
+  ],
+  "Crew consumption": [
+   "Core/MissionReportBuilder.cs:654"
+  ],
+  "Crop supplement added to stored food.": [
+   "Simulation/ResourceLedger.cs:219"
+  ],
+  "Custom loadout": [
+   "Core/MissionReportBuilder.cs:311"
+  ],
+  "Dataset": [
+   "Core/MissionReportBuilder.cs:644"
+  ],
+  "Debris impact. Condition after the strike: ": [
+   "Core/MissionDirector.cs:206"
+  ],
+  "Debris impact. Condition after the strike: {0}.": [
+   "manual: Core/MissionDirector.cs (journal)"
+  ],
+  "Deployable solar wing": [
+   "Core/AuroraMission.cs:69"
+  ],
+  "Depressurizing: ": [
+   "Core/MissionSession.cs:455"
+  ],
+  "Depressurizing: {0} left": [
+   "Core/MissionSession.cs:455"
+  ],
+  "Derived physics": [
+   "Core/MissionReportBuilder.cs:672"
+  ],
+  "Dismantle science instrument: +{0} spare parts for {1:0.##} kWh. The science objective is abandoned for good.": [
+   "Core/FieldModifications.cs:209"
+  ],
+  "Distress call transmitted on mission day {0}. Reference sample {1}: Earth {2} away, one-way light time {3}, earliest reply after {4}.": [
+   "Core/MissionDirector.cs:438"
+  ],
+  "Distress call transmitted. Earliest reply in {0}: 2 x {1} light time + {2} on Earth.": [
+   "Simulation/CommunicationSystem.cs:291"
+  ],
+  "Drink stored water": [
+   "Core/SurvivalExtension.cs:125"
+  ],
+  "EVA": [
+   "Core/MissionReportBuilder.cs:222",
+   "Core/MissionReportBuilder.cs:409",
+   "Core/MissionReportBuilder.cs:507"
+  ],
+  "EVA suit on. Tank: ": [
+   "Core/EvaOperations.cs:163"
+  ],
+  "EVA suit on: ": [
+   "Core/MissionSession.cs:76"
+  ],
+  "EVA suit on: {0} kg oxygen in the tank": [
+   "manual: Core/MissionSession.cs (suit locker status)"
+  ],
+  "EVA suit preparation started: {0:0.##} kg oxygen, {1}.": [
+   "Core/EvaOperations.cs:154"
+  ],
+  "EVA suit required before depressurizing.": [
+   "Core/EvaOperations.cs:186"
+  ],
+  "Earliest reply": [
+   "Core/MissionReportBuilder.cs:590"
+  ],
+  "Earth answered {0} after the distress call: twice the {1} light time across {2}, plus {3} on Earth. Contact is restored and a recovery trajectory can be assessed. Rescue has not arrived; the ship must hold.{4}": [
+   "Core/MissionDirector.cs:778"
+  ],
+  "Earth body center (399), DE441": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:31"
+  ],
+  "Earth distance": [
+   "Core/MissionReportBuilder.cs:586"
+  ],
+  "Earth processing": [
+   "Core/MissionReportBuilder.cs:589"
+  ],
+  "Earth relays a recovery plan: a fictional recovery craft already in transit nearby can rendezvous {0:0} days after contact, on mission day {1}, and will ask for the ship's beacon on mission day {2}. This timeline is a game assumption, not derived from the NASA Earth-Mars data.": [
+   "Core/SurvivalRecovery.cs:396"
+  ],
+  "Earth's reply has been received.": [
+   "Simulation/CommunicationSystem.cs:218"
+  ],
+  "Earth-Mars reference ephemeris: NASA/JPL Horizons. AURORA-7 uses a fictional Mars-vicinity distance approximation. Life-support behavior is simplified for education. Mission timing may be compressed.": [
+   "Core/MissionReportBuilder.cs:688"
+  ],
+  "Eat stored ration": [
+   "Core/SurvivalExtension.cs:124"
+  ],
+  "Elapsed simulation time would overflow.": [
+   "Core/MissionSession.cs:368"
+  ],
+  "Electrical load {0} W exceeds available generation {1} W by {2} W.": [
+   "Inventory/MissionConfiguration.cs:231"
+  ],
+  "Empty absorber bay. Build a cartridge at the workbench.": [
+   "Core/FieldModifications.cs:316"
+  ],
+  "Ended by mission control.": [
+   "Core/MissionReportBuilder.cs:303"
+  ],
+  "Energy": [
+   "Core/MissionReportBuilder.cs:668"
+  ],
+  "Enter the airlock.": [
+   "Core/EvaOperations.cs:298"
+  ],
+  "Exterior repair allowed.": [
+   "Core/MissionDirector.cs:528"
+  ],
+  "False signal": [
+   "Core/MissionReportBuilder.cs:684"
+  ],
+  "Fictional scenario and simplifications": [
+   "Core/MissionReportBuilder.cs:690"
+  ],
+  "Field modifications": [
+   "Core/MissionReportBuilder.cs:403",
+   "Core/MissionReportBuilder.cs:685"
+  ],
+  "Food": [
+   "Core/MissionReportBuilder.cs:379"
+  ],
+  "Food and water assume full BVAD crew-day portions, not the zero automatic meal rate. This estimate is not a rescue ETA.": [
+   "Core/MissionReportBuilder.cs:416"
+  ],
+  "Food locker": [
+   "Core/AuroraMission.cs:63"
+  ],
+  "Food reserve exhausted {0} after launch.": [
+   "Core/MissionDirector.cs:830"
+  ],
+  "Food reserve {0} kg is below the {1} kg required for {2} planned crew-days.": [
+   "Inventory/MissionConfiguration.cs:247"
+  ],
+  "Food use": [
+   "Simulation/ResourceRates.cs:55"
+  ],
+  "Food: the reserve ran out.": [
+   "Core/MissionReportBuilder.cs:297"
+  ],
+  "Frame time and hitch clamp must be finite and non-negative.": [
+   "Core/MissionSession.cs:256"
+  ],
+  "Go outside to reach the {0}.": [
+   "Core/MissionDirector.cs:529"
+  ],
+  "Grow module": [
+   "Core/MissionReportBuilder.cs:417"
+  ],
+  "Grow module failed: controlled conditions or irrigation were interrupted. No harvest was credited.": [
+   "Core/SurvivalExtension.cs:110"
+  ],
+  "Hands full: carrying ": [
+   "Core/CargoLoading.cs:127"
+  ],
+  "Hands full: carrying {0}": [
+   "Core/CargoLoading.cs:127"
+  ],
+  "Harvest credit must be finite and positive.": [
+   "Simulation/ResourceLedger.cs:213"
+  ],
+  "Harvest requires an active mission.": [
+   "Simulation/ResourceLedger.cs:215"
+  ],
+  "Harvest small supplement: {0:0.###} kg ration-equivalent game credit": [
+   "Core/SurvivalExtension.cs:215"
+  ],
+  "Holding margin": [
+   "Core/MissionReportBuilder.cs:259"
+  ],
+  "Holding projection": [
+   "Core/MissionReportBuilder.cs:416"
+  ],
+  "Horizons UT (UTC for these post-1962 dates; preserve source future leap-second caveat)": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:34"
+  ],
+  "ICRF, REF_PLANE=FRAME": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:32"
+  ],
+  "Impact detected": [
+   "Core/CockpitConsoleInteraction.cs:53"
+  ],
+  "Initial reserves must be finite and non-negative.": [
+   "Simulation/ResourceLedger.cs:524"
+  ],
+  "Inner hatch sealed, airlock depressurizing: {0:0.##} kg oxygen, {1:0.##} kWh. Breathing suit oxygen.": [
+   "Core/EvaOperations.cs:235"
+  ],
+  "Inner hatch sealed. Depressurizing.": [
+   "Core/EvaOperations.cs:247"
+  ],
+  "Inside the airlock.": [
+   "Core/EvaOperations.cs:313"
+  ],
+  "Install CO2 absorber cartridge: cabin CO2 stops rising for up to ": [
+   "Core/FieldModifications.cs:319"
+  ],
+  "Insufficient reserves: ": [
+   "Simulation/ResourceLedger.cs:489"
+  ],
+  "Insufficient reserves: {0}.": [
+   "manual: Simulation/ResourceLedger.cs"
+  ],
+  "Interior repair allowed.": [
+   "Core/MissionDirector.cs:533"
+  ],
+  "Keep irrigation water after the planting cost.": [
+   "Core/SurvivalExtension.cs:187"
+  ],
+  "Launch on {0}: {1:0} kg payload, {2:0} credits, {3:0} W load on {4:0} W generation.": [
+   "Core/MissionDirector.cs:417"
+  ],
+  "Launch requires Planning; current phase is {0}.": [
+   "Core/MissionGameState.cs:107",
+   "Core/MissionPlanner.cs:153",
+   "Core/MissionPlanner.cs:255"
+  ],
+  "Launch reserves loaded.": [
+   "Simulation/ResourceLedger.cs:99"
+  ],
+  "Launch reserves were already loaded.": [
+   "Simulation/ResourceLedger.cs:73"
+  ],
+  "Launch through IMissionPlanner.TryLaunch so the loadout is validated and frozen.": [
+   "Core/MissionGameState.cs:57"
+  ],
+  "Launched automatically at the planning deadline with the last valid loadout.": [
+   "Core/MissionReportBuilder.cs:354"
+  ],
+  "Launched automatically at the planning deadline with the loadout as drafted.": [
+   "Core/MissionReportBuilder.cs:359"
+  ],
+  "Launched by the crew inside the timed planning window.": [
+   "Core/MissionReportBuilder.cs:360"
+  ],
+  "Launched by the crew; planning was not timed.": [
+   "Core/MissionReportBuilder.cs:364"
+  ],
+  "Life support": [
+   "Core/MissionReportBuilder.cs:682"
+  ],
+  "Light time": [
+   "Core/MissionReportBuilder.cs:666"
+  ],
+  "Link availability, occultation, acquisition and message length are not modelled. Processing time on Earth and transmit energy are game assumptions.": [
+   "Core/MissionReportBuilder.cs:683"
+  ],
+  "Link diagnostic": [
+   "Core/MissionReportBuilder.cs:595"
+  ],
+  "Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.": [
+   "Core/MissionDirector.cs:273"
+  ],
+  "Link diagnostic: the damaged receive buffer replayed an old local recording. It was not a reply from Earth.": [
+   "Core/MissionDirector.cs:265"
+  ],
+  "Link hardware ready.": [
+   "Core/MissionDirector.cs:597"
+  ],
+  "Link ready.": [
+   "Core/MissionDirector.cs:561"
+  ],
+  "Load {0}: payload {1:0} -> {2:0} of {3:0} kg{4}": [
+   "Core/CargoLoading.cs:176"
+  ],
+  "Loading closed with a crate still in hand (": [
+   "Core/CargoLoading.cs:299"
+  ],
+  "Loading closed with a crate still in hand ({0}). It was not counted: only the sealed loadout is aboard.": [
+   "Core/CargoLoading.cs:299"
+  ],
+  "Loading closed. Board and secure your seat.": [
+   "Core/PlanningDeadline.cs:28"
+  ],
+  "Loading is still open.": [
+   "Core/MissionPlanner.cs:224"
+  ],
+  "Loadout": [
+   "Core/MissionReportBuilder.cs:311"
+  ],
+  "Loadout is within the mass, budget, power and supply limits.": [
+   "Inventory/MissionConfiguration.cs:194"
+  ],
+  "MISSION IN PROGRESS": [
+   "Core/MissionReportBuilder.cs:119"
+  ],
+  "MISSION LOST": [
+   "Core/MissionReportBuilder.cs:117"
+  ],
+  "Mars body center (499), mar099": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:30"
+  ],
+  "Mass {0} kg exceeds the {1} kg launch limit by {2} kg.": [
+   "Inventory/MissionConfiguration.cs:221"
+  ],
+  "Measure Martian upper-atmosphere composition": [
+   "Core/AuroraMission.cs:78"
+  ],
+  "Missed: the rendezvous slipped {0:0} days, to mission day {1}": [
+   "Core/SurvivalRecovery.cs:369"
+  ],
+  "Mission clock T0 {0} is outside the packaged reference ({1} to {2}).": [
+   "Core/MissionDirector.cs:76"
+  ],
+  "Mission date": [
+   "Core/MissionReportBuilder.cs:573"
+  ],
+  "Mission date at transmission": [
+   "Core/MissionReportBuilder.cs:568"
+  ],
+  "Mission design": [
+   "Core/MissionReportBuilder.cs:368"
+  ],
+  "Mission ended: {0}.": [
+   "Core/MissionGameState.cs:146"
+  ],
+  "Mission lost.": [
+   "Core/MissionDirector.cs:832"
+  ],
+  "Mission objective unrecoverable: the {0} needs {1} spare parts and only {2} remain{3}, so contact with Earth can never be restored. The crew is alive and the ship is stable, but no recovery can be planned.{4}": [
+   "Core/MissionDirector.cs:764"
+  ],
+  "Mission outcome: lost.": [
+   "Core/MissionDirector.cs:459"
+  ],
+  "Mission outcome: recovered by the fictional recovery craft.": [
+   "Core/MissionDirector.cs:458"
+  ],
+  "Mission outcome: recovery possible.": [
+   "Core/MissionDirector.cs:456"
+  ],
+  "Mission time": [
+   "Core/MissionReportBuilder.cs:244"
+  ],
+  "NASA Environmental Control and Life Support Systems: https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/": [
+   "Core/MissionReportBuilder.cs:18"
+  ],
+  "NASA Life Support Baseline Values and Assumptions Document (NASA/TP-2015-218570/REV2): oxygen {0:0.00} kg, water {1:0.0} L, food {2:0.00} kg and CO2 output {3:0.00} kg per crew-day.": [
+   "Core/MissionReportBuilder.cs:655"
+  ],
+  "NASA Mars Communications Disruption and Delay: https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf": [
+   "Core/MissionReportBuilder.cs:19"
+  ],
+  "NASA-01": [
+   "Core/MissionReportBuilder.cs:651"
+  ],
+  "NASA-02": [
+   "Core/MissionReportBuilder.cs:652"
+  ],
+  "NASA-03": [
+   "Core/MissionReportBuilder.cs:653"
+  ],
+  "NASA/JPL Horizons API: https://ssd-api.jpl.nasa.gov/doc/horizons.html": [
+   "Core/MissionReportBuilder.cs:17"
+  ],
+  "NASA/JPL Horizons, dataset ": [
+   "Core/MissionReportBuilder.cs:563"
+  ],
+  "NASA/JPL Horizons, dataset {0}": [
+   "Core/MissionReportBuilder.cs:563"
+  ],
+  "NASA/JPL Solar System Dynamics, Horizons": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:25"
+  ],
+  "NASA/JPL data": [
+   "Core/MissionReportBuilder.cs:659"
+  ],
+  "NONE; geometric simultaneous state vectors": [
+   "Simulation/HorizonsEarthMars2026Snapshot.cs:33"
+  ],
+  "Net electrical load must be finite.": [
+   "Simulation/ResourceRates.cs:60"
+  ],
+  "Net use including survival actions": [
+   "Core/MissionReportBuilder.cs:394"
+  ],
+  "No ": [
+   "Core/CargoLoading.cs:166"
+  ],
+  "No EVA is needed: the antenna is operational.": [
+   "Core/EvaOperations.cs:106"
+  ],
+  "No EVA was attempted.": [
+   "Core/MissionReportBuilder.cs:503"
+  ],
+  "No Earth-Mars reference sample exists before ": [
+   "Simulation/EarthMarsReference.cs:180"
+  ],
+  "No Earth-Mars reference sample exists before {0}.": [
+   "Simulation/EarthMarsReference.cs:180"
+  ],
+  "No distress call was sent.": [
+   "Core/MissionReportBuilder.cs:600"
+  ],
+  "No mature crop is ready to harvest.": [
+   "Core/SurvivalExtension.cs:216"
+  ],
+  "No mission session is running.": [
+   "Core/Runtime/MissionRuntime.cs:423",
+   "Core/Runtime/MissionRuntime.cs:445"
+  ],
+  "No ration is needed yet.": [
+   "Core/SurvivalExtension.cs:124"
+  ],
+  "No recovery plan yet": [
+   "Core/SurvivalRecovery.cs:379"
+  ],
+  "No rest now: ": [
+   "Core/SurvivalRecovery.cs:197"
+  ],
+  "No rest now: {0}.": [
+   "Core/SurvivalRecovery.cs:197"
+  ],
+  "No science payload aboard": [
+   "Core/FieldModifications.cs:185"
+  ],
+  "No science payload was carried: its mass, power and budget went to reserves and spares.": [
+   "Core/MissionReportBuilder.cs:525"
+  ],
+  "No water portion is needed yet.": [
+   "Core/SurvivalExtension.cs:125"
+  ],
+  "No {0} aboard": [
+   "Core/CargoLoading.cs:166"
+  ],
+  "No {0} left on the pallet: all {1} are aboard": [
+   "Core/CargoLoading.cs:122"
+  ],
+  "None possible.": [
+   "Core/MissionReportBuilder.cs:526"
+  ],
+  "None.": [
+   "Core/MissionReportBuilder.cs:719"
+  ],
+  "None: the snapshot ends on {0}. No call could be sent after that date.": [
+   "Core/MissionReportBuilder.cs:579"
+  ],
+  "Not available during {0}.": [
+   "Core/EvaOperations.cs:453",
+   "Core/FieldModifications.cs:416"
+  ],
+  "Not damaged.": [
+   "Core/MissionReportBuilder.cs:485"
+  ],
+  "Not needed before the emergency.": [
+   "Core/FieldModifications.cs:414"
+  ],
+  "Not possible during an EVA.": [
+   "Core/FieldModifications.cs:411"
+  ],
+  "Not received: it could not arrive for another ": [
+   "Core/MissionReportBuilder.cs:614"
+  ],
+  "Not received: it could not arrive for another {0}.": [
+   "Core/MissionReportBuilder.cs:614"
+  ],
+  "Not received: the link had no power when the reply arrived.": [
+   "Core/MissionReportBuilder.cs:618"
+  ],
+  "Not requested yet (mission day {0})": [
+   "Core/SurvivalRecovery.cs:380"
+  ],
+  "Not returned: the mission was lost without contact, so the data never reached Earth.": [
+   "Core/MissionReportBuilder.cs:547"
+  ],
+  "Nothing to consume.": [
+   "Simulation/ResourceLedger.cs:152"
+  ],
+  "Nothing to interact with is in reach.": [
+   "Interaction/InteractionResolver.cs:109"
+  ],
+  "O2 {0:G6} kg/s, water {1:G6} L/s, food {2:G6} kg/s, net load {3:0.#} W, CO2 {4:G6} ppm/s": [
+   "Simulation/ResourceRates.cs:85"
+  ],
+  "Objective": [
+   "Core/MissionReportBuilder.cs:525",
+   "Core/MissionReportBuilder.cs:532"
+  ],
+  "One-way light time": [
+   "Core/MissionReportBuilder.cs:587"
+  ],
+  "Only Core decides a mission outcome.": [
+   "Core/MissionGameState.cs:62"
+  ],
+  "Only an unlaunched Planning loadout can be sealed.": [
+   "Core/MissionPlanner.cs:187"
+  ],
+  "Outcome": [
+   "Core/MissionReportBuilder.cs:268",
+   "Core/MissionReportBuilder.cs:686"
+  ],
+  "Outer hatch closed. Repressurizing.": [
+   "Core/EvaOperations.cs:349"
+  ],
+  "Outside on the tether.": [
+   "Core/EvaOperations.cs:287"
+  ],
+  "Outside the ship on the tether.": [
+   "Core/EvaOperations.cs:285"
+  ],
+  "Oxygen": [
+   "Core/MissionReportBuilder.cs:377"
+  ],
+  "Oxygen reserve {0} kg is below the {1} kg required for {2} planned crew-days.": [
+   "Inventory/MissionConfiguration.cs:237"
+  ],
+  "Oxygen tank": [
+   "Core/AuroraMission.cs:57"
+  ],
+  "Oxygen use": [
+   "Simulation/ResourceRates.cs:45"
+  ],
+  "Oxygen: the stored reserve and then the cabin air ran out.": [
+   "Core/MissionReportBuilder.cs:287"
+  ],
+  "Packaged copy": [
+   "Core/MissionReportBuilder.cs:650"
+  ],
+  "Paused: real time discarded.": [
+   "Core/MissionSession.cs:29"
+  ],
+  "Payload mass": [
+   "Core/MissionReportBuilder.cs:328"
+  ],
+  "Pending: nothing can be returned until contact is restored.": [
+   "Core/MissionReportBuilder.cs:551"
+  ],
+  "Pick up {0}: {1:0} kg, {2:0} credits, {3} ({4} on the pallet)": [
+   "Core/CargoLoading.cs:118"
+  ],
+  "Planning": [
+   "Core/MissionReportBuilder.cs:367"
+  ],
+  "Plant {0:0.#}-day seedlings: {1:0.##} L; {2:0.#} further days, {3:0.#} W and {4:0.###} L/day": [
+   "Core/SurvivalExtension.cs:190"
+  ],
+  "Planting needs operational power and life support.": [
+   "Core/SurvivalExtension.cs:185"
+  ],
+  "Power": [
+   "Core/MissionReportBuilder.cs:330"
+  ],
+  "Power and life support must be operational before an EVA.": [
+   "Core/EvaOperations.cs:116",
+   "Core/EvaOperations.cs:191",
+   "Core/MissionDirector.cs:620"
+  ],
+  "Power the recovery beacon: {0:0.##} kWh; the window closes in {1}": [
+   "Core/SurvivalRecovery.cs:308"
+  ],
+  "Powered on mission day {0} ({1:0.##} kWh)": [
+   "Core/SurvivalRecovery.cs:363"
+  ],
+  "Preset '": [
+   "Core/MissionReportBuilder.cs:311"
+  ],
+  "Preset '{0}'": [
+   "Core/MissionReportBuilder.cs:311",
+   "manual: Core/MissionReportBuilder.cs (loadout line; the preset ID stays as is)"
+  ],
+  "Provider": [
+   "Core/MissionReportBuilder.cs:645"
+  ],
+  "Put on EVA suit: {0:0.##} kg oxygen, {1} of preparation.": [
+   "Core/EvaOperations.cs:130"
+  ],
+  "Put the ": [
+   "Core/CargoLoading.cs:126"
+  ],
+  "Put the {0} back on the pallet": [
+   "Core/CargoLoading.cs:126"
+  ],
+  "Quantity cannot be negative ({0}).": [
+   "Core/MissionPlanner.cs:103"
+  ],
+  "RECOVERED": [
+   "Core/MissionReportBuilder.cs:113"
+  ],
+  "RECOVERY POSSIBLE": [
+   "Core/MissionReportBuilder.cs:115"
+  ],
+  "Rates apply only after launch.": [
+   "Simulation/ResourceLedger.cs:227"
+  ],
+  "Rates updated: ": [
+   "Simulation/ResourceLedger.cs:237"
+  ],
+  "Rates updated: {0}.": [
+   "Simulation/ResourceLedger.cs:237"
+  ],
+  "Real play time": [
+   "Core/MissionReportBuilder.cs:702"
+  ],
+  "Real time must be finite and non-negative.": [
+   "Core/MissionSession.cs:275"
+  ],
+  "Recovery beacon": [
+   "Core/MissionReportBuilder.cs:421"
+  ],
+  "Recovery beacon powered on mission day {0} ({1:0.##} kWh): the rendezvous stays on mission day {2}.": [
+   "Core/SurvivalRecovery.cs:332"
+  ],
+  "Recovery beacon powered: the rendezvous stays on schedule.": [
+   "Core/SurvivalRecovery.cs:337"
+  ],
+  "Reference": [
+   "Core/MissionReportBuilder.cs:563"
+  ],
+  "Reference sample": [
+   "Core/MissionReportBuilder.cs:579",
+   "Core/MissionReportBuilder.cs:584"
+  ],
+  "Removed '{0}'.": [
+   "Core/MissionPlanner.cs:127"
+  ],
+  "Repair {0}: {1}.": [
+   "Simulation/ShipSystem.cs:147"
+  ],
+  "Reply": [
+   "Core/MissionReportBuilder.cs:614",
+   "Core/MissionReportBuilder.cs:618",
+   "Core/MissionReportBuilder.cs:667"
+  ],
+  "Reply from Earth received.": [
+   "Core/MissionDirector.cs:447"
+  ],
+  "Reply received": [
+   "Core/MissionReportBuilder.cs:608"
+  ],
+  "Reply waiting: the link has no power": [
+   "Core/CockpitConsoleInteraction.cs:73"
+  ],
+  "Repressurizing: ": [
+   "Core/MissionSession.cs:459"
+  ],
+  "Repressurizing: {0} left": [
+   "Core/MissionSession.cs:459"
+  ],
+  "Requested {0} (sequence {1}).": [
+   "Core/CinematicCoordinator.cs:81"
+  ],
+  "Requested, not powered yet": [
+   "Core/SurvivalRecovery.cs:375"
+  ],
+  "Reserves are already loaded; start a new mission session instead.": [
+   "Core/MissionPlanner.cs:260"
+  ],
+  "Reserves are unavailable until the mission launches.": [
+   "Simulation/ResourceLedger.cs:469"
+  ],
+  "Reserves cannot be spent after the mission has ended.": [
+   "Simulation/ResourceLedger.cs:474"
+  ],
+  "Resources": [
+   "Core/MissionReportBuilder.cs:424"
+  ],
+  "Rest": [
+   "Core/MissionReportBuilder.cs:420"
+  ],
+  "Rest began on mission day {0}: up to {1:0.##} h; food and water are drawn at the BVAD crew-day rates while the crew rests.": [
+   "Core/SurvivalRecovery.cs:229"
+  ],
+  "Rest ended on mission day {0} after {1:0.##} h: {2}.": [
+   "Core/SurvivalRecovery.cs:646"
+  ],
+  "Rest up to {0:0.##} h: about {1:0.###} kg food and {2:0.###} L water at the BVAD crew-day rates; any danger wakes the crew": [
+   "Core/SurvivalRecovery.cs:202"
+  ],
+  "Result": [
+   "Core/MissionReportBuilder.cs:233"
+  ],
+  "Resume before waking the crew.": [
+   "Core/SurvivalRecovery.cs:246"
+  ],
+  "Resume crew control before acting.": [
+   "Core/SurvivalExtension.cs:237"
+  ],
+  "Resume crew control first.": [
+   "Core/SurvivalRecovery.cs:573"
+  ],
+  "Return through the airlock and repressurize first.": [
+   "Core/MissionDirector.cs:630"
+  ],
+  "Returned: with the link restored, the instrument's data can be sent to Earth.": [
+   "Core/MissionReportBuilder.cs:543"
+  ],
+  "Run cockpit systems check": [
+   "Core/CockpitConsoleInteraction.cs:53"
+  ],
+  "Run communications diagnostic": [
+   "Core/MissionDirector.cs:245"
+  ],
+  "Run the communications diagnostic at the console first.": [
+   "Core/MissionDirector.cs:553"
+  ],
+  "SHA-256": [
+   "Core/MissionReportBuilder.cs:649"
+  ],
+  "Salvaged {0} spare part(s).": [
+   "Simulation/ResourceLedger.cs:205"
+  ],
+  "Science": [
+   "Core/MissionReportBuilder.cs:527",
+   "Core/MissionReportBuilder.cs:555"
+  ],
+  "Science instrument dismantled": [
+   "Core/FieldModifications.cs:190"
+  ],
+  "Science instrument dismantled: +{0} spare parts, {1:0} W off the bus. The science objective is abandoned.": [
+   "Core/FieldModifications.cs:235"
+  ],
+  "Science instrument dismantled: +{0} spare parts. Its {1:0} W load is off the bus.": [
+   "Core/FieldModifications.cs:242"
+  ],
+  "Science payload: 300 W continuous load and no survival value.": [
+   "Core/AuroraMission.cs:76"
+  ],
+  "Science return": [
+   "Core/MissionReportBuilder.cs:526",
+   "Core/MissionReportBuilder.cs:554"
+  ],
+  "Seal inner hatch and depressurize: {0:0.##} kg oxygen, {1:0.##} kWh.": [
+   "Core/EvaOperations.cs:205"
+  ],
+  "Secure your seat and launch: {0:0} of {1:0} kg, {2:0} of {3:0} credits": [
+   "Core/CockpitConsoleInteraction.cs:95"
+  ],
+  "Set '{0}' to {1}.": [
+   "Core/MissionPlanner.cs:127"
+  ],
+  "Shown to the player": [
+   "Core/MissionReportBuilder.cs:621"
+  ],
+  "Simplified for education. Consumption follows the cited NASA document; damage, leak and scrubber rates and repair costs are gameplay tuning. Loss levels are game rules anchored to cited operational levels, not medical limits.": [
+   "Core/MissionReportBuilder.cs:682"
+  ],
+  "Simulated mission time": [
+   "Core/MissionReportBuilder.cs:698"
+  ],
+  "Simulation advanced.": [
+   "Core/MissionSession.cs:28"
+  ],
+  "Simulation clock is stopped in this phase.": [
+   "Core/MissionSession.cs:30"
+  ],
+  "Simulation paused.": [
+   "Core/SimulationClock.cs:28"
+  ],
+  "Simulation resumed.": [
+   "Core/SimulationClock.cs:39"
+  ],
+  "Simulation time must be finite and non-negative.": [
+   "Core/MissionSession.cs:348"
+  ],
+  "Solo EVA": [
+   "Core/MissionReportBuilder.cs:681"
+  ],
+  "Spacecraft": [
+   "Core/MissionReportBuilder.cs:679"
+  ],
+  "Spare parts": [
+   "Core/MissionReportBuilder.cs:381"
+  ],
+  "Spare parts at launch": [
+   "Core/MissionReportBuilder.cs:349"
+  ],
+  "Spare parts kit": [
+   "Core/AuroraMission.cs:72"
+  ],
+  "Spent on ": [
+   "Core/MissionReportBuilder.cs:409"
+  ],
+  "Spent on {0}": [
+   "manual: Core/MissionReportBuilder.cs (report label)"
+  ],
+  "Stabilize power or life support first.": [
+   "Core/MissionDirector.cs:615"
+  ],
+  "Stabilize the ship before preparing an EVA.": [
+   "Core/EvaOperations.cs:111"
+  ],
+  "Status": [
+   "Core/MissionReportBuilder.cs:241"
+  ],
+  "Stored oxygen ran out {0} after launch. The cabin's own air stayed above the impairment level for another {1}; then the mission was lost.": [
+   "Core/MissionDirector.cs:810"
+  ],
+  "Suit oxygen ran out {0} {1} after launch, {2}.": [
+   "Core/MissionDirector.cs:709"
+  ],
+  "Suit oxygen: the tank ran empty before the crew was back in a pressurized cabin.": [
+   "Core/MissionReportBuilder.cs:299"
+  ],
+  "Survival accounting": [
+   "Core/MissionReportBuilder.cs:415"
+  ],
+  "Survival action available.": [
+   "Core/SurvivalExtension.cs:239"
+  ],
+  "Systems and repairs": [
+   "Core/MissionReportBuilder.cs:517"
+  ],
+  "T+{0} d {1:00} h {2:00} min": [
+   "Core/MissionCalendar.cs:85"
+  ],
+  "T+{0} h {1:00} min": [
+   "Core/MissionCalendar.cs:86"
+  ],
+  "The CO2 floor must be a finite, non-negative concentration.": [
+   "Simulation/ResourceLedger.cs:245"
+  ],
+  "The EVA is already under way.": [
+   "Core/EvaOperations.cs:176"
+  ],
+  "The EVA suit is already on.": [
+   "Core/EvaOperations.cs:101"
+  ],
+  "The Earth-Mars reference snapshot ends on ": [
+   "Simulation/EarthMarsReference.cs:187"
+  ],
+  "The Earth-Mars reference snapshot ends on {0}; there is no reviewed sample for ": [
+   "Simulation/EarthMarsReference.cs:187"
+  ],
+  "The airlock can only be cycled once the ship is stabilized.": [
+   "Core/EvaOperations.cs:181"
+  ],
+  "The airlock is not pressurized and idle.": [
+   "Core/EvaOperations.cs:196"
+  ],
+  "The airlock is not ready.": [
+   "Core/EvaOperations.cs:121"
+  ],
+  "The antenna must be repaired before transmitting.": [
+   "Core/MissionDirector.cs:635"
+  ],
+  "The beacon is already powered for the recovery craft.": [
+   "Core/SurvivalRecovery.cs:285"
+  ],
+  "The beacon window has passed; the rendezvous has slipped.": [
+   "Core/SurvivalRecovery.cs:291"
+  ],
+  "The cargo bay is sealed after launch.": [
+   "Core/CargoLoading.cs:256"
+  ],
+  "The cockpit check belongs to Intro; current phase is {0}.": [
+   "Core/MissionDirector.cs:183"
+  ],
+  "The combined cost is too large to represent.": [
+   "Simulation/ResourceLedger.cs:464"
+  ],
+  "The crew is already resting.": [
+   "Core/SurvivalRecovery.cs:182"
+  ],
+  "The crew is awake.": [
+   "Core/SurvivalRecovery.cs:261"
+  ],
+  "The crew is not resting.": [
+   "Core/SurvivalRecovery.cs:241"
+  ],
+  "The crew is resting. Wake up first.": [
+   "Core/SurvivalExtension.cs:238",
+   "Core/SurvivalRecovery.cs:297"
+  ],
+  "The debris strike and the damage it does are authored events.": [
+   "Core/MissionReportBuilder.cs:680"
+  ],
+  "The distress call is on its way. Earliest reply in ": [
+   "Simulation/CommunicationSystem.cs:223"
+  ],
+  "The emergency begins only after the impact sequence.": [
+   "Core/MissionDirector.cs:610"
+  ],
+  "The fallback timeout must be finite and non-negative.": [
+   "Core/CinematicCoordinator.cs:64"
+  ],
+  "The impact has already happened.": [
+   "Core/MissionDirector.cs:178"
+  ],
+  "The link cannot be used during {0}.": [
+   "Core/MissionDirector.cs:569"
+  ],
+  "The link diagnostic has already run.": [
+   "Core/MissionDirector.cs:230"
+  ],
+  "The link diagnostic is still running.": [
+   "Core/MissionDirector.cs:231",
+   "Core/MissionDirector.cs:558"
+  ],
+  "The loadout can only change during Planning; it is frozen after launch.": [
+   "Core/MissionPlanner.cs:88"
+  ],
+  "The mission already ended ({0}).": [
+   "Core/MissionGameState.cs:131"
+  ],
+  "The mission has already launched; the loadout is frozen.": [
+   "Core/MissionPlanner.cs:148",
+   "Core/MissionPlanner.cs:250"
+  ],
+  "The mission is still running; this is a preview.": [
+   "Core/MissionReportBuilder.cs:241"
+  ],
+  "The mission names astronomical reference '{0}' but the packaged dataset is '{1}'.": [
+   "Core/MissionDirector.cs:69"
+  ],
+  "The mission session has ended.": [
+   "Core/CargoLoading.cs:251",
+   "Core/CinematicCoordinator.cs:54",
+   "Core/EvaOperations.cs:448",
+   "Core/FieldModifications.cs:175",
+   "Core/FieldModifications.cs:392",
+   "Core/MissionDirector.cs:173",
+   "Core/MissionDirector.cs:224",
+   "Core/MissionDirector.cs:516",
+   "Core/MissionDirector.cs:542",
+   "Core/MissionGameState.cs:42",
+   "Core/MissionGameState.cs:102",
+   "Core/MissionGameState.cs:121",
+   "Core/MissionPlanner.cs:83",
+   "Core/MissionPlanner.cs:143",
+   "Core/MissionPlanner.cs:182",
+   "Core/MissionPlanner.cs:245",
+   "Core/MissionSession.cs:280",
+   "Core/MissionSession.cs:353",
+   "Core/PlanningDeadline.cs:79",
+   "Core/SurvivalRecovery.cs:563"
+  ],
+  "The mission was already advanced this frame.": [
+   "Core/Runtime/MissionRuntime.cs:428"
+  ],
+  "The one grow module has already been built.": [
+   "Core/SurvivalExtension.cs:159"
+  ],
+  "The only ": [
+   "Core/CargoLoading.cs:121"
+  ],
+  "The only {0} is already aboard": [
+   "Core/CargoLoading.cs:121"
+  ],
+  "The optional survival chapter starts only after actual restored contact.": [
+   "Core/MissionDirector.cs:639"
+  ],
+  "The outer hatch is closed.": [
+   "Core/EvaOperations.cs:270"
+  ],
+  "The outer hatch is not open.": [
+   "Core/EvaOperations.cs:326"
+  ],
+  "The planning deadline must be a finite number of seconds greater than zero.": [
+   "Core/PlanningDeadline.cs:94"
+  ],
+  "The pre-grown crop reached its nominal harvest age after sustained cultivation. Collect the small supplement.": [
+   "Core/SurvivalExtension.cs:117"
+  ],
+  "The recovery craft asks for the ship's beacon on mission day {0}: power it within {1:0} h ({2:0.##} kWh), or the rendezvous is delayed {3:0} days.": [
+   "Core/SurvivalRecovery.cs:526"
+  ],
+  "The recovery craft docked on mission day {0}; the crew transfers aboard.": [
+   "Core/SurvivalRecovery.cs:550"
+  ],
+  "The recovery craft has not asked for the beacon yet.": [
+   "Core/SurvivalRecovery.cs:292"
+  ],
+  "The salvage yield and the cartridge's cost and capacity are game assumptions. The capacity is stated in crew-hours of the cited metabolic CO2 output; it is not sized from or rated like a real lithium-hydroxide canister.": [
+   "Core/MissionReportBuilder.cs:685"
+  ],
+  "The scaled simulation time is too large to represent.": [
+   "Core/MissionSession.cs:291"
+  ],
+  "The science instrument cannot be reached in this ship.": [
+   "Core/FieldModifications.cs:180"
+  ],
+  "The signal found before the transmission was the damaged receive buffer replaying an old local recording. It was not a reply from Earth and changed nothing.": [
+   "Core/MissionReportBuilder.cs:595"
+  ],
+  "The signal heard before the transmission is a story beat: a damaged local buffer replaying an old recording. It is not an echo from space and not a model of a NASA link.": [
+   "Core/MissionReportBuilder.cs:684"
+  ],
+  "The simulation clock does not run during {0}.": [
+   "Core/MissionSession.cs:358"
+  ],
+  "The simulation is already paused.": [
+   "Core/SimulationClock.cs:24"
+  ],
+  "The simulation is not paused.": [
+   "Core/SimulationClock.cs:35"
+  ],
+  "The simulation is paused; resume before advancing time.": [
+   "Core/MissionSession.cs:363"
+  ],
+  "The spare parts count is too large to represent.": [
+   "Simulation/ResourceLedger.cs:194"
+  ],
+  "The {0} can only be repaired outside, during an EVA.": [
+   "Core/MissionDirector.cs:524"
+  ],
+  "The {0} cannot be repaired during {1}.": [
+   "Core/MissionDirector.cs:534"
+  ],
+  "This action belongs to the enabled post-contact survival chapter.": [
+   "Core/SurvivalExtension.cs:236"
+  ],
+  "This belongs to the post-contact survival chapter.": [
+   "Core/SurvivalRecovery.cs:568"
+  ],
+  "This ship has no workbench and absorber bay.": [
+   "Core/FieldModifications.cs:397"
+  ],
+  "This stack takes {0}; you are carrying {1}": [
+   "Core/CargoLoading.cs:172"
+  ],
+  "Time compression": [
+   "Core/MissionReportBuilder.cs:722"
+  ],
+  "Time scale must be greater than zero and at most 86,400x; use Pause to stop time.": [
+   "Core/SimulationClock.cs:46"
+  ],
+  "Time scale {0:0.###}x.": [
+   "Core/SimulationClock.cs:50"
+  ],
+  "Time scales": [
+   "Core/MissionReportBuilder.cs:705"
+  ],
+  "Timed planning can only start during Planning.": [
+   "Core/PlanningDeadline.cs:84"
+  ],
+  "Timed planning is already running.": [
+   "Core/PlanningDeadline.cs:89"
+  ],
+  "Timed planning needs a valid starting loadout to fall back to.": [
+   "Core/PlanningDeadline.cs:99"
+  ],
+  "Timed planning started.": [
+   "Core/PlanningDeadline.cs:105"
+  ],
+  "Timeline": [
+   "Core/MissionReportBuilder.cs:636"
+  ],
+  "Transition allowed.": [
+   "Core/MissionDirector.cs:641"
+  ],
+  "Transmission": [
+   "Core/MissionReportBuilder.cs:600"
+  ],
+  "Transmit distress call: {0:0.##} kWh. Earth is {1} away; earliest reply in {2}.": [
+   "Simulation/CommunicationSystem.cs:252"
+  ],
+  "Transmitted": [
+   "Core/MissionReportBuilder.cs:604"
+  ],
+  "Unknown cinematic value {0}.": [
+   "Core/CinematicCoordinator.cs:59"
+  ],
+  "Unknown equipment '{0}'.": [
+   "Core/CargoLoading.cs:266",
+   "Core/MissionPlanner.cs:98",
+   "Inventory/MissionConfiguration.cs:120"
+  ],
+  "Unknown phase value {0}.": [
+   "Core/MissionGameState.cs:47"
+  ],
+  "Unload one {0} ({1} aboard)": [
+   "Core/CargoLoading.cs:165"
+  ],
+  "Unmet food demand reached the scenario's game viability limit {0} after launch. This is a mission failure assumption, not a medical starvation threshold.": [
+   "Core/MissionDirector.cs:824"
+  ],
+  "Unmet food demand reached the scenario's game viability limit; not a medical starvation threshold.": [
+   "Core/MissionReportBuilder.cs:291"
+  ],
+  "Unmet water demand reached the scenario's game viability limit {0} after launch. This is a mission failure assumption, not a medical dehydration threshold.": [
+   "Core/MissionDirector.cs:826"
+  ],
+  "Unmet water demand reached the scenario's game viability limit; not a medical dehydration threshold.": [
+   "Core/MissionReportBuilder.cs:293"
+  ],
+  "Unrecoverable mission objective: too few spare parts to repair the antenna. The crew was alive when the mission was closed.": [
+   "Core/MissionReportBuilder.cs:301"
+  ],
+  "Used over time": [
+   "Core/MissionReportBuilder.cs:394"
+  ],
+  "Wake the crew": [
+   "Core/SurvivalRecovery.cs:249"
+  ],
+  "Water": [
+   "Core/MissionReportBuilder.cs:378"
+  ],
+  "Water reserve exhausted {0} after launch.": [
+   "Core/MissionDirector.cs:828"
+  ],
+  "Water reserve {0} L is below the {1} L required for {2} planned crew-days.": [
+   "Inventory/MissionConfiguration.cs:242"
+  ],
+  "Water tank": [
+   "Core/AuroraMission.cs:60"
+  ],
+  "Water use": [
+   "Simulation/ResourceRates.cs:50"
+  ],
+  "Water: the reserve ran out.": [
+   "Core/MissionReportBuilder.cs:295"
+  ],
+  "What it means": [
+   "Core/MissionReportBuilder.cs:249",
+   "Core/MissionReportBuilder.cs:254"
+  ],
+  "Why": [
+   "Core/MissionReportBuilder.cs:237"
+  ],
+  "You are still outside: enter the airlock first.": [
+   "Core/EvaOperations.cs:331"
+  ],
+  "a crate": [
+   "Core/CargoLoading.cs:320"
+  ],
+  "an unknown time": [
+   "Core/SurvivalRecovery.cs:671"
+  ],
+  "battery energy": [
+   "Simulation/ResourceLedger.cs:481"
+  ],
+  "battery net {0:0.00} kWh drawn": [
+   "Core/MissionReportBuilder.cs:392"
+  ],
+  "battery net {0:0.00} kWh recharged": [
+   "Core/MissionReportBuilder.cs:393"
+  ],
+  "before repressurization completed": [
+   "Core/MissionDirector.cs:708"
+  ],
+  "before the return to the airlock": [
+   "Core/MissionDirector.cs:708"
+  ],
+  "cabin CO2": [
+   "Simulation/HoldingEstimate.cs:43"
+  ],
+  "cabin CO2 is close to the loss limit": [
+   "Core/SurvivalRecovery.cs:712"
+  ],
+  "earliest reply = 2 x one-way light time + processing on Earth, with the distance frozen at the transmission": [
+   "Core/MissionReportBuilder.cs:667"
+  ],
+  "field modifications": [
+   "Core/MissionReportBuilder.cs:224",
+   "Core/MissionReportBuilder.cs:399"
+  ],
+  "food": [
+   "manual: Simulation/HoldingEstimate.cs, ResourceLedger.cs"
+  ],
+  "geometric state vectors without light-time correction": [
+   "Core/MissionReportBuilder.cs:648"
+  ],
+  "high-gain antenna": [
+   "Core/AuroraMission.cs:145"
+  ],
+  "in the airlock": [
+   "Core/MissionDirector.cs:707"
+  ],
+  "kWh = watts x seconds / 3,600,000": [
+   "Core/MissionReportBuilder.cs:668"
+  ],
+  "life support": [
+   "Core/AuroraMission.cs:142"
+  ],
+  "needs {0}, {1} available": [
+   "Simulation/ShipSystem.cs:201"
+  ],
+  "net +{0} spare part{1}": [
+   "Core/MissionReportBuilder.cs:441"
+  ],
+  "net {0} spare part{1} used": [
+   "Core/MissionReportBuilder.cs:442"
+  ],
+  "no effect": [
+   "Core/CargoLoading.cs:235"
+  ],
+  "no materials": [
+   "Simulation/ShipSystem.cs:94"
+  ],
+  "no reason": [
+   "Core/SurvivalRecovery.cs:722"
+  ],
+  "nothing": [
+   "manual: Core/MissionReportBuilder.cs, Simulation/ResourceLedger.cs"
+  ],
+  "on schedule with the beacon powered": [
+   "Core/SurvivalRecovery.cs:347"
+  ],
+  "one-way seconds = distance in km / 299,792.458 km/s": [
+   "Core/MissionReportBuilder.cs:666"
+  ],
+  "outside the ship": [
+   "Core/MissionDirector.cs:707"
+  ],
+  "over time": [
+   "Core/MissionReportBuilder.cs:212",
+   "Core/MissionReportBuilder.cs:389"
+  ],
+  "oxygen": [
+   "manual: Simulation/HoldingEstimate.cs, ResourceLedger.cs"
+  ],
+  "power distribution": [
+   "Core/AuroraMission.cs:140"
+  ],
+  "power is lost: the battery is empty and generation is below the load": [
+   "Core/SurvivalRecovery.cs:710"
+  ],
+  "ppm from the ideal gas law for a {0:0} m3 cabin at {1:0.0} kPa and {2:0} K (cabin figures are game assumptions)": [
+   "Core/MissionReportBuilder.cs:669"
+  ],
+  "repairs": [
+   "manual: Core/MissionReportBuilder.cs"
+  ],
+  "science instrument dismantled for spare parts": [
+   "Core/MissionReportBuilder.cs:432"
+  ],
+  "science payload": [
+   "Core/CargoLoading.cs:231"
+  ],
+  "the EVA": [
+   "Core/MissionReportBuilder.cs:409"
+  ],
+  "the crew was woken": [
+   "Core/SurvivalRecovery.cs:702"
+  ],
+  "the crop is ready to harvest": [
+   "Core/SurvivalRecovery.cs:714"
+  ],
+  "the food store is empty": [
+   "Core/SurvivalRecovery.cs:704"
+  ],
+  "the grow module failed": [
+   "Core/SurvivalRecovery.cs:716"
+  ],
+  "the mission ended": [
+   "Core/SurvivalRecovery.cs:720"
+  ],
+  "the planned rest is complete": [
+   "Core/SurvivalRecovery.cs:700"
+  ],
+  "the recovery craft needs the crew": [
+   "Core/SurvivalRecovery.cs:718"
+  ],
+  "the stored oxygen is used up; only the cabin air is left": [
+   "Core/SurvivalRecovery.cs:708"
+  ],
+  "the transmission": [
+   "Core/MissionReportBuilder.cs:409"
+  ],
+  "the water store is empty": [
+   "Core/SurvivalRecovery.cs:706"
+  ],
+  "transmission": [
+   "manual: Core/MissionReportBuilder.cs"
+  ],
+  "unknown": [
+   "manual: Simulation/CommunicationSystem.cs"
+  ],
+  "water": [
+   "manual: Simulation/HoldingEstimate.cs, ResourceLedger.cs"
+  ],
+  "yyyy-MM-dd HH:mm": [
+   "Core/MissionCalendar.cs:69",
+   "Simulation/EarthMarsReference.cs:237"
+  ],
+  "{0:#,0} W load on {1:#,0} W generation": [
+   "Core/MissionReportBuilder.cs:330"
+  ],
+  "{0:#,0} ppm at launch, {1:#,0} ppm at the end, peak {2:#,0} ppm (action level {3:#,0}, loss limit {4:#,0})": [
+   "Core/MissionReportBuilder.cs:382"
+  ],
+  "{0:0.###} L water": [
+   "Simulation/ResourceLedger.cs:588"
+  ],
+  "{0:0.###} kWh battery energy": [
+   "Simulation/ResourceLedger.cs:598"
+  ],
+  "{0:0.###} kg food": [
+   "Simulation/ResourceLedger.cs:593"
+  ],
+  "{0:0.###} kg oxygen": [
+   "Simulation/ResourceLedger.cs:583"
+  ],
+  "{0:0.##} L water": [
+   "Simulation/ShipSystem.cs:219"
+  ],
+  "{0:0.##} kWh": [
+   "Simulation/ShipSystem.cs:215"
+  ],
+  "{0:0.##} kg food": [
+   "Simulation/ShipSystem.cs:221"
+  ],
+  "{0:0.##} kg oxygen": [
+   "Simulation/ShipSystem.cs:217"
+  ],
+  "{0:0.00} kWh": [
+   "Core/MissionReportBuilder.cs:471"
+  ],
+  "{0:0.00} kWh at launch, {1:0.00} kWh left": [
+   "Core/MissionReportBuilder.cs:380"
+  ],
+  "{0:0.00} kg at launch, {1:0.00} kg left": [
+   "Core/MissionReportBuilder.cs:377"
+  ],
+  "{0:0.00} kg oxygen": [
+   "Core/MissionReportBuilder.cs:456"
+  ],
+  "{0:0.00} kg oxygen, {1:0.0} L water, {2:0.0} kg food; {3}": [
+   "Core/MissionReportBuilder.cs:394"
+  ],
+  "{0:0.0} L at launch, {1:0.0} L left": [
+   "Core/MissionReportBuilder.cs:378"
+  ],
+  "{0:0.0} L water": [
+   "Core/MissionReportBuilder.cs:461"
+  ],
+  "{0:0.0} days": [
+   "Core/MissionDirector.cs:846"
+  ],
+  "{0:0.0} kg at launch, {1:0.0} kg left": [
+   "Core/MissionReportBuilder.cs:379"
+  ],
+  "{0:0.0} kg food": [
+   "Core/MissionReportBuilder.cs:466"
+  ],
+  "{0:0} % after the impact; never repaired (needs {1}{2}).": [
+   "Core/MissionReportBuilder.cs:495"
+  ],
+  "{0:0} % after the impact; repaired at {1} for {2}{3}.": [
+   "Core/MissionReportBuilder.cs:489"
+  ],
+  "{0:0} W load": [
+   "Core/CargoLoading.cs:234"
+  ],
+  "{0:0} kg, {1:0} credits{2}": [
+   "Core/MissionReportBuilder.cs:325"
+  ],
+  "{0:0} of {1:0} credits (fictional)": [
+   "Core/MissionReportBuilder.cs:329"
+  ],
+  "{0:0} of {1:0} kg": [
+   "Core/MissionReportBuilder.cs:328"
+  ],
+  "{0:0} spare part{1}": [
+   "Simulation/ShipSystem.cs:213"
+  ],
+  "{0} (mission day {1})": [
+   "Core/MissionReportBuilder.cs:568",
+   "Core/MissionReportBuilder.cs:573"
+  ],
+  "{0} (row {1} of {2}; last sample at or before the mission date)": [
+   "Core/MissionReportBuilder.cs:584"
+  ],
+  "{0} CO2 absorber cartridge{1} built": [
+   "Core/MissionReportBuilder.cs:437"
+  ],
+  "{0} at launch, {1} left": [
+   "Core/MissionReportBuilder.cs:381"
+  ],
+  "{0} back on the pallet.": [
+   "manual: Core/CargoLoading.cs"
+  ],
+  "{0} cannot transition to {1}.": [
+   "Core/MissionGameState.cs:67"
+  ],
+  "{0} completed; the suit was put on {1} time{2} and the airlock cycled {3} time{4}.": [
+   "Core/MissionReportBuilder.cs:504"
+  ],
+  "{0} daily samples, {1} to {2}: Mars centre relative to Earth centre, km, {3}; {4}.": [
+   "Core/MissionReportBuilder.cs:646"
+  ],
+  "{0} damaged.": [
+   "Simulation/ShipSystem.cs:116"
+  ],
+  "{0} h {1:00} min": [
+   "Core/EvaOperations.cs:485"
+  ],
+  "{0} h {1:00} min {2:00} s": [
+   "Simulation/CommunicationSystem.cs:356"
+  ],
+  "{0} h {1} min": [
+   "Core/SurvivalRecovery.cs:688"
+  ],
+  "{0} is already at or below that condition.": [
+   "Simulation/ShipSystem.cs:110"
+  ],
+  "{0} is operational.": [
+   "Simulation/ShipSystem.cs:129"
+  ],
+  "{0} launched with {1} equipment line(s).": [
+   "Core/MissionPlanner.cs:290"
+  ],
+  "{0} loaded.": [
+   "manual: Core/CargoLoading.cs"
+  ],
+  "{0} min": [
+   "Core/EvaOperations.cs:486",
+   "Core/SurvivalRecovery.cs:692"
+  ],
+  "{0} min {1:00} s": [
+   "Simulation/CommunicationSystem.cs:360"
+  ],
+  "{0} must be finite and non-negative ({1} {2}).": [
+   "Simulation/ResourceRates.cs:78"
+  ],
+  "{0} of {1} built cartridge{2} installed; {3:0.00} kg CO2 taken up. GAME ASSUMPTION: {4:0.000} kg per cartridge, stated as {5:0.##} crew-hours of the cited {6:0.00} kg per crew-day; not a rated scrubber.": [
+   "Core/MissionReportBuilder.cs:511"
+  ],
+  "{0} repaired ({1}).": [
+   "Simulation/ShipSystem.cs:177"
+  ],
+  "{0} rest{1}, {2:0.#} h in total; food and water drawn at the BVAD crew-day rates while resting": [
+   "Core/SurvivalRecovery.cs:354"
+  ],
+  "{0} spare part(s)": [
+   "Simulation/ResourceLedger.cs:603"
+  ],
+  "{0} spare part(s) needed, {1} available": [
+   "Simulation/ResourceLedger.cs:484"
+  ],
+  "{0} spare part{1}": [
+   "Core/MissionReportBuilder.cs:451"
+  ],
+  "{0} {1:0.###} {2} needed, {3:0.###} {2} available": [
+   "Simulation/ResourceLedger.cs:500"
+  ],
+  "{0}, mission day {1} ({2})": [
+   "Core/MissionReportBuilder.cs:244"
+  ],
+  "{0}, using {1:0.##} kWh": [
+   "Core/MissionReportBuilder.cs:604"
+  ],
+  "{0}, {1} after the transmission": [
+   "Core/MissionReportBuilder.cs:608"
+  ],
+  "{0}: nominal": [
+   "manual: Core/RepairInteraction.cs (Capitalize(DisplayName) + \": nominal\")"
+  ],
+  "{0}: repaired": [
+   "manual: Core/RepairInteraction.cs (Capitalize(DisplayName) + \": repaired\")"
+  ],
+  "{0}; the three repairs need {1}": [
+   "Core/MissionReportBuilder.cs:349"
+  ],
+  "{0}; {1}, {2:0.00} kWh": [
+   "Core/MissionReportBuilder.cs:443"
+  ]
+ }
+}

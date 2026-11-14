@@ -379,6 +379,42 @@ effective with the next session). Only with Preflight Walk and timed planning; w
 - Pause changes nothing in the window. A restart builds a fresh, unsealed session with the same switch.
 - No Contracts change: presentation reads `MissionRuntime.AwaitingBoarding` (or `Session.PlanningDeadline`).
 
+## LANG-01: player-selectable language (English, Spanish, French)
+
+### What it is
+- New dependency-free assembly **`OutOfReach.Localization`** (`Scripts/Localization/`, pure C#, no Unity
+  reference): `GameLanguage { English, Spanish, French }` and the static **`GameText`**.
+- English stays the source of truth: Core state, commands, logs, saves and every test keep English text.
+  Text is translated **where it is shown**, so switching language never changes gameplay.
+- `GameText.Translate(renderedEnglish)` takes text as the game rendered it, numbers included: an exact match,
+  then the format patterns generated from the actual Core/Simulation/Inventory/Interaction source strings
+  (`"Begin mission: {0:0} of {1:0} kg, ..."` matches `Begin mission: 546 of 600 kg, ...`), with embedded phrases
+  translated recursively (`Carrying oxygen tank.`), then sentence by sentence. Unknown text stays English; it
+  never throws. Numbers keep the invariant rendering.
+- Catalog: `GameTextCatalog.cs` is GENERATED (English source strings plus the reviewed Spanish and French
+  translations; every entry keeps its placeholders and edge spaces, checked by a test). Regenerate it with
+  `Scripts/Localization/Tooling~/` (ignored by Unity; see its README) when gameplay text changes; until then a
+  new string simply shows in English.
+- Identifiers, units and numbers are never translated (IDs, the loadout name, section IDs, kg/L/kWh); the
+  translation is display-only and never becomes a simulation key.
+
+### Already translated by Core / Interaction
+- `InteractionResolver.CurrentPrompt` (and `PromptChanged`) and the explanation passed to `InteractionAttempted`.
+  `LastResult` and the `Interacted` C# event keep the domain's English `CommandResult`. The resolver refreshes
+  its prompt immediately on `GameText.Changed`.
+- The mission report: headline, outcome reason, loadout name, section titles and every line label/value. Section
+  IDs stay stable. `MissionSession.Report` rebuilds when the language changes.
+
+### For presentation (UI owner)
+- Language picker: `GameText.Languages`, `GameText.NativeName(lang)` (English, Español, Français),
+  `GameText.SetLanguage(lang)`; remember it with `GameText.Code(lang)` / `GameText.TryParseCode(code, out lang)`
+  in PlayerPrefs (Core holds no persistence).
+- Add `OutOfReach.Localization` to the UI asmdef references, pass UI-owned English strings through
+  `GameText.Translate`, and refresh views on `GameText.Changed`. Voices stay English; subtitles can be translated
+  the same way. SourceSans3 covers Spanish and French; Chinese would need a CJK font asset.
+- Note: report line lookups by label (for example `"Cause"`) see the translated label; use section IDs or the
+  typed report members instead.
+
 ## C05-B: payload salvage and the CO₂ absorber cartridge
 
 Two field modifications. Both only convert what was carried; nothing is created. **Each is offered only where its

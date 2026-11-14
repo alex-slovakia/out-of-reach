@@ -4,7 +4,8 @@
   "references": [
     "OutOfReach.Contracts",
     "OutOfReach.Inventory",
-    "OutOfReach.Simulation"
+    "OutOfReach.Simulation",
+    "OutOfReach.Localization"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
