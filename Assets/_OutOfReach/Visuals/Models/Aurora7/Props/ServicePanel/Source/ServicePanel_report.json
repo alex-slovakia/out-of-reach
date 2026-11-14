@@ -1,0 +1,68 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/ServicePanel_BaseColor.png",
+    "Metallic": "textures/ServicePanel_Metallic.png",
+    "Roughness": "textures/ServicePanel_Roughness.png",
+    "Occlusion": "textures/ServicePanel_Occlusion.png",
+    "MetallicSmoothness": "textures/ServicePanel_MetallicSmoothness.png",
+    "Labels": "textures/ServicePanel_Labels.png"
+  },
+  "texture_size": 2048,
+  "label_font": "Inter (SIL OFL 1.1, bundled with Blender)",
+  "dimensions_m": {
+    "width_x": 0.7,
+    "depth_y": 0.18,
+    "height_z": 1.2
+  },
+  "bounds_min": [
+    -0.35,
+    -0.09,
+    0.0
+  ],
+  "bounds_max": [
+    0.35,
+    0.09,
+    1.2
+  ],
+  "triangles": {
+    "Body": 5092,
+    "ServiceCover": 1462,
+    "StatusIndicators": 180
+  },
+  "triangles_total": 6734,
+  "object_origins": {
+    "Body": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "ServiceCover": [
+      -0.2575,
+      -0.046,
+      0.24
+    ],
+    "StatusIndicators": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "materials": {
+    "Body": [
+      "SP_ServicePanel",
+      "SP_Labels"
+    ],
+    "ServiceCover": [
+      "SP_ServicePanel",
+      "SP_Labels"
+    ],
+    "StatusIndicators": [
+      "SP_Indicator_Cyan",
+      "SP_Indicator_Amber",
+      "SP_Indicator_Red"
+    ]
+  }
+}
