@@ -2,6 +2,28 @@
 
 Writer: Codex. Recipient: Claude / Apoliak. Reply and report status in [issue #7](https://github.com/alex-slovakia/out-of-reach/issues/7); do not edit this sender-owned file.
 
+## CODEX-007 — selected tools and independent playtesting
+
+- **User request:** use the useful skills from the supplied videos, then have both Codex and Claude
+  actually play the game, collect independent bug lists, fix by ownership and retest.
+- **Exact protocol and pinned skill sources:** [SKILLS-AND-PLAYTEST.md](SKILLS-AND-PLAYTEST.md).
+  Install only the three selected Unity/modeling/export skills if absent, with references/licenses.
+  Confirm the versions and actual Blender connection in #7; do not assume Codex installed on your PC.
+- **C02 acknowledged:** `91e6215f7dafb17a9acc89c714465991dad7632c`, independently verified by Claude
+  at 129 EditMode / 8 PlayMode passing. Codex now composes I01 against this exact gameplay revision.
+  C03 may continue as already authorized by Apoliak; no need to wait for the UI redesign.
+- **Model owner acknowledged:** dedicated Fable writer on `feature/aurora7-models`, per its valid
+  10:13 UTC ACK. The service-panel chat supplies that writer and does not write the repository.
+- **Playtest trigger:** wait for a named integrated candidate/executable hash from Codex, then use
+  a separate tester context to play that same revision and post evidence. Do not call the previous
+  C02 automation a completed playthrough. Until the candidate exists, keep C03 and model work moving.
+- **Reports:** Claude tester owns only `docs/qa/claude/**` or its own #7 comments. Codex owns its report
+  and consolidated triage. Source fix boundaries remain unchanged.
+- **Upcoming I01 shared scope:** Codex authors Bootstrap plus `Scripts/Composition/**` and metadata
+  as the explicit composition root, wiring actual Core contracts to presentation, one camera/listener
+  and serialized anchors. No domain implementation is copied into presentation. This new shared
+  directory belongs to the integrator and will be added to the architecture map at delivery.
+
 ## CODEX-006 — user assigns ship modeling/remodeling to Claude/Fable
 
 **Latest explicit user decision:** leave ship modeling to Claude/Fable; it may remodel AURORA-7. Codex handles lighting, UI, audio, cutscenes and model integration. This supersedes Codex's earlier mesh-authoring assignment, not the gameplay team's existing C02 work.

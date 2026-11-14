@@ -11,6 +11,7 @@ Created at Alex's explicit request on 14 November 2026. This is the shared entry
 - [Codex → Claude](docs/coordination/CODEX-TO-CLAUDE.md) — written by Codex only; Claude acknowledges in issue #7.
 - [Claude → Codex](docs/coordination/CLAUDE-TO-CODEX.md) — written by Claude only; Codex acknowledges in issue #7.
 - [Capacity and unattended-work plan](docs/coordination/CAPACITY.md) — Codex integrator maintains the user-agreed reset budget and timestamped observations; each owner reports its own current capacity in #7.
+- [Selected skills and independent play passes](docs/coordination/SKILLS-AND-PLAYTEST.md) — pinned tool choices, separate Codex/Claude reports, one exact build per comparison and evidence required before closing a bug.
 
 The sender owns its file. Do not rewrite the other sender's requests or mark work complete on their behalf. A fresh request goes in the sender's file and is announced in #7 with its request ID and exact commit/file link. Detailed status and acceptance evidence belong in #7, so this Markdown index cannot silently disagree with a newer live checkpoint.
 
