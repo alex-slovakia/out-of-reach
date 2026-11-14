@@ -1,0 +1,1030 @@
+{
+ "file": "MissionTerminal_v1_export.fbx",
+ "objects": {
+  "ActiveDisplay": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 2,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Screen"
+   ],
+   "display": {
+    "corners_unity": [
+     [
+      -0.32,
+      -0.2,
+      0.0
+     ],
+     [
+      0.32,
+      -0.2,
+      0.0
+     ],
+     [
+      0.32,
+      0.2,
+      -0.0
+     ],
+     [
+      -0.32,
+      0.2,
+      -0.0
+     ]
+    ],
+    "normal_unity": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "size": [
+     0.64,
+     0.4
+    ],
+    "uv_by_corner": [
+     [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       -0.32,
+       -0.2,
+       0.0
+      ]
+     ],
+     [
+      [
+       1.0,
+       0.0
+      ],
+      [
+       0.32,
+       -0.2,
+       0.0
+      ]
+     ],
+     [
+      [
+       1.0,
+       1.0
+      ],
+      [
+       0.32,
+       0.2,
+       -0.0
+      ]
+     ],
+     [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       -0.32,
+       0.2,
+       -0.0
+      ]
+     ]
+    ]
+   }
+  },
+  "Bright machined reveal": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 384,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 1": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    -0.23,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 2": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    -0.23,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 3": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    0.23,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 4": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    0.23,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 5": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    0.0,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Captive screw 6": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    0.0,
+    -0.0095
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "DisplayFrame": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "FocusCameraAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.012,
+    0.025,
+    -0.66
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Grip mount lug": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.367,
+    -0.145,
+    0.028
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Grip mount lug.001": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.367,
+    0.145,
+    0.028
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Grip standoff": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.3955,
+    -0.145,
+    -0.003
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Grip standoff.001": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.3955,
+    0.145,
+    -0.003
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Hex drive 1": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    -0.23,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Hex drive 2": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    -0.23,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Hex drive 3": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    0.23,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Hex drive 4": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    0.23,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Hex drive 5": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.359,
+    0.0,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Hex drive 6": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.359,
+    0.0,
+    -0.0122
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 284,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "InteractionAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.1,
+    -0.08
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Left handhold": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.426,
+    0.0,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 508,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Rubber"
+   ]
+  },
+  "LeftGripFrame": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.426,
+    0.0,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Main machined bezel": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 384,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Enamel"
+   ]
+  },
+  "Mount arm": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.183
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    -0.12,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit.001": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    -0.09,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit.002": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    -0.06,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit.003": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    -0.03,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit.004": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    0.0,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Passive cooling slit.005": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    0.03,
+    0.089
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Rear sealed enclosure": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    0.044
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Screen perimeter gasket": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 384,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Rubber"
+   ]
+  },
+  "Service cable": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 512,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Rubber"
+   ]
+  },
+  "Service cover": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.184,
+    -0.045,
+    0.083
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Enamel"
+   ]
+  },
+  "Status lamp": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.3,
+    -0.233,
+    -0.012
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Amber"
+   ]
+  },
+  "Strain relief": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.23,
+    -0.185,
+    0.076
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Tilt hinge": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.105
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 508,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "VESA adapter": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    0.093
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "Wall base": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.306
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 188,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Enamel"
+   ]
+  },
+  "Wall captive bolt": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.073,
+    -0.127,
+    0.292
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Wall captive bolt.001": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.073,
+    0.051,
+    0.292
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Wall captive bolt.002": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.073,
+    -0.127,
+    0.292
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Wall captive bolt.003": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.073,
+    0.051,
+    0.292
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 380,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Graphite"
+   ]
+  },
+  "Wall hinge": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.275
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 508,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Aluminium"
+   ]
+  },
+  "WallMountAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.318
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "triangles": 12466,
+ "bounds_unity": {
+  "min": [
+   -0.443,
+   -0.272945,
+   -0.057
+  ],
+  "max": [
+   0.383,
+   0.255,
+   0.3175
+  ]
+ },
+ "drive_letter_paths": [],
+ "cameras_lights": []
+}

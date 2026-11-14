@@ -1,0 +1,125 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/MissionTerminal_BaseColor.png",
+    "Metallic": "textures/MissionTerminal_Metallic.png",
+    "Roughness": "textures/MissionTerminal_Roughness.png",
+    "Occlusion": "textures/MissionTerminal_Occlusion.png",
+    "MetallicSmoothness": "textures/MissionTerminal_MetallicSmoothness.png",
+    "Labels": "textures/MissionTerminal_Labels.png"
+  },
+  "texture_size": 2048,
+  "label_font": "Inter (SIL OFL 1.1, bundled with Blender)",
+  "units": "metres; Unity axes: X screen right, Y up, +Z into the case, the screen faces -Z",
+  "dimensions_unity_m": {
+    "x": 0.8286,
+    "y": 0.6235,
+    "z": 0.3771
+  },
+  "bounds_unity_min": [
+    -0.4456,
+    -0.3685,
+    -0.0596
+  ],
+  "bounds_unity_max": [
+    0.383,
+    0.255,
+    0.3175
+  ],
+  "active_display_m": [
+    0.64,
+    0.4
+  ],
+  "anchors": {
+    "DisplayFrame": {
+      "unity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "v1": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "equal": true
+    },
+    "LeftGripFrame": {
+      "unity": [
+        -0.426,
+        0.0,
+        -0.04
+      ],
+      "v1": [
+        -0.426,
+        0.0,
+        -0.04
+      ],
+      "equal": true
+    },
+    "InteractionAnchor": {
+      "unity": [
+        -0.0,
+        -0.1,
+        -0.08
+      ],
+      "v1": [
+        0.0,
+        -0.1,
+        -0.08
+      ],
+      "equal": true
+    },
+    "FocusCameraAnchor": {
+      "unity": [
+        0.012,
+        0.025,
+        -0.66
+      ],
+      "v1": [
+        0.012,
+        0.025,
+        -0.66
+      ],
+      "equal": true
+    },
+    "WallMountAnchor": {
+      "unity": [
+        -0.0,
+        -0.038,
+        0.318
+      ],
+      "v1": [
+        0.0,
+        -0.038,
+        0.318
+      ],
+      "equal": true
+    }
+  },
+  "triangles": {
+    "TerminalBody": 9806,
+    "Left handhold": 4352,
+    "ActiveDisplay": 2,
+    "Status lamp": 108
+  },
+  "triangles_total": 14268,
+  "materials": {
+    "TerminalBody": [
+      "MT_TerminalBody",
+      "MT_Labels"
+    ],
+    "Left handhold": [
+      "MT_TerminalBody"
+    ],
+    "ActiveDisplay": [
+      "MT_Screen"
+    ],
+    "Status lamp": [
+      "MT_Amber"
+    ]
+  },
+  "blend_path_scrubbed": 2
+}

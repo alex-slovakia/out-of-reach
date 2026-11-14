@@ -1,0 +1,17 @@
+{
+  "v1": {
+    "anchors": {"DisplayFrame": {"position": [0, 0, 0], "localEuler": [270.0198, 0, 0]}, "LeftGripFrame": {"position": [-0.426, 0, -0.04], "localEuler": [270.0198, 0, 0]}, "InteractionAnchor": {"position": [0, -0.1, -0.08], "localEuler": [270.0198, 0, 0]}, "FocusCameraAnchor": {"position": [0.012, 0.025, -0.66], "localEuler": [270.0198, 0, 0]}, "WallMountAnchor": {"position": [0, -0.038, 0.318], "localEuler": [270.0198, 0, 0]}},
+    "activeDisplay": {"size": [0.64, 0.4, 0], "faces": [0, 0, -1], "localEuler": [270.0198, 0, 0], "vertices": [{"p": [-0.32, -0.2, 0], "uv": [0, 0]}, {"p": [-0.32, 0.2, 0], "uv": [0, 1]}, {"p": [0.32, 0.2, 0], "uv": [1, 1]}, {"p": [0.32, -0.2, 0], "uv": [1, 0]}]},
+    "meshes": 41, "triangles": 12466, "boundsMin": [-0.443, -0.272945, -0.057], "boundsMax": [0.383, 0.255, 0.3175],
+    "cameras": 0, "lights": 0,
+    "materials": ["MT_Aluminium", "MT_Amber", "MT_Enamel", "MT_Graphite", "MT_Rubber", "MT_Screen"]
+  },
+  "v2": {
+    "anchors": {"DisplayFrame": {"position": [0, 0, 0], "localEuler": [270.0198, 0, 0]}, "LeftGripFrame": {"position": [-0.426, 0, -0.04], "localEuler": [270.0198, 0, 0]}, "InteractionAnchor": {"position": [0, -0.1, -0.08], "localEuler": [270.0198, 0, 0]}, "FocusCameraAnchor": {"position": [0.012, 0.025, -0.66], "localEuler": [270.0198, 0, 0]}, "WallMountAnchor": {"position": [0, -0.038, 0.318], "localEuler": [270.0198, 0, 0]}},
+    "activeDisplay": {"size": [0.64, 0.4, 0], "faces": [0, 0, -1], "localEuler": [270.0198, 0, 0], "vertices": [{"p": [0.32, -0.2, 0], "uv": [1, 0]}, {"p": [-0.32, -0.2, 0], "uv": [0, 0]}, {"p": [-0.32, 0.2, 0], "uv": [0, 1]}, {"p": [0.32, 0.2, 0], "uv": [1, 1]}]},
+    "meshes": 4, "triangles": 14268, "boundsMin": [-0.4456, -0.368515, -0.0596], "boundsMax": [0.383, 0.255, 0.3175],
+    "cameras": 0, "lights": 0,
+    "materials": ["MT_Amber", "MT_Labels", "MT_Screen", "MT_TerminalBody"]
+  },
+  "problems": []
+}

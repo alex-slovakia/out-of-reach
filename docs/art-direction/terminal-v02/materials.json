@@ -1,0 +1,95 @@
+{
+  "_comment": "TERMINAL-ART-V2 material manifest. baseColorLinear/metallic/roughness keep the TERM-V1 manifest fields, so an importer that reads only those still works; 'maps' lists the baked PBR maps for URP Lit. Paths are relative to this folder.",
+  "MT_TerminalBody": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "metallic": 1.0,
+    "roughness": 0.0,
+    "maps": {
+      "baseMap": {
+        "path": "textures/MissionTerminal_BaseColor.png",
+        "colorSpace": "sRGB"
+      },
+      "metallicGlossMap": {
+        "path": "textures/MissionTerminal_MetallicSmoothness.png",
+        "colorSpace": "linear",
+        "channels": "metallic in RGB, smoothness in A (URP: smoothness source = metallic alpha)"
+      },
+      "occlusionMap": {
+        "path": "textures/MissionTerminal_Occlusion.png",
+        "colorSpace": "linear"
+      }
+    },
+    "urp": {
+      "_BaseColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "_Smoothness": 1.0,
+      "_OcclusionStrength": 1.0,
+      "keywords": [
+        "_METALLICSPECGLOSSMAP",
+        "_OCCLUSIONMAP"
+      ]
+    },
+    "alsoProvided": {
+      "metallic": "textures/MissionTerminal_Metallic.png",
+      "roughness": "textures/MissionTerminal_Roughness.png"
+    },
+    "covers": "TerminalBody (enclosure, bezel, gasket, chamfer, controls, fasteners, mount, connectors, cable) and Left handhold"
+  },
+  "MT_Labels": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "metallic": 0.0,
+    "roughness": 0.55,
+    "maps": {
+      "baseMap": {
+        "path": "textures/MissionTerminal_Labels.png",
+        "colorSpace": "sRGB"
+      }
+    },
+    "urp": {
+      "_Smoothness": 0.45
+    },
+    "covers": "printed legends and plates on TerminalBody (second material slot); not emissive"
+  },
+  "MT_Screen": {
+    "shader": "replaced at runtime by the terminal display shader (TERM-V1)",
+    "baseColorLinear": [
+      0.0033,
+      0.004,
+      0.0044
+    ],
+    "metallic": 0.0,
+    "roughness": 0.32,
+    "covers": "ActiveDisplay: near-black matte cover glass when the display is off"
+  },
+  "MT_Amber": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      0.3,
+      0.12,
+      0.01
+    ],
+    "metallic": 0.0,
+    "roughness": 0.18,
+    "emissionLinear": [
+      1.0,
+      0.38,
+      0.01
+    ],
+    "emissionStrength": 1.2,
+    "covers": "Status lamp (same name and place as TERM-V1)"
+  }
+}

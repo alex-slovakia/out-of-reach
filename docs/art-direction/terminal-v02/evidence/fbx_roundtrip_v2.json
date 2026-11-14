@@ -1,0 +1,276 @@
+{
+ "file": "MissionTerminal.fbx",
+ "objects": {
+  "ActiveDisplay": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 2,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Screen"
+   ],
+   "display": {
+    "corners_unity": [
+     [
+      -0.32,
+      -0.2,
+      0.0
+     ],
+     [
+      0.32,
+      -0.2,
+      0.0
+     ],
+     [
+      0.32,
+      0.2,
+      -0.0
+     ],
+     [
+      -0.32,
+      0.2,
+      -0.0
+     ]
+    ],
+    "normal_unity": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "size": [
+     0.64,
+     0.4
+    ],
+    "uv_by_corner": [
+     [
+      [
+       1.0,
+       0.0
+      ],
+      [
+       0.32,
+       -0.2,
+       0.0
+      ]
+     ],
+     [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       -0.32,
+       0.2,
+       -0.0
+      ]
+     ],
+     [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       -0.32,
+       -0.2,
+       0.0
+      ]
+     ],
+     [
+      [
+       1.0,
+       0.0
+      ],
+      [
+       0.32,
+       -0.2,
+       0.0
+      ]
+     ],
+     [
+      [
+       1.0,
+       1.0
+      ],
+      [
+       0.32,
+       0.2,
+       -0.0
+      ]
+     ],
+     [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       -0.32,
+       0.2,
+       -0.0
+      ]
+     ]
+    ]
+   }
+  },
+  "DisplayFrame": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "FocusCameraAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.012,
+    0.025,
+    -0.66
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "InteractionAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.1,
+    -0.08
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Left handhold": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.426,
+    0.0,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 4352,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_TerminalBody"
+   ]
+  },
+  "LeftGripFrame": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.426,
+    0.0,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Status lamp": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.3,
+    -0.233,
+    -0.0133
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 108,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_Amber"
+   ]
+  },
+  "TerminalBody": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 9806,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "MT_TerminalBody",
+    "MT_Labels"
+   ]
+  },
+  "WallMountAnchor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    -0.038,
+    0.318
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "triangles": 14268,
+ "bounds_unity": {
+  "min": [
+   -0.4456,
+   -0.368515,
+   -0.0596
+  ],
+  "max": [
+   0.383,
+   0.255,
+   0.3175
+  ]
+ },
+ "drive_letter_paths": [],
+ "cameras_lights": []
+}
