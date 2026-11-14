@@ -1,0 +1,27 @@
+{
+ "unity": "6000.3.28f1",
+ "pipeline": "PC_RPAsset",
+ "prefab": "Assets/_OutOfReach/Visuals/Models/Aurora7/Prefabs/Aurora7_Models.prefab",
+ "objects": [
+  {"name": "A7_Cockpit", "triangles": 72296, "materials": 24, "bounds_min": [-3, -0.048, -3.055], "bounds_max": [3, 3.195, 3]},
+  {"name": "A7_Engineering", "triangles": 68736, "materials": 19, "bounds_min": [-2.4, -0.16, 2.837], "bounds_max": [2.4, 3.195, 11]},
+  {"name": "A7_Storage", "triangles": 49300, "materials": 17, "bounds_min": [-2.4, -0.16, 10.837], "bounds_max": [2.4, 3.195, 17]},
+  {"name": "A7_Airlock", "triangles": 28608, "materials": 21, "bounds_min": [-2.4, -0.16, 16.837], "bounds_max": [2.4, 3.195, 21.163]},
+  {"name": "A7_Exterior", "triangles": 27120, "materials": 10, "bounds_min": [-12.37, -2.015, -3.59], "bounds_max": [12.37, 5.135, 23.4]},
+  {"name": "DoorLeaf_Inner_L", "triangles": 2070, "materials": 6, "bounds_min": [-1.842, 0.01, 16.878], "bounds_max": [-0.958, 2.45, 17.122]},
+  {"name": "DoorLeaf_Inner_R", "triangles": 2070, "materials": 6, "bounds_min": [0.958, 0.01, 16.878], "bounds_max": [1.842, 2.45, 17.122]},
+  {"name": "DoorLeaf_Outer_L", "triangles": 2834, "materials": 7, "bounds_min": [-0.892, 0.01, 20.878], "bounds_max": [-0.008, 2.45, 21.122]},
+  {"name": "DoorLeaf_Outer_R", "triangles": 2834, "materials": 7, "bounds_min": [0.008, 0.01, 20.878], "bounds_max": [0.892, 2.45, 21.122]},
+  {"name": "Body", "triangles": 5092, "materials": 2, "bounds_min": [-1.72, 0.55, 5.75], "bounds_max": [-1.54, 1.75, 6.45]},
+  {"name": "ServiceCover", "triangles": 1462, "materials": 2, "bounds_min": [-1.608, 0.79, 5.836], "bounds_max": [-1.556, 1.31, 6.35]},
+  {"name": "StatusIndicators", "triangles": 180, "materials": 3, "bounds_min": [-1.595, 1.435, 5.845], "bounds_max": [-1.587, 1.615, 5.865]}
+ ],
+ "triangles_total": 262602,
+ "renderers": 12,
+ "materials": 34,
+ "textures": 36,
+ "colliders": 47,
+ "bounds_min": [-12.37, -2.015, -3.59],
+ "bounds_max": [12.37, 5.135, 23.4],
+ "problems": []
+}
