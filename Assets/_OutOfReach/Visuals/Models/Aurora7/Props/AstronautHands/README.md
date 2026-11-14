@@ -38,11 +38,22 @@ light, collider or audio listener.
 
 The rest pose is not listed as a pose: it is identity on every joint.
 
+`JsonUtility` reads the file with these classes (the import check used exactly them); the two text fields
+`units` and `rest` are notes and are skipped:
+
+```csharp
+[Serializable] class RigFile { public Joint[] joints; public Pose[] poses; }
+[Serializable] class Joint { public string name; public string parent; public float[] position; public float[] flexAxis; }
+[Serializable] class Pose { public string name; public JointRotation[] rotations; public Placement[] placements; }
+[Serializable] class JointRotation { public string name; public float[] rotation; }
+[Serializable] class Placement { public string name; public float[] position; public float[] rotation; }
+```
+
 ## Poses and clips
 
 | Pose | What it is | Clips |
 |---|---|---|
-| Rest | flat hand, the pose of the model file | `R_Rest`, `L_Rest` |
+| Rest | flat open hand, the pose of the model file; it also serves as a hand braced on a flat surface | `R_Rest`, `L_Rest` |
 | Neutral | relaxed hand, fingers slightly curled | `R_Neutral`, `L_Neutral` |
 | Grip | fist closed around a tube 34 mm in diameter | `R_Grip`, `L_Grip` |
 | Press | index finger straight, the other fingers folded, thumb tucked | `R_Press`, `L_Press` |
@@ -58,7 +69,8 @@ gripRight.SampleAnimation(handsRoot, 0f);     // handsRoot = the instance of Ast
 ```
 
 or read the rig file and set (or `Quaternion.Slerp` between) the joints' `localRotation` yourself, which also
-gives a smooth change between two poses. The clips can equally go into an Animator with one layer per hand.
+gives a smooth change between two poses and does not depend on how a player build samples clips. The clips can
+equally go into an Animator with one layer per hand.
 
 ## Placing a hand
 
