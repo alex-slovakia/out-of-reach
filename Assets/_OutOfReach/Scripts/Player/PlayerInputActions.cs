@@ -7,9 +7,10 @@ namespace OutOfReach.Player
     /// <summary>
     /// Player bindings defined in code with the existing Input System package, so the shared project input asset
     /// is never modified. Keyboard and mouse: WASD or arrows to walk, mouse to look, E or left mouse button to
-    /// interact, Escape to pause. Gamepad: left stick, right stick, south button, Start.
+    /// interact, held Shift to sprint, Escape to pause. Gamepad: left stick, right stick, south button,
+    /// held left-stick press to sprint, Start to pause.
     /// </summary>
-    public sealed class PlayerInputActions : IPlayerInputSource, IDisposable
+    public sealed class PlayerInputActions : IPlayerInputSource, ISprintInputSource, IDisposable
     {
         public const string MapName = "OutOfReach.Player";
 
@@ -19,6 +20,7 @@ namespace OutOfReach.Player
         private readonly InputAction lookStick;
         private readonly InputAction interact;
         private readonly InputAction pause;
+        private readonly InputAction sprint;
 
         public PlayerInputActions()
         {
@@ -46,6 +48,10 @@ namespace OutOfReach.Player
 
             pause = map.AddAction("Pause", InputActionType.Button, "<Keyboard>/escape");
             pause.AddBinding("<Gamepad>/start");
+
+            sprint = map.AddAction("Sprint", InputActionType.Button, "<Keyboard>/leftShift");
+            sprint.AddBinding("<Keyboard>/rightShift");
+            sprint.AddBinding("<Gamepad>/leftStickPress");
         }
 
         /// <summary>Mouse look sensitivity, degrees per pixel of pointer movement.</summary>
@@ -72,6 +78,8 @@ namespace OutOfReach.Player
         public bool InteractPressedThisFrame => interact.WasPressedThisFrame();
 
         public bool PausePressedThisFrame => pause.WasPressedThisFrame();
+
+        public bool SprintHeld => sprint.IsPressed();
 
         public void Enable()
         {

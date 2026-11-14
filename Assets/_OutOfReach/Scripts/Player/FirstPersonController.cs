@@ -33,6 +33,11 @@ namespace OutOfReach.Player
         [Tooltip("Downward acceleration, metres per second squared.")]
         [SerializeField] private float gravityMetresPerSecondSquared = 9.81f;
 
+        [Tooltip("Held sprint speed multiplier while walking unencumbered. Game tuning, not physiological data.")]
+        [SerializeField, Range(1f, 2f)] private float sprintSpeedMultiplier = 1.5f;
+
+        [SerializeField] private PlayerExertion exertion = new PlayerExertion();
+
         [Header("Interaction")]
         [SerializeField] private InteractionResolver interaction;
 
@@ -52,18 +57,24 @@ namespace OutOfReach.Player
         private int routeDirection = 1;
         private bool cursorApplied;
         private bool cursorCaptured;
+        private bool applicationFocused = true;
+        private bool applicationPaused;
+        private bool sprintReleaseRequired;
+        private bool sprinting;
+        private bool wasMovementActive;
 
         /// <summary>Input for this player. Assign a scripted source in tests; otherwise Input System actions are created.</summary>
         public IPlayerInputSource InputSource
         {
             get { return inputSource; }
-            set { inputSource = value; }
+            set { inputSource = value; CancelSprint(); }
         }
 
         /// <summary>Returns true while the player may move, look and interact. Null means always allowed.</summary>
         public Func<bool> ControlGate { get; set; }
 
-        public bool ControlAllowed => isActiveAndEnabled && (ControlGate == null || ControlGate());
+        public bool ControlAllowed => isActiveAndEnabled && applicationFocused && !applicationPaused &&
+            (ControlGate == null || ControlGate());
 
         /// <summary>What this controller asks of the cursor: captured only while control is allowed.</summary>
         public bool WantsCursorCaptured => captureCursor && ControlAllowed;
@@ -72,6 +83,12 @@ namespace OutOfReach.Player
         public float PitchDegrees { get; private set; }
 
         public float WalkSpeedMetresPerSecond => walkSpeedMetresPerSecond;
+
+        /// <summary>True only after actual unencumbered sprint movement, while control remains allowed.</summary>
+        public bool IsSprinting => sprinting && ControlAllowed && Time.timeScale > 0f;
+
+        /// <summary>Player stamina in [0, 1], independent of ship battery and suit oxygen. Game tuning.</summary>
+        public float ExertionRemaining01 => exertion.Remaining01;
 
         /// <summary>
         /// Share of the walk speed currently available, 0 to 1 (1 = unhindered). The composition root sets it from
@@ -137,6 +154,8 @@ namespace OutOfReach.Player
         /// </summary>
         public void Teleport(Vector3 feetPosition, float yawDegrees)
         {
+            CancelSprint();
+            wasMovementActive = false;
             CharacterController controller = Body;
             ActiveRoute = null;
             controller.enabled = false;
@@ -160,6 +179,7 @@ namespace OutOfReach.Player
                 return;
             }
 
+            CancelSprint();
             Body.enabled = false;
             ActiveRoute = route;
             verticalVelocity = 0f;
@@ -187,6 +207,22 @@ namespace OutOfReach.Player
             }
         }
 
+        /// <summary>
+        /// Session-start hook for an in-place restart. Ordinary teleports and EVA return preserve stamina.
+        /// A scene reload already creates a fresh full stamina state. Held sprint must be released afterwards.
+        /// </summary>
+        public void ResetExertionForNewSession()
+        {
+            exertion.Reset();
+            CancelSprint();
+            wasMovementActive = false;
+        }
+
+        private void Awake()
+        {
+            Body.minMoveDistance = 0f;
+        }
+
         private void OnEnable()
         {
             if (inputSource == null)
@@ -203,6 +239,8 @@ namespace OutOfReach.Player
 
         private void OnDisable()
         {
+            CancelSprint();
+            wasMovementActive = false;
             if (ownedInput != null)
             {
                 ownedInput.Disable();
@@ -214,6 +252,33 @@ namespace OutOfReach.Player
             }
 
             ApplyCursor(false);
+        }
+
+        private void OnApplicationFocus(bool focused)
+        {
+            applicationFocused = focused;
+            if (!focused)
+            {
+                CancelSprint();
+                wasMovementActive = false;
+                ApplyCursor(false);
+            }
+        }
+
+        private void OnApplicationPause(bool paused)
+        {
+            applicationPaused = paused;
+            if (paused)
+            {
+                CancelSprint();
+                wasMovementActive = false;
+            }
+        }
+
+        private void CancelSprint()
+        {
+            sprinting = false;
+            sprintReleaseRequired = true;
         }
 
         private void OnDestroy()
@@ -235,6 +300,8 @@ namespace OutOfReach.Player
             IPlayerInputSource input = inputSource;
             if (input == null)
             {
+                CancelSprint();
+                wasMovementActive = false;
                 return;
             }
 
@@ -251,20 +318,49 @@ namespace OutOfReach.Player
                 interaction.ResolutionEnabled = allowed;
             }
 
-            if (!allowed)
+            bool sprintHeld = input is ISprintInputSource sprintInput && sprintInput.SprintHeld;
+            if (!sprintHeld)
             {
+                sprintReleaseRequired = false;
+            }
+
+            if (!allowed || Time.deltaTime <= 0f)
+            {
+                CancelSprint();
+                wasMovementActive = false;
                 verticalVelocity = 0f;
                 return;
             }
 
             Look(input.LookDegrees);
+            sprinting = false;
+            float motionFraction;
+            ExertionActivity activity;
             if (ActiveRoute != null)
             {
-                MoveAlongRoute(input.Move, Time.deltaTime);
+                motionFraction = MoveAlongRoute(input.Move, Time.deltaTime);
+                activity = ExertionActivity.TetherTraversal;
             }
             else
             {
-                Walk(input.Move, Time.deltaTime);
+                bool carrying = speedMultiplier < 1f;
+                bool requestSprint = sprintHeld && !sprintReleaseRequired && !carrying &&
+                    exertion.CanSprint && Body.isGrounded;
+                motionFraction = Walk(input.Move, Time.deltaTime, requestSprint, carrying);
+                sprinting = requestSprint && motionFraction > 0.001f;
+                activity = sprinting ? ExertionActivity.Sprinting :
+                    carrying ? ExertionActivity.Carrying : ExertionActivity.Walking;
+            }
+
+            // Do not charge the interval spanning a control/focus break. Bound hitch time to the same maximum
+            // frame duration used by movement, while remaining independent of the mission simulation clock.
+            float activeRealSeconds = wasMovementActive ? Mathf.Min(Time.unscaledDeltaTime, Time.maximumDeltaTime) : 0f;
+            wasMovementActive = true;
+            exertion.Advance(activeRealSeconds,
+                motionFraction > 0.001f ? activity : ExertionActivity.Resting, motionFraction);
+            if (!exertion.CanSprint)
+            {
+                CancelSprint();
             }
 
             if (input.InteractPressedThisFrame && interaction != null)
@@ -295,23 +391,32 @@ namespace OutOfReach.Player
             }
         }
 
-        private void Walk(Vector2 move, float deltaSeconds)
+        private float Walk(Vector2 move, float deltaSeconds, bool requestSprint, bool carrying)
         {
             CharacterController controller = Body;
             if (!controller.enabled || deltaSeconds <= 0f)
             {
-                return;
+                return 0f;
             }
 
             Vector2 intent = Vector2.ClampMagnitude(move, 1f);
-            Vector3 horizontal = ((transform.right * intent.x) + (transform.forward * intent.y)) * (walkSpeedMetresPerSecond * speedMultiplier);
+            float speed = walkSpeedMetresPerSecond * speedMultiplier *
+                (requestSprint ? Mathf.Clamp(sprintSpeedMultiplier, 1f, 2f) : 1f) *
+                (carrying ? exertion.TraversalSpeedFactor : 1f);
+            Vector3 direction = (transform.right * intent.x) + (transform.forward * intent.y);
+            Vector3 horizontal = direction * speed;
             if (controller.isGrounded && verticalVelocity < 0f)
             {
                 verticalVelocity = -1f;
             }
 
             verticalVelocity -= gravityMetresPerSecondSquared * deltaSeconds;
+            Vector3 before = transform.position;
             controller.Move((horizontal + (Vector3.up * verticalVelocity)) * deltaSeconds);
+            Vector3 travelled = transform.position - before;
+            travelled.y = 0f;
+            float intendedTravel = Mathf.Max(0f, Vector3.Dot(travelled, direction.normalized));
+            return speed > 0f ? Mathf.Clamp01(intendedTravel / (speed * deltaSeconds)) : 0f;
         }
 
         /// <summary>
@@ -320,17 +425,17 @@ namespace OutOfReach.Player
         /// (pitch is ignored); inside the dead band the previous sense is kept, so looking sideways or along a
         /// vertical stretch never reverses the player. S always moves the other way.
         /// </summary>
-        private void MoveAlongRoute(Vector2 move, float deltaSeconds)
+        private float MoveAlongRoute(Vector2 move, float deltaSeconds)
         {
             if (deltaSeconds <= 0f)
             {
-                return;
+                return 0f;
             }
 
             float along = Mathf.Clamp(move.y, -1f, 1f);
             if (Mathf.Abs(along) < RouteInputDeadZone)
             {
-                return;
+                return 0f;
             }
 
             Vector3 heading = ActiveRoute.HeadingAt(routeDistance);
@@ -350,9 +455,12 @@ namespace OutOfReach.Player
             }
 
             float length = ActiveRoute.LengthMetres;
-            float step = routeDirection * along * ActiveRoute.SpeedMetresPerSecond * deltaSeconds;
+            float speed = ActiveRoute.SpeedMetresPerSecond * exertion.TraversalSpeedFactor;
+            float before = routeDistance;
+            float step = routeDirection * along * speed * deltaSeconds;
             routeDistance = Mathf.Clamp(routeDistance + step, 0f, length);
             transform.position = ActiveRoute.PointAt(routeDistance);
+            return speed > 0f ? Mathf.Clamp01(Mathf.Abs(routeDistance - before) / (speed * deltaSeconds)) : 0f;
         }
 
         private void ApplyCursor(bool capture)
