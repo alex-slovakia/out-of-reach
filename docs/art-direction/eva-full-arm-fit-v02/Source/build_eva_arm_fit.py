@@ -844,6 +844,11 @@ def key_all(rig, gloves, stored):
         for pb in rig.pose.bones:
             for path in ("location", "rotation_quaternion", "scale"):
                 pb.keyframe_insert(path, frame=f)
+        torso = bpy.data.objects.get("A7_EVA_TorsoLegs")
+        if torso and torso.data.shape_keys:
+            for kb in torso.data.shape_keys.key_blocks[1:]:
+                kb.value = 1.0 if kb.name == st.get("corrective") else 0.0
+                kb.keyframe_insert("value", frame=f)
         for o in objs:
             for path in ("location", "rotation_quaternion", "scale"):
                 o.keyframe_insert(path, frame=f)
@@ -867,6 +872,7 @@ def scrub_blend(path):
 
 def export_all(scene, eva, rig, gloves, stored, report):
     key_all(rig, gloves, stored)
+    expected_bounds(scene, stored)
     for o in list(bpy.data.objects):
         if o.type in ("CAMERA", "LIGHT") or o.name.startswith("PreviewOnly") or o.name in ("ServiceWrench", "ConnectorReceptacle", "ConnectorRepaired"):
             bpy.data.objects.remove(o, do_unlink=True)
@@ -881,7 +887,7 @@ def export_all(scene, eva, rig, gloves, stored, report):
     select_only(export, active=rig)
     bpy.ops.export_scene.fbx(filepath=os.path.join(OUT, NAME + ".fbx"), use_selection=True, object_types={"ARMATURE", "MESH", "EMPTY"},
                              apply_unit_scale=True, apply_scale_options="FBX_SCALE_UNITS", axis_forward="-Z", axis_up="Y",
-                             use_mesh_modifiers=True, mesh_smooth_type="FACE", use_triangles=True, add_leaf_bones=False,
+                             use_mesh_modifiers=not CORRECTIVE, mesh_smooth_type="FACE", use_triangles=True, add_leaf_bones=False,
                              primary_bone_axis="Y", secondary_bone_axis="X", use_armature_deform_only=False,
                              bake_anim=True, bake_anim_use_all_bones=True, bake_anim_use_nla_strips=False, bake_anim_use_all_actions=False,
                              bake_anim_force_startend_keying=True, bake_anim_step=1.0, bake_anim_simplify_factor=0.0,
@@ -919,6 +925,30 @@ def export_all(scene, eva, rig, gloves, stored, report):
     report["blend_path_scrubbed"] = scrub_blend(blend)
     json.dump(report, open(os.path.join(OUT, "fit-report.json"), "w", encoding="utf-8", newline="\n"), indent=1)
     log("exported", NAME + ".fbx", "and .blend")
+
+
+def expected_bounds(scene, stored):
+    """Model-space (Unity axes) bounding boxes of the skinned meshes per clip frame, from the evaluated (armature + shape
+    keys) meshes, so the Unity check can verify the real skinned result and not only bone positions."""
+    rows = ["frame,mesh,min_x,min_y,min_z,max_x,max_y,max_z"]
+    names = ["A7_EVA_TorsoLegs", "A7_EVA_Arm_R", "A7_EVA_Arm_L"]
+    for f in sorted(stored):
+        scene.frame_set(f)
+        bpy.context.view_layer.update()
+        dg = bpy.context.evaluated_depsgraph_get()
+        for name in names:
+            obj = bpy.data.objects[name]
+            ev = obj.evaluated_get(dg)
+            me = ev.to_mesh()
+            pts = [obj.matrix_world @ v.co for v in me.vertices]
+            ev.to_mesh_clear()
+            u = [(-p.x, p.z, -p.y) for p in pts]
+            lo = [min(q[i] for q in u) for i in range(3)]
+            hi = [max(q[i] for q in u) for i in range(3)]
+            rows.append("%d,%s,%s" % (f, name, ",".join("%.6f" % x for x in lo + hi)))
+    open(os.path.join(OUT, "expected_bounds.csv"), "w", encoding="utf-8", newline="\n").write("\n".join(rows) + "\n")
+    scene.frame_set(0)
+    log("expected bounds written for", len(stored), "frames")
 
 
 # ------------------------------------------------------------------ EVA-SHOULDER-SEAM-02: torso shoulder band follows the upper arm
@@ -983,6 +1013,299 @@ def seam_blend(rig, eva, side, radius, region=0.18):
             "recessed_torso_vertices": moved, "recess_max_m": SEAM_RECESS}
 
 
+# ------------------------------------------------------------------ EVA-SHOULDER-SEAM-02: pose-corrective torso blend shapes
+CORRECTIVE = bool(arg("--corrective", False))
+CORR_OUT, CORR_IN = 0.025, 0.003       # torso vertices up to 25 mm outside the sleeve are tucked 3 mm under it
+CORR_ZONE, CORR_JUNCTION = 0.22, 0.12  # torso vertex within 0.22 m of the shoulder joint, nearest sleeve point within 0.12 m
+
+
+def skin3(rig, torso):
+    """Per-vertex linear-blend skinning rotation/scale (armature space, pose relative to bind) of the torso."""
+    defm = {pb.name: (pb.matrix @ pb.bone.matrix_local.inverted()).to_3x3() for pb in rig.pose.bones}
+    names = {g.index: g.name for g in torso.vertex_groups}
+    out = []
+    for v in torso.data.vertices:
+        M = Matrix(((0.0, 0.0, 0.0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)))
+        tot = 0.0
+        for g in v.groups:
+            n = names[g.group]
+            if n in defm and g.weight > 0.0:
+                M = M + defm[n] * g.weight
+                tot += g.weight
+        out.append(M * (1.0 / tot) if tot > 0.0 else Matrix.Identity(3))
+    return out
+
+
+def junction_crossings(rig, eva):
+    """Torso vertices (current pose, current shape-key mix) lying 0-25 mm outside a sleeve at the shoulder junction."""
+    torso = eva["A7_EVA_TorsoLegs"]
+    _, tv = world_bvh([torso])
+    found, stats = {}, {}
+    for side in SIDES:
+        bvh, _ = world_bvh([eva["A7_EVA_Arm_" + side]])
+        S = bone_world(rig, "upperarm01." + side).translation
+        n = 0
+        for i, p in enumerate(tv):
+            if (p - S).length > CORR_ZONE:
+                continue
+            loc, nor, idx, dist = bvh.find_nearest(p)
+            if loc is None or (loc - S).length > CORR_JUNCTION:
+                continue
+            signed = (p - loc).dot(nor)
+            if 0.0 < signed < CORR_OUT:
+                n += 1
+                found[i] = (loc - nor * CORR_IN) - p
+        stats[side] = n
+    return found, stats
+
+
+def make_corrective(rig, eva, name):
+    torso = eva["A7_EVA_TorsoLegs"]
+    found, before = junction_crossings(rig, eva)
+    if not found:
+        return None, before, {s: 0 for s in SIDES}
+    assert (torso.matrix_world.to_3x3() - Matrix.Identity(3)).median_scale if False else True
+    mats = skin3(rig, torso)
+    if torso.data.shape_keys is None:
+        torso.shape_key_add(name="Basis", from_mix=False)
+    key = torso.shape_key_add(name="Seam_" + name, from_mix=False)
+    key.value = 0.0
+    inv_obj = torso.matrix_world.to_3x3().inverted()
+    inv_rig = rig.matrix_world.to_3x3().inverted()
+    for i, d in found.items():
+        key.data[i].co = key.data[i].co + inv_obj @ (rig.matrix_world.to_3x3() @ (mats[i].inverted() @ (inv_rig @ d)))
+    key.value = 1.0
+    bpy.context.view_layer.update()
+    _, after = junction_crossings(rig, eva)
+    return key, before, after
+
+
+# ------------------------------------------------------------------ EVA-SHOULDER-SEAM-02: scye bearing over the zigzag split boundary
+SCYE = bool(arg("--scye", False))
+SCYE_HALF, SCYE_OFF, SCYE_T = 0.027, 0.006, 0.006
+SCYE_PLANES = {}
+SCYE_SPLIT = bool(arg('--scye-split', False))   # half width along the loop normal, offset above the surface, thickness
+
+
+def scye_band(rig, eva, side):
+    """A ring that covers the FitV02 torso/arm split loop (a 47 mm zigzag); each cross-section copies the skin weights of
+    its boundary vertex, so the ring stays on the boundary in every pose."""
+    arm = eva["A7_EVA_Arm_" + side]
+    bm = bmesh.new()
+    bm.from_mesh(arm.data)
+    bm.verts.ensure_lookup_table()
+    S = rig.matrix_world @ rig.data.bones["upperarm01." + side].head_local
+    bverts = {v for e in bm.edges if e.is_boundary for v in e.verts}
+    loop = [v for v in bverts if ((arm.matrix_world @ v.co) - S).length < 0.20]
+    pts = [arm.matrix_world @ v.co for v in loop]
+    c = sum(pts, Vector()) / len(pts)
+    cov = Matrix(((0.0, 0.0, 0.0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)))
+    for p in pts:
+        d = p - c
+        for i in range(3):
+            for j in range(3):
+                cov[i][j] += d[i] * d[j]
+    A = Matrix.Identity(3) * (cov[0][0] + cov[1][1] + cov[2][2]) - cov
+    n = Vector((0.3, 0.5, 0.8))
+    for _ in range(80):
+        n = (A @ n).normalized()
+    u = (pts[0] - c - n * (pts[0] - c).dot(n)).normalized()
+    w = n.cross(u)
+    order = sorted(range(len(loop)), key=lambda i: atan2((pts[i] - c).dot(w), (pts[i] - c).dot(u)))
+    radii = [((pts[i] - c) - n * (pts[i] - c).dot(n)).length for i in order]
+    k = len(order)
+    smooth = [sum(radii[(j + s) % k] for s in (-2, -1, 0, 1, 2)) / 5.0 for j in range(k)]
+    out = bmesh.new()
+    rings = []
+    for j, i in enumerate(order):
+        p = pts[i]
+        radial = ((p - c) - n * (p - c).dot(n)).normalized()
+        base = c + radial * smooth[j]
+        r_in, r_out = SCYE_OFF, SCYE_OFF + SCYE_T
+        rings.append([out.verts.new(base + radial * r + n * h) for r, h in ((r_in, -SCYE_HALF), (r_out, -SCYE_HALF), (r_out, SCYE_HALF), (r_in, SCYE_HALF))])
+    for j in range(k):
+        a, b = rings[j], rings[(j + 1) % k]
+        for q in range(4):
+            q1 = (q + 1) % 4
+            out.faces.new((a[q], b[q], b[q1], a[q1]))
+    bmesh.ops.recalc_face_normals(out, faces=out.faces[:])
+    me = bpy.data.meshes.new(NAME + "_ScyeBearing_" + side)
+    out.to_mesh(me)
+    out.free()
+    me.materials.append(bpy.data.materials["MAT_BrushedTitanium"])
+    obj = bpy.data.objects.new("ScyeBearing_" + side, me)
+    bpy.context.scene.collection.objects.link(obj)
+    names = {g.index: g.name for g in arm.vertex_groups}
+    groups = {}
+    for j, i in enumerate(order):
+        src = arm.data.vertices[loop[i].index]
+        for g in src.groups:
+            name = names[g.group]
+            if name not in groups:
+                groups[name] = obj.vertex_groups.new(name=name)
+            groups[name].add([4 * j + q for q in range(4)], g.weight, "REPLACE")
+    bm.free()
+    mod = obj.modifiers.new("Armature", "ARMATURE")
+    mod.object = rig
+    keep_world_parent(obj, rig)
+    if (c - Vector((0.0, c.y, c.z))).dot(n) < 0.0:
+        n = -n                                         # point away from the body midline
+    SCYE_PLANES[side] = (c.copy(), n.copy(), max(smooth))
+    zig = [(p - c).dot(n) for p in pts]
+    return obj, {"boundary_vertices": len(loop), "zigzag_mm": [round(min(zig) * 1000, 1), round(max(zig) * 1000, 1)],
+                 "ring_half_width_mm": SCYE_HALF * 1000, "ring_radius_mm": [round(min(smooth) * 1000, 1), round(max(smooth) * 1000, 1)]}
+
+
+def scye_split(rig, eva, side, inner=-0.010, outer=0.020, reach=0.040):
+    """Move the effective torso/arm split to the scye plane: torso vertices on the arm side of the plane (the deltoid mass)
+    take the nearest sleeve vertex's weights, with a smoothstep from `inner` to `outer` metres across the plane, inside the
+    armhole radius + `reach`."""
+    c, n, rad = SCYE_PLANES[side]
+    torso, arm = eva["A7_EVA_TorsoLegs"], eva["A7_EVA_Arm_" + side]
+    tree = KDTree(len(arm.data.vertices))
+    for i, v in enumerate(arm.data.vertices):
+        tree.insert(arm.matrix_world @ v.co, i)
+    tree.balance()
+    agroups = {g.index: g.name for g in arm.vertex_groups}
+    tnames = {g.index: g.name for g in torso.vertex_groups}
+    tgroups = {g.name: g for g in torso.vertex_groups}
+    writes = []
+    for v in torso.data.vertices:
+        p = torso.matrix_world @ v.co
+        s_ = (p - c).dot(n)
+        if s_ <= inner or ((p - c) - n * s_).length > rad + reach:
+            continue
+        t = min(1.0, (s_ - inner) / (outer - inner))
+        t = t * t * (3.0 - 2.0 * t)
+        co, ai, d = tree.find(p)
+        tw = {tnames[g.group]: g.weight for g in v.groups}
+        aw = {agroups[g.group]: g.weight for g in arm.data.vertices[ai].groups}
+        names = set(tw) | set(aw)
+        new = {k: (1.0 - t) * tw.get(k, 0.0) + t * aw.get(k, 0.0) for k in names}
+        tot = sum(new.values()) or 1.0
+        writes.append((v.index, names, {k: w / tot for k, w in new.items()}))
+    for idx, names, new in writes:
+        for k in names:
+            if k not in tgroups:
+                tgroups[k] = torso.vertex_groups.new(name=k)
+            if new.get(k, 0.0) > 1e-4:
+                tgroups[k].add([idx], new[k], "REPLACE")
+            else:
+                tgroups[k].remove([idx])
+    return {"torso_vertices_reweighted": len(writes), "transition_m": [inner, outer], "armhole_reach_m": reach}
+
+# ------------------------------------------------------------------ diagnostic colours (never used for a delivered build)
+DEBUG_COLOURS = bool(arg("--debug-colours", False))
+
+
+def debug_colours(eva):
+    """Torso green, sleeve WarmIvory red, sleeve FlexGrey blue, any other sleeve material yellow."""
+    def flat(name, rgb):
+        mat = bpy.data.materials.new(name)
+        mat.use_nodes = True
+        node = bsdf_of(mat)
+        node.inputs["Base Color"].default_value = (rgb[0], rgb[1], rgb[2], 1.0)
+        node.inputs["Roughness"].default_value = 0.8
+        return mat
+    torso, ivory, grey, other = (flat("DBG_Torso", (0.05, 0.55, 0.05)), flat("DBG_ArmIvory", (0.8, 0.04, 0.04)),
+                                 flat("DBG_ArmGrey", (0.04, 0.1, 0.9)), flat("DBG_ArmOther", (0.9, 0.8, 0.05)))
+    for name, obj in eva.items():
+        if obj.type != "MESH":
+            continue
+        if name.startswith("A7_EVA_Arm_"):
+            for slot in obj.material_slots:
+                n = slot.material.name if slot.material else ""
+                slot.material = ivory if "WarmIvory" in n else grey if "FlexGrey" in n else other
+        elif name == "A7_EVA_TorsoLegs":
+            for slot in obj.material_slots:
+                slot.material = torso
+    log("debug colours on")
+
+# ------------------------------------------------------------------ EVA-SHOULDER-SEAM-02: one clean colour break on the sleeve
+CUFF = bool(arg("--cuff", False))
+CUFF_ZONE = 0.10       # faces whose centre lies within this distance of the fitted break plane are cut and re-coloured
+
+
+def _normal_of(pts):
+    """Least-squares plane through points: centroid and the direction of least spread."""
+    c = sum(pts, Vector()) / len(pts)
+    cov = Matrix(((0.0, 0.0, 0.0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)))
+    for p in pts:
+        d = p - c
+        for i in range(3):
+            for j in range(3):
+                cov[i][j] += d[i] * d[j]
+    A = Matrix.Identity(3) * (cov[0][0] + cov[1][1] + cov[2][2]) - cov
+    n = Vector((0.3, 0.5, 0.8))
+    for _ in range(100):
+        n = (A @ n).normalized()
+    return c, n
+
+
+def sleeve_cuff(rig, eva, side):
+    """The FitV02 sleeve changes from WarmIvory to FlexGrey along a zigzag of whole faces (the 'jagged ivory/grey edge').
+    Fit a plane to that boundary in bind pose, bisect the sleeve along it (new vertices interpolate weights and UVs) and
+    colour every face near the plane by its side, so the break is one straight loop. Bones and the glove are untouched."""
+    arm = eva["A7_EVA_Arm_" + side]
+    names = [m.name if m else "" for m in arm.data.materials]
+    iv = next(i for i, n in enumerate(names) if "WarmIvory" in n)
+    gr = next(i for i, n in enumerate(names) if "FlexGrey" in n)
+    S = rig.matrix_world @ rig.data.bones["upperarm01." + side].head_local
+    E = rig.matrix_world @ rig.data.bones["lowerarm01." + side].head_local
+    axis = (E - S).normalized()
+    mw = arm.matrix_world
+    nv0, nf0 = len(arm.data.vertices), len(arm.data.polygons)
+    custom = bool(getattr(arm.data, "has_custom_normals", False))
+    bm = bmesh.new()
+    bm.from_mesh(arm.data)
+    bverts = set()
+    for e in bm.edges:
+        mats = {f.material_index for f in e.link_faces}
+        if iv in mats and gr in mats:
+            bverts.update(e.verts)
+    pts = [mw @ v.co for v in bverts]
+    c, n = _normal_of(pts)
+    if n.dot(axis) < 0.0:
+        n = -n
+    spread = [(p - c).dot(n) for p in pts]
+    t_c = (c - S).dot(axis)
+    imw = mw.inverted()
+    co_obj = imw @ c
+    no_obj = (mw.to_3x3().inverted().transposed() @ n).normalized()
+    faces = [f for f in bm.faces if f.material_index in (iv, gr) and abs(((mw @ f.calc_center_median()) - c).dot(n)) < CUFF_ZONE]
+    geom = list({v for f in faces for v in f.verts}) + list({e for f in faces for e in f.edges}) + faces
+    bmesh.ops.bisect_plane(bm, geom=geom, dist=1e-6, plane_co=co_obj, plane_no=no_obj, clear_outer=False, clear_inner=False)
+    changed = 0
+    for f in bm.faces:
+        if f.material_index not in (iv, gr):
+            continue
+        d = ((mw @ f.calc_center_median()) - c).dot(n)
+        if abs(d) >= CUFF_ZONE:
+            continue
+        want = iv if d < 0.0 else gr
+        if f.material_index != want:
+            f.material_index = want
+            changed += 1
+    bm.to_mesh(arm.data)
+    bm.free()
+    arm.data.update()
+    unweighted = sum(1 for v in arm.data.vertices if sum(g.weight for g in v.groups) < 0.999)
+    edge_faces = {}
+    for p in arm.data.polygons:
+        for k in p.edge_keys:
+            edge_faces.setdefault(k, set()).add(p.material_index)
+    bpts = {i for k, m in edge_faces.items() if iv in m and gr in m for i in k}
+    bd = [((mw @ arm.data.vertices[i].co) - c).dot(n) for i in bpts]
+    return {"break_plane_point_along_upper_arm_m": round(t_c, 4),
+            "break_plane_tilt_vs_upper_arm_axis_deg": round(degrees(n.angle(axis)), 2),
+            "fitv02_zigzag_boundary_vertices": len(pts),
+            "fitv02_zigzag_depth_across_plane_mm": [round(min(spread) * 1000, 1), round(max(spread) * 1000, 1)],
+            "new_boundary_vertices": len(bpts),
+            "new_boundary_depth_across_plane_mm": [round(min(bd) * 1000, 2), round(max(bd) * 1000, 2)] if bd else None,
+            "faces_recoloured": changed, "vertices_added": len(arm.data.vertices) - nv0, "faces_added": len(arm.data.polygons) - nf0,
+            "vertices_with_weight_sum_below_1": unweighted, "had_custom_normals": custom}
+
+
 # ------------------------------------------------------------------ main
 V04 = os.path.abspath(arg("--v04"))
 ELBOW_OK = 150.0                                  # reachable = elbow interior <= 150 deg (30 deg bend kept)
@@ -1018,6 +1341,18 @@ def setup(scene):
                       "sleeve_end_axis_vs_forearm_deg": round(fit["axis_vs_forearm_deg"], 2),
                       "boot_proximal_radius_mm": glove["boot_proximal_radius_mm"]}
         log(side, "glove fit", fits[side])
+    if CUFF:
+        for side in SIDES:
+            fits[side]["sleeve_cuff"] = sleeve_cuff(rig, eva, side)
+            log(side, "sleeve cuff", fits[side]["sleeve_cuff"])
+    if SCYE:
+        for side in SIDES:
+            band, info = scye_band(rig, eva, side)
+            fits[side]["scye_bearing"] = info
+            log(side, "scye bearing", info)
+            if SCYE_SPLIT:
+                fits[side]["scye_split"] = scye_split(rig, eva, side)
+                log(side, "scye split", fits[side]["scye_split"])
     if SEAM_R > 0.0:
         for side in SIDES:
             fits[side]["seam_weight_blend"] = seam_blend(rig, eva, side, SEAM_R)
@@ -1159,8 +1494,14 @@ def solve_targets(scene, eva, rig, rigdef, gloves, base):
                          "original_short_by_mm": round(max(0.0, orig_d - (lu + lf)) * 1000, 1),
                          "pulled_towards_eye_mm": round(pulled * 1000, 1), "solved_target_eye": rnd(pos2), "comfortable_reach_m": round(d_ok, 4),
                          "glove_pivot_error_mm": round(err * 1000, 2), "shoulder_eye": rnd(sh_u), **info, **flex, "finger_pose": finger_pose}
+        corr = None
+        if CORRECTIVE:
+            corr, cb, ca = make_corrective(rig, eva, name)
+            res["seam_corrective"] = {"shape_key": corr.name if corr else None, "junction_crossings_before": cb, "junction_crossings_after": ca,
+                                      "vertices_moved": len(corr.data) and sum(1 for k, b0 in zip(corr.data, corr.relative_key.data) if (k.co - b0.co).length > 1e-7) if corr else 0}
         meas = {side: measure_pose(side, gloves[side], eva, eye_b) for side in SIDES}
         stored[frame] = capture(rig, gloves)
+        stored[frame]["corrective"] = corr.name if corr else None
         results[name] = {"frame": frame, "sides": res, "measure": meas}
         log(name, json.dumps(res["R"])[:400], "|", json.dumps(meas["R"]))
         tgt = gloves["R"]["pivot"].matrix_world.translation.copy()
@@ -1168,6 +1509,12 @@ def solve_targets(scene, eva, rig, rigdef, gloves, base):
         render(scene, cam, os.path.join(RENDER_DIR, "%sfp_%s.png" % ("cp_" if STAGE != "full" else "", name)), (1280, 960), 24 if STAGE != "full" else SAMPLES)
         cam = camera(scene, "EAF_Side_" + name, Vector((-1.0, -0.55, 1.45)), tgt + Vector((0.08, 0.10, 0.02)), lens=45.0)
         render(scene, cam, os.path.join(RENDER_DIR, "%sside_%s.png" % ("cp_" if STAGE != "full" else "", name)), (1280, 960), 24 if STAGE != "full" else SAMPLES)
+        Sh = bone_world(rig, "upperarm01.R").translation
+        cam = camera(scene, "EAF_Shoulder_" + name, Sh + Vector((-0.30, -0.32, 0.06)), Sh + Vector((-0.04, -0.10, -0.06)), lens=40.0)
+        render(scene, cam, os.path.join(RENDER_DIR, "%sshoulder_%s.png" % ("cp_" if STAGE != "full" else "", name)), (1280, 960), 24 if STAGE != "full" else SAMPLES)
+        if corr:
+            corr.value = 0.0
+            bpy.context.view_layer.update()
     return stored, results
 
 
@@ -1177,6 +1524,8 @@ def main():
     scene.render.fps = 30
     device = enable_gpu(scene)
     eva, hands, rig, rigdef, gloves, fits, base = setup(scene)
+    if DEBUG_COLOURS:
+        debug_colours(eva)
     render_set(scene)
     stored, results = solve_targets(scene, eva, rig, rigdef, gloves, base)
     report = {"blender": bpy.app.version_string, "device": device, "fit": fits, "targets": results,
