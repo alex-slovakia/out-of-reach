@@ -26,6 +26,15 @@ an authorized redemption action. Do not promise it will execute after capacity h
 
 ## Working policy
 
+**Latest Claude-specific override, 14 November:** keep Claude's work on Fable as Alex requested;
+do not migrate it solely because of the earlier conservation suggestion. Alex then clarified that
+Apoliak reportedly has an automatic reset today at 17:00: **do not redeem a manual Fable reset today;
+preserve it for tomorrow.** Claude must verify the exact quota window/date/timezone, because its
+10:50 UTC report instead said 15 November 18:00 UTC. At that observed time it reported all-model
+40% used and Fable 76% used (versus 17% / 29% at 10:15 UTC), attributed to three Fable chats with
+large contexts. Per-chat token accounting is not available to Codex. See CODEX-010 in issue #7.
+This changes the Claude plan, not the separate Codex reset-credit budget above.
+
 1. Read issue #7 before taking ownership. One writer per file; separate checkout for the Fable modeler.
 2. Keep one concrete deliverable per worker: currently UI, audio, cinematic presentation and Claude's gameplay. Prefer reuse of approved assets and bounded source review over repeated generations or whole-project rereads.
 3. Report capacity at meaningful delivery checkpoints, before a long new batch, on a limit warning and before unattended work. Include observed time, remaining capacity, next reset and the next useful handoff. No minute-by-minute polling or percentage guesses.

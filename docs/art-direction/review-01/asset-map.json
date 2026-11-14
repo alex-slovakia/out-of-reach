@@ -1,0 +1,86 @@
+{
+  "review": "review-01",
+  "project": "OUT OF REACH / AURORA-7",
+  "engine": "Unity 6000.3.28f1 / URP / Windows x64",
+  "status": {"vessel_direction": "accepted by Alex conditional on actual models", "team_approval": "not confirmed", "ui_v2": "pending", "old_ui": "rejected; not canonical"},
+  "boards": [
+    {"file": "01-ship-interiors.png", "views": ["R01", "R02", "R03", "R04"], "kind": "generated concept", "approval": "conditional vessel direction"},
+    {"file": "02-eva-cinematics.png", "views": ["R05", "R06", "R07", "R08"], "kind": "generated concept", "approval": "conditional vessel direction"},
+    {"file": "03-player-view-v2.png", "views": ["R09", "R10", "R11", "R12"], "kind": "generated concept pending delivery/review", "approval": "pending; view associations provisional"},
+    {"file": "03-player-view.png", "views": ["R09", "R10", "R11", "R12"], "kind": "superseded generated concept", "approval": "rejected", "canonical": false}
+  ],
+  "conventions": {"unit": "1 Unity unit = 1 metre", "up": "Y", "forward": "local Z", "eye_height_m": 1.65, "minimum_clear_passage_m": 1.2, "paths": "repository-relative ownership scopes; not proof of asset existence", "dimensions": "unspecified dimensions must be measured and agreed during bay verification", "nasa": "design/science reference only; no NASA models imported by these boards"},
+  "first_delivery": "One actual representative engineering bay: Blender source/export plus genuine Unity render and revision evidence, before kit multiplication.",
+  "assets": [
+    {
+      "id": "A01", "name": "Modular pressure shell and interior kit", "views": ["R01", "R02", "R03", "R04", "R07"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original model to be authored", "license": "original project asset; delivery provenance pending", "status": "concept direction accepted; representative model delivery pending",
+      "scale": "metres; 1.65 m eye height and >=1.2 m clear circulation",
+      "first_verification": "Import one bay in Unity; compare R02 framing, measured clearance, normals, material response and gameplay anchor placement."
+    },
+    {
+      "id": "A02", "name": "Life-support scrubber and service hardware", "views": ["R02", "R07", "R10"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original fictional equipment; NASA ECLSS informs function", "source_url": "https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/", "license": "original model provenance pending; reference is not an imported asset", "status": "model delivery and repair presentation unverified",
+      "scale": "metres; canisters/service access sized against the representative bay",
+      "first_verification": "Unity R02 view: readable replaceable canisters, usable LifeSupportRepair anchor and no blockage of the clear route."
+    },
+    {
+      "id": "A03", "name": "Power distribution cabinet", "views": ["R02", "R07", "R10"],
+      "owner": "Codex existing asset integration; Claude/Fable custom model alternative", "owned_paths": ["Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/PowerBox01/**", "Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "existing Poly Haven Power Box 01; optional original EPS-2 replacement pending", "source_url": "https://polyhaven.com/a/power_box_01", "license": "CC0-1.0 for existing Power Box 01; original EPS-2 provenance pending", "manifest": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/PowerBox01/manifest.json", "status": "existing source manifest verified; custom delivery pending; exact generated design not supplied",
+      "scale": "metres; cabinet and service opening measured in the bay",
+      "first_verification": "Compare selected actual model with R02; verify PowerRepair access, door/panel pivots, materials and collider clearance."
+    },
+    {
+      "id": "A04", "name": "Cargo bags, straps and stowage modules", "views": ["R03"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original reusable models", "license": "original project asset; delivery provenance pending", "status": "pending",
+      "scale": "metres; repeated modules fit bay dimensions and preserve clear passage",
+      "first_verification": "Place one bag/strap module in Unity R03 view; inspect silhouette, fabric roughness, clipping and collision clearance."
+    },
+    {
+      "id": "A05", "name": "Pressure hatch and suit stowage", "views": ["R04", "R06"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original fictional pressure-boundary hardware", "license": "original project asset; delivery provenance pending", "status": "model delivery and moving-part verification pending",
+      "scale": "metres; hatch and stowage fit the agreed player/airlock layout",
+      "first_verification": "Unity hatch open/closed inspection: separate moving parts, correct pivots and AirlockInner/AirlockOuter anchors; gameplay gates remain Claude's authority."
+    },
+    {
+      "id": "A06", "name": "Exterior hull, service section and solar assembly", "views": ["R05", "R06", "R08"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original fictional spacecraft; NASA reference informs design only", "license": "original project asset; delivery provenance pending", "status": "exterior direction accepted; actual model unverified",
+      "scale": "metres; exterior matches interior hull and hatch, not an independently rescaled ship",
+      "first_verification": "Unity R05 silhouette and R06 route views: inspect hull/interior alignment, panel material response, handholds and safe return path."
+    },
+    {
+      "id": "A07", "name": "Antenna and maintenance mount", "views": ["R05", "R06", "R08"],
+      "owner": "Claude/Fable model writer", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**"],
+      "source": "original fictional antenna", "license": "original project asset; delivery provenance pending", "status": "pending actual model verification",
+      "scale": "metres; service point reachable from the constrained EVA route",
+      "first_verification": "Unity first-person R06 view: verify AntennaRepair anchor, silhouette, service access and tether/handhold clearance."
+    },
+    {
+      "id": "A08", "name": "First-person gloves and tether", "views": ["R06"],
+      "owner": "Claude/Fable model writer; Claude player/EVA integration", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**", "Assets/_OutOfReach/Scripts/Player/**"],
+      "source": "original first-person parts; no full character required", "license": "original project asset; delivery provenance pending", "status": "pending",
+      "scale": "human first-person proportions against 1.65 m camera and actual handrails",
+      "first_verification": "Unity player-camera check: glove anatomy, clipping, visible tether attachment and readable constrained route."
+    },
+    {
+      "id": "A09", "name": "Practical lights, emergency response and restrained sparks", "views": ["R01", "R02", "R03", "R04", "R07", "R10"],
+      "owner": "Codex", "owned_paths": ["Assets/_OutOfReach/Visuals/** except Models/Aurora7/**", "Assets/_OutOfReach/Scripts/Presentation/**", "Assets/_OutOfReach/Prefabs/Visual/**", "Assets/_OutOfReach/Audio/**"],
+      "source": "original Unity lighting/VFX presentation", "license": "original project work", "status": "concept target; final bay effect and performance verification pending",
+      "scale": "lights/VFX positioned in the metre-scale bay; preserve readable passage",
+      "first_verification": "Capture the same bay in normal, impact and reduced-effects states; verify event-driven response, legibility and no exterior air-transmitted sound."
+    },
+    {
+      "id": "A10", "name": "Physical display frame and UI rendering", "views": ["R01", "R04", "R09", "R10", "R11", "R12"],
+      "owner": "Claude/Fable physical frame; Codex UI rendering", "owned_paths": ["Assets/_OutOfReach/Visuals/Models/Aurora7/**", "Assets/_OutOfReach/UI/**", "Assets/_OutOfReach/Scripts/Presentation/**"],
+      "source": "original frame/UI; Adobe Source Sans 3", "source_url": "https://github.com/adobe-fonts/source-sans/tree/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e", "license": "Source Sans 3: SIL OFL-1.1; original frame/UI provenance pending", "manifest": "Assets/_OutOfReach/UI/Typography/FONT-PROVENANCE.json", "status": "first UI board rejected; physical terminal/minimal HUD v2 pending approval",
+      "scale": "physical frame in metres; UI legibility checked at actual player viewing distance/resolution",
+      "first_verification": "Approve v2 then render actual terminal/minimal HUD in Unity; verify text, authoritative units, interactions, timing and state transitions rather than reproducing rejected form layout."
+    }
+  ]
+}

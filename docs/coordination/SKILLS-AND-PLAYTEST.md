@@ -13,6 +13,7 @@ instructions for the current task; project ownership, engine version and verifie
 | `unity-csharp-scripting` | `gamedev-skills/awesome-gamedev-agent-skills@c6ca6c41c839b68319ffc08430b99ab768debc32`, `skills/unity/unity-csharp-scripting` | Unity lifecycle, serialization, GUID checks and actual compilation evidence | Installed in `~/.codex/skills/`; Apache-2.0 license retained |
 | `hard-surface` | `arjun988/blender-skills@904f095d8f36a6e72adaebb08d07f884a074743d`, `.claude/skills/hard-surface` | Plausible mechanical construction, silhouette, bevels and repeated parts | Installed in `~/.codex/skills/`; MIT license retained |
 | `unity-export` | Same Blender repository and revision, `.claude/skills/unity-export` | Metre scale, pivots, normals, material and import checks | Installed in `~/.codex/skills/`; MIT license retained |
+| `ui-uitk` | `Unity-Technologies/skills@e5956e7e34a125982550de15a9e87f8e66af7d86`, `skills/ui-uitk` | Official UI Toolkit layout/import guidance | Installed in `~/.codex/skills/`; Unity Companion License retained; no plugin/hooks/Unity package added |
 | Impeccable / Taste Skill | Existing local installations | UI composition, readable typography, restrained motion and review of real captures | Already available; current redesign is using their relevant design guidance |
 
 Each new installation contains `INSTALL-PROVENANCE.json` with the upstream revision and file hashes.
@@ -25,6 +26,12 @@ Do not copy all 94 Blender skills into every task's context. A working existing 
 does not need replacement. If missing, inspect and set up only the required Blender connector on
 Apoliak's machine, bound locally; report the actual Blender/add-on version and successful connection.
 Codex cannot claim a remote installation without Claude's acknowledgement.
+
+Claude's 10:48 UTC ACK says Apoliak declined skill installation in his locked setup; its model writer
+reads the two Blender guides directly. This is distinct from Alex's later mandatory Blender connector
+request in CODEX-009, whose actual installation still needs evidence. The official UI guide incorrectly
+restricts `transition-property`; Unity 6000.3 documentation and actual import/render results take
+precedence. Its user-driven import steps are replaced by the already authorized isolated Editor checks.
 
 Use the existing verified FBX/Unity import pipeline. A generic GLB recommendation in a skill does not
 authorize adding a GLTF package. The model writer remains the sole model writer under CODEX-006.
