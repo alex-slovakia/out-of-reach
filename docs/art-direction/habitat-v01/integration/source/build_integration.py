@@ -250,8 +250,8 @@ def build():
         "berth_to_right_wall_blanket_bay": round(float(2.38 - berth[1][0]), 3),
         "portal_wings_z": [10.91, 11.09, 16.91, 17.09],
         "units_z_extent": [round(float(berth[0][2]), 3), round(float(galley[1][2]), 3)],
-        "ring_frame_flanges": "the graphite ring-frame flanges at z 14.0 (0.07 m deep) touch the berth and galley "
-                              "side panels by 5 mm; hidden, no collider involved",
+        "ring_frame_flanges": "the graphite ring-frame flanges at z 12.5, 14.0 and 15.5 (0.07 m deep, centred on each rib) "
+                              "enter the berth and galley side panels by 8 mm; hidden inside the panels, no collider involved",
     }
     # 5. the editable scene
     with open(os.path.join(OUT, "hb_integration_report.json"), "w", encoding="utf-8") as handle:

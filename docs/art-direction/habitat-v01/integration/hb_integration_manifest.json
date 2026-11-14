@@ -354,7 +354,7 @@
    12.527,
    15.473
   ],
-  "ring_frame_flanges": "the graphite ring-frame flanges at z 14.0 (0.07 m deep) touch the berth and galley side panels by 5 mm; hidden, no collider involved"
+  "ring_frame_flanges": "the graphite ring-frame flanges at z 12.5, 14.0 and 15.5 (0.07 m deep, centred on each rib) enter the berth and galley side panels by 8 mm; hidden inside the panels, no collider involved"
  },
  "storage_shell": {
   "fbx": "A7_Storage_Habitat.fbx",

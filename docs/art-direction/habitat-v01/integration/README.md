@@ -83,7 +83,7 @@ The empties carry positions only; forward directions are in the manifest, for yo
 
 - Opposite the berth, the starboard wall has a blanket bay; 4.225 m are free to its lining.
 - The units span z 12.527 to 15.473, clear of the portal wings at z 10.91–11.09 and 16.91–17.09.
-- The graphite ring-frame flanges at z 14.0 (0.07 m deep) touch the berth and galley side panels by 5 mm. This is hidden, and no collider is involved.
+- The graphite ring-frame flanges at z 12.5, 14.0 and 15.5 enter the berth and galley side panels by 8 mm. Each flange is 0.07 m deep and centred on its rib; the 1.446 m units leave 0.027 m to the rib. The overlap is hidden inside the panels, and no collider is involved. (The first version of this README said 5 mm; the overlap test below measured 8 mm.)
 
 ## Removed or moved features
 
@@ -99,7 +99,29 @@ The empties carry positions only; forward directions are in the manifest, for yo
 | FBX round trip (`roundtrip_habitat.py --report hb_integration_report.json`) | **PASS, 20/20**: exact triangle counts; pivots, bounds and anchors within 1 mm; material slots match |
 | Cycles renders of this layout | 4 stills, inspected |
 
-**Not verified:** Unity import, the Bootstrap swap, player collision in play, performance.
+**Not verified:** the Bootstrap swap, player collision in play, performance.
+
+## Self-review (14 November, 18:15 UTC, as Codex asked at 18:01 UTC)
+
+**Unity import check.**
+- **Setup:** Unity 6000.3.28f1, in a throwaway folder of the model writer's clone that was deleted afterwards. Importer settings are the AURORA-7 ship's: scale 1, file scale, Bake Axis Conversion, material descriptions.
+- **Scope:** all 6 FBX files, the three unit-space units in `../` and the three files here, with all 34 objects and anchors.
+- **Result:** pivots, rotations (all 0), scale (1), bounds (within 2 mm), material slot names, anchor positions and triangle counts **all match the build reports**. Unity welds no triangles away: 100,170 in total.
+- `A7_Storage_Habitat.fbx` has one object, so Unity puts its mesh on the root GameObject, as it does for the single-module ship FBX files.
+
+**Edge-collision test (Blender, world-space triangle overlap of the delivered files).**
+- **Between units:** no overlaps, including the deployed galley table against the grow lid and tray.
+- **Between units and the derivative shell,** only these, all hidden or intended:
+  - the ring-frame flanges named above, 8 mm into the side panels;
+  - the deck's wall-side cable trough, kick strip and two deck bolts per unit end, which run inside the units' plinths;
+  - the rear plates sitting flush on the wall lining;
+  - the berth's supply duct and the grow cassette's power cable ending in the wall lining, as designed.
+- No visible clipping was found.
+
+**Materials and maps.**
+- The FBX files carry no texture records, so materials bind by name.
+- Every material's maps are listed in `hb_integration_manifest.json`, and all of them are in `textures/` (32 files).
+- The `.blend` reopens with relative paths only.
 
 ## Rebuild
 
