@@ -309,6 +309,48 @@ namespace OutOfReach.Player
                 return FloatActionResult.NoSurface;
             }
 
+            BeginFloat();
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>
+        /// MICRO-ENTRY (Codex 6883884848): starts the microgravity mode from where the player stands on real support,
+        /// for example on the centre aisle after a transition, where no surface is within hand reach. Checked in this
+        /// order: control allowed (ControlDenied), not on the EVA route (OnRoute), already floating (Done; nothing
+        /// changes), and actual support under the feet, the same non-trigger, non-owned, upward-facing contact that
+        /// <see cref="TryPushFromFootContact"/> requires (NoSurface). Nothing changes before the support is validated:
+        /// no teleport, no impulse, no gravity change. Then the same float start as <see cref="EnterFloat"/>: zero
+        /// velocity, no hold. It never grants float mid-air; <see cref="TryPushFromFootContact"/> stays the only floor push.
+        /// </summary>
+        public FloatActionResult EnterFloatFromFootSupport()
+        {
+            if (!ControlAllowed)
+            {
+                return FloatActionResult.ControlDenied;
+            }
+
+            if (ActiveRoute != null)
+            {
+                return FloatActionResult.OnRoute;
+            }
+
+            if (floating)
+            {
+                return FloatActionResult.Done;
+            }
+
+            if (!Body.enabled || !FootContact(out Vector3 _))
+            {
+                return FloatActionResult.NoSurface;
+            }
+
+            BeginFloat();
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>The one float start shared by both entries: no gravity, no stepping, zero velocity, no hold.</summary>
+        private void BeginFloat()
+        {
             CancelSprint();
             CharacterController controller = Body;
             savedStepOffset = controller.stepOffset;
@@ -320,7 +362,6 @@ namespace OutOfReach.Player
             strandedFor = 0f;
             floatClock = 0f;
             lastPushAt = float.NegativeInfinity;
-            return FloatActionResult.Done;
         }
 
         /// <summary>Ends the microgravity mode: lets go, drops the velocity and walks again with gravity and stepping.</summary>
