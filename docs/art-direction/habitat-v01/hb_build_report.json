@@ -1,0 +1,408 @@
+{
+ "units": {
+  "HB_CrewBerth": {
+   "objects": {
+    "HB_CrewBerth": {
+     "triangles": 12204,
+     "per_material": {
+      "A7_Aluminum": 2864,
+      "A7_AnodizedBlack": 1180,
+      "A7_AnodizedClear": 132,
+      "A7_FabricCanvas": 1536,
+      "A7_FabricStrap": 676,
+      "A7_FabricWhite": 2216,
+      "A7_Grate": 172,
+      "A7_LedCyan": 12,
+      "A7_PaintAmber": 132,
+      "A7_PaintGraphite": 220,
+      "A7_PaintWhite": 352,
+      "A7_QuiltWhite": 44,
+      "A7_Rubber": 644,
+      "HB_BagQuilt": 1920,
+      "HB_BerthLight": 64,
+      "HB_Labels": 28,
+      "HB_ScreenOff": 12
+     },
+     "bounds_min": [
+      -0.723,
+      0.0,
+      0.0
+     ],
+     "bounds_max": [
+      0.723,
+      2.55,
+      0.533
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "anchors": {
+    "SleepEntry": {
+     "point": [
+      0.22,
+      0.0,
+      0.8
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "SleepCamera": {
+     "point": [
+      0.22,
+      1.96,
+      0.24
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "PersonalStowage": {
+     "point": [
+      -0.62,
+      1.25,
+      0.55
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    }
+   },
+   "bounds_min": [
+    -0.723,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.723,
+    2.55,
+    0.533
+   ],
+   "triangles": 12204,
+   "fbx": "HB_CrewBerth.fbx"
+  },
+  "HB_Galley": {
+   "objects": {
+    "HB_Galley": {
+     "triangles": 11682,
+     "per_material": {
+      "A7_Aluminum": 1516,
+      "A7_AnodizedBlack": 424,
+      "A7_CableBlue": 168,
+      "A7_FabricCanvas": 44,
+      "A7_FabricStrap": 144,
+      "A7_FabricWhite": 960,
+      "A7_LedCyan": 12,
+      "A7_LightPanel": 44,
+      "A7_MLISilver": 6664,
+      "A7_PaintAmber": 128,
+      "A7_PaintGraphite": 308,
+      "A7_PaintGray": 44,
+      "A7_PaintWhite": 572,
+      "A7_PlasticWhite": 128,
+      "A7_Rubber": 472,
+      "HB_Labels": 54
+     },
+     "bounds_min": [
+      -0.723,
+      0.0,
+      0.0
+     ],
+     "bounds_max": [
+      0.723,
+      2.4,
+      0.72
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "HB_GalleyTable": {
+     "triangles": 1498,
+     "per_material": {
+      "A7_Aluminum": 184,
+      "A7_MLISilver": 952,
+      "A7_PaintAmber": 32,
+      "A7_PaintGraphite": 88,
+      "A7_PaintWhite": 44,
+      "A7_Rubber": 192,
+      "HB_Labels": 6
+     },
+     "bounds_min": [
+      -0.14,
+      0.7544,
+      0.46
+     ],
+     "bounds_max": [
+      0.7,
+      1.051,
+      0.803
+     ],
+     "origin": [
+      0.0,
+      0.97,
+      0.46
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       90
+      ],
+      "note": "modelled deployed; rotates about its local x axis to stow upright"
+     }
+    }
+   },
+   "anchors": {
+    "RationPickup": {
+     "point": [
+      0.355,
+      1.72,
+      0.66
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "WaterDispenser": {
+     "point": [
+      -0.445,
+      1.13,
+      0.3
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    }
+   },
+   "bounds_min": [
+    -0.723,
+    0.0,
+    0.0
+   ],
+   "bounds_max": [
+    0.723,
+    2.4,
+    0.803
+   ],
+   "triangles": 13180,
+   "fbx": "HB_Galley.fbx"
+  },
+  "HB_GrowCassette": {
+   "objects": {
+    "HB_GrowCassette": {
+     "triangles": 3136,
+     "per_material": {
+      "A7_Aluminum": 1432,
+      "A7_CableBlue": 96,
+      "A7_FabricStrap": 88,
+      "A7_FabricWhite": 524,
+      "A7_Glass": 44,
+      "A7_Grate": 96,
+      "A7_LedCyan": 24,
+      "A7_PaintAmber": 172,
+      "A7_PaintGraphite": 188,
+      "A7_PaintWhite": 176,
+      "A7_PlasticWhite": 44,
+      "A7_Rubber": 216,
+      "HB_GrowLight": 12,
+      "HB_Labels": 12,
+      "HB_Water": 12
+     },
+     "bounds_min": [
+      -0.503,
+      0.4,
+      -0.0014
+     ],
+     "bounds_max": [
+      0.503,
+      2.0541,
+      0.509
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "HB_GrowLid": {
+     "triangles": 304,
+     "per_material": {
+      "A7_Aluminum": 248,
+      "A7_Glass": 12,
+      "A7_PaintAmber": 44
+     },
+     "bounds_min": [
+      -0.465,
+      1.105,
+      0.482
+     ],
+     "bounds_max": [
+      0.465,
+      1.663,
+      0.523
+     ],
+     "origin": [
+      0.0,
+      1.655,
+      0.49
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       100
+      ],
+      "note": "modelled closed; opens upward about the top hinge line"
+     }
+    },
+    "HB_GrowTray": {
+     "triangles": 4786,
+     "per_material": {
+      "A7_Aluminum": 44,
+      "A7_FabricCanvas": 4608,
+      "A7_PaintAmber": 44,
+      "A7_PaintGraphite": 88,
+      "HB_Labels": 2
+     },
+     "bounds_min": [
+      -0.43,
+      1.11,
+      0.06
+     ],
+     "bounds_max": [
+      0.43,
+      1.2055,
+      0.482
+     ],
+     "origin": [
+      0.0,
+      1.11,
+      0.47
+     ],
+     "motion": {
+      "type": "slide",
+      "axis": "z",
+      "range_m": [
+       0.0,
+       0.3
+      ],
+      "note": "modelled closed; slides out towards the room"
+     }
+    },
+    "HB_GrowSeedlings": {
+     "triangles": 3600,
+     "per_material": {
+      "HB_Leaf": 3600
+     },
+     "bounds_min": [
+      -0.3646,
+      1.203,
+      0.0899
+     ],
+     "bounds_max": [
+      0.366,
+      1.2767,
+      0.4351
+     ],
+     "origin": [
+      0.0,
+      1.11,
+      0.47
+     ],
+     "motion": {
+      "type": "follows",
+      "parent": "HB_GrowTray",
+      "note": "same origin as the tray; swap or hide per growth stage"
+     }
+    }
+   },
+   "anchors": {
+    "GrowInteraction": {
+     "point": [
+      0.0,
+      1.125,
+      0.53
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "GrowTray": {
+     "point": [
+      0.0,
+      1.21,
+      0.26
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   },
+   "bounds_min": [
+    -0.503,
+    0.4,
+    -0.0014
+   ],
+   "bounds_max": [
+    0.503,
+    2.0541,
+    0.523
+   ],
+   "triangles": 11826,
+   "fbx": "HB_GrowCassette.fbx"
+  }
+ },
+ "materials": [
+  "A7_Aluminum",
+  "A7_AnodizedBlack",
+  "A7_AnodizedClear",
+  "A7_CableBlue",
+  "A7_FabricCanvas",
+  "A7_FabricStrap",
+  "A7_FabricWhite",
+  "A7_Glass",
+  "A7_Grate",
+  "A7_LedCyan",
+  "A7_LightPanel",
+  "A7_MLISilver",
+  "A7_PaintAmber",
+  "A7_PaintGraphite",
+  "A7_PaintGray",
+  "A7_PaintWhite",
+  "A7_PlasticWhite",
+  "A7_QuiltWhite",
+  "A7_Rubber",
+  "HB_BagQuilt",
+  "HB_BerthLight",
+  "HB_GrowLight",
+  "HB_Labels",
+  "HB_Leaf",
+  "HB_ScreenOff",
+  "HB_Water"
+ ],
+ "total_triangles": 37210,
+ "convention": "Unity space, metres, y up; unit forward +z points into the room; origin on the wall plane at deck level under the unit centre line; mount by rotating about y only"
+}

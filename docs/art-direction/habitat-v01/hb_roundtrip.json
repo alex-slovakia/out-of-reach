@@ -1,0 +1,131 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "HB_CrewBerth": {
+   "fbx": "HB_CrewBerth.fbx",
+   "objects_in_file": 4,
+   "checks": [
+    {
+     "object": "HB_CrewBerth",
+     "ok": true,
+     "triangles": 12204,
+     "expected": 12204
+    },
+    {
+     "anchor": "SleepEntry",
+     "ok": true,
+     "point": [
+      0.22,
+      0.0,
+      0.8
+     ]
+    },
+    {
+     "anchor": "SleepCamera",
+     "ok": true,
+     "point": [
+      0.22,
+      1.96,
+      0.24
+     ]
+    },
+    {
+     "anchor": "PersonalStowage",
+     "ok": true,
+     "point": [
+      -0.62,
+      1.25,
+      0.55
+     ]
+    }
+   ]
+  },
+  "HB_Galley": {
+   "fbx": "HB_Galley.fbx",
+   "objects_in_file": 4,
+   "checks": [
+    {
+     "object": "HB_Galley",
+     "ok": true,
+     "triangles": 11682,
+     "expected": 11682
+    },
+    {
+     "object": "HB_GalleyTable",
+     "ok": true,
+     "triangles": 1498,
+     "expected": 1498
+    },
+    {
+     "anchor": "RationPickup",
+     "ok": true,
+     "point": [
+      0.355,
+      1.72,
+      0.66
+     ]
+    },
+    {
+     "anchor": "WaterDispenser",
+     "ok": true,
+     "point": [
+      -0.445,
+      1.13,
+      0.3
+     ]
+    }
+   ]
+  },
+  "HB_GrowCassette": {
+   "fbx": "HB_GrowCassette.fbx",
+   "objects_in_file": 6,
+   "checks": [
+    {
+     "object": "HB_GrowCassette",
+     "ok": true,
+     "triangles": 3136,
+     "expected": 3136
+    },
+    {
+     "object": "HB_GrowLid",
+     "ok": true,
+     "triangles": 304,
+     "expected": 304
+    },
+    {
+     "object": "HB_GrowTray",
+     "ok": true,
+     "triangles": 4786,
+     "expected": 4786
+    },
+    {
+     "object": "HB_GrowSeedlings",
+     "ok": true,
+     "triangles": 3600,
+     "expected": 3600
+    },
+    {
+     "anchor": "GrowInteraction",
+     "ok": true,
+     "point": [
+      0.0,
+      1.125,
+      0.53
+     ]
+    },
+    {
+     "anchor": "GrowTray",
+     "ok": true,
+     "point": [
+      0.0,
+      1.21,
+      0.26
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

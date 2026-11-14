@@ -1,0 +1,695 @@
+{
+ "kit": "HABITAT-DETAILS-V1",
+ "status": "authored Blender art kit for review; not integrated in Unity, no animation or gameplay",
+ "coordinates": "Unity space, metres, y up. Each unit's forward (+z) points into the room; its origin is on the wall plane at deck level under the unit centre line. Mount by rotating about y only. Blender (x, y, z) = Unity (x, z, y); exported with bake_space_transform, axis_forward -Z, axis_up Y.",
+ "fbx_contents": "meshes and anchor empties only, flat hierarchy, no cameras, lights or texture records; materials bind by name",
+ "material_binding": "Materials marked shared_with_ship are the AURORA-7 ship materials (same values and maps): bind them to the existing A7_* materials. HB_* are new.",
+ "total_triangles": 37210,
+ "roundtrip": {
+  "pass": true,
+  "tolerance_m": 0.001,
+  "tool": "Blender 5.3.0"
+ },
+ "units": {
+  "HB_CrewBerth": {
+   "fbx": "HB_CrewBerth.fbx",
+   "triangles": 12204,
+   "bounds_min_m": [
+    -0.723,
+    0.0,
+    0.0
+   ],
+   "bounds_max_m": [
+    0.723,
+    2.55,
+    0.533
+   ],
+   "objects": {
+    "HB_CrewBerth": {
+     "triangles": 12204,
+     "pivot_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "motion": null,
+     "materials": [
+      "A7_Aluminum",
+      "A7_AnodizedBlack",
+      "A7_AnodizedClear",
+      "A7_FabricCanvas",
+      "A7_FabricStrap",
+      "A7_FabricWhite",
+      "A7_Grate",
+      "A7_LedCyan",
+      "A7_PaintAmber",
+      "A7_PaintGraphite",
+      "A7_PaintWhite",
+      "A7_QuiltWhite",
+      "A7_Rubber",
+      "HB_BagQuilt",
+      "HB_BerthLight",
+      "HB_Labels",
+      "HB_ScreenOff"
+     ]
+    }
+   },
+   "anchors": {
+    "SleepEntry": {
+     "point": [
+      0.22,
+      0.0,
+      0.8
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "purpose": "Deck point 0.80 m in front of the berth centre where the player stands to get in; forward faces the berth."
+    },
+    "SleepCamera": {
+     "point": [
+      0.22,
+      1.96,
+      0.24
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "purpose": "Eye point inside the bag opening, 1.96 m above the deck and 0.24 m off the wall; forward looks out of the berth. Nothing crosses the face from here (restraints sit at chest, waist and knees)."
+    },
+    "PersonalStowage": {
+     "point": [
+      -0.62,
+      1.25,
+      0.55
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "purpose": "Paddle latch of the PERSONAL locker door; forward faces the user."
+    }
+   },
+   "clearance": {
+    "envelope_m": "1.44 W x 2.40 H (2.55 with the supply duct to the wall) x 0.53 D",
+    "berth_opening_m": "0.94 W x 2.10 H, bag 0.72 x 1.78 m on a quilted back pad",
+    "front_access_m": "keep 0.90 m deep x 1.00 m wide free in front of the berth (SleepEntry at 0.80 m)",
+    "ventilation": "supply fan in the hood above the face, two side vents per side, return grille in the plinth; the duct leaves the hood top towards the wall. Do not block the hood, vents or plinth grille."
+   }
+  },
+  "HB_Galley": {
+   "fbx": "HB_Galley.fbx",
+   "triangles": 13180,
+   "bounds_min_m": [
+    -0.723,
+    0.0,
+    0.0
+   ],
+   "bounds_max_m": [
+    0.723,
+    2.4,
+    0.803
+   ],
+   "objects": {
+    "HB_Galley": {
+     "triangles": 11682,
+     "pivot_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "motion": null,
+     "materials": [
+      "A7_Aluminum",
+      "A7_AnodizedBlack",
+      "A7_CableBlue",
+      "A7_FabricCanvas",
+      "A7_FabricStrap",
+      "A7_FabricWhite",
+      "A7_LedCyan",
+      "A7_LightPanel",
+      "A7_MLISilver",
+      "A7_PaintAmber",
+      "A7_PaintGraphite",
+      "A7_PaintGray",
+      "A7_PaintWhite",
+      "A7_PlasticWhite",
+      "A7_Rubber",
+      "HB_Labels"
+     ]
+    },
+    "HB_GalleyTable": {
+     "triangles": 1498,
+     "pivot_m": [
+      0.0,
+      0.97,
+      0.46
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       90
+      ],
+      "note": "modelled deployed; rotates about its local x axis to stow upright"
+     },
+     "materials": [
+      "A7_Aluminum",
+      "A7_MLISilver",
+      "A7_PaintAmber",
+      "A7_PaintGraphite",
+      "A7_PaintWhite",
+      "A7_Rubber",
+      "HB_Labels"
+     ]
+    }
+   },
+   "anchors": {
+    "RationPickup": {
+     "point": [
+      0.355,
+      1.72,
+      0.66
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "purpose": "Above the pouches in the open ration drawer; forward faces the user."
+    },
+    "WaterDispenser": {
+     "point": [
+      -0.445,
+      1.13,
+      0.3
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "purpose": "Tip of the needle nozzle in the dispensing bay; forward faces the user (the nozzle points down)."
+    }
+   },
+   "clearance": {
+    "envelope_m": "1.44 W x 2.40 H x 0.46 D; 0.72 with the ration drawer open, 0.80 with the table deployed",
+    "front_access_m": "keep 0.90 m in front of the table edge when deployed",
+    "work_heights_m": "table top 1.00, dispensing bay floor 0.99, nozzle tip 1.13, open drawer pouches 1.67-1.76"
+   }
+  },
+  "HB_GrowCassette": {
+   "fbx": "HB_GrowCassette.fbx",
+   "triangles": 11826,
+   "bounds_min_m": [
+    -0.503,
+    0.4,
+    -0.0014
+   ],
+   "bounds_max_m": [
+    0.503,
+    2.0541,
+    0.523
+   ],
+   "objects": {
+    "HB_GrowCassette": {
+     "triangles": 3136,
+     "pivot_m": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "motion": null,
+     "materials": [
+      "A7_Aluminum",
+      "A7_CableBlue",
+      "A7_FabricStrap",
+      "A7_FabricWhite",
+      "A7_Glass",
+      "A7_Grate",
+      "A7_LedCyan",
+      "A7_PaintAmber",
+      "A7_PaintGraphite",
+      "A7_PaintWhite",
+      "A7_PlasticWhite",
+      "A7_Rubber",
+      "HB_GrowLight",
+      "HB_Labels",
+      "HB_Water"
+     ]
+    },
+    "HB_GrowLid": {
+     "triangles": 304,
+     "pivot_m": [
+      0.0,
+      1.655,
+      0.49
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       100
+      ],
+      "note": "modelled closed; opens upward about the top hinge line"
+     },
+     "materials": [
+      "A7_Aluminum",
+      "A7_Glass",
+      "A7_PaintAmber"
+     ]
+    },
+    "HB_GrowTray": {
+     "triangles": 4786,
+     "pivot_m": [
+      0.0,
+      1.11,
+      0.47
+     ],
+     "motion": {
+      "type": "slide",
+      "axis": "z",
+      "range_m": [
+       0.0,
+       0.3
+      ],
+      "note": "modelled closed; slides out towards the room"
+     },
+     "materials": [
+      "A7_Aluminum",
+      "A7_FabricCanvas",
+      "A7_PaintAmber",
+      "A7_PaintGraphite",
+      "HB_Labels"
+     ]
+    },
+    "HB_GrowSeedlings": {
+     "triangles": 3600,
+     "pivot_m": [
+      0.0,
+      1.11,
+      0.47
+     ],
+     "motion": {
+      "type": "follows",
+      "parent": "HB_GrowTray",
+      "note": "same origin as the tray; swap or hide per growth stage"
+     },
+     "materials": [
+      "HB_Leaf"
+     ]
+    }
+   },
+   "anchors": {
+    "GrowInteraction": {
+     "point": [
+      0.0,
+      1.125,
+      0.53
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "purpose": "Amber handle of the hinged clear lid; forward faces the user."
+    },
+    "GrowTray": {
+     "point": [
+      0.0,
+      1.21,
+      0.26
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "purpose": "Top centre of the six root pillows on the tray; forward is up."
+    }
+   },
+   "clearance": {
+    "envelope_m": "1.00 W x 1.65 H (deck +0.40 to +2.05 incl. heat sink) x 0.51 D; tray slides out 0.30 more",
+    "front_access_m": "keep 0.80 m in front of the lid for opening and tray service",
+    "mounting": "rear plate to the wall, bottom 0.40 m above the deck; space below is free. A cable end enters the wall plane by 1.4 mm."
+   }
+  }
+ },
+ "materials": [
+  {
+   "name": "A7_PaintWhite",
+   "set": "A7_Paint",
+   "tint": "#B5B3AE",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_PaintGray",
+   "set": "A7_Paint",
+   "tint": "#8A8884",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_PaintAmber",
+   "set": "A7_Paint",
+   "tint": "#C68A1C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_PlasticWhite",
+   "set": "A7_Paint",
+   "tint": "#DDDCD4",
+   "tiling": 2.0,
+   "normal": 0.12,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_AnodizedBlack",
+   "set": "A7_Anodized",
+   "tint": "#232528",
+   "tiling": 2.0,
+   "normal": 0.5,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Anodized_BaseColor.png",
+    "textures/A7_Anodized_Normal.png",
+    "textures/A7_Anodized_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_AnodizedClear",
+   "set": "A7_Anodized",
+   "tint": "#B6B9BC",
+   "tiling": 2.0,
+   "normal": 0.5,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Anodized_BaseColor.png",
+    "textures/A7_Anodized_Normal.png",
+    "textures/A7_Anodized_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Brushed_BaseColor.png",
+    "textures/A7_Brushed_Normal.png",
+    "textures/A7_Brushed_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_FabricWhite",
+   "set": "A7_Fabric",
+   "tint": "#D4D1C8",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Fabric_BaseColor.png",
+    "textures/A7_Fabric_Normal.png",
+    "textures/A7_Fabric_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_FabricCanvas",
+   "set": "A7_Fabric",
+   "tint": "#B5A88C",
+   "tiling": 5.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Fabric_BaseColor.png",
+    "textures/A7_Fabric_Normal.png",
+    "textures/A7_Fabric_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_FabricDark",
+   "set": "A7_Fabric",
+   "tint": "#2C313B",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Fabric_BaseColor.png",
+    "textures/A7_Fabric_Normal.png",
+    "textures/A7_Fabric_MODS.png"
+   ],
+   "used": false
+  },
+  {
+   "name": "A7_FabricStrap",
+   "set": "A7_Fabric",
+   "tint": "#4B4F53",
+   "tiling": 8.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Fabric_BaseColor.png",
+    "textures/A7_Fabric_Normal.png",
+    "textures/A7_Fabric_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_QuiltWhite",
+   "set": "A7_Quilt",
+   "tint": "#C2BFB8",
+   "tiling": 2.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Quilt_BaseColor.png",
+    "textures/A7_Quilt_Normal.png",
+    "textures/A7_Quilt_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_Grate",
+   "set": "A7_Grate",
+   "tint": "#FFFFFF",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Grate_BaseColor.png",
+    "textures/A7_Grate_Normal.png",
+    "textures/A7_Grate_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_Rubber",
+   "set": "A7_Rubber",
+   "tint": "#1B1B1C",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Rubber_BaseColor.png",
+    "textures/A7_Rubber_Normal.png",
+    "textures/A7_Rubber_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_MLISilver",
+   "set": "A7_MLI",
+   "tint": "#C8CCD0",
+   "tiling": 1.2,
+   "normal": 1.0,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_MLI_BaseColor.png",
+    "textures/A7_MLI_Normal.png",
+    "textures/A7_MLI_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_Glass",
+   "tint": "#A9C0CC",
+   "surface": "transparent",
+   "alpha": 0.1,
+   "metallic": 0.0,
+   "smoothness": 0.96,
+   "shared_with_ship": true,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "A7_LedCyan",
+   "tint": "#082E38",
+   "emission": "#19D3FF",
+   "emission_strength": 2.5,
+   "metallic": 0.0,
+   "smoothness": 0.6,
+   "shared_with_ship": true,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "A7_CableBlue",
+   "set": "A7_Rubber",
+   "tint": "#2D60A9",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Rubber_BaseColor.png",
+    "textures/A7_Rubber_Normal.png",
+    "textures/A7_Rubber_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "A7_LightPanel",
+   "tint": "#F3EDE0",
+   "emission": "#FFE7C4",
+   "emission_strength": 4.0,
+   "metallic": 0.0,
+   "smoothness": 0.3,
+   "shared_with_ship": true,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "HB_Labels",
+   "atlas": "HB_Labels",
+   "surface": "cutout",
+   "metallic": 0.0,
+   "smoothness": 0.25,
+   "files": [
+    "textures/HB_Labels.png",
+    "textures/hb_labels.json"
+   ],
+   "used": true
+  },
+  {
+   "name": "HB_Leaf",
+   "set": "HB_Leaf",
+   "tint": "#FFFFFF",
+   "tiling": 1.0,
+   "normal": 0.6,
+   "uv": "explicit 0..1 per leaf",
+   "files": [
+    "textures/HB_Leaf_BaseColor.png",
+    "textures/HB_Leaf_Normal.png",
+    "textures/HB_Leaf_MODS.png"
+   ],
+   "used": true
+  },
+  {
+   "name": "HB_GrowLight",
+   "tint": "#2A2328",
+   "emission": "#FFD6EA",
+   "emission_strength": 3.0,
+   "metallic": 0.0,
+   "smoothness": 0.4,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "HB_BerthLight",
+   "tint": "#3A2A18",
+   "emission": "#FFC48A",
+   "emission_strength": 1.6,
+   "metallic": 0.0,
+   "smoothness": 0.4,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "HB_Water",
+   "tint": "#4FA9C2",
+   "surface": "transparent",
+   "alpha": 0.4,
+   "metallic": 0.0,
+   "smoothness": 0.95,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "HB_ScreenOff",
+   "tint": "#0C0F12",
+   "metallic": 0.0,
+   "smoothness": 0.92,
+   "files": [],
+   "used": true
+  },
+  {
+   "name": "HB_BagQuilt",
+   "set": "A7_Quilt",
+   "tint": "#56606F",
+   "tiling": 2.5,
+   "normal": 1.0,
+   "files": [
+    "textures/A7_Quilt_BaseColor.png",
+    "textures/A7_Quilt_Normal.png",
+    "textures/A7_Quilt_MODS.png"
+   ],
+   "used": true
+  }
+ ]
+}
