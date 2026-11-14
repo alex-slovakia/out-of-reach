@@ -28,6 +28,10 @@ tower, pad markings, a crawlerway and a distant assembly building. It carries on
 - Unity metres, y up, local to the existing prologue origin.
 - **Every object's pivot is the prologue origin.** Put the FBX root at that origin with identity rotation and scale 1, and each module lands in place.
 - Exported like the ship kit: `bake_space_transform`, −Z forward, Y up, `FBX_SCALE_ALL` (unit object scale, metre coordinates).
+- **Import it with the ship's ModelImporter settings.** **Bake Axis Conversion must be ON**, as in every `A7_*.fbx.meta`. The other settings are:
+  - Use File Units on, Use File Scale on, Scale Factor 1;
+  - no cameras, no lights; hierarchy not preserved.
+- **With Bake Axis Conversion off (Unity's default), everything comes in rotated 180° about y**, at (−x, y, −z). The trench outlet then lands at z −72, and the assembly building at z +925..+995, behind the transport.
 - Read from `ae6df60` only to stay clear of them, never changed:
   - transport axis x 0, z 0; booster Ø 4.7 m from y −30.6 to −0.55; engine emitter (0, −31.4, 0);
   - access mast centre x 0, z −8.5; staging deck z −9.9; crew deck y ≈ 0;
@@ -120,8 +124,12 @@ tower, pad markings, a crawlerway and a distant assembly building. It carries on
 - **Terrain boundary:** a scan of the delivered FBX finds exactly the boundary vertices listed above, all at y −36.6 (the trench walls also reach y −40.2 below the datum at z 72). Only LS_Crawlerway and LS_AssemblyBuilding have vertices outside the footprint.
 - **Rebuild:** the scripts in `source/`, run on their own in an empty folder, give an identical `ls_build_report.json` and byte-identical textures.
 - **No local paths:** a byte search of every delivered file finds none. The .blend's image paths are relative.
+- **Unity 6000.3.28f1 import check** (`unity_check/`, run in an isolated empty project on this exact FBX):
+  - **Bake Axis Conversion on:** all 11 renderers' world bounds and all 16 anchors equal this manifest. The maximum deviation is 0.0000 m at 0.1 mm output precision. Rotation is 0 and scale is 1 on every node.
+  - **Bake Axis Conversion off:** the same data maps exactly to (−x, y, −z).
+  - `LSAxisCheck.cs` does the import and the logging; `ls_axis_compare.py` finds the best axis map.
 - **Not verified:**
-  - the Unity import and the URP look of the materials;
+  - the URP look of the materials;
   - lighting and collision;
   - the joins with root's terrain and pad;
   - clearance against root's real transport, mast and arm. The renders use the proxies.

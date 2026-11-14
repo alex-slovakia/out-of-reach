@@ -475,7 +475,13 @@
    "blender": "5.3.0"
   },
   "rebuild_from_source": "identical build report, byte-identical textures",
-  "unity": "not run by this kit"
+  "unity": {
+   "editor": "6000.3.28f1",
+   "where": "isolated empty project, exact delivered FBX (unity_check/)",
+   "importer": "ship settings: bakeAxisConversion 1, useFileUnits 1, useFileScale 1, globalScale 1, no cameras/lights",
+   "bake_axis_conversion_on": "11 renderer world bounds + 16 anchors equal this manifest, max deviation 0.0000 m (0.1 mm output)",
+   "bake_axis_conversion_off": "everything maps to (-x, y, -z): 180 degrees about y; do not import this way"
+  }
  },
  "excluded": "no lights, cameras, colliders, terrain or water; PV_* proxies, sun and cameras exist only in the .blend for the review renders",
  "provenance": {
@@ -499,8 +505,8 @@
    "bytes": 201180
   },
   "README.md": {
-   "sha256": "49fff2e29c3ec05f1831c8402315411b47c6f9ff55f21ce41efe602271c92556",
-   "bytes": 11594
+   "sha256": "d559d86f2319d60378f02a2dd7865b64067dc671617aa6b98feec4d79d366625",
+   "bytes": 12551
   },
   "ls_build_report.json": {
    "sha256": "0050620a2ce174633fe662390cba145a2eb4f04f2cde9b648c9e1ad7b26dbcf9",
@@ -601,6 +607,22 @@
   "textures/ls_markings.json": {
    "sha256": "ddc076ebacb246bda66132989264d29180d7dc156b92ed9298fc0eae87338340",
    "bytes": 861
+  },
+  "unity_check/LSAxisCheck.cs": {
+   "sha256": "332c25f2e7b6cf724bfb813b1673bd57d1b4707ac65666b10c734179337adac7",
+   "bytes": 2484
+  },
+  "unity_check/ls_axis_check.tsv": {
+   "sha256": "5d315c8146a7b0fdda8a26e027fa95649948543d3073f07486ff7341544c094c",
+   "bytes": 5389
+  },
+  "unity_check/ls_axis_compare.py": {
+   "sha256": "fea893cf03b360ccb557ae08747dd56ff2778d36ff44536a77f919954f8fbe8b",
+   "bytes": 2749
+  },
+  "unity_check/ls_axis_compare.txt": {
+   "sha256": "f15fccb874e4fc6b006a1349a9dad19c2dd525c564bd13206d7c0704566cbe31",
+   "bytes": 997
   }
  }
 }
