@@ -1,0 +1,13 @@
+{
+  "name": "OutOfReach.I02PlayQa.Editor",
+  "references": ["OutOfReach.Contracts", "OutOfReach.Core", "OutOfReach.Core.Runtime", "OutOfReach.Composition", "OutOfReach.Player", "OutOfReach.Interaction", "OutOfReach.Simulation", "OutOfReach.Inventory", "OutOfReach.Cinematics", "OutOfReach.Presentation.Motion", "OutOfReach.Presentation.Hands", "OutOfReach.UI", "Unity.InputSystem"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

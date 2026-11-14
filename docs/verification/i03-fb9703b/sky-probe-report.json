@@ -1,0 +1,100 @@
+{
+    "result": "PASS",
+    "executedAtUtc": "2026-11-14T13:52:34.5821440Z",
+    "unityVersion": "6000.3.28f1",
+    "pipeline": "UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset",
+    "graphicsDevice": "Direct3D12 / NVIDIA GeForce RTX 3070",
+    "error": "",
+    "capture": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\verification\\GmatSkyboxV01\\UnityProbe\\Output\\actual-sky-positive-x.png",
+    "capturePngSha256": "e245f8357baca9690e108096edfcb57113f2f091caeda1450db5db2ec22b0efd",
+    "materialSha256": "7e39e9e56e7fe69d049e3137dd8d68994813af4c8903318bd94ac4e35e9e8089",
+    "renderApi": "Camera.Render(), matching I01BootstrapBuilder.CaptureIntegrated",
+    "width": 512,
+    "height": 512,
+    "fovDegrees": 90.0,
+    "materialExposure": 1.0,
+    "materialRotation": 0.0,
+    "firstPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "secondPosition": {
+        "x": 37.25,
+        "y": -12.5,
+        "z": 91.75
+    },
+    "comparisonLookDirection": {
+        "x": 1.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "changedPixelsAfterTranslation": 0,
+    "maxChannelDifferenceAfterTranslation": 0,
+    "changedPixelsRepeatFirstPosition": 0,
+    "previousActiveSceneRestored": true,
+    "temporarySceneClosed": true,
+    "faces": [
+        {
+            "face": "Front",
+            "property": "_FrontTex",
+            "guid": "288d1d0a6e1223242ad13f29a766469f",
+            "sourcePngSha256": "444ebec0669a735569b5365b4ba0aaff04c87c5926e502fd6d2cbcf018769a3c",
+            "rgbSha256": "8ae37fcc10aeb976cf8116b47beb5b7627b85d40c73394245b401911856f91bf",
+            "litPixels": 1831,
+            "maxChannel": 155,
+            "chromaticPixels": 0
+        },
+        {
+            "face": "Back",
+            "property": "_BackTex",
+            "guid": "9188c4fd2c3afb64e92e34ffb3b5861b",
+            "sourcePngSha256": "217d9dfcc4f5b1a3d97dc22536a2e3f787d83abec4cee9da4e395815e8ba5045",
+            "rgbSha256": "f0e0e566ce9f016f52b8eead8a4d54070cb0d42ba73be0ec7cbada8696f83276",
+            "litPixels": 1642,
+            "maxChannel": 208,
+            "chromaticPixels": 0
+        },
+        {
+            "face": "Left",
+            "property": "_LeftTex",
+            "guid": "6df8e368146db5943b61cdad402bbd6f",
+            "sourcePngSha256": "37a37abb3cfb6dbcac5d33b0d14768c65c12a13686e282ad846493c7e4294ad2",
+            "rgbSha256": "fd0e854623698b4783387c1593aec0c4ce9b47de4d7260bf890f145987ecab49",
+            "litPixels": 2813,
+            "maxChannel": 202,
+            "chromaticPixels": 0
+        },
+        {
+            "face": "Right",
+            "property": "_RightTex",
+            "guid": "a4f5652dc64847641944fa5de5d6647e",
+            "sourcePngSha256": "b320f070342026f1dbf52a9947ab149c85043e7e8e968390ba024b0c9499c81f",
+            "rgbSha256": "1c866bd6118e5bac6794533196e5b43d226706f31a8da202437594bcddb3c3d0",
+            "litPixels": 2695,
+            "maxChannel": 233,
+            "chromaticPixels": 0
+        },
+        {
+            "face": "Up",
+            "property": "_UpTex",
+            "guid": "0a05c8a0e9bf2f04dba95ad16fbd2bdc",
+            "sourcePngSha256": "db65a505b927cf0d96e7b530c5cf4ab51c72509a32eb7b8454ee7192a04c641c",
+            "rgbSha256": "9aa3ea225ce553dce28e4234ce0892c15596aa76c404661b2cb841396fc1fa1c",
+            "litPixels": 2408,
+            "maxChannel": 225,
+            "chromaticPixels": 0
+        },
+        {
+            "face": "Down",
+            "property": "_DownTex",
+            "guid": "3ed15f160363dd243941e818645d7745",
+            "sourcePngSha256": "e8f4e23bb5bf3c6703c62db3a2db35385323ea1ca1a1f9d590ef4842cb115490",
+            "rgbSha256": "eebdff35b7f19c5b97b39221d7be4551b6793fa00b2d94e04f25ddb1f281a56e",
+            "litPixels": 3149,
+            "maxChannel": 230,
+            "chromaticPixels": 0
+        }
+    ],
+    "limits": "Temporary empty Editor scene; actual GPU sky rendering and fixed-orientation translation only. No gameplay camera, walking/playthrough, precise-star astrometry, common celestial attitude, planetary geometry, frame/epoch accuracy, or post-processing acceptance is established. No scene/settings/assets saved."
+}

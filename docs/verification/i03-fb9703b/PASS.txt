@@ -1,0 +1,242 @@
+240 checks passed.
+Saved Bootstrap is the active full-mission scene.
+All eight authored mission targets are bound.
+Two authoritative gates and a valid real tether route are bound.
+One active camera, listener and authoritative runtime in the full scene.
+Actual player Input System and runtime frame stepping remain in use.
+Inner physical gate agrees with authoritative airlock passability=True.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Actual scene has separate bound cinematic and walk-motion pivots above the sole camera.
+Actual resolver viewOrigin is the unbobbed serialized cinematic pivot, not the animated camera child.
+Glove model is below its separate camera-child motion mount.
+Hands are bound but their actual model is hidden in the unsuited Planning session.
+Planning leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual UI Practice selected.
+Seven actual catalog controls and a valid success loadout.
+Success loadout covers all three authoritative repair costs.
+Capture 01-success-planning uses the existing actual camera and actual UIDocument at 1280x720.
+Actual UI launch releases player into Intro.
+Normal real-W probe starts with enabled, unreduced walk presentation.
+Injected W moves the actual CharacterController at its configured speed over measured controller frame time. Actual=(0.0000, -0.0195, 1.0019) expectedForward=1.0019
+Actual grounded W travel produces restrained camera-only motion with an unbobbed aim origin. Grounded samples=477 peakMetres=0.002354 peakDegrees=0.0000 aimSeparation=0.002354
+Standing after real W leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual Escape opens pause before changing reduced effects.
+Pause leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Existing Reduced effects UI updates both cinematic and walk presentation to True.
+Actual Escape resumes player control after the comfort setting.
+Real movement meets an existing scene wall and is stopped by CharacterController collision.
+Actual reduced-effects UI setting keeps camera neutral during the existing real-W wall traversal. Grounded samples=1181 peakMetres=0.000000 peakDegrees=0.0000
+Reduced walking leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual Escape opens pause before changing reduced effects.
+Pause leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Existing Reduced effects UI updates both cinematic and walk presentation to False.
+Actual Escape resumes player control after the comfort setting.
+Actual raycast resolver focuses cockpit-console through its authored collider.
+Cockpit systems check uses real E / resolver once; result=True: Cockpit check complete. Impact detected.
+Actual cockpit command applies the accident and locks controls for its bound cinematic.
+Impact has one actual request and its matching presentation acknowledgement.
+The actual serialized cinematic offset moved during the unreduced impact. Peak metres=0.010361 degrees=0.4829
+After impact leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual acknowledged impact enters Emergency and restores input without timeout.
+Impact camera offset returns to its actual resting pose.
+Actual raycast resolver focuses repair-power through its authored collider.
+Actual Power repair is available before use.
+Injected E performs the real Power repair once.
+Power exact OxygenKg debit equals its authoritative repair cost (0).
+Power exact WaterLitres debit equals its authoritative repair cost (0).
+Power exact FoodKg debit equals its authoritative repair cost (0).
+Power exact BatteryKWh debit equals its authoritative repair cost (0).
+Power exact SparePartsCount debit equals its authoritative repair cost (2).
+Repair does not invent an immediate CO2 change.
+Repeated Power interaction is rejected without a second debit.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Actual raycast resolver focuses repair-life-support through its authored collider.
+Actual LifeSupport repair is available before use.
+Injected E performs the real LifeSupport repair once.
+LifeSupport exact OxygenKg debit equals its authoritative repair cost (0).
+LifeSupport exact WaterLitres debit equals its authoritative repair cost (0).
+LifeSupport exact FoodKg debit equals its authoritative repair cost (0).
+LifeSupport exact BatteryKWh debit equals its authoritative repair cost (1).
+LifeSupport exact SparePartsCount debit equals its authoritative repair cost (2).
+Repair does not invent an immediate CO2 change.
+Repeated LifeSupport interaction is rejected without a second debit.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Actual power and life support repaired; mission remains viable.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Capture 02-interior-restored uses the existing actual camera and actual UIDocument at 1280x720.
+Actual raycast resolver focuses eva-exit through its authored collider.
+Unsuited exit uses real E / resolver once; result=False: A sealed suit and a depressurized airlock are required to go outside.
+Unsuited exit is rejected without resource charge or outside-state change.
+Inner physical gate agrees with authoritative airlock passability=True.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Actual raycast resolver focuses suit-locker through its authored collider.
+Suit preparation uses real E / resolver once; result=True: EVA suit on. Tank: 0.3 kg oxygen.
+Actual suit command advances the disclosed preparation interval through the Core model.
+Actual suit is on once and remains unsealed inside the pressurized cabin.
+Core charged suit purge/tank oxygen plus modeled preparation consumption.
+Repeated suit preparation uses real E / resolver once; result=False: The EVA suit is already on.
+Repeated suit action cannot charge twice.
+Real suit preparation reveals all 34 neutral glove parts.
+Actual Escape pause hides the worn gloves without changing authoritative suit state.
+Suited pause leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual Escape resume restores the still-worn gloves.
+Actual raycast resolver focuses airlock-controls through its authored collider.
+Depressurize airlock uses real E / resolver once; result=True: Inner hatch sealed. Depressurizing.
+Airlock command seals suit/inner hatch and starts actual EVA depressurization.
+Actual airlock loss and pump energy are charged exactly once.
+Inner physical gate agrees with authoritative airlock passability=False.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Depressurization awaited actual clock advancement; no QA time advancement.
+Actual raycast resolver focuses eva-exit through its authored collider.
+Clip tether and exit uses real E / resolver once; result=True: Outside on the tether.
+Actual exit command sets outside state and runtime attaches the real constrained route.
+Actual tether traversal disables cabin walking physics.
+Actual EVA exit retains the worn glove model on the first-person view.
+EVA entry leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Inner physical gate agrees with authoritative airlock passability=False.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Capture 03-eva-start uses the existing actual camera and actual UIDocument at 1280x720.
+Route traversal starts from actual outside/tether state.
+Real constrained input traverses the route to the antenna station.
+Actual suit oxygen remains positive after traversal.
+Actual EVA traversal keeps gloves visible and both visual motion offsets neutral after LateUpdate. Samples=30898 motionViolations=0 hiddenHands=0
+Real outward input is clamped to the authored tether corridor/end.
+Actual raycast resolver focuses repair-antenna through its authored collider.
+Actual Antenna repair is available before use.
+Injected E performs the real Antenna repair once.
+Antenna exact OxygenKg debit equals its authoritative repair cost (0).
+Antenna exact WaterLitres debit equals its authoritative repair cost (0).
+Antenna exact FoodKg debit equals its authoritative repair cost (0).
+Antenna exact BatteryKWh debit equals its authoritative repair cost (0.5).
+Antenna exact SparePartsCount debit equals its authoritative repair cost (3).
+Repair does not invent an immediate CO2 change.
+Repeated Antenna interaction is rejected without a second debit.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Actual antenna repair succeeds once while outside.
+Capture 04-antenna-restored uses the existing actual camera and actual UIDocument at 1280x720.
+Route traversal starts from actual outside/tether state.
+Real constrained input traverses back to the return station.
+Actual suit oxygen remains positive after traversal.
+Actual EVA traversal keeps gloves visible and both visual motion offsets neutral after LateUpdate. Samples=65517 motionViolations=0 hiddenHands=0
+Actual raycast resolver focuses eva-return through its authored collider.
+Return to airlock uses real E / resolver once; result=True: Inside the airlock.
+Actual return command restores cabin walking at authored reentry.
+Return action has no resource charge.
+Repressurize airlock uses real E / resolver once; result=True: Outer hatch closed. Repressurizing.
+Actual repressurization started.
+Inner physical gate agrees with authoritative airlock passability=False.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Repressurization awaited the actual remaining simulation interval.
+Complete actual EVA returns to Transmission with suit released.
+Inner physical gate agrees with authoritative airlock passability=True.
+Outer physical gate remains closed to walking; only actual EVA commands cross it.
+Actual completed repressurization removes the suit and hides the glove model.
+After repressurization leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual raycast resolver focuses cockpit-console through its authored collider.
+Local replay diagnostic uses real E / resolver once; result=True: Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+Diagnostic requests the local false-signal beat without transmitting or fabricating an Earth reply.
+FalseSignal has one actual request and its matching presentation acknowledgement.
+Local replay is not a received Earth reply.
+Transmit distress signal uses real E / resolver once; result=True: Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+Actual console command sends one distress transmission.
+Actual reply due time equals outbound light time + ground processing + inbound light time.
+Actual communication uses the packaged 32-row NASA reference dataset.
+Repeated transmission uses real E / resolver once; result=False: The distress call is on its way. Earliest reply in 31 min 58 s.
+Repeated transmission neither charges again nor resets the reply due time.
+Capture 05-awaiting-earth-reply uses the existing actual camera and actual UIDocument at 1280x720.
+Reply arrives no earlier than the complete modeled round trip and processing delay.
+Reply waited through real runtime frames at the displayed scale; no fast-forward command used.
+CommunicationRestored has one actual request and its matching presentation acknowledgement.
+EndingPullback has one actual request and its matching presentation acknowledgement.
+All success cinematic acknowledgements matched exactly once.
+Actual final report outcome=RecoveryPossible.
+Actual report includes mission design, resources, systems, communications and separate science/source/fiction/pacing sections.
+Actual report carries the NASA dataset hash and 32-sample provenance.
+Composition displays the actual final report and its real restart action.
+Capture 06-success-report uses the existing actual camera and actual UIDocument at 1280x720.
+Actual report restart disposes old state and opens a fresh planning mode choice.
+Restart preserves one active camera and listener.
+Actual scene has separate bound cinematic and walk-motion pivots above the sole camera.
+Actual resolver viewOrigin is the unbobbed serialized cinematic pivot, not the animated camera child.
+Glove model is below its separate camera-child motion mount.
+Actual report restart rebinds hands to the fresh unsuited session and leaves no old glove model visible.
+Restart leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual planner UI makes a valid low-parts loadout with one repair kit.
+Low-parts loadout covers interior repairs but leaves no antenna parts.
+Actual raycast resolver focuses cockpit-console through its authored collider.
+Cockpit systems check uses real E / resolver once; result=True: Cockpit check complete. Impact detected.
+Actual cockpit command applies the accident and locks controls for its bound cinematic.
+Impact has one actual request and its matching presentation acknowledgement.
+The actual serialized cinematic offset moved during the unreduced impact. Peak metres=0.010362 degrees=0.4846
+After impact leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Actual acknowledged impact enters Emergency and restores input without timeout.
+Impact camera offset returns to its actual resting pose.
+Actual raycast resolver focuses repair-power through its authored collider.
+Actual Power repair is available before use.
+Injected E performs the real Power repair once.
+Power exact OxygenKg debit equals its authoritative repair cost (0).
+Power exact WaterLitres debit equals its authoritative repair cost (0).
+Power exact FoodKg debit equals its authoritative repair cost (0).
+Power exact BatteryKWh debit equals its authoritative repair cost (0).
+Power exact SparePartsCount debit equals its authoritative repair cost (2).
+Repair does not invent an immediate CO2 change.
+Repeated Power interaction is rejected without a second debit.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Actual raycast resolver focuses repair-life-support through its authored collider.
+Actual LifeSupport repair is available before use.
+Injected E performs the real LifeSupport repair once.
+LifeSupport exact OxygenKg debit equals its authoritative repair cost (0).
+LifeSupport exact WaterLitres debit equals its authoritative repair cost (0).
+LifeSupport exact FoodKg debit equals its authoritative repair cost (0).
+LifeSupport exact BatteryKWh debit equals its authoritative repair cost (1).
+LifeSupport exact SparePartsCount debit equals its authoritative repair cost (2).
+Repair does not invent an immediate CO2 change.
+HUD resource-0 agrees with the current authoritative snapshot.
+HUD resource-1 agrees with the current authoritative snapshot.
+HUD resource-2 agrees with the current authoritative snapshot.
+HUD resource-3 agrees with the current authoritative snapshot.
+HUD resource-4 agrees with the current authoritative snapshot.
+HUD resource-5 agrees with the current authoritative snapshot.
+Core decides objective loss after actual repairs exhaust antenna parts; no state mutation by QA.
+EndingPullback has one actual request and its matching presentation acknowledgement.
+Actual final report outcome=Lost.
+Actual report includes mission design, resources, systems, communications and separate science/source/fiction/pacing sections.
+Actual report carries the NASA dataset hash and 32-sample provenance.
+Composition displays the actual final report and its real restart action.
+Loss report explains the actual antenna-parts decision.
+Capture 07-objective-loss-report uses the existing actual camera and actual UIDocument at 1280x720.
+Actual report restart disposes old state and opens a fresh planning mode choice.
+Restart preserves one active camera and listener.
+Actual scene has separate bound cinematic and walk-motion pivots above the sole camera.
+Actual resolver viewOrigin is the unbobbed serialized cinematic pivot, not the animated camera child.
+Glove model is below its separate camera-child motion mount.
+Actual report restart rebinds hands to the fresh unsuited session and leaves no old glove model visible.
+Restart leaves camera and hand-motion pivots neutral. Camera=(0.000000, 0.000000, 0.000000) hands=(0.000000, 0.000000, 0.000000)
+Report restart returns a fresh Planning session without a stale report or outside state.
+No game runtime Error/Exception/Assert during the full success and loss smoke passes.
+Automated runtime smoke only. QA teleports are not a walkthrough; no human-play claim.
