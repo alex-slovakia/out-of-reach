@@ -213,6 +213,8 @@ def make_collision(boxes, material, collection):
 
 
 def export_fbx(objects, path):
+    """Exports objects without texture records. Unity binds the external URP materials by name, and the
+    exporter would otherwise write the build machine's absolute texture paths into the file."""
     if not EXPORT:
         return
     bpy.ops.object.select_all(action="DESELECT")
@@ -220,11 +222,22 @@ def export_fbx(objects, path):
         obj.hide_set(False)
         obj.select_set(True)
     bpy.context.view_layer.objects.active = objects[0]
-    bpy.ops.export_scene.fbx(
-        filepath=path, use_selection=True, object_types={"MESH", "EMPTY"}, use_mesh_modifiers=True,
-        mesh_smooth_type="OFF", apply_unit_scale=True, apply_scale_options="FBX_SCALE_ALL",
-        bake_space_transform=True, axis_forward="-Z", axis_up="Y", add_leaf_bones=False, bake_anim=False,
-        path_mode="AUTO", embed_textures=False, use_tspace=False)
+    detached = []
+    for material in bpy.data.materials:
+        if material.use_nodes:
+            for node in material.node_tree.nodes:
+                if node.type == "TEX_IMAGE" and node.image is not None:
+                    detached.append((node, node.image))
+                    node.image = None
+    try:
+        bpy.ops.export_scene.fbx(
+            filepath=path, use_selection=True, object_types={"MESH", "EMPTY"}, use_mesh_modifiers=True,
+            mesh_smooth_type="OFF", apply_unit_scale=True, apply_scale_options="FBX_SCALE_ALL",
+            bake_space_transform=True, axis_forward="-Z", axis_up="Y", add_leaf_bones=False, bake_anim=False,
+            path_mode="STRIP", embed_textures=False, use_tspace=False)
+    finally:
+        for node, picture in detached:
+            node.image = picture
 
 
 # ----------------------------------------------------------------------------- preview renders
@@ -241,6 +254,7 @@ CAMERAS = {
     "exterior_finale": ((9.0, 5.0, 27.0), (0.5, 1.6, 12.0), 58),
     "exterior_forward": ((-9.5, 4.5, -11.0), (0.0, 1.6, 4.0), 55),
     "exterior_eva": ((2.2, 1.6, 24.6), (1.2, 2.2, 14.0), 72),
+    "exterior_antenna": ((3.514, 2.431, 14.25), (3.434, 2.462, 12.9), 90),   # towards review-01 R06 (Unity rolls this view to the hull normal)
 }
 
 
@@ -297,7 +311,7 @@ def setup_render(scene):
             light = bpy.data.objects.new("A7_PreviewLight_%s_%.1f" % (name, z), data)
             light.location = to_blender_point((0.0, a7_ship.CEILING - 0.135, z))
             scene.collection.objects.link(light)
-    for name, point in a7_ship.ANCHORS.items():
+    for name, (group, point) in a7_ship.ANCHORS.items():
         if name == "LightAnchor_PowerCabinetWork":
             data = bpy.data.lights.new("A7_PreviewWorkLight", "POINT")
             data.energy = 9.0
@@ -378,13 +392,14 @@ def main():
     if a7_ship.ANCHORS:
         collection = bpy.data.collections.new("A7_Anchors")
         scene.collection.children.link(collection)
-        for name, point in sorted(a7_ship.ANCHORS.items()):
+        for name, (group, point) in sorted(a7_ship.ANCHORS.items()):
             empty = bpy.data.objects.new(name, None)
             empty.empty_display_size = 0.1
             empty.location = to_blender_point(point)
             collection.objects.link(empty)
-            groups.setdefault("Parts", []).append(empty)
-        report["anchors"] = {name: [round(float(c), 4) for c in point] for name, point in sorted(a7_ship.ANCHORS.items())}
+            groups.setdefault(group, []).append(empty)
+        report["anchors"] = {name: {"group": group, "point": [round(float(c), 4) for c in point]}
+                             for name, (group, point) in sorted(a7_ship.ANCHORS.items())}
     for group, objects in groups.items():
         export_fbx(objects, os.path.join(MESHES, "A7_%s.fbx" % group))
     collection = bpy.data.collections.new("A7_Collision")

@@ -689,13 +689,14 @@ def build_decals():
     add("brk_row_b", 0.45, 0.034, breaker_tags(["CB-%02d" % i for i in range(9, 18)],
                                                 ["C10", "C10", "B6", "B6", "C16", "C16", "B10", "B10", "C6"]))
     add("isolator_face", 0.19, 0.19, isolator_face())
+    add("ant_drive", 0.20, 0.03, plate(YELLOW, INK, "ANTENNA MANUAL DRIVE", "SemiBold"))
     for bed, serial in (("A", "0417"), ("B", "0418"), ("C", "0422")):
         add("can_label_" + bed.lower(), 0.115, 0.16, canister_label(bed, serial))
 
     # Compartment and portal signage
     for key, number, name in (("sign_flightdeck", "01", "FLIGHT DECK"), ("sign_engineering", "02", "ENGINEERING"),
                               ("sign_logistics", "03", "LOGISTICS"), ("sign_airlock", "04", "AIRLOCK")):
-        add(key, 0.62, 0.10, two_line(GRAPHITE, WHITE, number + " / " + name, "AURORA-7  PRESSURISED VOLUME",
+        add(key, 0.62, 0.10, two_line(GRAPHITE, WHITE, number + " / " + name, "AURORA-7  PRESSURIZED VOLUME",
                                       accent=ORANGE))
     add("stencil_aurora", 0.90, 0.13, stencil("AURORA-7", (40, 44, 50, 255), "Black"))
     add("stencil_vessel", 0.80, 0.045, stencil("DEEP-SPACE RESEARCH VESSEL", (60, 64, 70, 255), "SemiBold"))
@@ -709,7 +710,7 @@ def build_decals():
 
     titles = [
         ("t_eps", "EPS-2  POWER DISTRIBUTION"), ("t_battery", "BATTERY ORU  28 V DC"), ("t_bus_a", "MAIN BUS A"),
-        ("t_bus_b", "MAIN BUS B"), ("t_eclss", "ECLSS-1  AIR REVITALISATION"), ("t_co2", "CO2 REMOVAL BED"),
+        ("t_bus_b", "MAIN BUS B"), ("t_eclss", "ECLSS-1  AIR REVITALIZATION"), ("t_co2", "CO2 REMOVAL BED"),
         ("t_o2", "OXYGEN SUPPLY"), ("t_h2o", "POTABLE WATER"), ("t_thermal", "THERMAL CONTROL LOOP"),
         ("t_avionics", "AVIONICS BAY"), ("t_comm", "COMM / TRACKING"), ("t_gnc", "GUIDANCE AND NAVIGATION"),
         ("t_stow", "STOWAGE"), ("t_spares", "SPARE PARTS"), ("t_food", "FOOD PROVISIONS"), ("t_med", "CREW MEDICAL"),
@@ -724,7 +725,7 @@ def build_decals():
 
     cautions = [
         ("c_hv", "CAUTION", "120 V DC BUS"), ("c_pinch", "CAUTION", "PINCH POINT"),
-        ("c_hot", "CAUTION", "HOT SURFACE"), ("c_press", "CAUTION", "PRESSURISED LINE"),
+        ("c_hot", "CAUTION", "HOT SURFACE"), ("c_press", "CAUTION", "PRESSURIZED LINE"),
         ("c_o2", "CAUTION", "OXYGEN  NO OIL OR GREASE"), ("c_rotate", "CAUTION", "ROTATING MACHINERY"),
         ("c_esd", "CAUTION", "STATIC SENSITIVE"), ("c_keepclear", "CAUTION", "KEEP HATCH PATH CLEAR"),
     ]

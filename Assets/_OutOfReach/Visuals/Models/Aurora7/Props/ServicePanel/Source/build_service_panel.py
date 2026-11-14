@@ -1181,18 +1181,30 @@ def main():
         bpy.context.view_layer.material_override = None
         scene.camera = cameras["hero"]
 
-        blend_path = os.path.join(OUT, "ServicePanel.blend")
-        bpy.context.preferences.filepaths.save_version = 0
-        bpy.ops.wm.save_as_mainfile(filepath=blend_path)
-        bpy.ops.file.make_paths_relative()
-        bpy.ops.wm.save_mainfile()
+        # FBX first, while the scene is still unsaved and its texture links are cut: the exporter writes the
+        # path of the .blend and of every linked texture into the file, and those are paths on this machine.
+        cut = []
+        for mat in {slot for obj in parts for slot in obj.data.materials if slot is not None and slot.node_tree}:
+            for link in list(mat.node_tree.links):
+                if link.from_node.type == "TEX_IMAGE":
+                    cut.append((mat.node_tree, link.from_socket, link.to_socket))
+                    mat.node_tree.links.remove(link)
         select_only(parts, active=body)
         bpy.ops.export_scene.fbx(
             filepath=os.path.join(OUT, "ServicePanel.fbx"), use_selection=True, object_types={"MESH"},
             apply_unit_scale=True, apply_scale_options="FBX_SCALE_UNITS", axis_forward="-Z", axis_up="Y",
             bake_space_transform=True, use_mesh_modifiers=True, mesh_smooth_type="OFF", use_triangles=True,
             add_leaf_bones=False, bake_anim=False, path_mode="RELATIVE", embed_textures=False)
-        log("saved .blend and exported .fbx")
+        for tree, source, target in cut:
+            tree.links.new(source, target)
+
+        blend_path = os.path.join(OUT, "ServicePanel.blend")
+        scene.render.filepath = "//renders/"
+        bpy.context.preferences.filepaths.save_version = 0
+        bpy.ops.wm.save_as_mainfile(filepath=blend_path)
+        bpy.ops.file.make_paths_relative()
+        bpy.ops.wm.save_mainfile()
+        log("exported .fbx and saved .blend")
     else:
         render(scene, cameras["hero"], "geometry_hero.png", (900, 1200), 48)
         cover.rotation_euler = (0.0, 0.0, radians(-100.0))

@@ -3,7 +3,7 @@
  "units": "metres, Unity axes (x right, y up, z forward)",
  "modules": {
   "Cockpit": {
-   "triangles": 75568,
+   "triangles": 75268,
    "per_material": {
     "A7_Aluminum": 20292,
     "A7_AnodizedBlack": 8396,
@@ -11,10 +11,10 @@
     "A7_AnodizedClear": 11640,
     "A7_AnodizedGold": 1424,
     "A7_CableBlue": 2240,
-    "A7_CableOrange": 720,
+    "A7_CableOrange": 480,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 326,
+    "A7_Decals": 330,
     "A7_Deck": 352,
     "A7_FabricDark": 792,
     "A7_FabricStrap": 1752,
@@ -31,7 +31,7 @@
     "A7_PaintWhite": 6416,
     "A7_PaintYellow": 576,
     "A7_QuiltWhite": 176,
-    "A7_Rubber": 4816,
+    "A7_Rubber": 4752,
     "A7_Screens": 10
    },
    "bounds_min": [
@@ -51,20 +51,20 @@
    ]
   },
   "Engineering": {
-   "triangles": 76974,
+   "triangles": 75974,
    "per_material": {
-    "A7_Aluminum": 27400,
+    "A7_Aluminum": 27412,
     "A7_AnodizedBlack": 4016,
     "A7_AnodizedBlue": 496,
-    "A7_AnodizedClear": 10408,
+    "A7_AnodizedClear": 9384,
     "A7_AnodizedGold": 1560,
     "A7_CableBlue": 3208,
     "A7_CableOrange": 1104,
-    "A7_CableRed": 3296,
+    "A7_CableRed": 3328,
     "A7_CableYellow": 512,
     "A7_Carbon": 1716,
     "A7_Chrome": 1080,
-    "A7_Decals": 268,
+    "A7_Decals": 260,
     "A7_Deck": 440,
     "A7_FabricWhite": 24,
     "A7_Grate": 120,
@@ -72,14 +72,14 @@
     "A7_LedCyan": 24,
     "A7_LedGreen": 252,
     "A7_LightPanel": 36,
-    "A7_PaintAmber": 3368,
-    "A7_PaintGraphite": 3080,
-    "A7_PaintGray": 1148,
-    "A7_PaintWhite": 3552,
+    "A7_PaintAmber": 3088,
+    "A7_PaintGraphite": 3124,
+    "A7_PaintGray": 1192,
+    "A7_PaintWhite": 3712,
     "A7_PaintYellow": 88,
     "A7_PlasticWhite": 1584,
-    "A7_QuiltWhite": 176,
-    "A7_Rubber": 7872,
+    "A7_QuiltWhite": 132,
+    "A7_Rubber": 7936,
     "A7_Screens": 8,
     "A7_WorkLight": 12
    },
@@ -100,7 +100,7 @@
    ]
   },
   "Storage": {
-   "triangles": 52862,
+   "triangles": 52860,
    "per_material": {
     "A7_Aluminum": 13592,
     "A7_AnodizedBlack": 1072,
@@ -110,7 +110,7 @@
     "A7_CableBlue": 4064,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 354,
+    "A7_Decals": 352,
     "A7_Deck": 352,
     "A7_FabricStrap": 6120,
     "A7_FabricWhite": 1344,
@@ -141,24 +141,24 @@
    ]
   },
   "Airlock": {
-   "triangles": 31092,
+   "triangles": 31698,
    "per_material": {
     "A7_Aluminum": 11224,
     "A7_AnodizedBlack": 1700,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 6272,
     "A7_AnodizedGold": 744,
-    "A7_CableBlue": 368,
+    "A7_CableBlue": 608,
     "A7_CableOrange": 96,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 130,
+    "A7_Decals": 128,
     "A7_Deck": 176,
     "A7_FabricStrap": 228,
     "A7_FabricWhite": 288,
     "A7_Grate": 60,
-    "A7_LedAmber": 48,
-    "A7_LedGreen": 96,
+    "A7_LedAmber": 72,
+    "A7_LedGreen": 72,
     "A7_LightPanel": 12,
     "A7_PaintAmber": 3936,
     "A7_PaintGraphite": 1528,
@@ -166,7 +166,7 @@
     "A7_PaintRed": 172,
     "A7_PaintWhite": 1240,
     "A7_QuiltWhite": 220,
-    "A7_Rubber": 1856,
+    "A7_Rubber": 2224,
     "A7_Screens": 2
    },
    "bounds_min": [
@@ -186,17 +186,23 @@
    ]
   },
   "Exterior": {
-   "triangles": 27120,
+   "triangles": 29556,
    "per_material": {
-    "A7_Aluminum": 15448,
+    "A7_Aluminum": 16016,
     "A7_AnodizedBlack": 5232,
-    "A7_AnodizedGold": 4856,
-    "A7_Decals": 16,
+    "A7_AnodizedClear": 160,
+    "A7_AnodizedGold": 5152,
+    "A7_Decals": 26,
     "A7_HullBlanket": 812,
     "A7_LightPanel": 84,
     "A7_MLIGold": 72,
     "A7_MLISilver": 352,
-    "A7_PaintWhite": 176,
+    "A7_PaintAmber": 96,
+    "A7_PaintGraphite": 18,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 416,
+    "A7_PaintYellow": 128,
+    "A7_Rubber": 832,
     "A7_SolarCell": 72
    },
    "bounds_min": [
@@ -487,19 +493,81 @@
     7.739999999999999
    ],
    "group": "Parts"
+  },
+  "Antenna_Azimuth": {
+   "triangles": 708,
+   "per_material": {
+    "A7_Aluminum": 448,
+    "A7_PaintGray": 260
+   },
+   "bounds_min": [
+    3.4699,
+    2.2325,
+    12.59
+   ],
+   "bounds_max": [
+    3.9705,
+    2.8093,
+    12.85
+   ],
+   "origin": [
+    3.5013760946735513,
+    2.479111224851807,
+    12.72
+   ],
+   "group": "ExteriorParts"
+  },
+  "Antenna_Elevation": {
+   "triangles": 2184,
+   "per_material": {
+    "A7_Aluminum": 624,
+    "A7_AnodizedBlack": 84,
+    "A7_PaintGray": 260,
+    "A7_PaintWhite": 1216
+   },
+   "bounds_min": [
+    3.728,
+    2.0403,
+    12.3694
+   ],
+   "bounds_max": [
+    4.4942,
+    3.259,
+    13.4536
+   ],
+   "origin": [
+    3.8302346229025592,
+    2.5654365885119215,
+    12.72
+   ],
+   "group": "ExteriorParts"
   }
  },
  "anchors": {
-  "LightAnchor_PowerCabinetAlarm": [
-   -1.638,
-   2.165,
-   6.71
-  ],
-  "LightAnchor_PowerCabinetWork": [
-   -1.758,
-   1.72,
-   6.35
-  ]
+  "Antenna_ServiceSocket": {
+   "group": "ExteriorParts",
+   "point": [
+    3.1996,
+    2.3999,
+    13.0
+   ]
+  },
+  "LightAnchor_PowerCabinetAlarm": {
+   "group": "Parts",
+   "point": [
+    -1.638,
+    2.165,
+    6.71
+   ]
+  },
+  "LightAnchor_PowerCabinetWork": {
+   "group": "Parts",
+   "point": [
+    -1.758,
+    1.72,
+    6.35
+   ]
+  }
  },
  "collision_proxies": [
   {
@@ -1101,7 +1169,7 @@
    ]
   }
  ],
- "triangles_total": 278672,
+ "triangles_total": 283304,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",

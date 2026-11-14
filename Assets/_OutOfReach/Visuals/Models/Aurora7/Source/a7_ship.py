@@ -17,7 +17,7 @@ import sys
 import numpy as np
 
 sys.dont_write_bytecode = True  # keep __pycache__ out of the Unity project
-from a7kit import Model, at, compose, front_frame, rotation, vec  # noqa: E402
+from a7kit import Model, at, basis, compose, front_frame, rotation, vec  # noqa: E402
 
 # ----------------------------------------------------------------------------- material names
 WHITE, GRAY, GRAPHITE = "A7_PaintWhite", "A7_PaintGray", "A7_PaintGraphite"
@@ -262,7 +262,7 @@ def rack_shell(m, width=1.6, height=2.3, depth=0.58):
     return front + 0.002
 
 
-# Named helper points in ship coordinates, exported as empties for the integrator.
+# Named helper points, name -> (export group, point in ship coordinates); exported as empties for the integrator.
 ANCHORS = {}
 
 
@@ -807,21 +807,23 @@ def bay_emergency(art):
     return m
 
 
-def bay_service(art, plinth=False):
-    """Painted close-out beside a service rack. With `plinth` it carries the mount for the EPS-2 control
-    panel prop (0.70 x 1.20 m, centred 1.15 m above the deck) and its junction box."""
+def bay_service(art, mount=None):
+    """Painted close-out beside a service rack. `mount` = (centre x, width, height, bottom y, title key) adds
+    the plinth for a wall-mounted prop (the EPS-2 control panel or the ARS-1 unit) with its junction box."""
     m = Model("BayService")
     bay_backing(m)
     for cx in (-0.36, 0.36):
         panel(m, (cx - 0.34, BAY_Y0 + 0.04, cx + 0.34, BAY_Y1 - 0.04), 0.012, WHITE, 0.012, None, True, 0.03)
-    if plinth:
-        m.box(GRAPHITE, (0.36, 1.15, 0.029), (0.76, 1.26, 0.010), 0.003)
-        m.box(GRAY, (0.36, 2.12, 0.06), (0.34, 0.22, 0.09), 0.01)
-        m.decal(art.decals, "t_bus_a", (0.36, 2.12, 0.105), None, width=0.28)
-        for cx, mat in ((0.28, RUBBER), (0.36, CABLE_RED), (0.44, RUBBER)):
-            m.cyl(mat, (cx, 2.23, 0.05), (cx, BAY_Y1 - 0.02, 0.05), 0.014, 8, 0.0, None, (False, False))
-            m.cyl(mat, (cx, 1.745, 0.05), (cx, 2.01, 0.05), 0.012, 8, 0.0, None, (False, False))
-        m.box(ALU, (0.36, 2.40, 0.04), (0.24, 0.024, 0.05), 0.003)
+    if mount:
+        mx, width, height, bottom, title = mount
+        top = bottom + height
+        m.box(GRAPHITE, (mx, bottom + height / 2, 0.029), (width + 0.06, height + 0.06, 0.010), 0.003)
+        m.box(GRAY, (mx, 2.12, 0.06), (0.34, 0.22, 0.09), 0.01)
+        m.decal(art.decals, title, (mx, 2.12, 0.105), None, width=0.28)
+        for dx, mat in ((-0.08, RUBBER), (0.0, CABLE_RED), (0.08, RUBBER)):
+            m.cyl(mat, (mx + dx, 2.23, 0.05), (mx + dx, BAY_Y1 - 0.02, 0.05), 0.014, 8, 0.0, None, (False, False))
+            m.cyl(mat, (mx + dx, top - 0.005, 0.05), (mx + dx, 2.01, 0.05), 0.012, 8, 0.0, None, (False, False))
+        m.box(ALU, (mx, 2.40, 0.04), (0.24, 0.024, 0.05), 0.003)
     else:
         handrail(m, (-0.42, 1.0), (-0.42, 1.6), 0.024)
         m.cyl(RUBBER, (-0.62, BAY_Y0 + 0.02, 0.045), (-0.62, BAY_Y1 - 0.02, 0.045), 0.018, 10, 0.0, None, (False, False))
@@ -1195,6 +1197,21 @@ def build_cockpit(art, bays):
     return m
 
 
+# ----------------------------------------------------------------------------- separately addressable parts
+def place_parts(frame, local_parts, local_anchors, group):
+    """Moves parts and helper points from an assembly's own space into ship space and tags their group."""
+    placed = {}
+    for name, part in local_parts.items():
+        model = Model(name)
+        model.instance(part, frame)
+        model.origin = tuple(float(c) for c in (frame @ np.append(vec(part.local_origin), 1.0))[:3])
+        model.group = group
+        placed[name] = model
+    for name, point in local_anchors.items():
+        ANCHORS[name] = (group, tuple(float(c) for c in (frame @ np.append(vec(point), 1.0))[:3]))
+    return placed
+
+
 # ----------------------------------------------------------------------------- engineering
 def tank_rack(art):
     """Three composite pressure vessels in a restraint frame (oxygen and water reserves)."""
@@ -1230,20 +1247,13 @@ def build_engineering(art, bays):
     """Returns the static compartment and its separately addressable parts (ship coordinates)."""
     m = Model("Engineering")
     left = [bays["equipment_thermal"], bays["closeout"], bays["service"], bays["tools"], bays["lockers_b"]]
-    right = [bays["blanket"], bays["blanket"], bays["utility"], bays["closeout"], bays["equipment_science"]]
+    right = [bays["utility"], bays["blanket"], bays["service_ars"], bays["closeout"], bays["equipment_science"]]
     build_shell(m, art, "Engineering", left, right, "sign_engineering")
     parts = {}
     for (body, rack_parts, anchors), frame in ((power_rack(art), front_frame((-2.02, 0, 6.1), (1, 0, 0))),
                                                (eclss_rack(art), front_frame((2.02, 0, 8.1), (-1, 0, 0)))):
         m.instance(body, frame)
-        for name, part in rack_parts.items():
-            placed = Model(name)
-            placed.instance(part, frame)
-            placed.origin = tuple(float(c) for c in (frame @ np.append(vec(part.local_origin), 1.0))[:3])
-            placed.group = "Parts"
-            parts[name] = placed
-        for name, point in anchors.items():
-            ANCHORS[name] = tuple(float(c) for c in (frame @ np.append(vec(point), 1.0))[:3])
+        parts.update(place_parts(frame, rack_parts, anchors, "Parts"))
     m.instance(tank_rack(art), front_frame((1.99, 0, 5.43), (-1, 0, 0)))
     # drops from the overhead services: feeder conduit and bus cables to the EPS rack, return duct to the scrubber
     m.tube(RUBBER, [(-1.698, 2.26, 5.43), (-1.698, 2.66, 5.43), (-1.42, 2.84, 5.43), (-0.94, 2.875, 5.43), (-0.94, 3.02, 5.43)],
@@ -1516,6 +1526,94 @@ def rcs_quad(m, angle_deg, radius, z):
         m.lathe(ANO, origin, axis, [(0.03, 0.0), (0.035, 0.03), (0.075, 0.14), (0.07, 0.14), (0.028, 0.03)], 16, f, (False, False))
 
 
+# ----------------------------------------------------------------------------- antenna (asset A07)
+def dish(radius=0.62, depth=0.19, thickness=0.014, segs=32):
+    """Parabolic reflector as a closed shell with feed, struts and backing tubes. Axis +y, vertex at the origin."""
+    m = Model("Dish")
+    steps = 9
+    back = [(max(0.03, radius * s), depth * s * s - thickness) for s in np.linspace(0.0, 1.0, steps)]
+    front = [(max(0.03, radius * s), depth * s * s) for s in np.linspace(1.0, 0.0, steps)]
+    m.lathe(WHITE, (0, 0, 0), (0, 1, 0), back + [(radius + 0.006, depth - thickness / 2)] + front, segs, None, (True, True))
+    focus = radius * radius / (4.0 * depth)
+    m.lathe(ANO, (0, 0, 0), (0, 1, 0), [(0.055, focus - 0.10), (0.022, focus - 0.045), (0.022, focus + 0.02)], 14, None, (True, True))
+    for a in (90, 210, 330):
+        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
+        m.tube(ALU, [(radius * 0.97 * ca, depth * 0.94, radius * 0.97 * sa), (0.03 * ca, focus - 0.02, 0.03 * sa)], 0.008, 6)
+    m.cyl(GRAY, (0, -0.075, 0), (0, -thickness + 0.002, 0), 0.13, 20, 0.006)
+    for a in range(0, 360, 45):
+        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
+        m.tube(ALU, [(r * ca, depth * (r / radius) ** 2 - thickness - 0.012, r * sa) for r in (0.12, 0.36, 0.59)], 0.012, 6)
+    ring_r = 0.40
+    ring_y = depth * (ring_r / radius) ** 2 - thickness - 0.012
+    m.tube(ALU, [(ring_r * math.cos(math.radians(a)), ring_y, ring_r * math.sin(math.radians(a))) for a in range(0, 360, 20)],
+           0.010, 6, 0.0, None, True)
+    return m
+
+
+def antenna(art):
+    """High-gain antenna on its hull pad (asset A07). Pad space: z outwards from the skin, y aft, x around the hull.
+
+    Returns (static base, parts, anchors). The manual drive socket is on the aft service deck, on the pad's
+    centre line and level with the AntennaRepair anchor (0.31 m off the skin)."""
+    base = Model("AntennaBase")
+    deck = 0.30
+    mast_y = -0.28
+    base.box(GRAY, (0, -0.02, 0.075), (0.66, 1.00, 0.03), 0.006)
+    for bx in (-0.305, 0.305):
+        for by in (-0.44, -0.16, 0.12, 0.40):
+            bolt(base, bx, by, 0.09, 0.012, 0.008, ALU)
+    base.box(GRAY, (0, -0.02, 0.19), (0.56, 0.92, 0.22), 0.02)
+    # aft service deck: amber-edged access, manual drive socket, access cover, tether point, test connectors
+    base.frame(AMBER, (0, 0.17, deck), 0.50, 0.52, 0.022, 0.002, 0.03)
+    base.cyl(YELLOW, (0, 0, deck), (0, 0, deck + 0.03), 0.05, 16, 0.006)
+    base.cyl(GRAPHITE, (0, 0, deck + 0.03), (0, 0, deck + 0.031), 0.026, 6, 0.0, None, (False, True))
+
+    def deck_label(key, x, y, z, scale):
+        # the crew arrives from aft with their head away from the hull, so deck labels read from that side
+        base.decal(art.decals, key, (0, 0, 0), compose(at(x, y, z), rotation((0, 0, 1), 180)), scale)
+
+    deck_label("ant_drive", 0.0, 0.10, deck, 1.0)
+    deck_label("torque_note", 0.0, 0.135, deck, 0.85)
+    base.plate(WHITE, (0.0, 0.29, deck), 0.30, 0.20, 0.008, 0.02)
+    corner_bolts(base, (-0.15, 0.19, 0.15, 0.39), deck + 0.008, 0.022, ANO_GOLD, None, 0.008)
+    deck_label("c_esd", 0.0, 0.29, deck + 0.008, 0.7)
+    u_handle(base, (0.20, 0.10), (0.20, 0.30), deck, 0.05, 0.009, ANO_GOLD)
+    deck_label("blue_tether", 0.165, 0.065, deck, 0.6)
+    # aft face of the housing: a proper (unmirrored) frame, because pad space is already a front-view space
+    aft = basis((0, 0.44, 0.19), (-1, 0, 0), (0, 0, 1), (0, 1, 0))
+    connectors(base, art, (-0.13, -0.03, 0.13, 0.05), 0.0, aft, 2, -0.115, 0)
+    # fore half: azimuth bearing and mast, with a service loop of cable
+    base.cyl(ALU, (0, mast_y, deck), (0, mast_y, deck + 0.05), 0.16, 24, 0.008)
+    for a in range(0, 360, 45):
+        bolt(base, 0.135 * math.cos(math.radians(a)), mast_y + 0.135 * math.sin(math.radians(a)), deck + 0.05, 0.008, 0.006, ALU)
+    base.cyl(WHITE, (0, mast_y, deck + 0.05), (0, mast_y, 0.62), 0.085, 20, 0.004)
+    base.tube(RUBBER, [(0.19, -0.08, deck), (0.19, -0.08, deck + 0.12), (0.14, mast_y, 0.50), (0.08, mast_y, 0.56)], 0.012, 8, 0.05)
+
+    azimuth = Model("Antenna_Azimuth")
+    azimuth.cyl(ALU, (0, mast_y, 0.62), (0, mast_y, 0.68), 0.13, 24, 0.006)
+    azimuth.box(GRAY, (0, mast_y, 0.705), (0.46, 0.15, 0.05), 0.008)
+    for sx in (-1, 1):
+        azimuth.box(GRAY, (sx * 0.205, mast_y, 0.87), (0.05, 0.13, 0.34), 0.008)
+        azimuth.cyl(ALU, (sx * 0.18, mast_y, 0.96), (sx * 0.24, mast_y, 0.96), 0.05, 16, 0.004)
+    azimuth.cyl(GRAY, (0.24, mast_y, 0.96), (0.33, mast_y, 0.96), 0.06, 16, 0.006)
+    azimuth.local_origin = (0.0, mast_y, 0.62)
+
+    elevation = Model("Antenna_Elevation")
+    tilt = math.radians(30.0)               # boresight leans aft from the pad normal
+    axis = np.array([0.0, math.sin(tilt), math.cos(tilt)])
+    hub = np.array([0.0, mast_y, 0.96])
+    vertex = hub + axis * 0.20
+    elevation.cyl(ALU, (-0.18, mast_y, 0.96), (0.18, mast_y, 0.96), 0.035, 12)
+    elevation.box(GRAY, tuple(hub), (0.22, 0.16, 0.16), 0.012)
+    elevation.cyl(GRAY, tuple(hub), tuple(vertex - axis * 0.07), 0.05, 14)
+    elevation.instance(dish(), basis(vertex, (1, 0, 0), axis, np.cross((1.0, 0.0, 0.0), axis)))
+    elevation.local_origin = (0.0, mast_y, 0.96)
+
+    parts = {"Antenna_Azimuth": azimuth, "Antenna_Elevation": elevation}
+    anchors = {"Antenna_ServiceSocket": (0.0, 0.0, 0.308)}
+    return base, parts, anchors
+
+
 def build_exterior(art):
     from a7kit import ring, rounded_rect
     m = Model("Exterior")
@@ -1587,15 +1685,17 @@ def build_exterior(art):
         p0, normal = on_hull(angle, R_AFT, 20.75)
         p1, normal1 = on_hull(angle + 14, R_AFT, 20.75)
         m.tube(ANO_GOLD, [p0, p0 + normal * 0.09, p1 + normal1 * 0.09, p1], 0.017, 8, 0.04)
-    # antenna mounting pad at the AntennaRepair anchor; the antenna assembly itself is a separate prop
+    # antenna mounting pad at the AntennaRepair anchor, with the high-gain antenna on it
     pad, normal = on_hull(antenna_angle, R_AFT, 13.0)
     f = front_frame(pad, normal, (0, 0, 1))
     m.box(ALU, (0, 0, 0.03), (0.9, 1.1, 0.06), 0.012, f)
-    for bx in (-0.38, 0.38):
-        for by in (-0.48, 0.48):
+    for bx in (-0.40, 0.40):
+        for by in (-0.50, 0.50):
             bolt(m, bx, by, 0.06, 0.016, 0.012, ALU, f)
-    m.decal(art.decals, "blue_tether", (0.0, -0.68, 0.012), f, 2.0)
     m.cyl(ANO_GOLD, (0.55, 0, 0.0), (0.55, 0, 0.08), 0.05, 14, 0.008, f)
+    antenna_base, antenna_parts, antenna_anchors = antenna(art)
+    m.instance(antenna_base, f)
+    parts = place_parts(f, antenna_parts, antenna_anchors, "ExteriorParts")
 
     # power and thermal: two solar wings, body-mounted radiators, reaction control quads
     for side in (-1, 1):
@@ -1617,7 +1717,7 @@ def build_exterior(art):
         base, normal = on_hull(0 if side > 0 else 180, R_AFT, 11.2, 0.004)
         f = front_frame(base, normal, (0, 1, 0))
         m.decal(art.decals, "stencil_aurora", (0, 0, 0), f, 4.0)
-    return m
+    return m, parts
 
 
 # ----------------------------------------------------------------------------- collision proxies
@@ -1673,19 +1773,22 @@ def build_all(decals, screens):
         "utility": bay_utility(art),
         "tools": bay_tools(art),
         "emergency": bay_emergency(art),
-        "service": bay_service(art, True),
+        "service": bay_service(art, (0.36, 0.70, 1.20, 0.55, "t_bus_a")),       # EPS-2 control panel
+        "service_ars": bay_service(art, (0.33, 0.80, 1.40, 0.45, "t_eclss")),   # ARS-1 air revitalisation unit
         "closeout": bay_service(art),
     }
     engineering, engineering_parts = build_engineering(art, bays)
+    exterior, exterior_parts = build_exterior(art)
     models = {
         "Cockpit": build_cockpit(art, bays),
         "Engineering": engineering,
         "Storage": build_storage(art, bays),
         "Airlock": build_airlock(art, bays),
-        "Exterior": build_exterior(art),
+        "Exterior": exterior,
     }
     models.update(build_doors(art))
     models.update(engineering_parts)
+    models.update(exterior_parts)
     return models, build_collision()
 
 

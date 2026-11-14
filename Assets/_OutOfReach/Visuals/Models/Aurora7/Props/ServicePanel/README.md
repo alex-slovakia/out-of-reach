@@ -23,7 +23,8 @@ or audio listener.
 ## Files
 
 - `ServicePanel.prefab` — use this. A variant of the model with the materials and the collision proxy.
-- `ServicePanel.fbx` — three triangulated meshes with exported normals. Its `.meta` remaps the five materials to `Materials/`.
+- `ServicePanel.fbx` — three triangulated meshes with exported normals, no texture records and no local paths
+  (second export, see Verification). Its `.meta` remaps the five materials to `Materials/`.
 - `Materials/`, `Textures/` — as listed above. The textures are clamped atlases; MetallicSmoothness and Occlusion are linear.
 - `Previews/` — five genuine Cycles renders of this mesh with these textures (`hero`, `front`, `detail`, `open`,
   `wire`) and two captures made in Unity by the import check (`ServicePanel_unity_urp.png`,
@@ -32,7 +33,9 @@ or audio listener.
 - `Source/` — `build_service_panel.py` regenerates the model, label atlas, baked textures, renders, `.blend` and FBX:
   `blender -b --factory-startup --python build_service_panel.py -- --stage full --out <folder outside Assets>`.
   `verify_fbx.py` re-imports the FBX and reports what a consumer receives. `ServicePanel.blend.bytes` is the saved
-  `.blend`; the extra extension stops Unity from importing it through Blender. Rename it to open it.
+  `.blend`; the extra extension stops Unity from importing it through Blender. Rename it to open it. A saved
+  `.blend` stores the absolute path it was saved to, so leave this file out of a commit if the repository must
+  hold no local paths; the script rebuilds it.
 
 ## What must stay together
 
@@ -78,6 +81,13 @@ No NASA insignia, no third-party game assets, no downloaded textures. Label word
   (0.70, 1.20, 0.18) m with min (−0.35, 0, −0.09); 6,734 triangles; all three meshes at identity rotation and
   unit scale; every renderer uses the external URP Lit materials with matching submesh counts; one collider; no
   camera or audio listener. The two Unity captures in `Previews/` come from that run.
+- **Second FBX export (14 Nov 2026, 12:08).** The first export carried absolute paths of the build machine: the
+  texture file names and the path of the `.blend`. `ServicePanel.fbx` was exported again from the same saved
+  `.blend`, in an unsaved session with the texture links cut, and `Source/build_service_panel.py` now exports
+  that way. After re-import the vertex, normal, UV and material data of all three meshes are identical to the
+  first export, and the file holds no drive-letter path. The Unity import check passed again on the new file
+  (exit 0, 6,734 triangles, same bounds, no problem), and the prefab it saved is byte-identical to the
+  delivered one. Only `ServicePanel.fbx`, `Source/build_service_panel.py` and this README changed.
 - `tools/verify_repository.py` passes in that clone with this folder in place (every file has a `.meta`, GUIDs unique).
 
 ## Limits
