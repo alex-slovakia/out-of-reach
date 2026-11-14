@@ -1,0 +1,382 @@
+{
+ "task": "HABITAT-FIT-02",
+ "base": "AURORA-7 ship generator at ba8b87f (the ship inside 33f474f)",
+ "space": "ship space = Aurora7_Models prefab space: Unity metres, y up, +z aft",
+ "units": {
+  "HB_CrewBerth": {
+   "position": [
+    -2.38,
+    0.0,
+    13.25
+   ],
+   "yaw_deg": 90.0,
+   "fbx_unit_space": "../HB_CrewBerth.fbx",
+   "objects": {
+    "HB_CrewBerth": {
+     "pivot_ship": [
+      -2.38,
+      0.0,
+      13.25
+     ],
+     "triangles": 12204,
+     "motion": null
+    }
+   }
+  },
+  "HB_Galley": {
+   "position": [
+    -2.38,
+    0.0,
+    14.75
+   ],
+   "yaw_deg": 90.0,
+   "fbx_unit_space": "../HB_Galley.fbx",
+   "objects": {
+    "HB_Galley": {
+     "pivot_ship": [
+      -2.38,
+      0.0,
+      14.75
+     ],
+     "triangles": 11682,
+     "motion": null
+    },
+    "HB_GalleyTable": {
+     "pivot_ship": [
+      -1.92,
+      0.97,
+      14.75
+     ],
+     "triangles": 1498,
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       90
+      ],
+      "note": "modelled deployed; rotates about its local x axis to stow upright",
+      "axis_ship": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     }
+    }
+   }
+  },
+  "HB_GrowCassette": {
+   "position": [
+    2.38,
+    0.0,
+    14.75
+   ],
+   "yaw_deg": -90.0,
+   "fbx_unit_space": "../HB_GrowCassette.fbx",
+   "objects": {
+    "HB_GrowCassette": {
+     "pivot_ship": [
+      2.38,
+      0.0,
+      14.75
+     ],
+     "triangles": 3136,
+     "motion": null
+    },
+    "HB_GrowLid": {
+     "pivot_ship": [
+      1.89,
+      1.655,
+      14.75
+     ],
+     "triangles": 304,
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       100
+      ],
+      "note": "modelled closed; opens upward about the top hinge line",
+      "axis_ship": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     }
+    },
+    "HB_GrowTray": {
+     "pivot_ship": [
+      1.91,
+      1.11,
+      14.75
+     ],
+     "triangles": 4786,
+     "motion": {
+      "type": "slide",
+      "axis": "z",
+      "range_m": [
+       0.0,
+       0.3
+      ],
+      "note": "modelled closed; slides out towards the room",
+      "axis_ship": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     }
+    },
+    "HB_GrowSeedlings": {
+     "pivot_ship": [
+      1.91,
+      1.11,
+      14.75
+     ],
+     "triangles": 3600,
+     "motion": {
+      "type": "follows",
+      "parent": "HB_GrowTray",
+      "note": "same origin as the tray; swap or hide per growth stage"
+     }
+    }
+   }
+  }
+ },
+ "anchors": {
+  "SleepEntry": {
+   "unit": "HB_CrewBerth",
+   "point": [
+    -1.58,
+    0.0,
+    13.03
+   ],
+   "forward": [
+    -1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "SleepCamera": {
+   "unit": "HB_CrewBerth",
+   "point": [
+    -2.14,
+    1.96,
+    13.03
+   ],
+   "forward": [
+    1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "PersonalStowage": {
+   "unit": "HB_CrewBerth",
+   "point": [
+    -1.83,
+    1.25,
+    13.87
+   ],
+   "forward": [
+    1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "RationPickup": {
+   "unit": "HB_Galley",
+   "point": [
+    -1.72,
+    1.72,
+    14.395
+   ],
+   "forward": [
+    1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "WaterDispenser": {
+   "unit": "HB_Galley",
+   "point": [
+    -2.08,
+    1.13,
+    15.195
+   ],
+   "forward": [
+    1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "GrowInteraction": {
+   "unit": "HB_GrowCassette",
+   "point": [
+    1.85,
+    1.125,
+    14.75
+   ],
+   "forward": [
+    -1.0,
+    0.0,
+    0.0
+   ]
+  },
+  "GrowTray": {
+   "unit": "HB_GrowCassette",
+   "point": [
+    2.12,
+    1.21,
+    14.75
+   ],
+   "forward": [
+    0.0,
+    1.0,
+    0.0
+   ]
+  }
+ },
+ "colliders": {
+  "remove": [
+   {
+    "name": "COL_Storage_LockersL",
+    "centre": [
+     -1.95,
+     1.3,
+     14.0
+    ],
+    "size": [
+     0.65,
+     2.6,
+     4.5
+    ]
+   },
+   {
+    "name": "COL_Storage_LockersR",
+    "centre": [
+     1.95,
+     1.3,
+     14.0
+    ],
+    "size": [
+     0.65,
+     2.6,
+     4.5
+    ]
+   }
+  ],
+  "add": [
+   {
+    "name": "COL_Habitat_Berth",
+    "unit": "HB_CrewBerth",
+    "centre": [
+     -2.1125,
+     1.275,
+     13.25
+    ],
+    "size": [
+     0.535,
+     2.55,
+     1.446
+    ]
+   },
+   {
+    "name": "COL_Habitat_Galley",
+    "unit": "HB_Galley",
+    "centre": [
+     -2.145,
+     1.2,
+     14.75
+    ],
+    "size": [
+     0.47,
+     2.4,
+     1.446
+    ]
+   },
+   {
+    "name": "COL_Habitat_GalleyDrawerOpen",
+    "unit": "HB_Galley",
+    "centre": [
+     -1.785,
+     1.675,
+     14.395
+    ],
+    "size": [
+     0.25,
+     0.2,
+     0.67
+    ]
+   },
+   {
+    "name": "COL_Habitat_GalleyTable",
+    "unit": "HB_Galley",
+    "centre": [
+     -1.7485,
+     0.9025,
+     14.47
+    ],
+    "size": [
+     0.343,
+     0.297,
+     0.84
+    ]
+   },
+   {
+    "name": "COL_Habitat_GrowCassette",
+    "unit": "HB_GrowCassette",
+    "centre": [
+     2.1175,
+     1.227,
+     14.75
+    ],
+    "size": [
+     0.525,
+     1.654,
+     1.006
+    ]
+   }
+  ],
+  "notes": "Boxes cover each unit's envelope; the galley table and the open ration drawer are separate boxes so root can disable them when the table is stowed or the drawer closed. All other live colliders (Storage floor, ceiling, walls, portals) stay as they are."
+ },
+ "clearance_m": {
+  "galley_to_grow_stowed": 3.765,
+  "galley_table_deployed_to_grow": 3.432,
+  "galley_table_deployed_to_grow_tray_out_0.30": 3.132,
+  "berth_to_right_wall_blanket_bay": 4.225,
+  "portal_wings_z": [
+   10.91,
+   11.09,
+   16.91,
+   17.09
+  ],
+  "units_z_extent": [
+   12.527,
+   15.473
+  ],
+  "ring_frame_flanges": "the graphite ring-frame flanges at z 14.0 (0.07 m deep) touch the berth and galley side panels by 5 mm; hidden, no collider involved"
+ },
+ "storage_shell": {
+  "fbx": "A7_Storage_Habitat.fbx",
+  "object": "A7_Storage_Habitat",
+  "replaces": "A7_Storage (live, unchanged)",
+  "triangles": 25690,
+  "bays_left": [
+   "blanket",
+   null,
+   null,
+   "blanket"
+  ],
+  "bays_right": [
+   "blanket",
+   "blanket",
+   null,
+   "blanket"
+  ],
+  "removed": [
+   "soft stowage wall on the -x side (soft bags, transit cases, lockers; z 11.75-16.25)",
+   "hard stowage wall on the +x side (lockers and hard cases; z 11.75-16.25)"
+  ],
+  "kept": "deck, ceiling, side walls, ring frames, blanket bays as listed, the z 11 portal and its signs"
+ }
+}

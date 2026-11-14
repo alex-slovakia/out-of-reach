@@ -1,0 +1,167 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "A7_Storage_Habitat": {
+   "fbx": "A7_Storage_Habitat.fbx",
+   "objects_in_file": 1,
+   "checks": [
+    {
+     "object": "A7_Storage_Habitat",
+     "ok": true,
+     "triangles": 25690,
+     "expected": 25690
+    }
+   ]
+  },
+  "HB_Habitat_Placed": {
+   "fbx": "HB_Habitat_Placed.fbx",
+   "objects_in_file": 14,
+   "checks": [
+    {
+     "object": "HB_CrewBerth",
+     "ok": true,
+     "triangles": 12204,
+     "expected": 12204
+    },
+    {
+     "object": "HB_Galley",
+     "ok": true,
+     "triangles": 11682,
+     "expected": 11682
+    },
+    {
+     "object": "HB_GalleyTable",
+     "ok": true,
+     "triangles": 1498,
+     "expected": 1498
+    },
+    {
+     "object": "HB_GrowCassette",
+     "ok": true,
+     "triangles": 3136,
+     "expected": 3136
+    },
+    {
+     "object": "HB_GrowLid",
+     "ok": true,
+     "triangles": 304,
+     "expected": 304
+    },
+    {
+     "object": "HB_GrowTray",
+     "ok": true,
+     "triangles": 4786,
+     "expected": 4786
+    },
+    {
+     "object": "HB_GrowSeedlings",
+     "ok": true,
+     "triangles": 3600,
+     "expected": 3600
+    },
+    {
+     "anchor": "SleepEntry",
+     "ok": true,
+     "point": [
+      -1.58,
+      0.0,
+      13.03
+     ]
+    },
+    {
+     "anchor": "SleepCamera",
+     "ok": true,
+     "point": [
+      -2.14,
+      1.96,
+      13.03
+     ]
+    },
+    {
+     "anchor": "PersonalStowage",
+     "ok": true,
+     "point": [
+      -1.83,
+      1.25,
+      13.87
+     ]
+    },
+    {
+     "anchor": "RationPickup",
+     "ok": true,
+     "point": [
+      -1.72,
+      1.72,
+      14.395
+     ]
+    },
+    {
+     "anchor": "WaterDispenser",
+     "ok": true,
+     "point": [
+      -2.08,
+      1.13,
+      15.195
+     ]
+    },
+    {
+     "anchor": "GrowInteraction",
+     "ok": true,
+     "point": [
+      1.85,
+      1.125,
+      14.75
+     ]
+    },
+    {
+     "anchor": "GrowTray",
+     "ok": true,
+     "point": [
+      2.12,
+      1.21,
+      14.75
+     ]
+    }
+   ]
+  },
+  "HB_Habitat_Collision": {
+   "fbx": "HB_Habitat_Collision.fbx",
+   "objects_in_file": 5,
+   "checks": [
+    {
+     "object": "COL_Habitat_Berth",
+     "ok": true,
+     "triangles": 12,
+     "expected": 12
+    },
+    {
+     "object": "COL_Habitat_Galley",
+     "ok": true,
+     "triangles": 12,
+     "expected": 12
+    },
+    {
+     "object": "COL_Habitat_GalleyDrawerOpen",
+     "ok": true,
+     "triangles": 12,
+     "expected": 12
+    },
+    {
+     "object": "COL_Habitat_GalleyTable",
+     "ok": true,
+     "triangles": 12,
+     "expected": 12
+    },
+    {
+     "object": "COL_Habitat_GrowCassette",
+     "ok": true,
+     "triangles": 12,
+     "expected": 12
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

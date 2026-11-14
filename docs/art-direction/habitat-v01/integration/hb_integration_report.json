@@ -1,0 +1,503 @@
+{
+ "units": {
+  "A7_Storage_Habitat": {
+   "fbx": "A7_Storage_Habitat.fbx",
+   "objects": {
+    "A7_Storage_Habitat": {
+     "triangles": 25690,
+     "per_material": {
+      "A7_Aluminum": 8904,
+      "A7_AnodizedBlack": 1072,
+      "A7_AnodizedBlue": 16,
+      "A7_AnodizedClear": 8624,
+      "A7_AnodizedGold": 16,
+      "A7_CableBlue": 32,
+      "A7_CableRed": 32,
+      "A7_CableYellow": 32,
+      "A7_Decals": 70,
+      "A7_Deck": 352,
+      "A7_FabricWhite": 24,
+      "A7_Grate": 96,
+      "A7_LedGreen": 48,
+      "A7_LightPanel": 24,
+      "A7_PaintAmber": 2808,
+      "A7_PaintGraphite": 1540,
+      "A7_PaintGray": 440,
+      "A7_PaintWhite": 644,
+      "A7_QuiltWhite": 308,
+      "A7_Rubber": 608
+     },
+     "bounds_min": [
+      -2.4,
+      -0.16,
+      10.8367
+     ],
+     "bounds_max": [
+      2.4,
+      3.1952,
+      17.0
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "anchors": {}
+  },
+  "HB_Habitat_Placed": {
+   "fbx": "HB_Habitat_Placed.fbx",
+   "objects": {
+    "HB_CrewBerth": {
+     "triangles": 12204,
+     "per_material": {
+      "A7_Aluminum": 2864,
+      "A7_AnodizedBlack": 1180,
+      "A7_AnodizedClear": 132,
+      "A7_FabricCanvas": 1536,
+      "A7_FabricStrap": 676,
+      "A7_FabricWhite": 2216,
+      "A7_Grate": 172,
+      "A7_LedCyan": 12,
+      "A7_PaintAmber": 132,
+      "A7_PaintGraphite": 220,
+      "A7_PaintWhite": 352,
+      "A7_QuiltWhite": 44,
+      "A7_Rubber": 644,
+      "HB_BagQuilt": 1920,
+      "HB_BerthLight": 64,
+      "HB_Labels": 28,
+      "HB_ScreenOff": 12
+     },
+     "bounds_min": [
+      -2.38,
+      0.0,
+      12.527
+     ],
+     "bounds_max": [
+      -1.847,
+      2.55,
+      13.973
+     ],
+     "origin": [
+      -2.38,
+      0.0,
+      13.25
+     ]
+    },
+    "HB_Galley": {
+     "triangles": 11682,
+     "per_material": {
+      "A7_Aluminum": 1516,
+      "A7_AnodizedBlack": 424,
+      "A7_CableBlue": 168,
+      "A7_FabricCanvas": 44,
+      "A7_FabricStrap": 144,
+      "A7_FabricWhite": 960,
+      "A7_LedCyan": 12,
+      "A7_LightPanel": 44,
+      "A7_MLISilver": 6664,
+      "A7_PaintAmber": 128,
+      "A7_PaintGraphite": 308,
+      "A7_PaintGray": 44,
+      "A7_PaintWhite": 572,
+      "A7_PlasticWhite": 128,
+      "A7_Rubber": 472,
+      "HB_Labels": 54
+     },
+     "bounds_min": [
+      -2.38,
+      0.0,
+      14.027
+     ],
+     "bounds_max": [
+      -1.66,
+      2.4,
+      15.473
+     ],
+     "origin": [
+      -2.38,
+      0.0,
+      14.75
+     ]
+    },
+    "HB_GalleyTable": {
+     "triangles": 1498,
+     "per_material": {
+      "A7_Aluminum": 184,
+      "A7_MLISilver": 952,
+      "A7_PaintAmber": 32,
+      "A7_PaintGraphite": 88,
+      "A7_PaintWhite": 44,
+      "A7_Rubber": 192,
+      "HB_Labels": 6
+     },
+     "bounds_min": [
+      -1.92,
+      0.7544,
+      14.05
+     ],
+     "bounds_max": [
+      -1.577,
+      1.051,
+      14.89
+     ],
+     "origin": [
+      -1.92,
+      0.97,
+      14.75
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       90
+      ],
+      "note": "modelled deployed; rotates about its local x axis to stow upright",
+      "axis_ship": [
+       0.0,
+       0.0,
+       -1.0
+      ]
+     }
+    },
+    "HB_GrowCassette": {
+     "triangles": 3136,
+     "per_material": {
+      "A7_Aluminum": 1432,
+      "A7_CableBlue": 96,
+      "A7_FabricStrap": 88,
+      "A7_FabricWhite": 524,
+      "A7_Glass": 44,
+      "A7_Grate": 96,
+      "A7_LedCyan": 24,
+      "A7_PaintAmber": 172,
+      "A7_PaintGraphite": 188,
+      "A7_PaintWhite": 176,
+      "A7_PlasticWhite": 44,
+      "A7_Rubber": 216,
+      "HB_GrowLight": 12,
+      "HB_Labels": 12,
+      "HB_Water": 12
+     },
+     "bounds_min": [
+      1.871,
+      0.4,
+      14.247
+     ],
+     "bounds_max": [
+      2.3814,
+      2.0541,
+      15.253
+     ],
+     "origin": [
+      2.38,
+      0.0,
+      14.75
+     ]
+    },
+    "HB_GrowLid": {
+     "triangles": 304,
+     "per_material": {
+      "A7_Aluminum": 248,
+      "A7_Glass": 12,
+      "A7_PaintAmber": 44
+     },
+     "bounds_min": [
+      1.857,
+      1.105,
+      14.285
+     ],
+     "bounds_max": [
+      1.898,
+      1.663,
+      15.215
+     ],
+     "origin": [
+      1.89,
+      1.655,
+      14.75
+     ],
+     "motion": {
+      "type": "hinge",
+      "axis": "x",
+      "range_deg": [
+       0,
+       100
+      ],
+      "note": "modelled closed; opens upward about the top hinge line",
+      "axis_ship": [
+       0.0,
+       0.0,
+       1.0
+      ]
+     }
+    },
+    "HB_GrowTray": {
+     "triangles": 4786,
+     "per_material": {
+      "A7_Aluminum": 44,
+      "A7_FabricCanvas": 4608,
+      "A7_PaintAmber": 44,
+      "A7_PaintGraphite": 88,
+      "HB_Labels": 2
+     },
+     "bounds_min": [
+      1.898,
+      1.11,
+      14.32
+     ],
+     "bounds_max": [
+      2.32,
+      1.2055,
+      15.18
+     ],
+     "origin": [
+      1.91,
+      1.11,
+      14.75
+     ],
+     "motion": {
+      "type": "slide",
+      "axis": "z",
+      "range_m": [
+       0.0,
+       0.3
+      ],
+      "note": "modelled closed; slides out towards the room",
+      "axis_ship": [
+       -1.0,
+       0.0,
+       0.0
+      ]
+     }
+    },
+    "HB_GrowSeedlings": {
+     "triangles": 3600,
+     "per_material": {
+      "HB_Leaf": 3600
+     },
+     "bounds_min": [
+      1.9449,
+      1.203,
+      14.3854
+     ],
+     "bounds_max": [
+      2.2901,
+      1.2767,
+      15.116
+     ],
+     "origin": [
+      1.91,
+      1.11,
+      14.75
+     ],
+     "motion": {
+      "type": "follows",
+      "parent": "HB_GrowTray",
+      "note": "same origin as the tray; swap or hide per growth stage"
+     }
+    }
+   },
+   "anchors": {
+    "SleepEntry": {
+     "point": [
+      -1.58,
+      0.0,
+      13.03
+     ],
+     "forward": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "SleepCamera": {
+     "point": [
+      -2.14,
+      1.96,
+      13.03
+     ],
+     "forward": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "PersonalStowage": {
+     "point": [
+      -1.83,
+      1.25,
+      13.87
+     ],
+     "forward": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "RationPickup": {
+     "point": [
+      -1.72,
+      1.72,
+      14.395
+     ],
+     "forward": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "WaterDispenser": {
+     "point": [
+      -2.08,
+      1.13,
+      15.195
+     ],
+     "forward": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "GrowInteraction": {
+     "point": [
+      1.85,
+      1.125,
+      14.75
+     ],
+     "forward": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "GrowTray": {
+     "point": [
+      2.12,
+      1.21,
+      14.75
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   }
+  },
+  "HB_Habitat_Collision": {
+   "fbx": "HB_Habitat_Collision.fbx",
+   "objects": {
+    "COL_Habitat_Berth": {
+     "triangles": 12,
+     "per_material": {
+      "A7_Collision": 12
+     },
+     "bounds_min": [
+      -2.38,
+      0.0,
+      12.527
+     ],
+     "bounds_max": [
+      -1.845,
+      2.55,
+      13.973
+     ],
+     "origin": [
+      -2.1125,
+      1.275,
+      13.25
+     ]
+    },
+    "COL_Habitat_Galley": {
+     "triangles": 12,
+     "per_material": {
+      "A7_Collision": 12
+     },
+     "bounds_min": [
+      -2.38,
+      0.0,
+      14.027
+     ],
+     "bounds_max": [
+      -1.91,
+      2.4,
+      15.473
+     ],
+     "origin": [
+      -2.145,
+      1.2,
+      14.75
+     ]
+    },
+    "COL_Habitat_GalleyDrawerOpen": {
+     "triangles": 12,
+     "per_material": {
+      "A7_Collision": 12
+     },
+     "bounds_min": [
+      -1.91,
+      1.575,
+      14.06
+     ],
+     "bounds_max": [
+      -1.66,
+      1.775,
+      14.73
+     ],
+     "origin": [
+      -1.785,
+      1.675,
+      14.395
+     ]
+    },
+    "COL_Habitat_GalleyTable": {
+     "triangles": 12,
+     "per_material": {
+      "A7_Collision": 12
+     },
+     "bounds_min": [
+      -1.92,
+      0.754,
+      14.05
+     ],
+     "bounds_max": [
+      -1.577,
+      1.051,
+      14.89
+     ],
+     "origin": [
+      -1.7485,
+      0.9025,
+      14.47
+     ]
+    },
+    "COL_Habitat_GrowCassette": {
+     "triangles": 12,
+     "per_material": {
+      "A7_Collision": 12
+     },
+     "bounds_min": [
+      1.855,
+      0.4,
+      14.247
+     ],
+     "bounds_max": [
+      2.38,
+      2.054,
+      15.253
+     ],
+     "origin": [
+      2.1175,
+      1.227,
+      14.75
+     ]
+    }
+   },
+   "anchors": {}
+  }
+ }
+}
