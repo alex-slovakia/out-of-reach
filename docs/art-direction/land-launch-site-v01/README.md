@@ -106,7 +106,7 @@ tower, pad markings, a crawlerway and a distant assembly building. It carries on
 
 ## Budgets
 
-- **Triangles:** 6,562 in total (limit 80,000). The largest module is LS_Umbilicals at 2,840.
+- **Triangles:** 6,562 in the FBX and 6,458 after Unity's import (limit 80,000). The largest module is LS_Umbilicals at 2,840 (2,792 in Unity).
 - **Textures:** two 1024² PBR sets and one 1024² atlas (limit 2k). The steel parts reuse the ship's maps.
 
 ## Not included (root's side)
@@ -127,6 +127,10 @@ tower, pad markings, a crawlerway and a distant assembly building. It carries on
 - **Unity 6000.3.28f1 import check** (`unity_check/`, run in an isolated empty project on this exact FBX):
   - **Bake Axis Conversion on:** all 11 renderers' world bounds and all 16 anchors equal this manifest. The maximum deviation is 0.0000 m at 0.1 mm output precision. Rotation is 0 and scale is 1 on every node.
   - **Bake Axis Conversion off:** the same data maps exactly to (−x, y, −z).
+  - **Triangles:** Unity imports 6,458 of the FBX's 6,562 triangles. It drops 48 in LS_Umbilicals (2,840 → 2,792) and 56 in LS_WaterTower (1,208 → 1,152).
+    - These are exactly the near-zero-area slivers at the sphere and tank poles, where the shared kit's lathe closes the profile on a 1 µm ring.
+    - Every other module matches, no zero-area triangle is left in Unity, and bounds and anchors are unaffected.
+    - `ls_manifest.json` lists both counts per object: `triangles` (the FBX's) and `triangles_unity`.
   - `LSAxisCheck.cs` does the import and the logging; `ls_axis_compare.py` finds the best axis map.
 - **Not verified:**
   - the URP look of the materials;

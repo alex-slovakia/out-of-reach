@@ -11,8 +11,10 @@ got = {}
 for line in open(tsv, encoding="utf-8"):
     parts = line.rstrip("\n").split("\t")
     variant, kind = parts[0], parts[1]
-    g = got.setdefault(variant, {"mesh": {}, "anchor": {}, "root": None})
-    if kind == "ROOT":
+    g = got.setdefault(variant, {"mesh": {}, "anchor": {}, "root": None, "tris": {}})
+    if kind == "TRIS":
+        g["tris"][parts[2]] = (int(parts[3]), int(parts[4]), int(parts[5]))
+    elif kind == "ROOT":
         g["root"] = parts[2:]
     elif kind == "MESH":
         g["mesh"][parts[2]] = (vec(parts[3]), vec(parts[4]), parts[5], parts[6])
@@ -54,5 +56,11 @@ for variant, g in got.items():
     for name in ("LS_AssemblyBuilding", "LS_FlameTrench"):
         if name in g["mesh"]:
             print("   %-20s Unity bounds %s .. %s, rot %s, scale %s" % ((name,) + tuple(g["mesh"][name])))
+    for name, o in man["objects"].items():
+        if name in g["tris"] and g["tris"][name][0] != o["triangles"]:
+            print("   triangles %-20s manifest %5d, Unity %5d (%+d); Unity zero-area left: %d" % (
+                name, o["triangles"], g["tris"][name][0], g["tris"][name][0] - o["triangles"], g["tris"][name][2]))
+    if g["tris"]:
+        print("   triangles total: manifest %d, Unity %d" % (man["triangles_total"], sum(v[0] for v in g["tris"].values())))
     if "LS_TrenchExit_Ground" in g["anchor"]:
         print("   LS_TrenchExit_Ground Unity %s (manifest %s)" % (g["anchor"]["LS_TrenchExit_Ground"], man["anchors"]["LS_TrenchExit_Ground"]))

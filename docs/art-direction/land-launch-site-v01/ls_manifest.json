@@ -128,7 +128,8 @@
    ],
    "materials": [
     "LS_Concrete"
-   ]
+   ],
+   "triangles_unity": 36
   },
   "LS_LaunchFoundation": {
    "triangles": 124,
@@ -144,7 +145,8 @@
    ],
    "materials": [
     "LS_Concrete"
-   ]
+   ],
+   "triangles_unity": 124
   },
   "LS_FlameTrench": {
    "triangles": 80,
@@ -161,7 +163,8 @@
    "materials": [
     "A7_PaintGraphite",
     "LS_ConcreteSoot"
-   ]
+   ],
+   "triangles_unity": 80
   },
   "LS_LaunchMount": {
    "triangles": 108,
@@ -179,7 +182,8 @@
     "A7_PaintGraphite",
     "A7_PaintGray",
     "LS_Concrete"
-   ]
+   ],
+   "triangles_unity": 108
   },
   "LS_Umbilicals": {
    "triangles": 2840,
@@ -198,7 +202,8 @@
     "A7_PaintGray",
     "A7_PaintWhite",
     "LS_Concrete"
-   ]
+   ],
+   "triangles_unity": 2792
   },
   "LS_Barriers": {
    "triangles": 840,
@@ -214,7 +219,8 @@
    ],
    "materials": [
     "LS_ConcreteBarrier"
-   ]
+   ],
+   "triangles_unity": 840
   },
   "LS_FloodTowers": {
    "triangles": 1144,
@@ -232,7 +238,8 @@
     "A7_Glass",
     "A7_PaintGraphite",
     "A7_PaintGray"
-   ]
+   ],
+   "triangles_unity": 1144
   },
   "LS_WaterTower": {
    "triangles": 1208,
@@ -249,7 +256,8 @@
    "materials": [
     "A7_PaintGray",
     "A7_PaintWhite"
-   ]
+   ],
+   "triangles_unity": 1152
   },
   "LS_Markings": {
    "triangles": 84,
@@ -265,7 +273,8 @@
    ],
    "materials": [
     "LS_Markings"
-   ]
+   ],
+   "triangles_unity": 84
   },
   "LS_Crawlerway": {
    "triangles": 48,
@@ -281,7 +290,8 @@
    ],
    "materials": [
     "LS_Gravel"
-   ]
+   ],
+   "triangles_unity": 48
   },
   "LS_AssemblyBuilding": {
    "triangles": 50,
@@ -300,7 +310,8 @@
     "A7_PaintGray",
     "A7_PaintWhite",
     "LS_Markings"
-   ]
+   ],
+   "triangles_unity": 50
   }
  },
  "triangles_total": 6562,
@@ -480,7 +491,8 @@
    "where": "isolated empty project, exact delivered FBX (unity_check/)",
    "importer": "ship settings: bakeAxisConversion 1, useFileUnits 1, useFileScale 1, globalScale 1, no cameras/lights",
    "bake_axis_conversion_on": "11 renderer world bounds + 16 anchors equal this manifest, max deviation 0.0000 m (0.1 mm output)",
-   "bake_axis_conversion_off": "everything maps to (-x, y, -z): 180 degrees about y; do not import this way"
+   "bake_axis_conversion_off": "everything maps to (-x, y, -z): 180 degrees about y; do not import this way",
+   "triangles": "Unity keeps 6,458 of 6,562: it drops the near-zero-area pole slivers of the lathe-built sphere (LS_Umbilicals -48) and tank (LS_WaterTower -56); 0 zero-area triangles remain; bounds and anchors unchanged"
   }
  },
  "excluded": "no lights, cameras, colliders, terrain or water; PV_* proxies, sun and cameras exist only in the .blend for the review renders",
@@ -505,8 +517,8 @@
    "bytes": 201180
   },
   "README.md": {
-   "sha256": "d559d86f2319d60378f02a2dd7865b64067dc671617aa6b98feec4d79d366625",
-   "bytes": 12551
+   "sha256": "d70949c745571f7688ffa563650bde819ccd55c0e0e01982a0953ec5a99f80b5",
+   "bytes": 13121
   },
   "ls_build_report.json": {
    "sha256": "0050620a2ce174633fe662390cba145a2eb4f04f2cde9b648c9e1ad7b26dbcf9",
@@ -609,20 +621,21 @@
    "bytes": 861
   },
   "unity_check/LSAxisCheck.cs": {
-   "sha256": "332c25f2e7b6cf724bfb813b1673bd57d1b4707ac65666b10c734179337adac7",
-   "bytes": 2484
+   "sha256": "53b91c1b8ec72067e204b8b51be75b60f42955048919f6202e1ec21c445e8663",
+   "bytes": 3435
   },
   "unity_check/ls_axis_check.tsv": {
-   "sha256": "5d315c8146a7b0fdda8a26e027fa95649948543d3073f07486ff7341544c094c",
-   "bytes": 5389
+   "sha256": "82d7bdc9d980583f4ec393b09b8a31642f0a57cfaf76af8b68723a6cbbc49e8e",
+   "bytes": 6270
   },
   "unity_check/ls_axis_compare.py": {
-   "sha256": "fea893cf03b360ccb557ae08747dd56ff2778d36ff44536a77f919954f8fbe8b",
-   "bytes": 2749
+   "sha256": "63e0ab2ac6af24f9178896b1cd67ed63731f2ebc4caf193738039831c49415a2",
+   "bytes": 3334
   },
   "unity_check/ls_axis_compare.txt": {
-   "sha256": "f15fccb874e4fc6b006a1349a9dad19c2dd525c564bd13206d7c0704566cbe31",
-   "bytes": 997
+   "sha256": "7b7cf7fd9731ec842a6283688d7905a2368b67d043e2266c8e22be2334face09",
+   "bytes": 1461
   }
- }
+ },
+ "triangles_total_unity": 6458
 }

@@ -1,8 +1,14 @@
 BakeOn: root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 11 anchors 16 | best map Unity=(+x+y+z) max err 0.0000 m  <- identity, matches the manifest
    LS_AssemblyBuilding  Unity bounds [-35.0, -36.6, -995.0] .. [75.0, 55.4, -924.8], rot 0.0000,0.0000,0.0000, scale 1.0000,1.0000,1.0000
    LS_FlameTrench       Unity bounds [-4.0, -40.2, -4.0] .. [4.0, -34.9455, 72.0], rot 0.0000,0.0000,0.0000, scale 1.0000,1.0000,1.0000
+   triangles LS_Umbilicals        manifest  2840, Unity  2792 (-48); Unity zero-area left: 0
+   triangles LS_WaterTower        manifest  1208, Unity  1152 (-56); Unity zero-area left: 0
+   triangles total: manifest 6562, Unity 6458
    LS_TrenchExit_Ground Unity [0.0, -36.6, 72.0] (manifest [0.0, -36.6, 72.0])
 BakeOff: root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 11 anchors 16 | best map Unity=(-x+y-z) max err 0.0000 m
    LS_AssemblyBuilding  Unity bounds [-75.0, -36.6, 924.8] .. [35.0, 55.4, 995.0], rot 0.0000,0.0000,0.0000, scale 1.0000,1.0000,1.0000
    LS_FlameTrench       Unity bounds [-4.0, -40.2, -72.0] .. [4.0, -34.9455, 4.0], rot 0.0000,0.0000,0.0000, scale 1.0000,1.0000,1.0000
+   triangles LS_Umbilicals        manifest  2840, Unity  2792 (-48); Unity zero-area left: 0
+   triangles LS_WaterTower        manifest  1208, Unity  1152 (-56); Unity zero-area left: 0
+   triangles total: manifest 6562, Unity 6458
    LS_TrenchExit_Ground Unity [0.0, -36.6, -72.0] (manifest [0.0, -36.6, 72.0])

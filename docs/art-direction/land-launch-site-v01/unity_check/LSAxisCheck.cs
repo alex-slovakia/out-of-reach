@@ -41,8 +41,25 @@ public static class LSAxisCheck
                 var r = t.GetComponent<MeshRenderer>();
                 string name = t.name;
                 if (r != null)
+                {
                     sb.AppendLine(variant + "\tMESH\t" + name + "\t" + F(r.bounds.min) + "\t" + F(r.bounds.max) + "\t" +
                                   F(t.localEulerAngles) + "\t" + F(t.lossyScale));
+                    var mesh = t.GetComponent<MeshFilter>().sharedMesh;
+                    long tris = 0;
+                    for (int s = 0; s < mesh.subMeshCount; s++) tris += (long)mesh.GetIndexCount(s) / 3;
+                    var verts = mesh.vertices;
+                    int tiny = 0;
+                    for (int s = 0; s < mesh.subMeshCount; s++)
+                    {
+                        var idx = mesh.GetTriangles(s);
+                        for (int i = 0; i < idx.Length; i += 3)
+                        {
+                            float area = 0.5f * Vector3.Cross(verts[idx[i + 1]] - verts[idx[i]], verts[idx[i + 2]] - verts[idx[i]]).magnitude;
+                            if (area < 1e-6f) tiny++;
+                        }
+                    }
+                    sb.AppendLine(variant + "\tTRIS\t" + name + "\t" + tris + "\t" + mesh.vertexCount + "\t" + tiny + "\t" + mesh.subMeshCount);
+                }
                 else
                     sb.AppendLine(variant + "\tANCHOR\t" + name + "\t" + F(t.position) + "\t" + F(t.localEulerAngles));
             }
