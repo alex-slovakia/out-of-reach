@@ -553,5 +553,91 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(recovery.Stage, Is.Not.EqualTo(RecoveryStage.Arrived));
             }
         }
+
+        // P1 6881113735: one long frame must advance exactly as far as many short ones when a step changes the scale.
+        [Test]
+        public void AFrameThatEndsARestMidway_SpendsItsRemainderAtTheAwakeScale_LikeManySmallFrames()
+        {
+            using (MissionSession one = Contact())
+            using (MissionSession ten = Contact())
+            {
+                double start = one.State.ElapsedSimulationSeconds;
+                Assert.That(ten.State.ElapsedSimulationSeconds, Is.EqualTo(start).Within(1e-9));
+                Require(one.SurvivalRecovery.TryBeginRest(0.01d));
+                Require(ten.SurvivalRecovery.TryBeginRest(0.01d));
+
+                Require(one.Tick(0.1d));
+                for (int i = 0; i < 10; i++)
+                {
+                    Require(ten.Tick(0.01d));
+                }
+
+                // 36 s of rest take 0.01 real s at 3,600; the remaining 0.09 real s run awake at the Survival scale.
+                double expected = 36d + (0.09d * one.Survival.Spec.TimeScale);
+                Assert.That(one.State.ElapsedSimulationSeconds - start, Is.EqualTo(expected).Within(1e-6), "one frame");
+                Assert.That(ten.State.ElapsedSimulationSeconds - start, Is.EqualTo(expected).Within(1e-6), "ten frames");
+                Assert.That(one.SurvivalRecovery.LastRestStop, Is.EqualTo(RestStopReason.Completed));
+                Assert.That(ten.SurvivalRecovery.LastRestStop, Is.EqualTo(RestStopReason.Completed));
+                Assert.That(one.Clock.TimeScale, Is.EqualTo(one.Survival.Spec.TimeScale));
+                Fixtures.AssertSnapshot(one.Resources.Snapshot, ten.Resources.Snapshot, 1e-9);
+                Assert.That(one.Survival.Thirst01, Is.EqualTo(ten.Survival.Thirst01).Within(1e-12));
+            }
+        }
+
+        [Test]
+        public void AFrameThatWakesTheCrewAtADanger_DoesNotRunOnAtTheRestScaleIntoALoss()
+        {
+            using (MissionSession one = Contact())
+            using (MissionSession ten = Contact())
+            {
+                foreach (MissionSession session in new[] { one, ten })
+                {
+                    // Codex's reproduction: 60 simulated seconds short of the thirst limit, food for 36 s of rest.
+                    Require(session.AdvanceSimulation(session.Survival.Spec.ThirstLimitSeconds - 60d));
+                    SpendDown(session, ResourceId.FoodKg, FoodPerSecond(session) * 36d);
+                    Require(session.SurvivalRecovery.TryBeginRest(SurvivalRecovery.MaximumRestHours));
+                }
+
+                double start = one.State.ElapsedSimulationSeconds;
+                Require(one.Tick(0.1d));
+                for (int i = 0; i < 10; i++)
+                {
+                    Require(ten.Tick(0.01d));
+                }
+
+                foreach (MissionSession session in new[] { one, ten })
+                {
+                    Assert.That(session.SurvivalRecovery.LastRestStop, Is.EqualTo(RestStopReason.FoodStoreEmpty));
+                    Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None), "awake at 300 the crew still has 33 s before the thirst limit");
+                    Assert.That(session.State.ElapsedSimulationSeconds - start, Is.EqualTo(36d + (0.09d * session.Survival.Spec.TimeScale)).Within(1e-6));
+                }
+            }
+        }
+
+        [Test]
+        public void AFrameAcrossContact_SpendsItsRemainderAtTheSurvivalScale()
+        {
+            using (MissionSession one = Contact(receive: false))
+            using (MissionSession ten = Contact(receive: false))
+            {
+                double start = one.State.ElapsedSimulationSeconds;
+                double transmissionScale = one.Clock.TimeScale;
+                double reply = one.Communications.ReplyRemainingSimulationSeconds;
+                double frame = (reply / transmissionScale) + 0.5d;
+
+                Require(one.Tick(frame));
+                for (int i = 0; i < 10; i++)
+                {
+                    Require(ten.Tick(frame / 10d));
+                }
+
+                foreach (MissionSession session in new[] { one, ten })
+                {
+                    Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Survival));
+                    Assert.That(session.State.ElapsedSimulationSeconds - start, Is.EqualTo(reply + (0.5d * session.Survival.Spec.TimeScale)).Within(1e-3),
+                        "the half real second after contact runs at the Survival scale");
+                }
+            }
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace OutOfReach.Core
     {
         /// <summary>Safety bound on boundary splits within one advance (each boundary occurs at most a few times).</summary>
         private const int MaxSplitsPerAdvance = 32;
+        private const int MaxScaleSegmentsPerTick = 8;
 
         private static readonly CommandResult Advanced = new CommandResult(true, CommandFailure.None, "Simulation advanced.");
         private static readonly CommandResult PausedResult = new CommandResult(true, CommandFailure.None, "Paused: real time discarded.");
@@ -248,7 +249,8 @@ namespace OutOfReach.Core
         /// Per-frame driver entry with unscaled real seconds. Paused: nothing happens and the time is discarded.
         /// Otherwise the cinematic fallback timer advances by real time. During Planning the planning deadline
         /// advances by real time and no simulated time is spent, even on the frame in which the deadline launches.
-        /// In running phases the simulation advances by real time x TimeScale. Invalid or unrepresentable time is
+        /// In running phases the simulation advances by real time x TimeScale; when a step changes the scale (a
+        /// rest beginning or ending, contact), the rest of the frame continues at the new scale. Invalid or unrepresentable time is
         /// rejected before anything changes.
         /// </summary>
         public CommandResult Tick(double realSeconds)
@@ -288,7 +290,7 @@ namespace OutOfReach.Core
             }
 
             PlayedRealSeconds += realSeconds;
-            return Advance(simulationSeconds);
+            return AdvanceRealTime(realSeconds);
         }
 
         /// <summary>
@@ -315,6 +317,17 @@ namespace OutOfReach.Core
 
         private CommandResult Advance(double simulationSeconds)
         {
+            return Advance(simulationSeconds, double.NaN, out double unused);
+        }
+
+        /// <summary>
+        /// The step loop. With a finite <paramref name="stopWhenScaleLeaves"/> it also stops right after a step that
+        /// moved the clock's time scale away from that value; <paramref name="spentSimulationSeconds"/> is the part of
+        /// the budget actually used.
+        /// </summary>
+        private CommandResult Advance(double simulationSeconds, double stopWhenScaleLeaves, out double spentSimulationSeconds)
+        {
+            spentSimulationSeconds = 0d;
             if (!IsFiniteNonNegative(simulationSeconds))
             {
                 return new CommandResult(false, CommandFailure.InvalidInput, "Simulation time must be finite and non-negative.");
@@ -363,6 +376,39 @@ namespace OutOfReach.Core
                     Director.FieldModifications.AdvanceTime(step);
                     remaining -= step;
                     Director.AfterSimulationStep(step);
+                    if (!double.IsNaN(stopWhenScaleLeaves) && Clock.TimeScale != stopWhenScaleLeaves)
+                    {
+                        break;
+                    }
+                }
+
+                spentSimulationSeconds = simulationSeconds - remaining;
+            }
+
+            return Advanced;
+        }
+
+        /// <summary>
+        /// Spends a frame's real-time budget at the clock's current scale and converts what is left again whenever a
+        /// step changes the scale (a rest beginning or ending, contact moving the mission into Survival), so one long
+        /// frame advances exactly as far as many short ones. Events are delivered after the whole frame.
+        /// </summary>
+        private CommandResult AdvanceRealTime(double realSeconds)
+        {
+            using (Events.DeferDispatch())
+            {
+                double remainingReal = realSeconds;
+                for (int segment = 0; remainingReal > 0d && State.IsSimulationRunning && segment < MaxScaleSegmentsPerTick; segment++)
+                {
+                    double scale = Clock.TimeScale;
+                    double budget = remainingReal * scale;
+                    CommandResult result = Advance(budget, scale, out double spent);
+                    if (!result.Succeeded)
+                    {
+                        return result;
+                    }
+
+                    remainingReal = spent >= budget ? 0d : Math.Max(0d, remainingReal - (spent / scale));
                 }
             }
 
