@@ -254,6 +254,72 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
+        public void TheBeaconRequestWakesTheCrew_AndNoRestCanSleepThroughTheOpenWindow()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                IInteractable sleep = Get(session, InteractionIds.SurvivalSleep);
+                for (int frame = 0; recovery.Stage == RecoveryStage.Inbound; frame++)
+                {
+                    Assert.That(frame, Is.LessThan(20000), "the request comes on day 6");
+                    if (!recovery.IsResting)
+                    {
+                        Require(sleep.TryInteract());
+                    }
+
+                    Require(session.Tick(FrameRealSeconds));
+                }
+
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested));
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.RecoveryMilestone), "the request wakes the crew");
+
+                // At 3,600 the 8 h window would pass in 8 real seconds: one more E on the bed must not sleep through it.
+                Assert.That(sleep.CanInteract, Is.False, "no rest while the recovery craft waits for the beacon");
+                Assert.That(sleep.Prompt, Does.Contain("beacon"));
+                Assert.That(sleep.TryInteract().Succeeded, Is.False);
+                Assert.That(recovery.IsResting, Is.False);
+                Assert.That(recovery.TryBeginRest(1d).Succeeded, Is.False, "no shorter rest either");
+
+                Require(Get(session, InteractionIds.RecoveryBeacon).TryInteract());
+                Assert.That(sleep.CanInteract, Is.True, "once the beacon is powered the crew may rest again");
+            }
+        }
+
+        [Test]
+        public void AnUnpoweredWindowStillPasses_AwakeInAboutNinetySixRealSeconds_ThenRestIsOfferedAgain()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                IInteractable sleep = Get(session, InteractionIds.SurvivalSleep);
+                for (int frame = 0; recovery.Stage == RecoveryStage.Inbound; frame++)
+                {
+                    Assert.That(frame, Is.LessThan(20000));
+                    if (!recovery.IsResting)
+                    {
+                        Require(sleep.TryInteract());
+                    }
+
+                    Require(session.Tick(FrameRealSeconds));
+                }
+
+                int frames = 0;
+                for (; recovery.Stage == RecoveryStage.BeaconRequested; frames++)
+                {
+                    Assert.That(frames, Is.LessThan(2000));
+                    Assert.That(sleep.CanInteract, Is.False);
+                    Require(session.Tick(FrameRealSeconds));
+                }
+
+                Assert.That(frames * FrameRealSeconds, Is.EqualTo(SurvivalRecovery.BeaconWindowHours * Hour / session.Survival.Spec.TimeScale).Within(0.2d),
+                    "the choice not to power it costs the awake window, about 96 real seconds, then the one delay");
+                Assert.That(recovery.BeaconMissed, Is.True);
+                Assert.That(sleep.CanInteract, Is.True);
+            }
+        }
+
+        [Test]
         public void AnUnattendedCrew_IsLostAtTheThirstLimit_AndTheGameEndsInsteadOfHanging()
         {
             using (MissionSession session = Contact())

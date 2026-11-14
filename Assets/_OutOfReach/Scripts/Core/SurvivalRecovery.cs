@@ -17,7 +17,8 @@ namespace OutOfReach.Core
     /// the planned end and at the CO2 danger margin; reserve depletion boundaries come from the ledger. After every
     /// step the rest stops at the first danger (a store running out, power lost, cabin CO2 near the loss limit, the
     /// crop finishing or failing), so no loss is stepped across while the crew sleeps; a danger wins a tie with the
-    /// planned end. A recovery milestone also wakes the crew. The Survival phase means inside the ship, out of the suit.
+    /// planned end. A recovery milestone also wakes the crew, and no rest begins while the beacon window is open (one
+    /// more rest would sleep through it). The Survival phase means inside the ship, out of the suit.
     /// </para>
     /// <para>
     /// RECOVERY (fictional, GAME ASSUMPTIONS): with Earth's reply a nearby recovery craft that is already in transit
@@ -195,6 +196,15 @@ namespace OutOfReach.Core
                     ? CommandFailure.InsufficientResources
                     : CommandFailure.PreconditionsNotMet;
                 return Fail(failure, "No rest now: " + Describe(danger) + ".");
+            }
+
+            if (stage == RecoveryStage.BeaconRequested)
+            {
+                // The request wakes the crew so they can answer it. At the rest scale one more rest would sleep through
+                // the whole window in a few real seconds and slip the rendezvous: power the beacon (or let it pass awake).
+                double left = beaconWindowEndsAt.HasValue ? beaconWindowEndsAt.Value - state.ElapsedSimulationSeconds : 0d;
+                return Fail(CommandFailure.PreconditionsNotMet, string.Format(CultureInfo.InvariantCulture,
+                    "No rest now: the recovery craft is waiting for the beacon; power it first (the window closes in {0}).", FormatSpan(left)));
             }
 
             double seconds = hours * SecondsPerHour;
