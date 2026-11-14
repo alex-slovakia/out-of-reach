@@ -3,18 +3,18 @@
  "units": "metres, Unity axes (x right, y up, z forward)",
  "modules": {
   "Cockpit": {
-   "triangles": 75268,
+   "triangles": 76184,
    "per_material": {
     "A7_Aluminum": 20292,
-    "A7_AnodizedBlack": 8396,
+    "A7_AnodizedBlack": 8636,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 11640,
     "A7_AnodizedGold": 1424,
     "A7_CableBlue": 2240,
-    "A7_CableOrange": 480,
+    "A7_CableOrange": 720,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 330,
+    "A7_Decals": 326,
     "A7_Deck": 352,
     "A7_FabricDark": 792,
     "A7_FabricStrap": 1752,
@@ -27,11 +27,11 @@
     "A7_PaintAmber": 2240,
     "A7_PaintGraphite": 10788,
     "A7_PaintGray": 792,
-    "A7_PaintRed": 256,
-    "A7_PaintWhite": 6416,
-    "A7_PaintYellow": 576,
+    "A7_PaintRed": 328,
+    "A7_PaintWhite": 6544,
+    "A7_PaintYellow": 448,
     "A7_QuiltWhite": 176,
-    "A7_Rubber": 4752,
+    "A7_Rubber": 5120,
     "A7_Screens": 10
    },
    "bounds_min": [
@@ -51,10 +51,10 @@
    ]
   },
   "Engineering": {
-   "triangles": 75974,
+   "triangles": 76182,
    "per_material": {
     "A7_Aluminum": 27412,
-    "A7_AnodizedBlack": 4016,
+    "A7_AnodizedBlack": 4176,
     "A7_AnodizedBlue": 496,
     "A7_AnodizedClear": 9384,
     "A7_AnodizedGold": 1560,
@@ -75,6 +75,7 @@
     "A7_PaintAmber": 3088,
     "A7_PaintGraphite": 3124,
     "A7_PaintGray": 1192,
+    "A7_PaintRed": 48,
     "A7_PaintWhite": 3712,
     "A7_PaintYellow": 88,
     "A7_PlasticWhite": 1584,
@@ -100,7 +101,7 @@
    ]
   },
   "Storage": {
-   "triangles": 52860,
+   "triangles": 52862,
    "per_material": {
     "A7_Aluminum": 13592,
     "A7_AnodizedBlack": 1072,
@@ -110,7 +111,7 @@
     "A7_CableBlue": 4064,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 352,
+    "A7_Decals": 354,
     "A7_Deck": 352,
     "A7_FabricStrap": 6120,
     "A7_FabricWhite": 1344,
@@ -141,33 +142,32 @@
    ]
   },
   "Airlock": {
-   "triangles": 31698,
+   "triangles": 31348,
    "per_material": {
-    "A7_Aluminum": 11224,
-    "A7_AnodizedBlack": 1700,
+    "A7_Aluminum": 11392,
+    "A7_AnodizedBlack": 2428,
     "A7_AnodizedBlue": 16,
-    "A7_AnodizedClear": 6272,
-    "A7_AnodizedGold": 744,
-    "A7_CableBlue": 608,
-    "A7_CableOrange": 96,
+    "A7_AnodizedClear": 6124,
+    "A7_AnodizedGold": 272,
+    "A7_CableBlue": 272,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 128,
-    "A7_Deck": 176,
-    "A7_FabricStrap": 228,
-    "A7_FabricWhite": 288,
+    "A7_Decals": 138,
+    "A7_Deck": 188,
+    "A7_FabricStrap": 204,
+    "A7_FabricWhite": 68,
     "A7_Grate": 60,
-    "A7_LedAmber": 72,
-    "A7_LedGreen": 72,
-    "A7_LightPanel": 12,
+    "A7_LedAmber": 116,
+    "A7_LedGreen": 150,
+    "A7_LightPanel": 24,
     "A7_PaintAmber": 3936,
-    "A7_PaintGraphite": 1528,
-    "A7_PaintGray": 616,
-    "A7_PaintRed": 172,
-    "A7_PaintWhite": 1240,
+    "A7_PaintGraphite": 1576,
+    "A7_PaintGray": 408,
+    "A7_PaintRed": 208,
+    "A7_PaintWhite": 1236,
     "A7_QuiltWhite": 220,
-    "A7_Rubber": 2224,
-    "A7_Screens": 2
+    "A7_Rubber": 2244,
+    "A7_Screens": 4
    },
    "bounds_min": [
     -2.4,
@@ -222,24 +222,24 @@
    ]
   },
   "DoorLeaf_Inner_L": {
-   "triangles": 2070,
+   "triangles": 2562,
    "per_material": {
-    "A7_Aluminum": 1280,
-    "A7_Decals": 10,
+    "A7_Aluminum": 1176,
+    "A7_Decals": 14,
     "A7_PaintAmber": 560,
     "A7_PaintGray": 88,
-    "A7_PaintWhite": 44,
+    "A7_PaintWhite": 636,
     "A7_Rubber": 88
    },
    "bounds_min": [
     -1.842,
     0.01,
-    16.878
+    16.87
    ],
    "bounds_max": [
     -0.958,
     2.45,
-    17.122
+    17.13
    ],
    "origin": [
     -1.4,
@@ -249,24 +249,24 @@
    "group": "Doors"
   },
   "DoorLeaf_Inner_R": {
-   "triangles": 2070,
+   "triangles": 2562,
    "per_material": {
-    "A7_Aluminum": 1280,
-    "A7_Decals": 10,
+    "A7_Aluminum": 1176,
+    "A7_Decals": 14,
     "A7_PaintAmber": 560,
     "A7_PaintGray": 88,
-    "A7_PaintWhite": 44,
+    "A7_PaintWhite": 636,
     "A7_Rubber": 88
    },
    "bounds_min": [
     0.958,
     0.01,
-    16.878
+    16.87
    ],
    "bounds_max": [
     1.842,
     2.45,
-    17.122
+    17.13
    ],
    "origin": [
     1.4,
@@ -276,25 +276,26 @@
    "group": "Doors"
   },
   "DoorLeaf_Outer_L": {
-   "triangles": 2834,
+   "triangles": 3614,
    "per_material": {
-    "A7_Aluminum": 1856,
-    "A7_Decals": 6,
+    "A7_Aluminum": 1896,
+    "A7_Decals": 10,
     "A7_Glass": 192,
     "A7_PaintAmber": 560,
+    "A7_PaintGraphite": 144,
     "A7_PaintGray": 88,
-    "A7_PaintWhite": 44,
+    "A7_PaintWhite": 636,
     "A7_Rubber": 88
    },
    "bounds_min": [
     -0.892,
     0.01,
-    20.878
+    20.87
    ],
    "bounds_max": [
     -0.008,
     2.45,
-    21.122
+    21.13
    ],
    "origin": [
     -0.45,
@@ -304,25 +305,26 @@
    "group": "Doors"
   },
   "DoorLeaf_Outer_R": {
-   "triangles": 2834,
+   "triangles": 3614,
    "per_material": {
-    "A7_Aluminum": 1856,
-    "A7_Decals": 6,
+    "A7_Aluminum": 1896,
+    "A7_Decals": 10,
     "A7_Glass": 192,
     "A7_PaintAmber": 560,
+    "A7_PaintGraphite": 144,
     "A7_PaintGray": 88,
-    "A7_PaintWhite": 44,
+    "A7_PaintWhite": 636,
     "A7_Rubber": 88
    },
    "bounds_min": [
     0.008,
     0.01,
-    20.878
+    20.87
    ],
    "bounds_max": [
     0.892,
     2.45,
-    21.122
+    21.13
    ],
    "origin": [
     0.45,
@@ -541,6 +543,88 @@
     12.72
    ],
    "group": "ExteriorParts"
+  },
+  "SuitLocker_Suit": {
+   "triangles": 3562,
+   "per_material": {
+    "A7_Aluminum": 1208,
+    "A7_AnodizedBlue": 64,
+    "A7_AnodizedClear": 64,
+    "A7_AnodizedGold": 424,
+    "A7_CableBlue": 224,
+    "A7_Decals": 2,
+    "A7_FabricStrap": 24,
+    "A7_FabricWhite": 728,
+    "A7_LedGreen": 24,
+    "A7_PaintGray": 264,
+    "A7_PaintRed": 56,
+    "A7_PaintWhite": 480
+   },
+   "bounds_min": [
+    1.878,
+    0.155,
+    18.8246
+   ],
+   "bounds_max": [
+    2.355,
+    2.205,
+    19.5554
+   ],
+   "origin": [
+    2.07,
+    0.155,
+    19.19
+   ],
+   "group": "AirlockParts"
+  },
+  "SuitLocker_Door": {
+   "triangles": 760,
+   "per_material": {
+    "A7_Aluminum": 416,
+    "A7_AnodizedBlack": 44,
+    "A7_Glass": 12,
+    "A7_PaintWhite": 144,
+    "A7_Rubber": 144
+   },
+   "bounds_min": [
+    1.746,
+    0.16,
+    18.785
+   ],
+   "bounds_max": [
+    1.834,
+    2.18,
+    19.599
+   ],
+   "origin": [
+    1.812,
+    0.16,
+    19.588
+   ],
+   "group": "AirlockParts"
+  },
+  "AirlockGauge_Needle": {
+   "triangles": 52,
+   "per_material": {
+    "A7_AnodizedBlack": 40,
+    "A7_PaintRed": 12
+   },
+   "bounds_min": [
+    1.4299,
+    1.6905,
+    20.827
+   ],
+   "bounds_max": [
+    1.53,
+    1.7095,
+    20.832
+   ],
+   "origin": [
+    1.45,
+    1.7,
+    20.832
+   ],
+   "group": "AirlockParts"
   }
  },
  "anchors": {
@@ -566,6 +650,14 @@
     -1.758,
     1.72,
     6.35
+   ]
+  },
+  "LightAnchor_SuitLocker": {
+   "group": "AirlockParts",
+   "point": [
+    1.86,
+    2.13,
+    19.19
    ]
   }
  },
@@ -1169,7 +1261,7 @@
    ]
   }
  ],
- "triangles_total": 283304,
+ "triangles_total": 290998,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",

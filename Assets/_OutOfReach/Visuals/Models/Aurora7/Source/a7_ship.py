@@ -203,10 +203,24 @@ def oru(m, art, rect, z, frame=None, title="t_battery", caution="c_hv", proud=0.
     m.decal(art.decals, "fastener_note", (cx, y0 + 0.058, z + proud), frame, 0.7)
 
 
-def gauge(m, art, x, y, z, frame=None, key="gauge_cabin", radius=0.05):
+def gauge_needle(radius, fraction):
+    """Pointer of a dial whose scale runs 270 degrees clockwise from the lower left; pivot at the origin.
+
+    fraction 0 is the start of the scale and 1 its end; the angle is 225 - 270 * fraction degrees,
+    counter-clockwise from the viewer's right."""
+    n = Model("Needle")
+    n.box(RED, (radius * 0.30, 0, 0.0015), (radius, radius * 0.05, 0.003), 0.0, rotation((0, 0, 1), 225.0 - 270.0 * fraction))
+    n.cyl(ANO, (0, 0, 0), (0, 0, 0.005), radius * 0.10, 10)
+    return n
+
+
+def gauge(m, art, x, y, z, frame=None, key="gauge_cabin", radius=0.05, needle=0.84):
+    """Dial in a bezel. `needle` is the pointer position as a fraction of the scale, or None for no pointer."""
     m.lathe(ALU, (x, y, z), (0, 0, 1), [(radius + 0.012, 0.0), (radius + 0.012, 0.012), (radius + 0.004, 0.016),
                                         (radius, 0.016), (radius, 0.006)], 20, frame, (False, False))
     m.decal(art.decals, key, (x, y, z + 0.0065), frame, width=radius * 2)
+    if needle is not None:
+        m.instance(gauge_needle(radius, needle), compose(frame if frame is not None else np.eye(4), at(x, y, z + 0.008)))
 
 
 def blank(m, art, rect, z, frame=None, label=True):
@@ -1318,78 +1332,160 @@ def build_storage(art, bays):
 
 
 # ----------------------------------------------------------------------------- airlock
-def suit_station(art):
-    """Suit stowage: life-support backpack and hard upper torso on a donning stand, helmet, boots."""
-    m = Model("SuitStation")
-    m.box(GRAY, (0, 1.25, -0.12), (1.25, 2.4, 0.06), 0.008)
-    m.frame(ALU, (0, 1.25, -0.09), 1.20, 2.3, 0.04, 0.03, 0.02)
+def suit_figure(art):
+    """EVA suit hanging on its donning stand, facing +z; origin on the floor under the suit's centre line."""
+    s = Model("Suit")
+    # life-support backpack and the stand post behind it
+    s.box(GRAY, (0, 1.30, -0.17), (0.50, 0.82, 0.17), 0.03)
+    s.box(ALU, (0, 1.05, -0.27), (0.07, 2.00, 0.03), 0.004)
+    s.box(ALU, (0, 1.62, -0.24), (0.30, 0.04, 0.05), 0.006)
+    # hard upper torso with the chest control module and the mission patch
+    s.box(FAB, (0, 1.36, 0.0), (0.44, 0.46, 0.28), 0.07)
+    s.box(GRAY, (0, 1.30, 0.155), (0.22, 0.16, 0.05), 0.012)
+    for i, mat in enumerate((ANO_BLUE, ANO_GOLD, ANO_CLEAR)):
+        s.cyl(mat, (-0.06 + i * 0.06, 1.33, 0.18), (-0.06 + i * 0.06, 1.33, 0.192), 0.013, 8, 0.002)
+    s.cyl(LED_G, (0.07, 1.265, 0.18), (0.07, 1.265, 0.183), 0.006, 8, 0.0, None, (False, True))
+    s.decal(art.decals, "emblem", (-0.065, 1.47, 0.1405), None, width=0.085)
     for sx in (-1, 1):
-        m.tube(ALU, [(sx * 0.26, 0.05, -0.09), (sx * 0.26, 1.72, -0.09), (sx * 0.26, 1.72, 0.10)], 0.018, 10, 0.05)
-    # life-support backpack
-    m.box(FAB, (0, 1.28, 0.02), (0.56, 0.78, 0.20), 0.03)
-    m.box(GRAY, (0, 1.30, 0.125), (0.40, 0.50, 0.03), 0.01)
-    m.decal(art.decals, "t_suit", (0, 1.60, 0.141), None, width=0.26)
+        s.box(STRAP, (sx * 0.135, 1.36, 0.141), (0.03, 0.30, 0.005), 0.0)
+    # neck ring, helmet with a gold visor, ear bearings
+    s.cyl(ALU, (0, 1.595, 0.0), (0, 1.645, 0.0), 0.135, 20, 0.006)
+    s.sphere(WHITE, (0, 1.80, 0.0), 0.165, 20, 12)
+    s.sphere(ANO_GOLD, (0, 1.80, 0.04), 0.15, 18, 10, None, (1.0, 0.95, 0.9))
     for sx in (-1, 1):
-        m.cyl(ANO_CLEAR, (sx * 0.17, 1.10, 0.14), (sx * 0.17, 1.10, 0.165), 0.03, 12, 0.004)
-        m.box(STRAP, (sx * 0.20, 1.28, 0.122), (0.04, 0.76, 0.005), 0.0)
-    # hard upper torso ring and helmet with a gold visor
-    m.cyl(ALU, (0, 1.70, 0.04), (0, 1.75, 0.04), 0.15, 20, 0.008)
-    m.sphere(WHITE, (0, 1.93, 0.04), 0.17, 20, 12)
-    m.sphere(ANO_GOLD, (0, 1.935, 0.075), 0.145, 18, 10, None, (1.0, 0.9, 0.95))
-    m.cyl(ALU, (-0.185, 1.93, 0.04), (-0.165, 1.93, 0.04), 0.03, 10, 0.004)
-    m.cyl(ALU, (0.165, 1.93, 0.04), (0.185, 1.93, 0.04), 0.03, 10, 0.004)
-    # folded arms and legs in restraint bags, boots on the foot plate
+        s.cyl(ALU, (sx * 0.150, 1.80, 0.0), (sx * 0.176, 1.80, 0.0), 0.03, 10, 0.004)
+    # waist ring and brief
+    s.cyl(ALU, (0, 1.10, 0.0), (0, 1.135, 0.0), 0.17, 20, 0.006)
+    s.box(FAB, (0, 0.99, 0.0), (0.38, 0.24, 0.26), 0.07)
     for sx in (-1, 1):
-        m.box(FAB, (sx * 0.36, 1.32, 0.02), (0.15, 0.62, 0.17), 0.05)
-        m.box(GRAY, (sx * 0.36, 0.96, 0.03), (0.13, 0.12, 0.15), 0.04)
-        m.box(FAB, (sx * 0.14, 0.52, 0.02), (0.20, 0.70, 0.20), 0.06)
-        m.box(GRAY, (sx * 0.14, 0.14, 0.05), (0.17, 0.16, 0.30), 0.04)
-    m.box(ALU, (0, 0.045, 0.04), (0.70, 0.03, 0.40), 0.006)
-    for by in (0.70, 1.20):
-        m.tube(CABLE_BLUE, [(-0.50, by, -0.09), (-0.50, by, 0.16), (0.50, by, 0.16), (0.50, by, -0.09)], 0.005, 6, 0.03)
-    m.decal(art.decals, "p_eva", (0.46, 2.12, -0.088), None, 0.7)
-    m.decal(art.decals, "blue_tether", (-0.42, 2.20, -0.088), None, 0.8)
-    m.cyl(ANO_GOLD, (-0.42, 2.06, -0.09), (-0.42, 2.06, -0.03), 0.035, 14, 0.006)
-    m.tube(CABLE_ORANGE, [(-0.42, 2.03, -0.04), (-0.42, 1.86, -0.02), (-0.34, 1.76, 0.02)], 0.004, 6, 0.03)
-    return m
+        # arms hang slightly forward: sleeve, shoulder and wrist bearings, glove
+        s.tube(FAB, [(sx * 0.255, 1.52, 0.0), (sx * 0.31, 1.24, 0.02), (sx * 0.30, 0.985, 0.06)], 0.058, 10, 0.08)
+        s.cyl(ALU, (sx * 0.235, 1.52, 0.0), (sx * 0.275, 1.50, 0.0), 0.07, 14, 0.004)
+        s.cyl(ALU, (sx * 0.30, 0.995, 0.058), (sx * 0.30, 0.965, 0.064), 0.052, 12, 0.003)
+        s.box(GRAY, (sx * 0.30, 0.885, 0.07), (0.085, 0.16, 0.065), 0.025)
+        # legs: trouser, ankle bearing, boot
+        s.tube(FAB, [(sx * 0.105, 0.90, 0.0), (sx * 0.115, 0.52, 0.02), (sx * 0.115, 0.17, 0.0)], 0.082, 10, 0.08)
+        s.cyl(ALU, (sx * 0.115, 0.185, 0.0), (sx * 0.115, 0.15, 0.0), 0.078, 14, 0.003)
+        s.box(GRAY, (sx * 0.115, 0.075, 0.035), (0.13, 0.15, 0.27), 0.04)
+        s.cyl(RED, (sx * 0.112, 0.645, 0.013), (sx * 0.112, 0.675, 0.013), 0.086, 14, 0.0, None, (False, False))
+    # umbilical from the backpack to the chest module
+    s.tube(CABLE_BLUE, [(0.20, 1.02, -0.14), (0.27, 1.02, 0.02), (0.20, 1.20, 0.16), (0.11, 1.28, 0.18)], 0.012, 8, 0.06)
+    return s
+
+
+def suit_locker(art):
+    """Sealed suit stowage (asset A05): a glazed door over the suit bay, a service door, a lit interior.
+
+    Front-view space; the envelope is the blockout's suit station: 1.25 wide, 2.4 tall, z from -0.45 (wall)
+    to +0.15 (collision face). Returns (locker, parts, anchors) like the service racks."""
+    m = Model("SuitLocker")
+    back, front = -0.45, 0.15
+    depth, mid = front - back, (front + back) / 2
+    half, top = 0.62, 2.38
+    bay_x0, bay_x1 = -0.58, 0.20           # suit bay; the service column lies between 0.24 and 0.58
+    door_y0, door_y1 = 0.16, 2.18
+    # carcass: sides, divider, top, plinth and back
+    for x in (-half + 0.02, half - 0.02, 0.22):
+        m.box(WHITE, (x, top / 2 + 0.01, mid), (0.04, top - 0.02, depth), 0.004)
+    m.box(WHITE, (0, top - 0.10, mid), (2 * half, 0.20, depth), 0.006)
+    m.box(WHITE, (0, 0.08, mid), (2 * half, 0.14, depth), 0.006)
+    m.box(GRAY, (0, top / 2, back + 0.015), (2 * half, top, 0.03), 0.0)
+    m.frame(WHITE, (0, top / 2 + 0.01, front), 2 * half, top - 0.02, 0.05, 0.012, 0.05, None, 4)
+    # head: name plate and status lamp; plinth: ventilation grille
+    m.decal(art.decals, "t_suit", (-0.19, top - 0.10, front + 0.0005), None, width=0.34)
+    m.cyl(ANO, (0.40, top - 0.10, front), (0.40, top - 0.10, front + 0.008), 0.014, 10, 0.002)
+    m.cyl(LED_G, (0.40, top - 0.10, front + 0.008), (0.40, top - 0.10, front + 0.011), 0.008, 10, 0.0, None, (False, True))
+    vent(m, (-0.50, 0.035, 0.10, 0.125), front)
+    # lit suit bay: warm strip under the head, pale liner behind the suit
+    m.box(ALU, (-0.19, door_y1 + 0.005, 0.07), (0.50, 0.03, 0.10), 0.004)
+    m.box(LIGHT, (-0.19, door_y1 - 0.012, 0.07), (0.44, 0.006, 0.07), 0.0)
+    m.box(WHITE, (-0.19, (door_y0 + door_y1) / 2, back + 0.035), (bay_x1 - bay_x0, door_y1 - door_y0, 0.01), 0.0)
+    m.box(DECK, (-0.19, 0.152, mid), (bay_x1 - bay_x0, 0.006, depth - 0.06), 0.0)
+    # service column: fixed door with a bar handle, paddle latch, hinges and the EVA checklist
+    sx0, sx1 = 0.25, 0.58
+    scx = (sx0 + sx1) / 2
+    m.plate(WHITE, (scx, (door_y0 + door_y1) / 2, front - 0.02), sx1 - sx0, door_y1 - door_y0, 0.02, 0.03, 0.004, None, 3)
+    u_handle(m, (sx0 + 0.07, 1.00), (sx0 + 0.07, 1.36), front, 0.045, 0.009, ALU)
+    m.box(GRAPHITE, (sx0 + 0.07, 1.52, front + 0.001), (0.06, 0.10, 0.003), 0.0)
+    m.box(ALU, (sx0 + 0.07, 1.53, front + 0.008), (0.04, 0.045, 0.012), 0.004)
+    for hy in (0.45, 1.90):
+        m.cyl(ALU, (sx1 - 0.012, hy - 0.04, front), (sx1 - 0.012, hy + 0.04, front), 0.008, 8, 0.001)
+    m.decal(art.decals, "p_eva", (scx + 0.03, 1.80, front + 0.0005), None, 0.72)
+    m.decal(art.decals, "t_eva", (scx + 0.01, 2.08, front + 0.0005), None, width=0.26)
+    m.decal(art.decals, art.next("pn", 28), (scx + 0.02, 0.24, front + 0.0005), None, 0.85)
+
+    # the suit is its own object, so it can be hidden while the crew member wears it
+    suit = Model("SuitLocker_Suit")
+    suit_origin = (-0.19, 0.155, -0.12)
+    suit.instance(suit_figure(art), at(*suit_origin))
+    suit.local_origin = suit_origin
+
+    # glazed door, pivot on its hinge line at the aft edge
+    door = Model("SuitLocker_Door")
+    dcx, dcy = (bay_x0 + bay_x1) / 2, (door_y0 + door_y1) / 2
+    dw, dh = bay_x1 - bay_x0 + 0.03, door_y1 - door_y0
+    door.frame(WHITE, (dcx, dcy, front - 0.03), dw, dh, 0.075, 0.03, 0.09, None, 5)
+    door.frame(RUBBER, (dcx, dcy, front - 0.034), dw - 0.13, dh - 0.13, 0.014, 0.006, 0.03, None, 5)
+    door.box(GLASS, (dcx, dcy, front - 0.018), (dw - 0.14, dh - 0.14, 0.006), 0.0)
+    u_handle(door, (bay_x1 - 0.035, 1.00), (bay_x1 - 0.035, 1.36), front, 0.045, 0.009, ALU)
+    door.box(ANO, (bay_x1 - 0.035, 1.52, front + 0.006), (0.045, 0.09, 0.012), 0.004)
+    for hy in (0.42, 1.17, 1.92):
+        door.cyl(ALU, (bay_x0 - 0.008, hy - 0.05, front - 0.012), (bay_x0 - 0.008, hy + 0.05, front - 0.012), 0.011, 8, 0.001)
+    door.local_origin = (bay_x0 - 0.008, door_y0, front - 0.012)
+
+    parts = {"SuitLocker_Suit": suit, "SuitLocker_Door": door}
+    anchors = {"LightAnchor_SuitLocker": (-0.19, door_y1 - 0.05, 0.09)}     # under the head, in front of the helmet
+    return m, parts, anchors
 
 
 def door_leaf(art, outer):
-    """Sliding pressure door leaf, 0.88 x 2.46 x 0.12 m, origin at floor centre like the blockout leaf."""
+    """Sliding pressure door leaf, 0.88 x 2.46 x 0.12 m, origin at floor centre like the blockout leaf.
+
+    Both faces carry pressed stiffening panels, edge dogs and an amber grab bar; outer leaves have a viewport."""
     m = Model("DoorLeaf")
     m.box(WHITE, (0, 1.23, 0), (0.86, 2.44, 0.09), 0.01)
     for face in (-1, 1):
         f = compose(at(0, 0, face * 0.045), rotation((0, 1, 0), 0 if face > 0 else 180))
-        m.frame(ALU, (0, 1.23, 0.0), 0.86, 2.44, 0.06, 0.016, 0.03, f)
+        m.frame(WHITE, (0, 1.23, 0.0), 0.86, 2.44, 0.07, 0.016, 0.05, f)
         m.box(GRAY, (0, 1.23, 0.004), (0.70, 2.28, 0.008), 0.004, f)
-        for sy in (0.50, 1.02, 2.02):
-            m.box(ALU, (0, sy, 0.014), (0.70, 0.035, 0.012), 0.004, f)
+        m.plate(WHITE, (0, 1.66, 0.008), 0.64, 0.98, 0.012, 0.09, 0.006, f, 4)
+        m.plate(WHITE, (0, 0.66, 0.008), 0.64, 0.70, 0.012, 0.09, 0.006, f, 4)
+        m.box(ALU, (0, 1.09, 0.014), (0.70, 0.045, 0.012), 0.004, f)
         for bx in (-0.40, 0.40):
             for by in np.linspace(0.15, 2.31, 9):
                 bolt(m, bx, by, 0.016, 0.006, 0.004, ALU, f)
+        for dy in (0.45, 1.23, 2.02):
+            m.box(ALU, (-0.385, dy, 0.022), (0.05, 0.11, 0.012), 0.004, f)
         if outer:
-            m.lathe(ALU, (0, 1.52, 0.012), (0, 0, 1), [(0.17, 0.0), (0.17, 0.02), (0.135, 0.024), (0.13, 0.01)], 24, f, (False, False))
-            m.cyl(GLASS, (0, 1.52, 0.014), (0, 1.52, 0.02), 0.13, 24, 0.0, f)
-            for k in range(8):
-                a = math.tau * k / 8
-                bolt(m, 0.152 * math.cos(a), 1.52 + 0.152 * math.sin(a), 0.032, 0.006, 0.004, ALU, f)
+            m.lathe(ALU, (0, 1.66, 0.020), (0, 0, 1), [(0.19, 0.0), (0.19, 0.02), (0.150, 0.024), (0.145, 0.008)], 24, f, (False, False))
+            # a dark disc behind the pane reads as the view into the next volume
+            m.cyl(GRAPHITE, (0, 1.66, 0.0200), (0, 1.66, 0.0212), 0.146, 24, 0.0, f, (False, True))
+            m.cyl(GLASS, (0, 1.66, 0.022), (0, 1.66, 0.028), 0.145, 24, 0.0, f)
+            for k in range(12):
+                a = math.tau * k / 12
+                bolt(m, 0.170 * math.cos(a), 1.66 + 0.170 * math.sin(a), 0.040, 0.006, 0.004, ALU, f)
         else:
-            m.decal(art.decals, "sign_airlock", (0, 1.60, 0.0125), f, 0.9)
-        handrail(m, (0.26, 1.02), (0.26, 1.42), 0.012, f, 0.05)
+            m.decal(art.decals, "sign_airlock", (0, 1.72, 0.0205), f, 0.9)
+        handrail(m, (0.27, 1.26), (0.27, 1.62), 0.020, f, 0.05)
         m.decal(art.decals, "hazard_short", (0, 0.20, 0.0125), f, width=0.66)
+        m.decal(art.decals, art.next("pn", 28), (-0.12, 0.40, 0.0205), f, 0.8)
     f = front_frame((0, 0, 0.045), (0, 0, 1))
-    m.decal(art.decals, "stencil_eva" if outer else "w_depress", (0, 1.90 if outer else 1.28, 0.0125), f, 1.0)
+    m.decal(art.decals, "stencil_eva" if outer else "w_depress", (0, 2.02 if outer else 1.36, 0.0205), f, 1.0)
     for sx in (-1, 1):
         m.box(RUBBER, (sx * 0.435, 1.23, 0), (0.014, 2.44, 0.10), 0.004)
     return m
 
 
 def build_airlock(art, bays):
+    """Returns the static compartment and its separately addressable parts (ship coordinates)."""
     m = Model("Airlock")
     build_shell(m, art, "Airlock", [bays["blanket"], bays["blanket"]], [bays["blanket"], bays["emergency"]], "sign_airlock")
     portal(m, art, 4.8, 21.0, "sign_airlock")
     m.instance(airlock_rack(art), front_frame((-2.02, 0, 19.0), (1, 0, 0)))
-    m.instance(suit_station(art), front_frame((1.95, 0, 19.0), (-1, 0, 0)))
+    locker_frame = front_frame((1.95, 0, 19.0), (-1, 0, 0))
+    locker, locker_parts, locker_anchors = suit_locker(art)
+    m.instance(locker, locker_frame)
+    parts = place_parts(locker_frame, locker_parts, locker_anchors, "AirlockParts")
     # door tracks above and below both hatchways
     for z in (17.0, 21.0):
         for y in (2.52, -0.012):
@@ -1397,7 +1493,39 @@ def build_airlock(art, bays):
     f = front_frame((0, 0.0, 20.45), (0, 1, 0), (0, 0, 1))
     m.decal(art.decals, "hazard_long", (0, 0, 0), f, width=1.7)
     m.decal(art.decals, "stencil_noslip", (0, -0.5, 0), f, 1.6)
-    return m
+
+    # inner face of the aft pressure bulkhead, seen from inside the airlock (x to starboard)
+    b = front_frame((0, 0.0, 20.92), (0, 0, -1))
+    # pressure station beside the outer hatch: dial with a separate pointer, display, two keys, conduit
+    px, py = 1.45, 1.45
+    m.box(WHITE, (px, py, 0.04), (0.36, 0.86, 0.08), 0.02, b)
+    gauge(m, art, px, py + 0.25, 0.08, b, "gauge_airlock", 0.10, None)
+    display(m, art, (px - 0.14, py - 0.18, px + 0.14, py + 0.03), 0.08, b, "sm_airlock", 0)
+    m.box(ANO, (px - 0.06, py - 0.29, 0.084), (0.07, 0.05, 0.008), 0.003, b)
+    m.box(LED_A, (px - 0.06, py - 0.29, 0.092), (0.052, 0.034, 0.008), 0.003, b)
+    m.box(ANO, (px + 0.06, py - 0.29, 0.084), (0.07, 0.05, 0.008), 0.003, b)
+    m.box(ANO_CLEAR, (px + 0.06, py - 0.29, 0.092), (0.040, 0.034, 0.008), 0.003, b)
+    m.decal(art.decals, "t_depress", (px, py - 0.37, 0.0805), b, width=0.26)
+    m.cyl(ALU, (px, 0.12, 0.03), (px, py - 0.43, 0.03), 0.016, 10, 0.0, b, (False, False))
+    for cy in (0.45, 0.90):
+        m.box(ALU, (px, cy, 0.02), (0.07, 0.024, 0.045), 0.003, b)
+    needle = Model("AirlockGauge_Needle")
+    needle_origin = (px, py + 0.25, 0.088)
+    needle.instance(gauge_needle(0.10, 101.3 / 120.0), at(*needle_origin))
+    needle.local_origin = needle_origin
+    parts.update(place_parts(b, {"AirlockGauge_Needle": needle}, {}, "AirlockParts"))
+    # port side of the hatch: conduits clamped to the bulkhead stiffeners and the intercom
+    for cx, radius, mat in ((-1.30, 0.020, RUBBER), (-1.365, 0.014, ALU)):
+        m.cyl(mat, (cx, 0.12, 0.034), (cx, 2.46, 0.034), radius, 10, 0.0, b, (False, False))
+    for cy in (0.45, 0.90, 1.40, 1.90, 2.35):
+        m.box(ALU, (-1.33, cy, 0.03), (0.13, 0.026, 0.05), 0.003, b)
+    m.box(GRAY, (-1.56, 1.45, 0.03), (0.24, 0.34, 0.06), 0.012, b)
+    vent(m, (-1.65, 1.48, -1.47, 1.58), 0.06, b, 5)
+    for i, lamp in enumerate((LED_G, LED_A)):
+        m.cyl(lamp, (-1.62 + i * 0.05, 1.42, 0.06), (-1.62 + i * 0.05, 1.42, 0.063), 0.007, 8, 0.0, b, (False, True))
+    m.box(ANO, (-1.50, 1.37, 0.064), (0.06, 0.04, 0.008), 0.003, b)
+    m.decal(art.decals, "conn_07", (-1.56, 1.31, 0.0605), b, 0.9)
+    return m, parts
 
 
 def build_doors(art):
@@ -1779,16 +1907,18 @@ def build_all(decals, screens):
     }
     engineering, engineering_parts = build_engineering(art, bays)
     exterior, exterior_parts = build_exterior(art)
+    airlock, airlock_parts = build_airlock(art, bays)
     models = {
         "Cockpit": build_cockpit(art, bays),
         "Engineering": engineering,
         "Storage": build_storage(art, bays),
-        "Airlock": build_airlock(art, bays),
+        "Airlock": airlock,
         "Exterior": exterior,
     }
     models.update(build_doors(art))
     models.update(engineering_parts)
     models.update(exterior_parts)
+    models.update(airlock_parts)
     return models, build_collision()
 
 

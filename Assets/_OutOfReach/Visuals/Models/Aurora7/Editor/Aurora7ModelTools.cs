@@ -366,6 +366,10 @@ namespace OutOfReach.ModelTools
             // The fitted cover is delivered switched off, so the breaker cabinet reads as open (review-01 R02).
             cover.gameObject.SetActive(false);
 
+            // Airlock parts: the suit, the glazed locker door, the pressure dial's pointer and a helper point.
+            GameObject airlockParts = Instantiate(Root + "/Meshes/A7_AirlockParts.fbx", root.transform);
+            airlockParts.name = "AirlockParts";
+
             // Antenna gimbal. The meshes keep ship axes; the two pivots give the integrator usable axes:
             // local Y is the hull normal at the pad (azimuth), local X is the trunnion (elevation).
             GameObject exteriorParts = Instantiate(Root + "/Meshes/A7_ExteriorParts.fbx", root.transform);
@@ -538,6 +542,8 @@ namespace OutOfReach.ModelTools
             CheckProxy(instance, "PowerCabinet_IsolatorHandle", new Vector3(-1.83f, 0.8036f, 5.85f), problems);
             CheckProxy(instance, "ScrubberCanister_A", new Vector3(1.855f, 0.8f, 8.24f), problems);
             CheckProxy(instance, "LightAnchor_PowerCabinetWork", new Vector3(-1.758f, 1.72f, 6.35f), problems);
+            CheckProxy(instance, "AirlockGauge_Needle", new Vector3(1.45f, 1.7f, 20.832f), problems);
+            CheckProxy(instance, "SuitLocker_Door", new Vector3(1.812f, 0.16f, 19.588f), problems);
             // The antenna's manual drive socket must sit on the AntennaRepair anchor.
             CheckProxy(instance, "Antenna_ServiceSocket", new Vector3(3.2f, 2.4f, 13f), problems);
             int colliders = instance.GetComponentsInChildren<Collider>(true).Length;
@@ -610,6 +616,8 @@ namespace OutOfReach.ModelTools
             ("engineering_eclss", new Vector3(0.25f, 1.55f, 7.5f), new Vector3(2f, 1.2f, 8.15f), 72f),
             ("storage", new Vector3(0f, 1.65f, 11.5f), new Vector3(0f, 1.3f, 17f), 76f),
             ("airlock", new Vector3(0.2f, 1.65f, 17.35f), new Vector3(-0.2f, 1.3f, 21f), 80f),
+            // review-01 R04 framing at 1.65 m eye height
+            ("airlock_r04", new Vector3(-0.75f, 1.65f, 17.55f), new Vector3(0.85f, 1.3f, 21f), 90f),
             ("exterior_finale", new Vector3(9f, 5f, 27f), new Vector3(0.5f, 1.6f, 12f), 58f),
             ("exterior_forward", new Vector3(-9.5f, 4.5f, -11f), new Vector3(0f, 1.6f, 4f), 55f),
             ("exterior_eva", new Vector3(2.2f, 1.6f, 24.6f), new Vector3(1.2f, 2.2f, 14f), 72f),
@@ -650,16 +658,18 @@ namespace OutOfReach.ModelTools
                 index++;
             }
 
-            // Preview stand-in for the amber work light in the breaker cabinet (the prefab carries only the anchor).
+            // Preview stand-ins for the amber work light in the breaker cabinet and the suit locker's interior
+            // light (the prefab carries only the anchors).
             foreach (Transform anchor in shipInstance.GetComponentsInChildren<Transform>(true)
-                         .Where(t => t.name == "LightAnchor_PowerCabinetWork"))
+                         .Where(t => t.name == "LightAnchor_PowerCabinetWork" || t.name == "LightAnchor_SuitLocker"))
             {
+                bool locker = anchor.name == "LightAnchor_SuitLocker";
                 var work = new GameObject("Preview " + anchor.name).AddComponent<Light>();
                 work.type = LightType.Point;
                 work.transform.position = anchor.position;
-                work.color = new Color(1f, 0.58f, 0.2f);
-                work.intensity = 0.8f;
-                work.range = 1.2f;
+                work.color = locker ? new Color(1f, 0.9f, 0.76f) : new Color(1f, 0.58f, 0.2f);
+                work.intensity = locker ? 0.9f : 0.8f;
+                work.range = locker ? 1.6f : 1.2f;
                 work.shadows = LightShadows.Soft;
             }
 
