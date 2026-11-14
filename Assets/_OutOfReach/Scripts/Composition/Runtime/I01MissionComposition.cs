@@ -54,6 +54,9 @@ namespace OutOfReach.Composition
         private bool modeChosen;
         private string cinematicCaption = string.Empty;
         private string dialogueSpeaker = "SHIP";
+        private string latestPrompt = string.Empty;
+        private bool latestPromptAvailable;
+        private float rejectionUntil;
 
         public MissionRuntime Runtime => runtime;
         public MissionCinematicPresenter Cinematics => cinematics;
@@ -103,6 +106,11 @@ namespace OutOfReach.Composition
 
         private void Update()
         {
+            if (rejectionUntil > 0f && Time.unscaledTime >= rejectionUntil)
+            {
+                rejectionUntil = 0f;
+                RefreshInteractionPrompt();
+            }
             if (!audioPresenter || !runtime || boundSession == null || runtime.IsPaused || audioPresenter.IsDialoguePlaying || dialogueQueue.Count == 0) return;
             var next = dialogueQueue.Peek();
             dialogueSpeaker = next.Value;
@@ -201,6 +209,9 @@ namespace OutOfReach.Composition
             boundEvents = null;
             boundSession = null;
             cinematicCaption = string.Empty;
+            latestPrompt = string.Empty;
+            latestPromptAvailable = false;
+            rejectionUntil = 0f;
             dialogueQueue.Clear();
             requestedDialogue.Clear();
             if (flightBoard)
@@ -371,23 +382,42 @@ namespace OutOfReach.Composition
         private void OnMissionEnded(MissionEnded ended)
         {
             audioPresenter.SetMood(MusicMood.Silent);
-            controls.ShowFeedback(ended.Reason, 12f);
+            rejectionUntil = 0f;
+            latestPrompt = string.Empty;
+            flightBoard.ClearInteractionPrompt();
             controls.Refresh();
         }
 
         private void OnPromptChanged(string prompt, bool available)
         {
+            latestPrompt = prompt ?? string.Empty;
+            latestPromptAvailable = available;
+            rejectionUntil = 0f;
+            RefreshInteractionPrompt();
+        }
+
+        private void RefreshInteractionPrompt()
+        {
             if (!flightBoard) return;
-            if (string.IsNullOrWhiteSpace(prompt)) flightBoard.ClearInteractionPrompt();
-            else flightBoard.ShowInteractionPrompt(prompt, available);
+            if (string.IsNullOrWhiteSpace(latestPrompt)) flightBoard.ClearInteractionPrompt();
+            else flightBoard.ShowInteractionPrompt(latestPrompt, latestPromptAvailable);
         }
 
         private void OnInteractionAttempted(bool succeeded, string explanation)
         {
             // An empty-space E press has no useful instruction. Keep actual target rejections visible.
             if (!succeeded && (!interaction || !interaction.CurrentTarget)) return;
-            if (!string.IsNullOrWhiteSpace(explanation)) controls.ShowFeedback(explanation);
-            if (succeeded) audioPresenter.TryPlaySfx("ui_confirm");
+            if (succeeded)
+            {
+                rejectionUntil = 0f;
+                RefreshInteractionPrompt();
+                audioPresenter.TryPlaySfx("ui_confirm");
+            }
+            else if (!string.IsNullOrWhiteSpace(explanation))
+            {
+                flightBoard.ShowInteractionPrompt(explanation, false);
+                rejectionUntil = Time.unscaledTime + 4f;
+            }
         }
 
         private void PlayOptional(DialogueCueBinding cue, string speaker, bool interrupt = false)

@@ -20,6 +20,7 @@ namespace OutOfReach.Presentation.UI
         private ISimulationClock clock;
         private IPlanningDeadline deadline;
         private IEvaStatus evaStatus, subscribedEva;
+        private ICargoLoading cargoLoading, subscribedCargo;
         private Action evaChangedHandler;
         private int evaSubscriptionGeneration;
         private ResourceSnapshot resourceReference;
@@ -50,6 +51,7 @@ namespace OutOfReach.Presentation.UI
                 clock = null;
                 deadline = null;
                 evaStatus = null;
+                cargoLoading = null;
                 hasResourceReference = false;
                 view?.ClearResourceReference();
             }
@@ -105,6 +107,16 @@ namespace OutOfReach.Presentation.UI
             evaStatus = status;
             RefreshEva();
             SubscribeEva();
+        }
+
+        /// <summary>Optional physical-loading refresh; the planner remains the sole loadout authority.</summary>
+        public void ConfigureCargoLoading(ICargoLoading cargo)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            UnsubscribeCargo();
+            cargoLoading = cargo;
+            Refresh();
+            SubscribeCargo();
         }
 
         /// <summary>The audio presenter owns when this cue begins and ends. No local timer is started.</summary>
@@ -189,6 +201,7 @@ namespace OutOfReach.Presentation.UI
             clock = null;
             deadline = null;
             evaStatus = null;
+            cargoLoading = null;
             hasResourceReference = false;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
@@ -223,6 +236,7 @@ namespace OutOfReach.Presentation.UI
         private void Subscribe()
         {
             SubscribeEva();
+            SubscribeCargo();
             if (subscribed || events == null || !isActiveAndEnabled || disposed) return;
             events.PhaseChanged += OnPhaseChanged;
             events.ResourceChanged += OnResourceChanged;
@@ -233,6 +247,7 @@ namespace OutOfReach.Presentation.UI
         private void Unsubscribe()
         {
             UnsubscribeEva();
+            UnsubscribeCargo();
             if (!subscribed) return;
             events.PhaseChanged -= OnPhaseChanged;
             events.ResourceChanged -= OnResourceChanged;
@@ -262,6 +277,25 @@ namespace OutOfReach.Presentation.UI
         }
 
         private void RefreshEva() => view?.SetEvaStatus(evaStatus);
+
+        private void SubscribeCargo()
+        {
+            if (subscribedCargo != null || cargoLoading == null || !isActiveAndEnabled || disposed) return;
+            subscribedCargo = cargoLoading;
+            subscribedCargo.Changed += OnCargoChanged;
+        }
+
+        private void UnsubscribeCargo()
+        {
+            if (subscribedCargo != null) subscribedCargo.Changed -= OnCargoChanged;
+            subscribedCargo = null;
+        }
+
+        private void OnCargoChanged()
+        {
+            if (!disposed && isActiveAndEnabled && state != null && state.Phase == GamePhase.Planning)
+                Refresh();
+        }
 
         private void Refresh()
         {

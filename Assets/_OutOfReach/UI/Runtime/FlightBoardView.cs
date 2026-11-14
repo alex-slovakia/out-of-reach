@@ -20,11 +20,12 @@ namespace OutOfReach.Presentation.UI
         private readonly VisualElement planningTiming, lastValidDetail;
         private readonly Label deadlineCountdown, deadlineRule, lastValidCounts;
         private IMissionConfiguration displayedLastValid;
-        private readonly VisualElement instruments, expandedTelemetry;
+        private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry;
+        private readonly Label suitDuration, suitSeal;
         private readonly Button systems;
-        private bool systemsPinned, systemsHeld, showingPlanning;
+        private bool systemsPinned, systemsHeld, showingPlanning, evaContext, co2NeedsAttention;
         private readonly VisualElement interactionPrompt, subtitleOverlay;
-        private readonly Label interactionText, subtitleSpeaker, subtitleText;
+        private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
         private readonly Label[] planningResources, hudResources;
         private readonly ResourceGauge oxygenGauge, batteryGauge, co2Gauge, suitGauge;
         private ResourceSnapshot resourceReference, latestResources;
@@ -48,14 +49,14 @@ namespace OutOfReach.Presentation.UI
             var heading = Element("planner-heading");
             planner.Add(heading);
             heading.Add(Text("Out of reach", "title"));
-            heading.Add(Text("Prepare AURORA-7 for deep space.\nWhat you bring determines what comes next.", "intro"));
+            heading.Add(Text("AURORA-7\nChoose what comes with you.", "intro"));
             IgnorePicking(heading);
 
             var payload = Element("payload-panel");
             planner.Add(payload);
             var payloadHeader = Element("payload-header");
             payload.Add(payloadHeader);
-            payloadHeader.Add(Text("Payload", "payload-title"));
+            payloadHeader.Add(Text("Mission loadout", "payload-title"));
             planningTiming = Element("planning-timing");
             payloadHeader.Add(planningTiming);
             deadlineCountdown = Text(string.Empty, "deadline-countdown");
@@ -128,41 +129,50 @@ namespace OutOfReach.Presentation.UI
 
             instruments = Element("hud-instruments");
             hud.Add(instruments);
-            instruments.Add(Text("SURVIVAL / AURORA-7", "instrument-heading"));
             var readouts = Element("hud-readouts");
             instruments.Add(readouts);
-            var primary = Element("primary-telemetry");
-            readouts.Add(primary);
+            primaryTelemetry = Element("primary-telemetry");
+            readouts.Add(primaryTelemetry);
+            evaTelemetry = Element("eva-telemetry");
+            readouts.Add(evaTelemetry);
             expandedTelemetry = Element("expanded-telemetry");
             readouts.Add(expandedTelemetry);
             hudResources = new Label[6];
-            oxygenGauge = new ResourceGauge(primary, "O₂ reserve", "oxygen", 0);
-            batteryGauge = new ResourceGauge(primary, "Battery", "battery", 3);
-            co2Gauge = new ResourceGauge(primary, "Cabin CO₂", "co2", 5);
+            oxygenGauge = new ResourceGauge(primaryTelemetry, "O₂ reserve", 0);
+            batteryGauge = new ResourceGauge(primaryTelemetry, "Battery", 3);
+            co2Gauge = new ResourceGauge(primaryTelemetry, "Cabin CO₂", 5);
             hudResources[0] = oxygenGauge.Value;
             hudResources[3] = batteryGauge.Value;
             hudResources[5] = co2Gauge.Value;
-            suitGauge = new ResourceGauge(readouts, "EVA / SUIT O₂", "suit", -1);
+            suitGauge = new ResourceGauge(evaTelemetry, "Suit O₂", -1);
             suitGauge.Element.name = "suit-oxygen-gauge";
             suitGauge.Element.AddToClassList("suit-gauge");
-            suitGauge.Element.style.display = DisplayStyle.None;
+            var duration = Element("suit-duration");
+            duration.AddToClassList("resource-cell");
+            duration.Add(Text("Time remaining", "resource-label"));
+            suitDuration = Text("—", "resource-value");
+            duration.Add(suitDuration);
+            suitSeal = Text(string.Empty, "suit-seal");
+            duration.Add(suitSeal);
+            evaTelemetry.Add(duration);
             hudResources[1] = AddResource(expandedTelemetry, "Water", 1);
             hudResources[2] = AddResource(expandedTelemetry, "Food", 2);
             hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
             systems = new Button(() => { systemsPinned = !systemsPinned; RefreshTelemetry(); })
             {
-                text = "Systems",
-                tooltip = "Show or hide water, food and spare parts. Hold Tab for a quick look."
+                text = "Tab  Systems",
+                tooltip = "Hold Tab to inspect all ship reserves. Click to keep them visible."
             };
             systems.AddToClassList("systems-button");
             instruments.Add(systems);
-            instruments.Add(Text("Hold Tab to inspect", "systems-hint"));
             IgnorePicking(hud);
             systems.pickingMode = PickingMode.Position;
             RefreshTelemetry();
 
             interactionPrompt = Element("interaction-prompt");
             hud.Add(interactionPrompt);
+            interactionKey = Text("E", "interaction-key");
+            interactionPrompt.Add(interactionKey);
             interactionText = Text(string.Empty, "interaction-text");
             interactionPrompt.Add(interactionText);
             IgnorePicking(interactionPrompt);
@@ -177,13 +187,13 @@ namespace OutOfReach.Presentation.UI
             subtitleText = Text(string.Empty, "subtitle-text");
             subtitleBox.Add(subtitleText);
             IgnorePicking(subtitleOverlay);
-            instruments.RegisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
             ClearSubtitle();
             ShowUnbound();
         }
 
         public void ShowUnbound()
         {
+            root.RemoveFromClassList("report-visible");
             ShowPlanning(false);
             phase.text = "Waiting for mission";
             objective.text = string.Empty;
@@ -203,8 +213,8 @@ namespace OutOfReach.Presentation.UI
         public void ShowPlanning(bool show)
         {
             showingPlanning = show;
-            planner.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-            hud.style.display = show ? DisplayStyle.None : DisplayStyle.Flex;
+            SetVisible(planner, show);
+            SetVisible(hud, !show);
             if (show)
             {
                 systemsHeld = false;
@@ -216,14 +226,15 @@ namespace OutOfReach.Presentation.UI
 
         public void SetPhase(GamePhase current, MissionOutcome outcome)
         {
+            root.EnableInClassList("report-visible", current == GamePhase.Report);
             switch (current)
             {
                 case GamePhase.Planning: phase.text = "Mission preparation"; objective.text = string.Empty; break;
-                case GamePhase.Intro: phase.text = "Departure"; objective.text = "AURORA-7"; break;
-                case GamePhase.Emergency: phase.text = "Emergency"; objective.text = "Stabilise the ship."; break;
-                case GamePhase.Repair: phase.text = "Restore essential systems"; objective.text = "Power and life support"; break;
-                case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = "Exterior operations"; break;
-                case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = "Communications"; break;
+                case GamePhase.Intro: phase.text = "Complete the cockpit check"; objective.text = string.Empty; break;
+                case GamePhase.Emergency: phase.text = "Restore power"; objective.text = string.Empty; break;
+                case GamePhase.Repair: phase.text = "Restore power and life support"; objective.text = string.Empty; break;
+                case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = string.Empty; break;
+                case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = string.Empty; break;
                 case GamePhase.Outcome:
                 case GamePhase.Report:
                     phase.text = outcome == MissionOutcome.RecoveryPossible ? "Contact restored"
@@ -311,16 +322,26 @@ namespace OutOfReach.Presentation.UI
 
         private void RefreshTelemetry()
         {
-            expandedTelemetry.style.display = systemsPinned || systemsHeld ? DisplayStyle.Flex : DisplayStyle.None;
-            systems.text = systemsPinned ? "Hide systems" : "Systems";
-            systems.EnableInClassList("systems-open", systemsPinned || systemsHeld);
+            bool inspect = systemsPinned || systemsHeld;
+            SetVisible(expandedTelemetry, inspect);
+            SetVisible(primaryTelemetry, !evaContext || inspect);
+            SetVisible(co2Gauge.Element, co2NeedsAttention || inspect);
+            SetVisible(evaTelemetry, evaContext);
+            instruments.EnableInClassList("inspecting-systems", inspect);
+            instruments.EnableInClassList("eva-context", evaContext);
+            systems.text = systemsPinned ? "Close systems" : "Tab  Systems";
+            systems.EnableInClassList("systems-open", inspect);
         }
 
         /// <summary>Displays supplied interaction wording without issuing or simulating a command.</summary>
         public void ShowInteractionPrompt(string text, bool available)
         {
             if (string.IsNullOrWhiteSpace(text)) { ClearInteractionPrompt(); return; }
-            interactionText.text = text;
+            bool hasKey = text.StartsWith("[E] ", StringComparison.OrdinalIgnoreCase)
+                || text.StartsWith("E — ", StringComparison.OrdinalIgnoreCase)
+                || text.StartsWith("E · ", StringComparison.OrdinalIgnoreCase);
+            interactionText.text = hasKey ? text.Substring(4) : text;
+            SetVisible(interactionKey, available);
             interactionText.EnableInClassList("constraint-exceeded", !available);
             interactionPrompt.style.display = DisplayStyle.Flex;
         }
@@ -345,13 +366,6 @@ namespace OutOfReach.Presentation.UI
             subtitleOverlay.style.display = DisplayStyle.None;
             subtitleText.text = string.Empty;
             subtitleSpeaker.text = string.Empty;
-        }
-
-        private void OnInstrumentGeometryChanged(GeometryChangedEvent change)
-        {
-            // Leave a real gap above both collapsed and expanded telemetry at the current panel scale.
-            if (change.newRect.height > 0)
-                subtitleOverlay.style.bottom = Math.Max(112f, change.newRect.height + 48f);
         }
 
         private static string FormatLoadoutCounts(IReadOnlyList<EquipmentSelection> selections,
@@ -451,22 +465,22 @@ namespace OutOfReach.Presentation.UI
 
         public void SetEvaStatus(IEvaStatus status)
         {
-            bool visible = status != null && (status.IsSuitOn || status.IsSuitSealed || status.IsOutside);
-            suitGauge.Element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
-            if (!visible) return;
+            evaContext = status != null && (status.IsSuitSealed || status.IsOutside);
+            RefreshTelemetry();
+            if (!evaContext) return;
             double remaining = status.SuitOxygenSecondsRemaining;
-            suitGauge.Value.text = double.IsPositiveInfinity(remaining) ? "∞ sim s remaining"
-                : !Finite(remaining) || remaining < 0 ? "— sim s remaining"
-                : Number(Math.Ceiling(remaining), "#,0") + " sim s remaining";
+            suitGauge.Value.text = Number(status.SuitOxygenKg, "0.000") + " kg";
+            suitDuration.text = double.IsPositiveInfinity(remaining) ? "No draw"
+                : !Finite(remaining) || remaining < 0 ? "—"
+                : Number(Math.Ceiling(remaining / 60), "#,0") + " min sim";
             bool known = Finite(status.SuitOxygenKg) && status.SuitOxygenKg >= 0
                 && Finite(status.SuitOxygenCapacityKg) && status.SuitOxygenCapacityKg > 0;
             double fraction = known ? status.SuitOxygenKg / status.SuitOxygenCapacityKg : 0;
-            string location = status.IsOutside ? "Outside" : "Cabin";
-            string seal = status.IsSuitSealed ? "sealed" : "suit open";
+            suitSeal.text = status.IsSuitSealed ? "Sealed" : "Suit open";
             suitGauge.SetLevel(known, fraction, known && fraction <= 0.25, known && fraction <= 0,
-                Number(status.SuitOxygenKg, "0.000") + " / " + Number(status.SuitOxygenCapacityKg, "0.000")
-                + " kg · " + location + " · " + seal);
+                known && fraction <= 0 ? "Empty" : known && fraction <= 0.25 ? "Low reserve" : string.Empty);
             suitGauge.Element.tooltip = "Suit oxygen from Core. Bar: actual suit capacity. Remaining duration is simulated time; no HUD countdown is calculated.";
+            suitDuration.tooltip = Number(remaining, "#,0") + " simulated seconds remaining. Supplied by the suit system.";
         }
 
         private void UpdateGauges()
@@ -478,13 +492,15 @@ namespace OutOfReach.Presentation.UI
             bool known = hasHudResources && Finite(current) && current >= 0;
             bool emergency = known && hasCo2Thresholds && current >= co2EmergencyPpm;
             bool action = known && hasCo2Thresholds && current >= co2ActionPpm;
-            string stateText = emergency ? "Emergency level" : action ? "Action required" : "Cabin concentration";
+            co2NeedsAttention = action;
+            string stateText = emergency ? "Emergency" : action ? "Check life support" : string.Empty;
             co2Gauge.SetLevel(known, known ? current / scale : 0, action, emergency,
-                "Scale 0–" + Number(scale, "#,0") + " ppm\n" + stateText, !hasCo2Thresholds);
+                stateText, !hasCo2Thresholds);
             co2Gauge.Element.tooltip = hasCo2Thresholds
                 ? "Scenario thresholds from Core: action " + Number(co2ActionPpm, "#,0")
                     + " ppm; emergency " + Number(co2EmergencyPpm, "#,0") + " ppm."
                 : "Instrument range only. No safety or warning threshold has been configured.";
+            RefreshTelemetry();
         }
 
         private void SetReserveGauge(ResourceGauge gauge, double current, double reference, string description)
@@ -494,9 +510,8 @@ namespace OutOfReach.Presentation.UI
             double fraction = known ? current / reference : 0;
             bool low = known && fraction <= 0.25;
             bool empty = known && current <= 0;
-            string note = known ? Number(fraction * 100, "0") + "% of launch" : "Launch reference —";
             gauge.SetLevel(known, fraction, low, empty,
-                note + "\n" + (empty ? "Reserve empty" : low ? "Low reserve" : description));
+                empty ? "Empty" : low ? "Low reserve" : string.Empty);
             gauge.Element.tooltip = "Bar is relative to the committed launch reserve, not tank capacity or cabin oxygen percentage. Amber denotes 25% of launch reserve or less.";
         }
 
@@ -516,7 +531,6 @@ namespace OutOfReach.Presentation.UI
         {
             QuantityChangeRequested = null;
             LaunchRequested = null;
-            instruments.UnregisterCallback<GeometryChangedEvent>(OnInstrumentGeometryChanged);
             root.RemoveFromHierarchy();
         }
 
@@ -577,6 +591,8 @@ namespace OutOfReach.Presentation.UI
             return element;
         }
 
+        private static void SetVisible(VisualElement element, bool visible) => element.EnableInClassList("is-hidden", !visible);
+
         private static Label Text(string content, string className)
         {
             var label = new Label(content) { enableRichText = false };
@@ -597,23 +613,12 @@ namespace OutOfReach.Presentation.UI
             private readonly ProgressBar bar;
             private readonly Label note;
 
-            public ResourceGauge(VisualElement parent, string title, string iconName, int resourceIndex)
+            public ResourceGauge(VisualElement parent, string title, int resourceIndex)
             {
                 Element = FlightBoardView.Element("instrument-gauge");
                 Element.AddToClassList("resource-cell");
                 if (resourceIndex >= 0) Element.name = "resource-" + resourceIndex;
-                var heading = FlightBoardView.Element("gauge-heading");
-                Element.Add(heading);
-                var icon = FlightBoardView.Element("gauge-icon");
-                icon.AddToClassList("gauge-icon-" + iconName);
-                for (int i = 0; i < 3; i++)
-                {
-                    var mark = FlightBoardView.Element("icon-mark");
-                    mark.AddToClassList("icon-mark-" + i);
-                    icon.Add(mark);
-                }
-                heading.Add(icon);
-                heading.Add(Text(title, "resource-label"));
+                Element.Add(Text(title, "resource-label"));
                 Value = Text("—", "resource-value");
                 Element.Add(Value);
                 bar = new ProgressBar { lowValue = 0f, highValue = 1f, value = 0f, title = string.Empty };
@@ -633,6 +638,7 @@ namespace OutOfReach.Presentation.UI
                 Element.EnableInClassList("gauge-low", low && !critical);
                 Element.EnableInClassList("gauge-critical", critical);
                 note.text = detail;
+                SetVisible(note, !string.IsNullOrEmpty(detail));
             }
         }
 

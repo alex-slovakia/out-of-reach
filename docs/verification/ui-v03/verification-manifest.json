@@ -1,0 +1,58 @@
+{
+  "task": "UiV03",
+  "base_commit": "38b2b09b9a9dbd00e9aacbee2cc6ece266679411",
+  "branch": "codex/i01-integration",
+  "verified_utc": "2026-11-14T13:22:49.407849+00:00",
+  "unity": "6000.3.28f1",
+  "graphics": "D3D12",
+  "run": "I02PlayQa.Run",
+  "checks_passed": 198,
+  "exit_code": 0,
+  "runtime_error_file_bytes": 0,
+  "ui_diff_sha256": "ef01c3fa7c8971436723f8f41d3d18c1ce738b5e677a9a9591a744004b6f9648",
+  "verified_five_file_diff_sha256": "13307e54094e0e3f6e6a0d94cc649052daf32d42a216627fc4b6ae4ba8746310",
+  "captures": [
+    {
+      "path": "after/01-success-planning-1280.png",
+      "sha256": "0356b5bd898afb7757408974c26b7e0232bb7193373161bd7b53940b50178386",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/02-interior-restored-1280.png",
+      "sha256": "add411b7665317efe59a54dbda68037e956c0d5699316484dc03888b5c5a7fb7",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/03-eva-start-1280.png",
+      "sha256": "feb5e5da2748484d7a894e5c93111382a5ff5b6f571911f7ee511ec69db2c76f",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/04-antenna-restored-1280.png",
+      "sha256": "06e0ecbc370bb094239aa9b96ae07718f659db1d4696375bfe5777d54b976d7a",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/05-awaiting-earth-reply-1280.png",
+      "sha256": "f27875eb309cbcedb1e0297f854757bd263f36332abb047f8c6216b018765cb5",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/06-success-report-1280.png",
+      "sha256": "0556ec9c70d1266b9edce59763d190ff362b2ecc15b23e4247d06b4f9291836d",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "after/07-objective-loss-report-1280.png",
+      "sha256": "ce9498a383cecae4bdafb45b37566a1a06d87327a35f2ba9c0acf43c8b899068",
+      "width": 1280,
+      "height": 720
+    }
+  ]
+}

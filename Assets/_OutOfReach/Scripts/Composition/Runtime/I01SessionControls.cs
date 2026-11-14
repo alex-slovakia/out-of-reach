@@ -101,7 +101,8 @@ namespace OutOfReach.Composition
             }
             bool visible = showingMode || paused || showingOutcome;
             modal.style.display = visible && !showRecord ? DisplayStyle.Flex : DisplayStyle.None;
-            controlsHint.style.display = !planning && !visible ? DisplayStyle.Flex : DisplayStyle.None;
+            // Controls remain in the pause panel; keep the flight view unobstructed.
+            controlsHint.style.display = DisplayStyle.None;
             RefreshCommunications();
             if (!visible) return;
 
