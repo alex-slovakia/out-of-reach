@@ -172,8 +172,8 @@ namespace OutOfReach.Simulation
 
         /// <summary>
         /// Salvage: debits the costs and adds whole spare parts in one all-or-nothing step, publishing exactly one
-        /// ResourceChanged. Spare parts are the only reserve that can ever be credited, and only by converting
-        /// something that was carried; oxygen, water, food and energy cannot be created this way.
+        /// ResourceChanged. This operation credits only spare parts converted from carried equipment. A separately guarded
+        /// post-contact crop harvest may credit a small food equivalent; this exchange never creates other reserves.
         /// </summary>
         public CommandResult TryExchangeForSpareParts(IReadOnlyList<ResourceAmount> costs, int sparePartsGained)
         {
@@ -203,6 +203,20 @@ namespace OutOfReach.Simulation
             depletedAt[(int)ResourceId.SparePartsCount] = null;
             events.Publish(new ResourceChanged(Snapshot));
             return Ok(string.Format(CultureInfo.InvariantCulture, "Salvaged {0} spare part(s).", sparePartsGained));
+        }
+
+        /// <summary>Credits the one mature crop's game ration-equivalent yield to the existing food reserve.
+        /// Core owns maturity and one-harvest validation; this narrow ledger operation validates quantity/lifetime.</summary>
+        public CommandResult TryCreditHarvestFood(double rationEquivalentKg)
+        {
+            if (!IsFinite(rationEquivalentKg) || rationEquivalentKg <= 0d || !IsFinite(foodKg + rationEquivalentKg))
+                return Fail(CommandFailure.InvalidInput, "Harvest credit must be finite and positive.");
+            if (!IsInitialized || !IsActive)
+                return Fail(CommandFailure.WrongPhase, "Harvest requires an active mission.");
+            foodKg += rationEquivalentKg;
+            depletedAt[(int)ResourceId.FoodKg] = null;
+            events.Publish(new ResourceChanged(Snapshot));
+            return Ok("Crop supplement added to stored food.");
         }
 
         /// <summary>Replaces the constant rates used by later steps (for example after damage or a repair).</summary>

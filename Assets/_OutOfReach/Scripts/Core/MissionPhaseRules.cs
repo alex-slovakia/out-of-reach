@@ -24,6 +24,8 @@ namespace OutOfReach.Core
                 case GamePhase.Eva:
                     return to == GamePhase.Repair || to == GamePhase.Transmission || to == GamePhase.Outcome;
                 case GamePhase.Transmission:
+                    return to == GamePhase.Outcome || to == GamePhase.Survival;
+                case GamePhase.Survival:
                     return to == GamePhase.Outcome;
                 case GamePhase.Outcome:
                     return to == GamePhase.Report;
@@ -39,7 +41,8 @@ namespace OutOfReach.Core
                 || phase == GamePhase.Emergency
                 || phase == GamePhase.Repair
                 || phase == GamePhase.Eva
-                || phase == GamePhase.Transmission;
+                || phase == GamePhase.Transmission
+                || phase == GamePhase.Survival;
         }
     }
 }

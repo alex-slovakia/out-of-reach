@@ -18,7 +18,12 @@ namespace OutOfReach.Simulation
         /// The ship is stable but the antenna can never be repaired (spare parts cannot be replenished), so no
         /// contact with Earth and no recovery plan is possible. Decided by Core, not by a reserve running out.
         /// </summary>
-        ContactImpossible
+        ContactImpossible,
+
+        /// <summary>Opt-in unmet food demand exceeded a game viability limit, not a medical death threshold.</summary>
+        HungerLimit,
+        /// <summary>Opt-in unmet water demand exceeded a game viability limit, not a medical death threshold.</summary>
+        ThirstLimit
     }
 
     /// <summary>
@@ -54,7 +59,7 @@ namespace OutOfReach.Simulation
         /// <param name="oxygenDepletedAtSeconds">Simulation time at which stored oxygen reached zero, or null.</param>
         /// <param name="nowSeconds">Current simulation time on the same clock.</param>
         /// <param name="crewCount">Crew size, for the cabin oxygen buffer.</param>
-        public static SurvivalFailure Evaluate(ResourceSnapshot snapshot, double? oxygenDepletedAtSeconds, double nowSeconds, int crewCount)
+        public static SurvivalFailure Evaluate(ResourceSnapshot snapshot, double? oxygenDepletedAtSeconds, double nowSeconds, int crewCount, bool evaluateFoodAndWaterReserves = true)
         {
             if (snapshot.OxygenKg <= 0d && oxygenDepletedAtSeconds.HasValue
                 && nowSeconds - oxygenDepletedAtSeconds.Value >= CabinAtmosphere.OxygenBufferSeconds(crewCount) - TimeToleranceSeconds)
@@ -67,12 +72,12 @@ namespace OutOfReach.Simulation
                 return SurvivalFailure.CarbonDioxideLimit;
             }
 
-            if (snapshot.WaterLitres <= 0d)
+            if (evaluateFoodAndWaterReserves && snapshot.WaterLitres <= 0d)
             {
                 return SurvivalFailure.WaterDepleted;
             }
 
-            if (snapshot.FoodKg <= 0d)
+            if (evaluateFoodAndWaterReserves && snapshot.FoodKg <= 0d)
             {
                 return SurvivalFailure.FoodDepleted;
             }

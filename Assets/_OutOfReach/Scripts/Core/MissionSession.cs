@@ -38,7 +38,7 @@ namespace OutOfReach.Core
         /// True for the physical preflight: the player may move and interact during Planning (to carry crates) and
         /// the cockpit console launches the mission. False keeps planning a pure list: no control before launch.
         /// </param>
-        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false)
+        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null)
         {
             PreflightWalkEnabled = preflightWalk;
             AllowMovementDuringImpact = allowMovementDuringImpact;
@@ -54,7 +54,7 @@ namespace OutOfReach.Core
             Planner = new MissionPlanner(Definition, State, Resources, Events, startingLoadout);
             PlanningDeadline = new PlanningDeadline(Planner, State);
             ClockView = new SimulationClockView(Clock, State);
-            Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics);
+            Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics, survivalExtension, survivalSpec);
             Director.Eva.BindSimulationAdvance(AdvanceSimulation);
 
             Interactions = new InteractionCatalog();
@@ -77,6 +77,16 @@ namespace OutOfReach.Core
             Interactions.Add(new DelegatedInteraction(InteractionIds.SalvagePayload, mods.CheckSalvagePayload, mods.TrySalvagePayload));
             Interactions.Add(new DelegatedInteraction(InteractionIds.Workbench, mods.CheckBuildCartridge, mods.TryBuildCartridge));
             Interactions.Add(new DelegatedInteraction(InteractionIds.AbsorberBay, mods.CheckInstallCartridge, mods.TryInstallCartridge));
+
+            if (survivalExtension)
+            {
+                SurvivalExtension survival = Director.Survival;
+                Interactions.Add(new DelegatedInteraction(InteractionIds.ConsumeRation, survival.CheckConsumeRation, survival.TryConsumeRation));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.DrinkWater, survival.CheckDrinkWater, survival.TryDrinkWater));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.BuildGrowModule, survival.CheckBuildGrowModule, survival.TryBuildGrowModule));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.PlantSeedlings, survival.CheckPlant, survival.TryPlant));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.HarvestCrop, survival.CheckHarvest, survival.TryHarvest));
+            }
 
             Cargo = new CargoLoading(Definition, Planner, State, Events, text => Director.Journal.Record(0d, text));
             foreach (EquipmentDefinition item in Definition.Catalog.Definitions)
@@ -124,6 +134,8 @@ namespace OutOfReach.Core
 
         /// <summary>Payload salvage and the CO2 absorber cartridge (implements IFieldModifications).</summary>
         public FieldModifications FieldModifications => Director.FieldModifications;
+
+        public SurvivalExtension Survival => Director.Survival;
 
         /// <summary>Preflight crate handling: the crate in hands and the carry speed. The bay itself is the planner's draft.</summary>
         public CargoLoading Cargo { get; }
@@ -190,8 +202,8 @@ namespace OutOfReach.Core
 
         /// <summary>
         /// True while the player may move and interact: a running phase (or Planning, when the physical preflight
-        /// is on), not paused and no cinematic in progress. The cinematic lock always releases, because the
-        /// handshake has a fallback timeout.
+        /// is on), not paused and no blocking cinematic. AllowMovementDuringImpact opts out of the Impact lock
+        /// only; every other sequence retains it. The handshake has a fallback timeout.
         /// </summary>
         public bool IsPlayerControlAllowed
         {

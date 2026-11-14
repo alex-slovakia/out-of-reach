@@ -73,6 +73,9 @@ namespace OutOfReach.Core.Runtime
         [Tooltip("Allow player control during the first Impact sequence. Pause and other sequences still lock control.")]
         [SerializeField] private bool allowMovementDuringImpact;
 
+        [Tooltip("Opt-in post-contact survival. Enable only with ration, water and grow-module presentation wired.")]
+        [SerializeField] private bool survivalExtension;
+
         [Tooltip("Feet position and heading the player starts from during the physical preflight. Empty uses Player Spawn.")]
         [SerializeField] private Transform preflightSpawn;
 
@@ -164,6 +167,8 @@ namespace OutOfReach.Core.Runtime
         /// <summary>True when this runtime runs the physical preflight (walking and crates during Planning).</summary>
         public bool PreflightWalk => preflightWalk;
 
+        public ISurvivalExtension Survival => Session != null ? Session.Survival : null;
+
         /// <summary>Mission date on the simulation clock (T0 + elapsed simulated time), for date and "mission day" labels.</summary>
         public MissionCalendar Calendar => Session != null ? Session.Calendar : null;
 
@@ -219,16 +224,22 @@ namespace OutOfReach.Core.Runtime
             evaReentryPoint = reentryPoint;
         }
 
-        /// <summary>
-        /// Explicit preflight wiring for code-built scenes; authored scenes use the serialized fields. Takes effect
-        /// with the next session (StartSession or RestartMission).
-        /// </summary>
         /// <summary>Configures playable impact movement for the next session; default is off.</summary>
         public void ConfigureImpactMovement(bool enabled)
         {
             allowMovementDuringImpact = enabled;
         }
 
+        /// <summary>Configures post-contact survival for the next session. Default false preserves the original ending.</summary>
+        public void ConfigureSurvivalExtension(bool enabled)
+        {
+            survivalExtension = enabled;
+        }
+
+        /// <summary>
+        /// Explicit preflight wiring for code-built scenes; authored scenes use the serialized fields. Takes effect
+        /// with the next session (StartSession or RestartMission).
+        /// </summary>
         public void ConfigurePreflight(bool walkDuringPlanning, Transform spawn)
         {
             preflightWalk = walkDuringPlanning;
@@ -298,7 +309,7 @@ namespace OutOfReach.Core.Runtime
         {
             EndSession();
             string preset = string.IsNullOrWhiteSpace(startingPresetId) ? null : startingPresetId;
-            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact);
+            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact, survivalExtension);
             BindScene();
             if (SessionStarted != null)
             {

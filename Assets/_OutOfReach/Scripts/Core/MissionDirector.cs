@@ -24,8 +24,9 @@ namespace OutOfReach.Core
     /// CO2 absorber cartridge takes up a rising cabin CO2 rate until its capacity is used, split exactly in time.</item>
     /// <item>In Transmission the console first runs a link diagnostic, once: Core requests the FalseSignal
     /// cinematic (the damaged receive buffer replays an old local recording). It grants nothing and is not a reply.
-    /// Only then can the distress call be sent, once; when Earth's reply is received the mission ends as
-    /// RecoveryPossible. If a loss and the reply fall on the same instant, the loss wins.</item>
+    /// Only then can the distress call be sent, once; Earth's reply ends the default slice as RecoveryPossible.
+    /// The opt-in extension instead enters Survival and keeps the same ledger and clock running.
+    /// If a loss and the reply fall on the same instant, the loss wins.</item>
     /// <item>After any ending Core requests the ending cinematics (CommunicationRestored then EndingPullback after
     /// a recovery, EndingPullback after a loss) and then enters Report by itself.</item>
     /// </list>
@@ -50,7 +51,7 @@ namespace OutOfReach.Core
             MissionPlanner planner,
             ResourceLedger resources,
             SimulationClock clock,
-            CinematicCoordinator cinematics)
+            CinematicCoordinator cinematics, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null)
         {
             this.definition = definition ?? throw new ArgumentNullException(nameof(definition));
             this.events = events ?? throw new ArgumentNullException(nameof(events));
@@ -97,6 +98,8 @@ namespace OutOfReach.Core
                 CheckTransmitPrerequisites,
                 IsLinkPowered,
                 events.DeferDispatch);
+            Survival = new SurvivalExtension(survivalExtension, survivalSpec, definition.CrewCount, events, state,
+                resources, clock, cinematics, HasGrowingConditions, RefreshRates, Journal.Record);
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
             events.CommunicationChanged += OnCommunicationChanged;
@@ -110,6 +113,8 @@ namespace OutOfReach.Core
 
         /// <summary>Payload salvage and the CO2 absorber cartridge.</summary>
         public FieldModifications FieldModifications { get; }
+
+        public SurvivalExtension Survival { get; }
 
         /// <summary>The link to Earth: reference distance, light time, the one transmission and the reply timer.</summary>
         public CommunicationSystem Communications { get; }
@@ -292,6 +297,7 @@ namespace OutOfReach.Core
 
             boundary = Math.Min(boundary, Eva.TimeToNextBoundary());
             boundary = Math.Min(boundary, FieldModifications.TimeToNextBoundary());
+            boundary = Math.Min(boundary, Survival.TimeToNextBoundary());
             return Math.Min(boundary, Communications.TimeToNextBoundary());
         }
 
@@ -302,6 +308,7 @@ namespace OutOfReach.Core
         public void AfterSimulationStep(double stepSeconds = 0d)
         {
             RefreshRates();
+            Survival.AdvanceTime(stepSeconds);
             TrackPeakCarbonDioxide();
             EvaluateSurvival();
             if (!state.IsSimulationRunning)
@@ -312,7 +319,15 @@ namespace OutOfReach.Core
             Communications.AdvanceTime(stepSeconds);
             if (Communications.State == CommunicationState.ReplyReceived && state.Outcome == MissionOutcome.None)
             {
-                TryEndMission(MissionOutcome.RecoveryPossible, DescribeRecovery());
+                if (Survival.Enabled)
+                {
+                    if (state.Phase == GamePhase.Transmission && state.TryTransition(GamePhase.Survival).Succeeded)
+                    {
+                        Survival.Begin();
+                        clock.TrySetTimeScale(Survival.Spec.TimeScale);
+                    }
+                }
+                else TryEndMission(MissionOutcome.RecoveryPossible, DescribeRecovery());
             }
         }
 
@@ -324,6 +339,7 @@ namespace OutOfReach.Core
             }
 
             disposed = true;
+            Survival.Dispose();
             events.PhaseChanged -= OnPhaseChanged;
             events.CommunicationChanged -= OnCommunicationChanged;
             events.MissionEnded -= OnMissionEnded;
@@ -372,7 +388,7 @@ namespace OutOfReach.Core
 
         private void OnPhaseChanged(PhaseChanged message)
         {
-            clock.TrySetTimeScale(definition.Scenario.Pacing.GetTimeScale(message.Current));
+            clock.TrySetTimeScale(message.Current == GamePhase.Survival ? Survival.Spec.TimeScale : definition.Scenario.Pacing.GetTimeScale(message.Current));
             if (message.Previous == GamePhase.Planning && message.Current == GamePhase.Intro)
             {
                 MissionConfiguration launched = planner.LaunchedConfiguration;
@@ -595,7 +611,18 @@ namespace OutOfReach.Core
                 return Fail(CommandFailure.PreconditionsNotMet, "The antenna must be repaired before transmitting.");
             }
 
+            if (to == GamePhase.Survival && (!Survival.Enabled || Communications.State != CommunicationState.ReplyReceived))
+                return Fail(CommandFailure.PreconditionsNotMet, "The optional survival chapter starts only after actual restored contact.");
+
             return Ok("Transition allowed.");
+        }
+
+        private bool HasGrowingConditions()
+        {
+            if (!Systems.Power.IsOperational || !Systems.LifeSupport.IsOperational || PowerState.Brownout) return false;
+            // Check the added light/fan load before accepting planting, including a battery already at zero.
+            double extra = Survival.GrowStage == GrowModuleStage.Growing ? 0d : Survival.Spec.GrowPowerWatts;
+            return resources.Snapshot.BatteryKWh > 0d || PowerState.GenerationWatts >= PowerState.LoadWatts + extra;
         }
 
         private void RefreshRates()
@@ -608,7 +635,7 @@ namespace OutOfReach.Core
 
             var inputs = new ShipPowerInputs(
                 definition.CrewCount,
-                Math.Max(0d, launched.RequiredPowerWatts - FieldModifications.RemovedLoadWatts),
+                Math.Max(0d, launched.RequiredPowerWatts - FieldModifications.RemovedLoadWatts) + (Survival != null ? Survival.GrowLoadWatts : 0d),
                 launched.AvailablePowerWatts,
                 Systems.Power.Condition01,
                 Systems.LifeSupport.Condition01,
@@ -623,6 +650,9 @@ namespace OutOfReach.Core
                     rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond - absorbed);
             }
 
+            if (Survival != null && Survival.IsActive)
+                rates = new ResourceRates(rates.OxygenUseKgPerSecond, Survival.GrowWaterLitresPerSecond, 0d,
+                    rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond);
             resources.TrySetRates(rates);
         }
 
@@ -654,7 +684,8 @@ namespace OutOfReach.Core
                 resources.Snapshot,
                 resources.GetDepletionTime(ResourceId.OxygenKg),
                 resources.ElapsedSimulationSeconds,
-                definition.CrewCount);
+                definition.CrewCount, !Survival.IsActive);
+            if (failure == SurvivalFailure.None && Survival.IsActive) failure = Survival.NeedsFailure;
             if (failure != SurvivalFailure.None)
             {
                 LossCause = failure;
@@ -759,6 +790,10 @@ namespace OutOfReach.Core
                         + (powerDown
                             ? " The battery ran flat because power distribution was not repaired, so the repaired scrubbers stopped."
                             : " The battery ran flat and the scrubbers stopped.");
+                case SurvivalFailure.HungerLimit:
+                    return $"Unmet food demand reached the scenario's game viability limit {elapsed} after launch. This is a mission failure assumption, not a medical starvation threshold.";
+                case SurvivalFailure.ThirstLimit:
+                    return $"Unmet water demand reached the scenario's game viability limit {elapsed} after launch. This is a mission failure assumption, not a medical dehydration threshold.";
                 case SurvivalFailure.WaterDepleted:
                     return $"Water reserve exhausted {elapsed} after launch.";
                 case SurvivalFailure.FoodDepleted:

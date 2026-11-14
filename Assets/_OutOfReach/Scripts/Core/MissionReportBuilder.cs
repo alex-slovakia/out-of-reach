@@ -76,7 +76,7 @@ namespace OutOfReach.Core
                 AbsorbedCarbonDioxideKg = mods.AbsorbedCarbonDioxideKg,
                 Communication = new ReportCommunication(link, director.Calendar, definition.Scenario.Pacing.TransmissionTimeScale),
                 FalseSignalReplayed = director.LinkDiagnosticRequested,
-                Holding = HoldingEstimate.Compute(atEnd, session.Resources.Rates),
+                Holding = HoldingEstimate.Compute(atEnd, HoldingProjectionRates(session)),
                 Timeline = director.Journal.Snapshot(),
                 PlayedRealSeconds = session.PlayedRealSeconds,
                 JumpedSimulationSeconds = session.JumpedSimulationSeconds,
@@ -258,6 +258,17 @@ namespace OutOfReach.Core
             return Section(MissionReportSections.Outcome, "Outcome", lines);
         }
 
+        private static ResourceRates HoldingProjectionRates(MissionSession session)
+        {
+            ResourceRates rates = session.Resources.Rates;
+            if (!session.Survival.ContactRestoredAtSimulationSeconds.HasValue) return rates;
+            // Projection only. Actual food/water debits remain exclusively the player's commands and crop irrigation.
+            double crewDaysPerSecond = session.Definition.CrewCount / CrewMetabolicAssumptions.SecondsPerDay;
+            return new ResourceRates(rates.OxygenUseKgPerSecond,
+                CrewMetabolicAssumptions.WaterLitresPerCrewDay * crewDaysPerSecond + rates.WaterUseLitresPerSecond,
+                CrewMetabolicAssumptions.FoodKgPerCrewDay * crewDaysPerSecond, rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond);
+        }
+
         private static string DescribeCause(SurvivalFailure cause)
         {
             switch (cause)
@@ -266,6 +277,10 @@ namespace OutOfReach.Core
                     return "Oxygen: the stored reserve and then the cabin air ran out.";
                 case SurvivalFailure.CarbonDioxideLimit:
                     return "Carbon dioxide: the cabin reached the emergency level.";
+                case SurvivalFailure.HungerLimit:
+                    return "Unmet food demand reached the scenario's game viability limit; not a medical starvation threshold.";
+                case SurvivalFailure.ThirstLimit:
+                    return "Unmet water demand reached the scenario's game viability limit; not a medical dehydration threshold.";
                 case SurvivalFailure.WaterDepleted:
                     return "Water: the reserve ran out.";
                 case SurvivalFailure.FoodDepleted:
@@ -366,7 +381,7 @@ namespace OutOfReach.Core
                     string battery = expenditure.BatteryKWh >= 0d
                         ? string.Format(Invariant, "battery net {0:0.00} kWh drawn", expenditure.BatteryKWh)
                         : string.Format(Invariant, "battery net {0:0.00} kWh recharged", -expenditure.BatteryKWh);
-                    lines.Add(Line("Used over time", string.Format(Invariant, "{0:0.00} kg oxygen, {1:0.0} L water, {2:0.0} kg food; {3}",
+                    lines.Add(Line(session.Survival.ContactRestoredAtSimulationSeconds.HasValue ? "Net use including survival actions" : "Used over time", string.Format(Invariant, "{0:0.00} kg oxygen, {1:0.0} L water, {2:0.0} kg food; {3}",
                         expenditure.OxygenKg, expenditure.WaterLitres, expenditure.FoodKg, battery)));
                     continue;
                 }
@@ -385,6 +400,12 @@ namespace OutOfReach.Core
                     DescribeSpending(expenditure)));
             }
 
+            if (session.Survival.ContactRestoredAtSimulationSeconds.HasValue)
+            {
+                lines.Add(Line("Survival accounting", "Food and drinking water were spent by crew commands; crop irrigation and power used the same ledger. Net use includes building, planting and the one harvest credit; actions are in the timeline."));
+                lines.Add(Line("Holding projection", "Food and water assume full BVAD crew-day portions, not the zero automatic meal rate. This estimate is not a rescue ETA."));
+                lines.Add(Line("Grow module", session.Survival.GrowStage.ToString()));
+            }
             return Section(MissionReportSections.Resources, "Resources", lines);
         }
 

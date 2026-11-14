@@ -1,6 +1,6 @@
 namespace OutOfReach.Contracts
 {
-    public enum GamePhase { Planning, Intro, Emergency, Repair, Eva, Transmission, Outcome, Report }
+    public enum GamePhase { Planning, Intro, Emergency, Repair, Eva, Transmission, Outcome, Report, Survival }
     public enum MissionOutcome { None, RecoveryPossible, Lost }
     public enum ShipSystemId { Power, LifeSupport, Antenna }
     public enum ResourceId { OxygenKg, WaterLitres, FoodKg, BatteryKWh, SparePartsCount }

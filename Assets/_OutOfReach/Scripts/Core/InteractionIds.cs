@@ -37,6 +37,13 @@ namespace OutOfReach.Core
         /// <summary>Fixed slot on the life-support unit: install a CO2 absorber cartridge.</summary>
         public const string AbsorberBay = "absorber-bay";
 
+        /// <summary>Optional post-contact actions, registered only when the survival extension is enabled.</summary>
+        public const string ConsumeRation = "survival-ration";
+        public const string DrinkWater = "survival-water";
+        public const string BuildGrowModule = "grow-build";
+        public const string PlantSeedlings = "grow-plant";
+        public const string HarvestCrop = "grow-harvest";
+
         /// <summary>Prefix of a type's supply pallet during preflight: "cargo-supply:" + equipment ID.</summary>
         public const string CargoSupplyPrefix = "cargo-supply:";
 

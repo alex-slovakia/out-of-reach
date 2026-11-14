@@ -196,6 +196,13 @@ namespace OutOfReach.Core
             ReportFailure(exception);
         }
 
+        // Core-local observable state uses the same transaction queue as the canonical mission events.
+        internal void EnqueueObservation(Action observation)
+        {
+            pending.Enqueue(observation);
+            if (!dispatching && deferDepth == 0) Drain();
+        }
+
         private void Enqueue<T>(SubscriberList<T> subscribers, T message)
         {
             pending.Enqueue(() => subscribers.Dispatch(message, reportFailure));
