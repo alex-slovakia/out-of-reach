@@ -519,31 +519,6 @@
    ],
    "group": "ExteriorParts"
   },
-  "Antenna_Elevation": {
-   "triangles": 2184,
-   "per_material": {
-    "A7_Aluminum": 624,
-    "A7_AnodizedBlack": 84,
-    "A7_PaintGray": 260,
-    "A7_PaintWhite": 1216
-   },
-   "bounds_min": [
-    3.728,
-    2.0403,
-    12.3694
-   ],
-   "bounds_max": [
-    4.4942,
-    3.259,
-    13.4536
-   ],
-   "origin": [
-    3.8302346229025592,
-    2.5654365885119215,
-    12.72
-   ],
-   "group": "ExteriorParts"
-  },
   "SuitLocker_Suit": {
    "triangles": 3562,
    "per_material": {
@@ -628,6 +603,14 @@
   }
  },
  "anchors": {
+  "Antenna_ElevationMount": {
+   "group": "ExteriorParts",
+   "point": [
+    3.8302,
+    2.5654,
+    12.72
+   ]
+  },
   "Antenna_ServiceSocket": {
    "group": "ExteriorParts",
    "point": [
@@ -1261,7 +1244,7 @@
    ]
   }
  ],
- "triangles_total": 290998,
+ "triangles_total": 288814,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",

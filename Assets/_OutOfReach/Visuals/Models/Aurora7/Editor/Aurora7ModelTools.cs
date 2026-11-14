@@ -377,8 +377,8 @@ namespace OutOfReach.ModelTools
             // The gimbal objects are re-parented under pivots, which a connected model instance does not allow.
             PrefabUtility.UnpackPrefabInstance(exteriorParts, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             Transform azimuth = exteriorParts.transform.Find("Antenna_Azimuth");
-            Transform elevation = exteriorParts.transform.Find("Antenna_Elevation");
-            if (azimuth == null || elevation == null)
+            Transform elevationMount = exteriorParts.transform.Find("Antenna_ElevationMount");
+            if (azimuth == null || elevationMount == null)
             {
                 throw new InvalidOperationException("A7_ExteriorParts.fbx lacks the antenna gimbal objects");
             }
@@ -390,9 +390,16 @@ namespace OutOfReach.ModelTools
             azimuthPivot.SetPositionAndRotation(azimuth.position, padRotation);
             Transform elevationPivot = new GameObject("Antenna_ElevationPivot").transform;
             elevationPivot.SetParent(azimuthPivot, false);
-            elevationPivot.SetPositionAndRotation(elevation.position, padRotation);
+            elevationPivot.SetPositionAndRotation(elevationMount.position, padRotation);
             azimuth.SetParent(azimuthPivot, true);
-            elevation.SetParent(elevationPivot, true);
+            UnityEngine.Object.DestroyImmediate(elevationMount.gameObject);
+
+            // The reflector assembly is the prop author's part, authored in the elevation pivot's own frame
+            // (X trunnion, Y hull normal, Z aft) with the delivered pose baked in.
+            GameObject reflector = Instantiate(Root + "/Props/AntennaReflector/AntennaReflector.prefab", elevationPivot);
+            reflector.name = "Antenna_Elevation";
+            reflector.transform.localPosition = Vector3.zero;
+            reflector.transform.localRotation = Quaternion.identity;
 
             var props = new GameObject("Props");
             props.transform.SetParent(root.transform, false);
@@ -508,7 +515,7 @@ namespace OutOfReach.ModelTools
                 }
 
                 Transform t = renderer.transform;
-                if (Quaternion.Angle(t.rotation, Quaternion.identity) > 0.01f && !IsUnder(t, "Props"))
+                if (Quaternion.Angle(t.rotation, Quaternion.identity) > 0.01f && !IsUnder(t, "Props") && !IsUnder(t, "Antenna_Elevation"))
                 {
                     problems.Add(renderer.name + " is not at identity rotation: " + t.rotation.eulerAngles);
                 }
@@ -546,6 +553,7 @@ namespace OutOfReach.ModelTools
             CheckProxy(instance, "SuitLocker_Door", new Vector3(1.812f, 0.16f, 19.588f), problems);
             // The antenna's manual drive socket must sit on the AntennaRepair anchor.
             CheckProxy(instance, "Antenna_ServiceSocket", new Vector3(3.2f, 2.4f, 13f), problems);
+            CheckProxy(instance, "Antenna_Elevation", new Vector3(3.83f, 2.565f, 12.72f), problems);
             int colliders = instance.GetComponentsInChildren<Collider>(true).Length;
             int activeColliders = instance.GetComponentsInChildren<Collider>(false).Length;
             if (instance.GetComponentsInChildren<Camera>(true).Length + instance.GetComponentsInChildren<AudioListener>(true).Length +

@@ -1655,34 +1655,12 @@ def rcs_quad(m, angle_deg, radius, z):
 
 
 # ----------------------------------------------------------------------------- antenna (asset A07)
-def dish(radius=0.62, depth=0.19, thickness=0.014, segs=32):
-    """Parabolic reflector as a closed shell with feed, struts and backing tubes. Axis +y, vertex at the origin."""
-    m = Model("Dish")
-    steps = 9
-    back = [(max(0.03, radius * s), depth * s * s - thickness) for s in np.linspace(0.0, 1.0, steps)]
-    front = [(max(0.03, radius * s), depth * s * s) for s in np.linspace(1.0, 0.0, steps)]
-    m.lathe(WHITE, (0, 0, 0), (0, 1, 0), back + [(radius + 0.006, depth - thickness / 2)] + front, segs, None, (True, True))
-    focus = radius * radius / (4.0 * depth)
-    m.lathe(ANO, (0, 0, 0), (0, 1, 0), [(0.055, focus - 0.10), (0.022, focus - 0.045), (0.022, focus + 0.02)], 14, None, (True, True))
-    for a in (90, 210, 330):
-        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
-        m.tube(ALU, [(radius * 0.97 * ca, depth * 0.94, radius * 0.97 * sa), (0.03 * ca, focus - 0.02, 0.03 * sa)], 0.008, 6)
-    m.cyl(GRAY, (0, -0.075, 0), (0, -thickness + 0.002, 0), 0.13, 20, 0.006)
-    for a in range(0, 360, 45):
-        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
-        m.tube(ALU, [(r * ca, depth * (r / radius) ** 2 - thickness - 0.012, r * sa) for r in (0.12, 0.36, 0.59)], 0.012, 6)
-    ring_r = 0.40
-    ring_y = depth * (ring_r / radius) ** 2 - thickness - 0.012
-    m.tube(ALU, [(ring_r * math.cos(math.radians(a)), ring_y, ring_r * math.sin(math.radians(a))) for a in range(0, 360, 20)],
-           0.010, 6, 0.0, None, True)
-    return m
-
-
 def antenna(art):
     """High-gain antenna on its hull pad (asset A07). Pad space: z outwards from the skin, y aft, x around the hull.
 
     Returns (static base, parts, anchors). The manual drive socket is on the aft service deck, on the pad's
-    centre line and level with the AntennaRepair anchor (0.31 m off the skin)."""
+    centre line and level with the AntennaRepair anchor (0.31 m off the skin). Base, mast and yoke are built
+    here; the reflector assembly on the trunnion is a prop."""
     base = Model("AntennaBase")
     deck = 0.30
     mast_y = -0.28
@@ -1726,19 +1704,10 @@ def antenna(art):
     azimuth.cyl(GRAY, (0.24, mast_y, 0.96), (0.33, mast_y, 0.96), 0.06, 16, 0.006)
     azimuth.local_origin = (0.0, mast_y, 0.62)
 
-    elevation = Model("Antenna_Elevation")
-    tilt = math.radians(30.0)               # boresight leans aft from the pad normal
-    axis = np.array([0.0, math.sin(tilt), math.cos(tilt)])
-    hub = np.array([0.0, mast_y, 0.96])
-    vertex = hub + axis * 0.20
-    elevation.cyl(ALU, (-0.18, mast_y, 0.96), (0.18, mast_y, 0.96), 0.035, 12)
-    elevation.box(GRAY, tuple(hub), (0.22, 0.16, 0.16), 0.012)
-    elevation.cyl(GRAY, tuple(hub), tuple(vertex - axis * 0.07), 0.05, 14)
-    elevation.instance(dish(), basis(vertex, (1, 0, 0), axis, np.cross((1.0, 0.0, 0.0), axis)))
-    elevation.local_origin = (0.0, mast_y, 0.96)
-
-    parts = {"Antenna_Azimuth": azimuth, "Antenna_Elevation": elevation}
-    anchors = {"Antenna_ServiceSocket": (0.0, 0.0, 0.308)}
+    # The elevation part (trunnion, hub, reflector, feed) is the prop Props/AntennaReflector; the editor tool hangs
+    # it on a pivot created at this helper point, 0.34 m above the azimuth pivot.
+    parts = {"Antenna_Azimuth": azimuth}
+    anchors = {"Antenna_ServiceSocket": (0.0, 0.0, 0.308), "Antenna_ElevationMount": (0.0, mast_y, 0.96)}
     return base, parts, anchors
 
 

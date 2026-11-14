@@ -36,9 +36,10 @@ practice. Everything is function first:
   panels and viewports.
 - **Exterior:** pressure hull with frames and seams, forward window face, aft EVA hatch and porch, gold EVA
   handrails to the antenna work site, two solar wings, body radiators, eight reaction-control quads.
-- **Antenna (asset A07):** 1.24 m dish with feed and backing tubes on a two-axis gimbal, standing on the hull
-  pad at AntennaRepair. The base housing carries an amber-edged service deck with the manual drive socket,
-  an access cover, a tether point and two test connectors.
+- **Antenna (asset A07):** a two-axis gimbal on the hull pad at AntennaRepair. The base housing carries an
+  amber-edged service deck with the manual drive socket, an access cover, a tether point and two test
+  connectors. The 1.24 m reflector assembly on the trunnion (gore seams, eight ribs and a ring behind the
+  dish, tripod, feed horn) is the prop author's part, option B of the integrator's decision of 14 Nov.
 
 All geometry and textures are original and generated from the scripts in `Source/`. See `LICENSES.md`.
 
@@ -81,8 +82,9 @@ from just inside the inner hatch towards the outer hatch and the starboard wall.
 | `Materials/*.mat` | 39 URP Lit materials created from `Source/a7_materials.json`. |
 | `Textures/` | 11 tiling PBR sets (BaseColor, Normal, MODS), the label atlas and the display atlas, with their JSON maps. |
 | `Props/ServicePanel/` | EPS-2 panel from the prop author's chat (its own README, licences and previews). The FBX is its author's second export, which holds no local path; the saved Blender file is left out for the same reason, as its README recommends. |
+| `Props/AntennaReflector/` | Reflector assembly of the antenna from the same chat, imported unchanged (manifest 39 of 39). It replaces the procedural reflector of `c1fa9c2` inside the same envelope. |
 | `Props/LifeSupportRack/` | ARS-1 unit from the same chat, imported unchanged; identical to branch `feature/prop-life-support-rack` at `8c28054`. Its README still describes the rack-face mount it was built for. |
-| `Previews/` | Genuine renders: `A7_unity_urp_*` from Unity URP (the delivered prefab), `A7_blender_cycles_*` from Blender Cycles (generated meshes only, so without the EPS-2 and ARS-1 props; their wall plinths show instead). `..._engineering_r02_cover_fitted` shows the cabinet with its cover. |
+| `Previews/` | Genuine renders: `A7_unity_urp_*` from Unity URP (the delivered prefab), `A7_blender_cycles_*` from Blender Cycles (generated meshes only, so interiors without the EPS-2 and ARS-1 props; their wall plinths show instead. There is no Cycles exterior still, because the antenna's reflector is a prop too). `..._engineering_r02_cover_fitted` shows the cabinet with its cover. |
 | `Editor/Aurora7ModelTools.cs` | Editor-only: importer settings, materials, prefab, validation, preview stills. |
 | `Source/` | `a7kit.py`, `a7_ship.py`, `a7_textures.py`, `build_aurora7.py`, `a7_materials.json` — the editable source. |
 
@@ -140,11 +142,13 @@ Instantiate the prefab at the ship origin with identity rotation and unit scale.
   | Object | Position (ship metres) | Use |
   |---|---|---|
   | `Antenna_AzimuthPivot` | (3.501, 2.479, 12.72) | Local **Y** is the hull normal at the pad. Rotate about local Y to slew in azimuth. Holds `Antenna_Azimuth` (turntable and yoke) and the elevation pivot. |
-  | `Antenna_ElevationPivot` | (3.830, 2.565, 12.72), child of the azimuth pivot | Local **X** is the trunnion. Rotate about local X to change elevation. Holds `Antenna_Elevation` (trunnion, boom, dish, feed). Delivered with the boresight leaning 30° aft of the hull normal. |
+  | `Antenna_ElevationPivot` | (3.830, 2.565, 12.72), child of the azimuth pivot | Local **X** is the trunnion. Rotate about local X to change elevation: a positive angle lowers the boresight towards aft, a negative one raises it towards the hull normal. Holds `Antenna_Elevation`, an instance of `Props/AntennaReflector` (trunnion, hub, reflector, feed; the renderer is its child `Reflector`). Delivered with the boresight leaning 30° aft of the hull normal, as in `c1fa9c2`. |
   | `Antenna_ServiceSocket` | (3.2, 2.4, 13.0) | Empty on the manual drive socket, on the AntennaRepair anchor. |
 
   The base housing, mast and service deck are part of the static `A7_Exterior` mesh. Deck labels read from
-  aft, where the handrail path arrives. Nothing limits the gimbal's travel: a large elevation change will put
+  aft, where the handrail path arrives. `Antenna_Elevation` is authored in the elevation pivot's frame, so it
+  is the one model object that is not at identity world rotation; the pivots and the socket are exactly where
+  `c1fa9c2` had them. Nothing limits the gimbal's travel: a large elevation change will put
   the dish through the yoke or the hull.
 - **Props:** `LifeSupportRack_Ars1`, the ARS-1 unit, on the wall plinth forward of the scrubber rack: pivot at
   (2.236, 0.45, 6.67), yaw −90. `CanisterA`, `CanisterB` and `FanRotor` are separate objects, see
@@ -188,10 +192,10 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | Door leaves (4) | 12,352 | 6–8 | at the two hatch planes |
 | Engineering parts (7 meshes) | 5,248 | 1–4 | inside the two service racks |
 | Airlock parts (3 meshes) | 4,374 | 2–12 | suit locker and pressure station |
-| Antenna gimbal (2 meshes) | 2,892 | 2–4 | on the hull pad at AntennaRepair |
+| Antenna gimbal (2 meshes) | 4,346 | 1–2 | on the hull pad at AntennaRepair; the reflector is 3,638 of them |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
 | ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
-| **Total** | **305,016** | **47 distinct** | 43 textures, 29 renderers, 48 colliders of which 46 active |
+| **Total** | **306,470** | **48 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
 around the flight deck, 6.0 m aft, 24.2 m long; solar wings span 24.7 m.
@@ -223,7 +227,8 @@ without rewriting the FBX files.
   - every renderer uses the external URP Lit materials, none missing;
   - three collision proxies at known asymmetric positions confirm axes, handedness and scale;
   - one part pivot from each rack and one helper point are checked against the generator's numbers to 1 cm;
-  - the antenna's drive socket is checked against the AntennaRepair anchor to 1 cm;
+  - the antenna's drive socket is checked against the AntennaRepair anchor to 1 cm, and the reflector's pivot
+    against the elevation pivot;
   - the dial pointer's and the locker door's pivots are checked the same way;
   - the prefab contains no camera, light, audio listener or script;
   - thirteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.

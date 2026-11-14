@@ -13,6 +13,7 @@ except the one third-party input listed below. Nothing was downloaded to make it
 | Materials, prefab, editor tool, scripts | Written for this project | Original team work |
 | `Props/ServicePanel/**` | Authored by the prop author's Claude chat for this team, imported as delivered except for its saved Blender file, which is left out | Original team work; see `Props/ServicePanel/README.md` |
 | `Props/LifeSupportRack/**` | Authored by the same chat for this team, imported unchanged | Original team work; see `Props/LifeSupportRack/README.md` |
+| `Props/AntennaReflector/**` | Authored by the same chat for this team, imported unchanged | Original team work; see `Props/AntennaReflector/README.md` |
 
 ## Third-party input
 

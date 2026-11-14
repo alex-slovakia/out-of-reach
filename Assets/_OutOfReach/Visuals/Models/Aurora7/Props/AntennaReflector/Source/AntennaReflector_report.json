@@ -1,0 +1,49 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/AntennaReflector_BaseColor.png",
+    "Metallic": "textures/AntennaReflector_Metallic.png",
+    "Roughness": "textures/AntennaReflector_Roughness.png",
+    "Occlusion": "textures/AntennaReflector_Occlusion.png",
+    "MetallicSmoothness": "textures/AntennaReflector_MetallicSmoothness.png"
+  },
+  "texture_size": 2048,
+  "dimensions_m": {
+    "width_x": 1.252,
+    "depth_y": 1.0923,
+    "height_z": 0.7575
+  },
+  "bounds_min": [
+    -0.626,
+    -0.7379,
+    -0.1043
+  ],
+  "bounds_max": [
+    0.626,
+    0.3544,
+    0.6532
+  ],
+  "triangles": {
+    "Reflector": 3638
+  },
+  "triangles_total": 3638,
+  "object_origins": {
+    "Reflector": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "boresight": [
+    0.0,
+    -0.5,
+    0.866
+  ],
+  "materials": {
+    "Reflector": [
+      "AR_AntennaReflector"
+    ]
+  }
+}
