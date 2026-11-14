@@ -513,5 +513,91 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(releases, Is.EqualTo(1));
             Assert.That(Vector3.Distance(Position, before), Is.LessThan(1e-3f), "no pull or teleport");
         }
+
+        /// <summary>Stands the player on the cabin floor at (x, z) and lets the walking controller settle there.</summary>
+        private IEnumerator StandOnFloor(float x, float z)
+        {
+            Place(new Vector3(x, 50.02f, z));
+            yield return Frames(10);
+            Assert.That(Position.y, Is.EqualTo(50f).Within(0.05f), "standing on the floor");
+        }
+
+        // MICRO-ENTRY (Codex 6883884848): entering float from real foot support where no surface is within hand reach.
+        [UnityTest]
+        public IEnumerator FootSupportEntry_StartsFloatOnTheCentreAisle_AtRest_WithoutAnyMove_AndIsIdempotent()
+        {
+            yield return StandOnFloor(0f, 1.5f);
+            Assert.That(Player.EnterFloat(), Is.EqualTo(FloatActionResult.NoSurface), "EnterFloat unchanged: no surface within hand reach mid-aisle");
+            Assert.That(Player.IsFloating, Is.False);
+
+            Vector3 standing = Position;
+            Done(Player.EnterFloatFromFootSupport());
+            Assert.That(Player.IsFloating, Is.True);
+            Assert.That(Player.FloatVelocity, Is.EqualTo(Vector3.zero), "no impulse");
+            Assert.That(Player.HeldHandhold, Is.Null);
+            Assert.That(Vector3.Distance(Position, standing), Is.LessThan(1e-6f), "no teleport");
+            yield return Frames(25);
+            Assert.That(Vector3.Distance(Position, standing), Is.LessThan(1e-4f), "no gravity and no drift without a push");
+
+            Done(Player.EnterFloatFromFootSupport());
+            Assert.That(Player.IsFloating, Is.True, "repeat: idempotent");
+            Assert.That(Player.FloatVelocity, Is.EqualTo(Vector3.zero));
+            Assert.That(Vector3.Distance(Position, standing), Is.LessThan(1e-4f));
+
+            Done(Player.TryPushFromFootContact(Vector3.up, 0.4f));
+            Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.4f).Within(1e-5f), "the floor push stays the separate, deliberate command");
+        }
+
+        [UnityTest]
+        public IEnumerator FootSupportEntry_IsRefused_MidAir_OverATrigger_WhenControlIsDenied_AndOnTheRoute()
+        {
+            Place(new Vector3(0f, 51f, 1.5f));
+            Vector3 midAir = Position;
+            Assert.That(Player.EnterFloatFromFootSupport(), Is.EqualTo(FloatActionResult.NoSurface), "never granted mid-air");
+            Assert.That(Player.IsFloating, Is.False);
+            Assert.That(Vector3.Distance(Position, midAir), Is.LessThan(1e-6f), "a refusal moves nothing");
+
+            Collider pad = harness.AddWall(new Vector3(0f, 50.95f, 1.5f), new Vector3(0.6f, 0.08f, 0.6f)).GetComponent<Collider>();
+            pad.isTrigger = true;
+            Physics.SyncTransforms();
+            Assert.That(Player.EnterFloatFromFootSupport(), Is.EqualTo(FloatActionResult.NoSurface), "a trigger under the feet is not support");
+            Assert.That(Player.IsFloating, Is.False);
+            pad.gameObject.SetActive(false);
+            Physics.SyncTransforms();
+
+            yield return Frames(40);
+            Assert.That(Position.y, Is.EqualTo(50f).Within(0.05f), "walking gravity still applied after the refusals");
+
+            gateOpen = false;
+            Assert.That(Player.EnterFloatFromFootSupport(), Is.EqualTo(FloatActionResult.ControlDenied), "paused or in a cinematic");
+            Assert.That(Player.IsFloating, Is.False);
+            gateOpen = true;
+
+            Player.EnterRoute(harness.Route);
+            Assert.That(Player.EnterFloatFromFootSupport(), Is.EqualTo(FloatActionResult.OnRoute));
+            Assert.That(Player.IsFloating, Is.False);
+            Player.ExitRoute(new Vector3(0f, 50.02f, 1.5f), 0f);
+            Physics.SyncTransforms();
+            yield return Frames(10);
+
+            Done(Player.EnterFloatFromFootSupport());
+            Assert.That(Player.IsFloating, Is.True, "landed on real support: granted");
+        }
+
+        [UnityTest]
+        public IEnumerator AfterAFootSupportEntry_APushUpStopsAtTheCeiling_WithoutPenetrating()
+        {
+            yield return StandOnFloor(0f, 1.5f);
+            Done(Player.EnterFloatFromFootSupport());
+            Done(Player.TryPushFromFootContact(Vector3.up, 1f));
+            yield return Frames(120);
+
+            CharacterController capsule = Player.GetComponent<CharacterController>();
+            float top = Position.y + capsule.center.y + (capsule.height * 0.5f);
+            Assert.That(top, Is.LessThanOrEqualTo(53f + 1e-3f), "the head stops at the ceiling (bottom face y = 53)");
+            Assert.That(top, Is.GreaterThan(52.9f), "it got there");
+            Assert.That(Player.FloatVelocity.y, Is.EqualTo(0f).Within(1e-4f), "inelastic stop");
+            Assert.That(Player.IsFloating, Is.True);
+        }
     }
 }
