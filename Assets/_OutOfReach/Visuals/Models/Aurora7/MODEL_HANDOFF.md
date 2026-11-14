@@ -65,7 +65,7 @@ view, looking aft from just inside the forward hatch.
 | `Meshes/a7_unity_import_report.json` | Unity-side counts, bounds and validation result. |
 | `Materials/*.mat` | 39 URP Lit materials created from `Source/a7_materials.json`. |
 | `Textures/` | 11 tiling PBR sets (BaseColor, Normal, MODS), the label atlas and the display atlas, with their JSON maps. |
-| `Props/ServicePanel/` | EPS-2 panel from the prop author's chat, imported unchanged (its own README, licences and previews). |
+| `Props/ServicePanel/` | EPS-2 panel from the prop author's chat (its own README, licences and previews). The FBX is its author's second export, which holds no local path; the saved Blender file is left out for the same reason, as its README recommends. |
 | `Props/LifeSupportRack/` | ARS-1 unit from the same chat, imported unchanged; identical to branch `feature/prop-life-support-rack` at `8c28054`. Its README still describes the rack-face mount it was built for. |
 | `Previews/` | Genuine renders: `A7_unity_urp_*` from Unity URP (the delivered prefab), `A7_blender_cycles_*` from Blender Cycles (generated meshes only, so without the EPS-2 and ARS-1 props; their wall plinths show instead). `..._engineering_r02_cover_fitted` shows the cabinet with its cover. |
 | `Editor/Aurora7ModelTools.cs` | Editor-only: importer settings, materials, prefab, validation, preview stills. |
@@ -201,7 +201,8 @@ without rewriting the FBX files.
 - `python tools/verify_repository.py` passes on the branch.
 - The FBX files are now exported without texture records and hold no local path (checked by searching the
   files). The exports in `9878304` and `18339a3` embedded the absolute texture paths of the build machine;
-  nothing depends on those paths.
+  nothing depends on those paths. The EPS-2 panel's FBX carried such paths up to `c1fa9c2` and was replaced by
+  its author's clean export after it.
 
 The preview lighting (warm spot lights at the luminaires, one amber point light at the work-light anchor, a
 flat ambient term, a warm reflection box, ACES and a little bloom) exists only inside the capture method. It
