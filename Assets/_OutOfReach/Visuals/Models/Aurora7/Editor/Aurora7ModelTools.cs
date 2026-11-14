@@ -366,6 +366,10 @@ namespace OutOfReach.ModelTools
             // The fitted cover is delivered switched off, so the breaker cabinet reads as open (review-01 R02).
             cover.gameObject.SetActive(false);
 
+            // Airlock parts: the suit, the glazed locker door, the pressure dial's pointer and a helper point.
+            GameObject airlockParts = Instantiate(Root + "/Meshes/A7_AirlockParts.fbx", root.transform);
+            airlockParts.name = "AirlockParts";
+
             // Antenna gimbal. The meshes keep ship axes; the two pivots give the integrator usable axes:
             // local Y is the hull normal at the pad (azimuth), local X is the trunnion (elevation).
             GameObject exteriorParts = Instantiate(Root + "/Meshes/A7_ExteriorParts.fbx", root.transform);
@@ -373,8 +377,8 @@ namespace OutOfReach.ModelTools
             // The gimbal objects are re-parented under pivots, which a connected model instance does not allow.
             PrefabUtility.UnpackPrefabInstance(exteriorParts, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             Transform azimuth = exteriorParts.transform.Find("Antenna_Azimuth");
-            Transform elevation = exteriorParts.transform.Find("Antenna_Elevation");
-            if (azimuth == null || elevation == null)
+            Transform elevationMount = exteriorParts.transform.Find("Antenna_ElevationMount");
+            if (azimuth == null || elevationMount == null)
             {
                 throw new InvalidOperationException("A7_ExteriorParts.fbx lacks the antenna gimbal objects");
             }
@@ -386,9 +390,16 @@ namespace OutOfReach.ModelTools
             azimuthPivot.SetPositionAndRotation(azimuth.position, padRotation);
             Transform elevationPivot = new GameObject("Antenna_ElevationPivot").transform;
             elevationPivot.SetParent(azimuthPivot, false);
-            elevationPivot.SetPositionAndRotation(elevation.position, padRotation);
+            elevationPivot.SetPositionAndRotation(elevationMount.position, padRotation);
             azimuth.SetParent(azimuthPivot, true);
-            elevation.SetParent(elevationPivot, true);
+            UnityEngine.Object.DestroyImmediate(elevationMount.gameObject);
+
+            // The reflector assembly is the prop author's part, authored in the elevation pivot's own frame
+            // (X trunnion, Y hull normal, Z aft) with the delivered pose baked in.
+            GameObject reflector = Instantiate(Root + "/Props/AntennaReflector/AntennaReflector.prefab", elevationPivot);
+            reflector.name = "Antenna_Elevation";
+            reflector.transform.localPosition = Vector3.zero;
+            reflector.transform.localRotation = Quaternion.identity;
 
             var props = new GameObject("Props");
             props.transform.SetParent(root.transform, false);
@@ -504,7 +515,7 @@ namespace OutOfReach.ModelTools
                 }
 
                 Transform t = renderer.transform;
-                if (Quaternion.Angle(t.rotation, Quaternion.identity) > 0.01f && !IsUnder(t, "Props"))
+                if (Quaternion.Angle(t.rotation, Quaternion.identity) > 0.01f && !IsUnder(t, "Props") && !IsUnder(t, "Antenna_Elevation"))
                 {
                     problems.Add(renderer.name + " is not at identity rotation: " + t.rotation.eulerAngles);
                 }
@@ -538,8 +549,11 @@ namespace OutOfReach.ModelTools
             CheckProxy(instance, "PowerCabinet_IsolatorHandle", new Vector3(-1.83f, 0.8036f, 5.85f), problems);
             CheckProxy(instance, "ScrubberCanister_A", new Vector3(1.855f, 0.8f, 8.24f), problems);
             CheckProxy(instance, "LightAnchor_PowerCabinetWork", new Vector3(-1.758f, 1.72f, 6.35f), problems);
+            CheckProxy(instance, "AirlockGauge_Needle", new Vector3(1.45f, 1.7f, 20.832f), problems);
+            CheckProxy(instance, "SuitLocker_Door", new Vector3(1.812f, 0.16f, 19.588f), problems);
             // The antenna's manual drive socket must sit on the AntennaRepair anchor.
             CheckProxy(instance, "Antenna_ServiceSocket", new Vector3(3.2f, 2.4f, 13f), problems);
+            CheckProxy(instance, "Antenna_Elevation", new Vector3(3.83f, 2.565f, 12.72f), problems);
             int colliders = instance.GetComponentsInChildren<Collider>(true).Length;
             int activeColliders = instance.GetComponentsInChildren<Collider>(false).Length;
             if (instance.GetComponentsInChildren<Camera>(true).Length + instance.GetComponentsInChildren<AudioListener>(true).Length +
@@ -603,13 +617,19 @@ namespace OutOfReach.ModelTools
         {
             ("cockpit_from_spawn", new Vector3(0f, 1.65f, 0.8f), new Vector3(0f, 1.55f, -3f), 78f),
             ("cockpit_three_quarter", new Vector3(2.2f, 1.95f, 2.3f), new Vector3(-0.6f, 1.15f, -2.2f), 70f),
+            // review-01 R01 framing at 1.65 m eye height
+            ("cockpit_r01", new Vector3(-0.55f, 1.65f, 2.2f), new Vector3(0.9f, 1.15f, -2.3f), 85f),
             ("engineering_corridor", new Vector3(0.25f, 1.65f, 3.6f), new Vector3(0f, 1.35f, 11f), 76f),
             // review-01 R02 framing at 1.65 m eye height; 90 degrees horizontal is close to a 60 degree vertical game camera
             ("engineering_r02", new Vector3(0.6f, 1.65f, 3.4f), new Vector3(-0.9f, 1.3f, 11f), 90f),
             ("engineering_power", new Vector3(-0.25f, 1.55f, 6.75f), new Vector3(-2f, 1.2f, 6.05f), 72f),
             ("engineering_eclss", new Vector3(0.25f, 1.55f, 7.5f), new Vector3(2f, 1.2f, 8.15f), 72f),
             ("storage", new Vector3(0f, 1.65f, 11.5f), new Vector3(0f, 1.3f, 17f), 76f),
+            // review-01 R03 framing at 1.65 m eye height
+            ("storage_r03", new Vector3(0.7f, 1.65f, 11.25f), new Vector3(-0.9f, 1.15f, 17f), 90f),
             ("airlock", new Vector3(0.2f, 1.65f, 17.35f), new Vector3(-0.2f, 1.3f, 21f), 80f),
+            // review-01 R04 framing at 1.65 m eye height
+            ("airlock_r04", new Vector3(-0.75f, 1.65f, 17.55f), new Vector3(0.85f, 1.3f, 21f), 90f),
             ("exterior_finale", new Vector3(9f, 5f, 27f), new Vector3(0.5f, 1.6f, 12f), 58f),
             ("exterior_forward", new Vector3(-9.5f, 4.5f, -11f), new Vector3(0f, 1.6f, 4f), 55f),
             ("exterior_eva", new Vector3(2.2f, 1.6f, 24.6f), new Vector3(1.2f, 2.2f, 14f), 72f),
@@ -650,16 +670,18 @@ namespace OutOfReach.ModelTools
                 index++;
             }
 
-            // Preview stand-in for the amber work light in the breaker cabinet (the prefab carries only the anchor).
+            // Preview stand-ins for the amber work light in the breaker cabinet and the suit locker's interior
+            // light (the prefab carries only the anchors).
             foreach (Transform anchor in shipInstance.GetComponentsInChildren<Transform>(true)
-                         .Where(t => t.name == "LightAnchor_PowerCabinetWork"))
+                         .Where(t => t.name == "LightAnchor_PowerCabinetWork" || t.name == "LightAnchor_SuitLocker"))
             {
+                bool locker = anchor.name == "LightAnchor_SuitLocker";
                 var work = new GameObject("Preview " + anchor.name).AddComponent<Light>();
                 work.type = LightType.Point;
                 work.transform.position = anchor.position;
-                work.color = new Color(1f, 0.58f, 0.2f);
-                work.intensity = 0.8f;
-                work.range = 1.2f;
+                work.color = locker ? new Color(1f, 0.9f, 0.76f) : new Color(1f, 0.58f, 0.2f);
+                work.intensity = locker ? 0.9f : 0.8f;
+                work.range = locker ? 1.6f : 1.2f;
                 work.shadows = LightShadows.Soft;
             }
 

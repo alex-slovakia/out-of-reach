@@ -24,7 +24,7 @@ WHITE, GRAY, GRAPHITE = "A7_PaintWhite", "A7_PaintGray", "A7_PaintGraphite"
 RED, YELLOW = "A7_PaintRed", "A7_PaintYellow"
 ANO, ANO_CLEAR, ANO_BLUE, ANO_GOLD = "A7_AnodizedBlack", "A7_AnodizedClear", "A7_AnodizedBlue", "A7_AnodizedGold"
 ALU = "A7_Aluminum"
-FAB, FAB_DARK, STRAP = "A7_FabricWhite", "A7_FabricDark", "A7_FabricStrap"
+FAB, FAB_DARK, STRAP, CANVAS = "A7_FabricWhite", "A7_FabricDark", "A7_FabricStrap", "A7_FabricCanvas"
 QUILT = "A7_QuiltWhite"
 DECK = "A7_Deck"
 RUBBER, CABLE_ORANGE, CABLE_BLUE = "A7_Rubber", "A7_CableOrange", "A7_CableBlue"
@@ -112,23 +112,33 @@ def vent(m, rect, z, frame=None, slats=None):
 
 
 def locker(m, art, rect, z, frame=None, title=None, barcode=True):
-    """Stowage locker door with a paddle latch, hinge barrels and inventory labels."""
+    """Stowage locker door: pressed panel, bar pull in a recess, hinge barrels and inventory labels."""
     x0, y0, x1, y1 = rect
     w, h = x1 - x0, y1 - y0
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
     m.plate(WHITE, (cx, cy, z), w - 0.012, h - 0.012, 0.014, 0.014, 0.004, frame)
+    press_w, press_h = w - 0.22, h - 0.07
+    px = x0 + 0.045 + press_w / 2
+    top = z + 0.019
+    if press_w > 0.12 and press_h > 0.10:
+        m.plate(WHITE, (px, cy, z + 0.014), press_w, press_h, 0.005, 0.02, 0.003, frame)
+    else:
+        top = z + 0.014
     lx, ly = x1 - 0.085, cy
-    m.box(GRAPHITE, (lx, ly, z + 0.015), (0.075, 0.11, 0.004), 0.002, frame)
-    m.box(ALU, (lx, ly + 0.012, z + 0.022), (0.05, 0.05, 0.012), 0.004, frame)
+    pull = min(0.17, h * 0.55)
+    m.box(GRAPHITE, (lx, ly, z + 0.015), (0.07, pull, 0.004), 0.002, frame)
+    m.cyl(ALU, (lx, ly - pull * 0.36, z + 0.028), (lx, ly + pull * 0.36, z + 0.028), 0.008, 8, 0.0, frame)
+    for dy in (-pull * 0.36, pull * 0.36):
+        m.cyl(ALU, (lx, ly + dy, z + 0.016), (lx, ly + dy, z + 0.028), 0.006, 6, 0.0, frame)
     for hy in (y0 + h * 0.2, y1 - h * 0.2):
         m.cyl(ALU, (x0 + 0.012, hy - 0.03, z + 0.014), (x0 + 0.012, hy + 0.03, z + 0.014), 0.007, 8, 0.001, frame)
     if title:
-        m.decal(art.decals, title, (cx - 0.04, y1 - 0.05, z + 0.014), frame, width=min(0.30, w - 0.16))
+        m.decal(art.decals, title, (px, cy + press_h / 2 - 0.04, top), frame, width=min(0.30, press_w - 0.04))
     if barcode:
-        m.decal(art.decals, art.next("barcode", 24), (x0 + 0.07, y0 + 0.045, z + 0.014), frame, 0.8)
-        m.decal(art.decals, art.next("pn", 28), (cx + 0.02, y0 + 0.03, z + 0.014), frame, 0.85)
+        m.decal(art.decals, art.next("barcode", 24), (px - press_w / 2 + 0.06, cy - press_h / 2 + 0.04, top), frame, 0.8)
+        m.decal(art.decals, art.next("pn", 28), (px + 0.03, cy - press_h / 2 + 0.03, top), frame, 0.85)
     if art.rng.random() < 0.6:
-        m.decal(art.decals, "velcro_blue", (x0 + 0.05 + art.rng.random() * (w - 0.25), cy - h * 0.18, z + 0.014), frame)
+        m.decal(art.decals, "velcro_blue", (px - press_w / 2 + 0.05 + art.rng.random() * max(0.02, press_w - 0.12), cy - h * 0.12, top), frame)
 
 
 def switch_panel(m, art, rect, z, frame=None, legend="leg_power", count=5):
@@ -203,10 +213,24 @@ def oru(m, art, rect, z, frame=None, title="t_battery", caution="c_hv", proud=0.
     m.decal(art.decals, "fastener_note", (cx, y0 + 0.058, z + proud), frame, 0.7)
 
 
-def gauge(m, art, x, y, z, frame=None, key="gauge_cabin", radius=0.05):
+def gauge_needle(radius, fraction):
+    """Pointer of a dial whose scale runs 270 degrees clockwise from the lower left; pivot at the origin.
+
+    fraction 0 is the start of the scale and 1 its end; the angle is 225 - 270 * fraction degrees,
+    counter-clockwise from the viewer's right."""
+    n = Model("Needle")
+    n.box(RED, (radius * 0.30, 0, 0.0015), (radius, radius * 0.05, 0.003), 0.0, rotation((0, 0, 1), 225.0 - 270.0 * fraction))
+    n.cyl(ANO, (0, 0, 0), (0, 0, 0.005), radius * 0.10, 10)
+    return n
+
+
+def gauge(m, art, x, y, z, frame=None, key="gauge_cabin", radius=0.05, needle=0.84):
+    """Dial in a bezel. `needle` is the pointer position as a fraction of the scale, or None for no pointer."""
     m.lathe(ALU, (x, y, z), (0, 0, 1), [(radius + 0.012, 0.0), (radius + 0.012, 0.012), (radius + 0.004, 0.016),
                                         (radius, 0.016), (radius, 0.006)], 20, frame, (False, False))
     m.decal(art.decals, key, (x, y, z + 0.0065), frame, width=radius * 2)
+    if needle is not None:
+        m.instance(gauge_needle(radius, needle), compose(frame if frame is not None else np.eye(4), at(x, y, z + 0.008)))
 
 
 def blank(m, art, rect, z, frame=None, label=True):
@@ -695,23 +719,24 @@ def bay_stowage(art, first_bag=0, rows=3, title="t_stow"):
     """Soft stowage: cargo bags on shelves behind bungee restraints."""
     m = Model("BayStowage")
     bay_backing(m)
-    m.frame(ALU, (0, (BAY_Y0 + BAY_Y1) / 2, 0.012), BAY_W, BAY_Y1 - BAY_Y0 - 0.04, 0.035, 0.11, 0.012)
+    m.frame(ALU, (0, (BAY_Y0 + BAY_Y1) / 2, 0.012), BAY_W, BAY_Y1 - BAY_Y0 - 0.04, 0.035, 0.16, 0.012)
     x0, x1 = -BAY_W / 2 + 0.05, BAY_W / 2 - 0.05
     rh = (BAY_Y1 - BAY_Y0 - 0.34) / rows
     bag = first_bag
     for r in range(rows):
         y0 = BAY_Y0 + 0.06 + r * rh
-        m.box(ALU, (0, y0, 0.066), (x1 - x0, 0.012, 0.11), 0.002)
+        m.box(ALU, (0, y0, 0.092), (x1 - x0, 0.012, 0.16), 0.002)
         count = 2 if r % 2 == 0 else 3
         gap = 0.02
         bw = (x1 - x0 - gap * (count + 1)) / count
         for i in range(count):
             cx = x0 + gap + bw / 2 + i * (bw + gap)
             bh = rh - 0.07 - art.rng.random() * 0.05
-            ctb(m, art, (cx, y0 + 0.008 + bh / 2, 0.066), (bw, bh, 0.10 + art.rng.random() * 0.02), None, "bag_%02d" % (bag % 16))
+            depth = 0.13 + art.rng.random() * 0.02
+            m.instance(soft_bag(art, (bw, bh, depth), "bag_%02d" % (bag % 16), 0.03), at(cx, y0 + 0.008 + bh / 2, 0.016 + depth / 2))
             bag += 1
         for by in (y0 + rh * 0.35, y0 + rh * 0.7):
-            m.tube(CABLE_BLUE, [(x0 - 0.01, by, 0.10), (x0 - 0.01, by, 0.135), (x1 + 0.01, by, 0.135), (x1 + 0.01, by, 0.10)],
+            m.tube(CABLE_BLUE, [(x0 - 0.01, by, 0.14), (x0 - 0.01, by, 0.182), (x1 + 0.01, by, 0.182), (x1 + 0.01, by, 0.14)],
                    0.004, 6, 0.012)
     m.decal(art.decals, title, (0, BAY_Y1 - 0.14, 0.014), width=0.34)
     m.decal(art.decals, "p_stow", (-0.42, BAY_Y1 - 0.15, 0.014), None, 0.6)
@@ -1032,46 +1057,72 @@ def build_shell(m, art, name, left_bays, right_bays, entrance_sign=None):
 
 
 # ----------------------------------------------------------------------------- cockpit
+def padded(m, mat, centre, size, frame=None):
+    """One cushion: a pillowed block of upholstery (a coarser grid than the cargo bags)."""
+    v, t, _ = pillow(size, (), 0.0, 0.0, 5.0, 5)
+    m.add(mat, v + vec(centre), t, frame)
+
+
 def seat(art, label):
-    """Crew seat, occupant facing +z in front-view space. Frame, cushions, harness, controllers."""
+    """Crew seat (review-01 R01), occupant facing +z in front-view space: padded shell on an energy-absorbing
+    base, five-point harness, armrests with hand controllers. It keeps the footprint of the blockout seat."""
     m = Model("Seat")
+    # floor tracks, legs and stroke struts
     for sx in (-1, 1):
         m.box(ANO, (sx * 0.24, 0.015, 0.0), (0.05, 0.03, 0.9), 0.004)
         for z in np.arange(-0.4, 0.41, 0.1):
             m.cyl(GRAPHITE, (sx * 0.24, 0.03, z), (sx * 0.24, 0.0305, z), 0.008, 6, 0.0, None, (False, True))
-        m.tube(ALU, [(sx * 0.24, 0.03, 0.30), (sx * 0.22, 0.42, 0.20)], 0.018, 10)
-        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.22, 0.42, -0.20)], 0.018, 10)
-        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.22, 0.42, 0.20)], 0.010, 8)
-    m.cyl(ALU, (0, 0.05, -0.36), (0, 0.45, -0.37), 0.03, 12, 0.004)
-    m.cyl(ANO_CLEAR, (0, 0.45, -0.37), (0, 0.86, -0.385), 0.018, 10, 0.002)
-    m.box(ALU, (0, 0.435, 0.02), (0.50, 0.03, 0.50), 0.008)
-    m.box(FAB_DARK, (0, 0.492, 0.03), (0.46, 0.075, 0.46), 0.025)
-    back = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12))
-    m.box(ALU, (0, 0.44, -0.025), (0.50, 0.90, 0.03), 0.008, back)
-    m.box(FAB_DARK, (0, 0.22, 0.03), (0.44, 0.38, 0.08), 0.03, back)
-    m.box(FAB_DARK, (0, 0.63, 0.03), (0.44, 0.40, 0.08), 0.03, back)
-    m.box(FAB_DARK, (0, 0.97, 0.035), (0.28, 0.20, 0.09), 0.035, back)
+        m.tube(ALU, [(sx * 0.24, 0.03, 0.30), (sx * 0.21, 0.41, 0.20)], 0.018, 10)
+        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.21, 0.41, -0.20)], 0.018, 10)
+        m.tube(ANO_CLEAR, [(sx * 0.24, 0.05, -0.28), (sx * 0.215, 0.39, 0.16)], 0.012, 8)
+        m.cyl(ANO_GOLD, (sx * 0.232, 0.15, -0.15), (sx * 0.224, 0.27, 0.005), 0.017, 10, 0.002)
+    # pedestal housing between the legs
+    m.box(ALU, (0, 0.045, -0.02), (0.40, 0.03, 0.44), 0.006)
+    m.box(GRAPHITE, (0, 0.23, -0.02), (0.26, 0.36, 0.30), 0.02)
+    for by in (0.14, 0.32):
+        for bx in (-0.10, 0.10):
+            bolt(m, bx, by, 0.13, 0.007, 0.004, ALU)
+    # seat pan: structure, cushion with side bolsters
+    m.box(GRAPHITE, (0, 0.435, 0.03), (0.52, 0.05, 0.52), 0.015)
+    padded(m, FAB_DARK, (0, 0.505, 0.04), (0.44, 0.10, 0.46))
     for sx in (-1, 1):
-        m.box(FAB_DARK, (sx * 0.17, 0.97, 0.07), (0.05, 0.18, 0.12), 0.02, back)
-        m.box(STRAP, (sx * 0.10, 0.52, 0.073), (0.045, 0.62, 0.005), 0.0, back)
-        m.box(ALU, (sx * 0.10, 0.84, 0.076), (0.05, 0.035, 0.008), 0.002, back)
-        m.box(STRAP, (sx * 0.15, 0.535, 0.12), (0.20, 0.006, 0.045), 0.0)
+        padded(m, FAB_DARK, (sx * 0.225, 0.515, 0.04), (0.08, 0.11, 0.44))
+    # back, leaning 12 degrees: padded shell, bolsters, headrest with wings
+    back = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12))
+    padded(m, FAB_DARK, (0, 0.44, 0.0), (0.50, 0.90, 0.12), back)
+    for sx in (-1, 1):
+        padded(m, FAB_DARK, (sx * 0.215, 0.40, 0.055), (0.09, 0.62, 0.10), back)
+    padded(m, FAB_DARK, (0, 0.98, 0.03), (0.30, 0.24, 0.12), back)
+    for sx in (-1, 1):
+        padded(m, FAB_DARK, (sx * 0.17, 0.98, 0.075), (0.07, 0.21, 0.15), back)
+    # rear of the back: spine, harness reel, grab bar and the seat label
+    m.box(GRAPHITE, (0, 0.44, -0.066), (0.16, 0.82, 0.03), 0.01, back)
+    m.box(ANO, (0, 0.86, -0.085), (0.22, 0.09, 0.06), 0.012, back)
+    m.tube(ALU, [(-0.12, 0.66, -0.08), (-0.12, 0.66, -0.13), (0.12, 0.66, -0.13), (0.12, 0.66, -0.08)], 0.011, 8, 0.02, back)
+    plate_frame = compose(back, at(0, 0.36, -0.082), rotation((0, 1, 0), 180))
+    m.decal(art.decals, label, (0, 0, 0), plate_frame, 1.0)
+    # five-point harness: shoulder straps from the reel slots, lap belts, crotch strap, rotary buckle
+    for sx in (-1, 1):
+        m.box(STRAP, (sx * 0.10, 0.52, 0.066), (0.045, 0.62, 0.005), 0.0, back)
+        m.box(ALU, (sx * 0.10, 0.84, 0.069), (0.05, 0.035, 0.008), 0.002, back)
+        m.box(ANO, (sx * 0.10, 0.25, 0.070), (0.05, 0.04, 0.010), 0.002, back)
+        m.box(STRAP, (sx * 0.15, 0.562, 0.12), (0.20, 0.006, 0.045), 0.0)
+    m.cyl(ALU, (0, 0.562, 0.17), (0, 0.576, 0.17), 0.035, 14, 0.004)
+    m.box(STRAP, (0, 0.562, 0.24), (0.04, 0.006, 0.16), 0.0)
+    for sx in (-1, 1):
         # armrest with a controller at its front end
-        m.cyl(ALU, (sx * 0.30, 0.44, -0.08), (sx * 0.30, 0.66, -0.08), 0.014, 8)
-        m.box(ALU, (sx * 0.30, 0.67, 0.03), (0.06, 0.02, 0.34), 0.006)
-        m.box(FAB_DARK, (sx * 0.30, 0.69, 0.0), (0.065, 0.025, 0.24), 0.01)
-        m.box(ANO, (sx * 0.30, 0.70, 0.19), (0.07, 0.045, 0.07), 0.01)
-        m.cyl(RUBBER, (sx * 0.30, 0.72, 0.19), (sx * 0.30, 0.755, 0.19), 0.018, 10, 0.004)
-        m.cyl(ANO_CLEAR, (sx * 0.30, 0.755, 0.19), (sx * 0.30, 0.80, 0.195), 0.009, 8)
-        m.box(ANO, (sx * 0.30, 0.845, 0.198), (0.034, 0.09, 0.036), 0.012)
-        m.cyl(RED if sx > 0 else ANO_GOLD, (sx * 0.30, 0.89, 0.198), (sx * 0.30, 0.897, 0.198), 0.008, 8, 0.002)
-    m.cyl(ALU, (0, 0.535, 0.17), (0, 0.548, 0.17), 0.035, 14, 0.004)
-    m.box(STRAP, (0, 0.50, 0.24), (0.04, 0.006, 0.16), 0.0)
+        m.cyl(ALU, (sx * 0.31, 0.44, -0.08), (sx * 0.31, 0.66, -0.08), 0.014, 8)
+        m.box(ALU, (sx * 0.31, 0.67, 0.03), (0.06, 0.02, 0.34), 0.006)
+        padded(m, FAB_DARK, (sx * 0.31, 0.695, 0.0), (0.07, 0.035, 0.26))
+        m.box(ANO, (sx * 0.31, 0.70, 0.19), (0.07, 0.045, 0.07), 0.01)
+        m.cyl(RUBBER, (sx * 0.31, 0.72, 0.19), (sx * 0.31, 0.755, 0.19), 0.018, 10, 0.004)
+        m.cyl(ANO_CLEAR, (sx * 0.31, 0.755, 0.19), (sx * 0.31, 0.80, 0.195), 0.009, 8)
+        m.box(ANO, (sx * 0.31, 0.845, 0.198), (0.034, 0.09, 0.036), 0.012)
+        m.cyl(RED if sx > 0 else ANO_GOLD, (sx * 0.31, 0.89, 0.198), (sx * 0.31, 0.897, 0.198), 0.008, 8, 0.002)
+    # footrest
     m.box(ALU, (0, 0.16, 0.44), (0.42, 0.02, 0.18), 0.006)
     for sx in (-1, 1):
         m.tube(ALU, [(sx * 0.19, 0.16, 0.40), (sx * 0.22, 0.40, 0.26)], 0.012, 8)
-    plate_frame = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12), at(0, 0.62, -0.041), rotation((0, 1, 0), 180))
-    m.decal(art.decals, label, (0, 0, 0), plate_frame, 1.0)
     return m
 
 
@@ -1104,6 +1155,19 @@ def console(art):
         m.cyl(ANO, (x, 0.97, 0.16), (x, 0.995, 0.16), 0.016, 12, 0.003)
         m.box(ANO_CLEAR, (x, 0.9965, 0.167), (0.004, 0.003, 0.014), 0.0)
     m.decal(art.decals, "leg_gnc", (0.04, 0.9705, 0.22), compose(at(0, 0, 0), rotation((1, 0, 0), -90)), 0.9)
+    # behind the keyboards: two rows of guarded toggles, lit keys and one guarded red switch, flat on the surface
+    s = compose(at(0, 0.9705, -0.02), rotation((1, 0, 0), -90))
+    switch_panel(m, art, (-0.50, -0.05, -0.06, 0.12), 0.0, s, "leg_power", 5)
+    switch_panel(m, art, (0.06, -0.05, 0.50, 0.12), 0.0, s, "leg_eclss", 5)
+    m.box(GRAPHITE, (-0.74, 0.035, 0.004), (0.30, 0.13, 0.008), 0.003, s)
+    for row in range(2):
+        for col in range(4):
+            lit = (row, col) in ((0, 1), (1, 3))
+            m.box(LED_A if lit else ANO, (-0.845 + col * 0.07, 0.005 + row * 0.058, 0.012), (0.055, 0.042, 0.008), 0.002, s)
+    m.box(GRAPHITE, (0.74, 0.035, 0.004), (0.14, 0.13, 0.008), 0.003, s)
+    m.cyl(ALU, (0.74, 0.03, 0.008), (0.74, 0.03, 0.016), 0.009, 8, 0.001, s)
+    m.box(RED, (0.74, 0.04, 0.032), (0.05, 0.08, 0.04), 0.008, s)
+    m.decal(art.decals, "hazard_short", (0.74, -0.018, 0.0085), s, width=0.12)
     # instrument panel, leaning back 15 degrees
     p = compose(at(0, 0.97, -0.17), rotation((1, 0, 0), -15))
     m.box(GRAPHITE, (0, 0.27, -0.035), (3.0, 0.56, 0.07), 0.012, p)
@@ -1123,13 +1187,16 @@ def console(art):
                 lit = art.rng.random() < 0.22
                 m.box(LED_A if lit else GRAPHITE, (cx - 0.035 + col * 0.07, 0.10 + row * 0.066, 0.014),
                       (0.055, 0.04, 0.004), 0.001, p)
+    for sx in (-1, 1):
+        handrail(m, (sx * 1.44, 0.10), (sx * 1.44, 0.46), 0.0, p)
     m.box(FAB_DARK, (0, 0.575, 0.09), (3.1, 0.03, 0.30), 0.012, p)
     m.box(GRAPHITE, (0, 0.55, -0.03), (3.1, 0.06, 0.08), 0.01, p)
     return m
 
 
 def forward_bulkhead(m, art):
-    """Five-pane observation window in a bolted frame, overhead breaker panel, sill handrail."""
+    """Forward bulkhead: five outer panes in bolted frames behind an inner liner with two small shielded
+    windows, overhead breaker panel, sill handrail."""
     f = front_frame((0, 0, -2.975), (0, 0, 1))
     panes = [(-1.82, 0.74), (-0.94, 0.74), (0.0, 0.86), (0.94, 0.74), (1.82, 0.74)]
     y0, y1 = 1.22, 2.78
@@ -1159,6 +1226,30 @@ def forward_bulkhead(m, art):
         for by in np.linspace(cy - h / 2 + 0.2, cy + h / 2 - 0.2, 6):
             for bx in (-w / 2 + 0.035, w / 2 - 0.035):
                 bolt(m, cx + bx, by, 0.05, 0.007, 0.005, ALU, f)
+    # Inner liner (review-01 R01): the crew sees two small shielded windows above the outer displays. The
+    # panes behind it stay, so the bow looks the same from outside.
+    lz, cy, h = 0.06, (y0 + y1) / 2, y1 - y0
+    for cx, w in ((0.0, 0.94), (-1.80, 0.78), (1.80, 0.78)):
+        m.box(QUILT, (cx, cy, lz + 0.02), (w - 0.02, h - 0.02, 0.04), 0.012, f)
+        m.frame(ALU, (cx, cy, lz + 0.04), w - 0.02, h - 0.02, 0.022, 0.004, 0.012, f)
+        for by in np.linspace(cy - h / 2 + 0.14, cy + h / 2 - 0.14, 6):
+            for bx in (-w / 2 + 0.022, w / 2 - 0.022):
+                m.cyl(ANO_CLEAR, (cx + bx, by, lz + 0.044), (cx + bx, by, lz + 0.048), 0.006, 8, 0.001, f)
+    for cx in (-0.94, 0.94):
+        wy = cy + 0.25
+        v, t = ring(rounded_rect(0.94, h, 0.004, 5), rounded_rect(0.50, 0.56, 0.09, 5) + np.array([0.0, 0.25]), 0.03, True)
+        m.add(WHITE, v + vec(cx, cy, lz), t, f)
+        # dark reveal from the liner back to the pane, so nothing of the outer frame shows at an angle
+        m.frame(GRAPHITE, (cx, wy, 0.0), 0.54, 0.60, 0.02, lz + 0.03, 0.11, f, 5)
+        m.frame(GRAPHITE, (cx, wy, lz + 0.03), 0.66, 0.72, 0.08, 0.03, 0.17, f, 5)
+        for bx in np.linspace(-0.21, 0.21, 4):
+            for by in (-0.32, 0.32):
+                bolt(m, cx + bx, wy + by, lz + 0.06, 0.007, 0.004, ALU, f)
+        for by in np.linspace(-0.18, 0.18, 3):
+            for bx in (-0.29, 0.29):
+                bolt(m, cx + bx, wy + by, lz + 0.06, 0.007, 0.004, ALU, f)
+        handrail(m, (cx - 0.22, cy - 0.30), (cx + 0.22, cy - 0.30), lz + 0.03, f)
+        m.decal(art.decals, "c_keepclear", (cx, cy - 0.52, lz + 0.03), f, 0.7)
     m.decal(art.decals, "stencil_aurora", (0, 2.955, 0.001), f, 1.0)
     m.decal(art.decals, "stencil_vessel", (0, 1.13, 0.001), f, 1.0)
     handrail(m, (-1.6, 1.16), (-0.5, 1.16), 0.0, f)
@@ -1268,8 +1359,138 @@ def build_engineering(art, bays):
 
 
 # ----------------------------------------------------------------------------- storage
-def stowage_wall(art, titles, first_bag):
-    """Three-bay stowage rack inside the blockout's locker envelope (0.65 m deep, 4.5 m long)."""
+def pillow(size, strap_xs=(), pinch=0.014, sag=0.04, exponent=5.0, segs=8):
+    """Pillowed canvas body of a soft bag: a rounded box whose faces bulge, drawn in where straps bind it.
+
+    Centre at the origin, front towards +z. Returns (vertices, triangles, surface), where surface(cx, cy, cz)
+    maps a point of the cube [-1, 1]^3 to the body, so straps and fittings can be laid on it."""
+    half = np.asarray(size, dtype=np.float64) / 2.0
+
+    def surface(cx, cy, cz):
+        c = np.array([cx, cy, cz], dtype=np.float64)
+        p = c / (np.abs(c) ** exponent).sum() ** (1.0 / exponent) * half
+        if p[1] > 0:                                   # an under-filled bag sinks along its top
+            p[1] *= 1.0 - sag * (1.0 - (p[0] / half[0]) ** 2)
+        for sx in strap_xs:                            # straps draw the girth in by the same depth all round
+            groove = pinch * math.exp(-((p[0] - sx) / 0.03) ** 2)
+            p[1] *= 1.0 - groove / half[1]
+            p[2] *= 1.0 - groove / half[2]
+        return p
+
+    index, verts, tris = {}, [], []
+
+    def vertex(c):
+        key = tuple(np.round(c, 6))
+        if key not in index:
+            index[key] = len(verts)
+            verts.append(surface(*c))
+        return index[key]
+
+    uniform = np.linspace(-1.0, 1.0, segs + 1)
+    # extra grid lines along the width, so each strap has a groove of its own
+    grooves = [(sx + k * 0.045) / half[0] for sx in strap_xs for k in (-1, 0, 1)]
+    along = [np.unique(np.round(np.concatenate([uniform, grooves]), 6)), uniform, uniform]
+    for axis in range(3):
+        for sign in (-1.0, 1.0):
+            first, second = [a for a in range(3) if a != axis]
+            for i in range(len(along[first]) - 1):
+                for j in range(len(along[second]) - 1):
+                    quad = []
+                    for a, b in ((i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1)):
+                        c = [0.0, 0.0, 0.0]
+                        c[axis], c[first], c[second] = sign, along[first][a], along[second][b]
+                        quad.append(vertex(c))
+                    tris += [(quad[0], quad[1], quad[2]), (quad[0], quad[2], quad[3])]
+    v = np.asarray(verts)
+    t = np.asarray(tris, dtype=np.int64)
+    # the body is star-shaped about its centre: turn every triangle to face away from it
+    normals = np.cross(v[t[:, 1]] - v[t[:, 0]], v[t[:, 2]] - v[t[:, 0]])
+    inward = (normals * v[t].mean(axis=1)).sum(axis=1) < 0
+    t[inward] = t[inward][:, ::-1]
+    return v, t, surface
+
+
+def girth_band(surface, x, width=0.036, lift=0.003, segs=32):
+    """Webbing strap around the girth of a pillow at x: a closed band lying on the body. Returns (v, t)."""
+    def cube_x(target, cy, cz):                         # the cube coordinate whose image has this x
+        lo, hi = -1.0, 1.0
+        for _ in range(24):
+            mid = (lo + hi) / 2
+            if surface(mid, cy, cz)[0] < target:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+
+    rings = ([], [])
+    for k in range(segs):
+        a = math.tau * k / segs
+        cy, cz = math.cos(a), math.sin(a)
+        scale = 1.0 / max(abs(cy), abs(cz))            # onto the square perimeter
+        cy, cz = cy * scale, cz * scale
+        for ring, target in zip(rings, (x - width / 2, x + width / 2)):
+            p = surface(cube_x(target, cy, cz), cy, cz)
+            radial = np.array([0.0, p[1], p[2]])
+            ring.append(p + radial / np.linalg.norm(radial) * lift)
+    v = np.asarray(rings[0] + rings[1])
+    t = []
+    for k in range(segs):
+        k1 = (k + 1) % segs
+        t += [(k, segs + k, segs + k1), (k, segs + k1, k1)]
+    t = np.asarray(t, dtype=np.int64)
+    normals = np.cross(v[t[:, 1]] - v[t[:, 0]], v[t[:, 2]] - v[t[:, 0]])
+    centre = v[t].mean(axis=1)
+    centre[:, 0] = 0.0
+    inward = (normals * centre).sum(axis=1) < 0
+    t[inward] = t[inward][:, ::-1]
+    return v, t
+
+
+def soft_bag(art, size, label=None, sag=0.04):
+    """Soft cargo bag (asset A04): pillowed canvas body, two girth straps with buckles, a grab loop and a
+    contents label. Centre at the origin, front towards +z; size = (width, height, depth)."""
+    m = Model("SoftBag")
+    w, h, d = size
+    strap_xs = (-w * 0.27, w * 0.27)
+    v, t, surface = pillow(size, strap_xs, 0.014, sag)
+    m.add(CANVAS, v, t)
+    for sx in strap_xs:
+        bv, bt = girth_band(surface, sx)
+        m.add(STRAP, bv, bt)
+        front = surface(sx / (w / 2), -0.12, 1.0)
+        m.box(ANO_CLEAR, (sx, front[1], front[2] + 0.008), (0.05, 0.034, 0.012), 0.003)
+        m.box(ANO, (sx, front[1], front[2] + 0.015), (0.03, 0.012, 0.004), 0.001)
+    face = d / 2
+    m.tube(STRAP, [(-0.07, h * 0.20, face - 0.004), (-0.07, h * 0.20 + 0.02, face + 0.03), (0.07, h * 0.20 + 0.02, face + 0.03),
+                   (0.07, h * 0.20, face - 0.004)], 0.007, 6, 0.02)
+    if label:
+        m.box(WHITE, (0.0, -h * 0.03, face + 0.0005), (min(0.22, w * 0.42), 0.075, 0.003), 0.001)
+        m.decal(art.decals, label, (0.0, -h * 0.03, face + 0.0022), None, width=min(0.19, w * 0.36))
+    return m
+
+
+def transit_case(art, size, label=None):
+    """Hard transit case under the soft stowage: ribbed shell, two latches, a recessed handle. Front towards +z."""
+    m = Model("TransitCase")
+    w, h, d = size
+    m.box(GRAY, (0, 0, 0), (w, h, d), 0.02)
+    for ry in (-h * 0.28, 0.0, h * 0.28):
+        m.box(GRAY, (0, ry, 0.004), (w + 0.008, 0.03, d), 0.008)
+    m.box(ANO, (0, h * 0.14, d / 2 + 0.001), (w * 0.98, 0.006, 0.004), 0.0)                 # lid line
+    for sx in (-1, 1):
+        m.box(ALU, (sx * w * 0.30, h * 0.14, d / 2 + 0.008), (0.05, 0.08, 0.014), 0.004)
+    m.box(GRAPHITE, (0, -h * 0.12, d / 2 + 0.001), (0.16, 0.06, 0.004), 0.0)
+    m.cyl(ALU, (-0.06, -h * 0.12, d / 2 + 0.012), (0.06, -h * 0.12, d / 2 + 0.012), 0.007, 8)
+    if label:
+        m.decal(art.decals, label, (-w * 0.26, -h * 0.30, d / 2 + 0.0005), None, 0.8)
+    m.decal(art.decals, art.next("barcode", 24), (w * 0.30, -h * 0.30, d / 2 + 0.0005), None, 0.7)
+    return m
+
+
+def stowage_wall(art, kind, first_bag=0):
+    """Three-bay stowage rack inside the blockout's locker envelope (0.65 m deep, 4.5 m long, 2.6 m tall).
+
+    kind "soft": strapped cargo bags over hard transit cases (asset A04); kind "hard": standard lockers."""
     m = Model("StowageWall")
     m.box(GRAY, (0, 1.3, -0.30), (4.5, 2.6, 0.05), 0.006)
     for x in (-2.25, -0.75, 0.75, 2.25):
@@ -1278,31 +1499,45 @@ def stowage_wall(art, titles, first_bag):
             m.cyl(GRAPHITE, (x, 0.15 + i * 0.1, 0.325), (x, 0.15 + i * 0.1, 0.3255), 0.007, 6, 0.0, None, (False, True))
     for y in (0.03, 2.57):
         m.box(ALU, (0, y, 0.0), (4.5, 0.06, 0.65), 0.006)
-    for bay, title in enumerate(titles):
+    bag = first_bag
+    for bay in range(3):
         cx = -1.5 + bay * 1.5
-        hard = bay == 2
-        if hard:
+        if kind == "hard":
             for r in range(4):
                 for c in range(2):
                     x0 = cx - 0.70 + c * 0.70
                     y0 = 0.09 + r * 0.615
-                    locker(m, art, (x0, y0, x0 + 0.70, y0 + 0.60), 0.30, None, title)
-        else:
-            shelves = [0.07, 0.88, 1.70]
-            for r, y0 in enumerate(shelves):
-                m.box(ALU, (cx, y0, 0.02), (1.42, 0.014, 0.58), 0.003)
-                count = 2 + (r + bay) % 2
-                bw = (1.36 - 0.02 * (count + 1)) / count
-                for i in range(count):
-                    bx = cx - 0.68 + 0.02 + bw / 2 + i * (bw + 0.02)
-                    bh = 0.62 + art.rng.random() * 0.12
-                    bd = 0.44 + art.rng.random() * 0.08
-                    ctb(m, art, (bx, y0 + 0.008 + bh / 2, 0.30 - bd / 2 - 0.02), (bw, bh, bd), None, "bag_%02d" % ((first_bag + bay * 5 + r * 2 + i) % 16))
-                for by in (y0 + 0.28, y0 + 0.55):
-                    m.tube(CABLE_BLUE, [(cx - 0.72, by, 0.30), (cx - 0.72, by, 0.335), (cx + 0.72, by, 0.335), (cx + 0.72, by, 0.30)],
-                           0.004, 6, 0.012)
-            m.decal(art.decals, title, (cx, 2.50, 0.326), None, width=0.34)
-        m.decal(art.decals, "rack_%02d" % (14 + bay + (0 if first_bag == 0 else 4)), (cx + 0.6, 2.585, 0.326), None, width=0.13)
+                    locker(m, art, (x0, y0, x0 + 0.70, y0 + 0.60), 0.30, None, ("t_food", "t_spares", "t_tools", "t_med")[(r + bay) % 4])
+            m.decal(art.decals, "rack_%02d" % (18 + bay), (cx + 0.6, 2.585, 0.326), None, width=0.13)
+            continue
+        # level 0: two transit cases on the deck rail
+        for c in range(2):
+            x = cx - 0.355 + c * 0.71
+            m.instance(transit_case(art, (0.69, 0.50, 0.54), "t_spares" if (bay + c) % 2 else "t_h2o"), at(x, 0.07 + 0.25, 0.02))
+        # three levels of bags, each on a deck plate behind one webbing restraint
+        levels = ((0.60, 0.66), (1.29, 0.62), (1.94, 0.56))
+        for level, (y0, room) in enumerate(levels):
+            m.box(ALU, (cx, y0 + 0.007, 0.02), (1.42, 0.014, 0.58), 0.003)
+            pattern = (2, 3, 1)[(level + bay) % 3]
+            if pattern == 1:                              # one long duffel lying across the bay
+                bh = min(room - 0.08, 0.46)
+                m.instance(soft_bag(art, (1.34, bh, 0.48), "bag_%02d" % (bag % 16), 0.07),
+                           at(cx, y0 + 0.016 + bh / 2, 0.29 - 0.24))
+                bag += 1
+            else:
+                bw = (1.40 - 0.02 * (pattern + 1)) / pattern
+                for i in range(pattern):
+                    bh = room - 0.04 - art.rng.random() * 0.05
+                    bd = 0.46 + art.rng.random() * 0.06
+                    bx = cx - 0.70 + 0.02 + bw / 2 + i * (bw + 0.02)
+                    m.instance(soft_bag(art, (bw, bh, bd), "bag_%02d" % (bag % 16), 0.02 + art.rng.random() * 0.05),
+                               at(bx, y0 + 0.016 + bh / 2, 0.29 - bd / 2))
+                    bag += 1
+            by = y0 + 0.016 + 0.13                        # restraint across the lower part of the row
+            m.box(STRAP, (cx, by, 0.307), (1.46, 0.045, 0.004), 0.0)
+            for sx in (-1, 1):
+                m.box(ANO_CLEAR, (cx + sx * 0.70, by, 0.312), (0.06, 0.06, 0.016), 0.004)
+        m.decal(art.decals, "rack_%02d" % (14 + bay), (cx + 0.6, 2.585, 0.326), None, width=0.13)
     handrail(m, (-0.75, 1.0), (-0.75, 1.6), 0.325)
     handrail(m, (0.75, 1.0), (0.75, 1.6), 0.325)
     return m
@@ -1312,84 +1547,166 @@ def build_storage(art, bays):
     m = Model("Storage")
     blank_bays = [bays["blanket"]] * 4
     build_shell(m, art, "Storage", blank_bays, blank_bays, "sign_logistics")
-    m.instance(stowage_wall(art, ("t_h2o", "t_food", "t_spares"), 0), front_frame((-1.95, 0, 14.0), (1, 0, 0)))
-    m.instance(stowage_wall(art, ("t_eva", "t_science", "t_tools"), 8), front_frame((1.95, 0, 14.0), (-1, 0, 0)))
+    m.instance(stowage_wall(art, "soft", 0), front_frame((-1.95, 0, 14.0), (1, 0, 0)))
+    m.instance(stowage_wall(art, "hard"), front_frame((1.95, 0, 14.0), (-1, 0, 0)))
     return m
 
 
 # ----------------------------------------------------------------------------- airlock
-def suit_station(art):
-    """Suit stowage: life-support backpack and hard upper torso on a donning stand, helmet, boots."""
-    m = Model("SuitStation")
-    m.box(GRAY, (0, 1.25, -0.12), (1.25, 2.4, 0.06), 0.008)
-    m.frame(ALU, (0, 1.25, -0.09), 1.20, 2.3, 0.04, 0.03, 0.02)
+def suit_figure(art):
+    """EVA suit hanging on its donning stand, facing +z; origin on the floor under the suit's centre line."""
+    s = Model("Suit")
+    # life-support backpack and the stand post behind it
+    s.box(GRAY, (0, 1.30, -0.17), (0.50, 0.82, 0.17), 0.03)
+    s.box(ALU, (0, 1.05, -0.27), (0.07, 2.00, 0.03), 0.004)
+    s.box(ALU, (0, 1.62, -0.24), (0.30, 0.04, 0.05), 0.006)
+    # hard upper torso with the chest control module and the mission patch
+    s.box(FAB, (0, 1.36, 0.0), (0.44, 0.46, 0.28), 0.07)
+    s.box(GRAY, (0, 1.30, 0.155), (0.22, 0.16, 0.05), 0.012)
+    for i, mat in enumerate((ANO_BLUE, ANO_GOLD, ANO_CLEAR)):
+        s.cyl(mat, (-0.06 + i * 0.06, 1.33, 0.18), (-0.06 + i * 0.06, 1.33, 0.192), 0.013, 8, 0.002)
+    s.cyl(LED_G, (0.07, 1.265, 0.18), (0.07, 1.265, 0.183), 0.006, 8, 0.0, None, (False, True))
+    s.decal(art.decals, "emblem", (-0.065, 1.47, 0.1405), None, width=0.085)
     for sx in (-1, 1):
-        m.tube(ALU, [(sx * 0.26, 0.05, -0.09), (sx * 0.26, 1.72, -0.09), (sx * 0.26, 1.72, 0.10)], 0.018, 10, 0.05)
-    # life-support backpack
-    m.box(FAB, (0, 1.28, 0.02), (0.56, 0.78, 0.20), 0.03)
-    m.box(GRAY, (0, 1.30, 0.125), (0.40, 0.50, 0.03), 0.01)
-    m.decal(art.decals, "t_suit", (0, 1.60, 0.141), None, width=0.26)
+        s.box(STRAP, (sx * 0.135, 1.36, 0.141), (0.03, 0.30, 0.005), 0.0)
+    # neck ring, helmet with a gold visor, ear bearings
+    s.cyl(ALU, (0, 1.595, 0.0), (0, 1.645, 0.0), 0.135, 20, 0.006)
+    s.sphere(WHITE, (0, 1.80, 0.0), 0.165, 20, 12)
+    s.sphere(ANO_GOLD, (0, 1.80, 0.04), 0.15, 18, 10, None, (1.0, 0.95, 0.9))
     for sx in (-1, 1):
-        m.cyl(ANO_CLEAR, (sx * 0.17, 1.10, 0.14), (sx * 0.17, 1.10, 0.165), 0.03, 12, 0.004)
-        m.box(STRAP, (sx * 0.20, 1.28, 0.122), (0.04, 0.76, 0.005), 0.0)
-    # hard upper torso ring and helmet with a gold visor
-    m.cyl(ALU, (0, 1.70, 0.04), (0, 1.75, 0.04), 0.15, 20, 0.008)
-    m.sphere(WHITE, (0, 1.93, 0.04), 0.17, 20, 12)
-    m.sphere(ANO_GOLD, (0, 1.935, 0.075), 0.145, 18, 10, None, (1.0, 0.9, 0.95))
-    m.cyl(ALU, (-0.185, 1.93, 0.04), (-0.165, 1.93, 0.04), 0.03, 10, 0.004)
-    m.cyl(ALU, (0.165, 1.93, 0.04), (0.185, 1.93, 0.04), 0.03, 10, 0.004)
-    # folded arms and legs in restraint bags, boots on the foot plate
+        s.cyl(ALU, (sx * 0.150, 1.80, 0.0), (sx * 0.176, 1.80, 0.0), 0.03, 10, 0.004)
+    # waist ring and brief
+    s.cyl(ALU, (0, 1.10, 0.0), (0, 1.135, 0.0), 0.17, 20, 0.006)
+    s.box(FAB, (0, 0.99, 0.0), (0.38, 0.24, 0.26), 0.07)
     for sx in (-1, 1):
-        m.box(FAB, (sx * 0.36, 1.32, 0.02), (0.15, 0.62, 0.17), 0.05)
-        m.box(GRAY, (sx * 0.36, 0.96, 0.03), (0.13, 0.12, 0.15), 0.04)
-        m.box(FAB, (sx * 0.14, 0.52, 0.02), (0.20, 0.70, 0.20), 0.06)
-        m.box(GRAY, (sx * 0.14, 0.14, 0.05), (0.17, 0.16, 0.30), 0.04)
-    m.box(ALU, (0, 0.045, 0.04), (0.70, 0.03, 0.40), 0.006)
-    for by in (0.70, 1.20):
-        m.tube(CABLE_BLUE, [(-0.50, by, -0.09), (-0.50, by, 0.16), (0.50, by, 0.16), (0.50, by, -0.09)], 0.005, 6, 0.03)
-    m.decal(art.decals, "p_eva", (0.46, 2.12, -0.088), None, 0.7)
-    m.decal(art.decals, "blue_tether", (-0.42, 2.20, -0.088), None, 0.8)
-    m.cyl(ANO_GOLD, (-0.42, 2.06, -0.09), (-0.42, 2.06, -0.03), 0.035, 14, 0.006)
-    m.tube(CABLE_ORANGE, [(-0.42, 2.03, -0.04), (-0.42, 1.86, -0.02), (-0.34, 1.76, 0.02)], 0.004, 6, 0.03)
-    return m
+        # arms hang slightly forward: sleeve, shoulder and wrist bearings, glove
+        s.tube(FAB, [(sx * 0.255, 1.52, 0.0), (sx * 0.31, 1.24, 0.02), (sx * 0.30, 0.985, 0.06)], 0.058, 10, 0.08)
+        s.cyl(ALU, (sx * 0.235, 1.52, 0.0), (sx * 0.275, 1.50, 0.0), 0.07, 14, 0.004)
+        s.cyl(ALU, (sx * 0.30, 0.995, 0.058), (sx * 0.30, 0.965, 0.064), 0.052, 12, 0.003)
+        s.box(GRAY, (sx * 0.30, 0.885, 0.07), (0.085, 0.16, 0.065), 0.025)
+        # legs: trouser, ankle bearing, boot
+        s.tube(FAB, [(sx * 0.105, 0.90, 0.0), (sx * 0.115, 0.52, 0.02), (sx * 0.115, 0.17, 0.0)], 0.082, 10, 0.08)
+        s.cyl(ALU, (sx * 0.115, 0.185, 0.0), (sx * 0.115, 0.15, 0.0), 0.078, 14, 0.003)
+        s.box(GRAY, (sx * 0.115, 0.075, 0.035), (0.13, 0.15, 0.27), 0.04)
+        s.cyl(RED, (sx * 0.112, 0.645, 0.013), (sx * 0.112, 0.675, 0.013), 0.086, 14, 0.0, None, (False, False))
+    # umbilical from the backpack to the chest module
+    s.tube(CABLE_BLUE, [(0.20, 1.02, -0.14), (0.27, 1.02, 0.02), (0.20, 1.20, 0.16), (0.11, 1.28, 0.18)], 0.012, 8, 0.06)
+    return s
+
+
+def suit_locker(art):
+    """Sealed suit stowage (asset A05): a glazed door over the suit bay, a service door, a lit interior.
+
+    Front-view space; the envelope is the blockout's suit station: 1.25 wide, 2.4 tall, z from -0.45 (wall)
+    to +0.15 (collision face). Returns (locker, parts, anchors) like the service racks."""
+    m = Model("SuitLocker")
+    back, front = -0.45, 0.15
+    depth, mid = front - back, (front + back) / 2
+    half, top = 0.62, 2.38
+    bay_x0, bay_x1 = -0.58, 0.20           # suit bay; the service column lies between 0.24 and 0.58
+    door_y0, door_y1 = 0.16, 2.18
+    # carcass: sides, divider, top, plinth and back
+    for x in (-half + 0.02, half - 0.02, 0.22):
+        m.box(WHITE, (x, top / 2 + 0.01, mid), (0.04, top - 0.02, depth), 0.004)
+    m.box(WHITE, (0, top - 0.10, mid), (2 * half, 0.20, depth), 0.006)
+    m.box(WHITE, (0, 0.08, mid), (2 * half, 0.14, depth), 0.006)
+    m.box(GRAY, (0, top / 2, back + 0.015), (2 * half, top, 0.03), 0.0)
+    m.frame(WHITE, (0, top / 2 + 0.01, front), 2 * half, top - 0.02, 0.05, 0.012, 0.05, None, 4)
+    # head: name plate and status lamp; plinth: ventilation grille
+    m.decal(art.decals, "t_suit", (-0.19, top - 0.10, front + 0.0005), None, width=0.34)
+    m.cyl(ANO, (0.40, top - 0.10, front), (0.40, top - 0.10, front + 0.008), 0.014, 10, 0.002)
+    m.cyl(LED_G, (0.40, top - 0.10, front + 0.008), (0.40, top - 0.10, front + 0.011), 0.008, 10, 0.0, None, (False, True))
+    vent(m, (-0.50, 0.035, 0.10, 0.125), front)
+    # lit suit bay: warm strip under the head, pale liner behind the suit
+    m.box(ALU, (-0.19, door_y1 + 0.005, 0.07), (0.50, 0.03, 0.10), 0.004)
+    m.box(LIGHT, (-0.19, door_y1 - 0.012, 0.07), (0.44, 0.006, 0.07), 0.0)
+    m.box(WHITE, (-0.19, (door_y0 + door_y1) / 2, back + 0.035), (bay_x1 - bay_x0, door_y1 - door_y0, 0.01), 0.0)
+    m.box(DECK, (-0.19, 0.152, mid), (bay_x1 - bay_x0, 0.006, depth - 0.06), 0.0)
+    # service column: fixed door with a bar handle, paddle latch, hinges and the EVA checklist
+    sx0, sx1 = 0.25, 0.58
+    scx = (sx0 + sx1) / 2
+    m.plate(WHITE, (scx, (door_y0 + door_y1) / 2, front - 0.02), sx1 - sx0, door_y1 - door_y0, 0.02, 0.03, 0.004, None, 3)
+    u_handle(m, (sx0 + 0.07, 1.00), (sx0 + 0.07, 1.36), front, 0.045, 0.009, ALU)
+    m.box(GRAPHITE, (sx0 + 0.07, 1.52, front + 0.001), (0.06, 0.10, 0.003), 0.0)
+    m.box(ALU, (sx0 + 0.07, 1.53, front + 0.008), (0.04, 0.045, 0.012), 0.004)
+    for hy in (0.45, 1.90):
+        m.cyl(ALU, (sx1 - 0.012, hy - 0.04, front), (sx1 - 0.012, hy + 0.04, front), 0.008, 8, 0.001)
+    m.decal(art.decals, "p_eva", (scx + 0.03, 1.80, front + 0.0005), None, 0.72)
+    m.decal(art.decals, "t_eva", (scx + 0.01, 2.08, front + 0.0005), None, width=0.26)
+    m.decal(art.decals, art.next("pn", 28), (scx + 0.02, 0.24, front + 0.0005), None, 0.85)
+
+    # the suit is its own object, so it can be hidden while the crew member wears it
+    suit = Model("SuitLocker_Suit")
+    suit_origin = (-0.19, 0.155, -0.12)
+    suit.instance(suit_figure(art), at(*suit_origin))
+    suit.local_origin = suit_origin
+
+    # glazed door, pivot on its hinge line at the aft edge
+    door = Model("SuitLocker_Door")
+    dcx, dcy = (bay_x0 + bay_x1) / 2, (door_y0 + door_y1) / 2
+    dw, dh = bay_x1 - bay_x0 + 0.03, door_y1 - door_y0
+    door.frame(WHITE, (dcx, dcy, front - 0.03), dw, dh, 0.075, 0.03, 0.09, None, 5)
+    door.frame(RUBBER, (dcx, dcy, front - 0.034), dw - 0.13, dh - 0.13, 0.014, 0.006, 0.03, None, 5)
+    door.box(GLASS, (dcx, dcy, front - 0.018), (dw - 0.14, dh - 0.14, 0.006), 0.0)
+    u_handle(door, (bay_x1 - 0.035, 1.00), (bay_x1 - 0.035, 1.36), front, 0.045, 0.009, ALU)
+    door.box(ANO, (bay_x1 - 0.035, 1.52, front + 0.006), (0.045, 0.09, 0.012), 0.004)
+    for hy in (0.42, 1.17, 1.92):
+        door.cyl(ALU, (bay_x0 - 0.008, hy - 0.05, front - 0.012), (bay_x0 - 0.008, hy + 0.05, front - 0.012), 0.011, 8, 0.001)
+    door.local_origin = (bay_x0 - 0.008, door_y0, front - 0.012)
+
+    parts = {"SuitLocker_Suit": suit, "SuitLocker_Door": door}
+    anchors = {"LightAnchor_SuitLocker": (-0.19, door_y1 - 0.05, 0.09)}     # under the head, in front of the helmet
+    return m, parts, anchors
 
 
 def door_leaf(art, outer):
-    """Sliding pressure door leaf, 0.88 x 2.46 x 0.12 m, origin at floor centre like the blockout leaf."""
+    """Sliding pressure door leaf, 0.88 x 2.46 x 0.12 m, origin at floor centre like the blockout leaf.
+
+    Both faces carry pressed stiffening panels, edge dogs and an amber grab bar; outer leaves have a viewport."""
     m = Model("DoorLeaf")
     m.box(WHITE, (0, 1.23, 0), (0.86, 2.44, 0.09), 0.01)
     for face in (-1, 1):
         f = compose(at(0, 0, face * 0.045), rotation((0, 1, 0), 0 if face > 0 else 180))
-        m.frame(ALU, (0, 1.23, 0.0), 0.86, 2.44, 0.06, 0.016, 0.03, f)
+        m.frame(WHITE, (0, 1.23, 0.0), 0.86, 2.44, 0.07, 0.016, 0.05, f)
         m.box(GRAY, (0, 1.23, 0.004), (0.70, 2.28, 0.008), 0.004, f)
-        for sy in (0.50, 1.02, 2.02):
-            m.box(ALU, (0, sy, 0.014), (0.70, 0.035, 0.012), 0.004, f)
+        m.plate(WHITE, (0, 1.66, 0.008), 0.64, 0.98, 0.012, 0.09, 0.006, f, 4)
+        m.plate(WHITE, (0, 0.66, 0.008), 0.64, 0.70, 0.012, 0.09, 0.006, f, 4)
+        m.box(ALU, (0, 1.09, 0.014), (0.70, 0.045, 0.012), 0.004, f)
         for bx in (-0.40, 0.40):
             for by in np.linspace(0.15, 2.31, 9):
                 bolt(m, bx, by, 0.016, 0.006, 0.004, ALU, f)
+        for dy in (0.45, 1.23, 2.02):
+            m.box(ALU, (-0.385, dy, 0.022), (0.05, 0.11, 0.012), 0.004, f)
         if outer:
-            m.lathe(ALU, (0, 1.52, 0.012), (0, 0, 1), [(0.17, 0.0), (0.17, 0.02), (0.135, 0.024), (0.13, 0.01)], 24, f, (False, False))
-            m.cyl(GLASS, (0, 1.52, 0.014), (0, 1.52, 0.02), 0.13, 24, 0.0, f)
-            for k in range(8):
-                a = math.tau * k / 8
-                bolt(m, 0.152 * math.cos(a), 1.52 + 0.152 * math.sin(a), 0.032, 0.006, 0.004, ALU, f)
+            m.lathe(ALU, (0, 1.66, 0.020), (0, 0, 1), [(0.19, 0.0), (0.19, 0.02), (0.150, 0.024), (0.145, 0.008)], 24, f, (False, False))
+            # a dark disc behind the pane reads as the view into the next volume
+            m.cyl(GRAPHITE, (0, 1.66, 0.0200), (0, 1.66, 0.0212), 0.146, 24, 0.0, f, (False, True))
+            m.cyl(GLASS, (0, 1.66, 0.022), (0, 1.66, 0.028), 0.145, 24, 0.0, f)
+            for k in range(12):
+                a = math.tau * k / 12
+                bolt(m, 0.170 * math.cos(a), 1.66 + 0.170 * math.sin(a), 0.040, 0.006, 0.004, ALU, f)
         else:
-            m.decal(art.decals, "sign_airlock", (0, 1.60, 0.0125), f, 0.9)
-        handrail(m, (0.26, 1.02), (0.26, 1.42), 0.012, f, 0.05)
+            m.decal(art.decals, "sign_airlock", (0, 1.72, 0.0205), f, 0.9)
+        handrail(m, (0.27, 1.26), (0.27, 1.62), 0.020, f, 0.05)
         m.decal(art.decals, "hazard_short", (0, 0.20, 0.0125), f, width=0.66)
+        m.decal(art.decals, art.next("pn", 28), (-0.12, 0.40, 0.0205), f, 0.8)
     f = front_frame((0, 0, 0.045), (0, 0, 1))
-    m.decal(art.decals, "stencil_eva" if outer else "w_depress", (0, 1.90 if outer else 1.28, 0.0125), f, 1.0)
+    m.decal(art.decals, "stencil_eva" if outer else "w_depress", (0, 2.02 if outer else 1.36, 0.0205), f, 1.0)
     for sx in (-1, 1):
         m.box(RUBBER, (sx * 0.435, 1.23, 0), (0.014, 2.44, 0.10), 0.004)
     return m
 
 
 def build_airlock(art, bays):
+    """Returns the static compartment and its separately addressable parts (ship coordinates)."""
     m = Model("Airlock")
     build_shell(m, art, "Airlock", [bays["blanket"], bays["blanket"]], [bays["blanket"], bays["emergency"]], "sign_airlock")
     portal(m, art, 4.8, 21.0, "sign_airlock")
     m.instance(airlock_rack(art), front_frame((-2.02, 0, 19.0), (1, 0, 0)))
-    m.instance(suit_station(art), front_frame((1.95, 0, 19.0), (-1, 0, 0)))
+    locker_frame = front_frame((1.95, 0, 19.0), (-1, 0, 0))
+    locker, locker_parts, locker_anchors = suit_locker(art)
+    m.instance(locker, locker_frame)
+    parts = place_parts(locker_frame, locker_parts, locker_anchors, "AirlockParts")
     # door tracks above and below both hatchways
     for z in (17.0, 21.0):
         for y in (2.52, -0.012):
@@ -1397,7 +1714,39 @@ def build_airlock(art, bays):
     f = front_frame((0, 0.0, 20.45), (0, 1, 0), (0, 0, 1))
     m.decal(art.decals, "hazard_long", (0, 0, 0), f, width=1.7)
     m.decal(art.decals, "stencil_noslip", (0, -0.5, 0), f, 1.6)
-    return m
+
+    # inner face of the aft pressure bulkhead, seen from inside the airlock (x to starboard)
+    b = front_frame((0, 0.0, 20.92), (0, 0, -1))
+    # pressure station beside the outer hatch: dial with a separate pointer, display, two keys, conduit
+    px, py = 1.45, 1.45
+    m.box(WHITE, (px, py, 0.04), (0.36, 0.86, 0.08), 0.02, b)
+    gauge(m, art, px, py + 0.25, 0.08, b, "gauge_airlock", 0.10, None)
+    display(m, art, (px - 0.14, py - 0.18, px + 0.14, py + 0.03), 0.08, b, "sm_airlock", 0)
+    m.box(ANO, (px - 0.06, py - 0.29, 0.084), (0.07, 0.05, 0.008), 0.003, b)
+    m.box(LED_A, (px - 0.06, py - 0.29, 0.092), (0.052, 0.034, 0.008), 0.003, b)
+    m.box(ANO, (px + 0.06, py - 0.29, 0.084), (0.07, 0.05, 0.008), 0.003, b)
+    m.box(ANO_CLEAR, (px + 0.06, py - 0.29, 0.092), (0.040, 0.034, 0.008), 0.003, b)
+    m.decal(art.decals, "t_depress", (px, py - 0.37, 0.0805), b, width=0.26)
+    m.cyl(ALU, (px, 0.12, 0.03), (px, py - 0.43, 0.03), 0.016, 10, 0.0, b, (False, False))
+    for cy in (0.45, 0.90):
+        m.box(ALU, (px, cy, 0.02), (0.07, 0.024, 0.045), 0.003, b)
+    needle = Model("AirlockGauge_Needle")
+    needle_origin = (px, py + 0.25, 0.088)
+    needle.instance(gauge_needle(0.10, 101.3 / 120.0), at(*needle_origin))
+    needle.local_origin = needle_origin
+    parts.update(place_parts(b, {"AirlockGauge_Needle": needle}, {}, "AirlockParts"))
+    # port side of the hatch: conduits clamped to the bulkhead stiffeners and the intercom
+    for cx, radius, mat in ((-1.30, 0.020, RUBBER), (-1.365, 0.014, ALU)):
+        m.cyl(mat, (cx, 0.12, 0.034), (cx, 2.46, 0.034), radius, 10, 0.0, b, (False, False))
+    for cy in (0.45, 0.90, 1.40, 1.90, 2.35):
+        m.box(ALU, (-1.33, cy, 0.03), (0.13, 0.026, 0.05), 0.003, b)
+    m.box(GRAY, (-1.56, 1.45, 0.03), (0.24, 0.34, 0.06), 0.012, b)
+    vent(m, (-1.65, 1.48, -1.47, 1.58), 0.06, b, 5)
+    for i, lamp in enumerate((LED_G, LED_A)):
+        m.cyl(lamp, (-1.62 + i * 0.05, 1.42, 0.06), (-1.62 + i * 0.05, 1.42, 0.063), 0.007, 8, 0.0, b, (False, True))
+    m.box(ANO, (-1.50, 1.37, 0.064), (0.06, 0.04, 0.008), 0.003, b)
+    m.decal(art.decals, "conn_07", (-1.56, 1.31, 0.0605), b, 0.9)
+    return m, parts
 
 
 def build_doors(art):
@@ -1527,34 +1876,12 @@ def rcs_quad(m, angle_deg, radius, z):
 
 
 # ----------------------------------------------------------------------------- antenna (asset A07)
-def dish(radius=0.62, depth=0.19, thickness=0.014, segs=32):
-    """Parabolic reflector as a closed shell with feed, struts and backing tubes. Axis +y, vertex at the origin."""
-    m = Model("Dish")
-    steps = 9
-    back = [(max(0.03, radius * s), depth * s * s - thickness) for s in np.linspace(0.0, 1.0, steps)]
-    front = [(max(0.03, radius * s), depth * s * s) for s in np.linspace(1.0, 0.0, steps)]
-    m.lathe(WHITE, (0, 0, 0), (0, 1, 0), back + [(radius + 0.006, depth - thickness / 2)] + front, segs, None, (True, True))
-    focus = radius * radius / (4.0 * depth)
-    m.lathe(ANO, (0, 0, 0), (0, 1, 0), [(0.055, focus - 0.10), (0.022, focus - 0.045), (0.022, focus + 0.02)], 14, None, (True, True))
-    for a in (90, 210, 330):
-        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
-        m.tube(ALU, [(radius * 0.97 * ca, depth * 0.94, radius * 0.97 * sa), (0.03 * ca, focus - 0.02, 0.03 * sa)], 0.008, 6)
-    m.cyl(GRAY, (0, -0.075, 0), (0, -thickness + 0.002, 0), 0.13, 20, 0.006)
-    for a in range(0, 360, 45):
-        ca, sa = math.cos(math.radians(a)), math.sin(math.radians(a))
-        m.tube(ALU, [(r * ca, depth * (r / radius) ** 2 - thickness - 0.012, r * sa) for r in (0.12, 0.36, 0.59)], 0.012, 6)
-    ring_r = 0.40
-    ring_y = depth * (ring_r / radius) ** 2 - thickness - 0.012
-    m.tube(ALU, [(ring_r * math.cos(math.radians(a)), ring_y, ring_r * math.sin(math.radians(a))) for a in range(0, 360, 20)],
-           0.010, 6, 0.0, None, True)
-    return m
-
-
 def antenna(art):
     """High-gain antenna on its hull pad (asset A07). Pad space: z outwards from the skin, y aft, x around the hull.
 
     Returns (static base, parts, anchors). The manual drive socket is on the aft service deck, on the pad's
-    centre line and level with the AntennaRepair anchor (0.31 m off the skin)."""
+    centre line and level with the AntennaRepair anchor (0.31 m off the skin). Base, mast and yoke are built
+    here; the reflector assembly on the trunnion is a prop."""
     base = Model("AntennaBase")
     deck = 0.30
     mast_y = -0.28
@@ -1598,19 +1925,10 @@ def antenna(art):
     azimuth.cyl(GRAY, (0.24, mast_y, 0.96), (0.33, mast_y, 0.96), 0.06, 16, 0.006)
     azimuth.local_origin = (0.0, mast_y, 0.62)
 
-    elevation = Model("Antenna_Elevation")
-    tilt = math.radians(30.0)               # boresight leans aft from the pad normal
-    axis = np.array([0.0, math.sin(tilt), math.cos(tilt)])
-    hub = np.array([0.0, mast_y, 0.96])
-    vertex = hub + axis * 0.20
-    elevation.cyl(ALU, (-0.18, mast_y, 0.96), (0.18, mast_y, 0.96), 0.035, 12)
-    elevation.box(GRAY, tuple(hub), (0.22, 0.16, 0.16), 0.012)
-    elevation.cyl(GRAY, tuple(hub), tuple(vertex - axis * 0.07), 0.05, 14)
-    elevation.instance(dish(), basis(vertex, (1, 0, 0), axis, np.cross((1.0, 0.0, 0.0), axis)))
-    elevation.local_origin = (0.0, mast_y, 0.96)
-
-    parts = {"Antenna_Azimuth": azimuth, "Antenna_Elevation": elevation}
-    anchors = {"Antenna_ServiceSocket": (0.0, 0.0, 0.308)}
+    # The elevation part (trunnion, hub, reflector, feed) is the prop Props/AntennaReflector; the editor tool hangs
+    # it on a pivot created at this helper point, 0.34 m above the azimuth pivot.
+    parts = {"Antenna_Azimuth": azimuth}
+    anchors = {"Antenna_ServiceSocket": (0.0, 0.0, 0.308), "Antenna_ElevationMount": (0.0, mast_y, 0.96)}
     return base, parts, anchors
 
 
@@ -1779,16 +2097,18 @@ def build_all(decals, screens):
     }
     engineering, engineering_parts = build_engineering(art, bays)
     exterior, exterior_parts = build_exterior(art)
+    airlock, airlock_parts = build_airlock(art, bays)
     models = {
         "Cockpit": build_cockpit(art, bays),
         "Engineering": engineering,
         "Storage": build_storage(art, bays),
-        "Airlock": build_airlock(art, bays),
+        "Airlock": airlock,
         "Exterior": exterior,
     }
     models.update(build_doors(art))
     models.update(engineering_parts)
     models.update(exterior_parts)
+    models.update(airlock_parts)
     return models, build_collision()
 
 

@@ -62,6 +62,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_FabricCanvas
+    second: {fileID: 2100000, guid: 05179744ee434f7498ca08561e491095, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_FabricDark
     second: {fileID: 2100000, guid: 2edbce156231d654e8a082e6dd24a44c, type: 2}
   - first:

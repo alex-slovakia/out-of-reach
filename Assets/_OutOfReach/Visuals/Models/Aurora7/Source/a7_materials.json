@@ -94,8 +94,15 @@
   {
    "name": "A7_FabricWhite",
    "set": "A7_Fabric",
-   "tint": "#C9C2B2",
+   "tint": "#D4D1C8",
    "tiling": 4.0,
+   "normal": 1.0
+  },
+  {
+   "name": "A7_FabricCanvas",
+   "set": "A7_Fabric",
+   "tint": "#B5A88C",
+   "tiling": 5.0,
    "normal": 1.0
   },
   {
