@@ -1,0 +1,25 @@
+{
+ "idle_objects": [
+  [
+   "A7_ContinuousBody_Rig.001",
+   "ARMATURE"
+  ]
+ ],
+ "idle_actions": [
+  "A7_ContinuousBody_Rig.001|BODY_StandIdle_V01"
+ ],
+ "bone_count": [
+  164,
+  164
+ ],
+ "names_equal": true,
+ "parents_equal": true,
+ "max_length_diff_mm": 0.000484,
+ "max_bind_matrix_diff": 7.401406764984131e-05,
+ "max_posed_joint_deviation_mm": 0.0009,
+ "frame_range": [
+  1.0,
+  31.0
+ ],
+ "fcurves": 1649
+}

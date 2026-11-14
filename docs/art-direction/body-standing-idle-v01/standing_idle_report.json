@@ -1,0 +1,233 @@
+{
+ "clip": "BODY_StandIdle_V01",
+ "target": {
+  "knee_deg": 11.0,
+  "hips_back_m": 0.04
+ },
+ "evidence": {
+  "WORK_StandRelaxed_setback330": {
+   "outfit": "WORK",
+   "pose": "StandRelaxed",
+   "visual_setback_m": 0.33,
+   "coverage_percent": {
+    "empty": 94.59,
+    "torso": 3.81,
+    "hips": 0.06,
+    "legs": 0.63,
+    "boots": 0.91
+   },
+   "boots_sight": {
+    "boot_vertices": 2195,
+    "outside_view": 0,
+    "visible": 1751,
+    "hidden_by": {
+     "legs": 313,
+     "torso": 131
+    },
+    "boots_angle_below_horizon_deg": [
+     93.3,
+     105.7
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 269.0,
+   "knees_deg": [
+    10.13,
+    10.13
+   ]
+  },
+  "WORK_StandRelaxed_setback197": {
+   "outfit": "WORK",
+   "pose": "StandRelaxed",
+   "visual_setback_m": 0.197,
+   "coverage_percent": {
+    "empty": 84.72,
+    "torso": 15.06,
+    "hips": 0.0,
+    "legs": 0.0,
+    "boots": 0.22
+   },
+   "boots_sight": {
+    "boot_vertices": 2195,
+    "outside_view": 0,
+    "visible": 464,
+    "hidden_by": {
+     "torso": 1731
+    },
+    "boots_angle_below_horizon_deg": [
+     88.6,
+     100.9
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 162.7,
+   "knees_deg": [
+    10.13,
+    10.13
+   ]
+  },
+  "WORK_StandIdle_setback330": {
+   "outfit": "WORK",
+   "pose": "StandIdle",
+   "visual_setback_m": 0.33,
+   "coverage_percent": {
+    "empty": 95.37,
+    "torso": 2.48,
+    "hips": 0.08,
+    "legs": 1.14,
+    "boots": 0.94
+   },
+   "boots_sight": {
+    "boot_vertices": 2195,
+    "outside_view": 0,
+    "visible": 1829,
+    "hidden_by": {
+     "legs": 366
+    },
+    "boots_angle_below_horizon_deg": [
+     93.3,
+     105.8
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 305.1,
+   "knees_deg": [
+    11.4,
+    11.4
+   ]
+  },
+  "WORK_StandIdle_setback197": {
+   "outfit": "WORK",
+   "pose": "StandIdle",
+   "visual_setback_m": 0.197,
+   "coverage_percent": {
+    "empty": 89.79,
+    "torso": 9.37,
+    "hips": 0.0,
+    "legs": 0.08,
+    "boots": 0.76
+   },
+   "boots_sight": {
+    "boot_vertices": 2195,
+    "outside_view": 0,
+    "visible": 1370,
+    "hidden_by": {
+     "torso": 774,
+     "legs": 51
+    },
+    "boots_angle_below_horizon_deg": [
+     88.6,
+     101.0
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 191.2,
+   "knees_deg": [
+    11.4,
+    11.4
+   ]
+  },
+  "EVA_StandIdle_setback330": {
+   "outfit": "EVA",
+   "pose": "StandIdle",
+   "visual_setback_m": 0.33,
+   "coverage_percent": {
+    "empty": 94.91,
+    "torso": 2.93,
+    "hips": 0.08,
+    "legs": 1.1,
+    "boots": 0.98
+   },
+   "boots_sight": {
+    "boot_vertices": 2215,
+    "outside_view": 0,
+    "visible": 1814,
+    "hidden_by": {
+     "legs": 401
+    },
+    "boots_angle_below_horizon_deg": [
+     93.3,
+     106.0
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 304.9,
+   "knees_deg": [
+    11.4,
+    11.4
+   ]
+  },
+  "EVA_StandIdle_setback197": {
+   "outfit": "EVA",
+   "pose": "StandIdle",
+   "visual_setback_m": 0.197,
+   "coverage_percent": {
+    "empty": 88.46,
+    "torso": 10.87,
+    "hips": 0.0,
+    "legs": 0.0,
+    "boots": 0.67
+   },
+   "boots_sight": {
+    "boot_vertices": 2215,
+    "outside_view": 0,
+    "visible": 1042,
+    "hidden_by": {
+     "torso": 1173
+    },
+    "boots_angle_below_horizon_deg": [
+     88.6,
+     101.2
+    ],
+    "view_spans_deg_below_horizon": [
+     46.0,
+     114.0
+    ]
+   },
+   "eye_to_nearest_skin_mm": 187.5,
+   "knees_deg": [
+    11.4,
+    11.4
+   ]
+  }
+ },
+ "source_take": "A7_ContinuousBody_Rig|A7_ContinuousBody_Rig|BODY_StandRelaxed",
+ "authoring": {
+  "knees_before_deg": [
+   10.13,
+   10.13
+  ],
+  "knees_after_deg": [
+   11.4,
+   11.4
+  ],
+  "root_shift_mm": [
+   -0.0,
+   40.0,
+   -0.0
+  ],
+  "foot_drift_mm": {
+   "L": 0.0,
+   "R": 0.0
+  },
+  "foot_rotation_change_deg": {
+   "L": 0.0,
+   "R": 0.0
+  }
+ }
+}
