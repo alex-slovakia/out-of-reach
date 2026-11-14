@@ -229,6 +229,63 @@ namespace OutOfReach.Tests.Composition
         }
 
         [Test]
+        public void AClosedMenuIgnoresItsReducedEffectsToggle()
+        {
+            Build(out UIDocument document);
+            Toggle reduced = document.rootVisualElement.Q<Toggle>(className: "session-reduced");
+            VisualElement menu = document.rootVisualElement.Q("i01-mode-pause-overlay");
+            Assert.That(reduced, Is.Not.Null);
+            bool before = reduced.value;
+
+            // The menu closes (Esc or Start resumes) while the toggle may still hold keyboard/gamepad focus.
+            menu.style.display = DisplayStyle.None;
+            Submit(reduced);
+            Assert.That(reduced.value, Is.EqualTo(before), "a stray submit into a closed menu changes nothing");
+
+            menu.style.display = DisplayStyle.Flex;
+            Submit(reduced);
+            Assert.That(reduced.value, Is.Not.EqualTo(before), "the shown menu's toggle still works");
+        }
+
+        [Test]
+        public void TheToggleGuardKeepsTheProgrammaticValue()
+        {
+            Build(out UIDocument document);
+            Toggle reduced = document.rootVisualElement.Q<Toggle>(className: "session-reduced");
+            document.rootVisualElement.Q("i01-mode-pause-overlay").style.display = DisplayStyle.None;
+
+            // Refresh mirrors the real setting with SetValueWithoutNotify, also while the menu is hidden.
+            reduced.SetValueWithoutNotify(true);
+            Assert.That(reduced.value, Is.True);
+            Submit(reduced);
+            Assert.That(reduced.value, Is.True, "a stray submit cannot flip the mirrored setting");
+            reduced.SetValueWithoutNotify(false);
+            Assert.That(reduced.value, Is.False, "programmatic updates still apply");
+        }
+
+        [UnityTest]
+        public IEnumerator BlurFocusWithinReleasesOnlyFocusInsideTheMenu()
+        {
+            Build(out UIDocument document);
+            VisualElement menu = document.rootVisualElement.Q("i01-mode-pause-overlay");
+            Button quit = document.rootVisualElement.Q<Button>(I01SessionControls.QuitButtonName);
+            var outside = new Button { name = "outside-focus-probe", text = "probe" };
+            document.rootVisualElement.Add(outside);
+
+            quit.Focus();
+            yield return null;
+            Assert.That(quit.focusController.focusedElement, Is.SameAs(quit), "the menu button holds focus");
+            I01SessionControls.BlurFocusWithin(menu);
+            Assert.That(quit.focusController.focusedElement, Is.Not.SameAs(quit), "focus inside the menu is released");
+
+            outside.Focus();
+            yield return null;
+            Assert.That(outside.focusController.focusedElement, Is.SameAs(outside));
+            I01SessionControls.BlurFocusWithin(menu);
+            Assert.That(outside.focusController.focusedElement, Is.SameAs(outside), "focus outside the menu is left alone");
+        }
+
+        [Test]
         public void ReleasingTheMenuDisarmsTheQuit()
         {
             I01SessionControls controls = Build(out UIDocument document);
@@ -315,13 +372,13 @@ namespace OutOfReach.Tests.Composition
             return controls;
         }
 
-        private static void Submit(Button button)
+        private static void Submit(VisualElement target)
         {
-            Assert.That(button.panel, Is.Not.Null, "the button is in a live panel");
+            Assert.That(target.panel, Is.Not.Null, "the element is in a live panel");
             using (NavigationSubmitEvent submit = NavigationSubmitEvent.GetPooled())
             {
-                submit.target = button;
-                button.SendEvent(submit);
+                submit.target = target;
+                target.SendEvent(submit);
             }
         }
     }
