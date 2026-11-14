@@ -4,16 +4,21 @@
 
 Status vocabulary: `in progress`, `ready`, `blocked`, `not started`, `verified`. An artifact existing is not proof that its tests pass.
 
+Integrator: **Codex**, explicitly selected by Alex on 14 November 2026. Live cross-chat status,
+writer claims and acknowledgements: [issue #7](https://github.com/alex-slovakia/out-of-reach/issues/7).
+This table records verified checkpoints, not a claim that a stopped chat is still running.
+
 | ID | Priority / owner | Task | Depends on | Acceptance checkpoint | Status |
 |---|---|---|---|---|---|
 | F00 | P0 / integrator | Audit existing Unity, pin 6000.3.28f1, repository, ignore rules and LFS | — | Remote/private access checked; source-only baseline; no changed original GUIDs | Verified foundation |
 | F01 | P0 / integrator | Product, architecture, contracts, ownership and prompt pack | F00 | Eight interfaces including planner bridge compile; both developers can state their boundaries | Verified foundation |
 | D01 | P0 / integrator | Reproducible NASA/JPL snapshot and assumptions | F00 | Raw source, request, epoch, units and derived distance/delay checked | Verified offline; runtime integration remains C04 |
-| C01 | P0 / Claude | Mission phases, event bus, mission planner/configuration and resource accounting | F01 | Deterministic EditMode tests; invalid actions consume nothing; no visual dependencies | Not started |
-| V01 | P0 / Codex | Modular interior and visual preview | F01 | Cockpit, engineering, storage, airlock; named anchors; compile and scene inspection | Not started |
-| C02 | P0 / Claude | Movement, interaction, power/life-support repair | C01 | Walk/interact in test fixture; repair costs atomic; repeated use safe | Not started |
-| V02 | P0 / Codex | Planner/HUD views and accident presentation | V01, contracts | Readable constraints/status; event-driven blackout/alarms; input/camera restored | Not started |
-| I01 | P0 / coordinated integrator | First connected playable: plan → accident → interior repairs | C02, V02 | Fresh loadout changes resources; gameplay and visuals agree; clean Console | Not started |
+| C01 | P0 / Claude | Mission phases, event bus, mission planner/configuration and resource accounting | F01 | Deterministic EditMode tests; invalid actions consume nothing; no visual dependencies | Delivered caee234, merged by Apoliak via PR #6; independent 77/77 EditMode pass; review fixes pending C02 |
+| V01 | P0 / Codex | Modular interior and visual preview | F01 | Cockpit, engineering, storage, airlock; named anchors; compile and scene inspection | Verified fallback 0be6d6a; final modeling handed to Claude/Fable |
+| V01A | P0 / Claude/Fable model writer | Remodel the fictional ship, preserve agreed gameplay anchor layout | V01 handoff / CODEX-006 | Unity-compatible models, licenses, genuine renders and placement checks | User assigned; dedicated writer/branch delivery not yet confirmed |
+| C02 | P0 / Claude | Movement, interaction, power/life-support repair | C01 | Walk/interact in test fixture; repair costs atomic; repeated use safe | In progress per Claude's 09:51 UTC #7 report; local domain work, no published tested C02 SHA yet |
+| V02 | P0 / Codex | Planner/HUD views and accident presentation | V01, contracts | Readable constraints/status; event-driven blackout/alarms; input/camera restored | In progress; local UI compiles/generates prefab, runtime interaction/layout verification and accident presentation pending |
+| I01 | P0 / Codex integrator | First connected playable: plan → accident → interior repairs | C02, V02 | Fresh loadout changes resources; gameplay and visuals agree; clean Console | In progress: shared clock/deadline contract coordination; Bootstrap still unconnected |
 | C03 | P0 / Claude | Suit/airlock gates, constrained EVA, antenna repair | C02 | No unsuited exit; return possible; resource failure deterministic | Not started |
 | V03 | P0 / Codex | Airlock animation, exterior route and EVA presentation | V01 | Anchors/collisions readable; no duplicate player/camera; no vacuum air sounds | Not started |
 | C04 | P0 / Claude | NASA data consumption, delayed transmission, outcomes and report data | C01, D01, C03 | Round-trip timing correct; success/failure/restart tests; source included | Not started |
@@ -38,7 +43,15 @@ If time slips: cut the optional modular installation and false-hope replay first
 | Initial audit | Pre-baseline | Existing 6000.3.28f1 project, URP | Editor/package/settings inspected | Version identified; not a build test |
 | D01 snapshot | Pre-baseline | Python offline verifier | 32 samples, source/CSV hashes, vector ranges and light-time checks | Passed; not runtime gameplay integration |
 
-The integrator adds measured evidence here. No gameplay, build or end-to-end result is recorded yet.
+The integrator adds measured evidence here. No end-to-end playable mission is verified yet.
+
+## Checkpoint evidence — 14 November 2026
+
+- **C01:** caee234b9bfa6e0eb5e672492f650601d25de592, merged to main as 43be436 via PR #6 by Apoliak. Codex independently ran its exact domain sources with presentation in the isolated Unity 6000.3.28f1 verification project: 77 passed, 0 failed/skipped, exit 0 (`c01-review-tests.xml`). This does not verify a playable Bootstrap. Pause/advance, finite arithmetic and outcome-boundary fixes are tracked for C02.
+- **V01 fallback:** 0be6d6a, isolated Unity build/validator and fresh GPU captures exited 0 (`v01-lighting-build-1.log`, `v01-lighting-render-1.log`). Ten anchors, 14 bindings, 405 standing/floor samples, no missing scripts/materials; corridor/engineering/storage stills inspected. Detailed CC0 service prop, primitive structural fallback, some dim labels remain. No player/performance claim.
+- **V02 UI:** local source import/compile and prefab generation exited 0 (`v02-ui-build.log`). Layout, domain-command interactions, timing display and actual scene binding remain unverified; not published as complete.
+- **External technical build report:** Claude's verification chat reported a Windows build of main@43be436 plus visuals@55d4c36, tree 5eb251bc31255466a611d84ad65a8424ca6d884a, exit 0. Included only the visual preview scene, whose EditorOnly camera is stripped. This is explicitly not playable-game proof; see #7 for that machine's evidence.
+- **Audio:** v1 clips/SFX were imported and decoded at 55d4c36. User acceptance supersedes its radio default: use new clean voice candidates; 01–10 regenerated locally, remaining new takes pending. Original mood loops generated and numerically checked, not yet integrated or approved by listening. No in-game playback claim.
 
 GitHub milestones: **M0 Shared foundation**, **M1 Playable mission**, **M2 Cinematic submission build**. These group the work above; their existence is not completion evidence.
 

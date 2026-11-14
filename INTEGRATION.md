@@ -1,5 +1,13 @@
 # Integration contracts and merge process
 
+## Designated integrator
+
+On 14 November 2026 Alex explicitly selected **Codex** to connect and verify the whole game.
+The exact shared clock/deadline additions were agreed by both feature owners in [coordination issue #7](https://github.com/alex-slovakia/out-of-reach/issues/7).
+Codex coordinates Bootstrap composition, shared contracts and integration evidence. This does not
+transfer Claude-owned gameplay source or permit automatic merges to main. Routine task allocation
+is autonomous, prioritizing the visual/gameplay result and avoiding duplicated agent work.
+
 ## Canonical contract surface
 
 The C# files in `Assets/_OutOfReach/Scripts/Contracts/` are authoritative. Namespace: **`OutOfReach.Contracts`**. Read those files before implementing an adapter; this document describes responsibilities rather than maintaining a second copy of signatures.
@@ -9,6 +17,8 @@ The C# files in `Assets/_OutOfReach/Scripts/Contracts/` are authoritative. Names
 | `IGameState` | Claude Core | Presentation, interaction | Authoritative phase and transitions |
 | `IMissionConfiguration` | Claude Inventory/Core | Planner, simulation, report | Validated equipment and engineering constraints |
 | `IMissionPlanner` | Claude Core/Inventory | Codex planner view | Authoritative equipment catalog, editable draft and validated launch |
+| `ISimulationClock` | Claude Core | Codex HUD and presentation | Read-only pause, simulation scale and elapsed authoritative time |
+| `IPlanningDeadline` | Claude Core | Codex planner view | Read-only active-real-time deadline and immutable last-valid fallback |
 | `IResourceSystem` | Claude Simulation | Gameplay commands, HUD | Quantities, snapshots and atomic consumption |
 | `IInteractable` | Claude Interaction | Player raycast, prompt view | Availability, prompt and validated action |
 | `IRepairable` | Claude Simulation/Interaction | Repair interaction, diagnostic view | System condition, requirements and repair result |
@@ -28,6 +38,13 @@ Initial contract event names: `PhaseChanged`, `ResourceChanged`, `SystemConditio
 - Spendable resources are `OxygenKg`, `WaterLitres`, `FoodKg`, `BatteryKWh`, `SparePartsCount`. `CarbonDioxidePpm` is a concentration in the snapshot, not a spendable resource. Never label oxygen inventory as cabin oxygen percentage.
 - Budget uses explicitly fictional planning credits unless a sourced currency model is introduced.
 - One simulation clock drives consumption, repairs and signals. The HUD labels simulation-time acceleration. Pause freezes this clock; cinematic animation may continue on real time.
+- `ISimulationClock.TimeScale` is simulated seconds per real second and retains its value while paused; elapsed time delegates to mission state, without a second counter. Presentation may choose to freeze effects on the same pause view.
+- Timed planning is 60 active, unpaused real seconds; Practice disables it before planning starts. Core owns deadline advancement and the atomic launch race. On expiry launch the valid current draft, otherwise the disclosed immutable last-valid configuration, and record fallback use. Never silently substitute an undisclosed preset. UI reads `IPlanningDeadline`; it does not run another countdown. The Practice/Timed command is a public runtime method bound through the composition root, with its exact signature supplied in C02's handoff.
+
+Compatibility of the 14 November additions: these are two new read-only interfaces; no existing member
+changes. Claude implements them on its already matching clock/deadline views. Codex injects them
+explicitly into the UI/presentation. Callers without these optional views remain usable for development,
+but accelerated/timed gameplay is not release-ready without the corresponding visible indicators.
 - Outbound light travel = documented distance / speed of light. An answer requires outbound travel, processing delay and inbound travel. Frozen-reference geometry and any compression must be disclosed.
 
 ## Event flow
