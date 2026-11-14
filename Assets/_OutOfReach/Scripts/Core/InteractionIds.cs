@@ -44,6 +44,9 @@ namespace OutOfReach.Core
         public const string PlantSeedlings = "grow-plant";
         public const string HarvestCrop = "grow-harvest";
 
+        /// <summary>Sleep position (SleepEntry anchor): begins a rest of up to 8.5 h, or wakes the resting crew.</summary>
+        public const string SurvivalSleep = "survival-sleep";
+
         /// <summary>Prefix of a type's supply pallet during preflight: "cargo-supply:" + equipment ID.</summary>
         public const string CargoSupplyPrefix = "cargo-supply:";
 
