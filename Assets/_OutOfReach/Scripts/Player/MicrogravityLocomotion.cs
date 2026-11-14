@@ -38,6 +38,9 @@ namespace OutOfReach.Player
         [Tooltip("How far below the capsule's bottom (beyond the skin width) a surface still counts as touching the feet, metres.")]
         [SerializeField, Min(0.005f)] private float footContactMetres = 0.05f;
 
+        [Tooltip("Foot support must face up: minimum dot product of the contact normal with the body's up axis (side walls and bare edges do not count).")]
+        [SerializeField, Range(0f, 1f)] private float minimumFootSupportDot = 0.8f;
+
         [Tooltip("Largest speed change one full push gives, metres per second.")]
         [SerializeField, Min(0f)] private float maxPushSpeed = 1f;
 
@@ -65,6 +68,8 @@ namespace OutOfReach.Player
         public float ReachMetres => reachMetres;
 
         public float FootContactMetres => footContactMetres;
+
+        public float MinimumFootSupportDot => minimumFootSupportDot;
 
         public float MaxPushSpeed => maxPushSpeed;
 

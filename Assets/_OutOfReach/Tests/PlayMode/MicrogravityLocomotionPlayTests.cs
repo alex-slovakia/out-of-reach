@@ -394,5 +394,98 @@ namespace OutOfReach.Tests.PlayMode
 
             Assert.That(Vector3.Distance(ends[0], ends[1]), Is.LessThan(1e-3f), "the grip settle is frame-rate independent");
         }
+
+        // MICRO-FLOAT-02 (Codex 6882323154): the grip is revalidated every frame; foot support must be real.
+        [UnityTest]
+        public IEnumerator AHeldGrip_IsReleasedOnce_WhenItsAnchorLeavesReach_TurnsTrigger_GoesInactive_OrIsCutOff()
+        {
+            int releases = 0;
+            Player.Released += c => releases++;
+            Vector3 grip = new Vector3(-1.9f, 51.6f, 1.5f);
+            Vector3 home = handhold.transform.position;
+            GameObject door = harness.AddWall(new Vector3(-1.6f, 51.725f, 1.5f), new Vector3(0.05f, 0.3f, 0.3f));
+            door.SetActive(false);
+            Physics.SyncTransforms();
+
+            for (int scenario = 0; scenario < 4; scenario++)
+            {
+                FloatAt(new Vector3(-1.3f, 50.2f, 1.5f));
+                Done(Player.TryGrab(handhold, grip));
+                yield return Frames(3);
+                Assert.That(Player.HeldHandhold, Is.SameAs(handhold), "held before scenario " + scenario);
+                releases = 0;
+                Vector3 before = Position;
+
+                switch (scenario)
+                {
+                    case 0:
+                        handhold.transform.position = home + new Vector3(0f, 0f, 1f); // anchor about 0.65 m -> 1.19 m away
+                        break;
+                    case 1:
+                        handhold.isTrigger = true;
+                        break;
+                    case 2:
+                        handhold.enabled = false;
+                        break;
+                    default:
+                        door.SetActive(true); // closes between the hand and the anchor
+                        break;
+                }
+
+                Physics.SyncTransforms();
+                yield return Frames(3);
+                Assert.That(Player.HeldHandhold, Is.Null, "released in scenario " + scenario);
+                Assert.That(releases, Is.EqualTo(1), "exactly once in scenario " + scenario);
+                Assert.That(Vector3.Distance(Position, before), Is.LessThan(1e-3f), "no pull or teleport in scenario " + scenario);
+
+                handhold.transform.position = home;
+                handhold.isTrigger = false;
+                handhold.enabled = true;
+                door.SetActive(false);
+                Physics.SyncTransforms();
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator AFootPush_NeedsRealSupportBelow_NotASideWallABareEdgeAnOwnedPartOrATrigger()
+        {
+            FloatAt(new Vector3(-1.67f, 51f, 1f));
+            Assert.That(Player.TryPushFromFootContact(Vector3.right), Is.EqualTo(FloatActionResult.NoSurface), "touching a side wall is not foot support");
+
+            GameObject ledge = harness.AddWall(new Vector3(0.45f, 50.65f, 1.5f), new Vector3(0.4f, 0.1f, 0.4f));
+            FloatAt(new Vector3(0f, 50.6f, 1.5f));
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "a bare edge under the side of the foot is not support");
+            ledge.SetActive(false);
+            Physics.SyncTransforms();
+
+            GameObject boot = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            boot.transform.SetParent(Player.transform, false);
+            boot.transform.localPosition = new Vector3(0f, 0.05f, 0f);
+            boot.transform.localScale = new Vector3(0.2f, 0.1f, 0.2f);
+            GameObject chest = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            chest.transform.SetParent(Player.transform, false);
+            chest.transform.localPosition = new Vector3(0f, Eye, -0.2f);
+            chest.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            CharacterController capsule = Player.GetComponent<CharacterController>();
+            Physics.IgnoreCollision(boot.GetComponent<Collider>(), capsule);
+            Physics.IgnoreCollision(chest.GetComponent<Collider>(), capsule);
+            FloatAt(new Vector3(-1.3f, 51f, 0.6f));
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "an owned solid part is not foot support");
+            Done(Player.TryPushOff(back, BackPoint, Vector3.forward, 0.2f));
+            Object.DestroyImmediate(boot);
+            Object.DestroyImmediate(chest);
+
+            FloatAt(new Vector3(0f, 51f, 1.5f));
+            Collider pad = harness.AddWall(new Vector3(0f, 50.95f, 1.5f), new Vector3(0.6f, 0.08f, 0.6f)).GetComponent<Collider>();
+            pad.isTrigger = true;
+            Physics.SyncTransforms();
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "a trigger under the feet is not support");
+
+            pad.isTrigger = false;
+            Physics.SyncTransforms();
+            Done(Player.TryPushFromFootContact(Vector3.up, 0.3f));
+            Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.3f).Within(1e-5f), "the same pad, solid and under the feet, is real support");
+            yield return null;
+        }
     }
 }
