@@ -1,0 +1,606 @@
+{
+ "task": "LAND-LAUNCH-SITE-01",
+ "status": "original art kit for root's native check; not imported into Unity by this kit",
+ "fbx": "LS_LandLaunchSite.fbx",
+ "space": "Unity metres, y up, local to the prologue origin; every object's pivot is the prologue origin. FBX exported like the ship kit: bake_space_transform, -Z forward, Y up, FBX_SCALE_ALL",
+ "fixed_by_existing_scene": {
+  "transport_axis_xz": [
+   0,
+   0
+  ],
+  "booster_y": [
+   -30.6,
+   -0.55
+  ],
+  "booster_diameter_m": 4.7,
+  "engine_emitter": [
+   0,
+   -31.4,
+   0
+  ],
+  "access_mast_centre_xz": [
+   0,
+   -8.5
+  ],
+  "staging_deck_z": -9.9,
+  "crew_deck_y": 0,
+  "pad_box": {
+   "centre": [
+    0,
+    -33.1,
+    -2
+   ],
+   "size": [
+    36,
+    1,
+    24
+   ],
+   "top_y": -32.6
+  }
+ },
+ "terrain_interface": {
+  "ground_datum_y": -36.6,
+  "foundation_top_y": -32.6,
+  "slope": "1:3, 12 m wide, hipped corners",
+  "footprint": {
+   "x": [
+    -72,
+    72
+   ],
+   "z": [
+    -62,
+    72
+   ],
+   "edge_y": -36.6
+  },
+  "boundary_vertices": {
+   "x=+-72": {
+    "z": [
+     -62,
+     -50,
+     60,
+     72
+    ]
+   },
+   "z=-62": {
+    "x": [
+     -72,
+     -60,
+     60,
+     72
+    ]
+   },
+   "z=+72": {
+    "x": [
+     -72,
+     -60,
+     -4,
+     -3,
+     3,
+     4,
+     60,
+     72
+    ]
+   }
+  },
+  "trench": {
+   "slot_x": [
+    -3,
+    3
+   ],
+   "slot_z": [
+    -3,
+    72
+   ],
+   "floor_y_level": -39.6,
+   "level_z": [
+    -3,
+    6
+   ],
+   "ramp": "straight from (z 6, y -39.6) to (z 72, y -36.6)",
+   "walls_below_datum_x": [
+    -4,
+    4
+   ],
+   "back_wall_z": [
+    -4,
+    -3
+   ],
+   "notch_beyond_z72": false
+  },
+  "outside_footprint": {
+   "LS_Crawlerway": "lanes x [-18,-6] and [6,18], z -62..-880, top datum +0.15, bottom datum -0.2",
+   "LS_AssemblyBuilding": "on the datum, z -925..-995"
+  }
+ },
+ "objects": {
+  "LS_PadDeck_Optional": {
+   "triangles": 36,
+   "bounds_min": [
+    -18.0,
+    -36.6,
+    -14.0
+   ],
+   "bounds_max": [
+    18.0,
+    -32.6,
+    10.0
+   ],
+   "materials": [
+    "LS_Concrete"
+   ]
+  },
+  "LS_LaunchFoundation": {
+   "triangles": 124,
+   "bounds_min": [
+    -72.0,
+    -36.6,
+    -62.0
+   ],
+   "bounds_max": [
+    72.0,
+    -32.6,
+    72.0
+   ],
+   "materials": [
+    "LS_Concrete"
+   ]
+  },
+  "LS_FlameTrench": {
+   "triangles": 80,
+   "bounds_min": [
+    -4.0,
+    -40.2,
+    -4.0
+   ],
+   "bounds_max": [
+    4.0,
+    -34.94547,
+    72.0
+   ],
+   "materials": [
+    "A7_PaintGraphite",
+    "LS_ConcreteSoot"
+   ]
+  },
+  "LS_LaunchMount": {
+   "triangles": 108,
+   "bounds_min": [
+    -4.7,
+    -32.6,
+    -4.6
+   ],
+   "bounds_max": [
+    4.7,
+    -30.62,
+    4.6
+   ],
+   "materials": [
+    "A7_PaintGraphite",
+    "A7_PaintGray",
+    "LS_Concrete"
+   ]
+  },
+  "LS_Umbilicals": {
+   "triangles": 2840,
+   "bounds_min": [
+    -29.0,
+    -32.6,
+    -49.02
+   ],
+   "bounds_max": [
+    49.02,
+    -17.1,
+    -10.51
+   ],
+   "materials": [
+    "A7_Aluminum",
+    "A7_PaintGray",
+    "A7_PaintWhite",
+    "LS_Concrete"
+   ]
+  },
+  "LS_Barriers": {
+   "triangles": 840,
+   "bounds_min": [
+    -4.2,
+    -32.6,
+    10.6
+   ],
+   "bounds_max": [
+    4.2,
+    -31.79,
+    58.4
+   ],
+   "materials": [
+    "LS_ConcreteBarrier"
+   ]
+  },
+  "LS_FloodTowers": {
+   "triangles": 1144,
+   "bounds_min": [
+    -47.71994,
+    -32.60526,
+    44.29607
+   ],
+   "bounds_max": [
+    47.71994,
+    -3.4,
+    47.70393
+   ],
+   "materials": [
+    "A7_Glass",
+    "A7_PaintGraphite",
+    "A7_PaintGray"
+   ]
+  },
+  "LS_WaterTower": {
+   "triangles": 1208,
+   "bounds_min": [
+    -51.2,
+    -32.61032,
+    -43.2
+   ],
+   "bounds_max": [
+    -40.8,
+    26.22,
+    -32.8
+   ],
+   "materials": [
+    "A7_PaintGray",
+    "A7_PaintWhite"
+   ]
+  },
+  "LS_Markings": {
+   "triangles": 84,
+   "bounds_min": [
+    -59.475,
+    -32.588,
+    -49.475
+   ],
+   "bounds_max": [
+    59.475,
+    -32.588,
+    59.475
+   ],
+   "materials": [
+    "LS_Markings"
+   ]
+  },
+  "LS_Crawlerway": {
+   "triangles": 48,
+   "bounds_min": [
+    -18.0,
+    -36.8,
+    -880.0
+   ],
+   "bounds_max": [
+    18.0,
+    -32.57,
+    -50.0
+   ],
+   "materials": [
+    "LS_Gravel"
+   ]
+  },
+  "LS_AssemblyBuilding": {
+   "triangles": 50,
+   "bounds_min": [
+    -35.0,
+    -36.6,
+    -995.0
+   ],
+   "bounds_max": [
+    75.0,
+    55.4,
+    -924.8
+   ],
+   "materials": [
+    "A7_PaintGraphite",
+    "A7_PaintGray",
+    "A7_PaintWhite",
+    "LS_Markings"
+   ]
+  }
+ },
+ "triangles_total": 6562,
+ "anchors": {
+  "LS_PadTop_Centre": [
+   0.0,
+   -32.6,
+   -2.0
+  ],
+  "LS_NozzleAxis_PadTop": [
+   0.0,
+   -32.6,
+   0.0
+  ],
+  "LS_TrenchFloor_UnderNozzle": [
+   0.0,
+   -39.6,
+   0.0
+  ],
+  "LS_DeflectorPeak": [
+   0.0,
+   -35.0,
+   -3.0
+  ],
+  "LS_TrenchExit_Ground": [
+   0.0,
+   -36.6,
+   72.0
+  ],
+  "LS_GroundLevel_SlopeFoot_West": [
+   -72.0,
+   -36.6,
+   0.0
+  ],
+  "LS_CableTray_MastEnd": [
+   -1.4,
+   -31.4,
+   -10.6
+  ],
+  "LS_PadTerminal_Door": [
+   -26.0,
+   -32.6,
+   -30.98
+  ],
+  "LS_PipeRack_MastEnd": [
+   1.4,
+   -30.36,
+   -10.6
+  ],
+  "LS_PropellantSphere_Centre": [
+   42.0,
+   -23.6,
+   -42.0
+  ],
+  "LS_FloodLamp_West": [
+   -46.0,
+   -4.0,
+   45.7
+  ],
+  "LS_FloodLamp_East": [
+   46.0,
+   -4.0,
+   45.7
+  ],
+  "LS_WaterTower_Base": [
+   -46.0,
+   -32.6,
+   -38.0
+  ],
+  "LS_Crawlerway_PadEnd": [
+   0.0,
+   -32.6,
+   -50.0
+  ],
+  "LS_Crawlerway_FarEnd": [
+   0.0,
+   -36.6,
+   -880.0
+  ],
+  "LS_AssemblyBuilding_Door": [
+   0.0,
+   -36.6,
+   -925.0
+  ]
+ },
+ "materials": [
+  {
+   "name": "LS_Concrete",
+   "set": "LS_Concrete",
+   "tint": "#E2E0DA",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "new": true,
+   "unity": "URP Lit; maps LS_Concrete_BaseColor / _Normal / _MODS (R metallic, G occlusion, A smoothness); tiling 0.25 per metre (4 m tile)"
+  },
+  {
+   "name": "LS_ConcreteSoot",
+   "set": "LS_Concrete",
+   "tint": "#77726C",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "new": true,
+   "unity": "same maps as LS_Concrete, darker tint for the trench and deflector"
+  },
+  {
+   "name": "LS_ConcreteBarrier",
+   "set": "LS_Concrete",
+   "tint": "#EFEDE7",
+   "tiling": 0.5,
+   "normal": 0.5,
+   "new": true,
+   "unity": "same maps as LS_Concrete, lighter tint, tiling 0.5"
+  },
+  {
+   "name": "LS_Gravel",
+   "set": "LS_Gravel",
+   "tint": "#FFFFFF",
+   "tiling": 0.5,
+   "normal": 0.8,
+   "new": true,
+   "unity": "URP Lit; maps LS_Gravel_*; tiling 0.5 per metre (2 m tile)"
+  },
+  {
+   "name": "LS_Markings",
+   "atlas": "LS_Markings",
+   "new": true,
+   "unity": "URP Lit alpha clip 0.5 on LS_Markings.png (UVs are atlas UVs)"
+  },
+  {
+   "name": "A7_PaintGray",
+   "set": "A7_Paint",
+   "tint": "#8A8884",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_PaintWhite",
+   "set": "A7_Paint",
+   "tint": "#B5B3AE",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_Glass",
+   "tint": "#A9C0CC",
+   "unity": "the ship's existing material of this name"
+  }
+ ],
+ "verification": {
+  "blender_fbx_roundtrip": {
+   "pass": true,
+   "checks": 27,
+   "failed": 0,
+   "blender": "5.3.0"
+  },
+  "rebuild_from_source": "identical build report, byte-identical textures",
+  "unity": "not run by this kit"
+ },
+ "excluded": "no lights, cameras, colliders, terrain or water; PV_* proxies, sun and cameras exist only in the .blend for the review renders",
+ "provenance": {
+  "author": "Claude Opus 5.5 (AI) for Apoliak7777's team",
+  "ai_generated": true,
+  "method": "procedural Blender 5.3 and Python scripts in source/",
+  "third_party": "none; lettering rasterised from Inter (SIL OFL 1.1, shipped with Blender), pixels only",
+  "branding": "fictional LC-7 and AURORA-7 marks only; no agency logos or insignia"
+ },
+ "files": {
+  "ATTRIBUTION.md": {
+   "sha256": "5d3a7bde3994f696d135bd982b297b48684b755c7dd0c4fb4c2e863577d51f71",
+   "bytes": 1050
+  },
+  "LS_LandLaunchSite.blend": {
+   "sha256": "c1512b31d5af68647e737f1121dd5fe4e3d95bac67d6993cdabf9d0a78bfdac7",
+   "bytes": 266599
+  },
+  "LS_LandLaunchSite.fbx": {
+   "sha256": "cabe9bf64c2996935b4944cbfd9bbe2258739f83c63bdf6f5d5e7f000fe12e6c",
+   "bytes": 201180
+  },
+  "README.md": {
+   "sha256": "49fff2e29c3ec05f1831c8402315411b47c6f9ff55f21ce41efe602271c92556",
+   "bytes": 11594
+  },
+  "ls_build_report.json": {
+   "sha256": "0050620a2ce174633fe662390cba145a2eb4f04f2cde9b648c9e1ad7b26dbcf9",
+   "bytes": 5351
+  },
+  "ls_build_roundtrip.json": {
+   "sha256": "3b457c952b48ab5fbc35f7d4948535b83471b00c5c8702a1ada8b4e2df274a5e",
+   "bytes": 3439
+  },
+  "renders/LS_crew_deck.png": {
+   "sha256": "9b598a7bf05fe7ddf9be3274152c8159009efc7fa6d9af98efc8d79552dda0d1",
+   "bytes": 977904
+  },
+  "renders/LS_ground.png": {
+   "sha256": "ebdfc63c745ba39c76483b56ef85d378ec61af36ea8f96aaeb7a9b3e1dbf9f55",
+   "bytes": 997125
+  },
+  "renders/LS_overview.png": {
+   "sha256": "1cdae5570e1e50e2eeedbfcda4494710233a84eb3af42b1ab51e3afeb1e2af3d",
+   "bytes": 1085681
+  },
+  "renders/LS_sheet.png": {
+   "sha256": "18f8b6d1adf031960dc40d62be9eebcf95aaefaf5cc8852327fb2e522a735e66",
+   "bytes": 610027
+  },
+  "renders/LS_towards_building.png": {
+   "sha256": "85afc85093443c840399de73c92714be030e07cb12dbe915328876183adf5374",
+   "bytes": 876606
+  },
+  "source/a7_textures.py": {
+   "sha256": "6eef19853ceb38947631cef7ec403745d79b83d8c09cc4cbe6e8242311652700",
+   "bytes": 47555
+  },
+  "source/a7kit.py": {
+   "sha256": "13bd12539c53d4c7cf4ae6f03951991f7605d1bef7b5f7f47418332feb0cc86b",
+   "bytes": 22736
+  },
+  "source/build_habitat.py": {
+   "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26",
+   "bytes": 20395
+  },
+  "source/build_site.py": {
+   "sha256": "928237d2c47282e1bec5cba4461b6ae2aaaa7c839f50d407707f03359cb1c057",
+   "bytes": 6685
+  },
+  "source/hb_kit.py": {
+   "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8",
+   "bytes": 35895
+  },
+  "source/ls_kit.py": {
+   "sha256": "16eb473b78bdf8de4fe2a41c647650063c6e631cff5312502a6f2e6ad87f7d87",
+   "bytes": 17452
+  },
+  "source/ls_materials.json": {
+   "sha256": "39cd5afdd4d06339fd7e17249e88a3b9591b69734bd4ae053bbb3f39c1ff8ae1",
+   "bytes": 2189
+  },
+  "source/ls_textures.py": {
+   "sha256": "ebebc53cf49a2d6533ab8cddcd61944d29dbfff133de46e5b6c9403be9c80374",
+   "bytes": 2619
+  },
+  "source/make_sheet.py": {
+   "sha256": "e81ebff9be3a4f3230c4c67b9a9a96828ad10b725905e13e82edb5ab60284115",
+   "bytes": 796
+  },
+  "source/roundtrip_habitat.py": {
+   "sha256": "60f4d01282a22b575baa6dac219f2bf27eec6b775af0bbd44e006802f2a7819a",
+   "bytes": 4118
+  },
+  "textures/LS_Concrete_BaseColor.png": {
+   "sha256": "20e593667b8c5a8a71670115e491a5b03df3945fec24361c11d54c2b6a2fdefe",
+   "bytes": 300735
+  },
+  "textures/LS_Concrete_MODS.png": {
+   "sha256": "a872a36470b5129160e67c41cf64382268addb61b381d48461bbe845a7f270dc",
+   "bytes": 42439
+  },
+  "textures/LS_Concrete_Normal.png": {
+   "sha256": "bd327b76ecfa3fe88aabf20e01e67b96e5474e20d61d0cee029dd12863314e58",
+   "bytes": 1846014
+  },
+  "textures/LS_Gravel_BaseColor.png": {
+   "sha256": "8b7e8e74f977e40cb025c670e3441356abbefeda696735875fc05d9c3dd3973d",
+   "bytes": 903382
+  },
+  "textures/LS_Gravel_MODS.png": {
+   "sha256": "cf3cc91ca4fed401fc7bc86e153ad95711392cae37e6f2b6b5f00284f88a1de9",
+   "bytes": 656800
+  },
+  "textures/LS_Gravel_Normal.png": {
+   "sha256": "678886808ace385e18f17c06a86106abb8edfcf4006540e68da21eaaa8be946b",
+   "bytes": 1927546
+  },
+  "textures/LS_Markings.png": {
+   "sha256": "a83673e07a76c1e40a2df2927f87ba9d57600715ef9f8741e8f30aea9b8742d5",
+   "bytes": 21190
+  },
+  "textures/ls_markings.json": {
+   "sha256": "ddc076ebacb246bda66132989264d29180d7dc156b92ed9298fc0eae87338340",
+   "bytes": 861
+  }
+ }
+}

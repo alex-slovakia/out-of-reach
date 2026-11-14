@@ -1,0 +1,367 @@
+{
+ "units": {
+  "LS_LandLaunchSite": {
+   "fbx": "LS_LandLaunchSite.fbx",
+   "objects": {
+    "LS_PadDeck_Optional": {
+     "triangles": 36,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -18.0,
+      -36.6,
+      -14.0
+     ],
+     "bounds_max": [
+      18.0,
+      -32.6,
+      10.0
+     ],
+     "per_material": {
+      "LS_Concrete": 36
+     }
+    },
+    "LS_LaunchFoundation": {
+     "triangles": 124,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -72.0,
+      -36.6,
+      -62.0
+     ],
+     "bounds_max": [
+      72.0,
+      -32.6,
+      72.0
+     ],
+     "per_material": {
+      "LS_Concrete": 124
+     }
+    },
+    "LS_FlameTrench": {
+     "triangles": 80,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -4.0,
+      -40.2,
+      -4.0
+     ],
+     "bounds_max": [
+      4.0,
+      -34.94547,
+      72.0
+     ],
+     "per_material": {
+      "LS_ConcreteSoot": 68,
+      "A7_PaintGraphite": 12
+     }
+    },
+    "LS_LaunchMount": {
+     "triangles": 108,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -4.7,
+      -32.6,
+      -4.6
+     ],
+     "bounds_max": [
+      4.7,
+      -30.62,
+      4.6
+     ],
+     "per_material": {
+      "LS_Concrete": 36,
+      "A7_PaintGraphite": 24,
+      "A7_PaintGray": 48
+     }
+    },
+    "LS_Umbilicals": {
+     "triangles": 2840,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -29.0,
+      -32.6,
+      -49.02
+     ],
+     "bounds_max": [
+      49.02,
+      -17.1,
+      -10.51
+     ],
+     "per_material": {
+      "A7_Aluminum": 72,
+      "A7_PaintGray": 1084,
+      "LS_Concrete": 12,
+      "A7_PaintWhite": 1672
+     }
+    },
+    "LS_Barriers": {
+     "triangles": 840,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -4.2,
+      -32.6,
+      10.6
+     ],
+     "bounds_max": [
+      4.2,
+      -31.79,
+      58.4
+     ],
+     "per_material": {
+      "LS_ConcreteBarrier": 840
+     }
+    },
+    "LS_FloodTowers": {
+     "triangles": 1144,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -47.71994,
+      -32.60526,
+      44.29607
+     ],
+     "bounds_max": [
+      47.71994,
+      -3.4,
+      47.70393
+     ],
+     "per_material": {
+      "A7_PaintGray": 960,
+      "A7_PaintGraphite": 88,
+      "A7_Glass": 96
+     }
+    },
+    "LS_WaterTower": {
+     "triangles": 1208,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -51.2,
+      -32.61032,
+      -43.2
+     ],
+     "bounds_max": [
+      -40.8,
+      26.22,
+      -32.8
+     ],
+     "per_material": {
+      "A7_PaintGray": 648,
+      "A7_PaintWhite": 560
+     }
+    },
+    "LS_Markings": {
+     "triangles": 84,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -59.475,
+      -32.588,
+      -49.475
+     ],
+     "bounds_max": [
+      59.475,
+      -32.588,
+      59.475
+     ],
+     "per_material": {
+      "LS_Markings": 84
+     }
+    },
+    "LS_Crawlerway": {
+     "triangles": 48,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -18.0,
+      -36.8,
+      -880.0
+     ],
+     "bounds_max": [
+      18.0,
+      -32.57,
+      -50.0
+     ],
+     "per_material": {
+      "LS_Gravel": 48
+     }
+    },
+    "LS_AssemblyBuilding": {
+     "triangles": 50,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -35.0,
+      -36.6,
+      -995.0
+     ],
+     "bounds_max": [
+      75.0,
+      55.4,
+      -924.8
+     ],
+     "per_material": {
+      "A7_PaintWhite": 24,
+      "A7_PaintGraphite": 12,
+      "A7_PaintGray": 12,
+      "LS_Markings": 2
+     }
+    }
+   },
+   "anchors": {
+    "LS_PadTop_Centre": {
+     "point": [
+      0.0,
+      -32.6,
+      -2.0
+     ]
+    },
+    "LS_NozzleAxis_PadTop": {
+     "point": [
+      0.0,
+      -32.6,
+      0.0
+     ]
+    },
+    "LS_TrenchFloor_UnderNozzle": {
+     "point": [
+      0.0,
+      -39.6,
+      0.0
+     ]
+    },
+    "LS_DeflectorPeak": {
+     "point": [
+      0.0,
+      -35.0,
+      -3.0
+     ]
+    },
+    "LS_TrenchExit_Ground": {
+     "point": [
+      0.0,
+      -36.6,
+      72.0
+     ]
+    },
+    "LS_GroundLevel_SlopeFoot_West": {
+     "point": [
+      -72.0,
+      -36.6,
+      0.0
+     ]
+    },
+    "LS_CableTray_MastEnd": {
+     "point": [
+      -1.4,
+      -31.4,
+      -10.6
+     ]
+    },
+    "LS_PadTerminal_Door": {
+     "point": [
+      -26.0,
+      -32.6,
+      -30.98
+     ]
+    },
+    "LS_PipeRack_MastEnd": {
+     "point": [
+      1.4,
+      -30.36,
+      -10.6
+     ]
+    },
+    "LS_PropellantSphere_Centre": {
+     "point": [
+      42.0,
+      -23.6,
+      -42.0
+     ]
+    },
+    "LS_FloodLamp_West": {
+     "point": [
+      -46.0,
+      -4.0,
+      45.7
+     ]
+    },
+    "LS_FloodLamp_East": {
+     "point": [
+      46.0,
+      -4.0,
+      45.7
+     ]
+    },
+    "LS_WaterTower_Base": {
+     "point": [
+      -46.0,
+      -32.6,
+      -38.0
+     ]
+    },
+    "LS_Crawlerway_PadEnd": {
+     "point": [
+      0.0,
+      -32.6,
+      -50.0
+     ]
+    },
+    "LS_Crawlerway_FarEnd": {
+     "point": [
+      0.0,
+      -36.6,
+      -880.0
+     ]
+    },
+    "LS_AssemblyBuilding_Door": {
+     "point": [
+      0.0,
+      -36.6,
+      -925.0
+     ]
+    }
+   }
+  }
+ },
+ "triangles_total": 6562
+}
