@@ -1,0 +1,30 @@
+{
+ "LS_Umbilicals": {
+  "source_triangles": 2840,
+  "pole_slivers": 48,
+  "source_minus_slivers": 2792,
+  "unity_triangles": 2792,
+  "matched_exact_1mm": 2766,
+  "matched_within_2mm": 26,
+  "max_deviation_m": 6.021720118098983e-06,
+  "unmatched_unity": 0,
+  "unmatched_source": 0,
+  "sliver_area_max_m2": 1.8838083782685026e-07,
+  "sliver_shortest_edge_max_m": 2.610523867733133e-07,
+  "pass": true
+ },
+ "LS_WaterTower": {
+  "source_triangles": 1208,
+  "pole_slivers": 56,
+  "source_minus_slivers": 1152,
+  "unity_triangles": 1152,
+  "matched_exact_1mm": 1120,
+  "matched_within_2mm": 32,
+  "max_deviation_m": 5.432332820021202e-06,
+  "unmatched_unity": 0,
+  "unmatched_source": 0,
+  "sliver_area_max_m2": 2.2194578853146237e-07,
+  "sliver_shortest_edge_max_m": 2.2392895638700524e-07,
+  "pass": true
+ }
+}

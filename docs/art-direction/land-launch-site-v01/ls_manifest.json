@@ -492,7 +492,37 @@
    "importer": "ship settings: bakeAxisConversion 1, useFileUnits 1, useFileScale 1, globalScale 1, no cameras/lights",
    "bake_axis_conversion_on": "11 renderer world bounds + 16 anchors equal this manifest, max deviation 0.0000 m (0.1 mm output)",
    "bake_axis_conversion_off": "everything maps to (-x, y, -z): 180 degrees about y; do not import this way",
-   "triangles": "Unity keeps 6,458 of 6,562: it drops the near-zero-area pole slivers of the lathe-built sphere (LS_Umbilicals -48) and tank (LS_WaterTower -56); 0 zero-area triangles remain; bounds and anchors unchanged"
+   "triangles": {
+    "summary": "Unity keeps 6,458 of 6,562: welding merges the sub-micron edges of the lathe's 104 pole slivers and drops the degenerate faces",
+    "counts": {
+     "LS_Umbilicals weld on": 2792,
+     "LS_WaterTower weld on": 1152,
+     "LS_Umbilicals weld off": 2840,
+     "LS_WaterTower weld off": 1208
+    },
+    "one_to_one_match": {
+     "LS_Umbilicals": {
+      "source_triangles": 2840,
+      "pole_slivers": 48,
+      "unity_triangles": 2792,
+      "max_deviation_m": 6.021720118098983e-06,
+      "unmatched_unity": 0,
+      "unmatched_source": 0,
+      "sliver_shortest_edge_max_m": 2.610523867733133e-07,
+      "pass": true
+     },
+     "LS_WaterTower": {
+      "source_triangles": 1208,
+      "pole_slivers": 56,
+      "unity_triangles": 1152,
+      "max_deviation_m": 5.432332820021202e-06,
+      "unmatched_unity": 0,
+      "unmatched_source": 0,
+      "sliver_shortest_edge_max_m": 2.2392895638700524e-07,
+      "pass": true
+     }
+    }
+   }
   }
  },
  "excluded": "no lights, cameras, colliders, terrain or water; PV_* proxies, sun and cameras exist only in the .blend for the review renders",
@@ -517,8 +547,8 @@
    "bytes": 201180
   },
   "README.md": {
-   "sha256": "d70949c745571f7688ffa563650bde819ccd55c0e0e01982a0953ec5a99f80b5",
-   "bytes": 13121
+   "sha256": "54f516aedae07d9911539c759543eabd5785e937b9785bb502a560a52a191d07",
+   "bytes": 13846
   },
   "ls_build_report.json": {
    "sha256": "0050620a2ce174633fe662390cba145a2eb4f04f2cde9b648c9e1ad7b26dbcf9",
@@ -624,6 +654,10 @@
    "sha256": "53b91c1b8ec72067e204b8b51be75b60f42955048919f6202e1ec21c445e8663",
    "bytes": 3435
   },
+  "unity_check/LSTriangleDetail.cs": {
+   "sha256": "e54659f680e2b4d658b79644b68d24b36a00fd41bd18c94419f7305bb7c69cad",
+   "bytes": 2967
+  },
   "unity_check/ls_axis_check.tsv": {
    "sha256": "82d7bdc9d980583f4ec393b09b8a31642f0a57cfaf76af8b68723a6cbbc49e8e",
    "bytes": 6270
@@ -635,6 +669,18 @@
   "unity_check/ls_axis_compare.txt": {
    "sha256": "7b7cf7fd9731ec842a6283688d7905a2368b67d043e2266c8e22be2334face09",
    "bytes": 1461
+  },
+  "unity_check/ls_tri_detail.tsv": {
+   "sha256": "ccd8948fcd795280e1d82a5055fdb78b8b853fa9e15211ffd94a004e5a44edd6",
+   "bytes": 441409
+  },
+  "unity_check/ls_tri_match.json": {
+   "sha256": "1f88d1ce48623bc58c50bdeebca1c44694b24fc29cbbc307269a368bc3e9b91c",
+   "bytes": 805
+  },
+  "unity_check/ls_tri_match.py": {
+   "sha256": "a595fc939f7dab2b0c3ac95cdaa693e3fd132c18242980140005c400d37a97ba",
+   "bytes": 3131
   }
  },
  "triangles_total_unity": 6458
