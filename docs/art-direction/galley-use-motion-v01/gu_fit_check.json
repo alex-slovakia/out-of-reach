@@ -1,0 +1,176 @@
+{
+ "blend": "GU_GalleyUse.blend",
+ "checks": [
+  {
+   "frame": 135,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Closed",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 150,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Closed",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 153,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Closed/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 3.0
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Closed",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 156,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Closed/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 0.7
+     },
+     "GC_DrinkPouch_Closed/GC_StrawPE": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 3.3
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Closed",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 159,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Closed/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 0.7
+     },
+     "GC_DrinkPouch_Closed/GC_StrawPE": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 3.3
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Closed",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 160,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Open/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.1
+     },
+     "GC_DrinkPouch_Open/GC_Silicone": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 9.7
+     },
+     "GC_DrinkPouch_Open/GC_StrawPE": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.7
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 161,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Open/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.1
+     },
+     "GC_DrinkPouch_Open/GC_Silicone": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 9.7
+     },
+     "GC_DrinkPouch_Open/GC_StrawPE": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.7
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 163,
+   "parts": {
+    "L_Index3": {
+     "GC_DrinkPouch_Open/GC_AmberPlastic": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.1
+     },
+     "GC_DrinkPouch_Open/GC_Silicone": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 9.7
+     },
+     "GC_DrinkPouch_Open/GC_StrawPE": {
+      "intersecting_pairs": 0,
+      "min_distance_mm": 1.7
+     }
+    }
+   },
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 166,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 169,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 199,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  },
+  {
+   "frame": 230,
+   "parts": {},
+   "props_visible": [
+    "GC_DrinkPouch_Open",
+    "GC_MealPouch_Opened"
+   ]
+  }
+ ],
+ "total_intersecting_pairs": 0
+}

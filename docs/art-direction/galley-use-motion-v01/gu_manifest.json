@@ -1,0 +1,250 @@
+{
+ "task": "GALLEY-USE-MOTION-01",
+ "status": "authored Blender animation set for review; not integrated in Unity; no hand carries a pouch (missing Clasp pose, targets per frame); left index Press on the drink clamp proven",
+ "inputs": {
+  "habitat": "feature/habitat-details-v1@5b0f1ca (hb_kit.py, build_habitat.py, a7kit.py, hb_materials.json, 28 textures)",
+  "consumables": "feature/galley-consumables-v1@12100dd (gc_kit.py, gc_materials.json, GC_Labels.png)",
+  "gloves": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands (FBX, rig, base colour; same blobs at 33f474f, 4a34a6b and 85b0994, last changed in 610ed02)",
+  "base": "codex/i01-integration@85b0994"
+ },
+ "clips": {
+  "meal": {
+   "frames_blender": [
+    1,
+    103
+   ],
+   "duration_s": 3.4,
+   "frames": 103
+  },
+  "drink": {
+   "frames_blender": [
+    121,
+    244
+   ],
+   "duration_s": 4.1,
+   "frames": 124
+  }
+ },
+ "suit_state": "unsuited only: helmet off, bare face. Never play these clips with the suit or helmet on. AstronautHandsPresenter shows the suit gloves only while the suit is worn. The left hand in the frames is the approved glove rig, darkened like the separate work-glove instance (MAT_Cargo_WorkGloves) to mark unsuited use; the unsuited WORK body (A7_BodyFit02_WORK, bare hands) can be driven to the same targets (index_tip_*, clasp_target_*).",
+ "timing": "presentation only: one staged bite (meal, 3.4 s) or sip (drink, 4.1 s). Not the simulated meal duration, amount, water volume or award moment; Core owns those.",
+ "missing_anchor": {
+  "pose": "Clasp for R and L: thumb pad opposed to the index and middle finger pads, aperture 24 mm (drink) to 28 mm (meal)",
+  "point": "R_ClaspPoint / L_ClaspPoint: the middle of that aperture, given in the Hand frame like the rig's Grip and Press reference points",
+  "target": "clasp_target_* in every frame: the pouch's grip anchor (MealGrip / DrinkGrip, (0, -0.020, 0) in prop space) with the prop's axes: +z label side (thumb), -z back (fingers), +y up the pouch",
+  "then": "hand_world = clasp_target @ inverse(ClaspPoint frame in Hand); R_Arm (camera space) = inverse(eye) @ hand_world @ inverse(Clasp wrist rotation)"
+ },
+ "fit": {
+  "press_closed": {
+   "lift_mm": 5.0,
+   "index_tip_clearance_mm": 0.7,
+   "other_left_parts_clearance_mm": 21.5,
+   "intersecting_pairs": {}
+  },
+  "press_open": {
+   "lift_mm": 3.75,
+   "index_tip_clearance_mm": 1.08,
+   "other_left_parts_clearance_mm": 21.4,
+   "intersecting_pairs": {}
+  },
+  "press_window_max_intersecting_pairs": 0,
+  "saved_blend_check_total_pairs": 0,
+  "rejected_adapter_fist_pairs": 1295
+ },
+ "files": [
+  {
+   "path": "ATTRIBUTION.md",
+   "bytes": 850,
+   "sha256": "aa4118134104072677496e1a78ce7ea95e274e09e16e4888e4dea1904473123d"
+  },
+  {
+   "path": "GU_GalleyUse.blend",
+   "bytes": 940131,
+   "sha256": "7a86da09e410ec0d79f8b5b34d4fd8e6c6caca662e77f3627673985986ba3197"
+  },
+  {
+   "path": "README.md",
+   "bytes": 12722,
+   "sha256": "c700c97a376f43c65c5de9683d30db8785f2855e979a4759c04f75b3ad0f9c06"
+  },
+  {
+   "path": "gu_fit.json",
+   "bytes": 1235,
+   "sha256": "e2566f5a99eb8c724c7fb276ed670c922eeac32e4601f4ac106b87df262e2fad"
+  },
+  {
+   "path": "gu_fit_check.json",
+   "bytes": 3261,
+   "sha256": "a91f88efc6cdaeeecbe7b2882d6eac3319bbb4046bd52e20633ac2009f2064cf"
+  },
+  {
+   "path": "gu_motion_clips.json",
+   "bytes": 246574,
+   "sha256": "d0bc1a8bf010d807686fcd8699bb4b2074f85e1f9630f2953f735c06045a7214"
+  },
+  {
+   "path": "renders/GU_drink_firstperson_1.png",
+   "bytes": 928307,
+   "sha256": "11bc80f4681026aea15027b463f03732dac40cd6844a3c36358c0a97a0ef2cfe"
+  },
+  {
+   "path": "renders/GU_drink_firstperson_2.png",
+   "bytes": 942557,
+   "sha256": "5173515e0529ca39ebee7cdc1c2418e114411f82044d2f8f09d38fe50b0333a7"
+  },
+  {
+   "path": "renders/GU_drink_firstperson_3.png",
+   "bytes": 946153,
+   "sha256": "778b656467124e4d8c8d6adcfef0d0286ceca2bad22c816c34b0a0e1f0439ed9"
+  },
+  {
+   "path": "renders/GU_drink_firstperson_4.png",
+   "bytes": 919302,
+   "sha256": "64396b04350859e0c0dceeaeff7964fef2430fdf69a37ccda3528d6eca8696aa"
+  },
+  {
+   "path": "renders/GU_drink_sheet.png",
+   "bytes": 1157773,
+   "sha256": "ee4f1d9195356725770b44360396c8fe51936803987df53b78246bd2edf59db9"
+  },
+  {
+   "path": "renders/GU_drink_witness_1.png",
+   "bytes": 952093,
+   "sha256": "4ea5c09f96fc1242dcd3a5728746c783be716af36795c479ff1130f2825eda37"
+  },
+  {
+   "path": "renders/GU_drink_witness_2.png",
+   "bytes": 957845,
+   "sha256": "1d04e8beb42462a1171bffcff4384569bdf74538d1416428adcb41687c80df3f"
+  },
+  {
+   "path": "renders/GU_drink_witness_3.png",
+   "bytes": 956960,
+   "sha256": "f5f0507665c6881be6bff1388aada011df226457cc6ca811c7fd527263e24aa8"
+  },
+  {
+   "path": "renders/GU_drink_witness_4.png",
+   "bytes": 962900,
+   "sha256": "e8ff91ce7cd5244142366c005920229ae5a11a746ebea7139b08236764cfc8ea"
+  },
+  {
+   "path": "renders/GU_meal_firstperson_1.png",
+   "bytes": 916972,
+   "sha256": "7c954f4c28de7bbc4a1f2bdaf05edf7aa21096b657a925012e401f2784f18bc8"
+  },
+  {
+   "path": "renders/GU_meal_firstperson_2.png",
+   "bytes": 922632,
+   "sha256": "5f1141d5c353eceb59384f269efedda230c9eb984feaaaddb44e320890de1d1a"
+  },
+  {
+   "path": "renders/GU_meal_firstperson_3.png",
+   "bytes": 911460,
+   "sha256": "02ed03d851c74e8bcef6d999c992d6f5e0da09aae5b1c499fc40caf4ae4c43b0"
+  },
+  {
+   "path": "renders/GU_meal_firstperson_4.png",
+   "bytes": 911734,
+   "sha256": "82af277f40babeac074132ddec94ef5494415eee846f7cd0fa3265017e56dfe6"
+  },
+  {
+   "path": "renders/GU_meal_sheet.png",
+   "bytes": 921089,
+   "sha256": "0cc853afc78e7991f68997381a1f01d562be642db7d17f5deb15fcf3eaf03f65"
+  },
+  {
+   "path": "renders/GU_meal_witness_1.png",
+   "bytes": 950844,
+   "sha256": "3dc4bd58a256aae1e97e56fcb251e439ea4ce5f5462eeca2f23b68999b4e29a3"
+  },
+  {
+   "path": "renders/GU_meal_witness_2.png",
+   "bytes": 950564,
+   "sha256": "70f40d49581ddba64f03195334e027a706cb87cf44ce352e19af5d66dbb94c9c"
+  },
+  {
+   "path": "renders/GU_meal_witness_3.png",
+   "bytes": 956570,
+   "sha256": "1c6c695fe47571c1d0a9a785ba298b6cc6a6713c0cc82e235454a93094d08489"
+  },
+  {
+   "path": "renders/GU_meal_witness_4.png",
+   "bytes": 955749,
+   "sha256": "c828e2df7e6ec38ab2c0ab475920ec1b835a819b07e5c332661c7db15a3e5b1c"
+  },
+  {
+   "path": "renders/GU_study_press_closed.png",
+   "bytes": 935772,
+   "sha256": "e4e2d3753f983f66b0304bfe999372e46d047d60cc922460cadac6f2b1b8ed37"
+  },
+  {
+   "path": "renders/GU_study_press_open.png",
+   "bytes": 940679,
+   "sha256": "d1fb5e4e7207736b79961e2f8c7e0a995a1bfdce17fd9dc19fc1b4b16283d1ed"
+  },
+  {
+   "path": "renders/GU_study_rejected_fist.png",
+   "bytes": 831223,
+   "sha256": "356a09f10272702d16420e8760675e41073eb1d924a15364e97effdf76f3d54b"
+  },
+  {
+   "path": "renders/GU_study_sheet.png",
+   "bytes": 950891,
+   "sha256": "8c187710972f0c73595d37681a75e77fdf6e946dfb957aab97a9aa45ec72de00"
+  },
+  {
+   "path": "source/a7kit.py",
+   "bytes": 22736,
+   "sha256": "13bd12539c53d4c7cf4ae6f03951991f7605d1bef7b5f7f47418332feb0cc86b"
+  },
+  {
+   "path": "source/build_habitat.py",
+   "bytes": 20395,
+   "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26"
+  },
+  {
+   "path": "source/build_motion.py",
+   "bytes": 28074,
+   "sha256": "74a0ffb4c92e8ed01b41992c06081a26d9ca5d66a40822a73e5e409b47f4a73a"
+  },
+  {
+   "path": "source/fit_check.py",
+   "bytes": 3524,
+   "sha256": "6b3e7acc8337e405b9c26e394fff6881334a857a7d7cb17d333253f57a626241"
+  },
+  {
+   "path": "source/gc_kit.py",
+   "bytes": 12169,
+   "sha256": "d700e8549b916aaf7dd85c51d216b1bea9bb816b04533963f4900d7ade37da12"
+  },
+  {
+   "path": "source/gc_materials.json",
+   "bytes": 1388,
+   "sha256": "cc8be900e370b42a8edb70623de7a854c942e12b562dbbbac6e244f5d1b14bea"
+  },
+  {
+   "path": "source/gu_motion.py",
+   "bytes": 11750,
+   "sha256": "2cd6d6afac54cfd9f940a0ab6f835309233d0b0a33b87c4707a1927d59add8f4"
+  },
+  {
+   "path": "source/hb_kit.py",
+   "bytes": 35895,
+   "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8"
+  },
+  {
+   "path": "source/hb_materials.json",
+   "bytes": 4313,
+   "sha256": "764e3e8b17d35fdafe82426a9aa5fb7f082793edb67b5f183201d2464fb69590"
+  },
+  {
+   "path": "source/make_manifest.py",
+   "bytes": 2897,
+   "sha256": "ca0e7cfedf71a7c85549b6d45e476c2ae66be9a41c781324e7948e657d904a06"
+  },
+  {
+   "path": "source/make_sheets.py",
+   "bytes": 1218,
+   "sha256": "dc24625b07b978e19d692604d0d8e614f7925b8e18a369311683aa9f0cfd8925"
+  }
+ ]
+}

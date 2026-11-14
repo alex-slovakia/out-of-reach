@@ -1,0 +1,61 @@
+{
+ "grip_fist_tube_mm": 34,
+ "grip_fist_span_mm": 93.7,
+ "rejected_adapter_fist": {
+  "what": "R Grip fist round the drink adapter (fist axis across the pouch), pouch at the hold pose",
+  "intersecting_pairs": {
+   "R_Arm": {
+    "GC_Foil": 254,
+    "GC_Labels": 46
+   },
+   "R_Hand": {
+    "A7_PlasticWhite": 14,
+    "GC_Foil": 266,
+    "GC_Labels": 7
+   },
+   "R_Thumb1": {
+    "GC_Foil": 53
+   },
+   "R_Thumb2": {
+    "A7_PlasticWhite": 42,
+    "GC_Foil": 106,
+    "GC_Labels": 7
+   },
+   "R_Thumb3": {
+    "A7_PlasticWhite": 153,
+    "GC_Foil": 52,
+    "GC_Labels": 11,
+    "GC_StrawPE": 24
+   },
+   "R_Index1": {
+    "A7_Rubber": 26
+   },
+   "R_Index2": {
+    "A7_Rubber": 30
+   },
+   "R_Middle1": {
+    "A7_Rubber": 20,
+    "GC_AmberPlastic": 56,
+    "GC_StrawPE": 36
+   },
+   "R_Ring1": {
+    "A7_PlasticWhite": 28,
+    "GC_Silicone": 32,
+    "GC_StrawPE": 32
+   }
+  }
+ },
+ "press_GC_DrinkPouch_Closed": {
+  "lift_mm": 5.0,
+  "index_tip_clearance_mm": 0.7,
+  "other_left_parts_clearance_mm": 21.5,
+  "intersecting_pairs": {}
+ },
+ "press_GC_DrinkPouch_Open": {
+  "lift_mm": 3.75,
+  "index_tip_clearance_mm": 1.08,
+  "other_left_parts_clearance_mm": 21.4,
+  "intersecting_pairs": {}
+ },
+ "press_window_max_intersecting_pairs": 0
+}
