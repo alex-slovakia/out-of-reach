@@ -832,10 +832,7 @@ namespace OutOfReach.Player
             }
 
             floatClock += deltaSeconds;
-            if (!ReferenceEquals(heldHandhold, null) && (heldHandhold == null || !heldHandhold.enabled || !heldHandhold.gameObject.activeInHierarchy))
-            {
-                ReleaseHold();
-            }
+            RevalidateHold();
 
             bool gripped = heldHandhold != null;
             Vector3 displacement = microgravity.Integrate(ref floatVelocity, deltaSeconds, gripped);
@@ -888,7 +885,7 @@ namespace OutOfReach.Player
         {
             normal = Vector3.zero;
             contact = Vector3.zero;
-            if (surface == null || !surface.enabled || !surface.gameObject.activeInHierarchy || surface.isTrigger)
+            if (surface == null || !surface.enabled || !surface.gameObject.activeInHierarchy || surface.isTrigger || IsOwned(surface))
             {
                 return FloatActionResult.NoSurface;
             }
@@ -932,10 +929,9 @@ namespace OutOfReach.Player
         {
             closest = default(RaycastHit);
             float nearest = float.PositiveInfinity;
-            CharacterController own = Body;
             foreach (RaycastHit hit in Physics.RaycastAll(origin, direction, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
             {
-                if (hit.collider != own && hit.distance < nearest)
+                if (!IsOwned(hit.collider) && hit.distance < nearest)
                 {
                     nearest = hit.distance;
                     closest = hit;
@@ -972,7 +968,12 @@ namespace OutOfReach.Player
             return alreadyOutside > 0f && Vector3.Dot(limited, eye - anchor) < 0f ? Vector3.zero : limited;
         }
 
-        /// <summary>A solid surface touching the feet: the nearest hit of a short sphere cast of the capsule's bottom along the body's down axis.</summary>
+        /// <summary>
+        /// Real support under the feet: the nearest hit of a short sphere cast of the capsule's bottom along the body's
+        /// down axis whose normal faces up. Initial overlaps (distance 0) never count: the cast starts inside the
+        /// capsule, so only owned parts or penetrating objects can overlap there. Owned colliders, triggers, side walls
+        /// and bare edges (normal tilted beyond the support limit) are not support.
+        /// </summary>
         private bool FootContact(out Vector3 normal)
         {
             normal = Vector3.zero;
@@ -986,16 +987,57 @@ namespace OutOfReach.Player
             float nearest = float.PositiveInfinity;
             foreach (RaycastHit hit in Physics.SphereCastAll(start, radius, down, distance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
             {
-                if (hit.collider == controller || hit.distance >= nearest)
+                if (hit.distance <= 0f || IsOwned(hit.collider) || hit.distance >= nearest
+                    || Vector3.Dot(hit.normal, -down) < microgravity.MinimumFootSupportDot)
                 {
                     continue;
                 }
 
                 nearest = hit.distance;
-                normal = hit.distance > 0f ? hit.normal : -down;
+                normal = hit.normal;
             }
 
             return nearest < float.PositiveInfinity;
+        }
+
+        /// <summary>
+        /// Each floating frame, before any motion: a grip stays only while its handhold is still a solid, enabled,
+        /// registered collider whose anchor is within reach and in line of sight (the closest non-trigger hit toward
+        /// it). Otherwise the grip ends once (Released); the body is never pulled or moved.
+        /// </summary>
+        private void RevalidateHold()
+        {
+            if (ReferenceEquals(heldHandhold, null))
+            {
+                return;
+            }
+
+            bool valid = heldHandhold != null && heldHandhold.enabled && heldHandhold.gameObject.activeInHierarchy
+                && !heldHandhold.isTrigger && IsHandhold(heldHandhold);
+            if (valid)
+            {
+                Vector3 anchor = heldHandhold.transform.TransformPoint(gripLocalPoint);
+                Vector3 eye = ReachOrigin;
+                Vector3 toAnchor = anchor - eye;
+                float distance = toAnchor.magnitude;
+                valid = distance <= microgravity.ReachMetres + HoldReachToleranceMetres
+                    && (distance < 1e-4f
+                        || (ClosestHit(eye, toAnchor / distance, distance + 0.02f, out RaycastHit hit) && hit.collider == heldHandhold));
+            }
+
+            if (!valid)
+            {
+                ReleaseHold();
+            }
+        }
+
+        /// <summary>Slack in the held reach check, metres (floating-point rounding at the arm's full stretch).</summary>
+        private const float HoldReachToleranceMetres = 0.005f;
+
+        /// <summary>True for the player's own capsule and any collider of the player rig (its children).</summary>
+        private bool IsOwned(Collider candidate)
+        {
+            return candidate != null && (candidate == Body || candidate.transform.IsChildOf(transform));
         }
 
         private bool SurfaceWithinReach()
@@ -1009,13 +1051,12 @@ namespace OutOfReach.Player
             direction = Vector3.zero;
             float nearest = float.PositiveInfinity;
             Vector3 origin = ReachOrigin;
-            CharacterController own = Body;
             foreach (Vector3 probe in ProbeDirections)
             {
                 RaycastHit[] hits = Physics.RaycastAll(origin, probe, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
                 foreach (RaycastHit hit in hits)
                 {
-                    if (hit.collider == own || hit.distance >= nearest)
+                    if (IsOwned(hit.collider) || hit.distance >= nearest)
                     {
                         continue;
                     }
