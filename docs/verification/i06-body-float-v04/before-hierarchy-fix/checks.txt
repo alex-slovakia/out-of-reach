@@ -1,0 +1,102 @@
+PASS setup: Unsaved additive EditorOnly fixture, separate from saved Bootstrap.
+PASS setup: Saved Bootstrap remains active for existing render/lighting settings.
+PASS setup: Source camera culling includes imported body layer 2.
+PASS setup: Six actual skins across two outfits.
+PASS setup: Feet and wrapper use unit metre scale.
+PASS setup: Actual source ViewPivot eye height is 1.65m.
+PASS WORK import: Generic unoptimized skeleton and expected CPU readability.
+PASS WORK import: Three real named Generic held clips, at least .9s each.
+PASS WORK import: Three imported skins have nonempty bone arrays and complete real mesh/root references.
+PASS WORK import: All 164 authored shared-skeleton joints survive native import uniquely.
+PASS EVA import: Generic unoptimized skeleton and expected CPU readability.
+PASS EVA import: Three real named Generic held clips, at least .9s each.
+PASS EVA import: Three imported skins have nonempty bone arrays and complete real mesh/root references.
+PASS EVA import: All 164 authored shared-skeleton joints survive native import uniquely.
+PASS EVA import: Controlled readonly suit fixture bound exactly once.
+PASS 01-work-standing-body-only: Outfit, authored pose and explicit arm policy selected.
+PASS 01-work-standing-body-only: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 01-work-standing-body-only: Correct explicit visual setback for current pose.
+PASS 01-work-standing-body-only: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 01-work-standing-body-only: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at lowerarm01.L
+PASS 01-work-standing-body-only: A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310).
+PASS 01-work-standing-body-only: A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310).
+PASS 01-work-standing-body-only: A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583).
+PASS 01-work-standing-body-only: GPU PNG written: 01-work-standing-body-only.png (1382816 bytes; human inspection still required).
+PASS 02-work-standing-with-arms: Outfit, authored pose and explicit arm policy selected.
+PASS 02-work-standing-with-arms: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 02-work-standing-with-arms: Correct explicit visual setback for current pose.
+PASS 02-work-standing-with-arms: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 02-work-standing-with-arms: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at lowerarm01.L
+PASS 02-work-standing-with-arms: A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310).
+PASS 02-work-standing-with-arms: A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310).
+PASS 02-work-standing-with-arms: A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583).
+PASS 02-work-standing-with-arms: GPU PNG written: 02-work-standing-with-arms.png (1376682 bytes; human inspection still required).
+PASS 03-eva-standing-body-only: Outfit, authored pose and explicit arm policy selected.
+PASS 03-eva-standing-body-only: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 03-eva-standing-body-only: Correct explicit visual setback for current pose.
+PASS 03-eva-standing-body-only: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 03-eva-standing-body-only: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at lowerarm01.L
+PASS 03-eva-standing-body-only: A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990).
+PASS 03-eva-standing-body-only: A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990).
+PASS 03-eva-standing-body-only: A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093).
+PASS 03-eva-standing-body-only: GPU PNG written: 03-eva-standing-body-only.png (1386502 bytes; human inspection still required).
+PASS 04-eva-standing-arms-no-gloves: Outfit, authored pose and explicit arm policy selected.
+PASS 04-eva-standing-arms-no-gloves: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 04-eva-standing-arms-no-gloves: Correct explicit visual setback for current pose.
+PASS 04-eva-standing-arms-no-gloves: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 04-eva-standing-arms-no-gloves: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at lowerarm01.L
+PASS 04-eva-standing-arms-no-gloves: A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990).
+PASS 04-eva-standing-arms-no-gloves: A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990).
+PASS 04-eva-standing-arms-no-gloves: A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093).
+PASS 04-eva-standing-arms-no-gloves: GPU PNG written: 04-eva-standing-arms-no-gloves.png (1381010 bytes; human inspection still required).
+PASS 05-work-floating-contact-fit: Outfit, authored pose and explicit arm policy selected.
+PASS 05-work-floating-contact-fit: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+FAIL 05-work-floating-contact-fit: Correct explicit visual setback for current pose.
+PASS 05-work-floating-contact-fit: Visual wrapper follows feet and yaw without moving camera/player.
+FAIL 05-work-floating-contact-fit: Sampled bone positions match independent Blender export basis within 2mm; max=2.370901m at special05.L
+PASS 05-work-floating-contact-fit: A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310).
+PASS 05-work-floating-contact-fit: A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310).
+PASS 05-work-floating-contact-fit: A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583).
+PASS 05-work-floating-contact-fit: GPU PNG written: 05-work-floating-contact-fit.png (1401283 bytes; human inspection still required).
+PASS 06-eva-floating-body-only: Outfit, authored pose and explicit arm policy selected.
+PASS 06-eva-floating-body-only: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+FAIL 06-eva-floating-body-only: Correct explicit visual setback for current pose.
+PASS 06-eva-floating-body-only: Visual wrapper follows feet and yaw without moving camera/player.
+FAIL 06-eva-floating-body-only: Sampled bone positions match independent Blender export basis within 2mm; max=2.370901m at special05.L
+PASS 06-eva-floating-body-only: A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990).
+PASS 06-eva-floating-body-only: A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990).
+PASS 06-eva-floating-body-only: A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093).
+PASS 06-eva-floating-body-only: GPU PNG written: 06-eva-floating-body-only.png (1401807 bytes; human inspection still required).
+PASS 07-work-seated-fitting-pose: Outfit, authored pose and explicit arm policy selected.
+PASS 07-work-seated-fitting-pose: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 07-work-seated-fitting-pose: Correct explicit visual setback for current pose.
+PASS 07-work-seated-fitting-pose: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 07-work-seated-fitting-pose: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at upperarm01.L
+PASS 07-work-seated-fitting-pose: A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310).
+PASS 07-work-seated-fitting-pose: A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310).
+PASS 07-work-seated-fitting-pose: A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583).
+PASS 07-work-seated-fitting-pose: GPU PNG written: 07-work-seated-fitting-pose.png (1415346 bytes; human inspection still required).
+PASS 08-eva-seated-fitting-pose: Outfit, authored pose and explicit arm policy selected.
+PASS 08-eva-seated-fitting-pose: Only expected torso/arms enabled; no duplicate outfit or camera hands.
+PASS 08-eva-seated-fitting-pose: Correct explicit visual setback for current pose.
+PASS 08-eva-seated-fitting-pose: Visual wrapper follows feet and yaw without moving camera/player.
+PASS 08-eva-seated-fitting-pose: Sampled bone positions match independent Blender export basis within 2mm; max=0.000001m at upperarm01.L
+PASS 08-eva-seated-fitting-pose: A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990).
+PASS 08-eva-seated-fitting-pose: A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990).
+PASS 08-eva-seated-fitting-pose: A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093).
+PASS 08-eva-seated-fitting-pose: GPU PNG written: 08-eva-seated-fitting-pose.png (1403420 bytes; human inspection still required).
+PASS pause, follow, contact reset and rebind: Passive body follows a separate proxy translation/yaw; real player untouched.
+PASS pause, follow, contact reset and rebind: Pause retains visible pose/root and revision despite proxy motion and requested floating pose.
+PASS pause, follow, contact reset and rebind: Unchanged presentation frames preserve an external leased wrist rotation.
+PASS pause, follow, contact reset and rebind: PoseWillReset cancels the lease before resampling; revision advances afterward.
+PASS pause, follow, contact reset and rebind: Explicit seated request is active before rebind reset check.
+PASS pause, follow, contact reset and rebind: Rebind unsubscribes previous suit and clears explicit seated state.
+PASS pause, follow, contact reset and rebind: Old suit events cannot alter the new binding.
+PASS pause, follow, contact reset and rebind: Disable releases suit subscription and all skins.
+PASS pause, follow, contact reset and rebind: Enable alone does not resurrect the old session.
+PASS pause, follow, contact reset and rebind: Explicit rebind restores a usable visible body.
+PASS pause, follow, contact reset and rebind: Explicit visibility policy hides both outfits.
+PASS pause, follow, contact reset and rebind: Final ClearBinding releases all session references/subscriptions.
+PASS pause, follow, contact reset and rebind: ClearBinding restores authored visual wrapper position/rotation/scale.
+PASS pause, follow, contact reset and rebind: Original player world/local position, rotation and scale unchanged.
+PASS pause, follow, contact reset and rebind: Original camera world/local position, rotation and scale unchanged.

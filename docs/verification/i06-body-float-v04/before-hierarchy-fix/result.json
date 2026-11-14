@@ -1,0 +1,6 @@
+{
+    "pass": false,
+    "message": "102 assertions, 4 failures; eight capture attempts. Inspect PNGs before visual acceptance.",
+    "utc": "2026-11-14T19:52:17.1610821Z",
+    "scope": "Controlled body presentation fixture; human visual review required."
+}

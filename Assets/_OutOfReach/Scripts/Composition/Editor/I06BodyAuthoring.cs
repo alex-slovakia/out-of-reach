@@ -16,6 +16,7 @@ namespace OutOfReach.Composition.Editor
         public const string VisualName = "I06 Embodied body visuals";
         public const string WorkPath = AssetRoot + "/Meshes/A7_BodyFit02_WORK.fbx";
         public const string EvaPath = AssetRoot + "/Meshes/A7_BodyFit02_EVA.fbx";
+        public const string FloatPath = "Assets/_OutOfReach/Visuals/Character/FirstPersonBody/FloatNeutralV04/Animations/BODY_FloatNeutral_V04.fbx";
         private const string NormalPath = AssetRoot + "/Textures/Body_Weave_Normal.png";
         private static readonly string[] PoseNames = { "BODY_StandRelaxed", "BODY_FloatNeutral", "BODY_SeatedFit" };
 
@@ -24,6 +25,7 @@ namespace OutOfReach.Composition.Editor
         {
             RequireEditMode();
             ConfigureModel(WorkPath, true); ConfigureModel(EvaPath, false);
+            ConfigureFloatingClip();
             var normal = AssetImporter.GetAtPath(NormalPath) as TextureImporter;
             if (normal == null) throw new InvalidOperationException("Copy the reviewed body weave normal before authoring.");
             if (normal.textureType != TextureImporterType.NormalMap || normal.sRGBTexture
@@ -56,9 +58,10 @@ namespace OutOfReach.Composition.Editor
                 var eva = CreateOutfit(EvaPath, "EVA", visuals.transform);
                 var presenter = host.AddComponent<EmbodiedBodyPresenter>();
                 presenter.ConfigureScene(visuals.transform, playerFeet, playerCamera, work, eva, new Vector3(0f, 0f, -.330f));
-                // Root-approved contact-fit candidate. Standing/seated keep the reviewed setback;
-                // floating must still pass native camera clipping and actual palm reach checks.
-                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, new Vector3(0f, 0f, -.100f));
+                // Centered, source-measured V04 neutral pose: the torso/legs fit the
+                // actual capsule and relaxed hands start behind a nearby wall.
+                // Standing/seated retain their existing independent setback.
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, Vector3.zero);
                 ValidateScene(presenter);
                 EditorUtility.SetDirty(presenter);
                 return presenter;
@@ -118,8 +121,36 @@ namespace OutOfReach.Composition.Editor
                 torsoLegs = ExactlyOne(skins, "A7_" + variant + "_TorsoLegs"),
                 leftArm = ExactlyOne(skins, "A7_" + variant + "_Arm_L"),
                 rightArm = ExactlyOne(skins, "A7_" + variant + "_Arm_R"),
-                standing = Clip(path, PoseNames[0]), floating = Clip(path, PoseNames[1]), seated = Clip(path, PoseNames[2])
+                standing = Clip(path, PoseNames[0]), floating = Clip(FloatPath, "BODY_FloatNeutral_V04"), seated = Clip(path, PoseNames[2])
             };
+        }
+
+        private static void ConfigureFloatingClip()
+        {
+            var importer = AssetImporter.GetAtPath(FloatPath) as ModelImporter;
+            if (importer == null) throw new InvalidOperationException("Copy the reviewed rest-bind V04 floating clip first.");
+            if (importer.animationType != ModelImporterAnimationType.Generic || !importer.importAnimation
+                || importer.avatarSetup != ModelImporterAvatarSetup.CreateFromThisModel
+                || importer.optimizeGameObjects || importer.animationCompression != ModelImporterAnimationCompression.Off
+                || importer.globalScale != 1f || !importer.useFileScale || importer.addCollider || !importer.preserveHierarchy)
+            {
+                importer.animationType = ModelImporterAnimationType.Generic; importer.importAnimation = true;
+                importer.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+                importer.optimizeGameObjects = false; importer.animationCompression = ModelImporterAnimationCompression.Off;
+                importer.globalScale = 1f; importer.useFileScale = true; importer.addCollider = false;
+                // Animation-only FBX must retain the same named rig parent as the multi-mesh outfits.
+                importer.preserveHierarchy = true;
+                importer.SaveAndReimport();
+            }
+            var takes = importer.defaultClipAnimations;
+            if (takes.Length != 1 || !takes[0].takeName.EndsWith("BODY_FloatNeutral", StringComparison.Ordinal))
+                throw new InvalidOperationException("V04 requires its single original floating take and frame bounds.");
+            if (importer.clipAnimations.Length != 1 || importer.clipAnimations[0].name != "BODY_FloatNeutral_V04")
+            {
+                takes[0].name = "BODY_FloatNeutral_V04"; takes[0].loopTime = true; takes[0].loopPose = false;
+                importer.clipAnimations = takes; importer.SaveAndReimport();
+            }
+            Clip(FloatPath, "BODY_FloatNeutral_V04");
         }
 
         private static void ConfigureModel(string path, bool readable)

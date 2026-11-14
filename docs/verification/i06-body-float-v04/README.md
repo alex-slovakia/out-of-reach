@@ -1,0 +1,7 @@
+# V04 floating clip import checkpoint
+
+Unity 6000.3.28f1, real GPU, isolated native fixture. Original mesh/outfit source unchanged. The animation-only FBX uses the original rest bind, 164 bones and unchanged lengths. Its importer must preserve the named rig parent: `preserveHierarchy=true`. Without that, Unity strips the single top-level rig and the clip rotates the model root instead of addressing its bones.
+
+Before: 102 checks, 4 failures (two obsolete fixture offset assertions, two actual 2.370901 m bone mismatches). After correcting the import hierarchy and matching the intended zero floating offset: 102 checks, 0 failures, process exit 0. All 164 floating bone positions in both WORK and EVA match independent frozen Blender source within 1.06 micrometres. Expectations are not generated from the tested Unity result. Original standing/seated checks remain.
+
+**Visual acceptance is still pending.** The attached actual post-fix down-80-degree view is dominated by the chest; it is retained as a known deficiency, not an approved reference. A further camera/body framing study is underway. This proves importing and sampling, not playability, wall contact, final body animation or a complete microgravity experience. The saved Bootstrap still needs its body instances rebuilt to select this clip. Temporary native fixture/source logs remain local. Existing Unity editor-search database errors are separate from assertions; no clean-console claim.
