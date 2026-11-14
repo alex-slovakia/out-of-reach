@@ -1,0 +1,72 @@
+{
+ "task": "WORK-LOOKDOWN-STUDY-01",
+ "status": "Blender study for review; no FBX, prefab, runtime or Core edits",
+ "base": "codex/i01-integration@8bb53aa",
+ "files": [
+  {
+   "path": "README.md",
+   "bytes": 6760,
+   "sha256": "2bab77a4c7c4d1750330058bd30b746d27fe7c82ba0bc0023b8817a14edc70f0"
+  },
+  {
+   "path": "lookdown_study.json",
+   "bytes": 74203,
+   "sha256": "d0653b20678a826d3dba5909a1a8fd9ece93e6e5f762020223e039befc58b50e"
+  },
+  {
+   "path": "renders/A_V04_zero_setback_eye.png",
+   "bytes": 355481,
+   "sha256": "29d7c05fd395a2bd1febb0c984a8ebf68a0360fa663d03a903260c6a94f4b923"
+  },
+  {
+   "path": "renders/A_V04_zero_setback_eye_regions.png",
+   "bytes": 216800,
+   "sha256": "1aae885dab3c8c32978dd79b2f471f9a8bbcd7c9080c51b420d60b381a92a429"
+  },
+  {
+   "path": "renders/A_V04_zero_setback_side.png",
+   "bytes": 183099,
+   "sha256": "ed61796a13dac3e5898ac6b63b8ef617775185e9110e435457aca6ac5ef6579a"
+  },
+  {
+   "path": "renders/B_stand_setback197_eye.png",
+   "bytes": 297242,
+   "sha256": "b8874b3dc2d77db168010de8e7fd66bbb4f42c368861f7fcf4404d41355d20e7"
+  },
+  {
+   "path": "renders/B_stand_setback197_eye_regions.png",
+   "bytes": 159097,
+   "sha256": "f392f2e84d3f631684898c883a734713dcb61e9b5888fbbc6507255fdaf4ff80"
+  },
+  {
+   "path": "renders/B_stand_setback197_side.png",
+   "bytes": 184714,
+   "sha256": "2c3945212a3df186ec6cbd1bc10cc533dcf28e72e59db155c98ca69c49063322"
+  },
+  {
+   "path": "renders/C_stand_setback330_eye.png",
+   "bytes": 282709,
+   "sha256": "1f8f44436bfe747405d3bf4667f8424563291664c1294382e8e701d65255dcee"
+  },
+  {
+   "path": "renders/C_stand_setback330_eye_regions.png",
+   "bytes": 141277,
+   "sha256": "bd7b90665e97b684e946958e8fdb8ef45c5dba190eefc800e9a311808de0ceca"
+  },
+  {
+   "path": "renders/C_stand_setback330_side.png",
+   "bytes": 184831,
+   "sha256": "15d2eb1d5ccb668c2b2a2efe348522d0dea1c527d0b5f92ce2ccbfeaa994b64b"
+  },
+  {
+   "path": "renders/LOOKDOWN_sheet.png",
+   "bytes": 237947,
+   "sha256": "35955fe9b39e7e1568d35f21445283d4daa0d0cde964b21e20c52e065cd190aa"
+  },
+  {
+   "path": "source/lookdown.py",
+   "bytes": 21802,
+   "sha256": "4462ae43445381069352502c9ebf8d8a4536bd3e8468e6823508513d4d239df8"
+  }
+ ]
+}
