@@ -14,7 +14,8 @@ namespace OutOfReach.Core
     /// gives its energy cost, Earth's distance and the earliest reply), and then the prompt shows the remaining wait.
     /// With the physical preflight on, the console also launches the mission during Planning: its prompt shows the
     /// loadout totals, or the exact violation that blocks the launch. Once Earth's reply is in and the mission goes
-    /// on (the optional post-contact Survival chapter), it reports the restored contact and offers nothing to send.
+    /// on (the optional post-contact Survival chapter), it reports the restored contact and offers nothing to send,
+    /// except the recovery beacon while the fictional recovery craft asks for it.
     /// </summary>
     public sealed class CockpitConsoleInteraction : IInteractable
     {
@@ -51,8 +52,15 @@ namespace OutOfReach.Core
                         return director.AccidentTriggered ? "Impact detected" : "Run cockpit systems check";
                     case GamePhase.Outcome:
                     case GamePhase.Report:
-                        return state.Outcome == MissionOutcome.RecoveryPossible ? "Contact with Earth restored" : "Console offline";
+                        return state.Outcome == MissionOutcome.RecoveryPossible || state.Outcome == MissionOutcome.Recovered
+                            ? "Contact with Earth restored"
+                            : "Console offline";
                     default:
+                        if (IsBeaconRequested)
+                        {
+                            return director.SurvivalRecovery.CheckPowerBeacon().Explanation;
+                        }
+
                         if (IsContactRestored)
                         {
                             return ContactRestoredPrompt;
@@ -86,10 +94,19 @@ namespace OutOfReach.Core
         /// <summary>True while the mission runs after Earth's reply: there is nothing left to send.</summary>
         private bool IsContactRestored => !state.IsClosed && communications.State == CommunicationState.ReplyReceived;
 
+        /// <summary>True while the fictional recovery craft asks for the beacon: the console powers it.</summary>
+        private bool IsBeaconRequested => !state.IsClosed && director.SurvivalRecovery != null
+            && director.SurvivalRecovery.Stage == RecoveryStage.BeaconRequested;
+
         public bool CanInteract
         {
             get
             {
+                if (IsBeaconRequested)
+                {
+                    return director.SurvivalRecovery.CheckPowerBeacon().Succeeded;
+                }
+
                 if (state.IsClosed || IsContactRestored)
                 {
                     return false;
@@ -119,6 +136,11 @@ namespace OutOfReach.Core
             if (state.Phase == GamePhase.Intro || state.Phase == GamePhase.Planning)
             {
                 return director.TryCompleteCockpitCheck();
+            }
+
+            if (IsBeaconRequested)
+            {
+                return director.SurvivalRecovery.TryPowerBeacon();
             }
 
             if (IsContactRestored)

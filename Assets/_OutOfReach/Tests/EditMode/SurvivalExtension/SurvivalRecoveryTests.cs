@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using OutOfReach.Contracts;
 using OutOfReach.Core;
@@ -44,6 +45,53 @@ namespace OutOfReach.Tests.EditMode
             }
 
             return session;
+        }
+
+        /// <summary>Begins the longest rest and advances (in half-hour chunks) until it stops for any reason.</summary>
+        private static void RestUntilStop(MissionSession session)
+        {
+            SurvivalRecovery recovery = session.SurvivalRecovery;
+            Require(recovery.TryBeginRest(SurvivalRecovery.MaximumRestHours));
+            for (int guard = 0; recovery.IsResting; guard++)
+            {
+                Assert.That(guard, Is.LessThan(100), "a rest always ends");
+                Require(session.AdvanceSimulation(Math.Min(1800d, recovery.RestRemainingSimulationSeconds)));
+            }
+        }
+
+        private static string Value(MissionReport report, string sectionId, string label)
+        {
+            foreach (MissionReportSection section in report.Sections)
+            {
+                if (section.Id != sectionId)
+                {
+                    continue;
+                }
+
+                foreach (MissionReportLine line in section.Lines)
+                {
+                    if (line.Label == label)
+                    {
+                        return line.Value;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private static int JournalCount(MissionSession session, string fragment)
+        {
+            int count = 0;
+            foreach (MissionLogEntry entry in session.Director.Journal.Snapshot())
+            {
+                if (entry.Text.Contains(fragment))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         private static void SpendDown(MissionSession session, ResourceId id, double leave)
@@ -224,18 +272,24 @@ namespace OutOfReach.Tests.EditMode
                 double foodBefore = session.Resources.Snapshot.FoodKg;
 
                 int rests = 0;
-                while (session.Survival.GrowStage == GrowModuleStage.Growing && rests < 40)
+                while (session.Survival.GrowStage == GrowModuleStage.Growing && rests < 60)
                 {
-                    Require(recovery.TryBeginRest(SurvivalRecovery.MaximumRestHours));
-                    Require(session.AdvanceSimulation(SurvivalRecovery.MaximumRestHours * Hour));
+                    if (recovery.Stage == RecoveryStage.BeaconRequested)
+                    {
+                        Require(recovery.TryPowerBeacon());
+                    }
+
+                    RestUntilStop(session);
                     rests++;
                 }
 
                 Assert.That(session.Survival.GrowStage, Is.EqualTo(GrowModuleStage.HarvestReady));
                 Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.CropReady), "the finished crop wakes the crew");
-                Assert.That(recovery.RestedSimulationSeconds, Is.EqualTo(growth).Within(1e-2), "rested exactly until the crop was ready");
-                Assert.That(rests, Is.LessThanOrEqualTo(23), "about 23 rests of 8.5 real seconds, not an endless wait");
-                Assert.That(foodBefore - session.Resources.Snapshot.FoodKg, Is.EqualTo(FoodPerSecond(session) * growth).Within(1e-6));
+                Assert.That(recovery.BeaconPoweredAtSimulationSeconds, Is.Not.Null, "the day-6 beacon request woke the crew once");
+                Assert.That(recovery.RestedSimulationSeconds, Is.EqualTo(growth).Within(Hour), "nearly the whole cycle was spent resting");
+                Assert.That(rests, Is.LessThanOrEqualTo(26), "about 24 rests of 8.5 real seconds, not an endless wait");
+                Assert.That(foodBefore - session.Resources.Snapshot.FoodKg, Is.EqualTo(FoodPerSecond(session) * recovery.RestedSimulationSeconds).Within(1e-6),
+                    "food is drawn only while resting");
                 Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None));
                 Require(session.Survival.TryHarvest());
             }
@@ -304,6 +358,200 @@ namespace OutOfReach.Tests.EditMode
             Require(leftover.TryBeginRest(2d));
             disposed.Dispose();
             Assert.That(leftover.IsResting, Is.False, "a disposed session leaves no rest lease");
+        }
+
+        [Test]
+        public void Contact_StartsOneFictionalRecoveryPlan_TwelveDaysOut_WithABeaconRequestOnDaySix()
+        {
+            const double Day = CrewMetabolicAssumptions.SecondsPerDay;
+            using (MissionSession session = Contact(receive: false))
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.NotStarted), "a sent call plans nothing yet");
+                Assert.That(recovery.ArrivalAtSimulationSeconds, Is.Null);
+                Assert.That(recovery.ArrivalRemainingSimulationSeconds, Is.EqualTo(double.PositiveInfinity));
+                Assert.That(recovery.CheckPowerBeacon().Failure, Is.EqualTo(CommandFailure.WrongPhase));
+                Require(session.AdvanceSimulation(session.Communications.ReplyDelaySimulationSeconds));
+
+                double contact = recovery.ContactAtSimulationSeconds.Value;
+                Assert.That(contact, Is.EqualTo(session.Survival.ContactRestoredAtSimulationSeconds.Value));
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.Inbound));
+                Assert.That(recovery.ArrivalAtSimulationSeconds, Is.EqualTo(contact + (12d * Day)).Within(1e-6));
+                Assert.That(recovery.ArrivalRemainingSimulationSeconds, Is.EqualTo(12d * Day).Within(1e-6));
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds, Is.Null);
+                Assert.That(recovery.CheckPowerBeacon().Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "not requested yet");
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None), "no rescue on mere radio contact");
+                Assert.That(JournalCount(session, "fictional recovery craft"), Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void ADefaultLoadout_RestsToTheBeacon_PowersItOnce_AndIsRecoveredOnSchedule_ThenTheReportOpens()
+        {
+            const double Day = CrewMetabolicAssumptions.SecondsPerDay;
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                double contact = recovery.ContactAtSimulationSeconds.Value;
+                for (int guard = 0; recovery.Stage == RecoveryStage.Inbound; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    RestUntilStop(session);
+                }
+
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested));
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.RecoveryMilestone), "the request wakes the crew");
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds, Is.EqualTo(contact + (6d * Day) + (2d * Hour)).Within(1e-6));
+
+                IInteractable console = Get(session, InteractionIds.CockpitConsole);
+                Assert.That(console.Prompt, Does.Contain("beacon"));
+                Assert.That(console.CanInteract, Is.True);
+                double battery = session.Resources.Snapshot.BatteryKWh;
+                Require(Get(session, InteractionIds.RecoveryBeacon).TryInteract());
+                Assert.That(battery - session.Resources.Snapshot.BatteryKWh, Is.EqualTo(SurvivalRecovery.BeaconEnergyKWh).Within(1e-9), "real energy");
+                Assert.That(recovery.TryPowerBeacon().Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
+                Assert.That(console.TryInteract().Succeeded, Is.False, "the console does not power it twice");
+                Assert.That(battery - session.Resources.Snapshot.BatteryKWh, Is.EqualTo(SurvivalRecovery.BeaconEnergyKWh).Within(1e-9), "charged once");
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.Inbound));
+                Assert.That(recovery.ArrivalAtSimulationSeconds, Is.EqualTo(contact + (12d * Day)).Within(1e-6), "on schedule");
+
+                for (int guard = 0; session.State.IsSimulationRunning; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    RestUntilStop(session);
+                }
+
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Recovered), session.State.OutcomeReason);
+                Assert.That(session.Director.LossCause, Is.EqualTo(SurvivalFailure.None));
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.Arrived));
+                Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.MissionEnded));
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(contact + (12d * Day)).Within(1e-3));
+                Assert.That(session.State.TryEndMission(MissionOutcome.Lost, "Late test ending.", session.Resources.Snapshot).Succeeded, Is.False);
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Recovered), "no duplicate outcome");
+                Assert.That(JournalCount(session, "Mission outcome"), Is.EqualTo(1));
+
+                Assert.That(session.Cinematics.ActiveCinematic, Is.EqualTo(CinematicId.RecoveryArrival));
+                Fixtures.AcknowledgeActiveCinematic(session);
+                Assert.That(session.Cinematics.ActiveCinematic, Is.EqualTo(CinematicId.MarsDeparture), "Mars is its own later sequence");
+                Fixtures.AcknowledgeActiveCinematic(session);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Report));
+
+                MissionReport report = session.Report;
+                Assert.That(report.Outcome, Is.EqualTo(MissionOutcome.Recovered));
+                Assert.That(report.Headline, Is.EqualTo("RECOVERED"));
+                Assert.That(Value(report, MissionReportSections.Outcome, "What it means"), Does.Contain("fictional").And.Contain("Mars"));
+                Assert.That(Value(report, MissionReportSections.Resources, "Rest"), Does.Contain("BVAD"));
+                Assert.That(Value(report, MissionReportSections.Resources, "Recovery beacon"), Does.StartWith("Powered"));
+            }
+        }
+
+        [Test]
+        public void AMissedBeaconWindow_DelaysTheRendezvousOnce_PausedTimeUsesNoWindow_AndTheTimeoutReachesTheReport()
+        {
+            const double Day = CrewMetabolicAssumptions.SecondsPerDay;
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                double contact = recovery.ContactAtSimulationSeconds.Value;
+                for (int guard = 0; recovery.Stage == RecoveryStage.Inbound; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    RestUntilStop(session);
+                }
+
+                double windowEnds = recovery.BeaconWindowEndsAtSimulationSeconds.Value;
+                Require(session.Clock.Pause());
+                session.Tick(600d);
+                Require(session.Clock.Resume());
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested), "paused time uses none of the window");
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds, Is.EqualTo(windowEnds));
+
+                Require(session.AdvanceSimulation(windowEnds - session.State.ElapsedSimulationSeconds + 60d));
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.Delayed));
+                Assert.That(recovery.BeaconMissed, Is.True);
+                Assert.That(recovery.ArrivalAtSimulationSeconds, Is.EqualTo(contact + (15d * Day)).Within(1e-6), "one explicit 3-day delay");
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds, Is.Null);
+                double battery = session.Resources.Snapshot.BatteryKWh;
+                Assert.That(recovery.TryPowerBeacon().Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "too late");
+                Assert.That(session.Resources.Snapshot.BatteryKWh, Is.EqualTo(battery), "a refused beacon costs nothing");
+                Require(session.AdvanceSimulation(Hour));
+                Assert.That(recovery.ArrivalAtSimulationSeconds, Is.EqualTo(contact + (15d * Day)).Within(1e-6), "not delayed again");
+                Assert.That(JournalCount(session, "Beacon window missed"), Is.EqualTo(1));
+
+                for (int guard = 0; session.State.IsSimulationRunning; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(60));
+                    RestUntilStop(session);
+                }
+
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Recovered), session.State.OutcomeReason);
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(contact + (15d * Day)).Within(1e-3));
+
+                double timeout = session.Definition.Scenario.EndingCinematicTimeoutRealSeconds;
+                session.Tick(timeout + 1d);
+                session.Tick(timeout + 1d);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Report), "the bounded sequence reaches the report without acknowledgements");
+                Assert.That(Value(session.Report, MissionReportSections.Resources, "Recovery beacon"), Does.StartWith("Missed"));
+            }
+        }
+
+        [Test]
+        public void AWaterShortage_LosesTheCrewBeforeTheRecoveryCraftArrives()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                SpendDown(session, ResourceId.WaterLitres, WaterPerSecond(session) * 2d * CrewMetabolicAssumptions.SecondsPerDay);
+                for (int guard = 0; recovery.LastRestStop != RestStopReason.WaterStoreEmpty; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(20));
+                    RestUntilStop(session);
+                }
+
+                Assert.That(recovery.CheckRest(1d).Failure, Is.EqualTo(CommandFailure.InsufficientResources));
+                Assert.That(session.Survival.CheckDrinkWater().Succeeded, Is.False);
+                session.AdvanceSimulation(session.Survival.Spec.ThirstLimitSeconds);
+
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Lost), session.State.OutcomeReason);
+                Assert.That(session.Director.LossCause, Is.EqualTo(SurvivalFailure.ThirstLimit));
+                Assert.That(recovery.Stage, Is.Not.EqualTo(RecoveryStage.Arrived), "no rescue for a lost crew");
+                Assert.That(recovery.RecoveredAtSimulationSeconds, Is.Null);
+            }
+        }
+
+        [Test]
+        public void ALossAtTheSameInstantAsTheRendezvous_Wins()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                for (int guard = 0; recovery.Stage == RecoveryStage.Inbound; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    RestUntilStop(session);
+                }
+
+                Require(recovery.TryPowerBeacon());
+                double ThirstLeft() => session.Survival.Spec.ThirstLimitSeconds * (1d - session.Survival.Thirst01);
+                double gap = recovery.ArrivalRemainingSimulationSeconds - ThirstLeft();
+                Assert.That(gap, Is.GreaterThan(0d));
+                for (int guard = 0; gap > 1e-6; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    double rest = Math.Min(gap, SurvivalRecovery.MaximumRestHours * Hour);
+                    Require(recovery.TryBeginRest(rest / Hour));
+                    Require(session.AdvanceSimulation(rest));
+                    Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.Completed));
+                    gap = recovery.ArrivalRemainingSimulationSeconds - ThirstLeft();
+                }
+
+                // Awake and not drinking, the thirst limit now falls on the rendezvous instant.
+                session.AdvanceSimulation(recovery.ArrivalRemainingSimulationSeconds);
+
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Lost), "the loss wins the tie");
+                Assert.That(session.Director.LossCause, Is.EqualTo(SurvivalFailure.ThirstLimit));
+                Assert.That(recovery.Stage, Is.Not.EqualTo(RecoveryStage.Arrived));
+            }
         }
     }
 }
