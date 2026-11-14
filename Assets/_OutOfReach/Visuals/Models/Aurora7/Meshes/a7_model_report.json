@@ -52,9 +52,9 @@
    ]
   },
   "Engineering": {
-   "triangles": 77342,
+   "triangles": 77486,
    "per_material": {
-    "A7_Aluminum": 27772,
+    "A7_Aluminum": 27916,
     "A7_AnodizedBlack": 4176,
     "A7_AnodizedBlue": 496,
     "A7_AnodizedClear": 9384,
@@ -102,9 +102,9 @@
    ]
   },
   "Storage": {
-   "triangles": 79246,
+   "triangles": 79390,
    "per_material": {
-    "A7_Aluminum": 16420,
+    "A7_Aluminum": 16564,
     "A7_AnodizedBlack": 2728,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 14072,
@@ -144,9 +144,9 @@
    ]
   },
   "Airlock": {
-   "triangles": 31464,
+   "triangles": 31752,
    "per_material": {
-    "A7_Aluminum": 11428,
+    "A7_Aluminum": 11716,
     "A7_AnodizedBlack": 2428,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 6124,
@@ -237,12 +237,12 @@
     "A7_Rubber": 88
    },
    "bounds_min": [
-    -1.842,
+    -1.85,
     0.01,
     16.87
    ],
    "bounds_max": [
-    -0.958,
+    -0.95,
     2.45,
     17.13
    ],
@@ -264,12 +264,12 @@
     "A7_Rubber": 88
    },
    "bounds_min": [
-    0.958,
+    0.95,
     0.01,
     16.87
    ],
    "bounds_max": [
-    1.842,
+    1.85,
     2.45,
     17.13
    ],
@@ -293,12 +293,12 @@
     "A7_Rubber": 88
    },
    "bounds_min": [
-    -0.892,
+    -0.9,
     0.01,
     20.87
    ],
    "bounds_max": [
-    -0.008,
+    0.0,
     2.45,
     21.13
    ],
@@ -322,12 +322,12 @@
     "A7_Rubber": 88
    },
    "bounds_min": [
-    0.008,
+    0.0,
     0.01,
     20.87
    ],
    "bounds_max": [
-    0.892,
+    0.9,
     2.45,
     21.13
    ],
@@ -1249,7 +1249,7 @@
    ]
   }
  ],
- "triangles_total": 378924,
+ "triangles_total": 379500,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",

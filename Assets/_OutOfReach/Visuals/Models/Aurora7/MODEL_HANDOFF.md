@@ -116,6 +116,29 @@ from the aft doorway across the seats to the console.
 | Dish antenna on top of the service section | The antenna stays on the upper starboard quarter at AntennaRepair. |
 | Windows glowing amber | Nothing emissive was added: the two windows are real openings onto the flight deck, so they show its lighting. |
 
+## Review fixes (hull review, #7 comment 6880363965)
+
+A ray check from 1,736 camera positions found three defects in these meshes. The check is
+`blender/aurora7-ship/tools/check_visibility.py` in the model workspace, and it culls back faces as URP renders them.
+All three defects are fixed here:
+
+- **Hatch-frame slits.**
+  - Each portal now has a closed aluminium reveal through the 0.16 m bulkhead, between its two sealing lands.
+  - Before, the lands were open rings, so at an angle you looked through the far land into the next room, or into
+    space at the outer hatch.
+  - Rays through the slits fell from about 8,500 to 112.
+- **Outer-door seam.**
+  - The leaves' edge seals now reach ±0.45 m, so the closed outer leaves meet on the centre line.
+  - Before, they left a 16 mm seam that showed space.
+  - Pivots and leaf positions are unchanged.
+- **Reversed hatch signage (B05).**
+  - The door-leaf labels (AIRLOCK sign, hazard strip, part number) now sit on a front frame.
+  - Before, all 20 of those label quads were mirrored, on both faces of all four leaves.
+  - Keys and positions are unchanged, and no label in the ship is mirrored now.
+
+The cockpit's aft shoulder gaps (B23: z = 3, 2.4 < |x| < 3.0) are closed by root's scene panels and colliders. They are
+deliberately not duplicated in these meshes.
+
 ## Folder map
 
 | Path | Content |
@@ -231,9 +254,9 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | Object | Triangles | Materials | Bounds min → max (m) |
 |---|---:|---:|---|
 | `A7_Cockpit` | 103,480 | 29 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
-| `A7_Engineering` | 77,326 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
-| `A7_Storage` | 79,246 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
-| `A7_Airlock` | 31,464 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
+| `A7_Engineering` | 77,470 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
+| `A7_Storage` | 79,390 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
+| `A7_Airlock` | 31,752 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
 | `A7_Exterior` | 64,710 | 19 | (−12.37, −2.04, −5.11) → (12.37, 5.16, 23.4) |
 | Door leaves (4) | 12,352 | 6–8 | at the two hatch planes |
 | Engineering parts (7 meshes) | 5,248 | 1–4 | inside the two service racks |
@@ -241,7 +264,7 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | Antenna gimbal (2 meshes) | 4,346 | 1–2 | on the hull pad at AntennaRepair; the reflector is 3,638 of them |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
 | ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
-| **Total** | **396,580** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
+| **Total** | **397,156** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
 around the flight deck, 6.0 m aft, 26.1 m long with the sensor nose (bow at z = −5.0); solar wings span 24.7 m.

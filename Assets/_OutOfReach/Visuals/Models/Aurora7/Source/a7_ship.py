@@ -1009,6 +1009,9 @@ def portal(m, art, width, z, sign, emergency_side=None):
             rail_x = (0.9 + 0.2 - (1.04 + wing / 2)) * (-side if face > 0 else side)
             handrail(m, (rail_x, 1.0), (rail_x, 1.6), 0.0, f)
     m.box(WHITE, (0, 2.81, z), (width, 0.62, 0.16), 0.004)
+    # closed reveal through the 0.16 m bulkhead between the two sealing lands: the lands are open rings, and
+    # without it the far land's open back showed the next room (or space at the outer hatch) at an angle
+    m.frame(ALU, (0, 1.24, 0.0), 2.08, 2.80, 0.142, 0.16, 0.30, front_frame((0, 0, z - 0.08), (0, 0, 1)), 5)
     for face in (-1, 1):
         f = front_frame((0, 0, z + face * 0.08), (0, 0, face))
         # machined sealing land: square outside, radiused inside at the top corners only
@@ -1685,15 +1688,19 @@ def door_leaf(art, outer):
             for k in range(12):
                 a = math.tau * k / 12
                 bolt(m, 0.170 * math.cos(a), 1.66 + 0.170 * math.sin(a), 0.040, 0.006, 0.004, ALU, f)
-        else:
-            m.decal(art.decals, "sign_airlock", (0, 1.72, 0.0205), f, 0.9)
+        # labels on a front frame, used once: the plain 0/180 degree turn of `f` printed them mirrored (B05).
+        # Local x of the front frame runs the other way, so the part number keeps its place at -x in `f`.
+        labels = front_frame((0, 0, face * 0.045), (0, 0, face))
+        if not outer:
+            m.decal(art.decals, "sign_airlock", (0, 1.72, 0.0205), labels, 0.9)
         handrail(m, (0.27, 1.26), (0.27, 1.62), 0.020, f, 0.05)
-        m.decal(art.decals, "hazard_short", (0, 0.20, 0.0125), f, width=0.66)
-        m.decal(art.decals, art.next("pn", 28), (-0.12, 0.40, 0.0205), f, 0.8)
+        m.decal(art.decals, "hazard_short", (0, 0.20, 0.0125), labels, width=0.66)
+        m.decal(art.decals, art.next("pn", 28), (0.12, 0.40, 0.0205), labels, 0.8)
     f = front_frame((0, 0, 0.045), (0, 0, 1))
     m.decal(art.decals, "stencil_eva" if outer else "w_depress", (0, 2.02 if outer else 1.36, 0.0205), f, 1.0)
     for sx in (-1, 1):
-        m.box(RUBBER, (sx * 0.435, 1.23, 0), (0.014, 2.44, 0.10), 0.004)
+        # edge seals reach x = +-0.45, so two closed leaves meet on the centre line (was a 16 mm seam)
+        m.box(RUBBER, (sx * 0.439, 1.23, 0), (0.022, 2.44, 0.10), 0.004)
     return m
 
 
