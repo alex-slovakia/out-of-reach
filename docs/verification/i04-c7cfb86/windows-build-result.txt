@@ -1,0 +1,1 @@
+I04_WINDOWS_BUILD_PASS output=C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Builds\I04\OutOfReach.exe bytes=369266361 | Development Windows x64, Bootstrap only. Executable launch/playthrough not established by this build.

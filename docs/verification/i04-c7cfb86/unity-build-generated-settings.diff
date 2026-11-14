@@ -1,0 +1,134 @@
+diff --git a/Assets/Settings/DefaultVolumeProfile.asset b/Assets/Settings/DefaultVolumeProfile.asset
+index 208b718..0784861 100644
+--- a/Assets/Settings/DefaultVolumeProfile.asset
++++ b/Assets/Settings/DefaultVolumeProfile.asset
+@@ -259,6 +259,9 @@ MonoBehaviour:
+   skyOcclusionIntensityMultiplier:
+     m_OverrideState: 1
+     m_Value: 1
++  worldOffset:
++    m_OverrideState: 1
++    m_Value: {x: 0, y: 0, z: 0}
+ --- !u!114 &-1216621516061285780
+ MonoBehaviour:
+   m_ObjectHideFlags: 3
+@@ -293,6 +296,9 @@ MonoBehaviour:
+   highQualityFiltering:
+     m_OverrideState: 1
+     m_Value: 0
++  filter:
++    m_OverrideState: 1
++    m_Value: 0
+   downscale:
+     m_OverrideState: 1
+     m_Value: 0
+diff --git a/Assets/Settings/PC_RPAsset.asset b/Assets/Settings/PC_RPAsset.asset
+index 9b2b046..a47a07c 100644
+--- a/Assets/Settings/PC_RPAsset.asset
++++ b/Assets/Settings/PC_RPAsset.asset
+@@ -101,16 +101,16 @@ MonoBehaviour:
+       m_Keys: []
+       m_Values: 
+   m_PrefilteringModeMainLightShadows: 3
+-  m_PrefilteringModeAdditionalLight: 4
+-  m_PrefilteringModeAdditionalLightShadows: 0
++  m_PrefilteringModeAdditionalLight: 0
++  m_PrefilteringModeAdditionalLightShadows: 2
+   m_PrefilterXRKeywords: 1
+-  m_PrefilteringModeForwardPlus: 1
++  m_PrefilteringModeForwardPlus: 2
+   m_PrefilteringModeDeferredRendering: 0
+-  m_PrefilteringModeScreenSpaceOcclusion: 1
++  m_PrefilteringModeScreenSpaceOcclusion: 2
+   m_PrefilterDebugKeywords: 1
+-  m_PrefilterWriteRenderingLayers: 0
++  m_PrefilterWriteRenderingLayers: 1
+   m_PrefilterHDROutput: 1
+-  m_PrefilterAlphaOutput: 0
++  m_PrefilterAlphaOutput: 1
+   m_PrefilterSSAODepthNormals: 0
+   m_PrefilterSSAOSourceDepthLow: 1
+   m_PrefilterSSAOSourceDepthMedium: 1
+@@ -122,17 +122,17 @@ MonoBehaviour:
+   m_PrefilterSSAOSampleCountHigh: 1
+   m_PrefilterDBufferMRT1: 1
+   m_PrefilterDBufferMRT2: 1
+-  m_PrefilterDBufferMRT3: 0
+-  m_PrefilterSoftShadowsQualityLow: 0
+-  m_PrefilterSoftShadowsQualityMedium: 0
+-  m_PrefilterSoftShadowsQualityHigh: 0
++  m_PrefilterDBufferMRT3: 1
++  m_PrefilterSoftShadowsQualityLow: 1
++  m_PrefilterSoftShadowsQualityMedium: 1
++  m_PrefilterSoftShadowsQualityHigh: 1
+   m_PrefilterSoftShadows: 0
+   m_PrefilterScreenCoord: 1
+-  m_PrefilterScreenSpaceIrradiance: 0
++  m_PrefilterScreenSpaceIrradiance: 1
+   m_PrefilterNativeRenderPass: 1
+   m_PrefilterUseLegacyLightmaps: 0
+-  m_PrefilterBicubicLightmapSampling: 0
+-  m_PrefilterReflectionProbeRotation: 0
++  m_PrefilterBicubicLightmapSampling: 1
++  m_PrefilterReflectionProbeRotation: 1
+   m_PrefilterReflectionProbeBlending: 0
+   m_PrefilterReflectionProbeBoxProjection: 0
+   m_PrefilterReflectionProbeAtlas: 0
+diff --git a/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset b/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
+index 74c0898..84dd030 100644
+--- a/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
++++ b/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset
+@@ -68,7 +68,23 @@ MonoBehaviour:
+       - rid: 3316557303088676878
+       - rid: 3316557303088676879
+     m_RuntimeSettings:
+-      m_List: []
++      m_List:
++      - rid: 6852985685364965378
++      - rid: 6852985685364965379
++      - rid: 6852985685364965380
++      - rid: 6852985685364965381
++      - rid: 6852985685364965384
++      - rid: 6852985685364965385
++      - rid: 6852985685364965392
++      - rid: 6852985685364965394
++      - rid: 8712630790384254976
++      - rid: 3316557303088676867
++      - rid: 3316557303088676871
++      - rid: 3316557303088676872
++      - rid: 3316557303088676873
++      - rid: 3316557303088676876
++      - rid: 3316557303088676877
++      - rid: 3316557303088676879
+   m_AssetVersion: 10
+   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
+   m_RenderingLayerNames:
+diff --git a/ProjectSettings/ProjectSettings.asset b/ProjectSettings/ProjectSettings.asset
+index f62f2f1..881aa4d 100644
+--- a/ProjectSettings/ProjectSettings.asset
++++ b/ProjectSettings/ProjectSettings.asset
+@@ -528,7 +528,10 @@ PlayerSettings:
+       m_Height: 720
+       m_Kind: 1
+       m_SubKind: 
+-  m_BuildTargetBatching: []
++  m_BuildTargetBatching:
++  - m_BuildTarget: Standalone
++    m_StaticBatching: 1
++    m_DynamicBatching: 0
+   m_BuildTargetShaderSettings: []
+   m_BuildTargetGraphicsJobs: []
+   m_BuildTargetGraphicsJobMode: []
+diff --git a/ProjectSettings/UnityConnectSettings.asset b/ProjectSettings/UnityConnectSettings.asset
+index 029ad8b..7a17e8f 100644
+--- a/ProjectSettings/UnityConnectSettings.asset
++++ b/ProjectSettings/UnityConnectSettings.asset
+@@ -4,7 +4,7 @@
+ UnityConnectSettings:
+   m_ObjectHideFlags: 0
+   serializedVersion: 1
+-  m_Enabled: 0
++  m_Enabled: 1
+   m_TestMode: 0
+   m_EventOldUrl: https://api.uca.cloud.unity3d.com/v1/events
+   m_EventUrl: https://cdp.cloud.unity3d.com/v1/events

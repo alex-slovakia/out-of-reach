@@ -80,3 +80,7 @@ After baseline, shared files are locked by process. Coordinate an integrator, ex
 6. Merge to main only after coordinated review of those results. Tag release candidates only when the executable is tested.
 
 No test branch is automatically promoted. No force-push, history rewrite or deletion of teammate work.
+# Current checkpoint override — 14 November 2026, 16:40 CET
+
+The latest user-directed ownership override and exact single-writer scopes are in [DEVELOPMENT-OWNERSHIP-C06](docs/DEVELOPMENT-OWNERSHIP-C06.md). The [playtest review](docs/playtest-review/README.md) records full feedback, schedule and intended walkthrough; [review 04](docs/art-direction/review-04/README.md) records approvals and corrections. Older status/ownership entries below are historical where they conflict with those records. C06 source is assembled on the isolated integration branch but is not yet a verified combined scene or promoted into Alex's original I04 playtest.
+

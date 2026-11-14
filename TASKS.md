@@ -83,3 +83,7 @@ Issue links: [C01](https://github.com/alex-slovakia/out-of-reach/issues/1), [V01
 - Ready local handoffs: restrained first-person motion patch and C05 binding/collision review; Unity integration pending.
 - Claude: cockpit6cd069d and handsf72224c delivered. Gameplay9044a00 delivered; sprint not started. Future model work depends on their capacity/owner.
 - Capacity at13:07UTC: Codex99%weekly used,3 reset credits. Alex says he will activate one; completion not yet verified. Claude app at12:58UTC: Fable94%used,all-model49%used; resetNov15 18:00UTC.
+# Current checkpoint override — 14 November 2026, 16:40 CET
+
+The latest user-directed ownership override and exact single-writer scopes are in [DEVELOPMENT-OWNERSHIP-C06](docs/DEVELOPMENT-OWNERSHIP-C06.md). The [playtest review](docs/playtest-review/README.md) records full feedback, schedule and intended walkthrough; [review 04](docs/art-direction/review-04/README.md) records approvals and corrections. Older status/ownership entries below are historical where they conflict with those records. C06 source is assembled on the isolated integration branch but is not yet a verified combined scene or promoted into Alex's original I04 playtest.
+

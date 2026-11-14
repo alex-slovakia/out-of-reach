@@ -81,3 +81,7 @@ Contracts are the only compile-time dependency between domain and presentation. 
 ## Failure behavior
 
 Commands validate before mutating. Failed commands do not consume resources or publish success events. Repeated interactions do not duplicate rewards, repairs or signals. Resource values remain finite and within valid bounds. Pausing stops simulation consumption and communication timers. Restart creates a clean mission and clears event subscriptions. Every scene load/unload unsubscribes presentation listeners.
+# Current checkpoint override — 14 November 2026, 16:40 CET
+
+The latest user-directed ownership override and exact single-writer scopes are in [DEVELOPMENT-OWNERSHIP-C06](docs/DEVELOPMENT-OWNERSHIP-C06.md). The [playtest review](docs/playtest-review/README.md) records full feedback, schedule and intended walkthrough; [review 04](docs/art-direction/review-04/README.md) records approvals and corrections. Older status/ownership entries below are historical where they conflict with those records. C06 source is assembled on the isolated integration branch but is not yet a verified combined scene or promoted into Alex's original I04 playtest.
+
