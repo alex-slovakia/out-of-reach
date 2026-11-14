@@ -8,8 +8,7 @@ Scope written: only `Assets/_OutOfReach/Visuals/Models.meta` and `Assets/_OutOfR
 the reference; palette, ribs, deck, overhead services and handrails are shared kit parts, so the other
 compartments received them without separate work. The high-gain antenna (asset A07) followed as a second
 step, because the EVA repair had nothing to repair before it; the airlock (asset A05) was then compared
-with R04, the stowage (asset A04) with R03 and the flight deck with R01. The exterior was not compared with
-its views yet.
+with R04, the stowage (asset A04) with R03, the flight deck with R01 and the hull (asset A06) with R05.
 
 ## What is delivered
 
@@ -37,8 +36,11 @@ practice. Everything is function first:
   beside the outer hatch (dial with a driven pointer, display, two keys), intercom and conduits on the aft
   bulkhead, umbilical/pressure-control rack with depress valve, two-leaf sliding pressure doors with pressed
   panels and viewports.
-- **Exterior:** pressure hull with frames and seams, forward window face, aft EVA hatch and porch, gold EVA
-  handrails to the antenna work site, two solar wings, body radiators, eight reaction-control quads.
+- **Exterior (asset A06):** pressure hull under a quilted blanket held by dark webbing straps (circumferential
+  bands and six longitudinal straps, a buckle at every crossing) and bolted frame rings; a faceted nose whose
+  hood and sensor nose leave the two small windows in a dark visor slot; curved amber-edged access panels; aft
+  EVA hatch and porch, gold EVA handrails to the antenna work site, two solar wings, body radiators, eight
+  reaction-control quads.
 - **Antenna (asset A07):** a two-axis gimbal on the hull pad at AntennaRepair. The base housing carries an
   amber-edged service deck with the manual drive socket, an access cover, a tether point and two test
   connectors. The 1.24 m reflector assembly on the trunnion (gore seams, eight ribs and a ring behind the
@@ -96,10 +98,23 @@ from the aft doorway across the seats to the console.
 |---|---|
 | One crash seat | Two seats, as in V01 with its two seat envelopes. Both are rebuilt: padded shell with bolsters and headrest wings, five-point harness, spine and harness reel behind, energy-absorbing base. |
 | Guarded switches, lit keys, a red guarded switch | Done on the work surface behind the keyboards, with handholds at the panel ends. |
-| Very small shielded forward windows | Done from inside: an inner liner with a dark reveal leaves two windows of 0.50 × 0.56 m above the outer displays. **From outside the bow still shows the five-pane band of `9878304`.** |
+| Very small shielded forward windows | Done from inside: an inner liner with a dark reveal leaves two windows of 0.50 × 0.56 m above the outer displays. From outside, an outer shield shows the same two windows at the back of the visor slot (see the hull below). |
 | Two landscape displays with plots | Three displays, unchanged; their pages are static and show no authoritative values. |
 | A compact, tight station | **Not matched on purpose:** the flight deck keeps its 6 × 6 m V01 footprint. |
 | Cables and hoses under the console | Not done: the console stands on closed cabinets. |
+
+## Hull against R05
+
+`Previews/A7_unity_urp_exterior_r05.png` is the matched view, from ahead and to starboard.
+
+| R05 | Model |
+|---|---|
+| Faceted nose with small shielded windows | Done: one faceted cone from the hull to the bow. Its lower part is a 16-facet sensor nose, 1.88 m long, with sensors, two floodlights and marker lights on its flat front and an anti-glare deck on top. Its upper part is a hood of eleven facets and two cheeks, 0.93 m long, with the mission emblem, marker lights and a star tracker. The two small flight-deck windows look out through the dark visor slot between them, set in an outer shield. |
+| White blankets held by straps, amber-edged access panels, handholds | Done: 11 circumferential webbing straps and six longitudinal ones with a buckle at each of the 66 crossings; six bolted frame rings; 10 access panels curved to the skin, with amber edges, bolts, quarter-turn fasteners and a grab handle; 12 more handrails on the upper hull. The thin seam battens and the dense metal bands of `9878304` were removed so that the straps read as in R05. |
+| Service and truss section with a thruster cluster aft | **Not matched on purpose:** the aft end is the EVA hatch and porch of the V01 layout (AirlockOuter, EvaStart, EvaReturn). |
+| Solar wings on a truss behind the hull | Kept: two wings on masts at mid-hull. |
+| Dish antenna on top of the service section | The antenna stays on the upper starboard quarter at AntennaRepair. |
+| Windows glowing amber | Nothing emissive was added: the two windows are real openings onto the flight deck, so they show its lighting. |
 
 ## Folder map
 
@@ -219,17 +234,17 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | `A7_Engineering` | 77,326 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
 | `A7_Storage` | 79,246 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
 | `A7_Airlock` | 31,464 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
-| `A7_Exterior` | 29,556 | 16 | (−12.37, −2.02, −3.59) → (12.37, 5.14, 23.4) |
+| `A7_Exterior` | 64,710 | 19 | (−12.37, −2.04, −5.11) → (12.37, 5.16, 23.4) |
 | Door leaves (4) | 12,352 | 6–8 | at the two hatch planes |
 | Engineering parts (7 meshes) | 5,248 | 1–4 | inside the two service racks |
 | Airlock parts (3 meshes) | 4,374 | 2–12 | suit locker and pressure station |
 | Antenna gimbal (2 meshes) | 4,346 | 1–2 | on the hull pad at AntennaRepair; the reflector is 3,638 of them |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
 | ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
-| **Total** | **361,426** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
+| **Total** | **396,580** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
-around the flight deck, 6.0 m aft, 24.2 m long; solar wings span 24.7 m.
+around the flight deck, 6.0 m aft, 26.1 m long with the sensor nose (bow at z = −5.0); solar wings span 24.7 m.
 
 Textures: tiling sets are 1024² (rubber 512²), the label atlas 4096², the display atlas 2048². UV0 is
 world-projected in metres for tiling materials and atlas-mapped for labels and displays. There is no
@@ -262,7 +277,7 @@ without rewriting the FBX files.
     against the elevation pivot;
   - the dial pointer's and the locker door's pivots are checked the same way;
   - the prefab contains no camera, light, audio listener or script;
-  - fifteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
+  - sixteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
 - `python tools/verify_repository.py` passes on the branch.
 - The FBX files are now exported without texture records and hold no local path (checked by searching the
   files). The exports in `9878304` and `18339a3` embedded the absolute texture paths of the build machine;
@@ -277,7 +292,7 @@ is not delivered lighting.
 
 - Placement and lighting inside the integrated Bootstrap scene; a Windows build of this branch; performance.
 - The 405-sample clearance validator from V01 was not run by me. Clearance is argued from identical proxies.
-- The exterior was not compared with R05, R06 and R08 yet.
+- R06 (first-person EVA) and R08 (final pullback) are camera work on the same hull and were not staged here.
 - No gloves and tether (A08) from this chat; the prop author builds the hands. The antenna has no damaged
   state and no collider.
 - No wear and dirt pass, no damage-state decals, no baked ambient occlusion, simple seat backs, a flat

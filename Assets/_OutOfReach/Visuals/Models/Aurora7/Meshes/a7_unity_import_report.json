@@ -7,7 +7,7 @@
   {"name": "A7_Engineering", "triangles": 77326, "materials": 30, "bounds_min": [-2.4, -0.16, 2.837], "bounds_max": [2.4, 3.195, 11]},
   {"name": "A7_Storage", "triangles": 79246, "materials": 22, "bounds_min": [-2.4, -0.16, 10.837], "bounds_max": [2.4, 3.195, 17]},
   {"name": "A7_Airlock", "triangles": 31464, "materials": 24, "bounds_min": [-2.4, -0.16, 16.837], "bounds_max": [2.4, 3.195, 21.163]},
-  {"name": "A7_Exterior", "triangles": 29556, "materials": 16, "bounds_min": [-12.37, -2.015, -3.59], "bounds_max": [12.37, 5.135, 23.4]},
+  {"name": "A7_Exterior", "triangles": 64710, "materials": 19, "bounds_min": [-12.37, -2.035, -5.114], "bounds_max": [12.37, 5.155, 23.4]},
   {"name": "DoorLeaf_Inner_L", "triangles": 2562, "materials": 6, "bounds_min": [-1.842, 0.01, 16.87], "bounds_max": [-0.958, 2.45, 17.13]},
   {"name": "DoorLeaf_Inner_R", "triangles": 2562, "materials": 6, "bounds_min": [0.958, 0.01, 16.87], "bounds_max": [1.842, 2.45, 17.13]},
   {"name": "DoorLeaf_Outer_L", "triangles": 3614, "materials": 8, "bounds_min": [-0.892, 0.01, 20.87], "bounds_max": [-0.008, 2.45, 21.13]},
@@ -33,13 +33,13 @@
   {"name": "FanRotor", "triangles": 68, "materials": 1, "bounds_min": [2.213, 0.812, 6.731], "bounds_max": [2.232, 1.028, 6.936]},
   {"name": "StatusIndicators", "triangles": 180, "materials": 3, "bounds_min": [2.223, 1.683, 6.8], "bounds_max": [2.231, 1.703, 6.97]}
  ],
- "triangles_total": 361426,
+ "triangles_total": 396580,
  "renderers": 29,
  "materials": 49,
  "textures": 46,
  "colliders": 48,
  "colliders_active": 46,
- "bounds_min": [-12.37, -2.015, -3.59],
- "bounds_max": [12.37, 5.135, 23.4],
+ "bounds_min": [-12.37, -2.035, -5.114],
+ "bounds_max": [12.37, 5.155, 23.4],
  "problems": []
 }

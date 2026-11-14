@@ -188,33 +188,36 @@
    ]
   },
   "Exterior": {
-   "triangles": 29556,
+   "triangles": 64710,
    "per_material": {
-    "A7_Aluminum": 16016,
-    "A7_AnodizedBlack": 5232,
-    "A7_AnodizedClear": 160,
-    "A7_AnodizedGold": 5152,
-    "A7_Decals": 26,
+    "A7_Aluminum": 29220,
+    "A7_AnodizedBlack": 6736,
+    "A7_AnodizedClear": 6664,
+    "A7_AnodizedGold": 11088,
+    "A7_Decals": 48,
+    "A7_FabricStrap": 4752,
+    "A7_Glass": 168,
     "A7_HullBlanket": 812,
-    "A7_LightPanel": 84,
+    "A7_LedAmber": 220,
+    "A7_LightPanel": 180,
     "A7_MLIGold": 72,
     "A7_MLISilver": 352,
-    "A7_PaintAmber": 96,
-    "A7_PaintGraphite": 18,
-    "A7_PaintGray": 88,
-    "A7_PaintWhite": 416,
+    "A7_PaintAmber": 1096,
+    "A7_PaintGraphite": 702,
+    "A7_PaintGray": 236,
+    "A7_PaintWhite": 1332,
     "A7_PaintYellow": 128,
     "A7_Rubber": 832,
     "A7_SolarCell": 72
    },
    "bounds_min": [
     -12.37,
-    -2.015,
-    -3.59
+    -2.035,
+    -5.114
    ],
    "bounds_max": [
     12.37,
-    5.135,
+    5.155,
     23.4
    ],
    "origin": [
@@ -1246,7 +1249,7 @@
    ]
   }
  ],
- "triangles_total": 343770,
+ "triangles_total": 378924,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",

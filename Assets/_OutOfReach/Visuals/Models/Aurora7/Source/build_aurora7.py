@@ -256,6 +256,7 @@ CAMERAS = {
     "airlock_r04": ((-0.75, 1.65, 17.55), (0.85, 1.30, 21.0), 90),   # review-01 R04 framing at 1.65 m eye height
     "exterior_finale": ((9.0, 5.0, 27.0), (0.5, 1.6, 12.0), 58),
     "exterior_forward": ((-9.5, 4.5, -11.0), (0.0, 1.6, 4.0), 55),
+    "exterior_r05": ((10.5, 6.5, -13.0), (0.0, 1.4, 5.0), 60),   # review-01 R05 framing (Unity moves the sun ahead for bow views)
     "exterior_eva": ((2.2, 1.6, 24.6), (1.2, 2.2, 14.0), 72),
     "exterior_antenna": ((3.514, 2.431, 14.25), (3.434, 2.462, 12.9), 90),   # towards review-01 R06 (Unity rolls this view to the hull normal)
 }
