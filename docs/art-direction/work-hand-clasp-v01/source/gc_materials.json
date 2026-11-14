@@ -1,0 +1,67 @@
+{
+ "_comment": "GALLEY-PROPS-01 materials, same fields as Aurora7/Source/a7_materials.json. shared_with_ship entries are the ship's own materials; GC_* are new.",
+ "materials": [
+  {
+   "name": "A7_PlasticWhite",
+   "set": "A7_Paint",
+   "tint": "#DDDCD4",
+   "tiling": 2.0,
+   "normal": 0.12,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_Rubber",
+   "set": "A7_Rubber",
+   "tint": "#1B1B1C",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true
+  },
+  {
+   "name": "GC_Foil",
+   "set": "A7_MLI",
+   "tint": "#C9CDD1",
+   "tiling": 6.0,
+   "normal": 0.6,
+   "note": "aluminium-laminate pouch film; the ship's MLI maps at a finer tiling"
+  },
+  {
+   "name": "GC_AmberPlastic",
+   "set": "A7_Paint",
+   "tint": "#D08A1C",
+   "tiling": 4.0,
+   "normal": 0.15,
+   "note": "pinch clamp and tethered cap"
+  },
+  {
+   "name": "GC_Silicone",
+   "tint": "#B9BCBF",
+   "metallic": 0.0,
+   "smoothness": 0.35,
+   "note": "septum"
+  },
+  {
+   "name": "GC_StrawPE",
+   "tint": "#E7ECEE",
+   "surface": "transparent",
+   "alpha": 0.55,
+   "metallic": 0.0,
+   "smoothness": 0.8,
+   "note": "polyethylene straw"
+  },
+  {
+   "name": "GC_Food",
+   "tint": "#5C3B22",
+   "metallic": 0.0,
+   "smoothness": 0.55,
+   "note": "stew surface in the opened pouch"
+  },
+  {
+   "name": "GC_Labels",
+   "atlas": "GC_Labels",
+   "surface": "cutout",
+   "metallic": 0.0,
+   "smoothness": 0.25
+  }
+ ]
+}

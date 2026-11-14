@@ -1,0 +1,220 @@
+{
+ "task": "WORK-HAND-CLASP-01",
+ "status": "Blender study for review: finger-local clasp poses of the published WORK bare hands; not imported in Unity",
+ "inputs": {
+  "body": "Assets/_OutOfReach/Visuals/Character/FirstPersonBody/FitV02/Meshes/A7_BodyFit02_WORK.fbx at 85b0994 (LFS sha256 46b3051a592f2e2fe3a0e7579ad281411415a6eb71ad4546c2899e47cf5eec90), read only",
+  "pouches": "feature/galley-consumables-v1@12100dd (gc_kit.py, gc_materials.json); helpers a7kit.py, hb_kit.py, build_habitat.py, hb_materials.json from feature/habitat-details-v1@5b0f1ca, copied unchanged",
+  "base": "codex/i01-integration@26d0ee0"
+ },
+ "poses": {
+  "WORK_Clasp_Drink_R": {
+   "aperture_mm": 27.42,
+   "thumb_opposes_bone": "finger2-2.R",
+   "clasp_point_prop_space_unity": [
+    -0.015,
+    -0.02,
+    0.0
+   ],
+   "intersecting_pairs": {
+    "GC_DrinkPouch_Closed": 0,
+    "GC_DrinkPouch_Open": 0
+   }
+  },
+  "WORK_Clasp_Meal_R": {
+   "aperture_mm": 29.13,
+   "thumb_opposes_bone": "finger2-2.R",
+   "clasp_point_prop_space_unity": [
+    -0.03,
+    -0.02,
+    0.0
+   ],
+   "intersecting_pairs": {
+    "GC_MealPouch_Opened": 0,
+    "GC_MealPouch_Sealed": 0
+   }
+  },
+  "WORK_Clasp_Drink_L": {
+   "aperture_mm": 27.42,
+   "thumb_opposes_bone": "finger2-2.L",
+   "clasp_point_prop_space_unity": [
+    0.015,
+    -0.02,
+    0.0
+   ],
+   "intersecting_pairs": {
+    "GC_DrinkPouch_Closed": 0,
+    "GC_DrinkPouch_Open": 0
+   }
+  },
+  "WORK_Clasp_Meal_L": {
+   "aperture_mm": 29.13,
+   "thumb_opposes_bone": "finger2-2.L",
+   "clasp_point_prop_space_unity": [
+    0.03,
+    -0.02,
+    0.0
+   ],
+   "intersecting_pairs": {
+    "GC_MealPouch_Opened": 0,
+    "GC_MealPouch_Sealed": 0
+   }
+  }
+ },
+ "files": [
+  {
+   "path": "ATTRIBUTION.md",
+   "bytes": 819,
+   "sha256": "456a3db1f40bafb00363c1772f679f6acdbb4f9597280360eca46a21cf30aa21"
+  },
+  {
+   "path": "README.md",
+   "bytes": 12463,
+   "sha256": "ad5cca289c55f37cd0c5bccee4e2af5e0a44f0ba1323dfffa0a77ca4291d6c1b"
+  },
+  {
+   "path": "tilt_study.json",
+   "bytes": 2071,
+   "sha256": "1e34ce0507c51100f28757cd509db86eb72af727f9e6ce89b25913e377f2733f"
+  },
+  {
+   "path": "work_hand_clasp.json",
+   "bytes": 35908,
+   "sha256": "193360cb2744118acf47fb6c9ddb7a81a78518597841105810bef4ad9fe5890d"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_L_back.png",
+   "bytes": 1025482,
+   "sha256": "d1908a231526fd9845f2141dc9d61d5d2eea3bf945fee4ad9a1da3778b0ef407"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_L_front.png",
+   "bytes": 1042220,
+   "sha256": "68af6fcb4e4e0934e35eb63e3c860ef4d346aa8a4597125011c825a91af9d1f3"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_L_top.png",
+   "bytes": 790167,
+   "sha256": "2c7579d108cca0579ee01a945dddcff6e453ff52c72292e9b6a9145e216ad7b2"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_R_back.png",
+   "bytes": 1087096,
+   "sha256": "f9aa9fb9a9ce4dba05a6629401b14c433010799ac51372ea199e5a95078f6e61"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_R_front.png",
+   "bytes": 1052995,
+   "sha256": "d09da7246b585d3583c1d3f45952dd2ab1fa927a6cca15711ae921fef1577fc8"
+  },
+  {
+   "path": "renders/WORK_Clasp_Drink_R_top.png",
+   "bytes": 799044,
+   "sha256": "bcd63d4fee488f8de7ddca88816474bb4102917a69018850974ba0d339bfb1f0"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_L_back.png",
+   "bytes": 1072546,
+   "sha256": "0d08d7bb10210a96377dfed72fd64cf3a4c7c7dacf421f1ad681aec8f803a7b1"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_L_front.png",
+   "bytes": 1058681,
+   "sha256": "880356d9e402746a9106a5020e69469ba1a8fdb128e8b36e141afc52d5077fd2"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_L_top.png",
+   "bytes": 789389,
+   "sha256": "95341a4c9449daa7e221ab70b97add4d0e9db832a0987b94c0bcaad27c3bef7d"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_R_back.png",
+   "bytes": 1129697,
+   "sha256": "bbeb52d7e58a9668c4c85d3fcaa9e8f2439b2e9de334388afc9c91b74aab898f"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_R_front.png",
+   "bytes": 1049051,
+   "sha256": "1db0acfb6c910b831545d3cc2129c24467b226c75ecf1eeb33555f6d06289cb2"
+  },
+  {
+   "path": "renders/WORK_Clasp_Meal_R_top.png",
+   "bytes": 796247,
+   "sha256": "24cb3a5ad9c5968faa712745785fed3c5740ac8349fd552d8fd11eb6e92af5cc"
+  },
+  {
+   "path": "renders/WORK_Clasp_sheet.png",
+   "bytes": 2354994,
+   "sha256": "6d53f4a656bc5f38ea86411bcc72e113a8950cd801cebf21e476eeab9338671b"
+  },
+  {
+   "path": "source/a7kit.py",
+   "bytes": 22736,
+   "sha256": "13bd12539c53d4c7cf4ae6f03951991f7605d1bef7b5f7f47418332feb0cc86b"
+  },
+  {
+   "path": "source/build_habitat.py",
+   "bytes": 20395,
+   "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26"
+  },
+  {
+   "path": "source/clasp_solve.py",
+   "bytes": 45050,
+   "sha256": "6af9b768a52cef3f66d423748a26c55d2dbe9b8e3c1afb83d21a413099f728ce"
+  },
+  {
+   "path": "source/gc_kit.py",
+   "bytes": 12169,
+   "sha256": "d700e8549b916aaf7dd85c51d216b1bea9bb816b04533963f4900d7ade37da12"
+  },
+  {
+   "path": "source/gc_materials.json",
+   "bytes": 1388,
+   "sha256": "cc8be900e370b42a8edb70623de7a854c942e12b562dbbbac6e244f5d1b14bea"
+  },
+  {
+   "path": "source/hb_kit.py",
+   "bytes": 35895,
+   "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8"
+  },
+  {
+   "path": "source/hb_materials.json",
+   "bytes": 4313,
+   "sha256": "764e3e8b17d35fdafe82426a9aa5fb7f082793edb67b5f183201d2464fb69590"
+  },
+  {
+   "path": "source/inspect_work.py",
+   "bytes": 2455,
+   "sha256": "e2fa0786330936dc7275ad6584833eed3483506d4af7073f2892df74088a8072"
+  },
+  {
+   "path": "source/make_manifest.py",
+   "bytes": 2287,
+   "sha256": "02adc747246f086d89b49860abbd43580cd2eeb92d2cee0d1f80e6b917551d3e"
+  },
+  {
+   "path": "source/make_readme.py",
+   "bytes": 13125,
+   "sha256": "e4a78b8588f3321f1755622840407979022f67ac09f4f92fa5bc5a791618e8d2"
+  },
+  {
+   "path": "source/make_sheet.py",
+   "bytes": 760,
+   "sha256": "8ad3d77e5f1cc7a2d1e57a29ccb18ccffb48b41e65bb0c12fac298c32de9ff7c"
+  },
+  {
+   "path": "source/probe_axes.py",
+   "bytes": 2332,
+   "sha256": "fe06a0ce4a029c0d93289fd5cf3a436f6b297160cb9caefdf9d251f8c5eda737"
+  },
+  {
+   "path": "source/probe_pads.py",
+   "bytes": 2905,
+   "sha256": "82c359cf1cb7b81af5f611677ec996bdfc217dfe48ffed080888ef5d91756aa6"
+  },
+  {
+   "path": "source/quick_geo.py",
+   "bytes": 2220,
+   "sha256": "7594552f44cc1cf863754fee1777f9ff52aed59676704e1f0bd67ec2be58be48"
+  }
+ ]
+}

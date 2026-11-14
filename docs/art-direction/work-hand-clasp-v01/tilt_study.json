@@ -1,0 +1,73 @@
+{
+ "what": "right hand, drink pouch, the same solver with the pouch tilted about its y axis (far side off the fingertips)",
+ "source": "clasp_solve.py --diag R --kinds drink --tilt <deg>, last solver step of each run",
+ "runs": [
+  {
+   "tilt_deg": 0,
+   "clasp_shift_mm": 20,
+   "thumb_miss_from_target_mm": 19.4,
+   "thumb_gap_mm": 0.72,
+   "intersections": "{}"
+  },
+  {
+   "tilt_deg": 6,
+   "clasp_shift_mm": 20,
+   "thumb_miss_from_target_mm": 15.1,
+   "thumb_gap_mm": 0.73,
+   "intersections": "{}",
+   "index_gap_mm": 0.04,
+   "middle_gap_mm": 0.05,
+   "ring_gap_mm": 0.07,
+   "little_gap_mm": 0.04,
+   "index_aperture_along_normal_mm": 22.56,
+   "middle_aperture_along_normal_mm": 22.8,
+   "index_contact_offset_from_thumb_mm": 41.0,
+   "middle_contact_offset_from_thumb_mm": 54.6
+  },
+  {
+   "tilt_deg": 12,
+   "clasp_shift_mm": 15,
+   "thumb_miss_from_target_mm": 10.4,
+   "thumb_gap_mm": 0.12,
+   "intersections": "{}",
+   "index_gap_mm": 0.03,
+   "middle_gap_mm": 0.06,
+   "ring_gap_mm": 0.0,
+   "little_gap_mm": 0.04,
+   "index_aperture_along_normal_mm": 22.55,
+   "middle_aperture_along_normal_mm": 22.79,
+   "index_contact_offset_from_thumb_mm": 43.8,
+   "middle_contact_offset_from_thumb_mm": 55.1
+  },
+  {
+   "tilt_deg": 18,
+   "clasp_shift_mm": 10,
+   "thumb_miss_from_target_mm": 5.4,
+   "thumb_gap_mm": 0.39,
+   "intersections": "{}",
+   "index_gap_mm": 0.07,
+   "middle_gap_mm": 0.16,
+   "ring_gap_mm": 0.06,
+   "little_gap_mm": 0.01,
+   "index_aperture_along_normal_mm": 24.14,
+   "middle_aperture_along_normal_mm": 24.19,
+   "index_contact_offset_from_thumb_mm": 40.3,
+   "middle_contact_offset_from_thumb_mm": 51.3
+  },
+  {
+   "tilt_deg": 24,
+   "clasp_shift_mm": 15,
+   "thumb_miss_from_target_mm": 0.6,
+   "thumb_gap_mm": 0.14,
+   "intersections": "{}",
+   "index_gap_mm": 0.05,
+   "middle_gap_mm": 0.08,
+   "ring_gap_mm": 0.0,
+   "little_gap_mm": 0.03,
+   "index_aperture_along_normal_mm": 24.43,
+   "middle_aperture_along_normal_mm": 24.61,
+   "index_contact_offset_from_thumb_mm": 28.5,
+   "middle_contact_offset_from_thumb_mm": 40.1
+  }
+ ]
+}

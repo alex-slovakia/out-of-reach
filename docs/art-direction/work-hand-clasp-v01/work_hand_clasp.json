@@ -1,0 +1,1436 @@
+{
+ "task": "WORK-HAND-CLASP-01",
+ "rig": {
+  "fbx": "Assets/_OutOfReach/Visuals/Character/FirstPersonBody/FitV02/Meshes/A7_BodyFit02_WORK.fbx",
+  "revision": "85b0994",
+  "lfs_sha256": "46b3051a592f2e2fe3a0e7579ad281411415a6eb71ad4546c2899e47cf5eec90",
+  "armature": "A7_ContinuousBody_Rig",
+  "bones": 164,
+  "untouched": "bone lengths, bind pose, meshes and weights as published"
+ },
+ "conventions": {
+  "blender": "armature space = Blender world of the imported FBX (Z up, character forward -Y, anatomical left +X); quaternions (w, x, y, z); bone-local frames as imported (bone Y along the bone)",
+  "unity_model_basis": "Unity model axes = (-x, z, -y) of Blender armature axes, the basis root verified for this rig's imported bone positions (docs/verification/i06-body-float-v04, 1.06 um). All *_unity values are offsets and rotations in that basis with the body at its bind pose, measured from the wrist head; nothing here depends on the importer's per-bone axes. Local-rotation values for Unity are NOT given: they depend on importer axes this kit has not verified.",
+  "apply_in_unity": "all rotations in model space (relative to the imported model root). Capture at bind (the model's default state): Wb = wrist rotation, Bb = each listed bone's rotation. At runtime, with the wrist's current model-space rotation Wr and position Wp: bone rotation = Wr * Inverse(Wb) * model_delta_at_bind * Bb (parent before child); a point p_from_wrist lies at Wp + Wr * Inverse(Wb) * p. Check: the listed head and tail points then land within 2 mm.",
+  "unity_path": "relative to the imported model's root; the armature node is A7_ContinuousBody_Rig",
+  "prop_space": "GALLEY-PROPS-01 prop space (Unity metres, y up the pouch, +z label side)"
+ },
+ "poses": {
+  "WORK_Clasp_Drink_R": {
+   "hand": "R",
+   "pouch": "GC_DrinkPouch",
+   "variants_checked": [
+    "GC_DrinkPouch_Closed",
+    "GC_DrinkPouch_Open"
+   ],
+   "grip": "edge clasp: index to little straight and flexed at the knuckle under the back face, the near edge in the thumb web, the thumb pad on the front (label) face",
+   "aperture_mm": 27.42,
+   "pouch_thickness_at_clasp_mm": 24.68,
+   "thumb_opposes_bone": "finger2-2.R",
+   "thumb_pad_gap_mm": 0.14,
+   "opposing_skin_to_back_face_mm": 28.27,
+   "finger_contacts": {
+    "index": {
+     "bone": "finger2-3.R",
+     "gap_mm": 0.05,
+     "aperture_from_thumb_contact_along_normal_mm": 24.43,
+     "offset_from_thumb_contact_along_face_mm": 28.5,
+     "contact_from_wrist_unity_m": [
+      -0.01547,
+      -0.09163,
+      0.11815
+     ]
+    },
+    "middle": {
+     "bone": "finger3-3.R",
+     "gap_mm": 0.08,
+     "aperture_from_thumb_contact_along_normal_mm": 24.61,
+     "offset_from_thumb_contact_along_face_mm": 40.1,
+     "contact_from_wrist_unity_m": [
+      -0.00242,
+      -0.1209,
+      0.10124
+     ]
+    },
+    "ring": {
+     "bone": "finger4-3.R",
+     "gap_mm": 0.0,
+     "aperture_from_thumb_contact_along_normal_mm": 22.67,
+     "offset_from_thumb_contact_along_face_mm": 51.5,
+     "contact_from_wrist_unity_m": [
+      0.01424,
+      -0.12644,
+      0.07681
+     ]
+    },
+    "little": {
+     "bone": "finger5-2.R",
+     "gap_mm": 0.03,
+     "aperture_from_thumb_contact_along_normal_mm": 18.43,
+     "offset_from_thumb_contact_along_face_mm": 63.2,
+     "contact_from_wrist_unity_m": [
+      0.03337,
+      -0.09994,
+      0.04616
+     ]
+    }
+   },
+   "knuckle_flexion_deg": {
+    "index": 37.84,
+    "middle": 40.85,
+    "ring": 38.9,
+    "little": 29.98
+   },
+   "thumb": {
+    "cmc_rotation_vector_deg_armature_space": [
+     15.89,
+     68.92,
+     41.1
+    ],
+    "mp_flexion_deg": -7.01,
+    "ip_flexion_deg": -10.04,
+    "miss_from_ideal_target_mm": 0.6
+   },
+   "clasp_point_prop_space_unity": [
+    -0.015,
+    -0.02,
+    0.0
+   ],
+   "clasp_point_from_grip_anchor_towards_held_edge_mm": 15,
+   "anchors_from_wrist_unity_m": {
+    "ThumbPad": [
+     -0.01823,
+     -0.08081,
+     0.08235
+    ],
+    "OpposingFingerSkin": [
+     -0.00122,
+     -0.07587,
+     0.10518
+    ],
+    "ClaspPoint": [
+     -0.00972,
+     -0.07834,
+     0.09377
+    ]
+   },
+   "pouch_from_wrist_unity": {
+    "origin_m": [
+     -0.02367,
+     -0.0858,
+     0.10923
+    ],
+    "rotation_xyzw": [
+     0.404572,
+     -0.80333,
+     -0.202792,
+     0.387116
+    ],
+    "note": "prop origin and prop axes (x, y up the pouch, z label) at the clasp"
+   },
+   "bones": {
+    "finger1-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R",
+     "angle_deg": 81.8,
+     "model_delta_at_bind_unity_xyzw": [
+      0.127149,
+      -0.328968,
+      0.551666,
+      0.755829
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01244,
+      -0.01555,
+      0.04024
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.01849,
+      -0.0396,
+      0.05347
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.755829,
+      -0.245935,
+      -0.513662,
+      -0.323094
+     ]
+    },
+    "finger1-2.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R",
+     "angle_deg": 7.01,
+     "model_delta_at_bind_unity_xyzw": [
+      0.100179,
+      -0.363932,
+      0.512305,
+      0.771402
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01849,
+      -0.0396,
+      0.05347
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.02264,
+      -0.07252,
+      0.07254
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.998129,
+      -0.010061,
+      0.0,
+      0.060307
+     ]
+    },
+    "finger1-3.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R/finger1-3.R",
+     "angle_deg": 10.04,
+     "model_delta_at_bind_unity_xyzw": [
+      0.061053,
+      -0.411353,
+      0.452469,
+      0.788881
+     ],
+     "head_from_wrist_unity_m": [
+      -0.02264,
+      -0.07252,
+      0.07254
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.03059,
+      -0.1053,
+      0.0906
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996167,
+      -0.014405,
+      -0.0,
+      0.086275
+     ]
+    },
+    "finger2-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R",
+     "angle_deg": 37.84,
+     "model_delta_at_bind_unity_xyzw": [
+      0.171793,
+      -0.216753,
+      -0.169237,
+      0.945973
+     ],
+     "head_from_wrist_unity_m": [
+      0.01957,
+      -0.0449,
+      0.09454
+     ],
+     "tail_from_wrist_unity_m": [
+      0.00883,
+      -0.06475,
+      0.10907
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.945973,
+      -0.126615,
+      -0.0,
+      -0.298503
+     ]
+    },
+    "finger3-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R",
+     "angle_deg": 40.85,
+     "model_delta_at_bind_unity_xyzw": [
+      0.155748,
+      -0.178217,
+      -0.256428,
+      0.937137
+     ],
+     "head_from_wrist_unity_m": [
+      0.03158,
+      -0.06025,
+      0.07695
+     ],
+     "tail_from_wrist_unity_m": [
+      0.02149,
+      -0.08939,
+      0.09107
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.937137,
+      -0.075732,
+      -0.0,
+      -0.340645
+     ]
+    },
+    "finger4-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R",
+     "angle_deg": 38.9,
+     "model_delta_at_bind_unity_xyzw": [
+      0.126777,
+      -0.132801,
+      -0.277798,
+      0.942931
+     ],
+     "head_from_wrist_unity_m": [
+      0.04095,
+      -0.06676,
+      0.05889
+     ],
+     "tail_from_wrist_unity_m": [
+      0.03486,
+      -0.09425,
+      0.06925
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.942931,
+      -0.026727,
+      0.0,
+      -0.331913
+     ]
+    },
+    "finger5-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R",
+     "angle_deg": 29.98,
+     "model_delta_at_bind_unity_xyzw": [
+      0.0904,
+      -0.089907,
+      -0.225048,
+      0.96597
+     ],
+     "head_from_wrist_unity_m": [
+      0.04618,
+      -0.07329,
+      0.03912
+     ],
+     "tail_from_wrist_unity_m": [
+      0.04165,
+      -0.09472,
+      0.04586
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.96597,
+      0.040956,
+      -0.0,
+      -0.255391
+     ]
+    }
+   },
+   "clearance_by_region": {
+    "GC_DrinkPouch_Closed": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.14,
+     "index_pad_segment_mm": 0.05,
+     "middle_pad_segment_mm": 0.08,
+     "thumb_mm": 0.14,
+     "index_mm": 0.05,
+     "middle_mm": 0.08,
+     "ring_mm": 0.0,
+     "little_mm": 0.03,
+     "palm_and_wrist_mm": 1.92,
+     "whole_arm_skin_mm": 0.0
+    },
+    "GC_DrinkPouch_Open": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.14,
+     "index_pad_segment_mm": 0.05,
+     "middle_pad_segment_mm": 0.08,
+     "thumb_mm": 0.14,
+     "index_mm": 0.05,
+     "middle_mm": 0.08,
+     "ring_mm": 0.0,
+     "little_mm": 0.03,
+     "palm_and_wrist_mm": 1.92,
+     "whole_arm_skin_mm": 0.0
+    }
+   },
+   "closing_from_bind": [
+    {
+     "fraction": 0.0,
+     "intersecting_pairs_by_region": {
+      "thumb": 240
+     }
+    },
+    {
+     "fraction": 0.25,
+     "intersecting_pairs_by_region": {
+      "thumb": 116
+     }
+    },
+    {
+     "fraction": 0.5,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 0.75,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 1.0,
+     "intersecting_pairs_by_region": {}
+    }
+   ]
+  },
+  "WORK_Clasp_Meal_R": {
+   "hand": "R",
+   "pouch": "GC_MealPouch",
+   "variants_checked": [
+    "GC_MealPouch_Opened",
+    "GC_MealPouch_Sealed"
+   ],
+   "grip": "edge clasp: index to little straight and flexed at the knuckle under the back face, the near edge in the thumb web, the thumb pad on the front (label) face",
+   "aperture_mm": 29.13,
+   "pouch_thickness_at_clasp_mm": 27.12,
+   "thumb_opposes_bone": "finger2-2.R",
+   "thumb_pad_gap_mm": 0.29,
+   "opposing_skin_to_back_face_mm": 29.89,
+   "finger_contacts": {
+    "index": {
+     "bone": "finger2-3.R",
+     "gap_mm": 0.04,
+     "aperture_from_thumb_contact_along_normal_mm": 27.93,
+     "offset_from_thumb_contact_along_face_mm": 26.5,
+     "contact_from_wrist_unity_m": [
+      -0.01095,
+      -0.08938,
+      0.1199
+     ]
+    },
+    "middle": {
+     "bone": "finger3-3.R",
+     "gap_mm": 0.03,
+     "aperture_from_thumb_contact_along_normal_mm": 28.02,
+     "offset_from_thumb_contact_along_face_mm": 32.0,
+     "contact_from_wrist_unity_m": [
+      0.00306,
+      -0.11295,
+      0.10174
+     ]
+    },
+    "ring": {
+     "bone": "finger4-3.R",
+     "gap_mm": 0.05,
+     "aperture_from_thumb_contact_along_normal_mm": 24.57,
+     "offset_from_thumb_contact_along_face_mm": 48.7,
+     "contact_from_wrist_unity_m": [
+      0.0169,
+      -0.12287,
+      0.07836
+     ]
+    },
+    "little": {
+     "bone": "finger5-3.R",
+     "gap_mm": 0.02,
+     "aperture_from_thumb_contact_along_normal_mm": 14.56,
+     "offset_from_thumb_contact_along_face_mm": 67.0,
+     "contact_from_wrist_unity_m": [
+      0.02812,
+      -0.11836,
+      0.04798
+     ]
+    }
+   },
+   "knuckle_flexion_deg": {
+    "index": 33.53,
+    "middle": 37.77,
+    "ring": 36.71,
+    "little": 31.35
+   },
+   "thumb": {
+    "cmc_rotation_vector_deg_armature_space": [
+     16.65,
+     70.51,
+     39.62
+    ],
+    "mp_flexion_deg": -9.11,
+    "ip_flexion_deg": -10.04,
+    "miss_from_ideal_target_mm": 0.7
+   },
+   "clasp_point_prop_space_unity": [
+    -0.03,
+    -0.02,
+    0.0
+   ],
+   "clasp_point_from_grip_anchor_towards_held_edge_mm": 30,
+   "anchors_from_wrist_unity_m": {
+    "ThumbPad": [
+     -0.0173,
+     -0.08066,
+     0.08296
+    ],
+    "OpposingFingerSkin": [
+     0.00059,
+     -0.07618,
+     0.10742
+    ],
+    "ClaspPoint": [
+     -0.00835,
+     -0.07842,
+     0.09519
+    ]
+   },
+   "pouch_from_wrist_unity": {
+    "origin_m": [
+     -0.02719,
+     -0.09794,
+     0.11773
+    ],
+    "rotation_xyzw": [
+     0.404572,
+     -0.80333,
+     -0.202792,
+     0.387116
+    ],
+    "note": "prop origin and prop axes (x, y up the pouch, z label) at the clasp"
+   },
+   "bones": {
+    "finger1-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R",
+     "angle_deg": 82.57,
+     "model_delta_at_bind_unity_xyzw": [
+      0.133011,
+      -0.31663,
+      0.563416,
+      0.751409
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01244,
+      -0.01555,
+      0.04024
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.01752,
+      -0.03962,
+      0.05385
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.751409,
+      -0.232514,
+      -0.519727,
+      -0.333474
+     ]
+    },
+    "finger1-2.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R",
+     "angle_deg": 9.11,
+     "model_delta_at_bind_unity_xyzw": [
+      0.09795,
+      -0.362428,
+      0.512774,
+      0.772084
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01752,
+      -0.03962,
+      0.05385
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.0217,
+      -0.07242,
+      0.0731
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996841,
+      -0.013071,
+      0.0,
+      0.078345
+     ]
+    },
+    "finger1-3.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R/finger1-3.R",
+     "angle_deg": 10.04,
+     "model_delta_at_bind_unity_xyzw": [
+      0.058711,
+      -0.410009,
+      0.453031,
+      0.789436
+     ],
+     "head_from_wrist_unity_m": [
+      -0.0217,
+      -0.07242,
+      0.0731
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.02969,
+      -0.10509,
+      0.09135
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996163,
+      -0.014413,
+      -0.0,
+      0.086321
+     ]
+    },
+    "finger2-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R",
+     "angle_deg": 33.53,
+     "model_delta_at_bind_unity_xyzw": [
+      0.15284,
+      -0.192839,
+      -0.150566,
+      0.957488
+     ],
+     "head_from_wrist_unity_m": [
+      0.01957,
+      -0.0449,
+      0.09454
+     ],
+     "tail_from_wrist_unity_m": [
+      0.01036,
+      -0.06454,
+      0.11035
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.957488,
+      -0.112646,
+      -0.0,
+      -0.265571
+     ]
+    },
+    "finger3-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R",
+     "angle_deg": 37.77,
+     "model_delta_at_bind_unity_xyzw": [
+      0.144465,
+      -0.165306,
+      -0.237852,
+      0.946166
+     ],
+     "head_from_wrist_unity_m": [
+      0.03158,
+      -0.06025,
+      0.07695
+     ],
+     "tail_from_wrist_unity_m": [
+      0.02304,
+      -0.08941,
+      0.09203
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.946166,
+      -0.070246,
+      -0.0,
+      -0.315968
+     ]
+    },
+    "finger4-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R",
+     "angle_deg": 36.71,
+     "model_delta_at_bind_unity_xyzw": [
+      0.119902,
+      -0.125598,
+      -0.262732,
+      0.949116
+     ],
+     "head_from_wrist_unity_m": [
+      0.04095,
+      -0.06676,
+      0.05889
+     ],
+     "tail_from_wrist_unity_m": [
+      0.03589,
+      -0.09427,
+      0.06973
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.949116,
+      -0.025278,
+      0.0,
+      -0.313912
+     ]
+    },
+    "finger5-1.R": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R",
+     "angle_deg": 31.35,
+     "model_delta_at_bind_unity_xyzw": [
+      0.094421,
+      -0.093906,
+      -0.23506,
+      0.962815
+     ],
+     "head_from_wrist_unity_m": [
+      0.04618,
+      -0.07329,
+      0.03912
+     ],
+     "tail_from_wrist_unity_m": [
+      0.04115,
+      -0.09468,
+      0.04565
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.962815,
+      0.042778,
+      -0.0,
+      -0.266752
+     ]
+    }
+   },
+   "clearance_by_region": {
+    "GC_MealPouch_Opened": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.29,
+     "index_pad_segment_mm": 0.04,
+     "middle_pad_segment_mm": 0.03,
+     "thumb_mm": 0.29,
+     "index_mm": 0.04,
+     "middle_mm": 0.03,
+     "ring_mm": 0.05,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 0.34,
+     "whole_arm_skin_mm": 0.02
+    },
+    "GC_MealPouch_Sealed": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.29,
+     "index_pad_segment_mm": 0.04,
+     "middle_pad_segment_mm": 0.03,
+     "thumb_mm": 0.29,
+     "index_mm": 0.04,
+     "middle_mm": 0.03,
+     "ring_mm": 0.12,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 0.34,
+     "whole_arm_skin_mm": 0.02
+    }
+   },
+   "closing_from_bind": [
+    {
+     "fraction": 0.0,
+     "intersecting_pairs_by_region": {
+      "thumb": 321,
+      "palm_and_wrist": 8
+     }
+    },
+    {
+     "fraction": 0.25,
+     "intersecting_pairs_by_region": {
+      "thumb": 112,
+      "palm_and_wrist": 8
+     }
+    },
+    {
+     "fraction": 0.5,
+     "intersecting_pairs_by_region": {
+      "palm_and_wrist": 8
+     }
+    },
+    {
+     "fraction": 0.75,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 1.0,
+     "intersecting_pairs_by_region": {}
+    }
+   ]
+  },
+  "WORK_Clasp_Drink_L": {
+   "hand": "L",
+   "pouch": "GC_DrinkPouch",
+   "variants_checked": [
+    "GC_DrinkPouch_Closed",
+    "GC_DrinkPouch_Open"
+   ],
+   "grip": "edge clasp: index to little straight and flexed at the knuckle under the back face, the near edge in the thumb web, the thumb pad on the front (label) face",
+   "aperture_mm": 27.42,
+   "pouch_thickness_at_clasp_mm": 24.68,
+   "thumb_opposes_bone": "finger2-2.L",
+   "thumb_pad_gap_mm": 0.14,
+   "opposing_skin_to_back_face_mm": 28.27,
+   "finger_contacts": {
+    "index": {
+     "bone": "finger2-3.L",
+     "gap_mm": 0.05,
+     "aperture_from_thumb_contact_along_normal_mm": 24.43,
+     "offset_from_thumb_contact_along_face_mm": 28.5,
+     "contact_from_wrist_unity_m": [
+      0.01547,
+      -0.09163,
+      0.11815
+     ]
+    },
+    "middle": {
+     "bone": "finger3-3.L",
+     "gap_mm": 0.08,
+     "aperture_from_thumb_contact_along_normal_mm": 24.61,
+     "offset_from_thumb_contact_along_face_mm": 40.1,
+     "contact_from_wrist_unity_m": [
+      0.00242,
+      -0.1209,
+      0.10124
+     ]
+    },
+    "ring": {
+     "bone": "finger4-3.L",
+     "gap_mm": 0.0,
+     "aperture_from_thumb_contact_along_normal_mm": 22.67,
+     "offset_from_thumb_contact_along_face_mm": 51.5,
+     "contact_from_wrist_unity_m": [
+      -0.01424,
+      -0.12644,
+      0.07681
+     ]
+    },
+    "little": {
+     "bone": "finger5-2.L",
+     "gap_mm": 0.02,
+     "aperture_from_thumb_contact_along_normal_mm": 18.43,
+     "offset_from_thumb_contact_along_face_mm": 63.2,
+     "contact_from_wrist_unity_m": [
+      -0.03337,
+      -0.09994,
+      0.04616
+     ]
+    }
+   },
+   "knuckle_flexion_deg": {
+    "index": 37.84,
+    "middle": 40.85,
+    "ring": 38.9,
+    "little": 29.98
+   },
+   "thumb": {
+    "cmc_rotation_vector_deg_armature_space": [
+     15.89,
+     -68.92,
+     -41.1
+    ],
+    "mp_flexion_deg": -7.01,
+    "ip_flexion_deg": -10.04,
+    "miss_from_ideal_target_mm": 0.6
+   },
+   "clasp_point_prop_space_unity": [
+    0.015,
+    -0.02,
+    0.0
+   ],
+   "clasp_point_from_grip_anchor_towards_held_edge_mm": 15,
+   "anchors_from_wrist_unity_m": {
+    "ThumbPad": [
+     0.01823,
+     -0.08081,
+     0.08235
+    ],
+    "OpposingFingerSkin": [
+     0.00122,
+     -0.07587,
+     0.10518
+    ],
+    "ClaspPoint": [
+     0.00972,
+     -0.07834,
+     0.09377
+    ]
+   },
+   "pouch_from_wrist_unity": {
+    "origin_m": [
+     0.02367,
+     -0.0858,
+     0.10923
+    ],
+    "rotation_xyzw": [
+     0.404571,
+     0.803331,
+     0.202789,
+     0.387116
+    ],
+    "note": "prop origin and prop axes (x, y up the pouch, z label) at the clasp"
+   },
+   "bones": {
+    "finger1-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L",
+     "angle_deg": 81.8,
+     "model_delta_at_bind_unity_xyzw": [
+      0.127145,
+      0.328976,
+      -0.551667,
+      0.755826
+     ],
+     "head_from_wrist_unity_m": [
+      0.01244,
+      -0.01555,
+      0.04024
+     ],
+     "tail_from_wrist_unity_m": [
+      0.01849,
+      -0.0396,
+      0.05347
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.755826,
+      0.245942,
+      0.513666,
+      -0.323089
+     ]
+    },
+    "finger1-2.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L",
+     "angle_deg": 7.01,
+     "model_delta_at_bind_unity_xyzw": [
+      0.100179,
+      0.363935,
+      -0.512311,
+      0.771397
+     ],
+     "head_from_wrist_unity_m": [
+      0.01849,
+      -0.0396,
+      0.05347
+     ],
+     "tail_from_wrist_unity_m": [
+      0.02264,
+      -0.07252,
+      0.07254
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.99813,
+      0.01006,
+      -0.0,
+      0.060299
+     ]
+    },
+    "finger1-3.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L/finger1-3.L",
+     "angle_deg": 10.04,
+     "model_delta_at_bind_unity_xyzw": [
+      0.061053,
+      0.411356,
+      -0.452475,
+      0.788876
+     ],
+     "head_from_wrist_unity_m": [
+      0.02264,
+      -0.07252,
+      0.07254
+     ],
+     "tail_from_wrist_unity_m": [
+      0.03059,
+      -0.1053,
+      0.0906
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996167,
+      0.014404,
+      -0.0,
+      0.086275
+     ]
+    },
+    "finger2-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L",
+     "angle_deg": 37.84,
+     "model_delta_at_bind_unity_xyzw": [
+      0.171794,
+      0.216753,
+      0.169236,
+      0.945973
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01956,
+      -0.0449,
+      0.09454
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.00883,
+      -0.06475,
+      0.10907
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.945973,
+      0.126618,
+      -0.0,
+      -0.298502
+     ]
+    },
+    "finger3-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L",
+     "angle_deg": 40.85,
+     "model_delta_at_bind_unity_xyzw": [
+      0.155749,
+      0.178217,
+      0.256429,
+      0.937137
+     ],
+     "head_from_wrist_unity_m": [
+      -0.03158,
+      -0.06025,
+      0.07695
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.02149,
+      -0.08939,
+      0.09107
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.937137,
+      0.075737,
+      -0.0,
+      -0.340644
+     ]
+    },
+    "finger4-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L",
+     "angle_deg": 38.9,
+     "model_delta_at_bind_unity_xyzw": [
+      0.126778,
+      0.1328,
+      0.277799,
+      0.942931
+     ],
+     "head_from_wrist_unity_m": [
+      -0.04095,
+      -0.06676,
+      0.05889
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.03486,
+      -0.09425,
+      0.06925
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.942931,
+      0.026727,
+      0.0,
+      -0.331913
+     ]
+    },
+    "finger5-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L",
+     "angle_deg": 29.98,
+     "model_delta_at_bind_unity_xyzw": [
+      0.0904,
+      0.089905,
+      0.225049,
+      0.96597
+     ],
+     "head_from_wrist_unity_m": [
+      -0.04618,
+      -0.07329,
+      0.03912
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.04165,
+      -0.09472,
+      0.04586
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.96597,
+      -0.040955,
+      -0.0,
+      -0.255391
+     ]
+    }
+   },
+   "clearance_by_region": {
+    "GC_DrinkPouch_Closed": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.14,
+     "index_pad_segment_mm": 0.05,
+     "middle_pad_segment_mm": 0.08,
+     "thumb_mm": 0.14,
+     "index_mm": 0.05,
+     "middle_mm": 0.08,
+     "ring_mm": 0.0,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 1.92,
+     "whole_arm_skin_mm": 0.0
+    },
+    "GC_DrinkPouch_Open": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.14,
+     "index_pad_segment_mm": 0.05,
+     "middle_pad_segment_mm": 0.08,
+     "thumb_mm": 0.14,
+     "index_mm": 0.05,
+     "middle_mm": 0.08,
+     "ring_mm": 0.0,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 1.92,
+     "whole_arm_skin_mm": 0.0
+    }
+   },
+   "closing_from_bind": [
+    {
+     "fraction": 0.0,
+     "intersecting_pairs_by_region": {
+      "thumb": 228
+     }
+    },
+    {
+     "fraction": 0.25,
+     "intersecting_pairs_by_region": {
+      "thumb": 112
+     }
+    },
+    {
+     "fraction": 0.5,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 0.75,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 1.0,
+     "intersecting_pairs_by_region": {}
+    }
+   ]
+  },
+  "WORK_Clasp_Meal_L": {
+   "hand": "L",
+   "pouch": "GC_MealPouch",
+   "variants_checked": [
+    "GC_MealPouch_Opened",
+    "GC_MealPouch_Sealed"
+   ],
+   "grip": "edge clasp: index to little straight and flexed at the knuckle under the back face, the near edge in the thumb web, the thumb pad on the front (label) face",
+   "aperture_mm": 29.13,
+   "pouch_thickness_at_clasp_mm": 27.13,
+   "thumb_opposes_bone": "finger2-2.L",
+   "thumb_pad_gap_mm": 0.29,
+   "opposing_skin_to_back_face_mm": 29.89,
+   "finger_contacts": {
+    "index": {
+     "bone": "finger2-3.L",
+     "gap_mm": 0.04,
+     "aperture_from_thumb_contact_along_normal_mm": 27.94,
+     "offset_from_thumb_contact_along_face_mm": 26.5,
+     "contact_from_wrist_unity_m": [
+      0.01095,
+      -0.08938,
+      0.1199
+     ]
+    },
+    "middle": {
+     "bone": "finger3-3.L",
+     "gap_mm": 0.04,
+     "aperture_from_thumb_contact_along_normal_mm": 28.02,
+     "offset_from_thumb_contact_along_face_mm": 32.0,
+     "contact_from_wrist_unity_m": [
+      -0.00305,
+      -0.11295,
+      0.10174
+     ]
+    },
+    "ring": {
+     "bone": "finger4-3.L",
+     "gap_mm": 0.05,
+     "aperture_from_thumb_contact_along_normal_mm": 24.57,
+     "offset_from_thumb_contact_along_face_mm": 48.7,
+     "contact_from_wrist_unity_m": [
+      -0.0169,
+      -0.12287,
+      0.07836
+     ]
+    },
+    "little": {
+     "bone": "finger5-3.L",
+     "gap_mm": 0.02,
+     "aperture_from_thumb_contact_along_normal_mm": 14.56,
+     "offset_from_thumb_contact_along_face_mm": 67.0,
+     "contact_from_wrist_unity_m": [
+      -0.02812,
+      -0.11836,
+      0.04798
+     ]
+    }
+   },
+   "knuckle_flexion_deg": {
+    "index": 33.53,
+    "middle": 37.77,
+    "ring": 36.71,
+    "little": 31.35
+   },
+   "thumb": {
+    "cmc_rotation_vector_deg_armature_space": [
+     16.64,
+     -70.5,
+     -39.63
+    ],
+    "mp_flexion_deg": -9.1,
+    "ip_flexion_deg": -10.04,
+    "miss_from_ideal_target_mm": 0.7
+   },
+   "clasp_point_prop_space_unity": [
+    0.03,
+    -0.02,
+    0.0
+   ],
+   "clasp_point_from_grip_anchor_towards_held_edge_mm": 30,
+   "anchors_from_wrist_unity_m": {
+    "ThumbPad": [
+     0.0173,
+     -0.08066,
+     0.08295
+    ],
+    "OpposingFingerSkin": [
+     -0.00059,
+     -0.07618,
+     0.10742
+    ],
+    "ClaspPoint": [
+     0.00835,
+     -0.07842,
+     0.09519
+    ]
+   },
+   "pouch_from_wrist_unity": {
+    "origin_m": [
+     0.02719,
+     -0.09794,
+     0.11773
+    ],
+    "rotation_xyzw": [
+     0.404571,
+     0.803331,
+     0.202789,
+     0.387116
+    ],
+    "note": "prop origin and prop axes (x, y up the pouch, z label) at the clasp"
+   },
+   "bones": {
+    "finger1-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L",
+     "angle_deg": 82.57,
+     "model_delta_at_bind_unity_xyzw": [
+      0.132991,
+      0.316674,
+      -0.563382,
+      0.75142
+     ],
+     "head_from_wrist_unity_m": [
+      0.01244,
+      -0.01555,
+      0.04024
+     ],
+     "tail_from_wrist_unity_m": [
+      0.01752,
+      -0.03962,
+      0.05385
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.75142,
+      0.232561,
+      0.519714,
+      -0.333439
+     ]
+    },
+    "finger1-2.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L",
+     "angle_deg": 9.1,
+     "model_delta_at_bind_unity_xyzw": [
+      0.097956,
+      0.362436,
+      -0.512778,
+      0.772077
+     ],
+     "head_from_wrist_unity_m": [
+      0.01752,
+      -0.03962,
+      0.05385
+     ],
+     "tail_from_wrist_unity_m": [
+      0.02171,
+      -0.07242,
+      0.0731
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996845,
+      0.01306,
+      -0.0,
+      0.078286
+     ]
+    },
+    "finger1-3.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L/finger1-3.L",
+     "angle_deg": 10.04,
+     "model_delta_at_bind_unity_xyzw": [
+      0.058717,
+      0.410016,
+      -0.453035,
+      0.789429
+     ],
+     "head_from_wrist_unity_m": [
+      0.02171,
+      -0.07242,
+      0.0731
+     ],
+     "tail_from_wrist_unity_m": [
+      0.02969,
+      -0.10509,
+      0.09134
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.996163,
+      0.014412,
+      -0.0,
+      0.086321
+     ]
+    },
+    "finger2-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L",
+     "angle_deg": 33.53,
+     "model_delta_at_bind_unity_xyzw": [
+      0.152841,
+      0.192839,
+      0.150565,
+      0.957488
+     ],
+     "head_from_wrist_unity_m": [
+      -0.01956,
+      -0.0449,
+      0.09454
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.01036,
+      -0.06454,
+      0.11035
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.957488,
+      0.112649,
+      -0.0,
+      -0.26557
+     ]
+    },
+    "finger3-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L",
+     "angle_deg": 37.77,
+     "model_delta_at_bind_unity_xyzw": [
+      0.144466,
+      0.165306,
+      0.237852,
+      0.946166
+     ],
+     "head_from_wrist_unity_m": [
+      -0.03158,
+      -0.06025,
+      0.07695
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.02304,
+      -0.08941,
+      0.09203
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.946166,
+      0.07025,
+      0.0,
+      -0.315967
+     ]
+    },
+    "finger4-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L",
+     "angle_deg": 36.71,
+     "model_delta_at_bind_unity_xyzw": [
+      0.119902,
+      0.125598,
+      0.262732,
+      0.949116
+     ],
+     "head_from_wrist_unity_m": [
+      -0.04095,
+      -0.06676,
+      0.05889
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.03589,
+      -0.09427,
+      0.06973
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.949116,
+      0.025277,
+      0.0,
+      -0.313912
+     ]
+    },
+    "finger5-1.L": {
+     "unity_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L",
+     "angle_deg": 31.35,
+     "model_delta_at_bind_unity_xyzw": [
+      0.094421,
+      0.093905,
+      0.23506,
+      0.962815
+     ],
+     "head_from_wrist_unity_m": [
+      -0.04618,
+      -0.07329,
+      0.03912
+     ],
+     "tail_from_wrist_unity_m": [
+      -0.04115,
+      -0.09468,
+      0.04565
+     ],
+     "blender_bone_local_delta_wxyz": [
+      0.962815,
+      -0.042777,
+      -0.0,
+      -0.266753
+     ]
+    }
+   },
+   "clearance_by_region": {
+    "GC_MealPouch_Opened": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.29,
+     "index_pad_segment_mm": 0.04,
+     "middle_pad_segment_mm": 0.04,
+     "thumb_mm": 0.29,
+     "index_mm": 0.04,
+     "middle_mm": 0.04,
+     "ring_mm": 0.05,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 0.34,
+     "whole_arm_skin_mm": 0.02
+    },
+    "GC_MealPouch_Sealed": {
+     "intersecting_pairs": 0,
+     "thumb_pad_segment_mm": 0.29,
+     "index_pad_segment_mm": 0.04,
+     "middle_pad_segment_mm": 0.04,
+     "thumb_mm": 0.29,
+     "index_mm": 0.04,
+     "middle_mm": 0.04,
+     "ring_mm": 0.11,
+     "little_mm": 0.02,
+     "palm_and_wrist_mm": 0.34,
+     "whole_arm_skin_mm": 0.02
+    }
+   },
+   "closing_from_bind": [
+    {
+     "fraction": 0.0,
+     "intersecting_pairs_by_region": {
+      "thumb": 303,
+      "palm_and_wrist": 8
+     }
+    },
+    {
+     "fraction": 0.25,
+     "intersecting_pairs_by_region": {
+      "thumb": 108,
+      "palm_and_wrist": 8
+     }
+    },
+    {
+     "fraction": 0.5,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 0.75,
+     "intersecting_pairs_by_region": {}
+    },
+    {
+     "fraction": 1.0,
+     "intersecting_pairs_by_region": {}
+    }
+   ]
+  }
+ },
+ "grip": {
+  "type": "edge clasp",
+  "pouch_tilt_deg": 24.0,
+  "tilt_meaning": "the pouch is turned 24 degrees about its own y axis against the straightened fingers, far side off the fingertips",
+  "tilt_study": "tilt_study.json (0, 6, 12, 18, 24 degrees; right hand, drink)"
+ }
+}
