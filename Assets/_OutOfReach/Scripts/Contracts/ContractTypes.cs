@@ -1,11 +1,11 @@
 namespace OutOfReach.Contracts
 {
     public enum GamePhase { Planning, Intro, Emergency, Repair, Eva, Transmission, Outcome, Report, Survival }
-    public enum MissionOutcome { None, RecoveryPossible, Lost }
+    public enum MissionOutcome { None, RecoveryPossible, Lost, Recovered }
     public enum ShipSystemId { Power, LifeSupport, Antenna }
     public enum ResourceId { OxygenKg, WaterLitres, FoodKg, BatteryKWh, SparePartsCount }
     public enum CommunicationState { Offline, Ready, AwaitingReply, ReplyReceived }
-    public enum CinematicId { Impact, FalseSignal, CommunicationRestored, EndingPullback }
+    public enum CinematicId { Impact, FalseSignal, CommunicationRestored, EndingPullback, RecoveryArrival, MarsDeparture }
     public enum AirlockState { InnerOpen, Sealed, Depressurizing, OuterOpen, Repressurizing }
     public enum CommandFailure { None, InvalidInput, WrongPhase, PreconditionsNotMet, InsufficientResources, AlreadyComplete }
 
