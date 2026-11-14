@@ -719,23 +719,24 @@ def bay_stowage(art, first_bag=0, rows=3, title="t_stow"):
     """Soft stowage: cargo bags on shelves behind bungee restraints."""
     m = Model("BayStowage")
     bay_backing(m)
-    m.frame(ALU, (0, (BAY_Y0 + BAY_Y1) / 2, 0.012), BAY_W, BAY_Y1 - BAY_Y0 - 0.04, 0.035, 0.11, 0.012)
+    m.frame(ALU, (0, (BAY_Y0 + BAY_Y1) / 2, 0.012), BAY_W, BAY_Y1 - BAY_Y0 - 0.04, 0.035, 0.16, 0.012)
     x0, x1 = -BAY_W / 2 + 0.05, BAY_W / 2 - 0.05
     rh = (BAY_Y1 - BAY_Y0 - 0.34) / rows
     bag = first_bag
     for r in range(rows):
         y0 = BAY_Y0 + 0.06 + r * rh
-        m.box(ALU, (0, y0, 0.066), (x1 - x0, 0.012, 0.11), 0.002)
+        m.box(ALU, (0, y0, 0.092), (x1 - x0, 0.012, 0.16), 0.002)
         count = 2 if r % 2 == 0 else 3
         gap = 0.02
         bw = (x1 - x0 - gap * (count + 1)) / count
         for i in range(count):
             cx = x0 + gap + bw / 2 + i * (bw + gap)
             bh = rh - 0.07 - art.rng.random() * 0.05
-            ctb(m, art, (cx, y0 + 0.008 + bh / 2, 0.066), (bw, bh, 0.10 + art.rng.random() * 0.02), None, "bag_%02d" % (bag % 16))
+            depth = 0.13 + art.rng.random() * 0.02
+            m.instance(soft_bag(art, (bw, bh, depth), "bag_%02d" % (bag % 16), 0.03), at(cx, y0 + 0.008 + bh / 2, 0.016 + depth / 2))
             bag += 1
         for by in (y0 + rh * 0.35, y0 + rh * 0.7):
-            m.tube(CABLE_BLUE, [(x0 - 0.01, by, 0.10), (x0 - 0.01, by, 0.135), (x1 + 0.01, by, 0.135), (x1 + 0.01, by, 0.10)],
+            m.tube(CABLE_BLUE, [(x0 - 0.01, by, 0.14), (x0 - 0.01, by, 0.182), (x1 + 0.01, by, 0.182), (x1 + 0.01, by, 0.14)],
                    0.004, 6, 0.012)
     m.decal(art.decals, title, (0, BAY_Y1 - 0.14, 0.014), width=0.34)
     m.decal(art.decals, "p_stow", (-0.42, BAY_Y1 - 0.15, 0.014), None, 0.6)
@@ -1056,46 +1057,72 @@ def build_shell(m, art, name, left_bays, right_bays, entrance_sign=None):
 
 
 # ----------------------------------------------------------------------------- cockpit
+def padded(m, mat, centre, size, frame=None):
+    """One cushion: a pillowed block of upholstery (a coarser grid than the cargo bags)."""
+    v, t, _ = pillow(size, (), 0.0, 0.0, 5.0, 5)
+    m.add(mat, v + vec(centre), t, frame)
+
+
 def seat(art, label):
-    """Crew seat, occupant facing +z in front-view space. Frame, cushions, harness, controllers."""
+    """Crew seat (review-01 R01), occupant facing +z in front-view space: padded shell on an energy-absorbing
+    base, five-point harness, armrests with hand controllers. It keeps the footprint of the blockout seat."""
     m = Model("Seat")
+    # floor tracks, legs and stroke struts
     for sx in (-1, 1):
         m.box(ANO, (sx * 0.24, 0.015, 0.0), (0.05, 0.03, 0.9), 0.004)
         for z in np.arange(-0.4, 0.41, 0.1):
             m.cyl(GRAPHITE, (sx * 0.24, 0.03, z), (sx * 0.24, 0.0305, z), 0.008, 6, 0.0, None, (False, True))
-        m.tube(ALU, [(sx * 0.24, 0.03, 0.30), (sx * 0.22, 0.42, 0.20)], 0.018, 10)
-        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.22, 0.42, -0.20)], 0.018, 10)
-        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.22, 0.42, 0.20)], 0.010, 8)
-    m.cyl(ALU, (0, 0.05, -0.36), (0, 0.45, -0.37), 0.03, 12, 0.004)
-    m.cyl(ANO_CLEAR, (0, 0.45, -0.37), (0, 0.86, -0.385), 0.018, 10, 0.002)
-    m.box(ALU, (0, 0.435, 0.02), (0.50, 0.03, 0.50), 0.008)
-    m.box(FAB_DARK, (0, 0.492, 0.03), (0.46, 0.075, 0.46), 0.025)
-    back = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12))
-    m.box(ALU, (0, 0.44, -0.025), (0.50, 0.90, 0.03), 0.008, back)
-    m.box(FAB_DARK, (0, 0.22, 0.03), (0.44, 0.38, 0.08), 0.03, back)
-    m.box(FAB_DARK, (0, 0.63, 0.03), (0.44, 0.40, 0.08), 0.03, back)
-    m.box(FAB_DARK, (0, 0.97, 0.035), (0.28, 0.20, 0.09), 0.035, back)
+        m.tube(ALU, [(sx * 0.24, 0.03, 0.30), (sx * 0.21, 0.41, 0.20)], 0.018, 10)
+        m.tube(ALU, [(sx * 0.24, 0.03, -0.30), (sx * 0.21, 0.41, -0.20)], 0.018, 10)
+        m.tube(ANO_CLEAR, [(sx * 0.24, 0.05, -0.28), (sx * 0.215, 0.39, 0.16)], 0.012, 8)
+        m.cyl(ANO_GOLD, (sx * 0.232, 0.15, -0.15), (sx * 0.224, 0.27, 0.005), 0.017, 10, 0.002)
+    # pedestal housing between the legs
+    m.box(ALU, (0, 0.045, -0.02), (0.40, 0.03, 0.44), 0.006)
+    m.box(GRAPHITE, (0, 0.23, -0.02), (0.26, 0.36, 0.30), 0.02)
+    for by in (0.14, 0.32):
+        for bx in (-0.10, 0.10):
+            bolt(m, bx, by, 0.13, 0.007, 0.004, ALU)
+    # seat pan: structure, cushion with side bolsters
+    m.box(GRAPHITE, (0, 0.435, 0.03), (0.52, 0.05, 0.52), 0.015)
+    padded(m, FAB_DARK, (0, 0.505, 0.04), (0.44, 0.10, 0.46))
     for sx in (-1, 1):
-        m.box(FAB_DARK, (sx * 0.17, 0.97, 0.07), (0.05, 0.18, 0.12), 0.02, back)
-        m.box(STRAP, (sx * 0.10, 0.52, 0.073), (0.045, 0.62, 0.005), 0.0, back)
-        m.box(ALU, (sx * 0.10, 0.84, 0.076), (0.05, 0.035, 0.008), 0.002, back)
-        m.box(STRAP, (sx * 0.15, 0.535, 0.12), (0.20, 0.006, 0.045), 0.0)
+        padded(m, FAB_DARK, (sx * 0.225, 0.515, 0.04), (0.08, 0.11, 0.44))
+    # back, leaning 12 degrees: padded shell, bolsters, headrest with wings
+    back = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12))
+    padded(m, FAB_DARK, (0, 0.44, 0.0), (0.50, 0.90, 0.12), back)
+    for sx in (-1, 1):
+        padded(m, FAB_DARK, (sx * 0.215, 0.40, 0.055), (0.09, 0.62, 0.10), back)
+    padded(m, FAB_DARK, (0, 0.98, 0.03), (0.30, 0.24, 0.12), back)
+    for sx in (-1, 1):
+        padded(m, FAB_DARK, (sx * 0.17, 0.98, 0.075), (0.07, 0.21, 0.15), back)
+    # rear of the back: spine, harness reel, grab bar and the seat label
+    m.box(GRAPHITE, (0, 0.44, -0.066), (0.16, 0.82, 0.03), 0.01, back)
+    m.box(ANO, (0, 0.86, -0.085), (0.22, 0.09, 0.06), 0.012, back)
+    m.tube(ALU, [(-0.12, 0.66, -0.08), (-0.12, 0.66, -0.13), (0.12, 0.66, -0.13), (0.12, 0.66, -0.08)], 0.011, 8, 0.02, back)
+    plate_frame = compose(back, at(0, 0.36, -0.082), rotation((0, 1, 0), 180))
+    m.decal(art.decals, label, (0, 0, 0), plate_frame, 1.0)
+    # five-point harness: shoulder straps from the reel slots, lap belts, crotch strap, rotary buckle
+    for sx in (-1, 1):
+        m.box(STRAP, (sx * 0.10, 0.52, 0.066), (0.045, 0.62, 0.005), 0.0, back)
+        m.box(ALU, (sx * 0.10, 0.84, 0.069), (0.05, 0.035, 0.008), 0.002, back)
+        m.box(ANO, (sx * 0.10, 0.25, 0.070), (0.05, 0.04, 0.010), 0.002, back)
+        m.box(STRAP, (sx * 0.15, 0.562, 0.12), (0.20, 0.006, 0.045), 0.0)
+    m.cyl(ALU, (0, 0.562, 0.17), (0, 0.576, 0.17), 0.035, 14, 0.004)
+    m.box(STRAP, (0, 0.562, 0.24), (0.04, 0.006, 0.16), 0.0)
+    for sx in (-1, 1):
         # armrest with a controller at its front end
-        m.cyl(ALU, (sx * 0.30, 0.44, -0.08), (sx * 0.30, 0.66, -0.08), 0.014, 8)
-        m.box(ALU, (sx * 0.30, 0.67, 0.03), (0.06, 0.02, 0.34), 0.006)
-        m.box(FAB_DARK, (sx * 0.30, 0.69, 0.0), (0.065, 0.025, 0.24), 0.01)
-        m.box(ANO, (sx * 0.30, 0.70, 0.19), (0.07, 0.045, 0.07), 0.01)
-        m.cyl(RUBBER, (sx * 0.30, 0.72, 0.19), (sx * 0.30, 0.755, 0.19), 0.018, 10, 0.004)
-        m.cyl(ANO_CLEAR, (sx * 0.30, 0.755, 0.19), (sx * 0.30, 0.80, 0.195), 0.009, 8)
-        m.box(ANO, (sx * 0.30, 0.845, 0.198), (0.034, 0.09, 0.036), 0.012)
-        m.cyl(RED if sx > 0 else ANO_GOLD, (sx * 0.30, 0.89, 0.198), (sx * 0.30, 0.897, 0.198), 0.008, 8, 0.002)
-    m.cyl(ALU, (0, 0.535, 0.17), (0, 0.548, 0.17), 0.035, 14, 0.004)
-    m.box(STRAP, (0, 0.50, 0.24), (0.04, 0.006, 0.16), 0.0)
+        m.cyl(ALU, (sx * 0.31, 0.44, -0.08), (sx * 0.31, 0.66, -0.08), 0.014, 8)
+        m.box(ALU, (sx * 0.31, 0.67, 0.03), (0.06, 0.02, 0.34), 0.006)
+        padded(m, FAB_DARK, (sx * 0.31, 0.695, 0.0), (0.07, 0.035, 0.26))
+        m.box(ANO, (sx * 0.31, 0.70, 0.19), (0.07, 0.045, 0.07), 0.01)
+        m.cyl(RUBBER, (sx * 0.31, 0.72, 0.19), (sx * 0.31, 0.755, 0.19), 0.018, 10, 0.004)
+        m.cyl(ANO_CLEAR, (sx * 0.31, 0.755, 0.19), (sx * 0.31, 0.80, 0.195), 0.009, 8)
+        m.box(ANO, (sx * 0.31, 0.845, 0.198), (0.034, 0.09, 0.036), 0.012)
+        m.cyl(RED if sx > 0 else ANO_GOLD, (sx * 0.31, 0.89, 0.198), (sx * 0.31, 0.897, 0.198), 0.008, 8, 0.002)
+    # footrest
     m.box(ALU, (0, 0.16, 0.44), (0.42, 0.02, 0.18), 0.006)
     for sx in (-1, 1):
         m.tube(ALU, [(sx * 0.19, 0.16, 0.40), (sx * 0.22, 0.40, 0.26)], 0.012, 8)
-    plate_frame = compose(at(0, 0.47, -0.24), rotation((1, 0, 0), -12), at(0, 0.62, -0.041), rotation((0, 1, 0), 180))
-    m.decal(art.decals, label, (0, 0, 0), plate_frame, 1.0)
     return m
 
 
@@ -1128,6 +1155,19 @@ def console(art):
         m.cyl(ANO, (x, 0.97, 0.16), (x, 0.995, 0.16), 0.016, 12, 0.003)
         m.box(ANO_CLEAR, (x, 0.9965, 0.167), (0.004, 0.003, 0.014), 0.0)
     m.decal(art.decals, "leg_gnc", (0.04, 0.9705, 0.22), compose(at(0, 0, 0), rotation((1, 0, 0), -90)), 0.9)
+    # behind the keyboards: two rows of guarded toggles, lit keys and one guarded red switch, flat on the surface
+    s = compose(at(0, 0.9705, -0.02), rotation((1, 0, 0), -90))
+    switch_panel(m, art, (-0.50, -0.05, -0.06, 0.12), 0.0, s, "leg_power", 5)
+    switch_panel(m, art, (0.06, -0.05, 0.50, 0.12), 0.0, s, "leg_eclss", 5)
+    m.box(GRAPHITE, (-0.74, 0.035, 0.004), (0.30, 0.13, 0.008), 0.003, s)
+    for row in range(2):
+        for col in range(4):
+            lit = (row, col) in ((0, 1), (1, 3))
+            m.box(LED_A if lit else ANO, (-0.845 + col * 0.07, 0.005 + row * 0.058, 0.012), (0.055, 0.042, 0.008), 0.002, s)
+    m.box(GRAPHITE, (0.74, 0.035, 0.004), (0.14, 0.13, 0.008), 0.003, s)
+    m.cyl(ALU, (0.74, 0.03, 0.008), (0.74, 0.03, 0.016), 0.009, 8, 0.001, s)
+    m.box(RED, (0.74, 0.04, 0.032), (0.05, 0.08, 0.04), 0.008, s)
+    m.decal(art.decals, "hazard_short", (0.74, -0.018, 0.0085), s, width=0.12)
     # instrument panel, leaning back 15 degrees
     p = compose(at(0, 0.97, -0.17), rotation((1, 0, 0), -15))
     m.box(GRAPHITE, (0, 0.27, -0.035), (3.0, 0.56, 0.07), 0.012, p)
@@ -1147,13 +1187,16 @@ def console(art):
                 lit = art.rng.random() < 0.22
                 m.box(LED_A if lit else GRAPHITE, (cx - 0.035 + col * 0.07, 0.10 + row * 0.066, 0.014),
                       (0.055, 0.04, 0.004), 0.001, p)
+    for sx in (-1, 1):
+        handrail(m, (sx * 1.44, 0.10), (sx * 1.44, 0.46), 0.0, p)
     m.box(FAB_DARK, (0, 0.575, 0.09), (3.1, 0.03, 0.30), 0.012, p)
     m.box(GRAPHITE, (0, 0.55, -0.03), (3.1, 0.06, 0.08), 0.01, p)
     return m
 
 
 def forward_bulkhead(m, art):
-    """Five-pane observation window in a bolted frame, overhead breaker panel, sill handrail."""
+    """Forward bulkhead: five outer panes in bolted frames behind an inner liner with two small shielded
+    windows, overhead breaker panel, sill handrail."""
     f = front_frame((0, 0, -2.975), (0, 0, 1))
     panes = [(-1.82, 0.74), (-0.94, 0.74), (0.0, 0.86), (0.94, 0.74), (1.82, 0.74)]
     y0, y1 = 1.22, 2.78
@@ -1183,6 +1226,30 @@ def forward_bulkhead(m, art):
         for by in np.linspace(cy - h / 2 + 0.2, cy + h / 2 - 0.2, 6):
             for bx in (-w / 2 + 0.035, w / 2 - 0.035):
                 bolt(m, cx + bx, by, 0.05, 0.007, 0.005, ALU, f)
+    # Inner liner (review-01 R01): the crew sees two small shielded windows above the outer displays. The
+    # panes behind it stay, so the bow looks the same from outside.
+    lz, cy, h = 0.06, (y0 + y1) / 2, y1 - y0
+    for cx, w in ((0.0, 0.94), (-1.80, 0.78), (1.80, 0.78)):
+        m.box(QUILT, (cx, cy, lz + 0.02), (w - 0.02, h - 0.02, 0.04), 0.012, f)
+        m.frame(ALU, (cx, cy, lz + 0.04), w - 0.02, h - 0.02, 0.022, 0.004, 0.012, f)
+        for by in np.linspace(cy - h / 2 + 0.14, cy + h / 2 - 0.14, 6):
+            for bx in (-w / 2 + 0.022, w / 2 - 0.022):
+                m.cyl(ANO_CLEAR, (cx + bx, by, lz + 0.044), (cx + bx, by, lz + 0.048), 0.006, 8, 0.001, f)
+    for cx in (-0.94, 0.94):
+        wy = cy + 0.25
+        v, t = ring(rounded_rect(0.94, h, 0.004, 5), rounded_rect(0.50, 0.56, 0.09, 5) + np.array([0.0, 0.25]), 0.03, True)
+        m.add(WHITE, v + vec(cx, cy, lz), t, f)
+        # dark reveal from the liner back to the pane, so nothing of the outer frame shows at an angle
+        m.frame(GRAPHITE, (cx, wy, 0.0), 0.54, 0.60, 0.02, lz + 0.03, 0.11, f, 5)
+        m.frame(GRAPHITE, (cx, wy, lz + 0.03), 0.66, 0.72, 0.08, 0.03, 0.17, f, 5)
+        for bx in np.linspace(-0.21, 0.21, 4):
+            for by in (-0.32, 0.32):
+                bolt(m, cx + bx, wy + by, lz + 0.06, 0.007, 0.004, ALU, f)
+        for by in np.linspace(-0.18, 0.18, 3):
+            for bx in (-0.29, 0.29):
+                bolt(m, cx + bx, wy + by, lz + 0.06, 0.007, 0.004, ALU, f)
+        handrail(m, (cx - 0.22, cy - 0.30), (cx + 0.22, cy - 0.30), lz + 0.03, f)
+        m.decal(art.decals, "c_keepclear", (cx, cy - 0.52, lz + 0.03), f, 0.7)
     m.decal(art.decals, "stencil_aurora", (0, 2.955, 0.001), f, 1.0)
     m.decal(art.decals, "stencil_vessel", (0, 1.13, 0.001), f, 1.0)
     handrail(m, (-1.6, 1.16), (-0.5, 1.16), 0.0, f)
@@ -1304,8 +1371,10 @@ def pillow(size, strap_xs=(), pinch=0.014, sag=0.04, exponent=5.0, segs=8):
         p = c / (np.abs(c) ** exponent).sum() ** (1.0 / exponent) * half
         if p[1] > 0:                                   # an under-filled bag sinks along its top
             p[1] *= 1.0 - sag * (1.0 - (p[0] / half[0]) ** 2)
-        for sx in strap_xs:                            # straps draw the girth in
-            p[1:] *= 1.0 - pinch / min(half[1], half[2]) * math.exp(-((p[0] - sx) / 0.03) ** 2)
+        for sx in strap_xs:                            # straps draw the girth in by the same depth all round
+            groove = pinch * math.exp(-((p[0] - sx) / 0.03) ** 2)
+            p[1] *= 1.0 - groove / half[1]
+            p[2] *= 1.0 - groove / half[2]
         return p
 
     index, verts, tris = {}, [], []

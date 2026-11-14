@@ -8,7 +8,8 @@ Scope written: only `Assets/_OutOfReach/Visuals/Models.meta` and `Assets/_OutOfR
 the reference; palette, ribs, deck, overhead services and handrails are shared kit parts, so the other
 compartments received them without separate work. The high-gain antenna (asset A07) followed as a second
 step, because the EVA repair had nothing to repair before it; the airlock (asset A05) was then compared
-with R04 and the stowage (asset A04) with R03. Cockpit and the exterior were not compared with their views yet.
+with R04, the stowage (asset A04) with R03 and the flight deck with R01. The exterior was not compared with
+its views yet.
 
 ## What is delivered
 
@@ -17,8 +18,9 @@ practice. Everything is function first:
 
 - **Structure:** graphite ring frames, quilted insulation liner, lift-out grated aisle panels, cable trays,
   overhead pipe runs on trapeze hangers, luminaires and air diffusers. Warm putty-grey powder coat.
-- **Flight deck:** five-pane framed observation window, overhead circuit-breaker panels, a three-display console
-  with keyboards, two crew seats with harness and hand controllers.
+- **Flight deck:** a forward bulkhead whose inner liner leaves two small shielded windows, overhead
+  circuit-breaker panels, a three-display console with keyboards, guarded switch rows and one guarded red
+  switch, two padded crew seats with five-point harness and hand controllers.
 - **Engineering (assets A01, A02, A03):**
   - **ARS-1 air revitalisation unit** (prop from the prop author's chat) on the wall forward of the scrubber
     rack: status lamps, gauge, two canister sockets, inlet fan, filter drawer and valve manifold.
@@ -84,6 +86,20 @@ from just inside the forward hatch along the port wall.
 | Wall of standard lockers with recessed pulls | Done on the starboard wall: 24 doors with pressed panels and bar pulls. The same door is used in every other compartment. |
 | Curved hull wall with arched ribs behind the cargo | **Not matched on purpose:** both walls are filled by the stowage racks inside the blockout's locker envelopes, and the room keeps the rectangular V01 section. |
 | Creases, panel seams and wear on the canvas | Not done. |
+
+## Flight deck against R01
+
+`Previews/A7_unity_urp_cockpit_r01.png` is the matched view: 1.65 m eye height, 85° horizontal field of view,
+from the aft doorway across the seats to the console.
+
+| R01 | Model |
+|---|---|
+| One crash seat | Two seats, as in V01 with its two seat envelopes. Both are rebuilt: padded shell with bolsters and headrest wings, five-point harness, spine and harness reel behind, energy-absorbing base. |
+| Guarded switches, lit keys, a red guarded switch | Done on the work surface behind the keyboards, with handholds at the panel ends. |
+| Very small shielded forward windows | Done from inside: an inner liner with a dark reveal leaves two windows of 0.50 × 0.56 m above the outer displays. **From outside the bow still shows the five-pane band of `9878304`.** |
+| Two landscape displays with plots | Three displays, unchanged; their pages are static and show no authoritative values. |
+| A compact, tight station | **Not matched on purpose:** the flight deck keeps its 6 × 6 m V01 footprint. |
+| Cables and hoses under the console | Not done: the console stands on closed cabinets. |
 
 ## Folder map
 
@@ -187,7 +203,8 @@ Instantiate the prefab at the ship origin with identity rotation and unit scale.
 ### Differences from the blockout to be aware of
 
 - Wall bays divide each compartment evenly, so the cosmetic ring frames are not at the blockout rib stations.
-- The observation window keeps the same opening band but is five framed panes, not one sheet.
+- The observation window keeps the same opening band but is five framed panes, not one sheet; from inside,
+  a liner covers all of it except two small windows.
 - `AntennaRepair` has yaw −90, which faces inboard. The service face is oriented outboard and the crew works
   facing the hull, as the integrator decided; the anchor itself is unchanged.
 - One mesh per compartment with one sub-mesh per material (21 to 29 each), as agreed for the first integration.
@@ -198,9 +215,9 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 
 | Object | Triangles | Materials | Bounds min → max (m) |
 |---|---:|---:|---|
-| `A7_Cockpit` | 78,504 | 28 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
+| `A7_Cockpit` | 103,480 | 29 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
 | `A7_Engineering` | 77,326 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
-| `A7_Storage` | 79,240 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
+| `A7_Storage` | 79,246 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
 | `A7_Airlock` | 31,464 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
 | `A7_Exterior` | 29,556 | 16 | (−12.37, −2.02, −3.59) → (12.37, 5.14, 23.4) |
 | Door leaves (4) | 12,352 | 6–8 | at the two hatch planes |
@@ -209,7 +226,7 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | Antenna gimbal (2 meshes) | 4,346 | 1–2 | on the hull pad at AntennaRepair; the reflector is 3,638 of them |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
 | ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
-| **Total** | **336,444** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
+| **Total** | **361,426** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
 around the flight deck, 6.0 m aft, 24.2 m long; solar wings span 24.7 m.
@@ -245,7 +262,7 @@ without rewriting the FBX files.
     against the elevation pivot;
   - the dial pointer's and the locker door's pivots are checked the same way;
   - the prefab contains no camera, light, audio listener or script;
-  - fourteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
+  - fifteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
 - `python tools/verify_repository.py` passes on the branch.
 - The FBX files are now exported without texture records and hold no local path (checked by searching the
   files). The exports in `9878304` and `18339a3` embedded the absolute texture paths of the build machine;
@@ -260,8 +277,8 @@ is not delivered lighting.
 
 - Placement and lighting inside the integrated Bootstrap scene; a Windows build of this branch; performance.
 - The 405-sample clearance validator from V01 was not run by me. Clearance is argued from identical proxies.
-- Cockpit and exterior were not compared with R01, R05, R06 and R08 yet.
-- No gloves and tether (A08). The antenna has no damaged state and no collider. The soft bags in the wall
-  bays of the other compartments are still the earlier flat pouches.
+- The exterior was not compared with R05, R06 and R08 yet.
+- No gloves and tether (A08) from this chat; the prop author builds the hands. The antenna has no damaged
+  state and no collider.
 - No wear and dirt pass, no damage-state decals, no baked ambient occlusion, simple seat backs, a flat
   forward hull face.

@@ -617,6 +617,8 @@ namespace OutOfReach.ModelTools
         {
             ("cockpit_from_spawn", new Vector3(0f, 1.65f, 0.8f), new Vector3(0f, 1.55f, -3f), 78f),
             ("cockpit_three_quarter", new Vector3(2.2f, 1.95f, 2.3f), new Vector3(-0.6f, 1.15f, -2.2f), 70f),
+            // review-01 R01 framing at 1.65 m eye height
+            ("cockpit_r01", new Vector3(-0.55f, 1.65f, 2.2f), new Vector3(0.9f, 1.15f, -2.3f), 85f),
             ("engineering_corridor", new Vector3(0.25f, 1.65f, 3.6f), new Vector3(0f, 1.35f, 11f), 76f),
             // review-01 R02 framing at 1.65 m eye height; 90 degrees horizontal is close to a 60 degree vertical game camera
             ("engineering_r02", new Vector3(0.6f, 1.65f, 3.4f), new Vector3(-0.9f, 1.3f, 11f), 90f),

@@ -245,6 +245,7 @@ CAMERAS = {
     "cockpit_from_spawn": ((0.0, 1.65, 0.8), (0.0, 1.55, -3.0), 78),
     "cockpit_three_quarter": ((2.2, 1.95, 2.3), (-0.6, 1.15, -2.2), 70),
     "cockpit_console": ((0.0, 1.45, -0.75), (0.0, 1.25, -2.4), 74),
+    "cockpit_r01": ((-0.55, 1.65, 2.2), (0.9, 1.15, -2.3), 85),   # review-01 R01 framing at 1.65 m eye height
     "engineering_corridor": ((0.25, 1.65, 3.6), (0.0, 1.35, 11.0), 76),
     "engineering_r02": ((0.6, 1.65, 3.4), (-0.9, 1.30, 11.0), 90),   # review-01 R02 framing at 1.65 m eye height
     "engineering_power": ((-0.25, 1.55, 6.75), (-2.0, 1.2, 6.05), 72),
