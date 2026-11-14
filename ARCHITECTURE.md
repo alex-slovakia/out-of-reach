@@ -38,9 +38,16 @@ Each system's prefab has one clear owner. Claude's gameplay components are attac
 
 ## File ownership
 
+Designated integrator: **Codex**, explicitly selected by Alex on 14 November 2026.
+Latest user-directed exception: ship modeling/remodeling belongs to a dedicated Claude/Fable writer
+in `Assets/_OutOfReach/Visuals/Models/Aurora7/**` plus metadata. Codex retains lighting, presentation
+and integration of delivered models. Existing ship prefabs/builders stay with Codex until an exact
+handover is coordinated. See CODEX-006 and issue #7; no two writers edit the same asset.
+
 | Owner | Paths | Responsibility |
 |---|---|---|
-| Codex | `Assets/_OutOfReach/Visuals/**` | Materials, geometry, lighting and environment assets |
+| Codex | `Assets/_OutOfReach/Visuals/**`, except the model scope above | Materials, lighting and integration of environment assets |
+| Claude/Fable model writer | `Assets/_OutOfReach/Visuals/Models/Aurora7/**` | Ship model source/exports, model materials/textures, license manifest and genuine renders |
 | Codex | `Assets/_OutOfReach/Scenes/Visual/**` | Visual authoring and preview scenes |
 | Codex | `Assets/_OutOfReach/Scripts/Presentation/**` | View adapters, cinematics, lighting and visual editor utilities |
 | Codex | `Assets/_OutOfReach/UI/**` | Planner, HUD, report and menu presentation |
