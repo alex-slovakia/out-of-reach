@@ -1,6 +1,6 @@
 {
   "language": "en-US",
-  "selection": "approved clean male takes; scene bindings determine playback",
+  "selection": "Selected Clean asset inventory; actual scene bindings below also use approved Dramatic Orus clips. This list is not a playback guarantee.",
   "clips": [
     {
       "id": "vo01_mc_briefing",
@@ -9,7 +9,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "8c4d015f0be314554c246bcdb31ff82453fc590cf630be52d7203818bb2d401c",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo01_mc_briefing.json",
+        "receipt_sha256": "4edf935a85300f482a22403d5daeab27f6ae867161a124a109009b59d4a569f8",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo02_ship_impact",
@@ -18,7 +27,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "ac2a0a506504dd7ff444a4d0ce9c7bd342f274534c788a3bb548d78d94e8c990",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo02_ship_impact.json",
+        "receipt_sha256": "22c506567afac39b46631ba9f9e499bd5e6bd5e4cc1169a3bc357d5dccb8aae7",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo03_ship_power_restored",
@@ -27,7 +45,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Power system restored. Review remaining faults and reserve levels.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "4c91a76cfa2ac32d00035669a0fdefa59a02116aa67f7d3883a5b65fe4252070",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo03_ship_power_restored.json",
+        "receipt_sha256": "9c37d7402b477699e5e212968c2c6a3a2ca499eed2090df1e38e29922efb6ad3",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo04_ship_life_support_restored",
@@ -36,7 +63,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "cfceb9467d316ee39a00deb490252c2659cc296b977437e1ac0e58cf805df0e9",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo04_ship_life_support_restored.json",
+        "receipt_sha256": "3ee39195aa76586d25e64eeec6680539acbfadf2a97eabd8fc7f9c7d51e3b67c",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo05_ship_eva_prepare",
@@ -45,7 +81,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Exterior repair required. Check your suit, secure your tether, and confirm your return route before cycling the airlock.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "20f32fc02799335519fad345f18f9cf545c150b08e549dd05fcba522bf200b38",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo05_ship_eva_prepare.json",
+        "receipt_sha256": "b9f466c75e58d4afdf7c0efdacce602404c88e84fce2d7fd674bedc418289ae9",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo06_ship_eva_exit",
@@ -54,7 +99,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Outer hatch open. Follow the marked tether route. Monitor your suit reserves and return through this airlock.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "ecadbf6280cab1d438481084aae04544744720fbd45ed79c1e6ec67ef1a80d8b",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo06_ship_eva_exit.json",
+        "receipt_sha256": "f65ba81f55f52533936985817df8b0b4ca958a7aed90171966b071ef20c9cee4",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo07_ship_antenna_restored",
@@ -63,7 +117,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Antenna repair confirmed. Return to the communications console to prepare your transmission.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "e20247e21420aee7c6738b2aa81894e393ba0752e887b9b73c49c33e84b38ae0",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo07_ship_antenna_restored.json",
+        "receipt_sha256": "a03d2988c06c46427a01f5fe9483ffe5b8d71e4e655f632567e4097c9e71b86f",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo08_ship_old_outbound",
@@ -72,7 +135,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Aurora Seven automated distress message. Debris impact recorded. Power and life support compromised. Requesting assistance.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "ae6af8b705cf07447203a86a6d5d5b945a6a8cdb64b4620fef59cf71551117bb",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo08_ship_old_outbound.json",
+        "receipt_sha256": "a72801b47a91f42dbab81f204dea7baddd2b5b6131d9b42f245686eaef10283c",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo09_ship_buffer_diagnosis",
@@ -81,7 +153,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "ac013690c512d6824f0878590e3ba8b37f07a236c05d045a823404f760753e31",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo09_ship_buffer_diagnosis.json",
+        "receipt_sha256": "dd5f74b69a843aa1f21a46f3b107c5e4c285f5b6dae5e2a8e1a84e536b06d691",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo10_ship_transmission_sent",
@@ -90,7 +171,16 @@
       "voice": "Orus",
       "take": "clean-v3",
       "transcript": "Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "7cbd5994911e0ae98e21e94f122ccba39add81d0fe3847d848d1c2601c795969",
+      "generation_evidence": {
+        "origin_path": ".local/audio-generation-orus-v3/vo10_ship_transmission_sent.json",
+        "receipt_sha256": "38457c61502696463efb6f31beca32e72c7876c1ef4654d93625eadf4e117198",
+        "raw_take_archived_in_repository": false,
+        "note": "Local generation receipt and raw WAV independently hash-checked; existing Editor/SourceTakes contains older takes, not these Clean-v3 sources."
+      }
     },
     {
       "id": "vo11_mc_reply_received",
@@ -99,9 +189,99 @@
       "voice": "Orus",
       "take": "clean-v1-male-retained",
       "transcript": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
-      "note": "Clean take selected per user feedback. No heavy radio processing."
+      "note": "Clean take selected per user feedback. No heavy radio processing.",
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-tts"
     }
   ],
   "omitted": "vo12 new male take unavailable; existing female report take not selected",
-  "verification": "File hashes recorded; source clip import completed. Full integrated scene audition still required."
+  "verification": "All eleven listed live WAV hashes match. Ten Clean-v3 source/receipt hashes were also checked against local production records. Scene references checked statically by GUID; no new listening or native execution.",
+  "observed_scene_bindings": {
+    "scene": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+    "scene_sha256": "a84d66f2ac340a08a0eab6b003db6c17b7b192e8b136766d6fc5d4003c4e5ce5",
+    "revision": "568988b8ba6c833818dd371aad577daa01b8a4c8",
+    "method": "Read serialized cleanClip GUIDs; this is not a new playback/audibility test",
+    "bindings": [
+      {
+        "field": "recordedBriefing",
+        "cueId": "vo01_mc_briefing",
+        "guid": "c86bf0824ffd12a4faa14d0dfb8fcbe0",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo01_mc_briefing.wav",
+        "sha256": "bed6c6917ede299d0498e065aca9cee31fc18ef3e7f48d8f737562b10bca94a1",
+        "sceneLine": 23350
+      },
+      {
+        "field": "impactWarning",
+        "cueId": "vo02_ship_impact",
+        "guid": "82296db9ac1542b7be47d55e5ccb39b4",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Dramatic/02_natural_crisis.wav",
+        "sha256": "8928acd5e4e05cf77a04dd9709140351fef1e5d57ba7cb814b62f3b845daa261",
+        "sceneLine": 23357
+      },
+      {
+        "field": "houstonDistress",
+        "cueId": "houston_to_earth",
+        "guid": "52641712ba754a3590c9dd98cab507aa",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Dramatic/05_houston_to_earth.wav",
+        "sha256": "f779f1cb36ce12738906c4422d0ded52d762bb8240e4cc007a8ad1b84ae51376",
+        "sceneLine": 23364
+      },
+      {
+        "field": "powerRestored",
+        "cueId": "vo03_ship_power_restored",
+        "guid": "15abb20fd15c0684abc36d1b74cc6e3f",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo03_ship_power_restored.wav",
+        "sha256": "ab90b5504c3b2c8a5b1d49f143f019a2623259786aa1378ecc88ee32ea5ecd18",
+        "sceneLine": 23371
+      },
+      {
+        "field": "lifeSupportRestored",
+        "cueId": "vo04_ship_life_support_restored",
+        "guid": "817665d67f940ca419bb7f4448148553",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo04_ship_life_support_restored.wav",
+        "sha256": "65840aaf356e8c64045cccfa2a3b2783ccfb97c51c29a9782da3e0922b630858",
+        "sceneLine": 23377
+      },
+      {
+        "field": "outerHatchOpen",
+        "cueId": "vo06_ship_eva_exit",
+        "guid": "65c057e36bf956649a9d74bc6319e5fd",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo06_ship_eva_exit.wav",
+        "sha256": "321bca1217edd665a5f897069f0b7a08efa945c0b3e9ff09c552c467245fe06b",
+        "sceneLine": 23412
+      },
+      {
+        "field": "antennaRestored",
+        "cueId": "vo07_ship_antenna_restored",
+        "guid": "1d43376166d50564cbfd248f94bfdde3",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo07_ship_antenna_restored.wav",
+        "sha256": "489f795b6ffa044d946ef507c53b581a19661869c26dc9c0cac57036dbdd4d4d",
+        "sceneLine": 23384
+      },
+      {
+        "field": "falseSignal",
+        "cueId": "vo09_ship_buffer_diagnosis",
+        "guid": "d6fe8faf4c80afe47880c9af8c4d4136",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo09_ship_buffer_diagnosis.wav",
+        "sha256": "bf68e7463988fe81e18abd4b82e884e96d60e1a0970b2d975344b487f130fb8e",
+        "sceneLine": 23391
+      },
+      {
+        "field": "transmissionSent",
+        "cueId": "vo10_ship_transmission_sent",
+        "guid": "e1e5cd001a78cb448ac5489bab3c15c9",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo10_ship_transmission_sent.wav",
+        "sha256": "8f82d06145f72df2b0a8c2bf542f0747e0346fe149f57244468c838fb9eaedb4",
+        "sceneLine": 23398
+      },
+      {
+        "field": "earthReply",
+        "cueId": "vo11_mc_reply_received",
+        "guid": "44f2fa12c778414b8b595d7cf1bf14f0",
+        "asset": "Assets/_OutOfReach/Audio/Voices/Dramatic/03_exhaustion_relief.wav",
+        "sha256": "121b95bc12f30eb4e094dc164cb3a02347668a6bbf0019eb3d431261a6664c07",
+        "sceneLine": 23405
+      }
+    ]
+  }
 }

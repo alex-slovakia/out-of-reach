@@ -41,7 +41,7 @@
   "correction": "NONE; geometric simultaneous state vectors",
   "speed_of_light_km_per_second": 299792.458,
   "derivation": "distance=sqrt(x*x+y*y+z*z); one_way=distance/c; minimum_round_trip=2*one_way",
-  "runtime_status": "Reference snapshot only; integration into the playable game is pending the Claude communications task",
+  "runtime_status": "Integrated offline: Scripts/Simulation/HorizonsEarthMars2026Snapshot.cs embeds this normalized CSV byte-for-byte; EarthMarsReference/CommunicationSystem consume it. The range is a documented fictional Mars-vicinity proxy, not AURORA-7 telemetry. Current source audit verified hashes and embedded rows; native evidence is recorded separately.",
   "scenario_assumption": "Mars center is a transparent distance proxy for a fictional Mars-vicinity spacecraft, not a calculated spacecraft trajectory.",
   "round_trip_limitation": "Twice the frozen-epoch geometric delay; excludes body motion during propagation, ground processing, scheduling, occultation and RF link budget."
 }

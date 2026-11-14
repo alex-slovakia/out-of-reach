@@ -1,0 +1,441 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "vo01_mc_briefing selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo01_mc_briefing clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo02_ship_impact selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo02_ship_impact clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo03_ship_power_restored selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo03_ship_power_restored clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo04_ship_life_support_restored selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo04_ship_life_support_restored clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo05_ship_eva_prepare selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo05_ship_eva_prepare clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo06_ship_eva_exit selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo06_ship_eva_exit clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo07_ship_antenna_restored selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo07_ship_antenna_restored clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo08_ship_old_outbound selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo08_ship_old_outbound clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo09_ship_buffer_diagnosis selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo09_ship_buffer_diagnosis clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo10_ship_transmission_sent selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo10_ship_transmission_sent clean-v3 master/source/receipt chain",
+      "pass": true
+    },
+    {
+      "name": "vo11_mc_reply_received selected live hash",
+      "pass": true
+    },
+    {
+      "name": "vo11_mc_reply_received retained original provenance",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo01_mc_briefing.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo01_mc_briefing.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo02_ship_impact.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo02_ship_impact.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo03_ship_power_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo03_ship_power_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo04_ship_life_support_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo04_ship_life_support_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo05_ship_eva_prepare.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo05_ship_eva_prepare.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo06_ship_eva_exit.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo06_ship_eva_exit.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo07_ship_antenna_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo07_ship_antenna_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo08_ship_old_outbound.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo08_ship_old_outbound.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo09_ship_buffer_diagnosis.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo09_ship_buffer_diagnosis.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo10_ship_transmission_sent.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo10_ship_transmission_sent.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo11_mc_reply_received.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo11_mc_reply_received.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo12_ship_report_log.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Clean/vo12_ship_report_log.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo01_mc_briefing.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo01_mc_briefing.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo02_ship_impact.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo02_ship_impact.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo03_ship_power_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo03_ship_power_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo04_ship_life_support_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo04_ship_life_support_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo05_ship_eva_prepare.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo05_ship_eva_prepare.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo06_ship_eva_exit.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo06_ship_eva_exit.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo07_ship_antenna_restored.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo07_ship_antenna_restored.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo08_ship_old_outbound.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo08_ship_old_outbound.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo09_ship_buffer_diagnosis.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo09_ship_buffer_diagnosis.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo10_ship_transmission_sent.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo10_ship_transmission_sent.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo11_mc_reply_received.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo11_mc_reply_received.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo12_ship_report_log.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "Voices/Radio/vo12_ship_report_log.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/comms_loss.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/comms_loss.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/planning_tick.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/planning_tick.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/planning_urgent.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/planning_urgent.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/power_down.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/power_down.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/ui_confirm.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/ui_confirm.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/ui_select.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/ui_select.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "SFX/warning_pulse.wav corrected manifest SHA",
+      "pass": true
+    },
+    {
+      "name": "SFX/warning_pulse.wav PCM format/duration",
+      "pass": true
+    },
+    {
+      "name": "recordedBriefing saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "impactWarning saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "houstonDistress saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "powerRestored saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "lifeSupportRestored saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "outerHatchOpen saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "antennaRestored saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "falseSignal saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "transmissionSent saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "earthReply saved scene binding exists",
+      "pass": true
+    },
+    {
+      "name": "02_natural_crisis dramatic source/output chain",
+      "pass": true
+    },
+    {
+      "name": "03_exhaustion_relief dramatic source/output chain",
+      "pass": true
+    },
+    {
+      "name": "05_houston_to_earth dramatic source/output chain",
+      "pass": true
+    },
+    {
+      "name": "GMAT Front actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "GMAT Back actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "GMAT Left actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "GMAT Right actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "GMAT Up actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "GMAT Down actual texture hash and material GUID",
+      "pass": true
+    },
+    {
+      "name": "docs/data/gmat-starfield-v01/gmat-stars.raw.txt hash",
+      "pass": true
+    },
+    {
+      "name": "docs/data/gmat-starfield-v01/gmat-stars.json hash",
+      "pass": true
+    },
+    {
+      "name": "Assets/StreamingAssets/ThirdParty/NASA-GMAT/LICENSE.txt hash",
+      "pass": true
+    },
+    {
+      "name": "Horizons raw bytes",
+      "pass": true
+    },
+    {
+      "name": "Horizons normalized bytes",
+      "pass": true
+    },
+    {
+      "name": "Horizons embedded runtime CSV equals canonical snapshot",
+      "pass": true
+    }
+  ]
+}

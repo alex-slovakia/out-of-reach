@@ -2,7 +2,15 @@
 
 Owner: Codex. Branch: `feature/visuals-cinematics`. Task: V02 audio preparation. No gameplay playback wiring is included in this checkpoint.
 
-## Delivered assets
+## Current selected assets - provenance correction, 14 November 2026
+
+The production checkpoint below is historical. Clean `vo01`-`vo10` were subsequently replaced by approved **Orus Clean-v3** masters. Their local generation receipts and finished-master hashes identify **`gemini-3.8-flash-lite-tts`**; `clean-runtime-selection.json` now records that evidence. These are different raw takes from the original `Editor/SourceTakes` recordings. The ten replacement raw WAVs/receipts remain local production artifacts (`.local/audio-generation-orus-v3/`), not a committed source archive. The corrected per-file entries in `audio-manifest.json` identify the actual current files; its top-level original processor/import/ASR results do not certify the replacements.
+
+The observed saved Bootstrap binds seven Clean-v3 cues (`vo01`, `vo03`, `vo04`, `vo06`, `vo07`, `vo09`, `vo10`) and three approved Dramatic Orus clips: `02_natural_crisis`, `03_exhaustion_relief`, `05_houston_to_earth`. Their own `Voices/Dramatic/voice-manifest.json` records matching generation evidence for the same flash-lite model. The retained Clean `vo11` is an older Orus master (`gemini-3.8-flash-tts`); it is available but the current reply binding uses Dramatic `03`. Clean `vo12` is an unselected older Kore report take. Radio variants and original archived takes retain their earlier provenance. Exact scene field/GUID/hash mapping is in `clean-runtime-selection.json`; it is static binding evidence, not a new listening test.
+
+Voice model names here are the recorded generation-request identifiers, not an independent provider/version certification. All current scene-bound dialogue is synthetic Orus speech, not NASA mission audio, Retellai or Charon. Credits for that selection can say: **"Original dialogue and sound design: OUT OF REACH. Synthetic dialogue: Google Gemini TTS, Orus."** Include Kore when crediting the older available production library. Preserve the permitted-use basis below; no CC0 claim or expanded license is made by this correction.
+
+## Original delivered assets
 
 - `Audio/Voices/Clean/`: twelve dry, normalized voice masters.
 - `Audio/Voices/Radio/`: twelve finished radio variants. Mission Control uses a stronger receiver filter; onboard speech uses a wider, clearer cabin band.
@@ -27,7 +35,7 @@ With the already-installed Python/numpy and ffmpeg, run from the repository root
 python Assets/_OutOfReach/Audio/Production/finish_audio.py
 ```
 
-This makes no network requests and writes only to ignored `.local/audio-rebuild`. It preserves source recordings and does not overwrite committed clips. Compare rebuilt WAV SHA-256 values with `audio-manifest.json` before deliberately replacing production assets. The processor records its original and rebuild source hashes; byte-exact waveform reproduction is verified on the recorded ffmpeg version, not promised for every future tool version.
+This makes no network requests and writes only to ignored `.local/audio-rebuild`. It preserves source recordings and does not overwrite committed clips. The original rebuild reproduces the original production pass, not the later Clean-v3 replacements. Compare each clip with its matching processor/source record in `audio-manifest.json` before deliberately replacing production assets. The processor records its original and rebuild source hashes; byte-exact waveform reproduction is verified on the recorded ffmpeg version, not promised for every future tool version.
 
 Automated source review checked all twelve takes with a locally cached speech-recognition model. Eleven matched normalized words exactly. The remaining take was transcribed as `PowerFault` instead of `Power fault` by two local models, with all following words matching. Both Mission Control radio variants independently matched every normalized word, including "Rescue is not yet confirmed." Evidence is in `asr-review.json`. This is not a claim of human listening approval, tone quality or perfect pronunciation.
 

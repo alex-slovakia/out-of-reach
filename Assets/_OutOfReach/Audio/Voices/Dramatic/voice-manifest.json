@@ -6,7 +6,18 @@
       "voice": "Orus",
       "human_listening_accepted": true,
       "sha256": "8928acd5e4e05cf77a04dd9709140351fef1e5d57ba7cb814b62f3b845daa261",
-      "source": "Google Gemini TTS"
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "1d8ec61b722800f20934fb2dda532952a16fea758c7255e1bce3911137fd2efe",
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "duration_seconds": 8.06,
+      "generation_evidence": {
+        "origin_path": ".local/verification/DramaticVoiceV01/source/02_natural_crisis.json",
+        "receipt_sha256": "909862f806dbad69374292378ca68ca590efd60b9ece91eeb96a9e6c0d3bfcaa",
+        "raw_take_archived_in_repository": false
+      }
     },
     {
       "clip": "03_exhaustion_relief",
@@ -14,7 +25,18 @@
       "voice": "Orus",
       "human_listening_accepted": true,
       "sha256": "121b95bc12f30eb4e094dc164cb3a02347668a6bbf0019eb3d431261a6664c07",
-      "source": "Google Gemini TTS"
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "96873779c1d7a71d8fe58012c7ecdbfe298f47dcffae173cd4f9afa5e679e14c",
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "duration_seconds": 12.66,
+      "generation_evidence": {
+        "origin_path": ".local/verification/DramaticVoiceV01/source/03_exhaustion_relief.json",
+        "receipt_sha256": "09e2ac775c2f90ae636974eb22e8b3e3b451cb87dbe58bece4edcd32502c768b",
+        "raw_take_archived_in_repository": false
+      }
     },
     {
       "clip": "05_houston_to_earth",
@@ -22,7 +44,18 @@
       "voice": "Orus",
       "human_listening_accepted": true,
       "sha256": "f779f1cb36ce12738906c4422d0ded52d762bb8240e4cc007a8ad1b84ae51376",
-      "source": "Google Gemini TTS"
+      "source": "Google Gemini TTS",
+      "model": "gemini-3.8-flash-lite-tts",
+      "source_sha256": "6d77817489237bcddfdea42162f094a03d3e4579202632373ef863975c924a99",
+      "sample_rate_hz": 24000,
+      "channels": 1,
+      "bits_per_sample": 16,
+      "duration_seconds": 10.34,
+      "generation_evidence": {
+        "origin_path": ".local/verification/HoustonCharacterVoiceV02/source/05_houston_to_earth.json",
+        "receipt_sha256": "51e14204c5c4082c07eb71c06f8eff31d4bf89b6911a752cac3e8cbf6342b026",
+        "raw_take_archived_in_repository": false
+      }
     }
   ],
   "format": 1,

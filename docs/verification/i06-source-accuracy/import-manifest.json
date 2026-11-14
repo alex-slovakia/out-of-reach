@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "path": "Assets/_OutOfReach/Audio/Production/clean-runtime-selection.json",
+      "baseSha256": "453738c33c7b3e0c699cb8dbd44ab2ab528056735dd38461f9b9231dc9365c9f",
+      "sha256": "8fc4f2a87384b4e80a7cf62f07659b611a4d659f305df5dc70a345eb0e1f67c4",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "Assets/_OutOfReach/Audio/Production/audio-manifest.json",
+      "baseSha256": "e301bd3d461832cd5b044104d94a744d641ee5f81725da89c676ed426c20645c",
+      "sha256": "94bac901a3cdeb8b7d091a74bd3f2004f284494e6553f0ce0eb5b6bd861f7abc",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "Assets/_OutOfReach/Audio/Voices/Dramatic/voice-manifest.json",
+      "baseSha256": "f252be5c7e0543c80de19f6ec9aad87a2150e02743213a212ec0a252ece78a34",
+      "sha256": "b305e729e2c1e5f03b3d0e0601cfc078d87122192fc5f2e10aae17b80bcc0005",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "docs/data/horizons/manifest.json",
+      "baseSha256": "17e0e91d2709a75914483ebef292aa0354d06fb9e964629b8e291001bd2b11a5",
+      "sha256": "7e62033425d43eb59d9e7551b51ca7f61d35a6c53cf4ac479ea5cda754f54789",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "Assets/_OutOfReach/Audio/Production/AUDIO_HANDOFF.md",
+      "baseSha256": "13c50ec4901a244e7e9fd40f7795e0fcdaa7a8b3d4fbd42c03bfb6a1be765a16",
+      "sha256": "9f6d360ef25eb8273a8e2b91271786f975ca35c14bb55f6f86f9db6d2686cda6",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Space/STARFIELD_PROVENANCE.md",
+      "baseSha256": "79ad8c8f18fa801ab21726a4f51700bfdc26c06d37ad0811c96a19afcce89af7",
+      "sha256": "4f2f5d22c89eac46386fc9e0cdfa2b0d8ec412d04d60ab55a0b4e1f070e69a11",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "Assets/StreamingAssets/ThirdParty/NASA-GMAT/NOTICE.txt",
+      "baseSha256": "4e529043da149b2f47b11d3886f24cb08b2a51aa10daa4cee2dd5004da519b09",
+      "sha256": "cc068ee858b8e7002f64fc2c6b4f23ea06e69750a44504ebab5f9a6a5c660298",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "docs/C06-REST-RECOVERY-CONTRACT.md",
+      "baseSha256": "414fc4760b9f471518d3502928dc8a3ac98c09ba7c23deeda8c7669eb93f6cba",
+      "sha256": "5ffddd379620b9de0aaea31f85be24523d659670ede6452d454705889c78f057",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    },
+    {
+      "path": "NASA-DATA.md",
+      "baseSha256": "6d6cf1bf21e2fe08fd9c88988344f0ed48adb12fa3e185cb653b48cc29d0d240",
+      "sha256": "0db975433b151e46c3436f42652c45838e83180c334b96c9a294d777196c5bed",
+      "operation": "replace-document-only",
+      "metaChanged": false
+    }
+  ],
+  "task": "SOURCES-ACCURACY-01",
+  "scope": "Existing provenance documents/manifests only; staged replacements; no audio, textures, Core, code, importers or meta changed",
+  "evidence": "Evidence/audit.json and Evidence/checks.json",
+  "nativeExecution": false,
+  "networkUsed": false
+}
