@@ -1,0 +1,239 @@
+PASS Saved Bootstrap is the active full-mission scene.
+PASS All eight authored mission targets are bound.
+PASS Two authoritative gates and a valid real tether route are bound.
+PASS One active camera, listener and authoritative runtime in the full scene.
+PASS Actual player Input System and runtime frame stepping remain in use.
+PASS Inner physical gate agrees with authoritative airlock passability=True.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+PASS Actual UI Practice selected.
+PASS Seven actual catalog controls and a valid success loadout.
+PASS Success loadout covers all three authoritative repair costs.
+ScreenCapture produced no image for 01-success-planning within 2 s; real-camera/UIDocument target follows.
+PASS Capture 01-success-planning uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Actual UI launch releases player into Intro.
+QA TELEPORT: feet (0, 0.05, 3.2), yaw 0, to isolate actual WASD movement. Not a walked route.
+Movement probe before W: keyboard=1 added=True enabled=True rawW=False actionEnabled=True Move=(0.0000, 0.0000) activeControl= boundQaW=True gate=True bodyEnabled=True collision=None dt=0.000702 unscaledDt=0.000702 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(0.0000, 0.0498, 3.2000) yaw=0.000
+Movement probe during W: keyboard=1 added=True enabled=True rawW=True actionEnabled=True Move=(0.0000, 1.0000) activeControl=/I02 QA keyboard/w boundQaW=True gate=True bodyEnabled=True collision=None dt=0.014832 unscaledDt=0.014832 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(0.0000, 0.0454, 3.2511) yaw=0.000
+Real W observed for 869 frames / 0.4001 controller seconds.
+Movement probe after W: travel=(0.0000, -0.0198, 1.0001) expectedForward=1.0001 controllerFrameSeconds=0.4001 | keyboard=1 added=True enabled=True rawW=False actionEnabled=True Move=(0.0000, 0.0000) activeControl= boundQaW=True gate=True bodyEnabled=True collision=Below dt=0.000594 unscaledDt=0.000594 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(0.0000, 0.0300, 4.2001) yaw=0.000
+PASS Injected W moves the actual CharacterController at its configured speed over measured controller frame time. Actual=(0.0000, -0.0198, 1.0001) expectedForward=1.0001
+QA TELEPORT: feet (0, 0.05, 3.2), yaw 90, to test the existing corridor wall. Not a walked route.
+Movement probe during W: keyboard=1 added=True enabled=True rawW=True actionEnabled=True Move=(0.0000, 1.0000) activeControl=/I02 QA keyboard/w boundQaW=True gate=True bodyEnabled=True collision=None dt=0.000499 unscaledDt=0.000499 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(0.0025, 0.0498, 3.2000) yaw=90.000
+Real W observed for 2958 frames / 1.8000 controller seconds.
+Wall probe: distance=2.0787 sideContact=True controllerFrameSeconds=1.8000 | keyboard=1 added=True enabled=True rawW=False actionEnabled=True Move=(0.0000, 0.0000) activeControl= boundQaW=True gate=True bodyEnabled=True collision=Below dt=0.000546 unscaledDt=0.000546 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(2.0700, 0.0300, 3.3900) yaw=90.000
+PASS Real movement meets an existing scene wall and is stopped by CharacterController collision.
+QA TELEPORT inside cabin: cockpit-console feet=(0.00, 0.05, -0.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses cockpit-console through its authored collider.
+PASS Cockpit systems check uses real E / resolver once; result=True: Cockpit check complete. Impact detected.
+PASS Actual cockpit command applies the accident and locks controls for its bound cinematic.
+Actual bound impact duration=7.6 real seconds; no short hard-coded cinematic completion.
+PASS Impact has one actual request and its matching presentation acknowledgement.
+PASS Actual acknowledged impact enters Emergency and restores input without timeout.
+PASS Impact camera offset returns to its actual resting pose.
+QA TELEPORT inside cabin: repair-power feet=(0.00, 0.05, 6.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses repair-power through its authored collider.
+PASS Actual Power repair is available before use.
+QA accounting window: suspended MissionRuntime.Update stepping around injected E for Power; no resources or outcomes assigned.
+PASS Injected E performs the real Power repair once.
+PASS Power exact OxygenKg debit equals its authoritative repair cost (0).
+PASS Power exact WaterLitres debit equals its authoritative repair cost (0).
+PASS Power exact FoodKg debit equals its authoritative repair cost (0).
+PASS Power exact BatteryKWh debit equals its authoritative repair cost (0).
+PASS Power exact SparePartsCount debit equals its authoritative repair cost (2).
+PASS Repair does not invent an immediate CO2 change.
+PASS Repeated Power interaction is rejected without a second debit.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+QA TELEPORT inside cabin: repair-life-support feet=(0.00, 0.05, 8.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses repair-life-support through its authored collider.
+PASS Actual LifeSupport repair is available before use.
+QA accounting window: suspended MissionRuntime.Update stepping around injected E for LifeSupport; no resources or outcomes assigned.
+PASS Injected E performs the real LifeSupport repair once.
+PASS LifeSupport exact OxygenKg debit equals its authoritative repair cost (0).
+PASS LifeSupport exact WaterLitres debit equals its authoritative repair cost (0).
+PASS LifeSupport exact FoodKg debit equals its authoritative repair cost (0).
+PASS LifeSupport exact BatteryKWh debit equals its authoritative repair cost (1).
+PASS LifeSupport exact SparePartsCount debit equals its authoritative repair cost (2).
+PASS Repair does not invent an immediate CO2 change.
+PASS Repeated LifeSupport interaction is rejected without a second debit.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+PASS Actual power and life support repaired; mission remains viable.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+ScreenCapture produced no image for 02-interior-restored within 2 s; real-camera/UIDocument target follows.
+PASS Capture 02-interior-restored uses the existing actual camera and actual UIDocument at 1280x720.
+QA TELEPORT inside cabin: eva-exit feet=(0.00, 0.05, 19.80). Not a walked navigation route.
+PASS Actual raycast resolver focuses eva-exit through its authored collider.
+PASS Unsuited exit uses real E / resolver once; result=False: A sealed suit and a depressurized airlock are required to go outside.
+PASS Unsuited exit is rejected without resource charge or outside-state change.
+PASS Inner physical gate agrees with authoritative airlock passability=True.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+QA TELEPORT inside cabin: suit-locker feet=(0.20, 0.05, 19.00). Not a walked navigation route.
+PASS Actual raycast resolver focuses suit-locker through its authored collider.
+ACTUAL CORE TIME JUMP: suit prompt='Put on EVA suit: 0.84 kg oxygen, 2 h 20 min of preparation.'; preparation=8400 simulated seconds.
+PASS Suit preparation uses real E / resolver once; result=True: EVA suit on. Tank: 0.3 kg oxygen.
+PASS Actual suit command advances the disclosed preparation interval through the Core model.
+PASS Actual suit is on once and remains unsealed inside the pressurized cabin.
+PASS Core charged suit purge/tank oxygen plus modeled preparation consumption.
+PASS Repeated suit preparation uses real E / resolver once; result=False: The EVA suit is already on.
+PASS Repeated suit action cannot charge twice.
+QA TELEPORT inside cabin: airlock-controls feet=(-0.20, 0.05, 19.00). Not a walked navigation route.
+PASS Actual raycast resolver focuses airlock-controls through its authored collider.
+PASS Depressurize airlock uses real E / resolver once; result=True: Inner hatch sealed. Depressurizing.
+PASS Airlock command seals suit/inner hatch and starts actual EVA depressurization.
+PASS Actual airlock loss and pump energy are charged exactly once.
+PASS Inner physical gate agrees with authoritative airlock passability=False.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+PASS Depressurization awaited actual clock advancement; no QA time advancement.
+QA TELEPORT inside cabin: eva-exit feet=(0.00, 0.05, 19.80). Not a walked navigation route.
+PASS Actual raycast resolver focuses eva-exit through its authored collider.
+PASS Clip tether and exit uses real E / resolver once; result=True: Outside on the tether.
+PASS Actual exit command sets outside state and runtime attaches the real constrained route.
+PASS Actual tether traversal disables cabin walking physics.
+PASS Inner physical gate agrees with authoritative airlock passability=False.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+ScreenCapture produced no image for 03-eva-start within 2 s; real-camera/UIDocument target follows.
+PASS Capture 03-eva-start uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Route traversal starts from actual outside/tether state.
+QA AIM ONLY: steering view toward actual authored tether stations; traversal uses real W. No route teleport/outside-state assignment.
+PASS Real constrained input traverses the route to the antenna station.
+PASS Actual suit oxygen remains positive after traversal.
+QA AIM ONLY: pushing W beyond the actual route end and sideways to verify tether constraint. Direction=(-0.27, 0.00, -0.96); no position or outside-state assignment. Derived from last segment; world +X can point back along a bent route.
+Movement probe during W: keyboard=1 added=True enabled=True rawW=True actionEnabled=True Move=(0.0000, 1.0000) activeControl=/I02 QA keyboard/w boundQaW=True gate=True bodyEnabled=False collision=None dt=0.001050 unscaledDt=0.001050 timeScale=1.000 updateMode=ProcessEventsInDynamicUpdate inputUpdate=Dynamic feet=(3.9904, 0.9001, 14.1699) yaw=230.526
+Real W observed for 2078 frames / 0.8003 controller seconds.
+PASS Real outward input is clamped to the authored tether corridor/end.
+PASS Actual raycast resolver focuses repair-antenna through its authored collider.
+PASS Actual Antenna repair is available before use.
+QA accounting window: suspended MissionRuntime.Update stepping around injected E for Antenna; no resources or outcomes assigned.
+PASS Injected E performs the real Antenna repair once.
+PASS Antenna exact OxygenKg debit equals its authoritative repair cost (0).
+PASS Antenna exact WaterLitres debit equals its authoritative repair cost (0).
+PASS Antenna exact FoodKg debit equals its authoritative repair cost (0).
+PASS Antenna exact BatteryKWh debit equals its authoritative repair cost (0.5).
+PASS Antenna exact SparePartsCount debit equals its authoritative repair cost (3).
+PASS Repair does not invent an immediate CO2 change.
+PASS Repeated Antenna interaction is rejected without a second debit.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+PASS Actual antenna repair succeeds once while outside.
+ScreenCapture produced no image for 04-antenna-restored within 2 s; real-camera/UIDocument target follows.
+PASS Capture 04-antenna-restored uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Route traversal starts from actual outside/tether state.
+QA AIM ONLY: steering view toward actual authored tether stations; traversal uses real W. No route teleport/outside-state assignment.
+PASS Real constrained input traverses back to the return station.
+PASS Actual suit oxygen remains positive after traversal.
+PASS Actual raycast resolver focuses eva-return through its authored collider.
+PASS Return to airlock uses real E / resolver once; result=True: Inside the airlock.
+PASS Actual return command restores cabin walking at authored reentry.
+PASS Return action has no resource charge.
+QA TELEPORT inside cabin: airlock-controls feet=(-0.20, 0.05, 19.00). Not a walked navigation route.
+PASS Repressurize airlock uses real E / resolver once; result=True: Outer hatch closed. Repressurizing.
+PASS Actual repressurization started.
+PASS Inner physical gate agrees with authoritative airlock passability=False.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+PASS Repressurization awaited the actual remaining simulation interval.
+PASS Complete actual EVA returns to Transmission with suit released.
+PASS Inner physical gate agrees with authoritative airlock passability=True.
+PASS Outer physical gate remains closed to walking; only actual EVA commands cross it.
+QA TELEPORT inside cabin: cockpit-console feet=(0.00, 0.05, -0.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses cockpit-console through its authored collider.
+PASS Local replay diagnostic uses real E / resolver once; result=True: Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+PASS Diagnostic requests the local false-signal beat without transmitting or fabricating an Earth reply.
+PASS FalseSignal has one actual request and its matching presentation acknowledgement.
+PASS Local replay is not a received Earth reply.
+PASS Transmit distress signal uses real E / resolver once; result=True: Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+PASS Actual console command sends one distress transmission.
+PASS Actual reply due time equals outbound light time + ground processing + inbound light time.
+PASS Actual communication uses the packaged 32-row NASA reference dataset.
+PASS Repeated transmission uses real E / resolver once; result=False: The distress call is on its way. Earliest reply in 31 min 57 s.
+PASS Repeated transmission neither charges again nor resets the reply due time.
+ScreenCapture produced no image for 05-awaiting-earth-reply within 2 s; real-camera/UIDocument target follows.
+PASS Capture 05-awaiting-earth-reply uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Reply arrives no earlier than the complete modeled round trip and processing delay.
+PASS Reply waited through real runtime frames at the displayed scale; no fast-forward command used.
+PASS CommunicationRestored has one actual request and its matching presentation acknowledgement.
+PASS EndingPullback has one actual request and its matching presentation acknowledgement.
+PASS All success cinematic acknowledgements matched exactly once.
+PASS Actual final report outcome=RecoveryPossible.
+PASS Actual report includes mission design, resources, systems, communications and separate science/source/fiction/pacing sections.
+PASS Actual report carries the NASA dataset hash and 32-sample provenance.
+PASS Composition displays the actual final report and its real restart action.
+ScreenCapture produced no image for 06-success-report within 2 s; real-camera/UIDocument target follows.
+PASS Capture 06-success-report uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Actual report restart disposes old state and opens a fresh planning mode choice.
+PASS Restart preserves one active camera and listener.
+PASS Actual planner UI makes a valid low-parts loadout with one repair kit.
+PASS Low-parts loadout covers interior repairs but leaves no antenna parts.
+QA TELEPORT inside cabin: cockpit-console feet=(0.00, 0.05, -0.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses cockpit-console through its authored collider.
+PASS Cockpit systems check uses real E / resolver once; result=True: Cockpit check complete. Impact detected.
+PASS Actual cockpit command applies the accident and locks controls for its bound cinematic.
+Actual bound impact duration=7.6 real seconds; no short hard-coded cinematic completion.
+PASS Impact has one actual request and its matching presentation acknowledgement.
+PASS Actual acknowledged impact enters Emergency and restores input without timeout.
+PASS Impact camera offset returns to its actual resting pose.
+QA TELEPORT inside cabin: repair-power feet=(0.00, 0.05, 6.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses repair-power through its authored collider.
+PASS Actual Power repair is available before use.
+QA accounting window: suspended MissionRuntime.Update stepping around injected E for Power; no resources or outcomes assigned.
+PASS Injected E performs the real Power repair once.
+PASS Power exact OxygenKg debit equals its authoritative repair cost (0).
+PASS Power exact WaterLitres debit equals its authoritative repair cost (0).
+PASS Power exact FoodKg debit equals its authoritative repair cost (0).
+PASS Power exact BatteryKWh debit equals its authoritative repair cost (0).
+PASS Power exact SparePartsCount debit equals its authoritative repair cost (2).
+PASS Repair does not invent an immediate CO2 change.
+PASS Repeated Power interaction is rejected without a second debit.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+QA TELEPORT inside cabin: repair-life-support feet=(0.00, 0.05, 8.10). Not a walked navigation route.
+PASS Actual raycast resolver focuses repair-life-support through its authored collider.
+PASS Actual LifeSupport repair is available before use.
+QA accounting window: suspended MissionRuntime.Update stepping around injected E for LifeSupport; no resources or outcomes assigned.
+PASS Injected E performs the real LifeSupport repair once.
+PASS LifeSupport exact OxygenKg debit equals its authoritative repair cost (0).
+PASS LifeSupport exact WaterLitres debit equals its authoritative repair cost (0).
+PASS LifeSupport exact FoodKg debit equals its authoritative repair cost (0).
+PASS LifeSupport exact BatteryKWh debit equals its authoritative repair cost (1).
+PASS LifeSupport exact SparePartsCount debit equals its authoritative repair cost (2).
+PASS Repair does not invent an immediate CO2 change.
+PASS HUD resource-0 agrees with the current authoritative snapshot.
+PASS HUD resource-1 agrees with the current authoritative snapshot.
+PASS HUD resource-2 agrees with the current authoritative snapshot.
+PASS HUD resource-3 agrees with the current authoritative snapshot.
+PASS HUD resource-4 agrees with the current authoritative snapshot.
+PASS HUD resource-5 agrees with the current authoritative snapshot.
+PASS Core decides objective loss after actual repairs exhaust antenna parts; no state mutation by QA.
+PASS EndingPullback has one actual request and its matching presentation acknowledgement.
+PASS Actual final report outcome=Lost.
+PASS Actual report includes mission design, resources, systems, communications and separate science/source/fiction/pacing sections.
+PASS Actual report carries the NASA dataset hash and 32-sample provenance.
+PASS Composition displays the actual final report and its real restart action.
+PASS Loss report explains the actual antenna-parts decision.
+ScreenCapture produced no image for 07-objective-loss-report within 2 s; real-camera/UIDocument target follows.
+PASS Capture 07-objective-loss-report uses the existing actual camera and actual UIDocument at 1280x720.
+PASS Actual report restart disposes old state and opens a fresh planning mode choice.
+PASS Restart preserves one active camera and listener.
+PASS Report restart returns a fresh Planning session without a stale report or outside state.
+PASS No game runtime Error/Exception/Assert during the full success and loss smoke passes.

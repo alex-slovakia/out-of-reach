@@ -1,0 +1,7 @@
+01-success-planning-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Planning
+02-interior-restored-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Repair
+03-eva-start-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Eva
+04-antenna-restored-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Eva
+05-awaiting-earth-reply-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Transmission
+06-success-report-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Report
+07-objective-loss-report-1280.png | 1280x720 | Existing scene camera + actual UIDocument shared target; excludes UGUI (outside impact only) | Report
