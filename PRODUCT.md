@@ -1,5 +1,9 @@
 # Product: OUT OF REACH
 
+## User-approved extension, November 14 afternoon
+
+The latest user playtest changes the desired ending: restored contact becomes the midpoint, followed by bounded food/water/oxygen survival, actual rations, one crafted growing module, then a time-separated rescue and departure-for-Mars cinematic (or survival failure). This supersedes the earlier final-report endpoint as the final product target. The existing contact-restored slice remains the tested checkpoint while the extension is implemented. No instant crops, instant rescue or unaccounted time skips. Exact requested changes and delivery distinctions: [live playtest record](docs/PLAYER-FEEDBACK-2026-11-14.md).
+
 ## Player promise
 
 You planned AURORA-7's mission. After a debris strike damages its systems, the equipment and reserves you selected determine your options. Alone in a small spacecraft, you stabilize life support, repair an exterior antenna, and survive long enough for Earth to respond.

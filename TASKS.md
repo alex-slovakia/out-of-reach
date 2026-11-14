@@ -1,5 +1,11 @@
 # Execution plan and status
 
+## Current verified checkpoint — November14,15:37CET
+
+Runtime `375c535`: physical C05 cargo integrated with Claude ship/gloves/GMAT stars and continuous EVA fix3bde63b. Root ran273 scripted complete-mission checks (success/loss/restart) and25PlayMode tests; repository/NASA checks pass. [Evidence and limits](docs/verification/i04-375c535/README.md). Windows build and second-machine sync are not verified for I04. Later tables are historical checkpoints, not current completion claims.
+
+Current writers: Codex integrates approved icon/bar HUD, cinematic grade, countdown audio and two-hand crate carry; Claude owns gameplay. Claude's latest sprint status is NOT STARTED awaiting Apoliak's go. Stamina and the new post-contact survival/rescue chapter are requested, not implemented. [Exact playtest requirements](docs/PLAYER-FEEDBACK-2026-11-14.md) and [approved visual target](docs/art-direction/approved-hud-02/README.md). Fresh Unity verification is required for changes after375c535.
+
 **Deadline:** November 15, 2026, 23:59 in the team creator's local timezone. Confirm that timezone. Suggested internal release cutoff: at least two hours earlier. All team planning below uses Europe/Bratislava unless explicitly labeled otherwise.
 
 Status vocabulary: `in progress`, `ready`, `blocked`, `not started`, `verified`. An artifact existing is not proof that its tests pass.

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="25" result="Passed" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.3369638">
+  <test-suite type="TestSuite" id="1039" name="OUT-OF-REACH-NASA-HACKATHON" fullname="OUT-OF-REACH-NASA-HACKATHON" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.336964" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1032" name="OutOfReach.Tests.PlayMode.dll" fullname="C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration/Library/ScriptAssemblies/OutOfReach.Tests.PlayMode.dll" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.325794" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="43400" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1033" name="OutOfReach" fullname="OutOfReach" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.324896" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1034" name="Tests" fullname="OutOfReach.Tests" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.324536" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1035" name="PlayMode" fullname="OutOfReach.Tests.PlayMode" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:59Z" duration="1.324187" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="EvaPlayTests" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:58Z" duration="0.584655" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="FullEva_ThroughInteractions_RepairsTheAntenna_AndReturnsToCabinAir" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests.FullEva_ThroughInteractions_RepairsTheAntenna_AndReturnsToCabinAir" methodname="FullEva_ThroughInteractions_RepairsTheAntenna_AndReturnsToCabinAir" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" seed="1937005330" result="Passed" start-time="2026-11-14 14:27:57Z" end-time="2026-11-14 14:27:58Z" duration="0.390201" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="GoingOutside_IsRefused_WithoutTheSuitAndTheAirlockCycle" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests.GoingOutside_IsRefused_WithoutTheSuitAndTheAirlockCycle" methodname="GoingOutside_IsRefused_WithoutTheSuitAndTheAirlockCycle" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" seed="575629561" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.007922" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="InnerGate_FollowsTheAirlock_AndTheOuterHatchIsNeverWalkable" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests.InnerGate_FollowsTheAirlock_AndTheOuterHatchIsNeverWalkable" methodname="InnerGate_FollowsTheAirlock_AndTheOuterHatchIsNeverWalkable" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" seed="105710206" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.133666" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="Restart_WhileOutside_PutsThePlayerBackAtTheSpawn_Walking" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests.Restart_WhileOutside_PutsThePlayerBackAtTheSpawn_Walking" methodname="Restart_WhileOutside_PutsThePlayerBackAtTheSpawn_Walking" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" seed="1311582664" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.014350" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="SuitRunningEmptyOutside_EndsTheMission_AndLocksThePlayer" fullname="OutOfReach.Tests.PlayMode.EvaPlayTests.SuitRunningEmptyOutside_EndsTheMission_AndLocksThePlayer" methodname="SuitRunningEmptyOutside_EndsTheMission_AndLocksThePlayer" classname="OutOfReach.Tests.PlayMode.EvaPlayTests" runstate="Runnable" seed="1188134959" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.020222" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1007" name="EvaTraversalPlayTests" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.379621" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1011" name="ADescendingTether_IsTraversedWithALevelView_AndStopsCleanlyAtBothEnds" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests.ADescendingTether_IsTraversedWithALevelView_AndStopsCleanlyAtBothEnds" methodname="ADescendingTether_IsTraversedWithALevelView_AndStopsCleanlyAtBothEnds" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" seed="450116734" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.205010" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="FacingBack_ReturnsTowardsTheHatch_SidewaysKeepsTheSense_AndBackMovesTheOtherWay" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests.FacingBack_ReturnsTowardsTheHatch_SidewaysKeepsTheSense_AndBackMovesTheOtherWay" methodname="FacingBack_ReturnsTowardsTheHatch_SidewaysKeepsTheSense_AndBackMovesTheOtherWay" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" seed="1401038776" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.064279" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="ForwardWhileLookingStraightDownOrUp_FollowsTheLine_WithoutVerticalTravel" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests.ForwardWhileLookingStraightDownOrUp_FollowsTheLine_WithoutVerticalTravel" methodname="ForwardWhileLookingStraightDownOrUp_FollowsTheLine_WithoutVerticalTravel" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" seed="1050918781" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.061401" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="LookingAround_OrSidewaysKeys_NeverMoveThePlayer" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests.LookingAround_OrSidewaysKeys_NeverMoveThePlayer" methodname="LookingAround_OrSidewaysKeys_NeverMoveThePlayer" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" seed="25383345" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.020219" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="Pause_StopsTraversal_AndResumeContinuesFromTheSamePlace" fullname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests.Pause_StopsTraversal_AndResumeContinuesFromTheSamePlace" methodname="Pause_StopsTraversal_AndResumeContinuesFromTheSamePlace" classname="OutOfReach.Tests.PlayMode.EvaTraversalPlayTests" runstate="Runnable" seed="1772677705" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.026106" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1013" name="FieldModificationPlayTests" fullname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests" classname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.039390" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1015" name="AShipWithoutTheTargets_OffersNoModification" fullname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests.AShipWithoutTheTargets_OffersNoModification" methodname="AShipWithoutTheTargets_OffersNoModification" classname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests" runstate="Runnable" seed="58649187" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.011150" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="Bench_Bay_AndInstrument_WorkThroughTheirTargets" fullname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests.Bench_Bay_AndInstrument_WorkThroughTheirTargets" methodname="Bench_Bay_AndInstrument_WorkThroughTheirTargets" classname="OutOfReach.Tests.PlayMode.FieldModificationPlayTests" runstate="Runnable" seed="1149222458" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.026669" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1016" name="FinalePlayTests" fullname="OutOfReach.Tests.PlayMode.FinalePlayTests" classname="OutOfReach.Tests.PlayMode.FinalePlayTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:59Z" duration="0.065410" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1017" name="Finale_ThroughTheConsole_WaitsTheLightTime_ReachesTheReport_AndRestartsClean" fullname="OutOfReach.Tests.PlayMode.FinalePlayTests.Finale_ThroughTheConsole_WaitsTheLightTime_ReachesTheReport_AndRestartsClean" methodname="Finale_ThroughTheConsole_WaitsTheLightTime_ReachesTheReport_AndRestartsClean" classname="OutOfReach.Tests.PlayMode.FinalePlayTests" runstate="Runnable" seed="1762746231" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:58Z" duration="0.053015" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="SkipSimulatedTime_AdvancesReservesAndTheReplyClockTogether" fullname="OutOfReach.Tests.PlayMode.FinalePlayTests.SkipSimulatedTime_AdvancesReservesAndTheReplyClockTogether" methodname="SkipSimulatedTime_AdvancesReservesAndTheReplyClockTogether" classname="OutOfReach.Tests.PlayMode.FinalePlayTests" runstate="Runnable" seed="948706816" result="Passed" start-time="2026-11-14 14:27:58Z" end-time="2026-11-14 14:27:59Z" duration="0.011010" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1019" name="PreflightPlayTests" fullname="OutOfReach.Tests.PlayMode.PreflightPlayTests" classname="OutOfReach.Tests.PlayMode.PreflightPlayTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.078034" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1021" name="Preflight_TheDeadlineLaunchesTheLastValidLoadout_AndMovesThePlayerToTheCockpit" fullname="OutOfReach.Tests.PlayMode.PreflightPlayTests.Preflight_TheDeadlineLaunchesTheLastValidLoadout_AndMovesThePlayerToTheCockpit" methodname="Preflight_TheDeadlineLaunchesTheLastValidLoadout_AndMovesThePlayerToTheCockpit" classname="OutOfReach.Tests.PlayMode.PreflightPlayTests" runstate="Runnable" seed="439806641" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.017642" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="Preflight_WalkCarryLoadAndLaunchFromTheConsole" fullname="OutOfReach.Tests.PlayMode.PreflightPlayTests.Preflight_WalkCarryLoadAndLaunchFromTheConsole" methodname="Preflight_WalkCarryLoadAndLaunchFromTheConsole" classname="OutOfReach.Tests.PlayMode.PreflightPlayTests" runstate="Runnable" seed="961877820" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.046774" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="Restart_DuringPreflight_ReturnsToThePadWithEmptyHands" fullname="OutOfReach.Tests.PlayMode.PreflightPlayTests.Restart_DuringPreflight_ReturnsToThePadWithEmptyHands" methodname="Restart_DuringPreflight_ReturnsToThePadWithEmptyHands" classname="OutOfReach.Tests.PlayMode.PreflightPlayTests" runstate="Runnable" seed="817799759" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.011864" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1023" name="RepairLoopPlayTests" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.174411" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1031" name="DefaultBindings_CoverKeyboardMouseAndGamepad" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.DefaultBindings_CoverKeyboardMouseAndGamepad" methodname="DefaultBindings_CoverKeyboardMouseAndGamepad" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="1882402452" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.009904" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="DisableEnable_AndRestart_NeverDuplicateSubscriptions_AndRebindTheScene" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.DisableEnable_AndRestart_NeverDuplicateSubscriptions_AndRebindTheScene" methodname="DisableEnable_AndRestart_NeverDuplicateSubscriptions_AndRebindTheScene" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="564352132" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.013496" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="Focus_NeedsReach_AndAClearLineOfSight" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.Focus_NeedsReach_AndAClearLineOfSight" methodname="Focus_NeedsReach_AndAClearLineOfSight" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="117106115" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.014170" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="ImpactCinematic_LocksControl_AndTheFallbackAlwaysReturnsIt" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.ImpactCinematic_LocksControl_AndTheFallbackAlwaysReturnsIt" methodname="ImpactCinematic_LocksControl_AndTheFallbackAlwaysReturnsIt" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="1367520110" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.012478" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="InteractPress_RepairsOnce_SpendsTheExactCost_AndARepeatIsRejected" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.InteractPress_RepairsOnce_SpendsTheExactCost_AndARepeatIsRejected" methodname="InteractPress_RepairsOnce_SpendsTheExactCost_AndARepeatIsRejected" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="721106962" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.010413" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="Look_TurnsTheBody_AndPitchIsBounded" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.Look_TurnsTheBody_AndPitchIsBounded" methodname="Look_TurnsTheBody_AndPitchIsBounded" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="1620998194" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.010608" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="Pause_FreezesThePlayerAndTheClock_AndReleasesTheCursor" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.Pause_FreezesThePlayerAndTheClock_AndReleasesTheCursor" methodname="Pause_FreezesThePlayerAndTheClock_AndReleasesTheCursor" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="11786038" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.018352" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="Player_CannotMoveBeforeLaunch_ThenWalksAtTheConfiguredSpeed_AndIsStoppedByGeometry" fullname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests.Player_CannotMoveBeforeLaunch_ThenWalksAtTheConfiguredSpeed_AndIsStoppedByGeometry" methodname="Player_CannotMoveBeforeLaunch_ThenWalksAtTheConfiguredSpeed_AndIsStoppedByGeometry" classname="OutOfReach.Tests.PlayMode.RepairLoopPlayTests" runstate="Runnable" seed="967464784" result="Passed" start-time="2026-11-14 14:27:59Z" end-time="2026-11-14 14:27:59Z" duration="0.082131" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/alexk/AppData/LocalLow/DefaultCompany/OUT-OF-REACH-NASA-HACKATHON\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
