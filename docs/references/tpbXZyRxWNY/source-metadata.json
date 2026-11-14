@@ -1,0 +1,54 @@
+{
+  "id": "tpbXZyRxWNY",
+  "title": "I Spent 100 Hours Making a Game With Claude (this is cooked)",
+  "channel": "Brendan Jowett",
+  "channel_url": "https://www.youtube.com/channel/UCzIsviqoJc-VcWqF5Pp8iLw",
+  "uploader": "Brendan Jowett",
+  "upload_date": "20261029",
+  "duration": 1342,
+  "webpage_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY",
+  "chapters": [
+    {
+      "start_time": 0,
+      "title": "Intro",
+      "end_time": 26
+    },
+    {
+      "start_time": 26,
+      "title": "What you need",
+      "end_time": 60
+    },
+    {
+      "start_time": 60,
+      "title": "The prompts and costs",
+      "end_time": 123
+    },
+    {
+      "start_time": 123,
+      "title": "10-minute build",
+      "end_time": 269
+    },
+    {
+      "start_time": 269,
+      "title": "1-hour build",
+      "end_time": 510
+    },
+    {
+      "start_time": 510,
+      "title": "10-hour build",
+      "end_time": 894
+    },
+    {
+      "start_time": 894,
+      "title": "100-hour build",
+      "end_time": 1323
+    },
+    {
+      "start_time": 1323,
+      "title": "Final thoughts",
+      "end_time": 1342
+    }
+  ],
+  "license": null,
+  "access_notes": "Subtitles unavailable: HTTP 429. Video-only 640x360 research copy, format 134. No audio/transcript verification. Selected frames for criticism/reference only; no reusable game-asset license established."
+}

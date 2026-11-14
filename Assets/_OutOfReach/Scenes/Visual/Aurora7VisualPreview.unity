@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &254824085
+--- !u!1 &123457470
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,8 +127,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 254824086}
-  - component: {fileID: 254824087}
+  - component: {fileID: 123457471}
+  - component: {fileID: 123457472}
   m_Layer: 0
   m_Name: PreviewCamera
   m_TagString: Untagged
@@ -136,28 +136,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &254824086
+--- !u!4 &123457471
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254824085}
+  m_GameObject: {fileID: 123457470}
   serializedVersion: 2
   m_LocalRotation: {x: 0.015437627, y: -0.023174422, z: 0.00035789685, w: 0.9996122}
   m_LocalPosition: {x: 0.45, y: 1.65, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1660033776}
+  m_Father: {fileID: 1800013487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &254824087
+--- !u!20 &123457472
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254824085}
+  m_GameObject: {fileID: 123457470}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -202,7 +202,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &1660033775
+--- !u!115 &656051347
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: ShipVisualAnchors
+  m_Namespace: OutOfReach.Presentation
+  m_AssemblyName: OutOfReach.Presentation
+--- !u!1 &1800013486
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,7 +225,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1660033776}
+  - component: {fileID: 1800013487}
   m_Layer: 0
   m_Name: PREVIEW ONLY - exclude from Bootstrap
   m_TagString: EditorOnly
@@ -218,23 +233,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1660033776
+--- !u!4 &1800013487
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660033775}
+  m_GameObject: {fileID: 1800013486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 254824086}
+  - {fileID: 123457471}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3853265949589834924
+--- !u!115 &2061623043
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 7
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_Type: 0
+  m_ExecutionOrder: 0
+  m_ClassName: ShipLabelAtlasBinder
+  m_Namespace: OutOfReach.Presentation
+  m_AssemblyName: OutOfReach.Presentation
+--- !u!1001 &6194091507375062124
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -295,5 +325,5 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 3853265949589834924}
-  - {fileID: 1660033776}
+  - {fileID: 6194091507375062124}
+  - {fileID: 1800013487}

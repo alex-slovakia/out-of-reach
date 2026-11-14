@@ -10,6 +10,11 @@ Build the one-mission vertical slice in `PRODUCT.md`. Implement one independentl
 
 ## Ownership is mandatory
 
+**Latest explicit user override (14 Nov 2026): Claude/Fable now owns all
+`Assets/_OutOfReach/UI/**` design and implementation, starting from integration `5a6f524`.
+Codex UI writers are stopped. Codex remains integrator and owns camera/lighting/audio and
+composition wiring. Coordinate one UI writer in issue #7; do not edit the same files concurrently.**
+
 Follow the exact path map in `ARCHITECTURE.md`. Codex owns presentation, visuals, visual prefabs/scenes, UI and audio. Claude owns core, simulation, interaction, player, inventory and tests. The contracts, Bootstrap scene, package/project settings, documentation, shared datasets and repository tooling belong to the integrator.
 
 The first shared baseline is authorized. **After that baseline, stop before changing a shared file and coordinate the exact change with the designated integrator.** Do not edit the teammate's files. Report a requested contract change with its reason, caller impact and migration steps. Do not bypass the boundary by copying the teammate's system into your folder.

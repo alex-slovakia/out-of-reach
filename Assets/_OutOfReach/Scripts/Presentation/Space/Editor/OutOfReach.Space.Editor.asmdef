@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.Space.Editor",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

@@ -1,0 +1,27 @@
+{
+  "name": "OutOfReach.Composition.Editor",
+  "rootNamespace": "OutOfReach.Composition.Editor",
+  "references": [
+    "OutOfReach.Composition",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.Presentation",
+    "OutOfReach.Cinematics",
+    "OutOfReach.Presentation.Lighting",
+    "OutOfReach.Audio",
+    "OutOfReach.UI",
+    "UnityEngine.UI"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

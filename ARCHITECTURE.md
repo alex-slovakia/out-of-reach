@@ -15,7 +15,7 @@ flowchart LR
   Data[Committed NASA snapshot] --> Core
   Core --> Contracts[Contracts and typed events]
   Contracts --> Visual[Lighting, cinematics and audio / Codex]
-  Contracts --> UI[Planner, HUD and report views / Codex]
+  Contracts --> UI[Planner, HUD and report views / Claude]
   UI -->|validated commands| Core
   Bootstrap[Bootstrap / designated integrator] --> Core
   Bootstrap --> Visual
@@ -50,7 +50,7 @@ handover is coordinated. See CODEX-006 and issue #7; no two writers edit the sam
 | Claude/Fable model writer | `Assets/_OutOfReach/Visuals/Models/Aurora7/**` | Ship model source/exports, model materials/textures, license manifest and genuine renders |
 | Codex | `Assets/_OutOfReach/Scenes/Visual/**` | Visual authoring and preview scenes |
 | Codex | `Assets/_OutOfReach/Scripts/Presentation/**` | View adapters, cinematics, lighting and visual editor utilities |
-| Codex | `Assets/_OutOfReach/UI/**` | Planner, HUD, report and menu presentation |
+| Claude/Fable UI writer | `Assets/_OutOfReach/UI/**` | Planner, HUD, report and menu presentation; explicit Alex transfer on Nov 14 after I02 draft review |
 | Codex | `Assets/_OutOfReach/Audio/**` | Original/licensed audio and mixer presentation |
 | Codex | `Assets/_OutOfReach/Prefabs/Visual/**` | Modular visual prefabs |
 | Claude | `Assets/_OutOfReach/Scripts/Core/**` | State machine, mission orchestration and domain event bus |
@@ -65,6 +65,12 @@ handover is coordinated. See CODEX-006 and issue #7; no two writers edit the sam
 | Integrator | Root docs, `docs/**`, `tools/**`, Git configuration files, shared data paths | Shared coordination, provenance, tooling and release evidence |
 
 Ownership includes `.meta`, nested `.asmdef`, prefabs and assets within each path. The initial foundation is assembled by Codex as bootstrap integrator. This does not grant ongoing permission to edit shared files after baseline. Both humans must coordinate a named integrator and exact shared change before subsequent edits. Unlisted paths are unassigned: request a path assignment before writing them.
+
+UI handover baseline: `codex/i01-integration@5a6f524`. Codex has stopped UI design edits;
+one Claude UI writer works in a separate checkout/branch, coordinated through issue #7.
+Bootstrap, audio, camera motion and composition wiring remain with Codex. UI changes needing
+different transient-feedback or subtitle wiring are requested against the exact composition
+call site; do not copy that runtime into the UI folder. Core/planner/resource state stays authoritative.
 
 ## Naming and boundaries
 

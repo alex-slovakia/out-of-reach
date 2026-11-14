@@ -19,6 +19,12 @@ namespace OutOfReach.Presentation.UI
         private IMissionEventBus events;
         private ISimulationClock clock;
         private IPlanningDeadline deadline;
+        private IEvaStatus evaStatus, subscribedEva;
+        private Action evaChangedHandler;
+        private int evaSubscriptionGeneration;
+        private ResourceSnapshot resourceReference;
+        private bool hasResourceReference, hasCo2Scale;
+        private double co2ActionPpm, co2EmergencyPpm;
         private FlightBoardView view;
         private bool subscribed;
         private bool disposed;
@@ -43,6 +49,9 @@ namespace OutOfReach.Presentation.UI
                 // Rebind timing explicitly for a replacement session; never retain its predecessor's clock.
                 clock = null;
                 deadline = null;
+                evaStatus = null;
+                hasResourceReference = false;
+                view?.ClearResourceReference();
             }
             planner = missionPlanner;
             resources = resourceSystem;
@@ -64,6 +73,38 @@ namespace OutOfReach.Presentation.UI
             this.clock = clock;
             this.deadline = deadline;
             RefreshTiming();
+        }
+
+        /// <summary>Bar reference from the committed launch configuration, never from a HUD estimate.</summary>
+        public void ConfigureResourceReference(ResourceSnapshot launchResources)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            resourceReference = launchResources;
+            hasResourceReference = true;
+            view?.ConfigureResourceReference(launchResources);
+        }
+
+        /// <summary>Inject the scenario's actual CO₂ action and emergency levels, in ppm.</summary>
+        public void ConfigureCo2Scale(double actionPpm, double emergencyPpm)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            if (double.IsNaN(actionPpm) || double.IsInfinity(actionPpm) || actionPpm <= 0
+                || double.IsNaN(emergencyPpm) || double.IsInfinity(emergencyPpm) || emergencyPpm <= actionPpm)
+                throw new ArgumentOutOfRangeException(nameof(emergencyPpm), "CO₂ levels must be finite, positive and ordered action < emergency.");
+            co2ActionPpm = actionPpm;
+            co2EmergencyPpm = emergencyPpm;
+            hasCo2Scale = true;
+            view?.ConfigureCo2Scale(actionPpm, emergencyPpm);
+        }
+
+        /// <summary>Bind a read-only suit view. Null detaches and hides the suit instrument.</summary>
+        public void ConfigureEva(IEvaStatus status)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            UnsubscribeEva();
+            evaStatus = status;
+            RefreshEva();
+            SubscribeEva();
         }
 
         /// <summary>The audio presenter owns when this cue begins and ends. No local timer is started.</summary>
@@ -147,6 +188,8 @@ namespace OutOfReach.Presentation.UI
             events = null;
             clock = null;
             deadline = null;
+            evaStatus = null;
+            hasResourceReference = false;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
             interactionPrompt = string.Empty;
@@ -163,6 +206,9 @@ namespace OutOfReach.Presentation.UI
             view.LaunchRequested += Launch;
             view.ShowSubtitle(subtitleText, subtitleSpeaker);
             view.ShowInteractionPrompt(interactionPrompt, interactionAvailable);
+            if (hasResourceReference) view.ConfigureResourceReference(resourceReference);
+            if (hasCo2Scale) view.ConfigureCo2Scale(co2ActionPpm, co2EmergencyPpm);
+            RefreshEva();
         }
 
         private void ReleaseView()
@@ -176,6 +222,7 @@ namespace OutOfReach.Presentation.UI
 
         private void Subscribe()
         {
+            SubscribeEva();
             if (subscribed || events == null || !isActiveAndEnabled || disposed) return;
             events.PhaseChanged += OnPhaseChanged;
             events.ResourceChanged += OnResourceChanged;
@@ -185,12 +232,36 @@ namespace OutOfReach.Presentation.UI
 
         private void Unsubscribe()
         {
+            UnsubscribeEva();
             if (!subscribed) return;
             events.PhaseChanged -= OnPhaseChanged;
             events.ResourceChanged -= OnResourceChanged;
             events.MissionEnded -= OnMissionEnded;
             subscribed = false;
         }
+
+        private void SubscribeEva()
+        {
+            if (subscribedEva != null || evaStatus == null || !isActiveAndEnabled || disposed) return;
+            int generation = ++evaSubscriptionGeneration;
+            subscribedEva = evaStatus;
+            evaChangedHandler = () =>
+            {
+                if (!disposed && isActiveAndEnabled && subscribedEva != null && generation == evaSubscriptionGeneration)
+                    RefreshEva();
+            };
+            subscribedEva.Changed += evaChangedHandler;
+        }
+
+        private void UnsubscribeEva()
+        {
+            evaSubscriptionGeneration++;
+            if (subscribedEva != null) subscribedEva.Changed -= evaChangedHandler;
+            subscribedEva = null;
+            evaChangedHandler = null;
+        }
+
+        private void RefreshEva() => view?.SetEvaStatus(evaStatus);
 
         private void Refresh()
         {
@@ -221,6 +292,7 @@ namespace OutOfReach.Presentation.UI
                 view.SetHudResources(resources.Snapshot);
             }
             RefreshTiming();
+            RefreshEva();
         }
 
         private void RefreshTiming()

@@ -1,0 +1,1212 @@
+{
+ "blender": "5.3.0",
+ "units": "metres, Unity axes (x right, y up, z forward)",
+ "modules": {
+  "Cockpit": {
+   "triangles": 75268,
+   "per_material": {
+    "A7_Aluminum": 20292,
+    "A7_AnodizedBlack": 8396,
+    "A7_AnodizedBlue": 16,
+    "A7_AnodizedClear": 11640,
+    "A7_AnodizedGold": 1424,
+    "A7_CableBlue": 2240,
+    "A7_CableOrange": 480,
+    "A7_CableRed": 32,
+    "A7_CableYellow": 32,
+    "A7_Decals": 330,
+    "A7_Deck": 352,
+    "A7_FabricDark": 792,
+    "A7_FabricStrap": 1752,
+    "A7_FabricWhite": 376,
+    "A7_Glass": 480,
+    "A7_Grate": 96,
+    "A7_LedAmber": 292,
+    "A7_LedGreen": 216,
+    "A7_LightPanel": 24,
+    "A7_PaintAmber": 2240,
+    "A7_PaintGraphite": 10788,
+    "A7_PaintGray": 792,
+    "A7_PaintRed": 256,
+    "A7_PaintWhite": 6416,
+    "A7_PaintYellow": 576,
+    "A7_QuiltWhite": 176,
+    "A7_Rubber": 4752,
+    "A7_Screens": 10
+   },
+   "bounds_min": [
+    -3.0,
+    -0.048,
+    -3.055
+   ],
+   "bounds_max": [
+    3.0,
+    3.1952,
+    3.0
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "Engineering": {
+   "triangles": 75974,
+   "per_material": {
+    "A7_Aluminum": 27412,
+    "A7_AnodizedBlack": 4016,
+    "A7_AnodizedBlue": 496,
+    "A7_AnodizedClear": 9384,
+    "A7_AnodizedGold": 1560,
+    "A7_CableBlue": 3208,
+    "A7_CableOrange": 1104,
+    "A7_CableRed": 3328,
+    "A7_CableYellow": 512,
+    "A7_Carbon": 1716,
+    "A7_Chrome": 1080,
+    "A7_Decals": 260,
+    "A7_Deck": 440,
+    "A7_FabricWhite": 24,
+    "A7_Grate": 120,
+    "A7_LedAmber": 126,
+    "A7_LedCyan": 24,
+    "A7_LedGreen": 252,
+    "A7_LightPanel": 36,
+    "A7_PaintAmber": 3088,
+    "A7_PaintGraphite": 3124,
+    "A7_PaintGray": 1192,
+    "A7_PaintWhite": 3712,
+    "A7_PaintYellow": 88,
+    "A7_PlasticWhite": 1584,
+    "A7_QuiltWhite": 132,
+    "A7_Rubber": 7936,
+    "A7_Screens": 8,
+    "A7_WorkLight": 12
+   },
+   "bounds_min": [
+    -2.4,
+    -0.16,
+    2.8367
+   ],
+   "bounds_max": [
+    2.4,
+    3.1952,
+    11.0
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "Storage": {
+   "triangles": 52860,
+   "per_material": {
+    "A7_Aluminum": 13592,
+    "A7_AnodizedBlack": 1072,
+    "A7_AnodizedBlue": 16,
+    "A7_AnodizedClear": 11696,
+    "A7_AnodizedGold": 16,
+    "A7_CableBlue": 4064,
+    "A7_CableRed": 32,
+    "A7_CableYellow": 32,
+    "A7_Decals": 352,
+    "A7_Deck": 352,
+    "A7_FabricStrap": 6120,
+    "A7_FabricWhite": 1344,
+    "A7_Grate": 96,
+    "A7_LedGreen": 48,
+    "A7_LightPanel": 24,
+    "A7_PaintAmber": 4768,
+    "A7_PaintGraphite": 5700,
+    "A7_PaintGray": 528,
+    "A7_PaintWhite": 1960,
+    "A7_QuiltWhite": 440,
+    "A7_Rubber": 608
+   },
+   "bounds_min": [
+    -2.4,
+    -0.16,
+    10.8367
+   ],
+   "bounds_max": [
+    2.4,
+    3.1952,
+    17.0
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "Airlock": {
+   "triangles": 31698,
+   "per_material": {
+    "A7_Aluminum": 11224,
+    "A7_AnodizedBlack": 1700,
+    "A7_AnodizedBlue": 16,
+    "A7_AnodizedClear": 6272,
+    "A7_AnodizedGold": 744,
+    "A7_CableBlue": 608,
+    "A7_CableOrange": 96,
+    "A7_CableRed": 32,
+    "A7_CableYellow": 32,
+    "A7_Decals": 128,
+    "A7_Deck": 176,
+    "A7_FabricStrap": 228,
+    "A7_FabricWhite": 288,
+    "A7_Grate": 60,
+    "A7_LedAmber": 72,
+    "A7_LedGreen": 72,
+    "A7_LightPanel": 12,
+    "A7_PaintAmber": 3936,
+    "A7_PaintGraphite": 1528,
+    "A7_PaintGray": 616,
+    "A7_PaintRed": 172,
+    "A7_PaintWhite": 1240,
+    "A7_QuiltWhite": 220,
+    "A7_Rubber": 2224,
+    "A7_Screens": 2
+   },
+   "bounds_min": [
+    -2.4,
+    -0.16,
+    16.8367
+   ],
+   "bounds_max": [
+    2.4,
+    3.1952,
+    21.1633
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "Exterior": {
+   "triangles": 29556,
+   "per_material": {
+    "A7_Aluminum": 16016,
+    "A7_AnodizedBlack": 5232,
+    "A7_AnodizedClear": 160,
+    "A7_AnodizedGold": 5152,
+    "A7_Decals": 26,
+    "A7_HullBlanket": 812,
+    "A7_LightPanel": 84,
+    "A7_MLIGold": 72,
+    "A7_MLISilver": 352,
+    "A7_PaintAmber": 96,
+    "A7_PaintGraphite": 18,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 416,
+    "A7_PaintYellow": 128,
+    "A7_Rubber": 832,
+    "A7_SolarCell": 72
+   },
+   "bounds_min": [
+    -12.37,
+    -2.015,
+    -3.59
+   ],
+   "bounds_max": [
+    12.37,
+    5.135,
+    23.4
+   ],
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "DoorLeaf_Inner_L": {
+   "triangles": 2070,
+   "per_material": {
+    "A7_Aluminum": 1280,
+    "A7_Decals": 10,
+    "A7_PaintAmber": 560,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 44,
+    "A7_Rubber": 88
+   },
+   "bounds_min": [
+    -1.842,
+    0.01,
+    16.878
+   ],
+   "bounds_max": [
+    -0.958,
+    2.45,
+    17.122
+   ],
+   "origin": [
+    -1.4,
+    0.0,
+    17.0
+   ],
+   "group": "Doors"
+  },
+  "DoorLeaf_Inner_R": {
+   "triangles": 2070,
+   "per_material": {
+    "A7_Aluminum": 1280,
+    "A7_Decals": 10,
+    "A7_PaintAmber": 560,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 44,
+    "A7_Rubber": 88
+   },
+   "bounds_min": [
+    0.958,
+    0.01,
+    16.878
+   ],
+   "bounds_max": [
+    1.842,
+    2.45,
+    17.122
+   ],
+   "origin": [
+    1.4,
+    0.0,
+    17.0
+   ],
+   "group": "Doors"
+  },
+  "DoorLeaf_Outer_L": {
+   "triangles": 2834,
+   "per_material": {
+    "A7_Aluminum": 1856,
+    "A7_Decals": 6,
+    "A7_Glass": 192,
+    "A7_PaintAmber": 560,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 44,
+    "A7_Rubber": 88
+   },
+   "bounds_min": [
+    -0.892,
+    0.01,
+    20.878
+   ],
+   "bounds_max": [
+    -0.008,
+    2.45,
+    21.122
+   ],
+   "origin": [
+    -0.45,
+    0.0,
+    21.0
+   ],
+   "group": "Doors"
+  },
+  "DoorLeaf_Outer_R": {
+   "triangles": 2834,
+   "per_material": {
+    "A7_Aluminum": 1856,
+    "A7_Decals": 6,
+    "A7_Glass": 192,
+    "A7_PaintAmber": 560,
+    "A7_PaintGray": 88,
+    "A7_PaintWhite": 44,
+    "A7_Rubber": 88
+   },
+   "bounds_min": [
+    0.008,
+    0.01,
+    20.878
+   ],
+   "bounds_max": [
+    0.892,
+    2.45,
+    21.122
+   ],
+   "origin": [
+    0.45,
+    0.0,
+    21.0
+   ],
+   "group": "Doors"
+  },
+  "PowerCabinet_Cover": {
+   "triangles": 1476,
+   "per_material": {
+    "A7_Aluminum": 448,
+    "A7_AnodizedGold": 800,
+    "A7_Decals": 8,
+    "A7_PaintWhite": 220
+   },
+   "bounds_min": [
+    -1.7,
+    0.4675,
+    5.5475
+   ],
+   "bounds_max": [
+    -1.645,
+    1.8925,
+    6.6525
+   ],
+   "origin": [
+    -1.7,
+    1.1800000000000002,
+    6.1
+   ],
+   "group": "Parts"
+  },
+  "PowerCabinet_IsolatorHandle": {
+   "triangles": 204,
+   "per_material": {
+    "A7_PaintRed": 204
+   },
+   "bounds_min": [
+    -1.83,
+    0.7446,
+    5.798
+   ],
+   "bounds_max": [
+    -1.782,
+    0.8626,
+    5.902
+   ],
+   "origin": [
+    -1.83,
+    0.8036000000000001,
+    5.85
+   ],
+   "group": "Parts"
+  },
+  "PowerCabinet_TrippedLever": {
+   "triangles": 44,
+   "per_material": {
+    "A7_AnodizedBlack": 44
+   },
+   "bounds_min": [
+    -1.8478,
+    1.4623,
+    6.155
+   ],
+   "bounds_max": [
+    -1.8175,
+    1.4879,
+    6.175
+   ],
+   "origin": [
+    -1.8425,
+    1.482,
+    6.165
+   ],
+   "group": "Parts"
+  },
+  "PowerCabinet_AlarmLens": {
+   "triangles": 44,
+   "per_material": {
+    "A7_PaintRed": 44
+   },
+   "bounds_min": [
+    -1.71,
+    2.134,
+    6.635
+   ],
+   "bounds_max": [
+    -1.674,
+    2.196,
+    6.785
+   ],
+   "origin": [
+    -1.71,
+    2.165,
+    6.71
+   ],
+   "group": "Parts"
+  },
+  "ScrubberCanister_A": {
+   "triangles": 1160,
+   "per_material": {
+    "A7_Chrome": 1096,
+    "A7_Decals": 16,
+    "A7_PlasticWhite": 48
+   },
+   "bounds_min": [
+    1.75,
+    0.8,
+    8.135
+   ],
+   "bounds_max": [
+    1.96,
+    1.56,
+    8.345
+   ],
+   "origin": [
+    1.855,
+    0.8,
+    8.24
+   ],
+   "group": "Parts"
+  },
+  "ScrubberCanister_B": {
+   "triangles": 1160,
+   "per_material": {
+    "A7_Chrome": 1096,
+    "A7_Decals": 16,
+    "A7_PlasticWhite": 48
+   },
+   "bounds_min": [
+    1.75,
+    0.8,
+    7.885
+   ],
+   "bounds_max": [
+    1.96,
+    1.56,
+    8.095
+   ],
+   "origin": [
+    1.855,
+    0.8,
+    7.989999999999999
+   ],
+   "group": "Parts"
+  },
+  "ScrubberCanister_C": {
+   "triangles": 1160,
+   "per_material": {
+    "A7_Chrome": 1096,
+    "A7_Decals": 16,
+    "A7_PlasticWhite": 48
+   },
+   "bounds_min": [
+    1.75,
+    0.8,
+    7.635
+   ],
+   "bounds_max": [
+    1.96,
+    1.56,
+    7.845
+   ],
+   "origin": [
+    1.855,
+    0.8,
+    7.739999999999999
+   ],
+   "group": "Parts"
+  },
+  "Antenna_Azimuth": {
+   "triangles": 708,
+   "per_material": {
+    "A7_Aluminum": 448,
+    "A7_PaintGray": 260
+   },
+   "bounds_min": [
+    3.4699,
+    2.2325,
+    12.59
+   ],
+   "bounds_max": [
+    3.9705,
+    2.8093,
+    12.85
+   ],
+   "origin": [
+    3.5013760946735513,
+    2.479111224851807,
+    12.72
+   ],
+   "group": "ExteriorParts"
+  },
+  "Antenna_Elevation": {
+   "triangles": 2184,
+   "per_material": {
+    "A7_Aluminum": 624,
+    "A7_AnodizedBlack": 84,
+    "A7_PaintGray": 260,
+    "A7_PaintWhite": 1216
+   },
+   "bounds_min": [
+    3.728,
+    2.0403,
+    12.3694
+   ],
+   "bounds_max": [
+    4.4942,
+    3.259,
+    13.4536
+   ],
+   "origin": [
+    3.8302346229025592,
+    2.5654365885119215,
+    12.72
+   ],
+   "group": "ExteriorParts"
+  }
+ },
+ "anchors": {
+  "Antenna_ServiceSocket": {
+   "group": "ExteriorParts",
+   "point": [
+    3.1996,
+    2.3999,
+    13.0
+   ]
+  },
+  "LightAnchor_PowerCabinetAlarm": {
+   "group": "Parts",
+   "point": [
+    -1.638,
+    2.165,
+    6.71
+   ]
+  },
+  "LightAnchor_PowerCabinetWork": {
+   "group": "Parts",
+   "point": [
+    -1.758,
+    1.72,
+    6.35
+   ]
+  }
+ },
+ "collision_proxies": [
+  {
+   "name": "COL_Cockpit_Floor",
+   "centre": [
+    0,
+    -0.12,
+    0.0
+   ],
+   "size": [
+    6.0,
+    0.24,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Cockpit_Ceiling",
+   "centre": [
+    0,
+    3.22,
+    0.0
+   ],
+   "size": [
+    6.0,
+    0.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Cockpit_WallL",
+   "centre": [
+    -3.06,
+    1.5,
+    0.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Cockpit_WallR",
+   "centre": [
+    3.06,
+    1.5,
+    0.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Engineering_Floor",
+   "centre": [
+    0,
+    -0.12,
+    7.0
+   ],
+   "size": [
+    4.8,
+    0.24,
+    8.0
+   ]
+  },
+  {
+   "name": "COL_Engineering_Ceiling",
+   "centre": [
+    0,
+    3.22,
+    7.0
+   ],
+   "size": [
+    4.8,
+    0.2,
+    8.0
+   ]
+  },
+  {
+   "name": "COL_Engineering_WallL",
+   "centre": [
+    -2.46,
+    1.5,
+    7.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    8.0
+   ]
+  },
+  {
+   "name": "COL_Engineering_WallR",
+   "centre": [
+    2.46,
+    1.5,
+    7.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    8.0
+   ]
+  },
+  {
+   "name": "COL_Storage_Floor",
+   "centre": [
+    0,
+    -0.12,
+    14.0
+   ],
+   "size": [
+    4.8,
+    0.24,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Storage_Ceiling",
+   "centre": [
+    0,
+    3.22,
+    14.0
+   ],
+   "size": [
+    4.8,
+    0.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Storage_WallL",
+   "centre": [
+    -2.46,
+    1.5,
+    14.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Storage_WallR",
+   "centre": [
+    2.46,
+    1.5,
+    14.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    6.0
+   ]
+  },
+  {
+   "name": "COL_Airlock_Floor",
+   "centre": [
+    0,
+    -0.12,
+    19.0
+   ],
+   "size": [
+    4.8,
+    0.24,
+    4.0
+   ]
+  },
+  {
+   "name": "COL_Airlock_Ceiling",
+   "centre": [
+    0,
+    3.22,
+    19.0
+   ],
+   "size": [
+    4.8,
+    0.2,
+    4.0
+   ]
+  },
+  {
+   "name": "COL_Airlock_WallL",
+   "centre": [
+    -2.46,
+    1.5,
+    19.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    4.0
+   ]
+  },
+  {
+   "name": "COL_Airlock_WallR",
+   "centre": [
+    2.46,
+    1.5,
+    19.0
+   ],
+   "size": [
+    0.12,
+    3.2,
+    4.0
+   ]
+  },
+  {
+   "name": "COL_PortalEngineering_WingL",
+   "centre": [
+    -1.65,
+    1.55,
+    3.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalEngineering_WingR",
+   "centre": [
+    1.65,
+    1.55,
+    3.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalEngineering_Lintel",
+   "centre": [
+    0,
+    2.82,
+    3.0
+   ],
+   "size": [
+    4.8,
+    0.64,
+    0.2
+   ]
+  },
+  {
+   "name": "COL_PortalStorage_WingL",
+   "centre": [
+    -1.65,
+    1.55,
+    11.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalStorage_WingR",
+   "centre": [
+    1.65,
+    1.55,
+    11.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalStorage_Lintel",
+   "centre": [
+    0,
+    2.82,
+    11.0
+   ],
+   "size": [
+    4.8,
+    0.64,
+    0.2
+   ]
+  },
+  {
+   "name": "COL_PortalAirlock_WingL",
+   "centre": [
+    -1.65,
+    1.55,
+    17.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalAirlock_WingR",
+   "centre": [
+    1.65,
+    1.55,
+    17.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalAirlock_Lintel",
+   "centre": [
+    0,
+    2.82,
+    17.0
+   ],
+   "size": [
+    4.8,
+    0.64,
+    0.2
+   ]
+  },
+  {
+   "name": "COL_PortalExterior_WingL",
+   "centre": [
+    -1.65,
+    1.55,
+    21.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalExterior_WingR",
+   "centre": [
+    1.65,
+    1.55,
+    21.0
+   ],
+   "size": [
+    1.5,
+    3.1,
+    0.18
+   ]
+  },
+  {
+   "name": "COL_PortalExterior_Lintel",
+   "centre": [
+    0,
+    2.82,
+    21.0
+   ],
+   "size": [
+    4.8,
+    0.64,
+    0.2
+   ]
+  },
+  {
+   "name": "COL_Cockpit_ForwardBulkhead",
+   "centre": [
+    0,
+    1.55,
+    -3.05
+   ],
+   "size": [
+    6,
+    3.1,
+    0.15
+   ]
+  },
+  {
+   "name": "COL_Cockpit_ConsolePlinth",
+   "centre": [
+    0,
+    0.46,
+    -1.95
+   ],
+   "size": [
+    2.9,
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "name": "COL_Cockpit_ConsoleTop",
+   "centre": [
+    0,
+    0.96,
+    -1.95
+   ],
+   "size": [
+    3.1,
+    0.12,
+    0.85
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatL_Pedestal",
+   "centre": [
+    -1.15,
+    0.3,
+    -0.45
+   ],
+   "size": [
+    0.4,
+    0.6,
+    0.5
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatL_Pan",
+   "centre": [
+    -1.15,
+    0.6,
+    -0.45
+   ],
+   "size": [
+    0.62,
+    0.15,
+    0.65
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatL_Back",
+   "centre": [
+    -1.15,
+    1.05,
+    -0.17
+   ],
+   "size": [
+    0.61,
+    0.9,
+    0.14
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatR_Pedestal",
+   "centre": [
+    1.15,
+    0.3,
+    -0.45
+   ],
+   "size": [
+    0.4,
+    0.6,
+    0.5
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatR_Pan",
+   "centre": [
+    1.15,
+    0.6,
+    -0.45
+   ],
+   "size": [
+    0.62,
+    0.15,
+    0.65
+   ]
+  },
+  {
+   "name": "COL_Cockpit_SeatR_Back",
+   "centre": [
+    1.15,
+    1.05,
+    -0.17
+   ],
+   "size": [
+    0.61,
+    0.9,
+    0.14
+   ]
+  },
+  {
+   "name": "COL_Engineering_PowerRack",
+   "centre": [
+    -2.02,
+    1.15,
+    6.1
+   ],
+   "size": [
+    0.58,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "COL_Engineering_EclssRack",
+   "centre": [
+    2.02,
+    1.15,
+    8.1
+   ],
+   "size": [
+    0.58,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "COL_Engineering_Tank1",
+   "centre": [
+    1.99,
+    1.1,
+    4.85
+   ],
+   "size": [
+    0.38,
+    1.56,
+    0.38
+   ]
+  },
+  {
+   "name": "COL_Engineering_Tank2",
+   "centre": [
+    1.99,
+    1.1,
+    5.43
+   ],
+   "size": [
+    0.38,
+    1.56,
+    0.38
+   ]
+  },
+  {
+   "name": "COL_Engineering_Tank3",
+   "centre": [
+    1.99,
+    1.1,
+    6.01
+   ],
+   "size": [
+    0.38,
+    1.56,
+    0.38
+   ]
+  },
+  {
+   "name": "COL_Storage_LockersL",
+   "centre": [
+    -1.95,
+    1.3,
+    14.0
+   ],
+   "size": [
+    0.65,
+    2.6,
+    4.5
+   ]
+  },
+  {
+   "name": "COL_Storage_LockersR",
+   "centre": [
+    1.95,
+    1.3,
+    14.0
+   ],
+   "size": [
+    0.65,
+    2.6,
+    4.5
+   ]
+  },
+  {
+   "name": "COL_Airlock_Rack",
+   "centre": [
+    -2.02,
+    1.15,
+    19.0
+   ],
+   "size": [
+    0.58,
+    2.3,
+    1.6
+   ]
+  },
+  {
+   "name": "COL_Airlock_SuitStation",
+   "centre": [
+    1.95,
+    1.25,
+    19.0
+   ],
+   "size": [
+    0.3,
+    2.4,
+    1.25
+   ]
+  }
+ ],
+ "triangles_total": 283304,
+ "materials_used": [
+  "A7_Aluminum",
+  "A7_AnodizedBlack",
+  "A7_AnodizedBlue",
+  "A7_AnodizedClear",
+  "A7_AnodizedGold",
+  "A7_CableBlue",
+  "A7_CableOrange",
+  "A7_CableRed",
+  "A7_CableYellow",
+  "A7_Carbon",
+  "A7_Chrome",
+  "A7_Decals",
+  "A7_Deck",
+  "A7_FabricDark",
+  "A7_FabricStrap",
+  "A7_FabricWhite",
+  "A7_Glass",
+  "A7_Grate",
+  "A7_HullBlanket",
+  "A7_LedAmber",
+  "A7_LedCyan",
+  "A7_LedGreen",
+  "A7_LightPanel",
+  "A7_MLIGold",
+  "A7_MLISilver",
+  "A7_PaintAmber",
+  "A7_PaintGraphite",
+  "A7_PaintGray",
+  "A7_PaintRed",
+  "A7_PaintWhite",
+  "A7_PaintYellow",
+  "A7_PlasticWhite",
+  "A7_QuiltWhite",
+  "A7_Rubber",
+  "A7_Screens",
+  "A7_SolarCell",
+  "A7_WorkLight"
+ ]
+}
