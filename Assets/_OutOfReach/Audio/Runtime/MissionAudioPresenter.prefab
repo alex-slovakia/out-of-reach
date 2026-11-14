@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4475693735307716575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1258496413749251505}
+  - component: {fileID: 6105050044080844860}
+  m_Layer: 0
+  m_Name: MissionAudioPresenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1258496413749251505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475693735307716575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6105050044080844860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475693735307716575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01e6f93379949a4a6809e5869711471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutOfReach.Audio::OutOfReach.Presentation.Audio.MissionAudioPresenter
+  dialogueCues: []
+  sfxCues:
+  - cueId: ui_select
+    clip: {fileID: 8300000, guid: 8e913034f62544c43b44bed8e3bac5c9, type: 3}
+    volume: 1
+  - cueId: ui_confirm
+    clip: {fileID: 8300000, guid: e381760f8b5f2b341a2402561fb66568, type: 3}
+    volume: 1
+  - cueId: planning_tick
+    clip: {fileID: 8300000, guid: 9d28542c759cd4e4a9c68d921c9e2ab4, type: 3}
+    volume: 1
+  - cueId: planning_urgent
+    clip: {fileID: 8300000, guid: 3bca17ca78df0b9499caee47dca8b42c, type: 3}
+    volume: 1
+  - cueId: comms_loss
+    clip: {fileID: 8300000, guid: 22ee3ea871e64e040b9b2348fe15a4f2, type: 3}
+    volume: 1
+  - cueId: power_down
+    clip: {fileID: 8300000, guid: d024d459ba12a104a93bd19d312fbd53, type: 3}
+    volume: 1
+  - cueId: warning_pulse
+    clip: {fileID: 8300000, guid: 9cfd2e4da446eb0468cfbe277407a8fd, type: 3}
+    volume: 1
+  isolationMusic: {fileID: 8300000, guid: d506184100d646deb877ebd447a2eba2, type: 3}
+  tensionMusic: {fileID: 8300000, guid: 24854550049f4041a977639bf4e9c159, type: 3}
+  emergencyMusic: {fileID: 8300000, guid: b0a36cc7d366482fba52397a1822171b, type: 3}
+  defaultCrossfadeSeconds: 1.25
+  masterVolume: 1
+  dialogueVolume: 1
+  musicVolume: 0.55
+  sfxVolume: 0.8
+  dialogueMusicDuckDb: -14
+  duckAttackSeconds: 0.08
+  duckReleaseSeconds: 0.65
+  dialogueOutput: {fileID: 0}
+  musicOutput: {fileID: 0}
+  sfxOutput: {fileID: 0}

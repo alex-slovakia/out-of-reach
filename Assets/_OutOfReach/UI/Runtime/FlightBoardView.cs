@@ -26,6 +26,10 @@ namespace OutOfReach.Presentation.UI
         private readonly VisualElement interactionPrompt, subtitleOverlay;
         private readonly Label interactionText, subtitleSpeaker, subtitleText;
         private readonly Label[] planningResources, hudResources;
+        private readonly ResourceGauge oxygenGauge, batteryGauge, co2Gauge, suitGauge;
+        private ResourceSnapshot resourceReference, latestResources;
+        private bool hasResourceReference, hasHudResources, hasCo2Thresholds;
+        private double co2ActionPpm, co2EmergencyPpm;
         private readonly Button launch;
         private readonly bool commandsEnabled;
 
@@ -124,6 +128,7 @@ namespace OutOfReach.Presentation.UI
 
             instruments = Element("hud-instruments");
             hud.Add(instruments);
+            instruments.Add(Text("SURVIVAL / AURORA-7", "instrument-heading"));
             var readouts = Element("hud-readouts");
             instruments.Add(readouts);
             var primary = Element("primary-telemetry");
@@ -131,9 +136,16 @@ namespace OutOfReach.Presentation.UI
             expandedTelemetry = Element("expanded-telemetry");
             readouts.Add(expandedTelemetry);
             hudResources = new Label[6];
-            hudResources[0] = AddResource(primary, "Oxygen reserve", 0);
-            hudResources[3] = AddResource(primary, "Battery", 3);
-            hudResources[5] = AddResource(primary, "Cabin CO₂", 5);
+            oxygenGauge = new ResourceGauge(primary, "O₂ reserve", "oxygen", 0);
+            batteryGauge = new ResourceGauge(primary, "Battery", "battery", 3);
+            co2Gauge = new ResourceGauge(primary, "Cabin CO₂", "co2", 5);
+            hudResources[0] = oxygenGauge.Value;
+            hudResources[3] = batteryGauge.Value;
+            hudResources[5] = co2Gauge.Value;
+            suitGauge = new ResourceGauge(readouts, "EVA / SUIT O₂", "suit", -1);
+            suitGauge.Element.name = "suit-oxygen-gauge";
+            suitGauge.Element.AddToClassList("suit-gauge");
+            suitGauge.Element.style.display = DisplayStyle.None;
             hudResources[1] = AddResource(expandedTelemetry, "Water", 1);
             hudResources[2] = AddResource(expandedTelemetry, "Food", 2);
             hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
@@ -177,6 +189,9 @@ namespace OutOfReach.Presentation.UI
             objective.text = string.Empty;
             outcomeReason.text = string.Empty;
             foreach (var value in hudResources) value.text = "—";
+            hasHudResources = false;
+            UpdateGauges();
+            SetEvaStatus(null);
             launch.SetEnabled(false);
             SetSimulationTiming(false, false, 0);
             SetSimulationElapsedTime(false, 0);
@@ -403,7 +418,89 @@ namespace OutOfReach.Presentation.UI
         }
 
         public void SetPlanningResources(ResourceSnapshot snapshot) => SetResources(planningResources, snapshot);
-        public void SetHudResources(ResourceSnapshot snapshot) => SetResources(hudResources, snapshot);
+        public void SetHudResources(ResourceSnapshot snapshot)
+        {
+            latestResources = snapshot;
+            hasHudResources = true;
+            SetResources(hudResources, snapshot);
+            UpdateGauges();
+        }
+
+        public void ConfigureResourceReference(ResourceSnapshot launchResources)
+        {
+            resourceReference = launchResources;
+            hasResourceReference = true;
+            UpdateGauges();
+        }
+
+        public void ClearResourceReference()
+        {
+            hasResourceReference = false;
+            UpdateGauges();
+        }
+
+        public void ConfigureCo2Scale(double actionPpm, double emergencyPpm)
+        {
+            if (!Finite(actionPpm) || !Finite(emergencyPpm) || actionPpm <= 0 || emergencyPpm <= actionPpm)
+                throw new ArgumentOutOfRangeException(nameof(emergencyPpm), "CO₂ levels must be finite, positive and ordered action < emergency.");
+            co2ActionPpm = actionPpm;
+            co2EmergencyPpm = emergencyPpm;
+            hasCo2Thresholds = true;
+            UpdateGauges();
+        }
+
+        public void SetEvaStatus(IEvaStatus status)
+        {
+            bool visible = status != null && (status.IsSuitOn || status.IsSuitSealed || status.IsOutside);
+            suitGauge.Element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+            if (!visible) return;
+            double remaining = status.SuitOxygenSecondsRemaining;
+            suitGauge.Value.text = double.IsPositiveInfinity(remaining) ? "∞ sim s remaining"
+                : !Finite(remaining) || remaining < 0 ? "— sim s remaining"
+                : Number(Math.Ceiling(remaining), "#,0") + " sim s remaining";
+            bool known = Finite(status.SuitOxygenKg) && status.SuitOxygenKg >= 0
+                && Finite(status.SuitOxygenCapacityKg) && status.SuitOxygenCapacityKg > 0;
+            double fraction = known ? status.SuitOxygenKg / status.SuitOxygenCapacityKg : 0;
+            string location = status.IsOutside ? "Outside" : "Cabin";
+            string seal = status.IsSuitSealed ? "sealed" : "suit open";
+            suitGauge.SetLevel(known, fraction, known && fraction <= 0.25, known && fraction <= 0,
+                Number(status.SuitOxygenKg, "0.000") + " / " + Number(status.SuitOxygenCapacityKg, "0.000")
+                + " kg · " + location + " · " + seal);
+            suitGauge.Element.tooltip = "Suit oxygen from Core. Bar: actual suit capacity. Remaining duration is simulated time; no HUD countdown is calculated.";
+        }
+
+        private void UpdateGauges()
+        {
+            SetReserveGauge(oxygenGauge, latestResources.OxygenKg, resourceReference.OxygenKg, "Stored oxygen reserve");
+            SetReserveGauge(batteryGauge, latestResources.BatteryKWh, resourceReference.BatteryKWh, "Available energy");
+            double scale = hasCo2Thresholds ? co2EmergencyPpm : 10000d;
+            double current = latestResources.CarbonDioxidePpm;
+            bool known = hasHudResources && Finite(current) && current >= 0;
+            bool emergency = known && hasCo2Thresholds && current >= co2EmergencyPpm;
+            bool action = known && hasCo2Thresholds && current >= co2ActionPpm;
+            string stateText = emergency ? "Emergency level" : action ? "Action required" : "Cabin concentration";
+            co2Gauge.SetLevel(known, known ? current / scale : 0, action, emergency,
+                "Scale 0–" + Number(scale, "#,0") + " ppm\n" + stateText, !hasCo2Thresholds);
+            co2Gauge.Element.tooltip = hasCo2Thresholds
+                ? "Scenario thresholds from Core: action " + Number(co2ActionPpm, "#,0")
+                    + " ppm; emergency " + Number(co2EmergencyPpm, "#,0") + " ppm."
+                : "Instrument range only. No safety or warning threshold has been configured.";
+        }
+
+        private void SetReserveGauge(ResourceGauge gauge, double current, double reference, string description)
+        {
+            bool known = hasHudResources && hasResourceReference && Finite(current) && current >= 0
+                && Finite(reference) && reference > 0;
+            double fraction = known ? current / reference : 0;
+            bool low = known && fraction <= 0.25;
+            bool empty = known && current <= 0;
+            string note = known ? Number(fraction * 100, "0") + "% of launch" : "Launch reference —";
+            gauge.SetLevel(known, fraction, low, empty,
+                note + "\n" + (empty ? "Reserve empty" : low ? "Low reserve" : description));
+            gauge.Element.tooltip = "Bar is relative to the committed launch reserve, not tank capacity or cabin oxygen percentage. Amber denotes 25% of launch reserve or less.";
+        }
+
+        private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 
         public void SetValidation(bool succeeded, string explanation, string rejectedCommand)
         {
@@ -491,6 +588,52 @@ namespace OutOfReach.Presentation.UI
         {
             element.pickingMode = PickingMode.Ignore;
             foreach (var child in element.Children()) IgnorePicking(child);
+        }
+
+        private sealed class ResourceGauge
+        {
+            public VisualElement Element { get; }
+            public Label Value { get; }
+            private readonly ProgressBar bar;
+            private readonly Label note;
+
+            public ResourceGauge(VisualElement parent, string title, string iconName, int resourceIndex)
+            {
+                Element = FlightBoardView.Element("instrument-gauge");
+                Element.AddToClassList("resource-cell");
+                if (resourceIndex >= 0) Element.name = "resource-" + resourceIndex;
+                var heading = FlightBoardView.Element("gauge-heading");
+                Element.Add(heading);
+                var icon = FlightBoardView.Element("gauge-icon");
+                icon.AddToClassList("gauge-icon-" + iconName);
+                for (int i = 0; i < 3; i++)
+                {
+                    var mark = FlightBoardView.Element("icon-mark");
+                    mark.AddToClassList("icon-mark-" + i);
+                    icon.Add(mark);
+                }
+                heading.Add(icon);
+                heading.Add(Text(title, "resource-label"));
+                Value = Text("—", "resource-value");
+                Element.Add(Value);
+                bar = new ProgressBar { lowValue = 0f, highValue = 1f, value = 0f, title = string.Empty };
+                bar.name = resourceIndex >= 0 ? "resource-bar-" + resourceIndex : "suit-oxygen-bar";
+                bar.AddToClassList("gauge-bar");
+                Element.Add(bar);
+                note = Text(string.Empty, "gauge-note");
+                Element.Add(note);
+                parent.Add(Element);
+            }
+
+            public void SetLevel(bool known, double fraction, bool low, bool critical, string detail, bool neutral = false)
+            {
+                bar.value = known ? (float)Math.Max(0, Math.Min(1, fraction)) : 0f;
+                Element.EnableInClassList("gauge-unknown", !known);
+                Element.EnableInClassList("gauge-neutral", neutral);
+                Element.EnableInClassList("gauge-low", low && !critical);
+                Element.EnableInClassList("gauge-critical", critical);
+                note.text = detail;
+            }
         }
 
         private sealed class EquipmentRow

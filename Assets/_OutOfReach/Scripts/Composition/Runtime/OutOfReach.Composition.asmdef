@@ -1,0 +1,25 @@
+{
+  "name": "OutOfReach.Composition",
+  "rootNamespace": "OutOfReach.Composition",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Simulation",
+    "OutOfReach.Interaction",
+    "OutOfReach.Cinematics",
+    "OutOfReach.Presentation.Lighting",
+    "OutOfReach.Audio",
+    "OutOfReach.UI",
+    "OutOfReach.UI.Report"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

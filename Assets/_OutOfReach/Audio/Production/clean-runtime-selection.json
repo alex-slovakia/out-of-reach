@@ -1,0 +1,107 @@
+{
+  "language": "en-US",
+  "selection": "approved clean male takes; scene bindings determine playback",
+  "clips": [
+    {
+      "id": "vo01_mc_briefing",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo01_mc_briefing.wav",
+      "sha256": "bed6c6917ede299d0498e065aca9cee31fc18ef3e7f48d8f737562b10bca94a1",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo02_ship_impact",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo02_ship_impact.wav",
+      "sha256": "a1281fa065b86717c30db1372f4f7ec9e1ef13c4f61e9efee1769f88eb7647cd",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo03_ship_power_restored",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo03_ship_power_restored.wav",
+      "sha256": "ab90b5504c3b2c8a5b1d49f143f019a2623259786aa1378ecc88ee32ea5ecd18",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Power system restored. Review remaining faults and reserve levels.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo04_ship_life_support_restored",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo04_ship_life_support_restored.wav",
+      "sha256": "65840aaf356e8c64045cccfa2a3b2783ccfb97c51c29a9782da3e0922b630858",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo05_ship_eva_prepare",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo05_ship_eva_prepare.wav",
+      "sha256": "7f6e4784ab2fe4bf6f23b05f15a94b90f58ce7f27cba32cb4604e37ed1a8757a",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Exterior repair required. Check your suit, secure your tether, and confirm your return route before cycling the airlock.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo06_ship_eva_exit",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo06_ship_eva_exit.wav",
+      "sha256": "321bca1217edd665a5f897069f0b7a08efa945c0b3e9ff09c552c467245fe06b",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Outer hatch open. Follow the marked tether route. Monitor your suit reserves and return through this airlock.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo07_ship_antenna_restored",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo07_ship_antenna_restored.wav",
+      "sha256": "489f795b6ffa044d946ef507c53b581a19661869c26dc9c0cac57036dbdd4d4d",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Antenna repair confirmed. Return to the communications console to prepare your transmission.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo08_ship_old_outbound",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo08_ship_old_outbound.wav",
+      "sha256": "b2f97f0a24bb78c8e50b5f34b6b054381a0bddb7b5697266e28760812dd6aa31",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Aurora Seven automated distress message. Debris impact recorded. Power and life support compromised. Requesting assistance.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo09_ship_buffer_diagnosis",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo09_ship_buffer_diagnosis.wav",
+      "sha256": "bf68e7463988fe81e18abd4b82e884e96d60e1a0970b2d975344b487f130fb8e",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo10_ship_transmission_sent",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo10_ship_transmission_sent.wav",
+      "sha256": "8f82d06145f72df2b0a8c2bf542f0747e0346fe149f57244468c838fb9eaedb4",
+      "voice": "Orus",
+      "take": "clean-v3",
+      "transcript": "Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    },
+    {
+      "id": "vo11_mc_reply_received",
+      "asset": "Assets/_OutOfReach/Audio/Voices/Clean/vo11_mc_reply_received.wav",
+      "sha256": "c0f36539700be122770150a710da988d1bc51885c90b4309d127bf6212eef895",
+      "voice": "Orus",
+      "take": "clean-v1-male-retained",
+      "transcript": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "note": "Clean take selected per user feedback. No heavy radio processing."
+    }
+  ],
+  "omitted": "vo12 new male take unavailable; existing female report take not selected",
+  "verification": "File hashes recorded; source clip import completed. Full integrated scene audition still required."
+}

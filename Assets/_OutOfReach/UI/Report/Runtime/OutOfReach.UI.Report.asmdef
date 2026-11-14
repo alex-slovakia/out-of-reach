@@ -1,0 +1,7 @@
+{
+  "name": "OutOfReach.UI.Report",
+  "rootNamespace": "OutOfReach.Presentation.UI.Report",
+  "references": ["OutOfReach.Contracts"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

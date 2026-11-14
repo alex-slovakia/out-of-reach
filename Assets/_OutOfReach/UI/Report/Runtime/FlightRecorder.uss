@@ -1,0 +1,101 @@
+.flight-recorder {
+    flex-grow: 1;
+    min-height: 0;
+    min-width: 0;
+    padding: 20px 28px 16px 28px;
+    background-color: #14191b;
+    color: #eee8dc;
+    -unity-font-definition: initial;
+    -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/SourceSans3-Regular.otf");
+    font-size: 20px;
+    border-width: 2px;
+    border-color: #535a59;
+    border-radius: 3px;
+}
+.recorder-hidden { display: none; }
+.recorder-masthead {
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    padding-bottom: 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: #606869;
+}
+.recorder-identifier {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #b6bcb9;
+    margin-right: 16px;
+    white-space: normal;
+}
+.recorder-status { font-size: 16px; color: #d7be85; white-space: normal; }
+.recorder-lost .recorder-status { color: #ffb1a4; }
+.recorder-recovery .recorder-status { color: #b2d0c8; }
+.recorder-scroll { flex-grow: 1; min-height: 0; min-width: 0; }
+.recorder-scroll .unity-scroll-view__content-container { padding-right: 12px; }
+.recorder-summary { padding-top: 22px; padding-bottom: 24px; flex-shrink: 0; }
+.recorder-headline {
+    font-size: 32px;
+    -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/SourceSans3-Semibold.otf");
+    white-space: normal;
+    margin-bottom: 8px;
+}
+.recorder-reason { white-space: normal; margin-bottom: 8px; }
+.recorder-context { color: #b6bcb9; font-size: 18px; white-space: normal; }
+.recorder-elapsed { color: #d7be85; font-size: 17px; white-space: normal; margin-top: 16px; }
+.recorder-section {
+    flex-shrink: 0;
+    padding-top: 16px;
+    padding-bottom: 20px;
+    border-top-width: 1px;
+    border-top-color: #4b5354;
+}
+.recorder-section:focus { border-top-color: #d7be85; }
+.recorder-section-heading { flex-direction: row; margin-bottom: 10px; }
+.recorder-number { color: #a3adaa; width: 34px; flex-shrink: 0; font-size: 17px; padding-top: 3px; }
+.recorder-section-title {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    white-space: normal;
+    font-size: 23px;
+    -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/SourceSans3-Semibold.otf");
+}
+.recorder-classification { color: #d7be85; font-size: 15px; white-space: normal; margin-bottom: 6px; }
+.recorder-fact { flex-direction: row; padding-top: 5px; padding-bottom: 5px; flex-shrink: 0; }
+.recorder-label { flex-basis: 32%; flex-shrink: 1; min-width: 0; margin-right: 20px; white-space: normal; color: #b6bcb9; }
+.recorder-value { flex-grow: 1; flex-basis: 0; min-width: 0; white-space: normal; }
+.recorder-empty { color: #b6bcb9; white-space: normal; margin-top: 8px; margin-bottom: 16px; }
+.recorder-footer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top-width: 1px;
+    border-top-color: #606869;
+}
+.recorder-navigation { flex-direction: row; flex-wrap: wrap; flex-grow: 1; }
+.recorder-button {
+    background-color: #20282a;
+    color: #eee8dc;
+    border-width: 1px;
+    border-color: #626c6b;
+    border-radius: 2px;
+    margin: 2px 8px 2px 0;
+    padding: 8px 12px;
+    min-height: 44px;
+    white-space: normal;
+    font-size: 18px;
+}
+.recorder-button:hover { background-color: #313d3f; }
+.recorder-button:focus { border-color: #efd19a; border-width: 2px; }
+.recorder-button:active { background-color: #465052; }
+.recorder-button:disabled { opacity: 0.45; }
+.recorder-restart { border-color: #b6a276; color: #f1d9a9; }
+.recorder-compact { padding: 12px 16px; }
+.recorder-compact .recorder-headline { font-size: 26px; }
+.recorder-compact .recorder-fact { flex-direction: column; }
+.recorder-compact .recorder-label { flex-basis: auto; margin-right: 0; margin-bottom: 2px; font-size: 17px; }
+.recorder-compact .recorder-value { flex-basis: auto; }
