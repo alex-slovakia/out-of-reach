@@ -1,0 +1,270 @@
+using System;
+using OutOfReach.Contracts;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace OutOfReach.Presentation.UI
+{
+    /// <summary>Contract-bound planner and reserve display. Never advances or owns mission state.</summary>
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(UIDocument))]
+    public sealed class MissionFlightBoard : MonoBehaviour, IDisposable
+    {
+        [SerializeField] private StyleSheet styleSheet;
+
+        private IMissionPlanner planner;
+        private IResourceSystem resources;
+        private IGameState state;
+        private IMissionEventBus events;
+        private ISimulationClock clock;
+        private IPlanningDeadline deadline;
+        private FlightBoardView view;
+        private bool subscribed;
+        private bool disposed;
+        private string commandExplanation = string.Empty;
+        private string subtitleText = string.Empty;
+        private string subtitleSpeaker = string.Empty;
+
+        public void Configure(IMissionPlanner missionPlanner, IResourceSystem resourceSystem,
+            IGameState gameState, IMissionEventBus eventBus)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            if (missionPlanner == null) throw new ArgumentNullException(nameof(missionPlanner));
+            if (resourceSystem == null) throw new ArgumentNullException(nameof(resourceSystem));
+            if (gameState == null) throw new ArgumentNullException(nameof(gameState));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+
+            Unsubscribe();
+            if (state != null && !ReferenceEquals(state, gameState))
+            {
+                // Rebind timing explicitly for a replacement session; never retain its predecessor's clock.
+                clock = null;
+                deadline = null;
+            }
+            planner = missionPlanner;
+            resources = resourceSystem;
+            state = gameState;
+            events = eventBus;
+            commandExplanation = string.Empty;
+            ClearSubtitle();
+            if (!isActiveAndEnabled) return;
+            CreateView();
+            Refresh(); // Read current snapshots before listening, including mid-mission binding.
+            Subscribe();
+        }
+
+        /// <summary>Optional read-only timing. Null inputs hide the unavailable presentation.</summary>
+        public void ConfigureTiming(ISimulationClock clock, IPlanningDeadline deadline)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            this.clock = clock;
+            this.deadline = deadline;
+            RefreshTiming();
+        }
+
+        /// <summary>The audio presenter owns when this cue begins and ends. No local timer is started.</summary>
+        public void ShowSubtitle(string text, string speakerLabel)
+        {
+            if (disposed) return;
+            subtitleText = text ?? string.Empty;
+            subtitleSpeaker = speakerLabel ?? string.Empty;
+            view?.ShowSubtitle(subtitleText, subtitleSpeaker);
+        }
+
+        public void ClearSubtitle()
+        {
+            subtitleText = string.Empty;
+            subtitleSpeaker = string.Empty;
+            view?.ClearSubtitle();
+        }
+
+        private void LateUpdate()
+        {
+            // These interfaces have no change events. Read Core's values after its frame update;
+            // never integrate deltaTime, decrement a deadline or infer elapsed simulation time.
+            if (!disposed) RefreshTiming();
+        }
+
+        private void OnEnable()
+        {
+            if (disposed) return;
+            CreateView();
+            Refresh();
+            Subscribe();
+        }
+
+        private void Start()
+        {
+            // UIDocument may be enabled later in a composition root's initialization order.
+            if (!disposed && view == null)
+            {
+                CreateView();
+                Refresh();
+            }
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
+            ReleaseView();
+        }
+
+        private void OnDestroy() => Dispose();
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
+            Unsubscribe();
+            ReleaseView();
+            planner = null;
+            resources = null;
+            state = null;
+            events = null;
+            clock = null;
+            deadline = null;
+            subtitleText = string.Empty;
+            subtitleSpeaker = string.Empty;
+        }
+
+        private void CreateView()
+        {
+            if (view != null) return;
+            var document = GetComponent<UIDocument>();
+            var root = document.rootVisualElement;
+            if (root == null) return;
+            view = new FlightBoardView(root, styleSheet);
+            view.QuantityChangeRequested += ChangeQuantity;
+            view.LaunchRequested += Launch;
+            view.ShowSubtitle(subtitleText, subtitleSpeaker);
+        }
+
+        private void ReleaseView()
+        {
+            if (view == null) return;
+            view.QuantityChangeRequested -= ChangeQuantity;
+            view.LaunchRequested -= Launch;
+            view.Dispose();
+            view = null;
+        }
+
+        private void Subscribe()
+        {
+            if (subscribed || events == null || !isActiveAndEnabled || disposed) return;
+            events.PhaseChanged += OnPhaseChanged;
+            events.ResourceChanged += OnResourceChanged;
+            events.MissionEnded += OnMissionEnded;
+            subscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (!subscribed) return;
+            events.PhaseChanged -= OnPhaseChanged;
+            events.ResourceChanged -= OnResourceChanged;
+            events.MissionEnded -= OnMissionEnded;
+            subscribed = false;
+        }
+
+        private void Refresh()
+        {
+            if (view == null) return;
+            if (planner == null || resources == null || state == null)
+            {
+                view.ShowUnbound();
+                return;
+            }
+
+            bool planning = state.Phase == GamePhase.Planning;
+            view.ShowPlanning(planning);
+            view.SetPhase(state.Phase, state.Outcome);
+            if (planning)
+            {
+                // Draft is a fresh authoritative snapshot after each command. Do not retain it as state.
+                var draft = planner.Draft;
+                var validation = draft.Validate();
+                view.SetEquipment(planner.Catalog, draft.Equipment, true);
+                view.SetConstraints(draft.TotalMassKg, draft.MassLimitKg,
+                    draft.TotalBudgetCredits, draft.BudgetLimitCredits,
+                    draft.RequiredPowerWatts, draft.AvailablePowerWatts);
+                view.SetPlanningResources(draft.InitialResources);
+                view.SetValidation(validation.Succeeded, validation.Explanation, commandExplanation);
+            }
+            else
+            {
+                view.SetHudResources(resources.Snapshot);
+            }
+            RefreshTiming();
+        }
+
+        private void RefreshTiming()
+        {
+            if (view == null) return;
+            bool bound = state != null && planner != null;
+            bool hasClock = bound && clock != null;
+            bool hasDeadline = bound && deadline != null;
+            view.SetSimulationTiming(hasClock, hasClock && clock.IsPaused, hasClock ? clock.TimeScale : 0);
+            view.SetPlanningTiming(hasDeadline, hasDeadline && deadline.IsEnabled,
+                hasDeadline ? deadline.RemainingRealSeconds : 0, hasClock && clock.IsPaused,
+                hasDeadline ? deadline.LastValidConfiguration : null, bound ? planner.Catalog : null);
+            view.SetDeadlineFallback(hasDeadline && state.Phase != GamePhase.Planning
+                && deadline.UsedLastValidLoadoutAtDeadline);
+        }
+
+        private void ChangeQuantity(string equipmentId, int delta)
+        {
+            if (planner == null || state == null || state.Phase != GamePhase.Planning) return;
+            int quantity = 0;
+            var draft = planner.Draft;
+            foreach (var selection in draft.Equipment)
+                if (selection.EquipmentId == equipmentId) quantity = selection.Quantity;
+
+            if ((delta > 0 && quantity == int.MaxValue) || (delta < 0 && quantity == 0)) return;
+            var result = planner.TrySetEquipment(equipmentId, quantity + delta);
+            commandExplanation = result.Succeeded ? string.Empty : Explain(result);
+            Refresh();
+        }
+
+        private void Launch()
+        {
+            if (planner == null || state == null || state.Phase != GamePhase.Planning) return;
+            var validation = planner.Draft.Validate();
+            if (!validation.Succeeded)
+            {
+                commandExplanation = Explain(validation);
+                Refresh();
+                return;
+            }
+            var result = planner.TryLaunch();
+            commandExplanation = result.Succeeded ? string.Empty : Explain(result);
+            Refresh();
+        }
+
+        private static string Explain(CommandResult result)
+        {
+            return string.IsNullOrWhiteSpace(result.Explanation)
+                ? "This action is unavailable. Review the mission constraints."
+                : result.Explanation;
+        }
+
+        private void OnPhaseChanged(PhaseChanged message)
+        {
+            commandExplanation = string.Empty;
+            Refresh();
+        }
+
+        private void OnResourceChanged(ResourceChanged message)
+        {
+            if (view != null && state != null && state.Phase != GamePhase.Planning)
+                view.SetHudResources(message.Snapshot);
+        }
+
+        private void OnMissionEnded(MissionEnded message)
+        {
+            Refresh();
+            if (view == null) return;
+            view.SetHudResources(message.FinalResources);
+            view.SetOutcomeReason(message.Reason);
+        }
+    }
+}
