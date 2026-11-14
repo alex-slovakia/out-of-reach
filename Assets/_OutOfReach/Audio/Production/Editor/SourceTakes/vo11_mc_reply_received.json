@@ -1,0 +1,16 @@
+{
+  "cue": "vo11_mc_reply_received",
+  "voice": "Orus",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 217920,
+  "duration_seconds": 9.08,
+  "sha256": "d6dda20ba356866aaca4caf6c71bdd497cf5aace4a59c6ce04075c9212a0b409",
+  "transcript": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+  "style": "A grounded professional mission controller in an intimate cinematic space survival drama. Mature, low-register, calm, human and quietly reassuring. Clear neutral American English, deliberate natural pauses, about 145 words per minute. Speak with restrained feeling, not a trailer announcer. Dry close microphone, no music, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

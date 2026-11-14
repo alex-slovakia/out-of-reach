@@ -1,0 +1,16 @@
+{
+  "cue": "vo06_ship_eva_exit",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 188160,
+  "duration_seconds": 7.84,
+  "sha256": "2d045324c6e9978c4d495d96ba2f63adb36376a8178d5d379a6578707190896a",
+  "transcript": "Outer hatch open. Follow the marked tether route. Monitor your suit reserves and return through this airlock.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

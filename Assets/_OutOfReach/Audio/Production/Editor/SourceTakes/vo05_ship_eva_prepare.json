@@ -1,0 +1,16 @@
+{
+  "cue": "vo05_ship_eva_prepare",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 215040,
+  "duration_seconds": 8.96,
+  "sha256": "6387e495f35878a02f6271678c066e86796179234f9707cf4a5cc82c9e28c5c7",
+  "transcript": "Exterior repair required. Check your suit, secure your tether, and confirm your return route before cycling the airlock.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

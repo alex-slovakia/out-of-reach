@@ -1,0 +1,232 @@
+{
+  "review_kind": "offline automated speech recognition; not human listening",
+  "model": "locally cached faster-whisper large-v3",
+  "downloaded_models": false,
+  "conditioning": "language=en, beam_size=5, temperature=0, condition_on_previous_text=False; no expected-text prompt",
+  "source_review": [
+    {
+      "cue": "vo01_mc_briefing",
+      "sha256": "413eaffa5eea649d06349006ca2a93b013a4fb25edeae61a8e9e57a4bb3cb526",
+      "expected": "Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+      "transcribed": "Aurora 7, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.44,
+      "rms_dbfs": -20.17,
+      "clipped_samples": 0,
+      "duration_seconds": 8.4,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo02_ship_impact",
+      "sha256": "c77d0c858f0f20942e976967e6e86bdd20af2da55175f15ba2c8fb1f87203cf7",
+      "expected": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "transcribed": "PowerFault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "exact_normalized_words": false,
+      "peak_dbfs": -1.8,
+      "rms_dbfs": -17.61,
+      "clipped_samples": 0,
+      "duration_seconds": 7.44,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo03_ship_power_restored",
+      "sha256": "2b36d71795cf26dcdfb8ad1de5b79dcc95960667a5b37451b7c789bc2d9cd7cf",
+      "expected": "Power system restored. Review remaining faults and reserve levels.",
+      "transcribed": "Power System restored. Review remaining faults and reserve levels.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -2.37,
+      "rms_dbfs": -18.28,
+      "clipped_samples": 0,
+      "duration_seconds": 4.92,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo04_ship_life_support_restored",
+      "sha256": "611f7dabffd5878e657daeb1f76635c3fc8f8496721f4318b6a1d5c5ee6d03b5",
+      "expected": "Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.",
+      "transcribed": "Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -2.1,
+      "rms_dbfs": -18.06,
+      "clipped_samples": 0,
+      "duration_seconds": 8.24,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo05_ship_eva_prepare",
+      "sha256": "6387e495f35878a02f6271678c066e86796179234f9707cf4a5cc82c9e28c5c7",
+      "expected": "Exterior repair required. Check your suit, secure your tether, and confirm your return route before cycling the airlock.",
+      "transcribed": "Exterior repair required, check your suit, secure your tether, and confirm your return route before cycling the airlock.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.3,
+      "rms_dbfs": -17.3,
+      "clipped_samples": 0,
+      "duration_seconds": 8.96,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo06_ship_eva_exit",
+      "sha256": "2d045324c6e9978c4d495d96ba2f63adb36376a8178d5d379a6578707190896a",
+      "expected": "Outer hatch open. Follow the marked tether route. Monitor your suit reserves and return through this airlock.",
+      "transcribed": "Outer hatch open. Follow the marked tether route, monitor your suit reserves, and return through this airlock.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.35,
+      "rms_dbfs": -16.04,
+      "clipped_samples": 0,
+      "duration_seconds": 7.84,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo07_ship_antenna_restored",
+      "sha256": "71e98128478d29035562a013643de720acdeaf19ef7fae96a3403174aed895b0",
+      "expected": "Antenna repair confirmed. Return to the communications console to prepare your transmission.",
+      "transcribed": "Antenna Repair confirmed. Return to the communications console to prepare your transmission.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -3.59,
+      "rms_dbfs": -20.07,
+      "clipped_samples": 0,
+      "duration_seconds": 6.32,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo08_ship_old_outbound",
+      "sha256": "c61be9cd53cc71c05d849af387ad7e5cf99da7d1a7c339d15ec6176629f3e08d",
+      "expected": "Aurora Seven automated distress message. Debris impact recorded. Power and life support compromised. Requesting assistance.",
+      "transcribed": "Aurora 7. Automated Distress Message. Debris Impact Recorded. Power and Life Support Compromised. Requesting assistance.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.22,
+      "rms_dbfs": -18.48,
+      "clipped_samples": 0,
+      "duration_seconds": 9.4,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo09_ship_buffer_diagnosis",
+      "sha256": "df8d72ae022f950dcb0519a85c605b91b5ab824e8e7b1ebaac1002fea341bacd",
+      "expected": "Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.",
+      "transcribed": "Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -2.13,
+      "rms_dbfs": -17.81,
+      "clipped_samples": 0,
+      "duration_seconds": 9.32,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo10_ship_transmission_sent",
+      "sha256": "0931156253012b9ecc169cac4a87dbe653b51c0e895e42faf8427b4736a89c23",
+      "expected": "Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.",
+      "transcribed": "Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.35,
+      "rms_dbfs": -18.08,
+      "clipped_samples": 0,
+      "duration_seconds": 8.28,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo11_mc_reply_received",
+      "sha256": "d6dda20ba356866aaca4caf6c71bdd497cf5aace4a59c6ce04075c9212a0b409",
+      "expected": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "transcribed": "Aurora 7, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -1.13,
+      "rms_dbfs": -18.68,
+      "clipped_samples": 0,
+      "duration_seconds": 9.08,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    },
+    {
+      "cue": "vo12_ship_report_log",
+      "sha256": "14c11bdb989a1bb58c0f44e2664b8d5adf361eb43762c22d16f8c282da73c8ee",
+      "expected": "Mission log complete. Review your equipment choices, resource use, and mission outcome.",
+      "transcribed": "Mission log complete. Review your equipment choices, resource use, and mission outcome.",
+      "exact_normalized_words": true,
+      "peak_dbfs": -2.48,
+      "rms_dbfs": -18.28,
+      "clipped_samples": 0,
+      "duration_seconds": 6.48,
+      "review": "local cached faster-whisper small; automated transcription, not human listening"
+    }
+  ],
+  "large_model_checks": [
+    {
+      "cue": "vo02_ship_impact",
+      "variant": "source",
+      "path": "Production/Editor/SourceTakes/vo02_ship_impact.wav",
+      "sha256": "c77d0c858f0f20942e976967e6e86bdd20af2da55175f15ba2c8fb1f87203cf7",
+      "expected": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "transcribed": "PowerFault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "exact_normalized_words": false,
+      "differences": [
+        {
+          "operation": "replace",
+          "expected": [
+            "power",
+            "fault"
+          ],
+          "transcribed": [
+            "powerfault"
+          ]
+        }
+      ],
+      "human_listening_verified": false,
+      "spacing_only_difference": true
+    },
+    {
+      "cue": "vo01_mc_briefing",
+      "variant": "radio",
+      "path": "Voices/Radio/vo01_mc_briefing.wav",
+      "sha256": "63b630c3e29de2f88475986ba6ec7dc49dbb4fba9daa850205af794aa5890f6b",
+      "expected": "Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+      "transcribed": "Aurora 7, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+      "exact_normalized_words": true,
+      "differences": [],
+      "human_listening_verified": false,
+      "spacing_only_difference": false
+    },
+    {
+      "cue": "vo11_mc_reply_received",
+      "variant": "radio",
+      "path": "Voices/Radio/vo11_mc_reply_received.wav",
+      "sha256": "3aff2d5481ced3c1059ea86a9a082ac7458e48bc20a9f8b73f453b297fa4753a",
+      "expected": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "transcribed": "Aurora 7, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "exact_normalized_words": true,
+      "differences": [],
+      "human_listening_verified": false,
+      "spacing_only_difference": false
+    }
+  ],
+  "human_listening_verified": false,
+  "all_source_hashes_still_match": true,
+  "source_summary": {
+    "cue_count": 12,
+    "small_model_exact_normalized": 11,
+    "small_model_mismatches": [
+      {
+        "cue": "vo02_ship_impact",
+        "differences": [
+          {
+            "operation": "replace",
+            "expected": [
+              "power",
+              "fault"
+            ],
+            "transcribed": [
+              "powerfault"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "review_findings": [
+    "12 source cues reviewed; 11 exact normalized word matches with cached small model.",
+    "Only source mismatch: both small and large-v3 emit PowerFault versus Power fault; concatenated letters and all subsequent words match. This is a word-boundary ASR difference, not proof of a spoken content error.",
+    "Both MC radio variants exactly match normalized expected words with cached large-v3; Aurora 7 versus Aurora Seven is numeric formatting.",
+    "Final radio line Rescue is not yet confirmed is preserved.",
+    "Automated ASR does not establish human listening quality, tone or pronunciation. No human listening performed."
+  ],
+  "path_base": "Assets/_OutOfReach/Audio"
+}

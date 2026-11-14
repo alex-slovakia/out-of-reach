@@ -1,0 +1,16 @@
+{
+  "cue": "vo04_ship_life_support_restored",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 197760,
+  "duration_seconds": 8.24,
+  "sha256": "611f7dabffd5878e657daeb1f76635c3fc8f8496721f4318b6a1d5c5ee6d03b5",
+  "transcript": "Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

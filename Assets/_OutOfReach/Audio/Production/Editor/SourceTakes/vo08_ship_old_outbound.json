@@ -1,0 +1,16 @@
+{
+  "cue": "vo08_ship_old_outbound",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 225600,
+  "duration_seconds": 9.4,
+  "sha256": "c61be9cd53cc71c05d849af387ad7e5cf99da7d1a7c339d15ec6176629f3e08d",
+  "transcript": "Aurora Seven automated distress message. Debris impact recorded. Power and life support compromised. Requesting assistance.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

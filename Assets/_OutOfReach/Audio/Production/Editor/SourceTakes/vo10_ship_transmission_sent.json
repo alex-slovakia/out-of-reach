@@ -1,0 +1,16 @@
+{
+  "cue": "vo10_ship_transmission_sent",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 198720,
+  "duration_seconds": 8.28,
+  "sha256": "0931156253012b9ecc169cac4a87dbe653b51c0e895e42faf8427b4736a89c23",
+  "transcript": "Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

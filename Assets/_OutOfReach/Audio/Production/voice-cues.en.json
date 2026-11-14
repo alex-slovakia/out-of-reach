@@ -1,0 +1,30 @@
+{
+  "language": "en-US",
+  "status": "production_script_not_runtime_integration",
+  "ship_name_spoken": "Aurora Seven",
+  "model": "gemini-3.8-flash-tts",
+  "voices": {
+    "mission_control": {
+      "voice": "Orus",
+      "style": "A grounded professional mission controller in an intimate cinematic space survival drama. Mature, low-register, calm, human and quietly reassuring. Clear neutral American English, deliberate natural pauses, about 145 words per minute. Speak with restrained feeling, not a trailer announcer. Dry close microphone, no music, no radio filter, no sound effects. Read the provided transcript exactly."
+    },
+    "ship": {
+      "voice": "Kore",
+      "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly."
+    }
+  },
+  "cues": [
+    {"id":"vo01_mc_briefing","speaker":"mission_control","text":"Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.","gate":"Intro; previously received recording before accident","context_label":"PREVIOUSLY RECEIVED — MISSION CONTROL"},
+    {"id":"vo02_ship_impact","speaker":"ship","text":"Power fault. Life support degraded. Communications offline. Check engineering diagnostics.","gate":"CinematicRequested Impact after Core confirms damage"},
+    {"id":"vo03_ship_power_restored","speaker":"ship","text":"Power system restored. Review remaining faults and reserve levels.","gate":"Confirmed Power repair, once; not repeated snapshot reads"},
+    {"id":"vo04_ship_life_support_restored","speaker":"ship","text":"Life support restored. Stored oxygen and cabin carbon dioxide remain under observation. Check your reserves.","gate":"Confirmed LifeSupport repair, once; no physiological safety guarantee"},
+    {"id":"vo05_ship_eva_prepare","speaker":"ship","text":"Exterior repair required. Check your suit, secure your tether, and confirm your return route before cycling the airlock.","gate":"Preparation instruction only; does not assert suit readiness or permit door opening"},
+    {"id":"vo06_ship_eva_exit","speaker":"ship","text":"Outer hatch open. Follow the marked tether route. Monitor your suit reserves and return through this airlock.","gate":"Authoritative Eva phase and OuterOpen airlock state; no gate authority in audio"},
+    {"id":"vo07_ship_antenna_restored","speaker":"ship","text":"Antenna repair confirmed. Return to the communications console to prepare your transmission.","gate":"Confirmed Antenna repair, once; no claim signal already sent"},
+    {"id":"vo08_ship_old_outbound","speaker":"ship","text":"Aurora Seven automated distress message. Debris impact recorded. Power and life support compromised. Requesting assistance.","gate":"Optional FalseSignal local buffer playback only","context_label":"LOCAL BUFFER — OLD OUTBOUND RECORDING"},
+    {"id":"vo09_ship_buffer_diagnosis","speaker":"ship","text":"Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.","gate":"Optional FalseSignal diagnosis while authoritative communication state is not ReplyReceived"},
+    {"id":"vo10_ship_transmission_sent","speaker":"ship","text":"Distress transmission sent. Awaiting Earth reply. Estimated remaining time is shown on the communications display.","gate":"Successful TryTransmit and confirmed AwaitingReply; rejected/repeated send remains silent"},
+    {"id":"vo11_mc_reply_received","speaker":"mission_control","text":"Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.","gate":"CommunicationChanged.State equals ReplyReceived and mission is not Lost; never a presentation timer"},
+    {"id":"vo12_ship_report_log","speaker":"ship","text":"Mission log complete. Review your equipment choices, resource use, and mission outcome.","gate":"Report only; recorded non-live log playback, valid for either outcome","context_label":"MISSION LOG"}
+  ]
+}

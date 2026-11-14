@@ -1,0 +1,16 @@
+{
+  "cue": "vo12_ship_report_log",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 155520,
+  "duration_seconds": 6.48,
+  "sha256": "14c11bdb989a1bb58c0f44e2664b8d5adf361eb43762c22d16f8c282da73c8ee",
+  "transcript": "Mission log complete. Review your equipment choices, resource use, and mission outcome.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

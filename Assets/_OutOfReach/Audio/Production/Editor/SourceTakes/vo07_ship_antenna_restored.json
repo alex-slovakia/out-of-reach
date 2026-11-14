@@ -1,0 +1,16 @@
+{
+  "cue": "vo07_ship_antenna_restored",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 151680,
+  "duration_seconds": 6.32,
+  "sha256": "71e98128478d29035562a013643de720acdeaf19ef7fae96a3403174aed895b0",
+  "transcript": "Antenna repair confirmed. Return to the communications console to prepare your transmission.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

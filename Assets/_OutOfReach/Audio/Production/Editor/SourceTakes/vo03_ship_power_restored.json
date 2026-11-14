@@ -1,0 +1,16 @@
+{
+  "cue": "vo03_ship_power_restored",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 118080,
+  "duration_seconds": 4.92,
+  "sha256": "2b36d71795cf26dcdfb8ad1de5b79dcc95960667a5b37451b7c789bc2d9cd7cf",
+  "transcript": "Power system restored. Review remaining faults and reserve levels.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

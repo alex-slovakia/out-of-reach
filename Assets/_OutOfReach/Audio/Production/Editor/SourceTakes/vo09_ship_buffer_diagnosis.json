@@ -1,0 +1,16 @@
+{
+  "cue": "vo09_ship_buffer_diagnosis",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 223680,
+  "duration_seconds": 9.32,
+  "sha256": "df8d72ae022f950dcb0519a85c605b91b5ab824e8e7b1ebaac1002fea341bacd",
+  "transcript": "Playback source identified. Local outgoing buffer. This is our earlier recording. No Earth reply has been received.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

@@ -1,0 +1,16 @@
+{
+  "cue": "vo01_mc_briefing",
+  "voice": "Orus",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 201600,
+  "duration_seconds": 8.4,
+  "sha256": "413eaffa5eea649d06349006ca2a93b013a4fb25edeae61a8e9e57a4bb3cb526",
+  "transcript": "Aurora Seven, Mission Control. Your research plan is approved. Check your systems and reserve margins. We'll be listening.",
+  "style": "A grounded professional mission controller in an intimate cinematic space survival drama. Mature, low-register, calm, human and quietly reassuring. Clear neutral American English, deliberate natural pauses, about 145 words per minute. Speak with restrained feeling, not a trailer announcer. Dry close microphone, no music, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}

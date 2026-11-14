@@ -1,0 +1,16 @@
+{
+  "cue": "vo02_ship_impact",
+  "voice": "Kore",
+  "model": "gemini-3.8-flash-tts",
+  "channels": 1,
+  "sample_rate": 24000,
+  "sample_width_bytes": 2,
+  "frames": 178560,
+  "duration_seconds": 7.44,
+  "sha256": "c77d0c858f0f20942e976967e6e86bdd20af2da55175f15ba2c8fb1f87203cf7",
+  "transcript": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+  "style": "A clear professional onboard systems voice for a grounded cinematic space survival drama. Calm, precise, composed and concise. Neutral American English, about 150 words per minute, short natural pauses between status statements. Dry close microphone, no music, no distortion, no radio filter, no sound effects. Read the provided transcript exactly.",
+  "source": "Google Gemini TTS",
+  "transcript_audited": false,
+  "listening_audited": false
+}
