@@ -3,9 +3,9 @@
  "units": "metres, Unity axes (x right, y up, z forward)",
  "modules": {
   "Cockpit": {
-   "triangles": 76184,
+   "triangles": 78504,
    "per_material": {
-    "A7_Aluminum": 20292,
+    "A7_Aluminum": 21012,
     "A7_AnodizedBlack": 8636,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 11640,
@@ -28,7 +28,7 @@
     "A7_PaintGraphite": 10788,
     "A7_PaintGray": 792,
     "A7_PaintRed": 328,
-    "A7_PaintWhite": 6544,
+    "A7_PaintWhite": 8144,
     "A7_PaintYellow": 448,
     "A7_QuiltWhite": 176,
     "A7_Rubber": 5120,
@@ -51,9 +51,9 @@
    ]
   },
   "Engineering": {
-   "triangles": 76182,
+   "triangles": 77342,
    "per_material": {
-    "A7_Aluminum": 27412,
+    "A7_Aluminum": 27772,
     "A7_AnodizedBlack": 4176,
     "A7_AnodizedBlue": 496,
     "A7_AnodizedClear": 9384,
@@ -76,7 +76,7 @@
     "A7_PaintGraphite": 3124,
     "A7_PaintGray": 1192,
     "A7_PaintRed": 48,
-    "A7_PaintWhite": 3712,
+    "A7_PaintWhite": 4512,
     "A7_PaintYellow": 88,
     "A7_PlasticWhite": 1584,
     "A7_QuiltWhite": 132,
@@ -101,27 +101,28 @@
    ]
   },
   "Storage": {
-   "triangles": 52862,
+   "triangles": 79240,
    "per_material": {
-    "A7_Aluminum": 13592,
-    "A7_AnodizedBlack": 1072,
+    "A7_Aluminum": 16420,
+    "A7_AnodizedBlack": 2728,
     "A7_AnodizedBlue": 16,
-    "A7_AnodizedClear": 11696,
+    "A7_AnodizedClear": 14072,
     "A7_AnodizedGold": 16,
-    "A7_CableBlue": 4064,
+    "A7_CableBlue": 32,
     "A7_CableRed": 32,
     "A7_CableYellow": 32,
-    "A7_Decals": 354,
+    "A7_Decals": 340,
     "A7_Deck": 352,
-    "A7_FabricStrap": 6120,
-    "A7_FabricWhite": 1344,
+    "A7_FabricCanvas": 20736,
+    "A7_FabricStrap": 5436,
+    "A7_FabricWhite": 24,
     "A7_Grate": 96,
     "A7_LedGreen": 48,
     "A7_LightPanel": 24,
     "A7_PaintAmber": 4768,
-    "A7_PaintGraphite": 5700,
-    "A7_PaintGray": 528,
-    "A7_PaintWhite": 1960,
+    "A7_PaintGraphite": 6124,
+    "A7_PaintGray": 1584,
+    "A7_PaintWhite": 5312,
     "A7_QuiltWhite": 440,
     "A7_Rubber": 608
    },
@@ -142,9 +143,9 @@
    ]
   },
   "Airlock": {
-   "triangles": 31348,
+   "triangles": 31464,
    "per_material": {
-    "A7_Aluminum": 11392,
+    "A7_Aluminum": 11428,
     "A7_AnodizedBlack": 2428,
     "A7_AnodizedBlue": 16,
     "A7_AnodizedClear": 6124,
@@ -164,7 +165,7 @@
     "A7_PaintGraphite": 1576,
     "A7_PaintGray": 408,
     "A7_PaintRed": 208,
-    "A7_PaintWhite": 1236,
+    "A7_PaintWhite": 1316,
     "A7_QuiltWhite": 220,
     "A7_Rubber": 2244,
     "A7_Screens": 4
@@ -1244,7 +1245,7 @@
    ]
   }
  ],
- "triangles_total": 288814,
+ "triangles_total": 318788,
  "materials_used": [
   "A7_Aluminum",
   "A7_AnodizedBlack",
@@ -1259,6 +1260,7 @@
   "A7_Chrome",
   "A7_Decals",
   "A7_Deck",
+  "A7_FabricCanvas",
   "A7_FabricDark",
   "A7_FabricStrap",
   "A7_FabricWhite",

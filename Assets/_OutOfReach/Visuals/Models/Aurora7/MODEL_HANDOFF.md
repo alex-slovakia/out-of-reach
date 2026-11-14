@@ -7,8 +7,8 @@ Scope written: only `Assets/_OutOfReach/Visuals/Models.meta` and `Assets/_OutOfR
 (`9878304`) is followed by one focused model and material pass. Only the engineering bay was compared with
 the reference; palette, ribs, deck, overhead services and handrails are shared kit parts, so the other
 compartments received them without separate work. The high-gain antenna (asset A07) followed as a second
-step, because the EVA repair had nothing to repair before it, and the airlock (asset A05) was then compared
-with R04. Cockpit, stowage and the exterior were not compared with their views yet.
+step, because the EVA repair had nothing to repair before it; the airlock (asset A05) was then compared
+with R04 and the stowage (asset A04) with R03. Cockpit and the exterior were not compared with their views yet.
 
 ## What is delivered
 
@@ -29,7 +29,8 @@ practice. Everything is function first:
     manifold with an outlet header, sample line, gauge and sensor, a status display and a latched drawer.
   - Three composite pressure vessels, tool board, avionics, utility and close-out bays; the EPS-2 panel as the
     bus control panel on the wall beside the power rack.
-- **Logistics:** soft stowage (cargo transfer bags behind bungee restraints) and hard lockers.
+- **Logistics (asset A04):** the port wall carries strapped soft cargo bags over hard transit cases, the
+  starboard wall standard lockers with bar pulls.
 - **Airlock (asset A05):** sealed suit locker with a glazed door and the suit inside, a pressure station
   beside the outer hatch (dial with a driven pointer, display, two keys), intercom and conduits on the aft
   bulkhead, umbilical/pressure-control rack with depress valve, two-leaf sliding pressure doors with pressed
@@ -71,6 +72,19 @@ from just inside the inner hatch towards the outer hatch and the starboard wall.
 | Sealed white suit locker with the suit behind glass | Done, on the starboard wall inside the blockout's suit-station envelope. On the board it stands beside the hatch; here it is seen at an angle. The suit is a simple figure, not a sculpted one. |
 | Conduits and wall boxes left of the hatch | Done: two conduits on the bulkhead stiffeners and an intercom. |
 
+## Stowage against R03
+
+`Previews/A7_unity_urp_storage_r03.png` is the matched view: 1.65 m eye height, 90° horizontal field of view,
+from just inside the forward hatch along the port wall.
+
+| R03 | Model |
+|---|---|
+| Soft, pillowed bags with webbing straps and buckles | Done: 18 generated bags in three sizes on the port wall. Each has a pillowed body drawn in under two girth straps, buckles, a grab loop and a contents label. |
+| Bags stacked on hard cases | Done: transit cases on the deck rail, three rows of bags above, each row on a deck plate behind a webbing restraint. |
+| Wall of standard lockers with recessed pulls | Done on the starboard wall: 24 doors with pressed panels and bar pulls. The same door is used in every other compartment. |
+| Curved hull wall with arched ribs behind the cargo | **Not matched on purpose:** both walls are filled by the stowage racks inside the blockout's locker envelopes, and the room keeps the rectangular V01 section. |
+| Creases, panel seams and wear on the canvas | Not done. |
+
 ## Folder map
 
 | Path | Content |
@@ -79,7 +93,7 @@ from just inside the inner hatch towards the outer hatch and the starboard wall.
 | `Meshes/A7_*.fbx` | Static modules: Cockpit, Engineering, Storage, Airlock, Exterior. Groups with their own pivots: Doors (four leaves), Parts (engineering parts and helper points), AirlockParts, ExteriorParts (antenna gimbal and its helper point). Collision. |
 | `Meshes/a7_model_report.json` | Blender-side counts, bounds, part origins and helper points (Unity axes). |
 | `Meshes/a7_unity_import_report.json` | Unity-side counts, bounds and validation result. |
-| `Materials/*.mat` | 39 URP Lit materials created from `Source/a7_materials.json`. |
+| `Materials/*.mat` | 40 URP Lit materials created from `Source/a7_materials.json`. |
 | `Textures/` | 11 tiling PBR sets (BaseColor, Normal, MODS), the label atlas and the display atlas, with their JSON maps. |
 | `Props/ServicePanel/` | EPS-2 panel from the prop author's chat (its own README, licences and previews). The FBX is its author's second export, which holds no local path; the saved Blender file is left out for the same reason, as its README recommends. |
 | `Props/AntennaReflector/` | Reflector assembly of the antenna from the same chat, imported unchanged (manifest 39 of 39). It replaces the procedural reflector of `c1fa9c2` inside the same envelope. |
@@ -184,10 +198,10 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 
 | Object | Triangles | Materials | Bounds min → max (m) |
 |---|---:|---:|---|
-| `A7_Cockpit` | 76,184 | 28 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
-| `A7_Engineering` | 76,166 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
-| `A7_Storage` | 52,862 | 21 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
-| `A7_Airlock` | 31,348 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
+| `A7_Cockpit` | 78,504 | 28 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
+| `A7_Engineering` | 77,326 | 30 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
+| `A7_Storage` | 79,240 | 22 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
+| `A7_Airlock` | 31,464 | 24 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
 | `A7_Exterior` | 29,556 | 16 | (−12.37, −2.02, −3.59) → (12.37, 5.14, 23.4) |
 | Door leaves (4) | 12,352 | 6–8 | at the two hatch planes |
 | Engineering parts (7 meshes) | 5,248 | 1–4 | inside the two service racks |
@@ -195,7 +209,7 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 | Antenna gimbal (2 meshes) | 4,346 | 1–2 | on the hull pad at AntennaRepair; the reflector is 3,638 of them |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
 | ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
-| **Total** | **306,470** | **48 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
+| **Total** | **336,444** | **49 distinct** | 46 textures, 29 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
 around the flight deck, 6.0 m aft, 24.2 m long; solar wings span 24.7 m.
@@ -231,7 +245,7 @@ without rewriting the FBX files.
     against the elevation pivot;
   - the dial pointer's and the locker door's pivots are checked the same way;
   - the prefab contains no camera, light, audio listener or script;
-  - thirteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
+  - fourteen stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
 - `python tools/verify_repository.py` passes on the branch.
 - The FBX files are now exported without texture records and hold no local path (checked by searching the
   files). The exports in `9878304` and `18339a3` embedded the absolute texture paths of the build machine;
@@ -246,7 +260,8 @@ is not delivered lighting.
 
 - Placement and lighting inside the integrated Bootstrap scene; a Windows build of this branch; performance.
 - The 405-sample clearance validator from V01 was not run by me. Clearance is argued from identical proxies.
-- Cockpit, stowage and exterior were not compared with R01, R03, R05, R06 and R08 yet.
-- No remodelled cargo bags (A04), no gloves and tether (A08). The antenna has no damaged state and no collider.
+- Cockpit and exterior were not compared with R01, R05, R06 and R08 yet.
+- No gloves and tether (A08). The antenna has no damaged state and no collider. The soft bags in the wall
+  bays of the other compartments are still the earlier flat pouches.
 - No wear and dirt pass, no damage-state decals, no baked ambient occlusion, simple seat backs, a flat
   forward hull face.

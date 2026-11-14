@@ -623,6 +623,8 @@ namespace OutOfReach.ModelTools
             ("engineering_power", new Vector3(-0.25f, 1.55f, 6.75f), new Vector3(-2f, 1.2f, 6.05f), 72f),
             ("engineering_eclss", new Vector3(0.25f, 1.55f, 7.5f), new Vector3(2f, 1.2f, 8.15f), 72f),
             ("storage", new Vector3(0f, 1.65f, 11.5f), new Vector3(0f, 1.3f, 17f), 76f),
+            // review-01 R03 framing at 1.65 m eye height
+            ("storage_r03", new Vector3(0.7f, 1.65f, 11.25f), new Vector3(-0.9f, 1.15f, 17f), 90f),
             ("airlock", new Vector3(0.2f, 1.65f, 17.35f), new Vector3(-0.2f, 1.3f, 21f), 80f),
             // review-01 R04 framing at 1.65 m eye height
             ("airlock_r04", new Vector3(-0.75f, 1.65f, 17.55f), new Vector3(0.85f, 1.3f, 21f), 90f),

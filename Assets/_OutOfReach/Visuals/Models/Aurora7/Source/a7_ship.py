@@ -24,7 +24,7 @@ WHITE, GRAY, GRAPHITE = "A7_PaintWhite", "A7_PaintGray", "A7_PaintGraphite"
 RED, YELLOW = "A7_PaintRed", "A7_PaintYellow"
 ANO, ANO_CLEAR, ANO_BLUE, ANO_GOLD = "A7_AnodizedBlack", "A7_AnodizedClear", "A7_AnodizedBlue", "A7_AnodizedGold"
 ALU = "A7_Aluminum"
-FAB, FAB_DARK, STRAP = "A7_FabricWhite", "A7_FabricDark", "A7_FabricStrap"
+FAB, FAB_DARK, STRAP, CANVAS = "A7_FabricWhite", "A7_FabricDark", "A7_FabricStrap", "A7_FabricCanvas"
 QUILT = "A7_QuiltWhite"
 DECK = "A7_Deck"
 RUBBER, CABLE_ORANGE, CABLE_BLUE = "A7_Rubber", "A7_CableOrange", "A7_CableBlue"
@@ -112,23 +112,33 @@ def vent(m, rect, z, frame=None, slats=None):
 
 
 def locker(m, art, rect, z, frame=None, title=None, barcode=True):
-    """Stowage locker door with a paddle latch, hinge barrels and inventory labels."""
+    """Stowage locker door: pressed panel, bar pull in a recess, hinge barrels and inventory labels."""
     x0, y0, x1, y1 = rect
     w, h = x1 - x0, y1 - y0
     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
     m.plate(WHITE, (cx, cy, z), w - 0.012, h - 0.012, 0.014, 0.014, 0.004, frame)
+    press_w, press_h = w - 0.22, h - 0.07
+    px = x0 + 0.045 + press_w / 2
+    top = z + 0.019
+    if press_w > 0.12 and press_h > 0.10:
+        m.plate(WHITE, (px, cy, z + 0.014), press_w, press_h, 0.005, 0.02, 0.003, frame)
+    else:
+        top = z + 0.014
     lx, ly = x1 - 0.085, cy
-    m.box(GRAPHITE, (lx, ly, z + 0.015), (0.075, 0.11, 0.004), 0.002, frame)
-    m.box(ALU, (lx, ly + 0.012, z + 0.022), (0.05, 0.05, 0.012), 0.004, frame)
+    pull = min(0.17, h * 0.55)
+    m.box(GRAPHITE, (lx, ly, z + 0.015), (0.07, pull, 0.004), 0.002, frame)
+    m.cyl(ALU, (lx, ly - pull * 0.36, z + 0.028), (lx, ly + pull * 0.36, z + 0.028), 0.008, 8, 0.0, frame)
+    for dy in (-pull * 0.36, pull * 0.36):
+        m.cyl(ALU, (lx, ly + dy, z + 0.016), (lx, ly + dy, z + 0.028), 0.006, 6, 0.0, frame)
     for hy in (y0 + h * 0.2, y1 - h * 0.2):
         m.cyl(ALU, (x0 + 0.012, hy - 0.03, z + 0.014), (x0 + 0.012, hy + 0.03, z + 0.014), 0.007, 8, 0.001, frame)
     if title:
-        m.decal(art.decals, title, (cx - 0.04, y1 - 0.05, z + 0.014), frame, width=min(0.30, w - 0.16))
+        m.decal(art.decals, title, (px, cy + press_h / 2 - 0.04, top), frame, width=min(0.30, press_w - 0.04))
     if barcode:
-        m.decal(art.decals, art.next("barcode", 24), (x0 + 0.07, y0 + 0.045, z + 0.014), frame, 0.8)
-        m.decal(art.decals, art.next("pn", 28), (cx + 0.02, y0 + 0.03, z + 0.014), frame, 0.85)
+        m.decal(art.decals, art.next("barcode", 24), (px - press_w / 2 + 0.06, cy - press_h / 2 + 0.04, top), frame, 0.8)
+        m.decal(art.decals, art.next("pn", 28), (px + 0.03, cy - press_h / 2 + 0.03, top), frame, 0.85)
     if art.rng.random() < 0.6:
-        m.decal(art.decals, "velcro_blue", (x0 + 0.05 + art.rng.random() * (w - 0.25), cy - h * 0.18, z + 0.014), frame)
+        m.decal(art.decals, "velcro_blue", (px - press_w / 2 + 0.05 + art.rng.random() * max(0.02, press_w - 0.12), cy - h * 0.12, top), frame)
 
 
 def switch_panel(m, art, rect, z, frame=None, legend="leg_power", count=5):
@@ -1282,8 +1292,136 @@ def build_engineering(art, bays):
 
 
 # ----------------------------------------------------------------------------- storage
-def stowage_wall(art, titles, first_bag):
-    """Three-bay stowage rack inside the blockout's locker envelope (0.65 m deep, 4.5 m long)."""
+def pillow(size, strap_xs=(), pinch=0.014, sag=0.04, exponent=5.0, segs=8):
+    """Pillowed canvas body of a soft bag: a rounded box whose faces bulge, drawn in where straps bind it.
+
+    Centre at the origin, front towards +z. Returns (vertices, triangles, surface), where surface(cx, cy, cz)
+    maps a point of the cube [-1, 1]^3 to the body, so straps and fittings can be laid on it."""
+    half = np.asarray(size, dtype=np.float64) / 2.0
+
+    def surface(cx, cy, cz):
+        c = np.array([cx, cy, cz], dtype=np.float64)
+        p = c / (np.abs(c) ** exponent).sum() ** (1.0 / exponent) * half
+        if p[1] > 0:                                   # an under-filled bag sinks along its top
+            p[1] *= 1.0 - sag * (1.0 - (p[0] / half[0]) ** 2)
+        for sx in strap_xs:                            # straps draw the girth in
+            p[1:] *= 1.0 - pinch / min(half[1], half[2]) * math.exp(-((p[0] - sx) / 0.03) ** 2)
+        return p
+
+    index, verts, tris = {}, [], []
+
+    def vertex(c):
+        key = tuple(np.round(c, 6))
+        if key not in index:
+            index[key] = len(verts)
+            verts.append(surface(*c))
+        return index[key]
+
+    uniform = np.linspace(-1.0, 1.0, segs + 1)
+    # extra grid lines along the width, so each strap has a groove of its own
+    grooves = [(sx + k * 0.045) / half[0] for sx in strap_xs for k in (-1, 0, 1)]
+    along = [np.unique(np.round(np.concatenate([uniform, grooves]), 6)), uniform, uniform]
+    for axis in range(3):
+        for sign in (-1.0, 1.0):
+            first, second = [a for a in range(3) if a != axis]
+            for i in range(len(along[first]) - 1):
+                for j in range(len(along[second]) - 1):
+                    quad = []
+                    for a, b in ((i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1)):
+                        c = [0.0, 0.0, 0.0]
+                        c[axis], c[first], c[second] = sign, along[first][a], along[second][b]
+                        quad.append(vertex(c))
+                    tris += [(quad[0], quad[1], quad[2]), (quad[0], quad[2], quad[3])]
+    v = np.asarray(verts)
+    t = np.asarray(tris, dtype=np.int64)
+    # the body is star-shaped about its centre: turn every triangle to face away from it
+    normals = np.cross(v[t[:, 1]] - v[t[:, 0]], v[t[:, 2]] - v[t[:, 0]])
+    inward = (normals * v[t].mean(axis=1)).sum(axis=1) < 0
+    t[inward] = t[inward][:, ::-1]
+    return v, t, surface
+
+
+def girth_band(surface, x, width=0.036, lift=0.003, segs=32):
+    """Webbing strap around the girth of a pillow at x: a closed band lying on the body. Returns (v, t)."""
+    def cube_x(target, cy, cz):                         # the cube coordinate whose image has this x
+        lo, hi = -1.0, 1.0
+        for _ in range(24):
+            mid = (lo + hi) / 2
+            if surface(mid, cy, cz)[0] < target:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+
+    rings = ([], [])
+    for k in range(segs):
+        a = math.tau * k / segs
+        cy, cz = math.cos(a), math.sin(a)
+        scale = 1.0 / max(abs(cy), abs(cz))            # onto the square perimeter
+        cy, cz = cy * scale, cz * scale
+        for ring, target in zip(rings, (x - width / 2, x + width / 2)):
+            p = surface(cube_x(target, cy, cz), cy, cz)
+            radial = np.array([0.0, p[1], p[2]])
+            ring.append(p + radial / np.linalg.norm(radial) * lift)
+    v = np.asarray(rings[0] + rings[1])
+    t = []
+    for k in range(segs):
+        k1 = (k + 1) % segs
+        t += [(k, segs + k, segs + k1), (k, segs + k1, k1)]
+    t = np.asarray(t, dtype=np.int64)
+    normals = np.cross(v[t[:, 1]] - v[t[:, 0]], v[t[:, 2]] - v[t[:, 0]])
+    centre = v[t].mean(axis=1)
+    centre[:, 0] = 0.0
+    inward = (normals * centre).sum(axis=1) < 0
+    t[inward] = t[inward][:, ::-1]
+    return v, t
+
+
+def soft_bag(art, size, label=None, sag=0.04):
+    """Soft cargo bag (asset A04): pillowed canvas body, two girth straps with buckles, a grab loop and a
+    contents label. Centre at the origin, front towards +z; size = (width, height, depth)."""
+    m = Model("SoftBag")
+    w, h, d = size
+    strap_xs = (-w * 0.27, w * 0.27)
+    v, t, surface = pillow(size, strap_xs, 0.014, sag)
+    m.add(CANVAS, v, t)
+    for sx in strap_xs:
+        bv, bt = girth_band(surface, sx)
+        m.add(STRAP, bv, bt)
+        front = surface(sx / (w / 2), -0.12, 1.0)
+        m.box(ANO_CLEAR, (sx, front[1], front[2] + 0.008), (0.05, 0.034, 0.012), 0.003)
+        m.box(ANO, (sx, front[1], front[2] + 0.015), (0.03, 0.012, 0.004), 0.001)
+    face = d / 2
+    m.tube(STRAP, [(-0.07, h * 0.20, face - 0.004), (-0.07, h * 0.20 + 0.02, face + 0.03), (0.07, h * 0.20 + 0.02, face + 0.03),
+                   (0.07, h * 0.20, face - 0.004)], 0.007, 6, 0.02)
+    if label:
+        m.box(WHITE, (0.0, -h * 0.03, face + 0.0005), (min(0.22, w * 0.42), 0.075, 0.003), 0.001)
+        m.decal(art.decals, label, (0.0, -h * 0.03, face + 0.0022), None, width=min(0.19, w * 0.36))
+    return m
+
+
+def transit_case(art, size, label=None):
+    """Hard transit case under the soft stowage: ribbed shell, two latches, a recessed handle. Front towards +z."""
+    m = Model("TransitCase")
+    w, h, d = size
+    m.box(GRAY, (0, 0, 0), (w, h, d), 0.02)
+    for ry in (-h * 0.28, 0.0, h * 0.28):
+        m.box(GRAY, (0, ry, 0.004), (w + 0.008, 0.03, d), 0.008)
+    m.box(ANO, (0, h * 0.14, d / 2 + 0.001), (w * 0.98, 0.006, 0.004), 0.0)                 # lid line
+    for sx in (-1, 1):
+        m.box(ALU, (sx * w * 0.30, h * 0.14, d / 2 + 0.008), (0.05, 0.08, 0.014), 0.004)
+    m.box(GRAPHITE, (0, -h * 0.12, d / 2 + 0.001), (0.16, 0.06, 0.004), 0.0)
+    m.cyl(ALU, (-0.06, -h * 0.12, d / 2 + 0.012), (0.06, -h * 0.12, d / 2 + 0.012), 0.007, 8)
+    if label:
+        m.decal(art.decals, label, (-w * 0.26, -h * 0.30, d / 2 + 0.0005), None, 0.8)
+    m.decal(art.decals, art.next("barcode", 24), (w * 0.30, -h * 0.30, d / 2 + 0.0005), None, 0.7)
+    return m
+
+
+def stowage_wall(art, kind, first_bag=0):
+    """Three-bay stowage rack inside the blockout's locker envelope (0.65 m deep, 4.5 m long, 2.6 m tall).
+
+    kind "soft": strapped cargo bags over hard transit cases (asset A04); kind "hard": standard lockers."""
     m = Model("StowageWall")
     m.box(GRAY, (0, 1.3, -0.30), (4.5, 2.6, 0.05), 0.006)
     for x in (-2.25, -0.75, 0.75, 2.25):
@@ -1292,31 +1430,45 @@ def stowage_wall(art, titles, first_bag):
             m.cyl(GRAPHITE, (x, 0.15 + i * 0.1, 0.325), (x, 0.15 + i * 0.1, 0.3255), 0.007, 6, 0.0, None, (False, True))
     for y in (0.03, 2.57):
         m.box(ALU, (0, y, 0.0), (4.5, 0.06, 0.65), 0.006)
-    for bay, title in enumerate(titles):
+    bag = first_bag
+    for bay in range(3):
         cx = -1.5 + bay * 1.5
-        hard = bay == 2
-        if hard:
+        if kind == "hard":
             for r in range(4):
                 for c in range(2):
                     x0 = cx - 0.70 + c * 0.70
                     y0 = 0.09 + r * 0.615
-                    locker(m, art, (x0, y0, x0 + 0.70, y0 + 0.60), 0.30, None, title)
-        else:
-            shelves = [0.07, 0.88, 1.70]
-            for r, y0 in enumerate(shelves):
-                m.box(ALU, (cx, y0, 0.02), (1.42, 0.014, 0.58), 0.003)
-                count = 2 + (r + bay) % 2
-                bw = (1.36 - 0.02 * (count + 1)) / count
-                for i in range(count):
-                    bx = cx - 0.68 + 0.02 + bw / 2 + i * (bw + 0.02)
-                    bh = 0.62 + art.rng.random() * 0.12
-                    bd = 0.44 + art.rng.random() * 0.08
-                    ctb(m, art, (bx, y0 + 0.008 + bh / 2, 0.30 - bd / 2 - 0.02), (bw, bh, bd), None, "bag_%02d" % ((first_bag + bay * 5 + r * 2 + i) % 16))
-                for by in (y0 + 0.28, y0 + 0.55):
-                    m.tube(CABLE_BLUE, [(cx - 0.72, by, 0.30), (cx - 0.72, by, 0.335), (cx + 0.72, by, 0.335), (cx + 0.72, by, 0.30)],
-                           0.004, 6, 0.012)
-            m.decal(art.decals, title, (cx, 2.50, 0.326), None, width=0.34)
-        m.decal(art.decals, "rack_%02d" % (14 + bay + (0 if first_bag == 0 else 4)), (cx + 0.6, 2.585, 0.326), None, width=0.13)
+                    locker(m, art, (x0, y0, x0 + 0.70, y0 + 0.60), 0.30, None, ("t_food", "t_spares", "t_tools", "t_med")[(r + bay) % 4])
+            m.decal(art.decals, "rack_%02d" % (18 + bay), (cx + 0.6, 2.585, 0.326), None, width=0.13)
+            continue
+        # level 0: two transit cases on the deck rail
+        for c in range(2):
+            x = cx - 0.355 + c * 0.71
+            m.instance(transit_case(art, (0.69, 0.50, 0.54), "t_spares" if (bay + c) % 2 else "t_h2o"), at(x, 0.07 + 0.25, 0.02))
+        # three levels of bags, each on a deck plate behind one webbing restraint
+        levels = ((0.60, 0.66), (1.29, 0.62), (1.94, 0.56))
+        for level, (y0, room) in enumerate(levels):
+            m.box(ALU, (cx, y0 + 0.007, 0.02), (1.42, 0.014, 0.58), 0.003)
+            pattern = (2, 3, 1)[(level + bay) % 3]
+            if pattern == 1:                              # one long duffel lying across the bay
+                bh = min(room - 0.08, 0.46)
+                m.instance(soft_bag(art, (1.34, bh, 0.48), "bag_%02d" % (bag % 16), 0.07),
+                           at(cx, y0 + 0.016 + bh / 2, 0.29 - 0.24))
+                bag += 1
+            else:
+                bw = (1.40 - 0.02 * (pattern + 1)) / pattern
+                for i in range(pattern):
+                    bh = room - 0.04 - art.rng.random() * 0.05
+                    bd = 0.46 + art.rng.random() * 0.06
+                    bx = cx - 0.70 + 0.02 + bw / 2 + i * (bw + 0.02)
+                    m.instance(soft_bag(art, (bw, bh, bd), "bag_%02d" % (bag % 16), 0.02 + art.rng.random() * 0.05),
+                               at(bx, y0 + 0.016 + bh / 2, 0.29 - bd / 2))
+                    bag += 1
+            by = y0 + 0.016 + 0.13                        # restraint across the lower part of the row
+            m.box(STRAP, (cx, by, 0.307), (1.46, 0.045, 0.004), 0.0)
+            for sx in (-1, 1):
+                m.box(ANO_CLEAR, (cx + sx * 0.70, by, 0.312), (0.06, 0.06, 0.016), 0.004)
+        m.decal(art.decals, "rack_%02d" % (14 + bay), (cx + 0.6, 2.585, 0.326), None, width=0.13)
     handrail(m, (-0.75, 1.0), (-0.75, 1.6), 0.325)
     handrail(m, (0.75, 1.0), (0.75, 1.6), 0.325)
     return m
@@ -1326,8 +1478,8 @@ def build_storage(art, bays):
     m = Model("Storage")
     blank_bays = [bays["blanket"]] * 4
     build_shell(m, art, "Storage", blank_bays, blank_bays, "sign_logistics")
-    m.instance(stowage_wall(art, ("t_h2o", "t_food", "t_spares"), 0), front_frame((-1.95, 0, 14.0), (1, 0, 0)))
-    m.instance(stowage_wall(art, ("t_eva", "t_science", "t_tools"), 8), front_frame((1.95, 0, 14.0), (-1, 0, 0)))
+    m.instance(stowage_wall(art, "soft", 0), front_frame((-1.95, 0, 14.0), (1, 0, 0)))
+    m.instance(stowage_wall(art, "hard"), front_frame((1.95, 0, 14.0), (-1, 0, 0)))
     return m
 
 
