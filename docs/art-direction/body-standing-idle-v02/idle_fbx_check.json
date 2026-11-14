@@ -1,0 +1,1176 @@
+{
+ "idle_objects": [
+  [
+   "A7_ContinuousBody_Rig.001",
+   "ARMATURE"
+  ]
+ ],
+ "idle_actions": [
+  "A7_ContinuousBody_Rig.001|BODY_StandIdle_V02"
+ ],
+ "idle_object_scale_after_blender_import": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "body_object_scale_after_blender_import": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "bone_count": [
+  164,
+  164
+ ],
+ "names_equal": true,
+ "parents_equal": true,
+ "max_length_diff_mm": 0.000484,
+ "max_bind_matrix_diff": 7.401406764984131e-05,
+ "max_posed_joint_deviation_mm": 0.0009,
+ "v01_expectation_bones": 164,
+ "max_joint_deviation_from_v01_expectations_mm": 0.0014,
+ "frame_range": [
+  1.0,
+  31.0
+ ],
+ "fcurves": 1649,
+ "units": {
+  "idle": {
+   "UnitScaleFactor": 100.0,
+   "OriginalUnitScaleFactor": 100.0,
+   "axes": {
+    "UpAxis": 1,
+    "UpAxisSign": 1,
+    "FrontAxis": 2,
+    "FrontAxisSign": 1,
+    "CoordAxis": 0,
+    "CoordAxisSign": 1
+   },
+   "takes": [
+    "BODY_StandIdle_V02"
+   ],
+   "nodes": {
+    "A7_ContinuousBody_Rig": {
+     "Lcl Translation": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "Lcl Rotation": [
+      -90.0000162,
+      -0.0,
+      0.0
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -90.0000153,
+       -0.0,
+       0.0
+      ],
+      "min": [
+       -90.0000153,
+       -0.0,
+       0.0
+      ],
+      "max": [
+       -90.0000153,
+       -0.0,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "min": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "max": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "keys": 31
+     }
+    },
+    "root": {
+     "Lcl Translation": [
+      0.0,
+      0.9356453,
+      -0.0810442
+     ],
+     "Lcl Rotation": [
+      90.0000093,
+      -10.2026369,
+      -90.0000162
+     ],
+     "Lcl Scaling": [
+      0.9999999,
+      0.9999997,
+      0.9999999
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       -0.0,
+       0.9356452,
+       -0.1210442
+      ],
+      "min": [
+       -0.0,
+       0.9356452,
+       -0.1210442
+      ],
+      "max": [
+       -0.0,
+       0.9356452,
+       -0.1210442
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       89.9999924,
+       -10.2026262,
+       -90.0000076
+      ],
+      "min": [
+       89.9999924,
+       -10.2026262,
+       -90.0000076
+      ],
+      "max": [
+       89.9999924,
+       -10.2026262,
+       -90.0000076
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000001,
+       0.9999999,
+       0.9999999
+      ],
+      "min": [
+       1.0000001,
+       0.9999999,
+       0.9999999
+      ],
+      "max": [
+       1.0000001,
+       0.9999999,
+       0.9999999
+      ],
+      "keys": 31
+     }
+    },
+    "upperleg01.L": {
+     "Lcl Translation": [
+      -0.0,
+      0.1203359,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -0.0001295,
+      97.8172223,
+      -79.4883619
+     ],
+     "Lcl Scaling": [
+      0.9999999,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       1e-07,
+       0.1203359,
+       -0.0
+      ],
+      "min": [
+       1e-07,
+       0.1203359,
+       -0.0
+      ],
+      "max": [
+       1e-07,
+       0.1203359,
+       -0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       36.8346367,
+       100.1916046,
+       -38.8277206
+      ],
+      "min": [
+       36.8346367,
+       100.1916046,
+       -38.8277206
+      ],
+      "max": [
+       36.8346367,
+       100.1916046,
+       -38.8277206
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       0.9999999,
+       0.9999997,
+       1.0000001
+      ],
+      "min": [
+       0.9999999,
+       0.9999997,
+       1.0000001
+      ],
+      "max": [
+       0.9999999,
+       0.9999997,
+       1.0000001
+      ],
+      "keys": 31
+     }
+    },
+    "lowerleg01.L": {
+     "Lcl Translation": [
+      -0.0,
+      0.3638123,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -0.4408906,
+      0.5807027,
+      -6.5262206
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       -0.0,
+       0.3638122,
+       0.0
+      ],
+      "min": [
+       -0.0,
+       0.3638122,
+       0.0
+      ],
+      "max": [
+       -0.0,
+       0.3638122,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       10.7963495,
+       -0.7486669,
+       7.7194023
+      ],
+      "min": [
+       10.7963495,
+       -0.7486669,
+       7.7194023
+      ],
+      "max": [
+       10.7963495,
+       -0.7486669,
+       7.7194023
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       0.9999998,
+       1.0000006,
+       0.9999999
+      ],
+      "min": [
+       0.9999998,
+       1.0000006,
+       0.9999999
+      ],
+      "max": [
+       0.9999998,
+       1.0000006,
+       0.9999999
+      ],
+      "keys": 31
+     }
+    },
+    "foot.L": {
+     "Lcl Translation": [
+      0.0,
+      0.2032933,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -3.8e-05,
+      -1.82e-05,
+      67.0891028
+     ],
+     "Lcl Scaling": [
+      1.0,
+      0.9999999,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.2032934,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.2032934,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.2032934,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -0.3034353,
+       0.1107023,
+       63.475811
+      ],
+      "min": [
+       -0.3034353,
+       0.1107023,
+       63.475811
+      ],
+      "max": [
+       -0.3034353,
+       0.1107023,
+       63.475811
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000001,
+       0.9999997,
+       1.0
+      ],
+      "min": [
+       1.0000001,
+       0.9999997,
+       1.0
+      ],
+      "max": [
+       1.0000001,
+       0.9999997,
+       1.0
+      ],
+      "keys": 31
+     }
+    },
+    "spine05": {
+     "Lcl Translation": [
+      1e-07,
+      0.0979844,
+      0.0
+     ],
+     "Lcl Rotation": [
+      8.9e-06,
+      -2.77e-05,
+      107.4235282
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       8.9e-06,
+       -2.77e-05,
+       107.4235306
+      ],
+      "min": [
+       8.9e-06,
+       -2.77e-05,
+       107.4235306
+      ],
+      "max": [
+       8.9e-06,
+       -2.77e-05,
+       107.4235306
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       0.9999998,
+       1.0,
+       1.0000001
+      ],
+      "min": [
+       0.9999998,
+       1.0,
+       1.0000001
+      ],
+      "max": [
+       0.9999998,
+       1.0,
+       1.0000001
+      ],
+      "keys": 31
+     }
+    },
+    "head": {
+     "Lcl Translation": [
+      0.0,
+      0.0423808,
+      0.0
+     ],
+     "Lcl Rotation": [
+      -1.38e-05,
+      6.9e-06,
+      -23.8198664
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       1e-07,
+       0.0423809,
+       -0.0
+      ],
+      "min": [
+       1e-07,
+       0.0423809,
+       -0.0
+      ],
+      "max": [
+       1e-07,
+       0.0423809,
+       -0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -1.38e-05,
+       6.9e-06,
+       -23.8198662
+      ],
+      "min": [
+       -1.38e-05,
+       6.9e-06,
+       -23.8198662
+      ],
+      "max": [
+       -1.38e-05,
+       6.9e-06,
+       -23.8198662
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "min": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "max": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "keys": 31
+     }
+    }
+   },
+   "model_count": 165
+  },
+  "v04": {
+   "UnitScaleFactor": 100.0,
+   "OriginalUnitScaleFactor": 100.0,
+   "axes": {
+    "UpAxis": 1,
+    "UpAxisSign": 1,
+    "FrontAxis": 2,
+    "FrontAxisSign": 1,
+    "CoordAxis": 0,
+    "CoordAxisSign": 1
+   },
+   "takes": [
+    "A7_ContinuousBody_Rig|BODY_FloatNeutral"
+   ],
+   "nodes": {
+    "A7_ContinuousBody_Rig": {
+     "Lcl Translation": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "Lcl Rotation": [
+      -90.0000093,
+      0.0,
+      0.0
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -90.0000076,
+       0.0,
+       0.0
+      ],
+      "min": [
+       -90.0000076,
+       0.0,
+       0.0
+      ],
+      "max": [
+       -90.0000076,
+       0.0,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "min": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "max": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "keys": 31
+     }
+    },
+    "root": {
+     "Lcl Translation": [
+      0.0,
+      0.9356453,
+      -0.0810442
+     ],
+     "Lcl Rotation": [
+      90.0000093,
+      -10.2026369,
+      -90.0000162
+     ],
+     "Lcl Scaling": [
+      0.9999999,
+      0.9999999,
+      0.9999999
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.9356453,
+       -0.0810442
+      ],
+      "min": [
+       0.0,
+       0.9356453,
+       -0.0810442
+      ],
+      "max": [
+       0.0,
+       0.9356453,
+       -0.0810442
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       90.0000076,
+       -10.2026367,
+       -90.0000153
+      ],
+      "min": [
+       90.0000076,
+       -10.2026367,
+       -90.0000153
+      ],
+      "max": [
+       90.0000076,
+       -10.2026367,
+       -90.0000153
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       0.9999999,
+       0.9999999,
+       0.9999999
+      ],
+      "min": [
+       0.9999999,
+       0.9999999,
+       0.9999999
+      ],
+      "max": [
+       0.9999999,
+       0.9999999,
+       0.9999999
+      ],
+      "keys": 31
+     }
+    },
+    "upperleg01.L": {
+     "Lcl Translation": [
+      -0.0,
+      0.1203359,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -2.92e-05,
+      97.8171813,
+      -79.4883209
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0000001,
+      0.9999999
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       -0.0,
+       0.1203359,
+       0.0
+      ],
+      "min": [
+       -0.0,
+       0.1203359,
+       0.0
+      ],
+      "max": [
+       -0.0,
+       0.1203359,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -60.2249756,
+       110.6831818,
+       -142.2669373
+      ],
+      "min": [
+       -60.2249756,
+       110.6831818,
+       -142.2669373
+      ],
+      "max": [
+       -60.2249756,
+       110.6831818,
+       -142.2669373
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0,
+       0.9999998,
+       0.9999998
+      ],
+      "min": [
+       1.0,
+       0.9999998,
+       0.9999998
+      ],
+      "max": [
+       1.0,
+       0.9999998,
+       0.9999998
+      ],
+      "keys": 31
+     }
+    },
+    "lowerleg01.L": {
+     "Lcl Translation": [
+      0.0,
+      0.3638123,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -0.4408781,
+      0.5806977,
+      -6.5262086
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       -0.0,
+       0.363812,
+       -0.0
+      ],
+      "min": [
+       -0.0,
+       0.363812,
+       -0.0
+      ],
+      "max": [
+       -0.0,
+       0.363812,
+       -0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       8.018671,
+       14.9061813,
+       -65.4570236
+      ],
+      "min": [
+       8.018671,
+       14.9061813,
+       -65.4570236
+      ],
+      "max": [
+       8.018671,
+       14.9061813,
+       -65.4570236
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000001,
+       1.0000002,
+       0.9999998
+      ],
+      "min": [
+       1.0000001,
+       1.0000002,
+       0.9999998
+      ],
+      "max": [
+       1.0000001,
+       1.0000002,
+       0.9999998
+      ],
+      "keys": 31
+     }
+    },
+    "foot.L": {
+     "Lcl Translation": [
+      0.0,
+      0.2032933,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -3.67e-05,
+      -3.27e-05,
+      67.0890755
+     ],
+     "Lcl Scaling": [
+      0.9999999,
+      1.0,
+      1.0000001
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       -0.0,
+       0.2032932,
+       0.0
+      ],
+      "min": [
+       -0.0,
+       0.2032932,
+       0.0
+      ],
+      "max": [
+       -0.0,
+       0.2032932,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -7.3766241,
+       8.4767561,
+       113.7003555
+      ],
+      "min": [
+       -7.3766241,
+       8.4767561,
+       113.7003555
+      ],
+      "max": [
+       -7.3766241,
+       8.4767561,
+       113.7003555
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000002,
+       0.9999999,
+       1.0000002
+      ],
+      "min": [
+       1.0000002,
+       0.9999999,
+       1.0000002
+      ],
+      "max": [
+       1.0000002,
+       0.9999999,
+       1.0000002
+      ],
+      "keys": 31
+     }
+    },
+    "spine05": {
+     "Lcl Translation": [
+      0.0,
+      0.0979844,
+      0.0
+     ],
+     "Lcl Rotation": [
+      8.9e-06,
+      -1.75e-05,
+      107.4235624
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.0979844,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       6.7e-06,
+       -1.98e-05,
+       125.4235535
+      ],
+      "min": [
+       6.7e-06,
+       -1.98e-05,
+       125.4235535
+      ],
+      "max": [
+       6.7e-06,
+       -1.98e-05,
+       125.4235535
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "min": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "max": [
+       1.0000001,
+       1.0,
+       1.0
+      ],
+      "keys": 31
+     }
+    },
+    "head": {
+     "Lcl Translation": [
+      0.0,
+      0.0423808,
+      -0.0
+     ],
+     "Lcl Rotation": [
+      -1.25e-05,
+      1.42e-05,
+      -23.8198783
+     ],
+     "Lcl Scaling": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keyed Lcl Translation": {
+      "first": [
+       0.0,
+       0.0423809,
+       0.0
+      ],
+      "min": [
+       0.0,
+       0.0423809,
+       0.0
+      ],
+      "max": [
+       0.0,
+       0.0423809,
+       0.0
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Rotation": {
+      "first": [
+       -1.25e-05,
+       1.42e-05,
+       -23.8198814
+      ],
+      "min": [
+       -1.25e-05,
+       1.42e-05,
+       -23.8198814
+      ],
+      "max": [
+       -1.25e-05,
+       1.42e-05,
+       -23.8198814
+      ],
+      "keys": 31
+     },
+     "keyed Lcl Scaling": {
+      "first": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "min": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "max": [
+       1.0,
+       1.0,
+       1.0
+      ],
+      "keys": 31
+     }
+    }
+   },
+   "model_count": 165
+  },
+  "work_body": {
+   "UnitScaleFactor": 100.0,
+   "OriginalUnitScaleFactor": 100.0,
+   "axes": {
+    "UpAxis": 1,
+    "UpAxisSign": 1,
+    "FrontAxis": 2,
+    "FrontAxisSign": 1,
+    "CoordAxis": 0,
+    "CoordAxisSign": 1
+   },
+   "takes": [
+    "A7_ContinuousBody_Rig|BODY_FloatNeutral",
+    "A7_ContinuousBody_Rig|BODY_SeatedFit",
+    "A7_ContinuousBody_Rig|BODY_StandRelaxed"
+   ],
+   "rig": {
+    "Lcl Translation": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "Lcl Rotation": [
+     -90.0000093,
+     0.0,
+     0.0
+    ],
+    "Lcl Scaling": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "keyed Lcl Translation": {
+     "first": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "min": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "max": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "keys": 31
+    },
+    "keyed Lcl Rotation": {
+     "first": [
+      -90.0000076,
+      0.0,
+      0.0
+     ],
+     "min": [
+      -90.0000076,
+      0.0,
+      0.0
+     ],
+     "max": [
+      -90.0000076,
+      0.0,
+      0.0
+     ],
+     "keys": 31
+    },
+    "keyed Lcl Scaling": {
+     "first": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "min": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "max": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "keys": 31
+    }
+   }
+  },
+  "checks": {
+   "unit_scale_factor_equals_v04_and_work": true,
+   "axes_equal_v04": true,
+   "rig_static_scale_is_one": true,
+   "rig_keyed_scale_is_one_on_every_key": true,
+   "rig_static_rotation_equals_v04_within_1e-4_deg": true,
+   "rig_static_translation_is_zero": true,
+   "root_rest_translation_equals_v04_m": true,
+   "keyed_root_translation_m": [
+    -0.0,
+    0.9356452,
+    -0.1210442
+   ],
+   "keyed_upperleg01_L_translation_m": [
+    1e-07,
+    0.1203359,
+    -0.0
+   ]
+  }
+ }
+}

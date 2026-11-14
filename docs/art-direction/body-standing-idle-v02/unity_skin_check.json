@@ -1,0 +1,1237 @@
+{
+ "method": "Inputs: the Unity check output (StandingIdleUnitCheck.cs: skin/*.bin, bones/*.json, unity_check.json) and the Blender\nreference (skin_reference.py). Per outfit (WORK, EVA) and skinned mesh (TorsoLegs, Arm_L, Arm_R):\n1. Map every Unity vertex to the Blender vertex at the same bind position (Unity splits vertices at seams), using the\n   Unity bind mesh; every Blender vertex within 0.01 mm counts, so coincident vertices cannot fake an error.\n2. Per pose, the per-vertex distance between Unity's baked vertex and Blender's evaluated vertex: max, mean, p99 and\n   counts above 2 mm and 5 mm. Unity: StandRelaxed (control, the published take), V02 (the fix) and V01 (the delivered\n   v01 clip, which must reproduce root's finding). Blender: the published take and the re-imported V02 file.\n3. Per pose, the world bounds of every mesh against Blender's, and the lowest TorsoLegs point (feet on the deck).\n4. Same eye as STANDING-IDLE-01 (1.65 m above the feet root, 80 deg down, vertical FOV 68 deg, 16:9) at the setbacks\n   0.33 m and 0.197 m, on Unity's own baked TorsoLegs triangles: nearest skin to the eye and which boot vertices the eye\n   sees (inside the view and not hidden by another region), counted per Blender boot vertex.\n5. Unity joints (bone heads) against the V02 joint expectations.\nWrites <out>/unity_skin_check.json.",
+ "outfits": {
+  "WORK": {
+   "meshes": {
+    "A7_WORK_Arm_L": {
+     "unity_vertices": 8310,
+     "blender_vertices": 7807,
+     "bind_mapping_max_mm": 0.0003,
+     "blender_vertices_covered": 7807,
+     "StandRelaxed": {
+      "max_mm": 0.0667,
+      "mean_mm": 0.0009,
+      "p99_mm": 0.0014,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 8310,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       -0.26708,
+       0.77427,
+       -0.05683
+      ],
+      "unity_world_max": [
+       -0.13018,
+       1.50225,
+       0.13522
+      ],
+      "unity_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       -0.0,
+       0.001,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       0.0,
+       -0.001,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.0684498,
+       0.09602694,
+       0.3639914
+      ]
+     },
+     "V02": {
+      "max_mm": 0.0669,
+      "mean_mm": 0.0012,
+      "p99_mm": 0.0016,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 8310,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -0.26708,
+       0.77427,
+       -0.09683
+      ],
+      "unity_world_max": [
+       -0.13018,
+       1.50225,
+       0.09522
+      ],
+      "unity_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       0.001,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.001,
+       0.001
+      ],
+      "unity_baked_local_extents": [
+       0.06844991,
+       0.09602677,
+       0.3639914
+      ]
+     },
+     "V01": {
+      "max_mm": 14495.2973,
+      "mean_mm": 3467.7298,
+      "p99_mm": 13462.9443,
+      "over_2mm": 8310,
+      "over_5mm": 8310,
+      "vertices": 8310,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -8.36723,
+       -13.16715,
+       -7.59661
+      ],
+      "unity_world_max": [
+       5.22907,
+       7.78045,
+       9.79646
+      ],
+      "unity_world_size": [
+       13.5963,
+       20.9476,
+       17.39307
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       13459.399,
+       20219.614,
+       17201.016
+      ],
+      "bounds_min_diff_mm": [
+       -8100.147,
+       -13941.418,
+       -7499.776
+      ],
+      "unity_baked_local_extents": [
+       6.798149,
+       8.696536,
+       10.4738
+      ]
+     }
+    },
+    "A7_WORK_Arm_R": {
+     "unity_vertices": 8310,
+     "blender_vertices": 7807,
+     "bind_mapping_max_mm": 0.00028,
+     "blender_vertices_covered": 7807,
+     "StandRelaxed": {
+      "max_mm": 0.0669,
+      "mean_mm": 0.0006,
+      "p99_mm": 0.001,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 8310,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       0.13018,
+       0.77427,
+       -0.05683
+      ],
+      "unity_world_max": [
+       0.26708,
+       1.50225,
+       0.13522
+      ],
+      "unity_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       -0.001,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.0,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.06844997,
+       0.0960268,
+       0.3639907
+      ]
+     },
+     "V02": {
+      "max_mm": 0.067,
+      "mean_mm": 0.0009,
+      "p99_mm": 0.0012,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 8310,
+      "against_blender": "V02",
+      "unity_world_min": [
+       0.13018,
+       0.77427,
+       -0.09683
+      ],
+      "unity_world_max": [
+       0.26708,
+       1.50225,
+       0.09522
+      ],
+      "unity_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.001,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.06844988,
+       0.09602695,
+       0.3639911
+      ]
+     },
+     "V01": {
+      "max_mm": 14495.2745,
+      "mean_mm": 3467.7287,
+      "p99_mm": 13462.9362,
+      "over_2mm": 8310,
+      "over_5mm": 8310,
+      "vertices": 8310,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -5.22906,
+       -13.16712,
+       -7.59661
+      ],
+      "unity_world_max": [
+       8.36723,
+       7.78042,
+       9.79646
+      ],
+      "unity_world_size": [
+       13.59629,
+       20.94754,
+       17.39307
+      ],
+      "blender_world_size": [
+       0.1369,
+       0.72798,
+       0.19205
+      ],
+      "bounds_size_diff_mm": [
+       13459.391,
+       20219.561,
+       17201.019
+      ],
+      "bounds_min_diff_mm": [
+       -5359.244,
+       -13941.395,
+       -7499.778
+      ],
+      "unity_baked_local_extents": [
+       6.798145,
+       8.696537,
+       10.47377
+      ]
+     }
+    },
+    "A7_WORK_TorsoLegs": {
+     "unity_vertices": 11583,
+     "blender_vertices": 10451,
+     "bind_mapping_max_mm": 0.00019,
+     "blender_vertices_covered": 10451,
+     "StandRelaxed": {
+      "max_mm": 0.1181,
+      "mean_mm": 0.0005,
+      "p99_mm": 0.0008,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 11583,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       -0.28364,
+       -0.00151,
+       -0.13039
+      ],
+      "unity_world_max": [
+       0.28364,
+       1.54347,
+       0.23684
+      ],
+      "unity_world_size": [
+       0.56729,
+       1.54498,
+       0.36723
+      ],
+      "blender_world_size": [
+       0.56729,
+       1.54498,
+       0.36723
+      ],
+      "bounds_size_diff_mm": [
+       -0.0,
+       -0.0,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       0.0,
+       -0.0,
+       -0.0
+      ],
+      "unity_baked_local_extents": [
+       0.2836443,
+       0.1836161,
+       0.7724901
+      ]
+     },
+     "V02": {
+      "max_mm": 0.1181,
+      "mean_mm": 0.0006,
+      "p99_mm": 0.001,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 11583,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -0.28605,
+       -0.00151,
+       -0.16268
+      ],
+      "unity_world_max": [
+       0.28605,
+       1.54347,
+       0.23684
+      ],
+      "unity_world_size": [
+       0.5721,
+       1.54498,
+       0.39952
+      ],
+      "blender_world_size": [
+       0.5721,
+       1.54498,
+       0.39952
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       0.0,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.0,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.2860505,
+       0.1997575,
+       0.7724908
+      ]
+     },
+     "V01": {
+      "max_mm": 35702.0249,
+      "mean_mm": 14151.7741,
+      "p99_mm": 33887.2458,
+      "over_2mm": 11583,
+      "over_5mm": 11583,
+      "vertices": 11583,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -18.12665,
+       -35.12063,
+       -13.55249
+      ],
+      "unity_world_max": [
+       18.12665,
+       14.67119,
+       26.12034
+      ],
+      "unity_world_size": [
+       36.2533,
+       49.79182,
+       39.67282
+      ],
+      "blender_world_size": [
+       0.5721,
+       1.54498,
+       0.39952
+      ],
+      "bounds_size_diff_mm": [
+       35681.197,
+       48246.84,
+       39273.309
+      ],
+      "bounds_min_diff_mm": [
+       -17840.6,
+       -35119.121,
+       -13389.811
+      ],
+      "unity_baked_local_extents": [
+       18.12665,
+       19.83641,
+       24.89591
+      ]
+     }
+    }
+   },
+   "joints": {
+    "V02": {
+     "against": "V02 joint expectations",
+     "bones": 164,
+     "max_mm": 0.0014,
+     "worst_bone": "foot.R",
+     "within_2mm": true
+    },
+    "V01": {
+     "against": "V02 joint expectations",
+     "bones": 164,
+     "max_mm": 0.0013,
+     "worst_bone": "finger3-1.R",
+     "within_2mm": true
+    },
+    "StandRelaxed": {
+     "against": "Blender StandRelaxed",
+     "bones": 164,
+     "max_mm": 0.002,
+     "worst_bone": "special06.L",
+     "within_2mm": true
+    }
+   },
+   "lookdown": {
+    "StandRelaxed": {
+     "lowest_point_y_mm": -1.511,
+     "setback330": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.33
+      ],
+      "eye_to_nearest_skin_mm": 269.0,
+      "boot_vertices": 2195,
+      "boots_inside_view": 2195,
+      "boots_visible": 1750
+     },
+     "setback197": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.197
+      ],
+      "eye_to_nearest_skin_mm": 162.7,
+      "boot_vertices": 2195,
+      "boots_inside_view": 2195,
+      "boots_visible": 464
+     }
+    },
+    "V02": {
+     "lowest_point_y_mm": -1.511,
+     "setback330": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.33
+      ],
+      "eye_to_nearest_skin_mm": 305.1,
+      "boot_vertices": 2195,
+      "boots_inside_view": 2195,
+      "boots_visible": 1827
+     },
+     "setback197": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.197
+      ],
+      "eye_to_nearest_skin_mm": 191.2,
+      "boot_vertices": 2195,
+      "boots_inside_view": 2195,
+      "boots_visible": 1372
+     }
+    }
+   },
+   "unity_rig": {
+    "StandRelaxed": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270.0198,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356453,
+      -0.08104417
+     ],
+     "upperleg01_L_localPosition": [
+      4.9e-08,
+      0.1203359,
+      -5e-09
+     ],
+     "root_lossyScale": [
+      0.9999998,
+      0.9999997,
+      0.9999998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V04Float": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270.0198,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356453,
+      -0.08104417
+     ],
+     "upperleg01_L_localPosition": [
+      4.7e-08,
+      0.1203359,
+      1e-08
+     ],
+     "root_lossyScale": [
+      0.9999998,
+      0.9999997,
+      0.9999998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V01": {
+     "rig_localScale": [
+      100,
+      100,
+      100
+     ],
+     "rig_localEuler": [
+      270,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.009356452,
+      -0.001210442
+     ],
+     "upperleg01_L_localPosition": [
+      -1e-09,
+      0.001203359,
+      0
+     ],
+     "root_lossyScale": [
+      100,
+      100,
+      99.99998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V02": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356452,
+      -0.1210442
+     ],
+     "upperleg01_L_localPosition": [
+      -9.3e-08,
+      0.1203359,
+      -1.3e-08
+     ],
+     "root_lossyScale": [
+      1,
+      1,
+      0.9999999
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    }
+   },
+   "checks": {
+    "rig_localScale_one_and_root_in_metres": true,
+    "every_skin_vertex_within_2mm_of_blender": true,
+    "v02_max_error_not_above_published_take_mm": true,
+    "bounds_size_within_1mm_of_blender": true,
+    "joints_within_2mm": true,
+    "feet_lowest_point_equals_published_take_within_0_1mm": true,
+    "v01_reproduces_root_finding": true
+   }
+  },
+  "EVA": {
+   "meshes": {
+    "A7_EVA_Arm_L": {
+     "unity_vertices": 990,
+     "blender_vertices": 954,
+     "bind_mapping_max_mm": 0.0002,
+     "blender_vertices_covered": 954,
+     "StandRelaxed": {
+      "max_mm": 0.0751,
+      "mean_mm": 0.001,
+      "p99_mm": 0.0012,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 990,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       -0.27084,
+       0.92572,
+       -0.06637
+      ],
+      "unity_world_max": [
+       -0.12429,
+       1.51214,
+       0.12377
+      ],
+      "unity_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       -0.0,
+       0.0,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       0.0,
+       -0.001,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.0732753,
+       0.09506928,
+       0.2932137
+      ]
+     },
+     "V02": {
+      "max_mm": 0.0753,
+      "mean_mm": 0.0008,
+      "p99_mm": 0.001,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 990,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -0.27084,
+       0.92572,
+       -0.10637
+      ],
+      "unity_world_max": [
+       -0.12429,
+       1.51215,
+       0.08377
+      ],
+      "unity_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       0.001,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.001,
+       0.001
+      ],
+      "unity_baked_local_extents": [
+       0.07327548,
+       0.09506928,
+       0.2932136
+      ]
+     },
+     "V01": {
+      "max_mm": 15204.3678,
+      "mean_mm": 9876.1328,
+      "p99_mm": 14628.7284,
+      "over_2mm": 990,
+      "over_5mm": 990,
+      "vertices": 990,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -9.03552,
+       -13.54455,
+       -8.38336
+      ],
+      "unity_world_max": [
+       5.79745,
+       8.77955,
+       10.54283
+      ],
+      "unity_world_size": [
+       14.83297,
+       22.3241,
+       18.92619
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       14686.419,
+       21737.673,
+       18736.047
+      ],
+      "bounds_min_diff_mm": [
+       -8764.683,
+       -14470.27,
+       -8276.987
+      ],
+      "unity_baked_local_extents": [
+       7.416485,
+       9.463093,
+       11.16205
+      ]
+     }
+    },
+    "A7_EVA_Arm_R": {
+     "unity_vertices": 990,
+     "blender_vertices": 954,
+     "bind_mapping_max_mm": 0.00027,
+     "blender_vertices_covered": 954,
+     "StandRelaxed": {
+      "max_mm": 0.0752,
+      "mean_mm": 0.0008,
+      "p99_mm": 0.0011,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 990,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       0.12429,
+       0.92572,
+       -0.06637
+      ],
+      "unity_world_max": [
+       0.27084,
+       1.51214,
+       0.12377
+      ],
+      "unity_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       -0.0,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       0.0,
+       -0.0,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.07327539,
+       0.09506927,
+       0.2932132
+      ]
+     },
+     "V02": {
+      "max_mm": 0.0753,
+      "mean_mm": 0.0007,
+      "p99_mm": 0.0009,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 990,
+      "against_blender": "V02",
+      "unity_world_min": [
+       0.12429,
+       0.92572,
+       -0.10637
+      ],
+      "unity_world_max": [
+       0.27084,
+       1.51215,
+       0.08377
+      ],
+      "unity_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.001,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.07327536,
+       0.09506929,
+       0.2932137
+      ]
+     },
+     "V01": {
+      "max_mm": 15204.346,
+      "mean_mm": 9876.1329,
+      "p99_mm": 14628.7366,
+      "over_2mm": 990,
+      "over_5mm": 990,
+      "vertices": 990,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -5.79744,
+       -13.54454,
+       -8.38336
+      ],
+      "unity_world_max": [
+       9.03551,
+       8.77955,
+       10.54283
+      ],
+      "unity_world_size": [
+       14.83295,
+       22.32408,
+       18.92619
+      ],
+      "blender_world_size": [
+       0.14655,
+       0.58643,
+       0.19014
+      ],
+      "bounds_size_diff_mm": [
+       14686.396,
+       21737.657,
+       18736.049
+      ],
+      "bounds_min_diff_mm": [
+       -5921.728,
+       -14470.254,
+       -8276.987
+      ],
+      "unity_baked_local_extents": [
+       7.416473,
+       9.463095,
+       11.16204
+      ]
+     }
+    },
+    "A7_EVA_TorsoLegs": {
+     "unity_vertices": 12093,
+     "blender_vertices": 10853,
+     "bind_mapping_max_mm": 0.00019,
+     "blender_vertices_covered": 10853,
+     "StandRelaxed": {
+      "max_mm": 0.1216,
+      "mean_mm": 0.0005,
+      "p99_mm": 0.0008,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 12093,
+      "against_blender": "StandRelaxed",
+      "unity_world_min": [
+       -0.29432,
+       -0.00151,
+       -0.14125
+      ],
+      "unity_world_max": [
+       0.29432,
+       1.55343,
+       0.23684
+      ],
+      "unity_world_size": [
+       0.58864,
+       1.55494,
+       0.37809
+      ],
+      "blender_world_size": [
+       0.58864,
+       1.55494,
+       0.37809
+      ],
+      "bounds_size_diff_mm": [
+       -0.0,
+       -0.0,
+       0.0
+      ],
+      "bounds_min_diff_mm": [
+       0.0,
+       -0.0,
+       -0.0
+      ],
+      "unity_baked_local_extents": [
+       0.2943179,
+       0.1890434,
+       0.7774721
+      ]
+     },
+     "V02": {
+      "max_mm": 0.1216,
+      "mean_mm": 0.0006,
+      "p99_mm": 0.001,
+      "over_2mm": 0,
+      "over_5mm": 0,
+      "vertices": 12093,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -0.29668,
+       -0.00151,
+       -0.17304
+      ],
+      "unity_world_max": [
+       0.29669,
+       1.55343,
+       0.23684
+      ],
+      "unity_world_size": [
+       0.59337,
+       1.55495,
+       0.40988
+      ],
+      "blender_world_size": [
+       0.59337,
+       1.55495,
+       0.40988
+      ],
+      "bounds_size_diff_mm": [
+       0.001,
+       0.0,
+       -0.0
+      ],
+      "bounds_min_diff_mm": [
+       -0.0,
+       -0.0,
+       0.0
+      ],
+      "unity_baked_local_extents": [
+       0.2966848,
+       0.2049397,
+       0.7774728
+      ]
+     },
+     "V01": {
+      "max_mm": 36493.8931,
+      "mean_mm": 15008.3481,
+      "p99_mm": 34703.8386,
+      "over_2mm": 12093,
+      "over_5mm": 12093,
+      "vertices": 12093,
+      "against_blender": "V02",
+      "unity_world_min": [
+       -19.28028,
+       -35.92855,
+       -14.57864
+      ],
+      "unity_world_max": [
+       19.28028,
+       15.53366,
+       26.12034
+      ],
+      "unity_world_size": [
+       38.56055,
+       51.46221,
+       40.69898
+      ],
+      "blender_world_size": [
+       0.59337,
+       1.55495,
+       0.40988
+      ],
+      "bounds_size_diff_mm": [
+       37967.185,
+       49907.267,
+       40289.099
+      ],
+      "bounds_min_diff_mm": [
+       -18983.595,
+       -35927.04,
+       -14405.601
+      ],
+      "unity_baked_local_extents": [
+       19.28028,
+       20.34949,
+       25.73111
+      ]
+     }
+    }
+   },
+   "joints": {
+    "V02": {
+     "against": "V02 joint expectations",
+     "bones": 164,
+     "max_mm": 0.0014,
+     "worst_bone": "foot.R",
+     "within_2mm": true
+    },
+    "V01": {
+     "against": "V02 joint expectations",
+     "bones": 164,
+     "max_mm": 0.0013,
+     "worst_bone": "finger3-1.R",
+     "within_2mm": true
+    },
+    "StandRelaxed": {
+     "against": "Blender StandRelaxed",
+     "bones": 164,
+     "max_mm": 0.002,
+     "worst_bone": "special06.L",
+     "within_2mm": true
+    }
+   },
+   "lookdown": {
+    "StandRelaxed": {
+     "lowest_point_y_mm": -1.511,
+     "setback330": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.33
+      ],
+      "eye_to_nearest_skin_mm": 268.4,
+      "boot_vertices": 2215,
+      "boots_inside_view": 2215,
+      "boots_visible": 1640
+     },
+     "setback197": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.197
+      ],
+      "eye_to_nearest_skin_mm": 156.2,
+      "boot_vertices": 2215,
+      "boots_inside_view": 2215,
+      "boots_visible": 122
+     }
+    },
+    "V02": {
+     "lowest_point_y_mm": -1.511,
+     "setback330": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.33
+      ],
+      "eye_to_nearest_skin_mm": 304.9,
+      "boot_vertices": 2215,
+      "boots_inside_view": 2215,
+      "boots_visible": 1814
+     },
+     "setback197": {
+      "eye_unity": [
+       0.0,
+       1.65,
+       0.197
+      ],
+      "eye_to_nearest_skin_mm": 187.5,
+      "boot_vertices": 2215,
+      "boots_inside_view": 2215,
+      "boots_visible": 1042
+     }
+    }
+   },
+   "unity_rig": {
+    "StandRelaxed": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270.0198,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356453,
+      -0.08104417
+     ],
+     "upperleg01_L_localPosition": [
+      4.9e-08,
+      0.1203359,
+      -5e-09
+     ],
+     "root_lossyScale": [
+      0.9999998,
+      0.9999997,
+      0.9999998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V04Float": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270.0198,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356453,
+      -0.08104417
+     ],
+     "upperleg01_L_localPosition": [
+      4.7e-08,
+      0.1203359,
+      1e-08
+     ],
+     "root_lossyScale": [
+      0.9999998,
+      0.9999997,
+      0.9999998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V01": {
+     "rig_localScale": [
+      100,
+      100,
+      100
+     ],
+     "rig_localEuler": [
+      270,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.009356452,
+      -0.001210442
+     ],
+     "upperleg01_L_localPosition": [
+      -1e-09,
+      0.001203359,
+      0
+     ],
+     "root_lossyScale": [
+      100,
+      100,
+      99.99998
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    },
+    "V02": {
+     "rig_localScale": [
+      1,
+      1,
+      1
+     ],
+     "rig_localEuler": [
+      270,
+      0,
+      0
+     ],
+     "root_localPosition": [
+      0,
+      0.9356452,
+      -0.1210442
+     ],
+     "upperleg01_L_localPosition": [
+      -9.3e-08,
+      0.1203359,
+      -1.3e-08
+     ],
+     "root_lossyScale": [
+      1,
+      1,
+      0.9999999
+     ],
+     "held_pose_max_joint_delta_first_vs_last_frame_m": 0
+    }
+   },
+   "checks": {
+    "rig_localScale_one_and_root_in_metres": true,
+    "every_skin_vertex_within_2mm_of_blender": true,
+    "v02_max_error_not_above_published_take_mm": true,
+    "bounds_size_within_1mm_of_blender": true,
+    "joints_within_2mm": true,
+    "feet_lowest_point_equals_published_take_within_0_1mm": true,
+    "v01_reproduces_root_finding": true
+   }
+  }
+ }
+}
