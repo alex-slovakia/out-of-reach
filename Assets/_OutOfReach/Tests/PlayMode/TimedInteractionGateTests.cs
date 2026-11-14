@@ -209,6 +209,89 @@ namespace OutOfReach.Tests.PlayMode
             }
         }
 
+        // Codex 6884680635: pause freezes time, not validity.
+        [Test]
+        public void AStaleSession_CancelsEvenWhilePaused_AndAnExternalCancelWorksWhilePaused()
+        {
+            using (MissionSession session = Outside())
+            {
+                bool valid = true;
+                bool paused = false;
+                ResourceSnapshot before = session.Resources.Snapshot;
+                var gate = new TimedInteractionGate(Antenna(session), Work, () => valid, () => paused);
+                var reasons = new System.Collections.Generic.List<string>();
+                gate.Cancelled += reason => reasons.Add(reason);
+
+                Require(gate.TryInteract());
+                gate.Advance(1d);
+                paused = true;
+                valid = false;
+                gate.Advance(0.5d);
+                Assert.That(gate.State, Is.EqualTo(TimedWorkState.Idle), "a stale session is not kept alive by the pause");
+                Assert.That(reasons, Has.Count.EqualTo(1));
+
+                valid = true;
+                Require(gate.TryInteract());
+                gate.Cancel("Restart from the pause menu.");
+                Assert.That(gate.State, Is.EqualTo(TimedWorkState.Idle), "an explicit cancel works while paused");
+                Assert.That(reasons, Has.Count.EqualTo(2));
+                Assert.That(reasons[1], Is.EqualTo("Restart from the pause menu."));
+                Assert.That(session.Systems.Antenna.IsOperational, Is.False);
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(before.SparePartsCount), "nothing spent");
+            }
+        }
+
+        // Codex 6884680635: re-entrant handlers can never let a completion act on a replacement attempt.
+        [Test]
+        public void HandlersThatCancelOrRestart_NeverLetACompletionActOnAReplacement_AndFinishedSeesAClearedState()
+        {
+            using (MissionSession session = Outside())
+            {
+                int conditionEvents = 0;
+                session.Events.SystemConditionChanged += _ => conditionEvents++;
+                var gate = new TimedInteractionGate(Antenna(session), 1d);
+                bool restartOnce = true;
+                gate.Progressed += progress =>
+                {
+                    if (restartOnce)
+                    {
+                        restartOnce = false;
+                        gate.Cancel("Replaced from a handler.");
+                        Require(gate.TryInteract());
+                    }
+                };
+                TimedWorkState stateInFinished = TimedWorkState.Working;
+                gate.Finished += _ => stateInFinished = gate.State;
+
+                Require(gate.TryInteract());
+                gate.Advance(2d);
+
+                Assert.That(session.Systems.Antenna.IsOperational, Is.False, "the advance that reached the end belonged to the cancelled attempt");
+                Assert.That(conditionEvents, Is.EqualTo(0));
+                Assert.That(gate.State, Is.EqualTo(TimedWorkState.Working), "the replacement attempt runs on");
+                Assert.That(gate.ElapsedActiveSeconds, Is.EqualTo(0d), "from zero");
+
+                gate.Advance(1d);
+                Assert.That(session.Systems.Antenna.IsOperational, Is.True);
+                Assert.That(conditionEvents, Is.EqualTo(1), "one real repair");
+                Assert.That(stateInFinished, Is.EqualTo(TimedWorkState.Idle), "the working state is cleared before Finished");
+            }
+
+            using (MissionSession session = Outside())
+            {
+                ResourceSnapshot before = session.Resources.Snapshot;
+                var gate = new TimedInteractionGate(Antenna(session), Work);
+                gate.Started += () => gate.Cancel("Cancelled at once.");
+
+                CommandResult start = gate.TryInteract();
+
+                Assert.That(start.Succeeded, Is.False, "a start cancelled by its own handler is reported as cancelled");
+                Assert.That(start.Explanation, Is.EqualTo("Work cancelled."));
+                Assert.That(gate.State, Is.EqualTo(TimedWorkState.Idle));
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(before.SparePartsCount));
+            }
+        }
+
         [Test]
         public void AnUngatedRepair_StaysInstant_AndInvalidInputIsRejected()
         {
