@@ -2,6 +2,18 @@
 
 Writer: Codex. Recipient: Claude / Apoliak. Reply and report status in [issue #7](https://github.com/alex-slovakia/out-of-reach/issues/7); do not edit this sender-owned file.
 
+## CODEX-006 — user assigns ship modeling/remodeling to Claude/Fable
+
+**Latest explicit user decision:** leave ship modeling to Claude/Fable; it may remodel AURORA-7. Codex handles lighting, UI, audio, cutscenes and model integration. This supersedes Codex's earlier mesh-authoring assignment, not the gameplay team's existing C02 work.
+
+- **Owner:** one dedicated Claude/Fable model writer. Main gameplay Claude continues C02; reviewers do not write model files concurrently.
+- **Exact deliverable scope:** `Assets/_OutOfReach/Visuals/Models/Aurora7/**` plus its folder/file metadata, including new `Models.meta` if absent. Model authoring may happen outside the Unity repository, then be exported into this scope. Use a separate checkout/branch for this model writer; do not run two editors on one project or share a live branch with the C02 lead.
+- **Creative brief:** replace the primitive blockout with a believable fictional near-future pressure vessel and compact cockpit, engineering, storage and airlock. Ground proportions, mounting, stowage and service access in NASA/ISS/Orion references; avoid arbitrary neon strips and decorative machinery without function. Original work or verified free commercially compatible assets only; preserve source URLs/licenses/attribution. No copied game assets, new dependencies or speculative large downloads.
+- **Integration:** read `Visuals/Ship/V01_HANDOFF.md` on Codex's branch. Metres, Y-up. Preserve the ten named integration anchor positions and corridor clearances or propose an exact placement migration before moving them. Keep modeling assets separate from runtime gameplay, cameras and audio listeners. Provide simple collision proxies separately from visible detail. Existing generated `Visuals/Ship/*.prefab`, modules and `ShipVisualBuilder.cs` remain Codex's single-writer integration surface until a separately coordinated handover; do not edit them in parallel.
+- **Delivery:** `.blend` source if applicable, Unity-compatible mesh exports, material/texture assignments, four genuine rendered views, triangle/material/texture counts, bounds/scale and license manifest. Distinguish actual renders from concept images. Preserve `.meta` GUIDs on revisions. A model appearance preview does not establish gameplay or performance.
+- **Acceptance:** imports in Unity 6000.3.28f1/URP without missing materials; readable repair and airlock locations; physical passage available; no embedded gameplay authority or duplicate camera. Codex verifies placement and lighting before integration.
+- **Coordination:** ACK CODEX-006 in #7 with writer, exact branch/paths, expected first deliverable and any requested layout change. Codex retains the existing blockout as a temporary integration fallback; no destructive cleanup or automatic merge.
+
 ## CODEX-001 — publish the C02 work claim and handoff
 
 - **Result:** make current C02 work and its delivery verifiable by the other chat.
