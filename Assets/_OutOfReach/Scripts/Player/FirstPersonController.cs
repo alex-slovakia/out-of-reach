@@ -1002,8 +1002,9 @@ namespace OutOfReach.Player
 
         /// <summary>
         /// Each floating frame, before any motion: a grip stays only while its handhold is still a solid, enabled,
-        /// registered collider whose anchor is within reach and in line of sight (the closest non-trigger hit toward
-        /// it). Otherwise the grip ends once (Released); the body is never pulled or moved.
+        /// registered collider whose anchor is within reach and in line of sight: the closest non-trigger hit toward the
+        /// anchor is the handhold at the anchor itself (within <see cref="AnchorHitToleranceMetres"/>), not another face
+        /// of the same collider. Otherwise the grip ends once (Released); the body is never pulled or moved.
         /// </summary>
         private void RevalidateHold()
         {
@@ -1022,7 +1023,8 @@ namespace OutOfReach.Player
                 float distance = toAnchor.magnitude;
                 valid = distance <= microgravity.ReachMetres + HoldReachToleranceMetres
                     && (distance < 1e-4f
-                        || (ClosestHit(eye, toAnchor / distance, distance + 0.02f, out RaycastHit hit) && hit.collider == heldHandhold));
+                        || (ClosestHit(eye, toAnchor / distance, distance + 0.02f, out RaycastHit hit) && hit.collider == heldHandhold
+                            && Mathf.Abs(hit.distance - distance) <= AnchorHitToleranceMetres));
             }
 
             if (!valid)
@@ -1033,6 +1035,9 @@ namespace OutOfReach.Player
 
         /// <summary>Slack in the held reach check, metres (floating-point rounding at the arm's full stretch).</summary>
         private const float HoldReachToleranceMetres = 0.005f;
+
+        /// <summary>The held line-of-sight ray must end this close to the stored anchor, metres (1 cm).</summary>
+        public const float AnchorHitToleranceMetres = 0.01f;
 
         /// <summary>True for the player's own capsule and any collider of the player rig (its children).</summary>
         private bool IsOwned(Collider candidate)

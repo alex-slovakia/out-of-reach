@@ -487,5 +487,31 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.3f).Within(1e-5f), "the same pad, solid and under the feet, is real support");
             yield return null;
         }
+
+        // MICRO-FLOAT-03 (Codex 6882492748): the held ray must reach the stored anchor, not another face of the same collider.
+        [UnityTest]
+        public IEnumerator AHeldGrip_IsReleased_WhenItsAnchorTurnsToTheFarSideOfTheSameHandhold()
+        {
+            int releases = 0;
+            Player.Released += c => releases++;
+            FloatAt(new Vector3(-1.3f, 50.2f, 1.5f));
+            Done(Player.TryGrab(handhold, new Vector3(-1.9f, 51.6f, 1.5f)));
+            yield return Frames(3);
+            Assert.That(Player.HeldHandhold, Is.SameAs(handhold));
+            releases = 0;
+            Vector3 before = Position;
+
+            handhold.transform.Rotate(0f, 180f, 0f, Space.World);
+            Physics.SyncTransforms();
+            Vector3 turnedAnchor = Player.HeldGripPoint.Value;
+            Vector3 eye = Position + (Vector3.up * Eye);
+            Assert.That(turnedAnchor.x, Is.LessThan(-1.95f), "the anchor now sits on the far face");
+            Assert.That(Vector3.Distance(eye, turnedAnchor), Is.LessThan(Player.Microgravity.ReachMetres), "still within reach, so only the anchor-point check can catch it");
+
+            yield return Frames(3);
+            Assert.That(Player.HeldHandhold, Is.Null, "no hand through the box");
+            Assert.That(releases, Is.EqualTo(1));
+            Assert.That(Vector3.Distance(Position, before), Is.LessThan(1e-3f), "no pull or teleport");
+        }
     }
 }
