@@ -401,7 +401,8 @@ namespace OutOfReach.Tests.EditMode
 
                 Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested));
                 Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.RecoveryMilestone), "the request wakes the crew");
-                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds, Is.EqualTo(contact + (6d * Day) + (2d * Hour)).Within(1e-6));
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds,
+                    Is.EqualTo(contact + (6d * Day) + (SurvivalRecovery.BeaconWindowHours * Hour)).Within(1e-6));
 
                 IInteractable console = Get(session, InteractionIds.CockpitConsole);
                 Assert.That(console.Prompt, Does.Contain("beacon"));
@@ -442,6 +443,29 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(Value(report, MissionReportSections.Outcome, "What it means"), Does.Contain("fictional").And.Contain("Mars"));
                 Assert.That(Value(report, MissionReportSections.Resources, "Rest"), Does.Contain("BVAD"));
                 Assert.That(Value(report, MissionReportSections.Resources, "Recovery beacon"), Does.StartWith("Powered"));
+            }
+        }
+
+        [Test]
+        public void TheBeaconWindow_IsAFictionalPacingWindowOfEightHours_AboutNinetySixRealSecondsAwake()
+        {
+            using (MissionSession session = Contact())
+            {
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                for (int guard = 0; recovery.Stage == RecoveryStage.Inbound; guard++)
+                {
+                    Assert.That(guard, Is.LessThan(40));
+                    RestUntilStop(session);
+                }
+
+                Assert.That(SurvivalRecovery.BeaconWindowHours, Is.EqualTo(8d));
+                double open = recovery.BeaconWindowEndsAtSimulationSeconds.Value - session.State.ElapsedSimulationSeconds;
+                Assert.That(open / session.Survival.Spec.TimeScale, Is.GreaterThan(90d), "about 96 real seconds awake at the Survival scale");
+                Require(session.AdvanceSimulation(open - (0.1d * Hour)));
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested), "still open 6 minutes before the end");
+                Require(recovery.TryPowerBeacon());
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.Inbound));
+                Assert.That(recovery.BeaconMissed, Is.False);
             }
         }
 

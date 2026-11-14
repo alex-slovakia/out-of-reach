@@ -52,8 +52,12 @@ namespace OutOfReach.Core
         /// <summary>GAME ASSUMPTION (fictional): the craft asks for the ship's beacon this many days after contact.</summary>
         public const double BeaconRequestAfterContactDays = 6d;
 
-        /// <summary>GAME ASSUMPTION (fictional): how long the beacon request stays open, hours.</summary>
-        public const double BeaconWindowHours = 2d;
+        /// <summary>
+        /// GAME ASSUMPTION, a fictional pacing window: how long the beacon request stays open, simulated hours. Eight
+        /// hours are about 96 real seconds at the Survival time scale (300), enough to reach the comms panel after the
+        /// request wakes the crew; the earlier 2 hours (24 real seconds) were too short in review.
+        /// </summary>
+        public const double BeaconWindowHours = 8d;
 
         /// <summary>GAME ASSUMPTION (fictional): one delay of the rendezvous after a missed beacon window, days.</summary>
         public const double MissedBeaconDelayDays = 3d;
