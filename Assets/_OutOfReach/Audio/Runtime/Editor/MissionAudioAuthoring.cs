@@ -27,6 +27,7 @@ namespace OutOfReach.Presentation.Audio.Editor
                     RequiredClip("Assets/_OutOfReach/Audio/Music/mx02_tension.wav"),
                     RequiredClip("Assets/_OutOfReach/Audio/Music/mx03_emergency.wav"),
                     Array.Empty<DialogueCueBinding>(), effects);
+                presenter.ConfigureRecoveryMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/mx04_recovery.wav"));
                 if (!presenter.ValidateConfiguration(out string reason)) throw new InvalidOperationException(reason);
                 if (!PrefabUtility.SaveAsPrefabAsset(root, PrefabPath))
                     throw new InvalidOperationException("Could not save owned audio prefab.");
@@ -56,7 +57,8 @@ namespace OutOfReach.Presentation.Audio.Editor
                 if (clip && AssetDatabase.GetAssetPath(clip).Contains("/Voices/Radio/"))
                     throw new InvalidOperationException("Rejected radio variants must not be the default dialogue catalog.");
             }
-            Debug.Log("AUDIO_PREFAB_VALIDATION_PASS music=3 sfx=" + serialized.FindProperty("sfxCues").arraySize
+            Debug.Log("AUDIO_PREFAB_VALIDATION_PASS music=" + (serialized.FindProperty("recoveryMusic").objectReferenceValue ? 4 : 3)
+                + " sfx=" + serialized.FindProperty("sfxCues").arraySize
                 + " dialogueBindings=" + cues.arraySize + " listeners=0 authoredSources=0; runtime playback not tested by this check");
         }
 

@@ -44,9 +44,11 @@ namespace OutOfReach.Composition
         private void LateUpdate()
         {
             if (!volume || !cameraData || clock == null || state == null) return;
-            bool pausedView = clock.IsPaused && state.Phase != GamePhase.Outcome && state.Phase != GamePhase.Report;
+            bool pausedView = state.Phase == GamePhase.Report
+                || (clock.IsPaused && state.Phase != GamePhase.Outcome);
             // Resume restores crisp gameplay immediately; only the menu entrance eases in.
-            volume.weight = pausedView ? Mathf.MoveTowards(volume.weight, 1f, Time.unscaledDeltaTime * 5f) : 0f;
+            float weight = state.Phase == GamePhase.Report ? .5f : 1f;
+            volume.weight = pausedView ? Mathf.MoveTowards(volume.weight, weight, Time.unscaledDeltaTime * 5f) : 0f;
             cameraData.renderPostProcessing = originalPostProcessing || volume.weight > 0f;
         }
 

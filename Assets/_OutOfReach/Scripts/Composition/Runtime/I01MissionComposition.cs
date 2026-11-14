@@ -16,6 +16,7 @@ using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.UI;
 using OutOfReach.Simulation;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace OutOfReach.Composition
 {
@@ -28,6 +29,7 @@ namespace OutOfReach.Composition
         [SerializeField] private MissionFlightBoard flightBoard;
         [SerializeField] private MissionCinematicPresenter cinematics;
         [SerializeField] private MissionAudioPresenter audioPresenter;
+        [SerializeField] private FootstepAudioPresenter footsteps;
         [SerializeField] private PreflightTensionPresenter preflightTension;
         private MusicMood preflightPreviousMood;
         private bool preflightMusicOwned;
@@ -47,6 +49,10 @@ namespace OutOfReach.Composition
         [SerializeField] private AstronautHandsPresenter astronautHands;
         [SerializeField] private CargoVisualPresenter cargoPresentation;
         [SerializeField] private PreflightCargoHandsPresenter cargoHands;
+        [SerializeField] private SurvivalChapterPresenter survivalUi;
+        [SerializeField] private UIDocument survivalDocument;
+        [SerializeField] private StyleSheet survivalStyle;
+        private bool menuPresentationVisible;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
         [Tooltip("Parent of the cinematic offset. This transform is used only to frame Planning.")]
@@ -58,6 +64,7 @@ namespace OutOfReach.Composition
         [Header("Optional explicitly approved clean dialogue; no implicit catalog or fallback")]
         [SerializeField] private DialogueCueBinding recordedBriefing;
         [SerializeField] private DialogueCueBinding impactWarning;
+        [SerializeField] private DialogueCueBinding houstonDistress;
         [SerializeField] private DialogueCueBinding powerRestored;
         [SerializeField] private DialogueCueBinding lifeSupportRestored;
         [SerializeField] private DialogueCueBinding antennaRestored;
@@ -77,7 +84,7 @@ namespace OutOfReach.Composition
         private Func<bool> domainControlGate;
         private Func<bool> composedControlGate;
         private string cinematicCaption = string.Empty;
-        private string dialogueSpeaker = "SHIP";
+        private string dialogueSpeaker = "SHIP COMPUTER";
         private string latestPrompt = string.Empty;
         private bool latestPromptAvailable;
         private float rejectionUntil;
@@ -122,6 +129,13 @@ namespace OutOfReach.Composition
             firstPersonMotion = presenter;
             firstPersonMotionPivot = visualOffset;
         }
+
+        public void ConfigureFootsteps(FootstepAudioPresenter presenter) => footsteps = presenter;
+
+        // This candidate still uses the existing grounded controller. The floating-mode
+        // integration must also exclude IsFloating here, even when touching a floor.
+        private bool CanPresentGroundedStepAudio() => CanPresentWalkMotion() && modeChosen
+            && !menuPresentationVisible && !(boundSession.SurvivalRecovery?.IsResting ?? false);
 
         // This is queried by the visual presenter in LateUpdate, after camera sequences update.
         // Read the real controller's gate; never replace it or introduce another input/movement authority.
@@ -209,9 +223,22 @@ namespace OutOfReach.Composition
 
         public void ConfigureCargoHands(PreflightCargoHandsPresenter presenter) => cargoHands = presenter;
 
+        public void ConfigureSurvivalUi(SurvivalChapterPresenter presenter, UIDocument document, StyleSheet style)
+        {
+            survivalUi = presenter;
+            survivalDocument = document;
+            survivalStyle = style;
+        }
+
+        private bool CanPresentSurvivalUi() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && !menuPresentationVisible && cinematics && !cinematics.IsPlaying;
+
         public void SetMenuPresentationVisible(bool visible)
         {
+            menuPresentationVisible = visible;
             if (cargoPresentation) cargoPresentation.SetMenuOverlayVisible(visible);
+            if (survivalUi) survivalUi.RefreshPresentation();
         }
 
         public void PlayMenuCue(bool confirm = false)
@@ -219,10 +246,10 @@ namespace OutOfReach.Composition
             if (audioPresenter) audioPresenter.TryPlayMenuCue(confirm);
         }
 
-        // Add only the planning-mode UI lock to Core's existing gate. Speed stays entirely with MissionRuntime.
+        // Add planning and physical-rest presentation locks to Core's existing gate. No parallel simulation.
         private void BindPlanningControlGate()
         {
-            if (!runtime.PreflightWalk || !runtime.Player) return;
+            if (!runtime.Player) return;
             planningControlPlayer = runtime.Player;
             domainControlGate = planningControlPlayer.ControlGate;
             composedControlGate = CanUsePlanningControls;
@@ -232,6 +259,7 @@ namespace OutOfReach.Composition
         private bool CanUsePlanningControls() => isActiveAndEnabled && attached && boundSession != null
             && runtime && ReferenceEquals(boundSession, runtime.Session)
             && domainControlGate != null && domainControlGate()
+            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
 
         private void ReleasePlanningControlGate()
@@ -350,12 +378,19 @@ namespace OutOfReach.Composition
                 cargoHands.Configure(runtime.Cargo, runtime.GameState, runtime.Clock, CanPresentHands);
             }
             flightBoard.ConfigureEva(runtime.EvaStatus);
+            if (survivalUi)
+                survivalUi.Configure(survivalDocument, survivalStyle, runtime.Survival, runtime.SurvivalRecovery,
+                    runtime.GameState, runtime.Clock, CanPresentSurvivalUi);
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
             flightBoard.enabled = true;
             cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
             cinematics.enabled = true;
+            if (footsteps && runtime.Player)
+                footsteps.Configure(runtime.Player.GetComponent<CharacterController>(), runtime.GameState,
+                    runtime.Clock, runtime.EvaStatus, CanPresentGroundedStepAudio,
+                    (clip, gain) => audioPresenter && audioPresenter.PlaySfx(clip, gain));
             if (astronautHands)
             {
                 astronautHands.ConfigureSession(runtime.EvaStatus, runtime.GameState, runtime.Clock, CanPresentHands);
@@ -402,6 +437,9 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (footsteps) footsteps.ClearBinding();
+            if (survivalUi) survivalUi.ClearBinding();
+            menuPresentationVisible = false;
             if (cargoHands) cargoHands.ClearBinding();
             if (preflightTension) preflightTension.ClearBinding();
             if (airlockPanel) airlockPanel.ClearBinding();
@@ -519,15 +557,15 @@ namespace OutOfReach.Composition
                 case GamePhase.Intro:
                     modeChosen = true;
                     flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
-                    audioPresenter.SetMood(MusicMood.Tension);
+                    audioPresenter.SetMood(MusicMood.Isolation);
                     if (playTransition)
                     {
                         audioPresenter.TryPlaySfx("ui_confirm");
-                        PlayOptional(recordedBriefing, "MISSION CONTROL · RECORDED");
+                        PlayOptional(recordedBriefing, "MISSION CONTROL · EARTH · RECORDED");
                     }
                     break;
                 case GamePhase.Emergency:
-                    audioPresenter.SetMood(MusicMood.Emergency);
+                    audioPresenter.SetMood(MusicMood.Emergency, 0f);
                     break;
                 case GamePhase.Repair:
                     audioPresenter.SetMood(InteriorRepairsComplete ? MusicMood.Isolation : MusicMood.Tension);
@@ -535,6 +573,14 @@ namespace OutOfReach.Composition
                 case GamePhase.Eva:
                 case GamePhase.Transmission:
                     audioPresenter.SetMood(MusicMood.Tension);
+                    break;
+                case GamePhase.Survival:
+                    audioPresenter.SetMood(MusicMood.Isolation);
+                    break;
+                case GamePhase.Outcome:
+                case GamePhase.Report:
+                    audioPresenter.SetMood(runtime.GameState.Outcome == MissionOutcome.Recovered
+                        ? MusicMood.Recovery : MusicMood.Silent);
                     break;
                 default:
                     audioPresenter.SetMood(MusicMood.Silent);
@@ -551,12 +597,15 @@ namespace OutOfReach.Composition
         {
             if (astronautHands) astronautHands.ResetToNeutral();
             if (openingMenuMotion) openingMenuMotion.ResetToNeutral();
-            if (request.Cinematic == CinematicId.FalseSignal) { PlayOptional(falseSignal, "SHIP · BUFFER DIAGNOSTIC", true); return; }
-            if (request.Cinematic == CinematicId.CommunicationRestored) { PlayOptional(earthReply, "MISSION CONTROL · DELAYED REPLY", true); return; }
+            if (request.Cinematic == CinematicId.FalseSignal) { PlayOptional(falseSignal, "SHIP COMPUTER · BUFFER DIAGNOSTIC", true); return; }
+            if (request.Cinematic == CinematicId.CommunicationRestored) { QueueReceivedEarthMessage(); return; }
             if (request.Cinematic != CinematicId.Impact) return;
-            audioPresenter.SetMood(MusicMood.Emergency, .3f);
+            audioPresenter.SetMood(MusicMood.Emergency, 0f);
             audioPresenter.TryPlaySfx("power_down");
-            PlayOptional(impactWarning, "SHIP", true);
+            PlayOptional(impactWarning, "SHIP COMPUTER", true);
+            // Houston is the playable astronaut; this is local speech directed to Earth.
+            // The communication service still controls when an Earth reply can arrive.
+            PlayOptional(houstonDistress, "HOUSTON · YOU");
         }
 
         private void OnSystemConditionChanged(SystemConditionChanged change)
@@ -564,9 +613,9 @@ namespace OutOfReach.Composition
             UpdateSystemLights();
             if (change.Condition01 >= 1d)
             {
-                if (change.SystemId == ShipSystemId.Power) PlayOptional(powerRestored, "SHIP");
-                if (change.SystemId == ShipSystemId.LifeSupport) PlayOptional(lifeSupportRestored, "SHIP");
-                if (change.SystemId == ShipSystemId.Antenna) PlayOptional(antennaRestored, "SHIP");
+                if (change.SystemId == ShipSystemId.Power) PlayOptional(powerRestored, "SHIP COMPUTER");
+                if (change.SystemId == ShipSystemId.LifeSupport) PlayOptional(lifeSupportRestored, "SHIP COMPUTER");
+                if (change.SystemId == ShipSystemId.Antenna) PlayOptional(antennaRestored, "SHIP COMPUTER");
             }
             if (InteriorRepairsComplete && runtime.GameState.Phase == GamePhase.Repair)
             {
@@ -590,7 +639,19 @@ namespace OutOfReach.Composition
 
         private void OnCommunicationChanged(CommunicationChanged change)
         {
-            if (change.State == CommunicationState.AwaitingReply) PlayOptional(transmissionSent, "SHIP");
+            if (change.State == CommunicationState.AwaitingReply) PlayOptional(transmissionSent, "SHIP COMPUTER");
+            // C06 enters Survival directly at receipt, without the old ending cinematic.
+            // The service owns delay and receipt; presentation never starts a second timer.
+            if (change.State == CommunicationState.ReplyReceived) QueueReceivedEarthMessage();
+        }
+
+        private void QueueReceivedEarthMessage()
+        {
+            if (!runtime || boundSession == null || runtime.GameState.Outcome == MissionOutcome.Lost
+                || runtime.Session.Communications.State != CommunicationState.ReplyReceived) return;
+            // A fast-forward may cross receipt while a previous buffer diagnosis is
+            // still speaking. It must not keep claiming that no Earth reply arrived.
+            PlayOptional(earthReply, "MISSION CONTROL · EARTH · DELAYED REPLY", true);
         }
 
         private void OnAirlockStateChanged(AirlockStateChanged change)
@@ -601,7 +662,7 @@ namespace OutOfReach.Composition
                 || change.State == AirlockState.InnerOpen || change.State == AirlockState.OuterOpen)
                 if (airlockMotor) audioPresenter.PlaySfx(airlockMotor, .32f);
             if (change.State == AirlockState.OuterOpen && airlockReady) audioPresenter.PlaySfx(airlockReady, .22f);
-            if (change.State == AirlockState.OuterOpen) PlayOptional(outerHatchOpen, "SHIP");
+            if (change.State == AirlockState.OuterOpen) PlayOptional(outerHatchOpen, "SHIP COMPUTER");
         }
 
         private void UpdateSystemLights()
@@ -619,7 +680,10 @@ namespace OutOfReach.Composition
 
         private void OnMissionEnded(MissionEnded ended)
         {
-            audioPresenter.SetMood(MusicMood.Silent);
+            dialogueQueue.Clear();
+            audioPresenter.StopDialogue();
+            audioPresenter.SetMood(runtime.GameState.Outcome == MissionOutcome.Recovered
+                ? MusicMood.Recovery : MusicMood.Silent);
             rejectionUntil = 0f;
             latestPrompt = string.Empty;
             flightBoard.ClearInteractionPrompt();

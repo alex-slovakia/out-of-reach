@@ -338,15 +338,17 @@ namespace OutOfReach.Presentation.UI
             switch (current)
             {
                 case GamePhase.Planning: phase.text = "Mission preparation"; objective.text = string.Empty; break;
-                case GamePhase.Intro: phase.text = "Complete the cockpit check"; objective.text = string.Empty; break;
+                case GamePhase.Intro: phase.text = "Complete the cockpit check"; objective.text = "You are Houston, aboard Aurora-7."; break;
                 case GamePhase.Emergency: phase.text = "Restore power"; objective.text = string.Empty; break;
                 case GamePhase.Repair: phase.text = "Restore power and life support"; objective.text = string.Empty; break;
-                case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = string.Empty; break;
+                case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = "Spacewalk (EVA) · Stay attached to the safety line."; break;
                 case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = string.Empty; break;
+                case GamePhase.Survival: phase.text = "Survive until rescue"; objective.text = "Manage your food, water and ship systems."; break;
                 case GamePhase.Outcome:
                 case GamePhase.Report:
                     phase.text = outcome == MissionOutcome.RecoveryPossible ? "Contact restored"
-                        : outcome == MissionOutcome.Lost ? "Mission lost" : "Mission report";
+                        : outcome == MissionOutcome.Lost ? "Mission lost"
+                        : outcome == MissionOutcome.Recovered ? "Rescue arrived" : "Mission report";
                     objective.text = outcome == MissionOutcome.RecoveryPossible ? "Recovery planning is possible. Rescue is not confirmed." : string.Empty;
                     break;
                 default: phase.text = "Mission status"; objective.text = string.Empty; break;

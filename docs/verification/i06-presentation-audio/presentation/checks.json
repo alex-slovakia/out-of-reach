@@ -1,0 +1,1894 @@
+{
+    "checks": [
+        {
+            "utc": "2026-11-14T18:39:25.5989339Z",
+            "stage": "saved scene",
+            "message": "Saved Bootstrap loaded, no generated replacement scene.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6019692Z",
+            "stage": "saved scene",
+            "message": "Saved builder has an enabled SurvivalChapterPresenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6103636Z",
+            "stage": "saved scene",
+            "message": "Planning/menu hides survival widgets.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6413513Z",
+            "stage": "opt-in session setup",
+            "message": "StartSession disposes the old authority and binds a fresh one.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6433841Z",
+            "stage": "opt-in session setup",
+            "message": "New session starts behind the real mode-choice control gate.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6498041Z",
+            "stage": "opt-in session setup",
+            "message": "Fresh planning session contains no visible old survival state.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.6601511Z",
+            "stage": "opt-in session setup",
+            "message": "Submit enabled, visible real button: Practice · no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.7563730Z",
+            "stage": "opt-in session setup",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.7584175Z",
+            "stage": "opt-in session setup",
+            "message": "Actual Practice button releases the composed gate without a deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.7820414Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8014385Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8035408Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives Impact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8157261Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges Impact through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8301574Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual power repair costs | power distribution repaired (2 spare parts).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8337247Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8498336Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8646255Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual airlock cycle | Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8727371Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real depressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8752625Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual exterior domain command (no movement claim) | Outside on the tether.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8828050Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.8903482Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual return-inside domain command | Inside the airlock.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9002405Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual repressurization command | Outer hatch closed. Repressurizing.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9098848Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real repressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9190479Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9256078Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives FalseSignal.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9342144Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges FalseSignal through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9463788Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9499170Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Reply is pending after transmission, not instant.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:25.9651824Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance the actual outbound/return reply interval | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0595193Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communication service reports the received reply.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0615263Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Restored contact enters Survival with no final outcome.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0702190Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Contact has no final report or ending sequence.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0780553Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Contact does not open the report UI.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0866729Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real opt-in services are active and recovery is inbound.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.0953146Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1030061Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Both displayed needs equal their authoritative services (hunger / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1105893Z",
+            "stage": "disclosed domain-command journey",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1196852Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Recovery detail is absent from the default compact HUD.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1273863Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Submit enabled, visible real button: Tab  Systems.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1558362Z",
+            "stage": "disclosed domain-command journey",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1588784Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual Systems button exposes the real inbound recovery stage only on demand.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1680021Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Submit enabled, visible real button: Close systems.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1837941Z",
+            "stage": "disclosed domain-command journey",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1853127Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Closing Systems returns to the compact view.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.1956415Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance one real simulated hour through all services | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.2129050Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.2149453Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Both displayed needs equal their authoritative services (hunger / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.2242056Z",
+            "stage": "disclosed domain-command journey",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:26.2318998Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual unmet needs increased, so bars are not constant placeholders.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.0100375Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Capture uses the actual camera/document at 1280x720: 01-survival.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.1743912Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Begin a real two-hour rest | Rest up to 2 h: about 0.153 kg food and 0.208 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.1889830Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest UI appears only while the real service is resting.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.1915116Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Composition blocks actual player controls/cursor capture during rest after frames.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2042953Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest releases the actual cursor for Wake.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2149625Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest day matches the authoritative mission calendar.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2280948Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest countdown reflects the service's exact initial two hours.",
+            "pass": true,
+            "simulationSeconds": 15118.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2404272Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Advance ten simulated rest minutes through the same resource model | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2616269Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest remaining time and food/water ledger advance together.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.2651497Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest UI follows the actual remaining time after advancement.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.3346600Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 02-rest.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.7360307Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Real runtime Update while paused freezes mission clock, rest and food/water consumption.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.7390533Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Pause hides survival HUD and disables Wake.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.7529150Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Paused UI submission and authoritative Wake guard cannot wake the crew.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:27.8364221Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 02b-paused-rest.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0047939Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Resume retains the real rest and its player lock.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0085207Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Submit enabled, visible real button: Wake.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0326271Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One NavigationSubmit produces exactly one actual click (survival-wake).",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0356748Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One actual Wake button click wakes the same session.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0463895Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake restores the prior simulation scale and actual player control/cursor intent.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0559785Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake immediately removes the rest overlay.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0671270Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0763649Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Both displayed needs equal their authoritative services (hunger / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.0855738Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1039375Z",
+            "stage": "survival UI lifecycle",
+            "message": "Presenter disable removes owned widgets from the live panel.",
+            "pass": true,
+            "simulationSeconds": 15718.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1084744Z",
+            "stage": "survival UI lifecycle",
+            "message": "Authoritative state changes while the presenter is disabled | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1178529Z",
+            "stage": "survival UI lifecycle",
+            "message": "Disabled service events do not recreate UI.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1422777Z",
+            "stage": "survival UI lifecycle",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1463257Z",
+            "stage": "survival UI lifecycle",
+            "message": "Both displayed needs equal their authoritative services (hunger / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1594968Z",
+            "stage": "survival UI lifecycle",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.1819606Z",
+            "stage": "survival UI lifecycle",
+            "message": "Composition teardown removes survival views.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.2047519Z",
+            "stage": "survival UI lifecycle",
+            "message": "Composition rebind keeps the same live session and restores its actual gate.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.2087815Z",
+            "stage": "survival UI lifecycle",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.2174451Z",
+            "stage": "survival UI lifecycle",
+            "message": "Both displayed needs equal their authoritative services (hunger / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.2266674Z",
+            "stage": "survival UI lifecycle",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 15778.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:28.3237390Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Submit enabled, visible real button: Tab  Systems.",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.3646312Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.3682674Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Optional detail shows the real requested stage and live beacon window.",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.3778715Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Submit enabled, visible real button: Close systems.",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.3997187Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.4042661Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Power the requested recovery beacon through the real ledger | Recovery beacon powered: the rendezvous stays on schedule.",
+            "pass": true,
+            "simulationSeconds": 530578.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.4944879Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Actual repeated rests and paid beacon reach Recovered/Arrived without inventory grants.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.4970038Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Real RecoveryArrival is playing before the report.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:28.5062623Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "The end card does not appear before recovery cinematics finish.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.5877514Z",
+            "stage": "real rest/beacon recovery journey",
+            "message": "Last ending completed normally, without fallback or skip.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.5949345Z",
+            "stage": "Recovered report navigation",
+            "message": "Displayed report comes from the real final outcome Recovered.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6045505Z",
+            "stage": "Recovered report navigation",
+            "message": "Exactly one real, unskipped ending completion: RecoveryArrival.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6141789Z",
+            "stage": "Recovered report navigation",
+            "message": "Exactly one real, unskipped ending completion: MarsDeparture.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6263446Z",
+            "stage": "Recovered report navigation",
+            "message": "Report opens on its short first view with all technical detail hidden.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6385359Z",
+            "stage": "Recovered report navigation",
+            "message": "End-card headline: You made it..",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6501756Z",
+            "stage": "Recovered report navigation",
+            "message": "First-view summary is present and short (53 characters).",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6593099Z",
+            "stage": "Recovered report navigation",
+            "message": "First view stays compact with mission identity, outcome, elapsed time and three optional actions.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6699195Z",
+            "stage": "Recovered report navigation",
+            "message": "Final report hides survival HUD and blocks gameplay controls.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:44.6779952Z",
+            "stage": "Recovered report navigation",
+            "message": "Real Recovered outcome confirms rescue and names Mars as the next destination, without claiming arrival there.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:45.7360385Z",
+            "stage": "Recovered report navigation",
+            "message": "Capture uses the actual camera/document at 1280x720: 03-recovered.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:45.8999764Z",
+            "stage": "Recovered report navigation",
+            "message": "Submit enabled, visible real button: Mission record.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0530749Z",
+            "stage": "Recovered report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (missionRecordButton).",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0561176Z",
+            "stage": "Recovered report navigation",
+            "message": "Mission record opens only after its actual button submission.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0681399Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section outcome.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0772272Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section mission-design.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0883397Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section resources.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.0986624Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section systems.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1076086Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section science.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1182336Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section communication.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1264772Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section timeline.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1360645Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section nasa-data.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1441443Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section derived-physics.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1523098Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section fictional-scenario.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1614946Z",
+            "stage": "Recovered report navigation",
+            "message": "Record preserves supplied values for section time-compression.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1711962Z",
+            "stage": "Recovered report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1900217Z",
+            "stage": "Recovered report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.1940274Z",
+            "stage": "Recovered report navigation",
+            "message": "Back returns from record to the short card.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2036714Z",
+            "stage": "Recovered report navigation",
+            "message": "Submit enabled, visible real button: Sources.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2359451Z",
+            "stage": "Recovered report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportSourcesButton).",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2399654Z",
+            "stage": "Recovered report navigation",
+            "message": "Sources opens its own optional view.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2511324Z",
+            "stage": "Recovered report navigation",
+            "message": "Sources contains exactly the report's NASA/derived/fiction/time-compression sections.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2569961Z",
+            "stage": "Recovered report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2761307Z",
+            "stage": "Recovered report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2786357Z",
+            "stage": "Recovered report navigation",
+            "message": "Back returns from Sources to the short card.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.2876961Z",
+            "stage": "actual Plan again restart",
+            "message": "Submit enabled, visible real button: Plan again.",
+            "pass": true,
+            "simulationSeconds": 1048318.965642497
+        },
+        {
+            "utc": "2026-11-14T18:39:46.6720808Z",
+            "stage": "actual Plan again restart",
+            "message": "One NavigationSubmit produces exactly one actual click (reportRestartButton).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.6827875Z",
+            "stage": "actual Plan again restart",
+            "message": "Plan again disposes the ended session and returns to clean planning.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.6858075Z",
+            "stage": "actual Plan again restart",
+            "message": "Old end card is detached or hidden after restart.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.6968574Z",
+            "stage": "actual Plan again restart",
+            "message": "Restart restores mode choice and hides the previous report.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7224318Z",
+            "stage": "opt-out session setup",
+            "message": "StartSession disposes the old authority and binds a fresh one.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7239368Z",
+            "stage": "opt-out session setup",
+            "message": "New session starts behind the real mode-choice control gate.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7365387Z",
+            "stage": "opt-out session setup",
+            "message": "Fresh planning session contains no visible old survival state.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7461250Z",
+            "stage": "opt-out session setup",
+            "message": "Submit enabled, visible real button: Practice · no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7609917Z",
+            "stage": "opt-out session setup",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7645345Z",
+            "stage": "opt-out session setup",
+            "message": "Actual Practice button releases the composed gate without a deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7735822Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7816687Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7903009Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives Impact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.7973545Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges Impact through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8054090Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual power repair costs | power distribution repaired (2 spare parts).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8124478Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8210547Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8305971Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual airlock cycle | Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8386598Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real depressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8467658Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual exterior domain command (no movement claim) | Outside on the tether.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8578638Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8656496Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual return-inside domain command | Inside the airlock.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8748393Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual repressurization command | Outer hatch closed. Repressurizing.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8838876Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real repressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8913859Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.8994358Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives FalseSignal.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9074945Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges FalseSignal through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9173369Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9248764Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Reply is pending after transmission, not instant.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9353139Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance the actual outbound/return reply interval | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9573904Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communication service reports the received reply.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:39:46.9609020Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Fresh opt-out session preserves the legacy Contact restored outcome.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7340782Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Last ending completed normally, without fallback or skip.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7362943Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Displayed report comes from the real final outcome RecoveryPossible.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7454362Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Exactly one real, unskipped ending completion: CommunicationRestored.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7555667Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Exactly one real, unskipped ending completion: EndingPullback.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7672118Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Report opens on its short first view with all technical detail hidden.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7739981Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "End-card headline: A voice from Earth..",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7857554Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "First-view summary is present and short (44 characters).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.7938187Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "First view stays compact with mission identity, outcome, elapsed time and three optional actions.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.8040329Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Final report hides survival HUD and blocks gameplay controls.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:07.8161309Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Legacy contact explicitly states rescue has not arrived.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:08.8655992Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Capture uses the actual camera/document at 1280x720: 04-contact-restored-legacy.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.0131594Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Submit enabled, visible real button: Mission record.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.0795354Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (missionRecordButton).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.0831048Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Mission record opens only after its actual button submission.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.0921613Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section outcome.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1018386Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section mission-design.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1099021Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section resources.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1206941Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section systems.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1296069Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section science.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1395854Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section communication.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1489374Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section timeline.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1586153Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section nasa-data.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1677666Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section derived-physics.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1775286Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section fictional-scenario.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1861231Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Record preserves supplied values for section time-compression.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.1967536Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2153957Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2203953Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Back returns from record to the short card.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2285787Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Submit enabled, visible real button: Sources.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2539258Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportSourcesButton).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2570599Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Sources opens its own optional view.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2656157Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Sources contains exactly the report's NASA/derived/fiction/time-compression sections.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2742265Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2895917Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.2926434Z",
+            "stage": "RecoveryPossible report navigation",
+            "message": "Back returns from Sources to the short card.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.3018447Z",
+            "stage": "actual Plan again restart",
+            "message": "Submit enabled, visible real button: Plan again.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.6718432Z",
+            "stage": "actual Plan again restart",
+            "message": "One NavigationSubmit produces exactly one actual click (reportRestartButton).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.6795498Z",
+            "stage": "actual Plan again restart",
+            "message": "Plan again disposes the ended session and returns to clean planning.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.6836621Z",
+            "stage": "actual Plan again restart",
+            "message": "Old end card is detached or hidden after restart.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.6913243Z",
+            "stage": "actual Plan again restart",
+            "message": "Restart restores mode choice and hides the previous report.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7106950Z",
+            "stage": "opt-in session setup",
+            "message": "StartSession disposes the old authority and binds a fresh one.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7138136Z",
+            "stage": "opt-in session setup",
+            "message": "New session starts behind the real mode-choice control gate.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7234622Z",
+            "stage": "opt-in session setup",
+            "message": "Fresh planning session contains no visible old survival state.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7306754Z",
+            "stage": "opt-in session setup",
+            "message": "Submit enabled, visible real button: Practice · no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7474711Z",
+            "stage": "opt-in session setup",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7510009Z",
+            "stage": "opt-in session setup",
+            "message": "Actual Practice button releases the composed gate without a deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7596799Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7673672Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7755657Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives Impact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7836291Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges Impact through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.7929867Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual power repair costs | power distribution repaired (2 spare parts).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8008151Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8089659Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8176894Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual airlock cycle | Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8249930Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real depressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8340808Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual exterior domain command (no movement claim) | Outside on the tether.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8421585Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8512928Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual return-inside domain command | Inside the airlock.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8588762Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual repressurization command | Outer hatch closed. Repressurizing.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8676978Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real repressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8759295Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8855378Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives FalseSignal.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.8941333Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges FalseSignal through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9037221Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9117734Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Reply is pending after transmission, not instant.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9223589Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance the actual outbound/return reply interval | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9487474Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communication service reports the received reply.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9533134Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance awake without drinking, through the actual viability limit | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:09.9619511Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real unmet-water accounting produces Lost; no forced outcome or fake phase.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:17.9621468Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Last ending completed normally, without fallback or skip.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:17.9652190Z",
+            "stage": "Lost report navigation",
+            "message": "Displayed report comes from the real final outcome Lost.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:17.9742768Z",
+            "stage": "Lost report navigation",
+            "message": "Exactly one real, unskipped ending completion: EndingPullback.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:17.9839466Z",
+            "stage": "Lost report navigation",
+            "message": "Report opens on its short first view with all technical detail hidden.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:17.9927295Z",
+            "stage": "Lost report navigation",
+            "message": "End-card headline: Out of time..",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:18.0036082Z",
+            "stage": "Lost report navigation",
+            "message": "First-view summary is present and short (100 characters).",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:18.0112235Z",
+            "stage": "Lost report navigation",
+            "message": "First view stays compact with mission identity, outcome, elapsed time and three optional actions.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:18.0207223Z",
+            "stage": "Lost report navigation",
+            "message": "Final report hides survival HUD and blocks gameplay controls.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:18.0298183Z",
+            "stage": "Lost report navigation",
+            "message": "Lost first view preserves the exact authoritative cause.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.0808987Z",
+            "stage": "Lost report navigation",
+            "message": "Capture uses the actual camera/document at 1280x720: 05-lost.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.2420107Z",
+            "stage": "Lost report navigation",
+            "message": "Submit enabled, visible real button: Mission record.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.2912431Z",
+            "stage": "Lost report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (missionRecordButton).",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.2984084Z",
+            "stage": "Lost report navigation",
+            "message": "Mission record opens only after its actual button submission.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3101013Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section outcome.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3235435Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section mission-design.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3352027Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section resources.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3492060Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section systems.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3628323Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section science.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3739086Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section communication.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.3881194Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section timeline.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4024465Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section nasa-data.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4159404Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section derived-physics.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4276248Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section fictional-scenario.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4378858Z",
+            "stage": "Lost report navigation",
+            "message": "Record preserves supplied values for section time-compression.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4480866Z",
+            "stage": "Lost report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4712837Z",
+            "stage": "Lost report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4758513Z",
+            "stage": "Lost report navigation",
+            "message": "Back returns from record to the short card.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.4864871Z",
+            "stage": "Lost report navigation",
+            "message": "Submit enabled, visible real button: Sources.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5227364Z",
+            "stage": "Lost report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportSourcesButton).",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5276707Z",
+            "stage": "Lost report navigation",
+            "message": "Sources opens its own optional view.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5395623Z",
+            "stage": "Lost report navigation",
+            "message": "Sources contains exactly the report's NASA/derived/fiction/time-compression sections.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5523232Z",
+            "stage": "Lost report navigation",
+            "message": "Submit enabled, visible real button: Back.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5701317Z",
+            "stage": "Lost report navigation",
+            "message": "One NavigationSubmit produces exactly one actual click (reportBackButton).",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5741870Z",
+            "stage": "Lost report navigation",
+            "message": "Back returns from Sources to the short card.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.5840296Z",
+            "stage": "actual Plan again restart",
+            "message": "Submit enabled, visible real button: Plan again.",
+            "pass": true,
+            "simulationSeconds": 97918.96564249695
+        },
+        {
+            "utc": "2026-11-14T18:40:19.9517700Z",
+            "stage": "actual Plan again restart",
+            "message": "One NavigationSubmit produces exactly one actual click (reportRestartButton).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:19.9612038Z",
+            "stage": "actual Plan again restart",
+            "message": "Plan again disposes the ended session and returns to clean planning.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:19.9647248Z",
+            "stage": "actual Plan again restart",
+            "message": "Old end card is detached or hidden after restart.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:19.9739956Z",
+            "stage": "actual Plan again restart",
+            "message": "Restart restores mode choice and hides the previous report.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T18:40:19.9846200Z",
+            "stage": "actual Plan again restart",
+            "message": "Final restart leaves no stale report, needs or rest panel.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        }
+    ]
+}

@@ -1,0 +1,1049 @@
+{
+    "checks": [
+        {
+            "stage": "saved scene",
+            "message": "Exactly one active existing AudioListener.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved scene has one valid audio owner.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Four distinct native score channels are bound.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved exact score binding: Assets/_OutOfReach/Audio/Music/mx01_isolation.wav",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved exact score binding: Assets/_OutOfReach/Audio/Music/mx02_tension.wav",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved exact score binding: Assets/_OutOfReach/Audio/Music/mx03_emergency.wav",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved exact score binding: Assets/_OutOfReach/Audio/Music/mx04_recovery.wav",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved footstep presenter is bound to three real contact clips.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Footsteps delegates to the single audio owner; no private AudioSource.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Saved AudioMixV02 music gain .8 and dialogue duck -8 dB.",
+            "pass": true
+        },
+        {
+            "stage": "saved scene",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 00-initial-native-output.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 01-planning-calm.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Mode menu blocks actual W movement and contact cues.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Submit actual visible button: Practice · no deadline",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "Planning source mix",
+            "message": "Actual Practice button enables grounded movement.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Grounded idle emits no contacts.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Walk sampling stays within the production cadence's 250 ms hitch limit; max=0.003473895",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Actual grounded distance=2.600075 m emitted=2 contacts; expectedContacts=True",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 02-grounded-contact-mix.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Teleport displacement and subsequent idle produce no contact/backlog.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Walk sampling stays within the production cadence's 250 ms hitch limit; max=0.003037904",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Actual grounded distance=0.2004671 m emitted=0 contacts; expectedContacts=False",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Sub-step actual movement after teleport cannot replay the old partial distance.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Native CharacterController is genuinely airborne at the QA fixture.",
+            "pass": true
+        },
+        {
+            "stage": "actual grounded contacts",
+            "message": "Airborne probe travelled farther than a full stride, so grounding suppression was substantive.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Walk sampling stays within the production cadence's 250 ms hitch limit; max=0.001137302",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Actual grounded distance=0.3000679 m emitted=0 contacts; expectedContacts=False",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Pause freezes native source positions, score weights, fade and duck state.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Paused W neither moves nor emits contacts.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 02b-paused-audio.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Real resume restores audio and player control.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Resume without movement does not replay a footstep backlog.",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Walk sampling stays within the production cadence's 250 ms hitch limit; max=0.003382703",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Actual grounded distance=0.2008495 m emitted=0 contacts; expectedContacts=False",
+            "pass": true
+        },
+        {
+            "stage": "pause/resume audio and cadence",
+            "message": "Resumed sub-stride movement starts clean after suppressed partial distance.",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "resumed Planning source mix",
+            "message": "resumed Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "composition teardown/rebind",
+            "message": "Composition disable stops all score/dialogue and clears weights.",
+            "pass": true
+        },
+        {
+            "stage": "composition teardown/rebind",
+            "message": "Composition disable releases footstep services and cadence.",
+            "pass": true
+        },
+        {
+            "stage": "composition teardown/rebind",
+            "message": "Rebind uses the same real session and reconnects contacts.",
+            "pass": true
+        },
+        {
+            "stage": "composition teardown/rebind",
+            "message": "Submit actual visible button: Practice · no deadline",
+            "pass": true
+        },
+        {
+            "stage": "composition teardown/rebind",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "rebound Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "Submit actual visible button: Practice · no deadline",
+            "pass": true
+        },
+        {
+            "stage": "rebound Planning source mix",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Intro: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 03-intro-calm.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Actual impact immediately hard-cuts all calm/tension/recovery weight, without a residual crossfade.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Hard cut stops the calm native source and clears its started flag.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 04-impact-emergency.",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Disclosed real presentation skip: Impact",
+            "pass": true
+        },
+        {
+            "stage": "Intro source mix",
+            "message": "Emergency phase keeps the immediate crisis cut.",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "partial Repair source mix",
+            "message": "partial Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "stabilized Repair source mix",
+            "message": "stabilized Repair: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "EVA: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "Actual EVA start has an outward horizontal heading.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "Real W moved the bound exterior route for the no-footsteps probe (not a full EVA traversal).",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "Exterior/EVA movement emits no grounded-deck contacts.",
+            "pass": true
+        },
+        {
+            "stage": "EVA source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 05-eva-tension.",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Transmission source mix",
+            "message": "Transmission: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Disclosed real presentation skip: FalseSignal",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Earth reply cue is absent before the actual inbound/outbound interval completes.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Required reply cue is gated by real receipt and active Survival, not an ending or timer shortcut.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Current and queued false-signal dialogue are absent after receipt; current cue is vo11_mc_reply_received.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Survival: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Survival source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 06-survival-calm-and-reply.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovered: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 07-recovered-hopeful.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Recovery music follows genuine Recovered, not merely contact.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Disclosed real presentation skip: RecoveryArrival",
+            "pass": true
+        },
+        {
+            "stage": "Recovered source mix",
+            "message": "Disclosed real presentation skip: MarsDeparture",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Recovered report source mix",
+            "message": "Recovered report: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Submit actual visible button: Plan again",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Exactly one active existing AudioListener.",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Real Plan again disposes the old session and restores the menu.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "fresh Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "fresh Planning source mix",
+            "message": "Restart clears contact cadence and audio pause state.",
+            "pass": true
+        },
+        {
+            "stage": "fresh actual survival loss",
+            "message": "Submit actual visible button: Practice · no deadline",
+            "pass": true
+        },
+        {
+            "stage": "fresh actual survival loss",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "fresh actual survival loss",
+            "message": "Disclosed real presentation skip: Impact",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Disclosed real presentation skip: FalseSignal",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Earth reply cue is absent before the actual inbound/outbound interval completes.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Required reply cue is gated by real receipt and active Survival, not an ending or timer shortcut.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Current and queued false-signal dialogue are absent after receipt; current cue is vo11_mc_reply_received.",
+            "pass": true
+        },
+        {
+            "stage": "actual receipt replaces diagnostic dialogue",
+            "message": "Real unmet-water accounting produced Lost.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Lost clears obsolete dialogue and queued lines as well as the score.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Observed listener PCM is finite and contains no full-scale/over-range samples in 08-lost-silence.",
+            "pass": true
+        },
+        {
+            "stage": "Lost source mix",
+            "message": "Disclosed real presentation skip: EndingPullback",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Submit actual visible button: Plan again",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Exactly one native UI callback.",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Exactly one active existing AudioListener.",
+            "pass": true
+        },
+        {
+            "stage": "actual report restart",
+            "message": "Real Plan again disposes the old session and restores the menu.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: actual fade completed with exact final weights.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel 0 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel 1 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel 2 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel 3 playing/started matches selection (source state, not audibility).",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "final restart Planning: native channel volume matches actual weight and duck gain.",
+            "pass": true
+        },
+        {
+            "stage": "final restart Planning source mix",
+            "message": "Final restart has no footstep backlog and only the requested calm score source playing.",
+            "pass": true
+        }
+    ]
+}

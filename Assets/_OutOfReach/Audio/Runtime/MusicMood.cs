@@ -6,6 +6,7 @@ namespace OutOfReach.Presentation.Audio
         Silent = 0,
         Isolation = 1,
         Tension = 2,
-        Emergency = 3
+        Emergency = 3,
+        Recovery = 4
     }
 }

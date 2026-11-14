@@ -20,14 +20,15 @@ namespace OutOfReach.Presentation.Audio
         [SerializeField] private AudioClip isolationMusic;
         [SerializeField] private AudioClip tensionMusic;
         [SerializeField] private AudioClip emergencyMusic;
+        [SerializeField] private AudioClip recoveryMusic; // Optional: old three-mood configurations remain valid.
         [Min(0)] [SerializeField] private float defaultCrossfadeSeconds = 1.25f;
 
         [Header("Presentation mix")]
         [Range(0, 1)] [SerializeField] private float masterVolume = 1f;
         [Range(0, 1)] [SerializeField] private float dialogueVolume = 1f;
-        [Range(0, 1)] [SerializeField] private float musicVolume = .55f;
+        [Range(0, 1)] [SerializeField] private float musicVolume = .8f;
         [Range(0, 1)] [SerializeField] private float sfxVolume = .8f;
-        [Range(-40, 0)] [SerializeField] private float dialogueMusicDuckDb = -14f;
+        [Range(-40, 0)] [SerializeField] private float dialogueMusicDuckDb = -8f;
         [Min(.001f)] [SerializeField] private float duckAttackSeconds = .08f;
         [Min(.001f)] [SerializeField] private float duckReleaseSeconds = .65f;
 
@@ -41,10 +42,10 @@ namespace OutOfReach.Presentation.Audio
         private AudioSource sfxSource;
         private AudioSource menuSource;
         private float lastMenuCueTime = -10f;
-        private readonly AudioSource[] musicSources = new AudioSource[3];
-        private readonly bool[] musicStarted = new bool[3];
-        private readonly float[] musicWeights = new float[3];
-        private readonly float[] fadeStartWeights = new float[3];
+        private readonly AudioSource[] musicSources = new AudioSource[4];
+        private readonly bool[] musicStarted = new bool[4];
+        private readonly float[] musicWeights = new float[4];
+        private readonly float[] fadeStartWeights = new float[4];
         private float fadeElapsed;
         private float fadeDuration;
         private float duckGain = 1f;
@@ -154,14 +155,32 @@ namespace OutOfReach.Presentation.Audio
         public bool SetMood(MusicMood mood, float fadeSeconds = -1f)
         {
             if (!Application.isPlaying || !isActiveAndEnabled) return Reject("Audio presenter is not active in Play mode.");
-            if ((int)mood < 0 || (int)mood > 3) return Reject("Unknown music mood.");
+            if ((int)mood < 0 || (int)mood > 4) return Reject("Unknown music mood.");
             if (!Finite(fadeSeconds)) return Reject("Crossfade duration must be finite.");
             AudioClip requestedClip = MusicClip(mood);
             if (mood != MusicMood.Silent && !PrepareClip(requestedClip)) return false;
             EnsureSources();
-            if (mood == CurrentMood) { LastRejection = string.Empty; return true; }
-
             int target = (int)mood - 1;
+            if (mood == CurrentMood)
+            {
+                // One retry per explicit request. Paused sources report not playing: never restart them here.
+                if (target >= 0 && !presentationPaused && !AudioListener.pause
+                    && (!musicStarted[target] || !musicSources[target].isPlaying))
+                {
+                    musicSources[target].clip = requestedClip;
+                    musicSources[target].Play();
+                    if (!musicSources[target].isPlaying) return Reject("Music recovery playback did not start.");
+                    musicStarted[target] = true;
+                    ApplyVolumes();
+                }
+                if (fadeSeconds == 0)
+                {
+                    fadeElapsed = fadeDuration = 0;
+                    SnapMusicWeights(target); // Explicit same-mood hard cut still completes an in-flight fade.
+                }
+                LastRejection = string.Empty;
+                return true;
+            }
             if (target >= 0 && !musicStarted[target])
             {
                 musicSources[target].clip = requestedClip;
@@ -175,19 +194,7 @@ namespace OutOfReach.Presentation.Audio
             CurrentMood = mood;
             fadeDuration = fadeSeconds < 0 ? Nonnegative(defaultCrossfadeSeconds, 1.25f) : fadeSeconds;
             fadeElapsed = 0;
-            if (fadeDuration == 0)
-            {
-                for (int i = 0; i < musicWeights.Length; i++)
-                {
-                    musicWeights[i] = i == target ? 1f : 0f;
-                    if (i != target && musicSources[i])
-                    {
-                        musicSources[i].Stop();
-                        musicStarted[i] = false;
-                    }
-                }
-                ApplyVolumes();
-            }
+            if (fadeDuration == 0) SnapMusicWeights(target);
             LastRejection = string.Empty;
             return true;
         }
@@ -292,6 +299,13 @@ namespace OutOfReach.Presentation.Audio
             sfxCues = effects == null ? Array.Empty<SfxCueBinding>() : (SfxCueBinding[])effects.Clone();
         }
 
+        /// <summary>Optional fourth mood; existing ConfigureClips callers keep their three-mood behavior.</summary>
+        public void ConfigureRecoveryMusic(AudioClip recovery)
+        {
+            if (CurrentMood == MusicMood.Recovery) SetMood(MusicMood.Silent, 0);
+            recoveryMusic = recovery;
+        }
+
         public bool ValidateConfiguration(out string reason)
         {
             if (!isolationMusic || !tensionMusic || !emergencyMusic)
@@ -352,6 +366,7 @@ namespace OutOfReach.Presentation.Audio
                 case MusicMood.Isolation: return isolationMusic;
                 case MusicMood.Tension: return tensionMusic;
                 case MusicMood.Emergency: return emergencyMusic;
+                case MusicMood.Recovery: return recoveryMusic;
                 default: return null;
             }
         }
@@ -386,6 +401,20 @@ namespace OutOfReach.Presentation.Audio
             return source;
         }
 
+        private void SnapMusicWeights(int target)
+        {
+            for (int i = 0; i < musicWeights.Length; i++)
+            {
+                musicWeights[i] = fadeStartWeights[i] = i == target ? 1f : 0f;
+                if (i != target && musicSources[i])
+                {
+                    musicSources[i].Stop();
+                    musicStarted[i] = false;
+                }
+            }
+            ApplyVolumes();
+        }
+
         private void ApplyVolumes()
         {
             float master = Safe01(masterVolume);
@@ -403,7 +432,7 @@ namespace OutOfReach.Presentation.Audio
         }
 
         private bool Reject(string reason) { LastRejection = reason; return false; }
-        private float SafeDuckDb() => Finite(dialogueMusicDuckDb) ? Mathf.Clamp(dialogueMusicDuckDb, -40, 0) : -14;
+        private float SafeDuckDb() => Finite(dialogueMusicDuckDb) ? Mathf.Clamp(dialogueMusicDuckDb, -40, 0) : -8;
         private static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
         private static float Safe01(float value) => Finite(value) ? Mathf.Clamp01(value) : 0;
         private static float Positive(float value, float fallback) => Finite(value) && value > 0 ? value : fallback;

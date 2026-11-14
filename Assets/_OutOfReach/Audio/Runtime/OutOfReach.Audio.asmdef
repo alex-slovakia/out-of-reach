@@ -1,7 +1,9 @@
 {
   "name": "OutOfReach.Audio",
   "rootNamespace": "OutOfReach.Presentation.Audio",
-  "references": [],
+  "references": [
+    "GUID:6a4e96b62d2827c4fac4388c480ef63b"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

@@ -1,0 +1,5 @@
+{
+    "pass": true,
+    "message": "209 source/control/physics assertions passed. Nonzero listener PCM observed in 8/10 windows (silence expected in some). This is not device/speaker audibility or listening acceptance. See native-output.json.",
+    "utc": "2026-11-14T18:45:13.3855970Z"
+}

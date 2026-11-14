@@ -157,9 +157,15 @@ namespace OutOfReach.Composition.Editor
                 throw new InvalidOperationException("Audio prefab needs valid explicit music/SFX bindings.");
 
             Transform presentationRoot = Child("I01 presentation", null);
+            FootstepAudioPresenter footsteps = presentationRoot.gameObject.AddComponent<FootstepAudioPresenter>();
+            footsteps.ConfigureClips(new[] {
+                Required<AudioClip>("Assets/_OutOfReach/Audio/Original/DeckContacts/deck-contact-01.wav"),
+                Required<AudioClip>("Assets/_OutOfReach/Audio/Original/DeckContacts/deck-contact-02.wav"),
+                Required<AudioClip>("Assets/_OutOfReach/Audio/Original/DeckContacts/deck-contact-03.wav")
+            });
             FirstPersonMotionPresenter walkMotion = presentationRoot.gameObject.AddComponent<FirstPersonMotionPresenter>();
             var motionFields = new SerializedObject(walkMotion);
-            motionFields.FindProperty("cameraVerticalMetres").floatValue = .006f;
+            motionFields.FindProperty("cameraVerticalMetres").floatValue = .014f;
             motionFields.ApplyModifiedPropertiesWithoutUndo();
             OpeningMenuMotionPresenter menuMotion = presentationRoot.gameObject.AddComponent<OpeningMenuMotionPresenter>();
             AstronautHandsPresenter hands = presentationRoot.gameObject.AddComponent<AstronautHandsPresenter>();
@@ -213,6 +219,7 @@ namespace OutOfReach.Composition.Editor
                 planningPivot, overview, powerLight, lifeLight);
             composition.ConfigureShipPresentation(doors, shipLighting, workingLights, emergencyLights);
             composition.ConfigureWalkMotion(walkMotion, motionPivot);
+            composition.ConfigureFootsteps(footsteps);
             composition.ConfigureOpeningMenuMotion(menuMotion, menuMotionPivot);
             composition.ConfigurePauseBackdrop(presentationRoot.gameObject.AddComponent<I01PauseBackdrop>(), camera);
             Transform airlockScreenMount = Child("Airlock digital display mount", presentationRoot);
@@ -228,6 +235,8 @@ namespace OutOfReach.Composition.Editor
             presentationRoot.gameObject.AddComponent<CargoDestinationGuide>().Configure(cargoStage.Presenter, camera,
                 document, Required<StyleSheet>("Assets/_OutOfReach/UI/Styles/MissionFlightBoard.uss"), font);
             composition.ConfigureCargoHands(cargoStage.Hands);
+            composition.ConfigureSurvivalUi(presentationRoot.gameObject.AddComponent<SurvivalChapterPresenter>(),
+                document, Required<StyleSheet>("Assets/_OutOfReach/UI/Styles/SurvivalChapter.uss"));
             BindApprovedDialogue(composition, cinematics);
 
             // Physical preflight uses the actual body and aim pivot; list-mode retains its authored overview.
@@ -714,14 +723,15 @@ namespace OutOfReach.Composition.Editor
             // Explicit user-approved clean masters only. Subtitle text is read verbatim from each matching TXT.
             var owner = new SerializedObject(composition);
             BindCue(owner, "recordedBriefing", "vo01_mc_briefing");
-            AudioClip impact = BindCue(owner, "impactWarning", "vo02_ship_impact");
+            AudioClip impact = BindCue(owner, "impactWarning", "vo02_ship_impact", "Dramatic/02_natural_crisis");
+            BindCue(owner, "houstonDistress", "houston_to_earth", "Dramatic/05_houston_to_earth");
             BindCue(owner, "powerRestored", "vo03_ship_power_restored");
             BindCue(owner, "lifeSupportRestored", "vo04_ship_life_support_restored");
             BindCue(owner, "outerHatchOpen", "vo06_ship_eva_exit");
             BindCue(owner, "antennaRestored", "vo07_ship_antenna_restored");
             AudioClip diagnosis = BindCue(owner, "falseSignal", "vo09_ship_buffer_diagnosis");
             BindCue(owner, "transmissionSent", "vo10_ship_transmission_sent");
-            AudioClip reply = BindCue(owner, "earthReply", "vo11_mc_reply_received");
+            AudioClip reply = BindCue(owner, "earthReply", "vo11_mc_reply_received", "Dramatic/03_exhaustion_relief");
             owner.ApplyModifiedPropertiesWithoutUndo();
             var cinematic = new SerializedObject(cinematics);
             cinematic.FindProperty("impactSeconds").floatValue = Mathf.Clamp(impact.length + .3f, 4.5f, 40f);
@@ -730,9 +740,9 @@ namespace OutOfReach.Composition.Editor
             cinematic.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        private static AudioClip BindCue(SerializedObject owner, string field, string id)
+        private static AudioClip BindCue(SerializedObject owner, string field, string id, string relativeVoicePath = null)
         {
-            string path = "Assets/_OutOfReach/Audio/Voices/Clean/" + id;
+            string path = "Assets/_OutOfReach/Audio/Voices/" + (relativeVoicePath ?? ("Clean/" + id));
             AudioClip clip = Required<AudioClip>(path + ".wav");
             TextAsset subtitle = Required<TextAsset>(path + ".txt");
             SerializedProperty cue = owner.FindProperty(field);

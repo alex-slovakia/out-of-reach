@@ -226,7 +226,11 @@ namespace OutOfReach.Presentation.Cinematics
                 case CinematicId.FalseSignal:
                     return phase == GamePhase.Repair || phase == GamePhase.Eva || phase == GamePhase.Transmission;
                 case CinematicId.CommunicationRestored:
-                    return phase == GamePhase.Transmission || (phase == GamePhase.Outcome && outcome == MissionOutcome.RecoveryPossible);
+                    return phase == GamePhase.Transmission || phase == GamePhase.Survival
+                        || (phase == GamePhase.Outcome && outcome == MissionOutcome.RecoveryPossible);
+                case CinematicId.RecoveryArrival:
+                case CinematicId.MarsDeparture:
+                    return phase == GamePhase.Outcome && outcome == MissionOutcome.Recovered;
                 case CinematicId.EndingPullback:
                     return phase == GamePhase.Outcome && outcome != MissionOutcome.None;
                 default:
@@ -284,7 +288,7 @@ namespace OutOfReach.Presentation.Cinematics
             {
                 case CinematicId.Impact:
                     ApplyImpact(t);
-                    caption = "Impact detected. Check power and life support.";
+                    caption = "Trajectory deviation detected. Stabilize power and life support.";
                     break;
                 case CinematicId.FalseSignal:
                     caption = t < 0.45f ? "Local communications buffer playback." : "Archived transmission. This is not a new Earth reply.";
@@ -301,7 +305,11 @@ namespace OutOfReach.Presentation.Cinematics
                     if (hasEndingFrame && capturedPivot && !reducedEffects)
                         capturedPivot.SetPositionAndRotation(Vector3.Lerp(pivotWorldPosition, endingWorldPosition, Smooth(t)),
                             Quaternion.Slerp(pivotWorldRotation, endingWorldRotation, Smooth(t)));
-                    caption = gameState.Outcome == MissionOutcome.Lost
+                    caption = activeRequest.Cinematic == CinematicId.RecoveryArrival
+                        ? "Recovery craft has arrived. Prepare for crew transfer."
+                        : activeRequest.Cinematic == CinematicId.MarsDeparture
+                        ? "LATER · ONWARD TO MARS"
+                        : gameState.Outcome == MissionOutcome.Lost
                         ? "Mission lost. Review the mission report."
                         : "Contact restored. Recovery takes time.";
                     break;

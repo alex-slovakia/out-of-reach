@@ -79,8 +79,8 @@ namespace OutOfReach.Presentation.Motion
         private void OnDestroy() => ClearBinding();
 
         private bool CanAnimate() => bound && offset && isActiveAndEnabled && !reducedMotion
-            && (state.Phase == GamePhase.Planning || clock.IsPaused)
-            && state.Phase != GamePhase.Outcome && state.Phase != GamePhase.Report && menuViewAllowed();
+            && (state.Phase == GamePhase.Planning || state.Phase == GamePhase.Report || clock.IsPaused)
+            && state.Phase != GamePhase.Outcome && menuViewAllowed();
 
         private void LateUpdate()
         {

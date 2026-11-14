@@ -18,7 +18,7 @@ namespace OutOfReach.Presentation.Motion
         [SerializeField] private bool reducedMotion;
 
         [Header("Very small camera offsets; metres / degrees")]
-        [SerializeField, Range(0f, .008f)] private float cameraVerticalMetres = .006f;
+        [SerializeField, Range(0f, .02f)] private float cameraVerticalMetres = .014f;
         [SerializeField, Range(0f, .005f)] private float cameraLateralMetres = .0015f;
         [SerializeField, Range(0f, .15f)] private float cameraRollDegrees = .06f;
 
@@ -258,7 +258,7 @@ namespace OutOfReach.Presentation.Motion
             float side = Mathf.Sin(phaseRadians);
             float rise = Mathf.Sin(phaseRadians * 2f);
             Vector3 cameraTarget = new Vector3(side * Mathf.Clamp(cameraLateralMetres, 0f, .005f),
-                rise * Mathf.Clamp(cameraVerticalMetres, 0f, .008f), 0f) * strength;
+                rise * Mathf.Clamp(cameraVerticalMetres, 0f, .02f), 0f) * strength;
             Vector3 handsTarget = new Vector3(-side * Mathf.Clamp(handsLateralMetres, 0f, .015f),
                 -rise * Mathf.Clamp(handsVerticalMetres, 0f, .015f), 0f) * strength;
             float blend = 1f - Mathf.Exp(-Mathf.Clamp(responsePerSecond, 5f, 24f) * visualSeconds);
@@ -309,7 +309,8 @@ namespace OutOfReach.Presentation.Motion
             ? Vector3.ProjectOnPlane(cameraPivot.parent.forward, Vector3.up) : Vector3.zero;
 
         private static bool IsWalkingPhase(GamePhase phase) => phase == GamePhase.Planning || phase == GamePhase.Intro
-            || phase == GamePhase.Emergency || phase == GamePhase.Repair || phase == GamePhase.Transmission;
+            || phase == GamePhase.Emergency || phase == GamePhase.Repair || phase == GamePhase.Transmission
+            || phase == GamePhase.Survival;
 
         private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 

@@ -1,229 +1,158 @@
 {
-  "version": "oor-original-score-candidates-v1",
-  "script_sha256": "55ca1fa9b5fa22a63f72d6a629a8b2d6d553502f7f8af5db9ec2341765e1b6cf",
-  "ffmpeg_version": "ffmpeg version 5.1.2-full_build-www.gyan.dev Copyright (c) 2000-2022 the FFmpeg developers",
-  "scope": "Production source assets imported byte-for-byte; audio presenter source supplied, Unity playback and listening approval pending",
-  "same_loudness_target_lufs": -24.0,
-  "sample_peak_ceiling_dbfs": -8.0,
-  "loop_construction": "Exactly 32 s, native 48 kHz stereo, no terminal fade; periodic synthesis and modulation",
-  "existing_voice_or_sfx_files_modified": false,
-  "human_listening_verified": false,
-  "files": [
+  "authorship": "Original algorithmically performed scores, composed for OUT OF REACH. No copied melody, third-party samples or NASA recordings.",
+  "music_intent": "Pitched electric piano/chord accompaniment, original melodic motifs, bass and light percussion. Distinct from the prior ambient drone.",
+  "mix": {
+    "master": 1,
+    "music": 0.8,
+    "dialogue_duck_db": -8
+  },
+  "human_listening_approved": false,
+  "tracks": [
     {
-      "id": "mx01_isolation",
-      "path": "mx01_isolation.wav",
-      "sha256": "6d6d5f689514a983262ea3bc3ebddc6f6a6bcb9ab984ea10d740e5b151ea2fe5",
-      "byte_count": 6144044,
-      "sample_rate_hz": 48000,
-      "channels": 2,
-      "pcm_bits": 16,
-      "frames": 1536000,
-      "duration_seconds": 32.0,
-      "tempo_bpm": 60,
-      "meter": "4/4",
-      "bars": 8,
-      "tonal_center": "D minor / open suspended voicings",
-      "intention": "Quiet isolation: slow crossfaded pads, wide restrained glints, sparse low mechanical pulse",
-      "loop_start_frame": 0,
-      "loop_end_frame_exclusive": 1536000,
-      "pre_roll_seconds": 0,
-      "post_roll_seconds": 0,
-      "sample_peak_dbfs": -15.2006,
-      "clipped_samples": 0,
-      "nonfinite_samples": 0,
+      "asset": "Assets/_OutOfReach/Audio/Music/mx01_isolation.wav",
+      "title": "Cabin Radio - Small Blue Light",
+      "tag": "calm-radio",
+      "tempo_bpm": 80,
+      "bars": 16,
+      "duration_seconds": 48.0,
+      "sha256": "29138c3b9c18c5a4d16bd4453a0aa7301c01b375632ba234371bd45310c161e6",
       "loudness": {
-        "integrated_lufs": -24.0,
-        "loudness_range_lu": 3.0,
-        "true_peak_dbfs": -15.2,
-        "measurement": "Installed ffmpeg ebur128 with true-peak oversampling; not human listening"
+        "input_i": -20.0,
+        "input_tp": -7.48,
+        "input_lra": 0.5
       },
-      "loop_seam_checks": {
-        "pass": true,
-        "first_sample_l_r": [
-          0.007904052734375,
-          0.0145263671875
-        ],
-        "last_sample_l_r": [
-          0.00811767578125,
-          0.01629638671875
-        ],
-        "wrap_step_l_r": [
-          -0.000213623046875,
-          -0.00177001953125
-        ],
-        "incoming_slope_l_r": [
-          -0.000213623046875,
-          -0.001739501953125
-        ],
-        "outgoing_slope_l_r": [
-          -0.000213623046875,
-          -0.00177001953125
-        ],
-        "boundary_slope_change_l_r": [
-          0.0,
-          3.0517578125e-05
-        ],
-        "allowed_wrap_step_l_r": [
-          0.00592041015625,
-          0.00726318359375
-        ],
-        "allowed_slope_change_l_r": [
-          0.000244140625,
-          0.0003662109375
-        ],
-        "method": "Integer-cycle oscillators, periodic modulation/envelopes and FFT noise/filtering; compare PCM wrap step/slope against normal local changes and quantization floor",
-        "interpretation": "Numerical seam check only. Adjacent first/last PCM samples need not be equal for a continuous periodic waveform. Auditory loop check is pending."
-      },
-      "stereo_correlation": 0.64971,
-      "mono_fold_down_rms_loss_db": -0.837,
-      "authorship": "Original OUT OF REACH composition, arrangement, oscillator patches and procedural noise authored in build_music.py; no third-party recordings, samples, melodies or model/API audio",
-      "human_listening_verified": false,
-      "integration": "Non-diegetic score candidate only. Runtime gain, dialogue ducking and state transitions belong to later integration; no gameplay authority or rescue/delay implication."
+      "clipped_samples": 0,
+      "loop_wrap_jump": [
+        0.00032483613288026257,
+        0.0004956495259745737
+      ],
+      "max_internal_sample_jump": [
+        0.05859632222163012,
+        0.06813768018826555
+      ],
+      "wrap_slope_mismatch": [
+        -3.2134849395380055e-05,
+        -3.8962614923299804e-05
+      ],
+      "preview": "Previews/calm-radio-15s.wav",
+      "stems": [
+        "Stems/mx01_isolation-keys.flac",
+        "Stems/mx01_isolation-melody.flac",
+        "Stems/mx01_isolation-bass.flac",
+        "Stems/mx01_isolation-percussion.flac"
+      ],
+      "numerical_seam_pass": true
     },
     {
-      "id": "mx02_tension",
-      "path": "mx02_tension.wav",
-      "sha256": "3e082d38b79bb6b90a2ff963cab67dbd22dd132fe49f825560ca7b5da802262d",
-      "byte_count": 6144044,
-      "sample_rate_hz": 48000,
-      "channels": 2,
-      "pcm_bits": 16,
-      "frames": 1536000,
-      "duration_seconds": 32.0,
-      "tempo_bpm": 75,
-      "meter": "4/4",
-      "bars": 10,
-      "tonal_center": "D minor with fleeting chromatic neighbours",
-      "intention": "Rising tension: repeating low ostinato, cyclical swells and sparse muted ticks; no sudden loop reset",
-      "loop_start_frame": 0,
-      "loop_end_frame_exclusive": 1536000,
-      "pre_roll_seconds": 0,
-      "post_roll_seconds": 0,
-      "sample_peak_dbfs": -15.1778,
-      "clipped_samples": 0,
-      "nonfinite_samples": 0,
+      "asset": "Assets/_OutOfReach/Audio/Music/mx02_tension.wav",
+      "title": "Signal Break - Hold the Line",
+      "tag": "crisis-tension",
+      "tempo_bpm": 100,
+      "bars": 16,
+      "duration_seconds": 38.4,
+      "sha256": "6536cb5c10987cb16398a22f8b4c4fce7c57c7021fd0301e9860fac435e7fb04",
       "loudness": {
-        "integrated_lufs": -24.0,
-        "loudness_range_lu": 3.5,
-        "true_peak_dbfs": -15.2,
-        "measurement": "Installed ffmpeg ebur128 with true-peak oversampling; not human listening"
+        "input_i": -20.0,
+        "input_tp": -7.02,
+        "input_lra": 1.0
       },
-      "loop_seam_checks": {
-        "pass": true,
-        "first_sample_l_r": [
-          -0.053955078125,
-          -0.077117919921875
-        ],
-        "last_sample_l_r": [
-          -0.052032470703125,
-          -0.07562255859375
-        ],
-        "wrap_step_l_r": [
-          -0.001922607421875,
-          -0.001495361328125
-        ],
-        "incoming_slope_l_r": [
-          -0.00189208984375,
-          -0.00146484375
-        ],
-        "outgoing_slope_l_r": [
-          -0.001922607421875,
-          -0.00146484375
-        ],
-        "boundary_slope_change_l_r": [
-          3.0517578125e-05,
-          3.0517578125e-05
-        ],
-        "allowed_wrap_step_l_r": [
-          0.00555419921875,
-          0.00457763671875
-        ],
-        "allowed_slope_change_l_r": [
-          0.00067138671875,
-          0.00103759765625
-        ],
-        "method": "Integer-cycle oscillators, periodic modulation/envelopes and FFT noise/filtering; compare PCM wrap step/slope against normal local changes and quantization floor",
-        "interpretation": "Numerical seam check only. Adjacent first/last PCM samples need not be equal for a continuous periodic waveform. Auditory loop check is pending."
-      },
-      "stereo_correlation": 0.79716,
-      "mono_fold_down_rms_loss_db": -0.4953,
-      "authorship": "Original OUT OF REACH composition, arrangement, oscillator patches and procedural noise authored in build_music.py; no third-party recordings, samples, melodies or model/API audio",
-      "human_listening_verified": false,
-      "integration": "Non-diegetic score candidate only. Runtime gain, dialogue ducking and state transitions belong to later integration; no gameplay authority or rescue/delay implication."
+      "clipped_samples": 0,
+      "loop_wrap_jump": [
+        0.0014351684283416604,
+        0.0013058334570824927
+      ],
+      "max_internal_sample_jump": [
+        0.06824885536351871,
+        0.0795364080766405
+      ],
+      "wrap_slope_mismatch": [
+        0.00019600435151421666,
+        0.0001655825769411143
+      ],
+      "preview": "Previews/crisis-tension-15s.wav",
+      "stems": [
+        "Stems/mx02_tension-keys.flac",
+        "Stems/mx02_tension-melody.flac",
+        "Stems/mx02_tension-bass.flac",
+        "Stems/mx02_tension-percussion.flac"
+      ],
+      "numerical_seam_pass": true
     },
     {
-      "id": "mx03_emergency",
-      "path": "mx03_emergency.wav",
-      "sha256": "10b27d13533541340978c514bb66051e5ab06fde5e599095d34e7295b94c4f2e",
-      "byte_count": 6144044,
-      "sample_rate_hz": 48000,
-      "channels": 2,
-      "pcm_bits": 16,
-      "frames": 1536000,
-      "duration_seconds": 32.0,
+      "asset": "Assets/_OutOfReach/Audio/Music/mx03_emergency.wav",
+      "title": "Signal Break - Emergency",
+      "tag": "emergency-crisis",
+      "tempo_bpm": 100,
+      "bars": 16,
+      "duration_seconds": 38.4,
+      "sha256": "6536cb5c10987cb16398a22f8b4c4fce7c57c7021fd0301e9860fac435e7fb04",
+      "loudness": {
+        "input_i": -20.0,
+        "input_tp": -7.02,
+        "input_lra": 1.0
+      },
+      "clipped_samples": 0,
+      "loop_wrap_jump": [
+        0.0014351684283416604,
+        0.0013058334570824927
+      ],
+      "max_internal_sample_jump": [
+        0.06824885536351871,
+        0.0795364080766405
+      ],
+      "wrap_slope_mismatch": [
+        0.00019600435151421666,
+        0.0001655825769411143
+      ],
+      "preview": "Previews/crisis-tension-15s.wav",
+      "stems": [
+        "Stems/mx02_tension-keys.flac",
+        "Stems/mx02_tension-melody.flac",
+        "Stems/mx02_tension-bass.flac",
+        "Stems/mx02_tension-percussion.flac"
+      ],
+      "numerical_seam_pass": true,
+      "arrangement_shared_with": "mx02_tension"
+    },
+    {
+      "asset": "Assets/_OutOfReach/Audio/Music/mx04_recovery.wav",
+      "title": "Another Dawn - Recovery",
+      "tag": "hopeful-recovery",
       "tempo_bpm": 90,
-      "meter": "4/4",
-      "bars": 12,
-      "tonal_center": "D-centred minor / E-flat tension",
-      "intention": "Controlled emergency: syncopated low pulses, restrained contact-like percussion and narrow dissonance; no trailer impacts",
-      "loop_start_frame": 0,
-      "loop_end_frame_exclusive": 1536000,
-      "pre_roll_seconds": 0,
-      "post_roll_seconds": 0,
-      "sample_peak_dbfs": -11.9149,
-      "clipped_samples": 0,
-      "nonfinite_samples": 0,
+      "bars": 16,
+      "duration_seconds": 42.666666666666664,
+      "sha256": "581c45929ba152604862789297dd162f5b48446cef1b1d930a408f6704e3c59b",
       "loudness": {
-        "integrated_lufs": -24.0,
-        "loudness_range_lu": 4.2,
-        "true_peak_dbfs": -11.9,
-        "measurement": "Installed ffmpeg ebur128 with true-peak oversampling; not human listening"
+        "input_i": -19.99,
+        "input_tp": -7.27,
+        "input_lra": 1.3
       },
-      "loop_seam_checks": {
-        "pass": true,
-        "first_sample_l_r": [
-          -0.08489990234375,
-          -0.054473876953125
-        ],
-        "last_sample_l_r": [
-          -0.083740234375,
-          -0.053619384765625
-        ],
-        "wrap_step_l_r": [
-          -0.00115966796875,
-          -0.0008544921875
-        ],
-        "incoming_slope_l_r": [
-          -0.00115966796875,
-          -0.000885009765625
-        ],
-        "outgoing_slope_l_r": [
-          -0.001129150390625,
-          -0.0008544921875
-        ],
-        "boundary_slope_change_l_r": [
-          3.0517578125e-05,
-          3.0517578125e-05
-        ],
-        "allowed_wrap_step_l_r": [
-          0.0062255859375,
-          0.00555419921875
-        ],
-        "allowed_slope_change_l_r": [
-          0.00201416015625,
-          0.00201416015625
-        ],
-        "method": "Integer-cycle oscillators, periodic modulation/envelopes and FFT noise/filtering; compare PCM wrap step/slope against normal local changes and quantization floor",
-        "interpretation": "Numerical seam check only. Adjacent first/last PCM samples need not be equal for a continuous periodic waveform. Auditory loop check is pending."
-      },
-      "stereo_correlation": 0.84039,
-      "mono_fold_down_rms_loss_db": -0.3875,
-      "authorship": "Original OUT OF REACH composition, arrangement, oscillator patches and procedural noise authored in build_music.py; no third-party recordings, samples, melodies or model/API audio",
-      "human_listening_verified": false,
-      "integration": "Non-diegetic score candidate only. Runtime gain, dialogue ducking and state transitions belong to later integration; no gameplay authority or rescue/delay implication."
+      "clipped_samples": 0,
+      "loop_wrap_jump": [
+        -0.00022418896479263917,
+        -0.00034660217995304693
+      ],
+      "max_internal_sample_jump": [
+        0.05221602642272974,
+        0.06037036582364329
+      ],
+      "wrap_slope_mismatch": [
+        5.1289244450772493e-05,
+        3.626453580157611e-05
+      ],
+      "preview": "Previews/hopeful-recovery-15s.wav",
+      "stems": [
+        "Stems/mx04_recovery-keys.flac",
+        "Stems/mx04_recovery-melody.flac",
+        "Stems/mx04_recovery-bass.flac",
+        "Stems/mx04_recovery-percussion.flac"
+      ],
+      "numerical_seam_pass": true
     }
   ],
-  "rebuild_script": "Editor/build_music.py",
-  "rebuild_instructions": "Copy the exact rebuild script to an isolated output folder and run it there; it writes beside itself. Compare output hashes before replacing production music.",
-  "current_human_listening_verified": false
+  "phase_policy": "Isolation=calm cabin/radio; Tension=EVA/transmission/repair tension; Emergency=actual crisis; Recovery (new ordinal 4)=genuine recovered ending. Mere Earth contact is not recovery.",
+  "version": "oor-original-instrumental-score-v2",
+  "generator": "Editor/build_music_v2.py",
+  "script_sha256": "13241043115b579c3d5d2bd73f83a5f55114ac26b2d7d93ef9b6165fde26033a",
+  "existing_voice_or_sfx_files_modified": false
 }

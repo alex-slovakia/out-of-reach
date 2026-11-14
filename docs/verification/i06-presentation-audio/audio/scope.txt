@@ -1,0 +1,6 @@
+Saved Bootstrap/native audio verification. No production/scene writes.
+Actual W input on documented QA lane; explicit teleports also test discontinuity and airborne suppression. No navigation walkthrough claim.
+Real domain commands and simulation advancement reach EVA/contact/recovery/loss; cinematics use the real SkipActive handshake to bound this audio test.
+Native source flags/weights, listener PCM observations, and human audibility/listening acceptance are distinct. No new audio source/listener or test signal.
+A read-only audio filter tap temporarily observes the existing listener; GetOutputData is a separate short-history sample, not a chronological recording.
+Zero/no callbacks are recorded as unverified output, never proof of an audible mix or proof that hardware is absent. 120-second wall watchdog.

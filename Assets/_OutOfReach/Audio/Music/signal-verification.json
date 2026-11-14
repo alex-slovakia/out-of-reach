@@ -1,30 +1,66 @@
 {
-  "deterministic_rebuild": true,
-  "three_wav_hashes": {
-    "mx01_isolation.wav": "6d6d5f689514a983262ea3bc3ebddc6f6a6bcb9ab984ea10d740e5b151ea2fe5",
-    "mx02_tension.wav": "3e082d38b79bb6b90a2ff963cab67dbd22dd132fe49f825560ca7b5da802262d",
-    "mx03_emergency.wav": "10b27d13533541340978c514bb66051e5ab06fde5e599095d34e7295b94c4f2e"
-  },
-  "total_wav_bytes": 18432132,
-  "all_numerical_seams_pass": true,
-  "all_true_peaks_below_minus6": true,
-  "total_clipped_samples": 0,
-  "human_listening_verified": false,
-  "stereo_mono_checks": [
+  "version": "v2",
+  "checks": [
     {
-      "id": "mx01_isolation",
-      "stereo_correlation": 0.64971,
-      "mono_fold_down_rms_loss_db": -0.837
+      "file": "mx01_isolation.wav",
+      "sha256": "29138c3b9c18c5a4d16bd4453a0aa7301c01b375632ba234371bd45310c161e6",
+      "clipped_samples": 0,
+      "wrap_jump_pcm": [
+        11,
+        17
+      ],
+      "wrap_slope_mismatch_pcm": [
+        -1,
+        -2
+      ],
+      "seam_slope_pass": true,
+      "true_peak_dbfs": -7.48
     },
     {
-      "id": "mx02_tension",
-      "stereo_correlation": 0.79716,
-      "mono_fold_down_rms_loss_db": -0.4953
+      "file": "mx02_tension.wav",
+      "sha256": "6536cb5c10987cb16398a22f8b4c4fce7c57c7021fd0301e9860fac435e7fb04",
+      "clipped_samples": 0,
+      "wrap_jump_pcm": [
+        47,
+        43
+      ],
+      "wrap_slope_mismatch_pcm": [
+        6,
+        6
+      ],
+      "seam_slope_pass": true,
+      "true_peak_dbfs": -7.02
     },
     {
-      "id": "mx03_emergency",
-      "stereo_correlation": 0.84039,
-      "mono_fold_down_rms_loss_db": -0.3875
+      "file": "mx03_emergency.wav",
+      "sha256": "6536cb5c10987cb16398a22f8b4c4fce7c57c7021fd0301e9860fac435e7fb04",
+      "clipped_samples": 0,
+      "wrap_jump_pcm": [
+        47,
+        43
+      ],
+      "wrap_slope_mismatch_pcm": [
+        6,
+        6
+      ],
+      "seam_slope_pass": true,
+      "true_peak_dbfs": -7.02
+    },
+    {
+      "file": "mx04_recovery.wav",
+      "sha256": "581c45929ba152604862789297dd162f5b48446cef1b1d930a408f6704e3c59b",
+      "clipped_samples": 0,
+      "wrap_jump_pcm": [
+        -8,
+        -11
+      ],
+      "wrap_slope_mismatch_pcm": [
+        2,
+        1
+      ],
+      "seam_slope_pass": true,
+      "true_peak_dbfs": -7.27
     }
-  ]
+  ],
+  "human_listening_verified": false
 }

@@ -1,0 +1,35 @@
+{
+  "clips": [
+    {
+      "clip": "02_natural_crisis",
+      "transcript": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+      "voice": "Orus",
+      "human_listening_accepted": true,
+      "sha256": "8928acd5e4e05cf77a04dd9709140351fef1e5d57ba7cb814b62f3b845daa261",
+      "source": "Google Gemini TTS"
+    },
+    {
+      "clip": "03_exhaustion_relief",
+      "transcript": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.",
+      "voice": "Orus",
+      "human_listening_accepted": true,
+      "sha256": "121b95bc12f30eb4e094dc164cb3a02347668a6bbf0019eb3d431261a6664c07",
+      "source": "Google Gemini TTS"
+    },
+    {
+      "clip": "05_houston_to_earth",
+      "transcript": "Mission Control, this is Houston aboard Aurora Seven. We're drifting off course. Do you copy? Please respond.",
+      "voice": "Orus",
+      "human_listening_accepted": true,
+      "sha256": "f779f1cb36ce12738906c4422d0ded52d762bb8240e4cc007a8ad1b84ae51376",
+      "source": "Google Gemini TTS"
+    }
+  ],
+  "format": 1,
+  "note": "All three performances accepted by Alex as audio previews; Houston05 accepted Nov14 after correction to astronaut calling Earth. PCM validation is separate from an automated transcription audit. No NASA recording or Retellai voice is used.",
+  "roles": {
+    "02_natural_crisis": "SHIP COMPUTER",
+    "03_exhaustion_relief": "MISSION CONTROL / EARTH",
+    "05_houston_to_earth": "HOUSTON / PLAYABLE ASTRONAUT"
+  }
+}

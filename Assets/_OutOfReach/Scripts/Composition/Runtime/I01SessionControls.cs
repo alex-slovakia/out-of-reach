@@ -89,7 +89,9 @@ namespace OutOfReach.Composition
                 {
                     recorder = new FlightRecorderPresenter(reportHost, reportStyleSheet);
                     recorder.RestartRequested += OnReportRestart;
+                    recorder.MenuFeedbackRequested += OnReportMenuFeedback;
                 }
+                recorder.SetReducedMotion(composition.Cinematics && composition.Cinematics.ReducedEffects);
                 if (!ReferenceEquals(displayedReport, composition.Runtime.Report))
                 {
                     displayedReport = composition.Runtime.Report;
@@ -187,8 +189,8 @@ namespace OutOfReach.Composition
             root.Add(communications);
             reportHost = new VisualElement { name = "mission-record-host" };
             Fill(reportHost);
-            reportHost.style.left = reportHost.style.right = Length.Percent(6);
-            reportHost.style.top = reportHost.style.bottom = Length.Percent(5);
+            reportHost.style.left = reportHost.style.right = 0;
+            reportHost.style.top = reportHost.style.bottom = 0;
             reportHost.style.display = DisplayStyle.None;
             root.Add(reportHost);
         }
@@ -267,6 +269,7 @@ namespace OutOfReach.Composition
             if (recorder != null)
             {
                 recorder.RestartRequested -= OnReportRestart;
+                recorder.MenuFeedbackRequested -= OnReportMenuFeedback;
                 recorder.Dispose();
                 recorder = null;
             }
@@ -278,6 +281,11 @@ namespace OutOfReach.Composition
             reportHost = null;
             primary = secondary = null;
             reduced = null;
+        }
+
+        private void OnReportMenuFeedback(bool confirm)
+        {
+            if (composition) composition.PlayMenuCue(confirm);
         }
     }
 }

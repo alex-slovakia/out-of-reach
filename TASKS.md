@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current checkpoint — 14 November, 19:46 CET
+
+I06 presentation/audio sources are verified in the isolated integration checkout: **270 presentation assertions + 209 audio/control assertions passed**, including native listener PCM, actual report navigation and restart. [Evidence and exact limits](docs/verification/i06-presentation-audio/README.md). Original open project remains **33f474f**. C06 saved-scene activation, physical habitat/boarding, body and microgravity integration remain in progress; no complete new-game or AAA claim follows from these checks. Claude delivered corrected default-off microgravity **b7abd2c** (owner reports290Edit/47Play); root review/import pending. Habitat **5b0f1ca** and transport **855efbc** are delivered and author-import-checked, not yet root-playtested. New disjoint art tasks: antenna repair kit and galley consumable props. Older dated status below is historical.
+
 ## Current override — 14 November, 18:45 CET
 
 Original project I05 **33f474f**, runtime3032686, is delivered and being played by Alex. Root107focused/274full-mission checks and Windows build pass; second-PC author290Edit/34Play and Bootstrap probe confirmed. [Exact full-row counts and owners](docs/playtest-review/06-status-1845.md). Reviewed C06 rest/recovery through968ab8e is isolated as475fe18, not yet enabled in original. Habitat36211e8 and transport6df81d3 are delivered art awaiting integration. Microgravity is newly requested and assigned as an optional prototype. [Final target boards/Slovak walkthrough](docs/art-direction/review-06-final-overview/README.md). Older claims below are historical.
