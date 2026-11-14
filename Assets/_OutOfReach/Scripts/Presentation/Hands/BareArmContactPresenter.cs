@@ -98,7 +98,10 @@ namespace OutOfReach.Presentation.Hands
             if (!leaseAllowed(hand) || !active.Renderer.enabled || !active.Renderer.gameObject.activeInHierarchy)
             { CancelImmediately(); return; }
             float dt = Time.unscaledDeltaTime;
-            if (!Finite(dt) || dt < 0f || dt > .1f) { CancelContact(); return; }
+            if (!Finite(dt) || dt < 0f) { CancelContact(); return; }
+            // Slow rendering alone must neither abandon a valid reach nor fast-forward its action.
+            // Revalidate the real target/lease below while holding the animation at its prior time.
+            if (dt > .1f) dt = 0f;
             elapsed += dt;
             if (ContactStage == HandContactStage.Returning)
             {

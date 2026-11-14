@@ -1,0 +1,605 @@
+saved scene | PASS Actual saved habitat binding, status and player resolver exist.
+saved scene | Hidden batch focus uses the real controller focus-regain callback; scripted intent and QA aisle teleports are disclosed setup, not manual play.
+saved scene | PASS Actual saved Bootstrap is loaded.
+saved scene | PASS Saved runtime creates C06 by default, without ConfigureSurvivalExtension or replacing its initial session.
+saved scene | PASS Initial session is behind actual mode choice.
+saved scene | PASS Saved runtime binds exactly 28 distinct objects and interaction IDs.
+saved scene | PASS Target binds the current authoritative action: cockpit-console
+saved scene | PASS Target binds the current authoritative action: repair-power
+saved scene | PASS Target binds the current authoritative action: repair-life-support
+saved scene | PASS Target binds the current authoritative action: suit-locker
+saved scene | PASS Target binds the current authoritative action: airlock-controls
+saved scene | PASS Target binds the current authoritative action: eva-exit
+saved scene | PASS Target binds the current authoritative action: eva-return
+saved scene | PASS Target binds the current authoritative action: repair-antenna
+saved scene | PASS Target binds the current authoritative action: cargo-supply:oxygen-tank
+saved scene | PASS Target binds the current authoritative action: cargo-bay:oxygen-tank
+saved scene | PASS Target binds the current authoritative action: cargo-supply:water-tank
+saved scene | PASS Target binds the current authoritative action: cargo-bay:water-tank
+saved scene | PASS Target binds the current authoritative action: cargo-supply:food-locker
+saved scene | PASS Target binds the current authoritative action: cargo-bay:food-locker
+saved scene | PASS Target binds the current authoritative action: cargo-supply:battery-module
+saved scene | PASS Target binds the current authoritative action: cargo-bay:battery-module
+saved scene | PASS Target binds the current authoritative action: cargo-supply:solar-wing
+saved scene | PASS Target binds the current authoritative action: cargo-bay:solar-wing
+saved scene | PASS Target binds the current authoritative action: cargo-supply:spare-parts-kit
+saved scene | PASS Target binds the current authoritative action: cargo-bay:spare-parts-kit
+saved scene | PASS Target binds the current authoritative action: cargo-supply:spectrometer
+saved scene | PASS Target binds the current authoritative action: cargo-bay:spectrometer
+saved scene | PASS Target binds the current authoritative action: survival-ration
+saved scene | PASS Target binds the current authoritative action: survival-water
+saved scene | PASS Target binds the current authoritative action: grow-build
+saved scene | PASS Target binds the current authoritative action: survival-sleep
+saved scene | PASS Target binds the current authoritative action: recovery-beacon
+saved scene | PASS Target binds the current authoritative action: salvage-payload
+saved scene | PASS All original eight mission bindings remain unique and intact.
+saved scene | PASS All fourteen cargo targets remain bound.
+saved scene | PASS Grow lifecycle uses one target with one trigger, never overlapping stage triggers.
+saved scene | PASS Both old locker collision boxes are disabled.
+saved scene | PASS Exactly five authored habitat solid proxies are enabled.
+saved scene | PASS Saved habitat status is bound; unplanted seedlings are hidden.
+saved scene | PASS survival-ration has one disabled interaction trigger.
+saved scene | PASS survival-water has one disabled interaction trigger.
+saved scene | PASS survival-sleep has one disabled interaction trigger.
+saved scene | PASS grow-build has one disabled interaction trigger.
+saved scene | PASS recovery-beacon has one disabled interaction trigger.
+saved scene | PASS Wrong-phase domain guard rejects survival-ration without charging.
+saved scene | PASS Wrong-phase domain guard rejects survival-water without charging.
+saved scene | PASS Wrong-phase domain guard rejects survival-sleep without charging.
+saved scene | PASS Wrong-phase domain guard rejects grow-build without charging.
+saved scene | PASS Wrong-phase domain guard rejects recovery-beacon without charging.
+saved scene | PASS Submit enabled, visible real button: Practice · no deadline.
+saved scene | PASS One NavigationSubmit produces exactly one actual click ().
+saved scene | PASS Actual Practice UI releases control with no deadline.
+saved scene | PASS Dormant ration trigger cannot resolve or interact during Planning.
+C05 seven-type physical regression | PASS Baseline is the real two-kit 546 kg loadout; no full-prologue claim.
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: oxygen-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:oxygen-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:oxygen-tank | Carrying oxygen tank.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: oxygen-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:oxygen-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:oxygen-tank | Oxygen tank back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: oxygen-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:oxygen-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:oxygen-tank | Carrying oxygen tank.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: oxygen-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:oxygen-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:oxygen-tank | Oxygen tank loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: oxygen-tank
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: water-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:water-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:water-tank | Carrying water tank.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: water-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:water-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:water-tank | Water tank back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: water-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:water-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:water-tank | Carrying water tank.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: water-tank
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:water-tank.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:water-tank | Water tank loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: water-tank
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: food-locker
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:food-locker.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:food-locker | Carrying food locker.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: food-locker
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:food-locker.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:food-locker | Food locker back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: food-locker
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:food-locker.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:food-locker | Carrying food locker.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: food-locker
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:food-locker.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:food-locker | Food locker loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: food-locker
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: battery-module
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:battery-module.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:battery-module | Carrying battery module.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: battery-module
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:battery-module.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:battery-module | Battery module back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: battery-module
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:battery-module.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:battery-module | Carrying battery module.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: battery-module
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:battery-module.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:battery-module | Battery module loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: battery-module
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: solar-wing
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:solar-wing.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:solar-wing | Carrying deployable solar wing.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: solar-wing
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:solar-wing.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:solar-wing | Deployable solar wing back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: solar-wing
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:solar-wing.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:solar-wing | Carrying deployable solar wing.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: solar-wing
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:solar-wing.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:solar-wing | Deployable solar wing loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: solar-wing
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: spare-parts-kit
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:spare-parts-kit.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:spare-parts-kit | Carrying spare parts kit.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: spare-parts-kit
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:spare-parts-kit.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:spare-parts-kit | Spare parts kit back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: spare-parts-kit
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:spare-parts-kit.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:spare-parts-kit | Carrying spare parts kit.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: spare-parts-kit
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:spare-parts-kit.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:spare-parts-kit | Spare parts kit loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: spare-parts-kit
+C05 seven-type physical regression | PASS Initial real bay has a unit for reach roundtrip: spectrometer
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:spectrometer.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:spectrometer | Carrying atmospheric spectrometer.
+C05 seven-type physical regression | PASS One bay unload updates one planner quantity: spectrometer
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:spectrometer.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:spectrometer | Atmospheric spectrometer back on the pallet.
+C05 seven-type physical regression | PASS Return restores real supply: spectrometer
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-supply:spectrometer.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-supply:spectrometer | Carrying atmospheric spectrometer.
+C05 seven-type physical regression | PASS Supply pickup is not prematurely counted aboard: spectrometer
+C05 seven-type physical regression | PASS Actual closest ray resolves aisle/cockpit target cargo-bay:spectrometer.
+C05 seven-type physical regression | PASS Exactly one resolver attempt succeeds for cargo-bay:spectrometer | Atmospheric spectrometer loaded.
+C05 seven-type physical regression | PASS Physical stow restores exact inventory and mass: spectrometer
+C05 seven-type physical regression | PASS Seven physical roundtrips preserve the valid default loadout and its one authoritative inventory.
+disclosed domain-command journey | PASS Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).
+disclosed domain-command journey | PASS survival-ration has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-water has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-sleep has one disabled interaction trigger.
+disclosed domain-command journey | PASS grow-build has one disabled interaction trigger.
+disclosed domain-command journey | PASS recovery-beacon has one disabled interaction trigger.
+disclosed domain-command journey | PASS Actual cockpit check | Cockpit check complete. Impact detected.
+disclosed domain-command journey | PASS Real saved presentation receives Impact.
+disclosed domain-command journey | PASS Disclosed setup skip acknowledges Impact through its real presenter.
+disclosed domain-command journey | PASS survival-ration has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-water has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-sleep has one disabled interaction trigger.
+disclosed domain-command journey | PASS grow-build has one disabled interaction trigger.
+disclosed domain-command journey | PASS recovery-beacon has one disabled interaction trigger.
+disclosed domain-command journey | PASS Actual power repair costs | power distribution repaired (2 spare parts).
+disclosed domain-command journey | PASS Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).
+disclosed domain-command journey | PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+disclosed domain-command journey | PASS Actual airlock cycle | Inner hatch sealed. Depressurizing.
+disclosed domain-command journey | PASS Real depressurization time and resource accounting | Simulation advanced.
+disclosed domain-command journey | PASS Actual exterior domain command (no movement claim) | Outside on the tether.
+disclosed domain-command journey | PASS Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).
+disclosed domain-command journey | PASS Actual return-inside domain command | Inside the airlock.
+disclosed domain-command journey | PASS Actual repressurization command | Outer hatch closed. Repressurizing.
+disclosed domain-command journey | PASS Real repressurization time and resource accounting | Simulation advanced.
+disclosed domain-command journey | PASS Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+disclosed domain-command journey | PASS Real saved presentation receives FalseSignal.
+disclosed domain-command journey | PASS Disclosed setup skip acknowledges FalseSignal through its real presenter.
+disclosed domain-command journey | PASS Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+disclosed domain-command journey | PASS Reply is pending after transmission, not instant.
+disclosed domain-command journey | PASS survival-ration has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-water has one disabled interaction trigger.
+disclosed domain-command journey | PASS survival-sleep has one disabled interaction trigger.
+disclosed domain-command journey | PASS grow-build has one disabled interaction trigger.
+disclosed domain-command journey | PASS recovery-beacon has one disabled interaction trigger.
+disclosed domain-command journey | PASS Advance the actual outbound/return reply interval | Simulation advanced.
+disclosed domain-command journey | PASS Actual communication service reports the received reply.
+disclosed domain-command journey | PASS Actual restored contact is a midpoint: Survival, no outcome and no old final report.
+disclosed domain-command journey | PASS No legacy ending screen or cinematic control lock at contact.
+disclosed domain-command journey | PASS Authoritative recovery is inbound and needs service is active.
+disclosed domain-command journey | PASS survival-ration has one active interaction trigger.
+disclosed domain-command journey | PASS survival-water has one active interaction trigger.
+disclosed domain-command journey | PASS survival-sleep has one active interaction trigger.
+disclosed domain-command journey | PASS grow-build has one active interaction trigger.
+disclosed domain-command journey | PASS recovery-beacon has one active interaction trigger.
+disclosed domain-command journey | PASS Saved runtime binds exactly 28 distinct objects and interaction IDs.
+disclosed domain-command journey | PASS Target binds the current authoritative action: cockpit-console
+disclosed domain-command journey | PASS Target binds the current authoritative action: repair-power
+disclosed domain-command journey | PASS Target binds the current authoritative action: repair-life-support
+disclosed domain-command journey | PASS Target binds the current authoritative action: suit-locker
+disclosed domain-command journey | PASS Target binds the current authoritative action: airlock-controls
+disclosed domain-command journey | PASS Target binds the current authoritative action: eva-exit
+disclosed domain-command journey | PASS Target binds the current authoritative action: eva-return
+disclosed domain-command journey | PASS Target binds the current authoritative action: repair-antenna
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:oxygen-tank
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:oxygen-tank
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:water-tank
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:water-tank
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:food-locker
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:food-locker
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:battery-module
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:battery-module
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:solar-wing
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:solar-wing
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:spare-parts-kit
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:spare-parts-kit
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-supply:spectrometer
+disclosed domain-command journey | PASS Target binds the current authoritative action: cargo-bay:spectrometer
+disclosed domain-command journey | PASS Target binds the current authoritative action: survival-ration
+disclosed domain-command journey | PASS Target binds the current authoritative action: survival-water
+disclosed domain-command journey | PASS Target binds the current authoritative action: grow-build
+disclosed domain-command journey | PASS Target binds the current authoritative action: survival-sleep
+disclosed domain-command journey | PASS Target binds the current authoritative action: recovery-beacon
+disclosed domain-command journey | PASS Target binds the current authoritative action: salvage-payload
+disclosed domain-command journey | PASS All original eight mission bindings remain unique and intact.
+disclosed domain-command journey | PASS All fourteen cargo targets remain bound.
+disclosed domain-command journey | PASS Grow lifecycle uses one target with one trigger, never overlapping stage triggers.
+disclosed domain-command journey | PASS Both old locker collision boxes are disabled.
+disclosed domain-command journey | PASS Exactly five authored habitat solid proxies are enabled.
+disclosed domain-command journey | PASS Visible hunger/hydration bars match the actual need services.
+disclosed domain-command journey | PASS Exactly one survival needs view is bound.
+disclosed domain-command journey | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 1
+actual grounded storage collision | PASS Storage walk uses the actual grounded player outside float/EVA routing.
+actual grounded storage collision | PASS Actual forward intent travels at least 1.8 m along the clear storage aisle.
+actual grounded storage collision | PASS Actual forward walk approaches the galley then stops outside its solid cabinet/table footprint.
+actual grounded storage collision | PASS Grounded player has no penetration beyond controller skin into COL_Habitat_Berth; depth=9.304622E-43
+actual grounded storage collision | PASS Grounded player has no penetration beyond controller skin into COL_Habitat_Galley; depth=0
+actual grounded storage collision | PASS Grounded player has no penetration beyond controller skin into COL_Habitat_GalleyDrawerOpen; depth=0
+actual grounded storage collision | PASS Grounded player has no penetration beyond controller skin into COL_Habitat_GalleyTable; depth=0
+actual grounded storage collision | PASS Grounded player has no penetration beyond controller skin into COL_Habitat_GrowCassette; depth=0
+actual grounded storage collision | Forward intent uses the public IPlayerInputSource; QA teleports only set the two disclosed start positions. No full prologue/path claim.
+actual grounded storage collision | PASS Capture uses the actual camera/document at 1280x720: 01-habitat-wide.
+actual grounded storage collision | PASS Capture uses the actual camera/document at 1280x720: 02-berth.
+actual grounded storage collision | PASS Capture uses the actual camera/document at 1280x720: 03-galley.
+actual grounded storage collision | PASS Capture uses the actual camera/document at 1280x720: 04-grow-unbuilt.
+physical food, water and guards | PASS Advance one actual awake portion interval through all simulation services | Simulation advanced.
+physical food, water and guards | PASS Visible hunger/hydration bars match the actual need services.
+physical food, water and guards | PASS Exactly one survival needs view is bound.
+physical food, water and guards | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 1
+physical food, water and guards | PASS Awake hunger/thirst accrue without automatically double-charging stored food/water.
+physical food, water and guards | PASS Real galley ration surface is reachable and needed.
+physical food, water and guards | PASS Capture uses the actual camera/document at 1280x720: 05-ration-interaction.
+physical food, water and guards | PASS Actual closest ray resolves aisle/cockpit target survival-ration.
+physical food, water and guards | PASS Exactly one resolver attempt succeeds for survival-ration | Eat stored ration: 0.4575 kg
+physical food, water and guards | PASS One actual ration action charges exactly its food portion and meets hunger.
+physical food, water and guards | PASS Actual closest ray resolves aisle/cockpit target survival-ration.
+physical food, water and guards | PASS Exactly one resolver attempt rejects for survival-ration | No ration is needed yet.
+physical food, water and guards | PASS Full-hunger repeat is rejected without waste or a duplicate charge.
+physical food, water and guards | PASS Actual closest ray resolves aisle/cockpit target survival-water.
+physical food, water and guards | PASS Exactly one resolver attempt succeeds for survival-water | Drink stored water: 0.625 L
+physical food, water and guards | PASS One actual dispenser action charges exactly its water portion and meets thirst.
+physical food, water and guards | PASS Actual closest ray resolves aisle/cockpit target survival-water.
+physical food, water and guards | PASS Exactly one resolver attempt rejects for survival-water | No water portion is needed yet.
+physical food, water and guards | PASS Full-hydration repeat is rejected without duplicate charges.
+physical food, water and guards | PASS Visible hunger/hydration bars match the actual need services.
+physical food, water and guards | PASS Exactly one survival needs view is bound.
+physical food, water and guards | PASS A real solid collider in the sight line blocks the grow action and all costs.
+physical food, water and guards | PASS Removing the disclosed QA blocker restores actual grow focus.
+physical food, water and guards | PASS Grow action beyond the real two-metre reach is rejected without costs.
+physical food, water and guards | PASS Pause blocks both resolver use and authoritative grow command without costs.
+physical food, water and guards | PASS Resume restores the actual control and resolver gates.
+salvage and one grow lifecycle | PASS Default loadout spent its seven repair parts; only the bound salvage feature is enabled.
+salvage and one grow lifecycle | PASS Actual closest ray resolves aisle/cockpit target salvage-payload.
+salvage and one grow lifecycle | PASS Exactly one resolver attempt succeeds for salvage-payload | Science instrument dismantled: +3 spare parts. Its 300 W load is off the bus.
+salvage and one grow lifecycle | PASS Actual engineering salvage abandons the science payload and credits three parts once with its real energy cost.
+salvage and one grow lifecycle | PASS The actual science load is removed from the bus; frozen launch selections remain historical.
+salvage and one grow lifecycle | PASS Actual closest ray resolves aisle/cockpit target salvage-payload.
+salvage and one grow lifecycle | PASS Exactly one resolver attempt rejects for salvage-payload | Science instrument dismantled
+salvage and one grow lifecycle | PASS Repeated salvage grants no parts and consumes no energy.
+salvage and one grow lifecycle | PASS Actual closest ray resolves aisle/cockpit target grow-build.
+salvage and one grow lifecycle | PASS Exactly one resolver attempt succeeds for grow-plant | Build grow module: 1 spare part(s), 0.2 kWh
+salvage and one grow lifecycle | PASS Build charges its exact recipe once and rebinds the same physical target to Plant.
+salvage and one grow lifecycle | PASS Unplanted grow module has no visible seedlings and reads ready to plant.
+salvage and one grow lifecycle | PASS Already-built domain guard rejects a duplicate build charge.
+salvage and one grow lifecycle | PASS Actual closest ray resolves aisle/cockpit target grow-plant.
+salvage and one grow lifecycle | PASS Exactly one resolver attempt succeeds for grow-harvest | Plant 25-day seedlings: 1 L; 8 further days, 70 W and 0.05 L/day
+salvage and one grow lifecycle | PASS Plant charges water once and rebinds the same target to guarded Harvest; no immediate food.
+salvage and one grow lifecycle | PASS Visible authored seedlings begin at the actual pre-grown age with the full further cultivation time.
+salvage and one grow lifecycle | PASS Actual closest ray resolves aisle/cockpit target grow-harvest.
+salvage and one grow lifecycle | PASS Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.
+salvage and one grow lifecycle | PASS Immature crop cannot be harvested or credited.
+salvage and one grow lifecycle | PASS Saved runtime binds exactly 28 distinct objects and interaction IDs.
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cockpit-console
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: repair-power
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: repair-life-support
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: suit-locker
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: airlock-controls
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: eva-exit
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: eva-return
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: repair-antenna
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:oxygen-tank
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:oxygen-tank
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:water-tank
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:water-tank
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:food-locker
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:food-locker
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:battery-module
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:battery-module
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:solar-wing
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:solar-wing
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:spare-parts-kit
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:spare-parts-kit
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-supply:spectrometer
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: cargo-bay:spectrometer
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: survival-ration
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: survival-water
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: grow-harvest
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: survival-sleep
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: recovery-beacon
+salvage and one grow lifecycle | PASS Target binds the current authoritative action: salvage-payload
+salvage and one grow lifecycle | PASS All original eight mission bindings remain unique and intact.
+salvage and one grow lifecycle | PASS All fourteen cargo targets remain bound.
+salvage and one grow lifecycle | PASS Grow lifecycle uses one target with one trigger, never overlapping stage triggers.
+salvage and one grow lifecycle | PASS Both old locker collision boxes are disabled.
+salvage and one grow lifecycle | PASS Exactly five authored habitat solid proxies are enabled.
+salvage and one grow lifecycle | PASS Capture uses the actual camera/document at 1280x720: 06-grow-seedlings.
+physical berth and real pause | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+physical berth and real pause | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+physical berth and real pause | PASS One bed interaction begins one actual maximum-length rest.
+physical berth and real pause | PASS Real composition locks movement and releases the cursor for the rest UI.
+physical berth and real pause | PASS Advance ten simulated rest minutes through the actual shared ledger | Simulation advanced.
+physical berth and real pause | PASS Rest time, food and water all advance together.
+physical berth and real pause | PASS Actual rest DAY N equals the mission calendar.
+physical berth and real pause | PASS Rest label reads the authoritative remaining simulated time.
+physical berth and real pause | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 1
+physical berth and real pause | PASS Capture uses the actual camera/document at 1280x720: 07-rest.
+physical berth and real pause | PASS Manual food/water commands cannot double-charge a resting crew.
+physical berth and real pause | PASS Actual paused Update freezes the common clock, rest and every resource.
+physical berth and real pause | PASS Pause hides rest UI and disables its real Wake button.
+physical berth and real pause | PASS Paused Wake UI and domain guard preserve rest.
+physical berth and real pause | PASS Capture uses the actual camera/document at 1280x720: 07b-paused-rest.
+physical berth and real pause | PASS Submit enabled, visible real button: Wake.
+physical berth and real pause | PASS One NavigationSubmit produces exactly one actual click (survival-wake).
+physical berth and real pause | PASS Actual Wake button restores the same session, awake scale and physical control.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 1 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 1
+paid rest, calendar and recovery beacon | Rest 1: Completed, mission day 1, crop remaining 660000
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 2 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 2
+paid rest, calendar and recovery beacon | Rest 2: Completed, mission day 2, crop remaining 629400
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 3 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 2
+paid rest, calendar and recovery beacon | Rest 3: Completed, mission day 2, crop remaining 598800
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 4 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 2
+paid rest, calendar and recovery beacon | Rest 4: Completed, mission day 2, crop remaining 568200
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 5 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 3
+paid rest, calendar and recovery beacon | Rest 5: Completed, mission day 3, crop remaining 537600
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 6 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 3
+paid rest, calendar and recovery beacon | Rest 6: Completed, mission day 3, crop remaining 507000
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 7 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 3
+paid rest, calendar and recovery beacon | Rest 7: Completed, mission day 3, crop remaining 476400
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 8 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 4
+paid rest, calendar and recovery beacon | Rest 8: Completed, mission day 4, crop remaining 445800
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 9 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 4
+paid rest, calendar and recovery beacon | Rest 9: Completed, mission day 4, crop remaining 415200
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 10 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 4
+paid rest, calendar and recovery beacon | Rest 10: Completed, mission day 4, crop remaining 384600
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 11 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 5
+paid rest, calendar and recovery beacon | Rest 11: Completed, mission day 5, crop remaining 354000
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 12 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 5
+paid rest, calendar and recovery beacon | Rest 12: Completed, mission day 5, crop remaining 323400
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 13 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 5
+paid rest, calendar and recovery beacon | Rest 13: Completed, mission day 5, crop remaining 292800
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 14 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 6
+paid rest, calendar and recovery beacon | Rest 14: Completed, mission day 6, crop remaining 262200
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 15 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 6
+paid rest, calendar and recovery beacon | Rest 15: Completed, mission day 6, crop remaining 231600
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 16 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 7
+paid rest, calendar and recovery beacon | Rest 16: Completed, mission day 7, crop remaining 201000
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 17 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 7
+paid rest, calendar and recovery beacon | Rest 17: RecoveryMilestone, mission day 7, crop remaining 194400
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual recovery request opens a future beacon window; no hard-coded window duration.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target recovery-beacon.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for recovery-beacon | Recovery beacon powered: the rendezvous stays on schedule.
+paid rest, calendar and recovery beacon | PASS Physical cockpit beacon pays the authoritative energy cost once inside the real window.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target recovery-beacon.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt rejects for recovery-beacon | The beacon is already powered for the recovery craft.
+paid rest, calendar and recovery beacon | PASS Repeated beacon interaction is rejected without another energy charge.
+paid rest, calendar and recovery beacon | PASS Capture uses the actual camera/document at 1280x720: 08-beacon.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 18 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 7
+paid rest, calendar and recovery beacon | Rest 18: Completed, mission day 7, crop remaining 163800
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 19 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 7
+paid rest, calendar and recovery beacon | Rest 19: Completed, mission day 7, crop remaining 133200
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 20 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 8
+paid rest, calendar and recovery beacon | Rest 20: Completed, mission day 8, crop remaining 102600
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 21 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 8
+paid rest, calendar and recovery beacon | Rest 21: Completed, mission day 8, crop remaining 72000
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 22 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 8
+paid rest, calendar and recovery beacon | Rest 22: Completed, mission day 8, crop remaining 41400
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 23 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 9
+paid rest, calendar and recovery beacon | Rest 23: Completed, mission day 9, crop remaining 10800
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target survival-sleep.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+paid rest, calendar and recovery beacon | PASS Physical bed begins rest 24 and locks movement.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 9
+paid rest, calendar and recovery beacon | Rest 24: CropReady, mission day 9, crop remaining 0
+paid rest, calendar and recovery beacon | PASS Real resource accounting keeps this supplied rest alive.
+paid rest, calendar and recovery beacon | PASS Entire cultivation wait used accounted rest time and the actual requested beacon.
+paid rest, calendar and recovery beacon | PASS Eight-day cultivation/rest uses exactly the common food ledger and drinking-plus-grow water rates, no double charging.
+paid rest, calendar and recovery beacon | PASS Real elapsed cultivation reaches nominal harvest age, wakes the crew and updates visible crop state.
+paid rest, calendar and recovery beacon | PASS Visible hunger/hydration bars match the actual need services.
+paid rest, calendar and recovery beacon | PASS Exactly one survival needs view is bound.
+paid rest, calendar and recovery beacon | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 9
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target grow-harvest.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt succeeds for grow-harvest | Harvest small supplement: 0.05 kg ration-equivalent game credit
+paid rest, calendar and recovery beacon | PASS One physical harvest credits the exact small food equivalent and hides harvested seedlings on the same target.
+paid rest, calendar and recovery beacon | PASS Actual closest ray resolves aisle/cockpit target grow-harvest.
+paid rest, calendar and recovery beacon | PASS Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.
+paid rest, calendar and recovery beacon | PASS Repeated harvest cannot duplicate food.
+paid rest, calendar and recovery beacon | PASS Capture uses the actual camera/document at 1280x720: 09-grow-harvested.
+paid rest, calendar and recovery beacon | PASS Saved runtime binds exactly 28 distinct objects and interaction IDs.
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cockpit-console
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: repair-power
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: repair-life-support
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: suit-locker
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: airlock-controls
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: eva-exit
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: eva-return
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: repair-antenna
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:oxygen-tank
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:oxygen-tank
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:water-tank
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:water-tank
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:food-locker
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:food-locker
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:battery-module
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:battery-module
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:solar-wing
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:solar-wing
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:spare-parts-kit
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:spare-parts-kit
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-supply:spectrometer
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: cargo-bay:spectrometer
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: survival-ration
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: survival-water
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: grow-harvest
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: survival-sleep
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: recovery-beacon
+paid rest, calendar and recovery beacon | PASS Target binds the current authoritative action: salvage-payload
+paid rest, calendar and recovery beacon | PASS All original eight mission bindings remain unique and intact.
+paid rest, calendar and recovery beacon | PASS All fourteen cargo targets remain bound.
+paid rest, calendar and recovery beacon | PASS Grow lifecycle uses one target with one trigger, never overlapping stage triggers.
+paid rest, calendar and recovery beacon | PASS Both old locker collision boxes are disabled.
+paid rest, calendar and recovery beacon | PASS Exactly five authored habitat solid proxies are enabled.
+habitat teardown and clean restart | PASS Composition teardown clears the habitat binding, world text and seedlings.
+habitat teardown and clean restart | PASS survival-ration has one disabled interaction trigger.
+habitat teardown and clean restart | PASS survival-water has one disabled interaction trigger.
+habitat teardown and clean restart | PASS survival-sleep has one disabled interaction trigger.
+habitat teardown and clean restart | PASS grow-build has one disabled interaction trigger.
+habitat teardown and clean restart | PASS recovery-beacon has one disabled interaction trigger.
+habitat teardown and clean restart | PASS Teardown unbinds all five physical habitat actions.
+habitat teardown and clean restart | PASS Disposed presentation cannot re-credit the completed harvest.
+habitat teardown and clean restart | PASS Composition re-enable rebinds the same authoritative session, not a new simulation.
+habitat teardown and clean restart | PASS Rebind restores final crop state without duplicate costs, food or rest commands.
+habitat teardown and clean restart | PASS survival-ration has one active interaction trigger.
+habitat teardown and clean restart | PASS survival-water has one active interaction trigger.
+habitat teardown and clean restart | PASS survival-sleep has one active interaction trigger.
+habitat teardown and clean restart | PASS grow-harvest has one active interaction trigger.
+habitat teardown and clean restart | PASS recovery-beacon has one active interaction trigger.
+habitat teardown and clean restart | PASS Visible hunger/hydration bars match the actual need services.
+habitat teardown and clean restart | PASS Exactly one survival needs view is bound.
+habitat teardown and clean restart | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 9
+habitat teardown and clean restart | PASS Actual closest ray resolves aisle/cockpit target grow-harvest.
+habitat teardown and clean restart | PASS Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.
+habitat teardown and clean restart | PASS Rebound harvest remains spent and cannot duplicate yield.
+habitat teardown and clean restart | PASS In-place StartSession reset disposes the old authority and retains the saved C06 option.
+habitat teardown and clean restart | PASS Restart clears growth, needs, rest and recovery chronology.
+habitat teardown and clean restart | PASS Restart restores the original single inventory and unsalvaged payload.
+habitat teardown and clean restart | PASS Restart restores Build on the same target and removes stale survival UI behind actual mode choice.
+habitat teardown and clean restart | PASS survival-ration has one disabled interaction trigger.
+habitat teardown and clean restart | PASS survival-water has one disabled interaction trigger.
+habitat teardown and clean restart | PASS survival-sleep has one disabled interaction trigger.
+habitat teardown and clean restart | PASS grow-build has one disabled interaction trigger.
+habitat teardown and clean restart | PASS recovery-beacon has one disabled interaction trigger.
+habitat teardown and clean restart | PASS Saved runtime binds exactly 28 distinct objects and interaction IDs.
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cockpit-console
+habitat teardown and clean restart | PASS Target binds the current authoritative action: repair-power
+habitat teardown and clean restart | PASS Target binds the current authoritative action: repair-life-support
+habitat teardown and clean restart | PASS Target binds the current authoritative action: suit-locker
+habitat teardown and clean restart | PASS Target binds the current authoritative action: airlock-controls
+habitat teardown and clean restart | PASS Target binds the current authoritative action: eva-exit
+habitat teardown and clean restart | PASS Target binds the current authoritative action: eva-return
+habitat teardown and clean restart | PASS Target binds the current authoritative action: repair-antenna
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:oxygen-tank
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:oxygen-tank
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:water-tank
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:water-tank
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:food-locker
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:food-locker
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:battery-module
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:battery-module
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:solar-wing
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:solar-wing
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:spare-parts-kit
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:spare-parts-kit
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-supply:spectrometer
+habitat teardown and clean restart | PASS Target binds the current authoritative action: cargo-bay:spectrometer
+habitat teardown and clean restart | PASS Target binds the current authoritative action: survival-ration
+habitat teardown and clean restart | PASS Target binds the current authoritative action: survival-water
+habitat teardown and clean restart | PASS Target binds the current authoritative action: grow-build
+habitat teardown and clean restart | PASS Target binds the current authoritative action: survival-sleep
+habitat teardown and clean restart | PASS Target binds the current authoritative action: recovery-beacon
+habitat teardown and clean restart | PASS Target binds the current authoritative action: salvage-payload
+habitat teardown and clean restart | PASS All original eight mission bindings remain unique and intact.
+habitat teardown and clean restart | PASS All fourteen cargo targets remain bound.
+habitat teardown and clean restart | PASS Grow lifecycle uses one target with one trigger, never overlapping stage triggers.
+habitat teardown and clean restart | PASS Both old locker collision boxes are disabled.
+habitat teardown and clean restart | PASS Exactly five authored habitat solid proxies are enabled.
+habitat teardown and clean restart | PASS Wall mission day is sourced from the authoritative calendar: MISSION DAY 1
+habitat teardown and clean restart | PASS Final scene has the same 28 targets; no accumulated action objects.

@@ -1,0 +1,29 @@
+{
+    "label": "bare-hitch-approach-valid",
+    "beforeStage": "Reaching",
+    "afterStage": "Reaching",
+    "validationBefore": "accepted real nearest hit and wrist path",
+    "validationAfter": "accepted real nearest hit and wrist path",
+    "heldBefore": "none",
+    "heldAfter": "none",
+    "injectedFrame": 11,
+    "observedFrame": 12,
+    "callbacksBefore": 0,
+    "callbacksAfter": 0,
+    "actualDelta": 0.18756289780139924,
+    "elapsedBefore": 0.05464790016412735,
+    "elapsedAfter": 0.05464790016412735,
+    "worstJointAngle": 0.0,
+    "worstJointPositionMetres": 0.0,
+    "blockedSeconds": 0.1603443,
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+}

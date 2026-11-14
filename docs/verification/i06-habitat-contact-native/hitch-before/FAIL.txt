@@ -1,0 +1,6 @@
+Stage: glove-Left-hitch-held
+System.InvalidOperationException: Observe hitch: System.InvalidOperationException: A slow frame alone preserves Holding; current=Returning, validation=accepted real nearest hit and wrist path
+  at ContactNativeQaDriver.Check (System.Boolean pass, System.String message) [0x00012] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:612 
+  at ContactNativeQaDriver+<>c__DisplayClass80_1.<InjectHitch>b__4 () [0x0024a] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:587 
+  at ContactNativeQaDriver.LateUpdate () [0x0002e] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:351 
+  at ContactNativeQaDriver+<Start>d__49.MoveNext () [0x00067] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:200 

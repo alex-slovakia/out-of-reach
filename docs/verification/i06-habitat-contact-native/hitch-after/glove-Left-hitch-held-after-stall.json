@@ -1,0 +1,51 @@
+{
+    "name": "glove-Left-hitch-held-after-stall",
+    "hand": "Left",
+    "kind": "existing held grip after actual slow frame; not new action",
+    "command": "",
+    "callbackFrame": 471,
+    "captureFrame": 471,
+    "callbackCount": 1,
+    "pushedEvents": 0,
+    "grabbedEvents": 1,
+    "elapsedRealSeconds": 0.0,
+    "reportedResidual": 0.0,
+    "measuredResidual": 0.0,
+    "skinNormalDot": 0.0,
+    "viewPitchDegrees": 0.0,
+    "point": {
+        "x": -0.17999957501888276,
+        "y": 1.649999976158142,
+        "z": 0.5999982357025147
+    },
+    "wrist": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "bodyVisualOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "bare": false,
+    "actualFloating": true,
+    "realSuitOn": true,
+    "rendererVisible": true,
+    "skinTriangle": []
+}

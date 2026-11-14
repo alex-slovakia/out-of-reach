@@ -1,0 +1,10 @@
+Unsaved bounded wall/rail fixture, NOT Bootstrap/full-game/input-binding acceptance.
+One real Player and MissionSession. Real launch/cockpit/repairs/suit command; actual pending Impact acknowledged skipped.
+Real EnterFloat at a visible nearby solid. Public Teleport/ClearMotion reset positions BETWEEN cases only. Scripted zero device intent.
+No synthetic phase/suit/mode/inventory; session is not auto-ticked during geometry probes. Body authoring reuses imported released models.
+Closest-hit validator plus 10 mm padded wrist path; NOT whole-arm collision/IK acceptance. Bare skin triangle rebaked at callback.
+1280x720 actual camera, endCameraRendering capture on contact frame. Native art acceptance still needs human viewing. 100s watchdog.
+CONTACT-HITCH: real 160ms main-thread stalls after presenter LateUpdate, then observe actual next-frame delta/pose/stage/action counts.
+No private presentation advance is invoked. Private elapsed is read-only instrumentation. All original geometry validation remains unchanged.
+Initial contact GPU readback is suppressed in hitch mode to isolate the injected stall; measured contact JSON remains. Two PNGs show held grips AFTER the stall.
+WORK/glove approaches retain animation time and issue no hitch-frame action; static grips remain, geometry jumps/occlusion still cancel.

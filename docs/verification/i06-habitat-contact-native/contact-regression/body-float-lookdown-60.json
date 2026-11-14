@@ -1,0 +1,51 @@
+{
+    "name": "body-float-lookdown-60",
+    "hand": "",
+    "kind": "visual-only; no contact action",
+    "command": "",
+    "callbackFrame": 335,
+    "captureFrame": 335,
+    "callbackCount": 0,
+    "pushedEvents": 0,
+    "grabbedEvents": 0,
+    "elapsedRealSeconds": 0.0,
+    "reportedResidual": 0.0,
+    "measuredResidual": 0.0,
+    "skinNormalDot": 0.0,
+    "viewPitchDegrees": -60.0,
+    "point": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "wrist": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "bodyVisualOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    },
+    "bare": true,
+    "actualFloating": true,
+    "realSuitOn": false,
+    "rendererVisible": true,
+    "skinTriangle": []
+}

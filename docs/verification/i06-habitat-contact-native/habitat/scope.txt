@@ -1,0 +1,9 @@
+Actual saved Bootstrap; existing default survival opt-in is asserted, never enabled by this runner.
+Real Practice UI. All seven cargo types unload/return/pickup/stow through the real resolver. The default loadout is restored, then the real engineering payload is salvaged for grow construction after repairs.
+QA teleports put feet in the central aisle or cockpit approach; aim is scripted. Resolver Refresh/TryInteract uses actual saved targets and physics. These are not a full manual E-key/prologue walkthrough.
+Earlier repair/EVA/transmission use real domain commands/costs, AdvanceSimulation and presenter skips for Impact/FalseSignal. No state, phase, reserve or clock grants.
+Habitat ration/water/bed/grow/beacon actions use actual resolver; real bounded rests advance the same simulation, reserves and calendar. No instantaneous crop.
+A transient QA solid cube tests ray occlusion; it is removed immediately. Grounded aisle/wall movement uses scripted forward intent through the actual FirstPersonController.
+DriveFromUpdate is off except paused freeze observation. No saved-scene, runtime-code or imported-asset writes.
+1280x720 actual scene camera + actual UIDocument; overlay UGUI excluded. Final capsule/report and subjective art acceptance remain separate.
+120-second wall watchdog includes setup. Durable output is outside Temp.

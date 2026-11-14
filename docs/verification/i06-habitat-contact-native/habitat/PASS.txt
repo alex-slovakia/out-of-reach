@@ -1,0 +1,1 @@
+579 assertions passed. Actual saved-scene habitat interactions and real domain setup; see scope.txt for automation limits.

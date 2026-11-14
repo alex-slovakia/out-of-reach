@@ -1,0 +1,19 @@
+phase=Survival
+outcome=None
+simulationSeconds=529918.965642497
+resting=False
+controlAllowed=True
+cursor=None
+visibleLabels=
+Survive until rescue
+Manage your food, water and ship systems.
+
+300× simulation
+O₂ reserve
+Food stores
+Battery
+Hunger
+Hydration
+The beacon is already powered for the recovery craft.
+MISSION CONTROL · EARTH · DELAYED REPLY
+Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.

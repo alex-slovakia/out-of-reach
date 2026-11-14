@@ -1,0 +1,29 @@
+{
+    "label": "glove-hitch-approach-valid",
+    "beforeStage": "Reaching",
+    "afterStage": "Reaching",
+    "validationBefore": "accepted real nearest hit and wrist path",
+    "validationAfter": "accepted real nearest hit and wrist path",
+    "heldBefore": "none",
+    "heldAfter": "none",
+    "injectedFrame": 273,
+    "observedFrame": 274,
+    "callbacksBefore": 0,
+    "callbacksAfter": 0,
+    "actualDelta": 0.18406780064105988,
+    "elapsedBefore": 0.04284889996051788,
+    "elapsedAfter": 0.04284889996051788,
+    "worstJointAngle": 0.0,
+    "worstJointPositionMetres": 0.0,
+    "blockedSeconds": 0.16078869999999999,
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+}

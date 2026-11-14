@@ -1,0 +1,179 @@
+PASS fixture startup | Exactly one real Player/capsule.
+PASS fixture startup | One fixture camera and released body/glove/bare presenters.
+PASS fixture startup | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS fixture startup | Real domain command: Cockpit check complete. Impact detected.
+PASS fixture startup | Real Impact requested by cockpit command.
+PASS fixture startup | Real domain command: power distribution repaired (2 spare parts).
+PASS fixture startup | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS fixture startup | Actual repaired, unsuited session enables fixture control.
+PASS fixture startup | Original glove JSON binds without alternate rig.
+PASS bare-Left-Push | Actual Player command: Done
+PASS bare-Left-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Left-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Left-Push | Actual WORK skin is visible/readable and carries its bare-skin material.
+PASS bare-Left-Push | Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.
+PASS bare-Left-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Left-Push | Request acceptance is not an immediate gameplay action.
+PASS bare-Left-Push | Action callback repeats real live surface/path validation exactly once.
+PASS bare-Left-Push | No physical action/travel before visible anticipation completed.
+PASS bare-Left-Push | Imported palm triangle selected before action.
+PASS bare-Left-Push | Actual rebaked bare palm <=3 mm: residual=7.93548054E-07 m; facing dot=1
+PASS bare-Left-Push | Actual bare contact skin lies in the player camera frustum.
+PASS bare-Left-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-Left-Push | Real controller contact command succeeds: Done
+PASS bare-Left-Push | Successful physical push sets actual velocity and emits one event.
+PASS bare-Left-Push | Exactly one real controller command/event.
+PASS bare-Left-Push | Actual successful push produces collision-aware body travel.
+PASS bare-Left-Push | Return animation never repeats the action.
+PASS bare-Right-Push | Actual Player command: Done
+PASS bare-Right-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Right-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Right-Push | Actual WORK skin is visible/readable and carries its bare-skin material.
+PASS bare-Right-Push | Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.
+PASS bare-Right-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Right-Push | Request acceptance is not an immediate gameplay action.
+PASS bare-Right-Push | Action callback repeats real live surface/path validation exactly once.
+PASS bare-Right-Push | No physical action/travel before visible anticipation completed.
+PASS bare-Right-Push | Imported palm triangle selected before action.
+PASS bare-Right-Push | Actual rebaked bare palm <=3 mm: residual=1.04063031E-06 m; facing dot=1
+PASS bare-Right-Push | Actual bare contact skin lies in the player camera frustum.
+PASS bare-Right-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-Right-Push | Real controller contact command succeeds: Done
+PASS bare-Right-Push | Successful physical push sets actual velocity and emits one event.
+PASS bare-Right-Push | Exactly one real controller command/event.
+PASS bare-Right-Push | Actual successful push produces collision-aware body travel.
+PASS bare-Right-Push | Return animation never repeats the action.
+PASS bare floating camera fit | Actual Player command: Done
+PASS bare floating camera fit | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare floating camera fit | Exclusive visible arm owner matches authoritative suit state.
+PASS bare floating camera fit | Actual camera looks down while the floating body world pose stays fixed.
+PASS bare floating camera fit | Actual camera looks down while the floating body world pose stays fixed.
+PASS bare floating camera fit | Look-down probes issue no physical contact command.
+PASS bare refusals | Actual Player command: Done
+PASS bare refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS bare refusals | A genuine distant ray hit refuses before any animation/command.
+PASS bare refusals | Actual Player command: Done
+PASS bare refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS bare refusals | A real intervening solid refuses the formerly visible target.
+PASS bare interruption pause | Actual Player command: Done
+PASS bare interruption pause | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption pause | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption pause | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption pause | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption pause | Real domain command: Simulation paused.
+PASS bare interruption pause | Real session pause denies Player control.
+PASS bare interruption pause | Paused pose is stable after cancellation; no callback advances.
+PASS bare interruption pause | Real domain command: Simulation resumed.
+PASS bare interruption pause | Cancellation never fires a stale action on resume/return.
+PASS bare interruption removed | Actual Player command: Done
+PASS bare interruption removed | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption removed | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption removed | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption removed | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption removed | Cancellation never fires a stale action on resume/return.
+PASS bare interruption occluded | Actual Player command: Done
+PASS bare interruption occluded | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption occluded | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption occluded | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption occluded | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption occluded | Cancellation never fires a stale action on resume/return.
+PASS bare interruption body-pose | Actual Player command: Done
+PASS bare interruption body-pose | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption body-pose | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption body-pose | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption body-pose | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption body-pose | Body pose reset synchronously cancels the borrowed WORK bones.
+PASS bare interruption body-pose | Cancellation never fires a stale action on resume/return.
+PASS actual suit command | Real domain command: EVA suit on. Tank: 0.3 kg oxygen.
+PASS actual suit command | Authoritative paid suit preparation, no fixture suit substitute.
+PASS glove-Left-Push | Actual Player command: Done
+PASS glove-Left-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Left-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Left-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Left-Push | Request acceptance is not an immediate gameplay action.
+PASS glove-Left-Push | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Left-Push | No physical action/travel before visible anticipation completed.
+PASS glove-Left-Push | Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.
+PASS glove-Left-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Left-Push | Real controller contact command succeeds: Done
+PASS glove-Left-Push | Successful physical push sets actual velocity and emits one event.
+PASS glove-Left-Push | Exactly one real controller command/event.
+PASS glove-Left-Push | Actual successful push produces collision-aware body travel.
+PASS glove-Left-Push | Return animation never repeats the action.
+PASS glove-Right-Push | Actual Player command: Done
+PASS glove-Right-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Right-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Right-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Right-Push | Request acceptance is not an immediate gameplay action.
+PASS glove-Right-Push | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Right-Push | No physical action/travel before visible anticipation completed.
+PASS glove-Right-Push | Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.
+PASS glove-Right-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Right-Push | Real controller contact command succeeds: Done
+PASS glove-Right-Push | Successful physical push sets actual velocity and emits one event.
+PASS glove-Right-Push | Exactly one real controller command/event.
+PASS glove-Right-Push | Actual successful push produces collision-aware body travel.
+PASS glove-Right-Push | Return animation never repeats the action.
+PASS glove-Left-Grip | Actual Player command: Done
+PASS glove-Left-Grip | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Left-Grip | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Left-Grip | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Left-Grip | Request acceptance is not an immediate gameplay action.
+PASS glove-Left-Grip | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Left-Grip | No physical action/travel before visible anticipation completed.
+PASS glove-Left-Grip | Actual original glove pad/tube frame <=2 mm: residual=0 m.
+PASS glove-Left-Grip | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Left-Grip | Real controller contact command succeeds: Done
+PASS glove-Left-Grip | Successful physical grab sets the real held surface/point and emits one event.
+PASS glove-Left-Grip | Exactly one real controller command/event.
+PASS glove-Left-Grip | Actual static registered grip stays held and presented. held=Registered 15 mm rail stage=Holding validation=accepted real nearest hit and wrist path feet=(0.000000, 0.000000, 0.000000) eye=(0.000000, 1.650000, 0.000000) anchor=(-0.18, 1.65, 0.60)
+PASS glove-Left-Grip | Actual Player command: Done
+PASS glove-Left-Grip | Real Release clears the anchor without another callback.
+PASS glove-Right-Grip | Actual Player command: Done
+PASS glove-Right-Grip | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Right-Grip | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Right-Grip | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Right-Grip | Request acceptance is not an immediate gameplay action.
+PASS glove-Right-Grip | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Right-Grip | No physical action/travel before visible anticipation completed.
+PASS glove-Right-Grip | Actual original glove pad/tube frame <=2 mm: residual=0 m.
+PASS glove-Right-Grip | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Right-Grip | Real controller contact command succeeds: Done
+PASS glove-Right-Grip | Successful physical grab sets the real held surface/point and emits one event.
+PASS glove-Right-Grip | Exactly one real controller command/event.
+PASS glove-Right-Grip | Actual static registered grip stays held and presented. held=Registered 15 mm rail stage=Holding validation=accepted real nearest hit and wrist path feet=(0.000000, 0.000000, 0.000000) eye=(0.000000, 1.650000, 0.000000) anchor=(0.18, 1.65, 0.60)
+PASS glove-Right-Grip | Actual Player command: Done
+PASS glove-Right-Grip | Real Release clears the anchor without another callback.
+PASS glove refusals | Actual Player command: Done
+PASS glove refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS glove refusals | A genuine distant ray hit refuses before any animation/command.
+PASS glove refusals | Actual Player command: Done
+PASS glove refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS glove refusals | A real intervening solid refuses the formerly visible target.
+PASS glove interruption pause | Actual Player command: Done
+PASS glove interruption pause | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove interruption pause | Exclusive visible arm owner matches authoritative suit state.
+PASS glove interruption pause | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove interruption pause | Interruption occurs during visible anticipation, before the command.
+PASS glove interruption pause | Real domain command: Simulation paused.
+PASS glove interruption pause | Real session pause denies Player control.
+PASS glove interruption pause | Paused pose is stable after cancellation; no callback advances.
+PASS glove interruption pause | Real domain command: Simulation resumed.
+PASS glove interruption pause | Cancellation never fires a stale action on resume/return.
+PASS glove interruption removed | Actual Player command: Done
+PASS glove interruption removed | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove interruption removed | Exclusive visible arm owner matches authoritative suit state.
+PASS glove interruption removed | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove interruption removed | Interruption occurs during visible anticipation, before the command.
+PASS glove interruption removed | Cancellation never fires a stale action on resume/return.
+PASS teardown guard | Actual Player command: Done
+PASS teardown guard | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS teardown guard | Exclusive visible arm owner matches authoritative suit state.
+PASS teardown guard | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS teardown guard | Teardown leaves no stale callback or visible rig.
+PASS teardown guard | Six genuine positive contact-frame captures recorded.
+PASS teardown guard | Actual 60/80 degree look-down captures recorded separately from contact proof.

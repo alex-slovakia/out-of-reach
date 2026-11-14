@@ -1,0 +1,29 @@
+{
+    "label": "glove-Left-hitch-held",
+    "beforeStage": "Holding",
+    "afterStage": "Holding",
+    "validationBefore": "accepted real nearest hit and wrist path",
+    "validationAfter": "accepted real nearest hit and wrist path",
+    "heldBefore": "Registered 15 mm rail",
+    "heldAfter": "Registered 15 mm rail",
+    "injectedFrame": 469,
+    "observedFrame": 470,
+    "callbacksBefore": 1,
+    "callbacksAfter": 1,
+    "actualDelta": 0.17887039482593537,
+    "elapsedBefore": 0.06419769674539566,
+    "elapsedAfter": 0.06419769674539566,
+    "worstJointAngle": 0.0,
+    "worstJointPositionMetres": 0.0,
+    "blockedSeconds": 0.1599058,
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+}

@@ -1,0 +1,10 @@
+01-habitat-wide.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+02-berth.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+03-galley.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+04-grow-unbuilt.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+05-ration-interaction.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+06-grow-seedlings.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+07-rest.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+07b-paused-rest.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=True
+08-beacon.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+09-grow-harvested.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False

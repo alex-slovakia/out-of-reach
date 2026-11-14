@@ -1,0 +1,1078 @@
+{
+    "checks": [
+        {
+            "stage": "fixture startup",
+            "message": "Exactly one real Player/capsule.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "One fixture camera and released body/glove/bare presenters.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real Impact requested by cockpit command.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Actual repaired, unsuited session enables fixture control.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Original glove JSON binds without alternate rig.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual WORK skin is visible/readable and carries its bare-skin material.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Imported palm triangle selected before action.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual rebaked bare palm <=3 mm: residual=7.93548054E-07 m; facing dot=1",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual bare contact skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 62
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 63
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 105
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 172
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 172
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 179
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 179
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual WORK skin is visible/readable and carries its bare-skin material.",
+            "pass": true,
+            "frame": 179
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.",
+            "pass": true,
+            "frame": 179
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 180
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 180
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Imported palm triangle selected before action.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual rebaked bare palm <=3 mm: residual=1.04063031E-06 m; facing dot=1",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual bare contact skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 230
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 231
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 272
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 325
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 325
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 332
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 332
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Actual camera looks down while the floating body world pose stays fixed.",
+            "pass": true,
+            "frame": 335
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Actual camera looks down while the floating body world pose stays fixed.",
+            "pass": true,
+            "frame": 339
+        },
+        {
+            "stage": "bare floating camera fit",
+            "message": "Look-down probes issue no physical contact command.",
+            "pass": true,
+            "frame": 340
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 340
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 347
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 347
+        },
+        {
+            "stage": "bare refusals",
+            "message": "A genuine distant ray hit refuses before any animation/command.",
+            "pass": true,
+            "frame": 347
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 347
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 354
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 354
+        },
+        {
+            "stage": "bare refusals",
+            "message": "A real intervening solid refuses the formerly visible target.",
+            "pass": true,
+            "frame": 354
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 354
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 361
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 361
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 362
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 387
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real domain command: Simulation paused.",
+            "pass": true,
+            "frame": 387
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real session pause denies Player control.",
+            "pass": true,
+            "frame": 389
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Paused pose is stable after cancellation; no callback advances.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 486
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 486
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 493
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 493
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 494
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 516
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 699
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 699
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 706
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 706
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 707
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 734
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 864
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 864
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 871
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 871
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 872
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 907
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Body pose reset synchronously cancels the borrowed WORK bones.",
+            "pass": true,
+            "frame": 907
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 980
+        },
+        {
+            "stage": "actual suit command",
+            "message": "Real domain command: EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "frame": 980
+        },
+        {
+            "stage": "actual suit command",
+            "message": "Authoritative paid suit preparation, no fixture suit substitute.",
+            "pass": true,
+            "frame": 980
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 980
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 987
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 987
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 988
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 988
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 1072
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 1073
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 1132
+        },
+        {
+            "stage": "glove-Left-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 1196
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1196
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1203
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1203
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 1204
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 1204
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 1290
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 1291
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 1337
+        },
+        {
+            "stage": "glove-Right-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 1385
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1385
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1392
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1392
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 1393
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 1393
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=0 m.",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Successful physical grab sets the real held surface/point and emits one event.",
+            "pass": true,
+            "frame": 1470
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 1471
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Actual static registered grip stays held and presented. held=Registered 15 mm rail stage=Holding validation=accepted real nearest hit and wrist path feet=(0.000000, 0.000000, 0.000000) eye=(0.000000, 1.650000, 0.000000) anchor=(-0.18, 1.65, 0.60)",
+            "pass": true,
+            "frame": 1523
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1523
+        },
+        {
+            "stage": "glove-Left-Grip",
+            "message": "Real Release clears the anchor without another callback.",
+            "pass": true,
+            "frame": 1628
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1628
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1635
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1635
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 1636
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 1636
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=0 m.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Successful physical grab sets the real held surface/point and emits one event.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 1723
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Actual static registered grip stays held and presented. held=Registered 15 mm rail stage=Holding validation=accepted real nearest hit and wrist path feet=(0.000000, 0.000000, 0.000000) eye=(0.000000, 1.650000, 0.000000) anchor=(0.18, 1.65, 0.60)",
+            "pass": true,
+            "frame": 1776
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1776
+        },
+        {
+            "stage": "glove-Right-Grip",
+            "message": "Real Release clears the anchor without another callback.",
+            "pass": true,
+            "frame": 1879
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1879
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1886
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1886
+        },
+        {
+            "stage": "glove refusals",
+            "message": "A genuine distant ray hit refuses before any animation/command.",
+            "pass": true,
+            "frame": 1886
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1886
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1893
+        },
+        {
+            "stage": "glove refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1893
+        },
+        {
+            "stage": "glove refusals",
+            "message": "A real intervening solid refuses the formerly visible target.",
+            "pass": true,
+            "frame": 1893
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 1893
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 1900
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 1900
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 1901
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 1931
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Real domain command: Simulation paused.",
+            "pass": true,
+            "frame": 1931
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Real session pause denies Player control.",
+            "pass": true,
+            "frame": 1933
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Paused pose is stable after cancellation; no callback advances.",
+            "pass": true,
+            "frame": 1997
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Real domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 1997
+        },
+        {
+            "stage": "glove interruption pause",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 2139
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2139
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 2146
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 2146
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 2147
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 2169
+        },
+        {
+            "stage": "glove interruption removed",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 2304
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2304
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 2311
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 2311
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 2312
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Teardown leaves no stale callback or visible rig.",
+            "pass": true,
+            "frame": 2474
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Six genuine positive contact-frame captures recorded.",
+            "pass": true,
+            "frame": 2474
+        },
+        {
+            "stage": "teardown guard",
+            "message": "Actual 60/80 degree look-down captures recorded separately from contact proof.",
+            "pass": true,
+            "frame": 2474
+        }
+    ]
+}

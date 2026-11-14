@@ -1,0 +1,55 @@
+{
+    "name": "bare-hitch-approach-valid",
+    "hand": "Right",
+    "kind": "Push",
+    "command": "Done",
+    "callbackFrame": 51,
+    "captureFrame": 51,
+    "callbackCount": 1,
+    "pushedEvents": 1,
+    "grabbedEvents": 0,
+    "elapsedRealSeconds": 0.4386773109436035,
+    "reportedResidual": 2.327635826304686e-7,
+    "measuredResidual": 0.0000010406303090348957,
+    "skinNormalDot": 1.0,
+    "viewPitchDegrees": 0.0,
+    "point": {
+        "x": 0.17999999225139619,
+        "y": 1.5,
+        "z": 0.30000001192092898
+    },
+    "wrist": {
+        "x": 0.1841723918914795,
+        "y": 1.455719232559204,
+        "z": 0.2664465308189392
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    },
+    "bodyVisualOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    },
+    "bare": true,
+    "actualFloating": true,
+    "realSuitOn": false,
+    "rendererVisible": true,
+    "skinTriangle": [
+        5021,
+        4995,
+        5023
+    ]
+}

@@ -1,0 +1,4057 @@
+{
+    "checks": [
+        {
+            "utc": "2026-11-14T19:28:09.8244417Z",
+            "stage": "saved scene",
+            "message": "Actual saved habitat binding, status and player resolver exist.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9274280Z",
+            "stage": "saved scene",
+            "message": "Actual saved Bootstrap is loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9294011Z",
+            "stage": "saved scene",
+            "message": "Saved runtime creates C06 by default, without ConfigureSurvivalExtension or replacing its initial session.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9364376Z",
+            "stage": "saved scene",
+            "message": "Initial session is behind actual mode choice.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9450470Z",
+            "stage": "saved scene",
+            "message": "Saved runtime binds exactly 28 distinct objects and interaction IDs.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9491057Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cockpit-console",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9567776Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: repair-power",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9637419Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: repair-life-support",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9717868Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: suit-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9779565Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: airlock-controls",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9849572Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: eva-exit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:09.9930166Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: eva-return",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0010682Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: repair-antenna",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0076183Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0136669Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0222264Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0287818Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0364531Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0425363Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0502708Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0576569Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0654544Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0728188Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0805194Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0868401Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.0941401Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-supply:spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1027224Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: cargo-bay:spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1119286Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: survival-ration",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1198207Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: survival-water",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1292957Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: grow-build",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1366256Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: survival-sleep",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1457393Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: recovery-beacon",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1544751Z",
+            "stage": "saved scene",
+            "message": "Target binds the current authoritative action: salvage-payload",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1645495Z",
+            "stage": "saved scene",
+            "message": "All original eight mission bindings remain unique and intact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1748217Z",
+            "stage": "saved scene",
+            "message": "All fourteen cargo targets remain bound.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.1853740Z",
+            "stage": "saved scene",
+            "message": "Grow lifecycle uses one target with one trigger, never overlapping stage triggers.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2004386Z",
+            "stage": "saved scene",
+            "message": "Both old locker collision boxes are disabled.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2125127Z",
+            "stage": "saved scene",
+            "message": "Exactly five authored habitat solid proxies are enabled.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2247422Z",
+            "stage": "saved scene",
+            "message": "Saved habitat status is bound; unplanted seedlings are hidden.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2378658Z",
+            "stage": "saved scene",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2504930Z",
+            "stage": "saved scene",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2530227Z",
+            "stage": "saved scene",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2647685Z",
+            "stage": "saved scene",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2781161Z",
+            "stage": "saved scene",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.2904670Z",
+            "stage": "saved scene",
+            "message": "Wrong-phase domain guard rejects survival-ration without charging.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.3016254Z",
+            "stage": "saved scene",
+            "message": "Wrong-phase domain guard rejects survival-water without charging.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.3178910Z",
+            "stage": "saved scene",
+            "message": "Wrong-phase domain guard rejects survival-sleep without charging.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.3327899Z",
+            "stage": "saved scene",
+            "message": "Wrong-phase domain guard rejects grow-build without charging.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.3454733Z",
+            "stage": "saved scene",
+            "message": "Wrong-phase domain guard rejects recovery-beacon without charging.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.3604404Z",
+            "stage": "saved scene",
+            "message": "Submit enabled, visible real button: Practice · no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5428991Z",
+            "stage": "saved scene",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5454120Z",
+            "stage": "saved scene",
+            "message": "Actual Practice UI releases control with no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5689090Z",
+            "stage": "saved scene",
+            "message": "Dormant ration trigger cannot resolve or interact during Planning.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5719451Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Baseline is the real two-kit 546 kg loadout; no full-prologue claim.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5789299Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.5959413Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:oxygen-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.6015258Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:oxygen-tank | Carrying oxygen tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.6619201Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.6729778Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:oxygen-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.6775595Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:oxygen-tank | Oxygen tank back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7144780Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7225463Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:oxygen-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7275671Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:oxygen-tank | Carrying oxygen tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7728583Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7778961Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:oxygen-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.7835240Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:oxygen-tank | Oxygen tank loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8205660Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8230818Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8352869Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:water-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8428853Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:water-tank | Carrying water tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8600594Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.8974457Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:water-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9000870Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:water-tank | Water tank back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9133281Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9205613Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:water-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9250918Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:water-tank | Carrying water tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9390799Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9461714Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:water-tank.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9522710Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:water-tank | Water tank loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9665377Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9701209Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9825185Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:food-locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:10.9885723Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:food-locker | Carrying food locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0031221Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0112456Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:food-locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0183508Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:food-locker | Food locker back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0561505Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0622306Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:food-locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0678400Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:food-locker | Carrying food locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0814475Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0900349Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:food-locker.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.0950747Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:food-locker | Food locker loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1036723Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1083599Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1227356Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:battery-module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1288541Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:battery-module | Carrying battery module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1437911Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1519039Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:battery-module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1572841Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:battery-module | Battery module back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1742240Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1803327Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:battery-module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.1864075Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:battery-module | Carrying battery module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2003228Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2094622Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:battery-module.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2143216Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:battery-module | Battery module loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2279611Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2336809Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2471486Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:solar-wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2532948Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:solar-wing | Carrying deployable solar wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2659577Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2745949Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:solar-wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2811956Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:solar-wing | Deployable solar wing back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.2944941Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3026103Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:solar-wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3093108Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:solar-wing | Carrying deployable solar wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3239492Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3356423Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:solar-wing.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3403525Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:solar-wing | Deployable solar wing loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3553678Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3589478Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3751689Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:spare-parts-kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3802001Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:spare-parts-kit | Carrying spare parts kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.3961928Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4084935Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:spare-parts-kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4125662Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:spare-parts-kit | Spare parts kit back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4304758Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4393174Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:spare-parts-kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4474247Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:spare-parts-kit | Carrying spare parts kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4677908Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4779359Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:spare-parts-kit.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.4845809Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:spare-parts-kit | Spare parts kit loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5032301Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5078118Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Initial real bay has a unit for reach roundtrip: spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5224409Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5301398Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:spectrometer | Carrying atmospheric spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5456878Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "One bay unload updates one planner quantity: spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5532673Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5592080Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:spectrometer | Atmospheric spectrometer back on the pallet.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5714707Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Return restores real supply: spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5792128Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-supply:spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.5874948Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-supply:spectrometer | Carrying atmospheric spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6011217Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Supply pickup is not prematurely counted aboard: spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6113791Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Actual closest ray resolves aisle/cockpit target cargo-bay:spectrometer.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6150629Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Exactly one resolver attempt succeeds for cargo-bay:spectrometer | Atmospheric spectrometer loaded.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6288345Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Physical stow restores exact inventory and mass: spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6323656Z",
+            "stage": "C05 seven-type physical regression",
+            "message": "Seven physical roundtrips preserve the valid default loadout and its one authoritative inventory.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.6554346Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7320997Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7351203Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7453075Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7559073Z",
+            "stage": "disclosed domain-command journey",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7664890Z",
+            "stage": "disclosed domain-command journey",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.7981041Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.8016329Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives Impact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.8142459Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges Impact through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.8912395Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.8937501Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9023005Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9123668Z",
+            "stage": "disclosed domain-command journey",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9199726Z",
+            "stage": "disclosed domain-command journey",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9380975Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual power repair costs | power distribution repaired (2 spare parts).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9421270Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9577766Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9713639Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual airlock cycle | Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9794440Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real depressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9829762Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual exterior domain command (no movement claim) | Outside on the tether.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9910483Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T19:28:11.9975822Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual return-inside domain command | Inside the airlock.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0076334Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual repressurization command | Outer hatch closed. Repressurizing.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0188389Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real repressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0247262Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0317834Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives FalseSignal.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0406076Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges FalseSignal through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0511864Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0562548Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Reply is pending after transmission, not instant.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0863492Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0897032Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.0962374Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1048769Z",
+            "stage": "disclosed domain-command journey",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1144444Z",
+            "stage": "disclosed domain-command journey",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1275367Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance the actual outbound/return reply interval | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1759551Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communication service reports the received reply.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1902860Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual restored contact is a midpoint: Survival, no outcome and no old final report.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.1923071Z",
+            "stage": "disclosed domain-command journey",
+            "message": "No legacy ending screen or cinematic control lock at contact.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2000607Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Authoritative recovery is inbound and needs service is active.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2082613Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-ration has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2158030Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-water has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2228558Z",
+            "stage": "disclosed domain-command journey",
+            "message": "survival-sleep has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2320166Z",
+            "stage": "disclosed domain-command journey",
+            "message": "grow-build has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2385844Z",
+            "stage": "disclosed domain-command journey",
+            "message": "recovery-beacon has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2479675Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Saved runtime binds exactly 28 distinct objects and interaction IDs.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2560585Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cockpit-console",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2636303Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: repair-power",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2718069Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: repair-life-support",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2797327Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: suit-locker",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2876415Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: airlock-controls",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.2947251Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: eva-exit",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3040987Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: eva-return",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3112656Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: repair-antenna",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3198369Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3278755Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3349315Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:water-tank",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3426777Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:water-tank",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3507784Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:food-locker",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3588420Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:food-locker",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3664639Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:battery-module",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3736601Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:battery-module",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3807696Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:solar-wing",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3874490Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:solar-wing",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.3957603Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4058668Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4134042Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-supply:spectrometer",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4216026Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: cargo-bay:spectrometer",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4291581Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: survival-ration",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4378066Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: survival-water",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4454287Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: grow-build",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4536104Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: survival-sleep",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4616765Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: recovery-beacon",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4687453Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Target binds the current authoritative action: salvage-payload",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4768618Z",
+            "stage": "disclosed domain-command journey",
+            "message": "All original eight mission bindings remain unique and intact.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4844417Z",
+            "stage": "disclosed domain-command journey",
+            "message": "All fourteen cargo targets remain bound.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.4935436Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Grow lifecycle uses one target with one trigger, never overlapping stage triggers.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5023709Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Both old locker collision boxes are disabled.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5099320Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Exactly five authored habitat solid proxies are enabled.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5180624Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Visible hunger/hydration bars match the actual need services.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5251832Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Exactly one survival needs view is bound.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5322374Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 1",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:12.5524586Z",
+            "stage": "actual grounded storage collision",
+            "message": "Storage walk uses the actual grounded player outside float/EVA routing.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:13.4338116Z",
+            "stage": "actual grounded storage collision",
+            "message": "Actual forward intent travels at least 1.8 m along the clear storage aisle.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4478378Z",
+            "stage": "actual grounded storage collision",
+            "message": "Actual forward walk approaches the galley then stops outside its solid cabinet/table footprint.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4528741Z",
+            "stage": "actual grounded storage collision",
+            "message": "Grounded player has no penetration beyond controller skin into COL_Habitat_Berth; depth=9.304622E-43",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4639368Z",
+            "stage": "actual grounded storage collision",
+            "message": "Grounded player has no penetration beyond controller skin into COL_Habitat_Galley; depth=0",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4745460Z",
+            "stage": "actual grounded storage collision",
+            "message": "Grounded player has no penetration beyond controller skin into COL_Habitat_GalleyDrawerOpen; depth=0",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4860884Z",
+            "stage": "actual grounded storage collision",
+            "message": "Grounded player has no penetration beyond controller skin into COL_Habitat_GalleyTable; depth=0",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:14.4953992Z",
+            "stage": "actual grounded storage collision",
+            "message": "Grounded player has no penetration beyond controller skin into COL_Habitat_GrowCassette; depth=0",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:15.2765780Z",
+            "stage": "actual grounded storage collision",
+            "message": "Capture uses the actual camera/document at 1280x720: 01-habitat-wide.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:15.5350396Z",
+            "stage": "actual grounded storage collision",
+            "message": "Capture uses the actual camera/document at 1280x720: 02-berth.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:15.8025288Z",
+            "stage": "actual grounded storage collision",
+            "message": "Capture uses the actual camera/document at 1280x720: 03-galley.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.0449913Z",
+            "stage": "actual grounded storage collision",
+            "message": "Capture uses the actual camera/document at 1280x720: 04-grow-unbuilt.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1423058Z",
+            "stage": "physical food, water and guards",
+            "message": "Advance one actual awake portion interval through all simulation services | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1559768Z",
+            "stage": "physical food, water and guards",
+            "message": "Visible hunger/hydration bars match the actual need services.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1595441Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one survival needs view is bound.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1682976Z",
+            "stage": "physical food, water and guards",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 1",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1775224Z",
+            "stage": "physical food, water and guards",
+            "message": "Awake hunger/thirst accrue without automatically double-charging stored food/water.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.1943189Z",
+            "stage": "physical food, water and guards",
+            "message": "Real galley ration surface is reachable and needed.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.2693962Z",
+            "stage": "physical food, water and guards",
+            "message": "Capture uses the actual camera/document at 1280x720: 05-ration-interaction.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.3948170Z",
+            "stage": "physical food, water and guards",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-ration.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.3993925Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one resolver attempt succeeds for survival-ration | Eat stored ration: 0.4575 kg",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4226768Z",
+            "stage": "physical food, water and guards",
+            "message": "One actual ration action charges exactly its food portion and meets hunger.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4349867Z",
+            "stage": "physical food, water and guards",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-ration.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4390407Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one resolver attempt rejects for survival-ration | No ration is needed yet.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4573993Z",
+            "stage": "physical food, water and guards",
+            "message": "Full-hunger repeat is rejected without waste or a duplicate charge.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4695614Z",
+            "stage": "physical food, water and guards",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-water.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4741339Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one resolver attempt succeeds for survival-water | Drink stored water: 0.625 L",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.4950482Z",
+            "stage": "physical food, water and guards",
+            "message": "One actual dispenser action charges exactly its water portion and meets thirst.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5051726Z",
+            "stage": "physical food, water and guards",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-water.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5102098Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one resolver attempt rejects for survival-water | No water portion is needed yet.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5293851Z",
+            "stage": "physical food, water and guards",
+            "message": "Full-hydration repeat is rejected without duplicate charges.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5344132Z",
+            "stage": "physical food, water and guards",
+            "message": "Visible hunger/hydration bars match the actual need services.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5428998Z",
+            "stage": "physical food, water and guards",
+            "message": "Exactly one survival needs view is bound.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5607325Z",
+            "stage": "physical food, water and guards",
+            "message": "A real solid collider in the sight line blocks the grow action and all costs.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5637670Z",
+            "stage": "physical food, water and guards",
+            "message": "Removing the disclosed QA blocker restores actual grow focus.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5798300Z",
+            "stage": "physical food, water and guards",
+            "message": "Grow action beyond the real two-metre reach is rejected without costs.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.5989424Z",
+            "stage": "physical food, water and guards",
+            "message": "Pause blocks both resolver use and authoritative grow command without costs.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6160671Z",
+            "stage": "physical food, water and guards",
+            "message": "Resume restores the actual control and resolver gates.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6226258Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Default loadout spent its seven repair parts; only the bound salvage feature is enabled.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6348927Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual closest ray resolves aisle/cockpit target salvage-payload.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6399312Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly one resolver attempt succeeds for salvage-payload | Science instrument dismantled: +3 spare parts. Its 300 W load is off the bus.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6534169Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual engineering salvage abandons the science payload and credits three parts once with its real energy cost.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6595837Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "The actual science load is removed from the bus; frozen launch selections remain historical.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6748259Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual closest ray resolves aisle/cockpit target salvage-payload.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6788648Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly one resolver attempt rejects for salvage-payload | Science instrument dismantled",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.6939158Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Repeated salvage grants no parts and consumes no energy.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7040623Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-build.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7106372Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly one resolver attempt succeeds for grow-plant | Build grow module: 1 spare part(s), 0.2 kWh",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7326632Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Build charges its exact recipe once and rebinds the same physical target to Plant.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7371962Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Unplanted grow module has no visible seedlings and reads ready to plant.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7467932Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Already-built domain guard rejects a duplicate build charge.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7653815Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-plant.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7711910Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly one resolver attempt succeeds for grow-harvest | Plant 25-day seedlings: 1 L; 8 further days, 70 W and 0.05 L/day",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7844994Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Plant charges water once and rebinds the same target to guarded Harvest; no immediate food.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.7890354Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Visible authored seedlings begin at the actual pre-grown age with the full further cultivation time.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8044169Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-harvest.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8084596Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8218361Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Immature crop cannot be harvested or credited.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8248537Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Saved runtime binds exactly 28 distinct objects and interaction IDs.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8330672Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cockpit-console",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8416651Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: repair-power",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8489686Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: repair-life-support",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8578206Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: suit-locker",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8663631Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: airlock-controls",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8735154Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: eva-exit",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8816772Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: eva-return",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8877554Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: repair-antenna",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.8953980Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9035269Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9111695Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:water-tank",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9192153Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:water-tank",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9267507Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:food-locker",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9353674Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:food-locker",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9428938Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:battery-module",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9507425Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:battery-module",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9587875Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:solar-wing",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9667137Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:solar-wing",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9742690Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9814823Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9895598Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-supply:spectrometer",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:16.9967001Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: cargo-bay:spectrometer",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0060828Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: survival-ration",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0146560Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: survival-water",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0216615Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: grow-harvest",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0290216Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: survival-sleep",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0371128Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: recovery-beacon",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0442123Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Target binds the current authoritative action: salvage-payload",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0523492Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "All original eight mission bindings remain unique and intact.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0605403Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "All fourteen cargo targets remain bound.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0691165Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Grow lifecycle uses one target with one trigger, never overlapping stage triggers.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0777084Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Both old locker collision boxes are disabled.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.0847718Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Exactly five authored habitat solid proxies are enabled.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.1536618Z",
+            "stage": "salvage and one grow lifecycle",
+            "message": "Capture uses the actual camera/document at 1280x720: 06-grow-seedlings.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.2457104Z",
+            "stage": "physical berth and real pause",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.2487538Z",
+            "stage": "physical berth and real pause",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.2865942Z",
+            "stage": "physical berth and real pause",
+            "message": "One bed interaction begins one actual maximum-length rest.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.2898279Z",
+            "stage": "physical berth and real pause",
+            "message": "Real composition locks movement and releases the cursor for the rest UI.",
+            "pass": true,
+            "simulationSeconds": 33118.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.2986727Z",
+            "stage": "physical berth and real pause",
+            "message": "Advance ten simulated rest minutes through the actual shared ledger | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.3124033Z",
+            "stage": "physical berth and real pause",
+            "message": "Rest time, food and water all advance together.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.3154322Z",
+            "stage": "physical berth and real pause",
+            "message": "Actual rest DAY N equals the mission calendar.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.3231583Z",
+            "stage": "physical berth and real pause",
+            "message": "Rest label reads the authoritative remaining simulated time.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.3307232Z",
+            "stage": "physical berth and real pause",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 1",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.3879367Z",
+            "stage": "physical berth and real pause",
+            "message": "Capture uses the actual camera/document at 1280x720: 07-rest.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.4791018Z",
+            "stage": "physical berth and real pause",
+            "message": "Manual food/water commands cannot double-charge a resting crew.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.7338309Z",
+            "stage": "physical berth and real pause",
+            "message": "Actual paused Update freezes the common clock, rest and every resource.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.7363459Z",
+            "stage": "physical berth and real pause",
+            "message": "Pause hides rest UI and disables its real Wake button.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.7449859Z",
+            "stage": "physical berth and real pause",
+            "message": "Paused Wake UI and domain guard preserve rest.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.8020577Z",
+            "stage": "physical berth and real pause",
+            "message": "Capture uses the actual camera/document at 1280x720: 07b-paused-rest.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.8814032Z",
+            "stage": "physical berth and real pause",
+            "message": "Submit enabled, visible real button: Wake.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9228556Z",
+            "stage": "physical berth and real pause",
+            "message": "One NavigationSubmit produces exactly one actual click (survival-wake).",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9253782Z",
+            "stage": "physical berth and real pause",
+            "message": "Actual Wake button restores the same session, awake scale and physical control.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9387027Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9432679Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9564360Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 1 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 33718.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9698658Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 1",
+            "pass": true,
+            "simulationSeconds": 64318.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9733790Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 64318.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9880425Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 64318.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:17.9915605Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 64318.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0053972Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 2 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 64318.965642496936
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0182277Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 2",
+            "pass": true,
+            "simulationSeconds": 94918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0217375Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 94918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0371417Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 94918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0401746Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 94918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0552852Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 3 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 94918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0684485Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 2",
+            "pass": true,
+            "simulationSeconds": 125518.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0730777Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 125518.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0861752Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 125518.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.0908565Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 125518.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1046227Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 4 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 125518.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1183301Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 2",
+            "pass": true,
+            "simulationSeconds": 156118.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1223980Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 156118.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1386410Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 156118.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1416626Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 156118.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1563023Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 5 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 156118.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1722360Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 3",
+            "pass": true,
+            "simulationSeconds": 186718.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1757615Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 186718.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1915837Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 186718.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.1962225Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 186718.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2104736Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 6 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 186718.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2250109Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 3",
+            "pass": true,
+            "simulationSeconds": 217318.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2295937Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 217318.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2446978Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 217318.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2492692Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 217318.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2638848Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 7 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 217318.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2775656Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 3",
+            "pass": true,
+            "simulationSeconds": 247918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2832333Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 247918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.2973546Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 247918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3004291Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 247918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3131019Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 8 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 247918.96564249695
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3289152Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 4",
+            "pass": true,
+            "simulationSeconds": 278518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3329339Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 278518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3464083Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 278518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3502768Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 278518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3635488Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 9 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 278518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3763146Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 4",
+            "pass": true,
+            "simulationSeconds": 309118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3808712Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 309118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3949528Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 309118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.3989863Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 309118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4136109Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 10 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 309118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4275848Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 4",
+            "pass": true,
+            "simulationSeconds": 339718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4310966Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 339718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4457804Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 339718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4518505Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 339718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4649042Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 11 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 339718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4795390Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 5",
+            "pass": true,
+            "simulationSeconds": 370318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4835579Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 370318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.4988820Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 370318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5036295Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 370318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5189804Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 12 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 370318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5347173Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 5",
+            "pass": true,
+            "simulationSeconds": 400918.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5382663Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 400918.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5544566Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 400918.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5590152Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 400918.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5732536Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 13 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 400918.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5864699Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 5",
+            "pass": true,
+            "simulationSeconds": 431518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.5914918Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 431518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6081653Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 431518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6116133Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 431518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6305728Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 14 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 431518.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6476429Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 6",
+            "pass": true,
+            "simulationSeconds": 462118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6522071Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 462118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6700641Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 462118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6756206Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 462118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.6916841Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 15 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 462118.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7082161Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 6",
+            "pass": true,
+            "simulationSeconds": 492718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7138855Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 492718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7377676Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 492718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7446443Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 492718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7669270Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 16 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 492718.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7942771Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 7",
+            "pass": true,
+            "simulationSeconds": 523318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.7988566Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 523318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8161427Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 523318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8225526Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 523318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8394902Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 17 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 523318.96564249697
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8517760Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 7",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8558322Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8642513Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual recovery request opens a future beacon window; no hard-coded window duration.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8822976Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target recovery-beacon.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.8884188Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for recovery-beacon | Recovery beacon powered: the rendezvous stays on schedule.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.9044226Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical cockpit beacon pays the authoritative energy cost once inside the real window.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.9158638Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target recovery-beacon.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.9195922Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt rejects for recovery-beacon | The beacon is already powered for the recovery craft.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.9342714Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Repeated beacon interaction is rejected without another energy charge.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:18.9947390Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Capture uses the actual camera/document at 1280x720: 08-beacon.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.0897787Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.0943706Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1089261Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 18 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 529918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1226481Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 7",
+            "pass": true,
+            "simulationSeconds": 560518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1287807Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 560518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1433993Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 560518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1494832Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 560518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1647035Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 19 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 560518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1817295Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 7",
+            "pass": true,
+            "simulationSeconds": 591118.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.1872845Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 591118.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2050582Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 591118.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2106196Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 591118.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2285514Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 20 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 591118.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2419809Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 8",
+            "pass": true,
+            "simulationSeconds": 621718.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2467707Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 621718.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2615510Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 621718.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2657250Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 621718.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2808973Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 21 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 621718.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.2949610Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 8",
+            "pass": true,
+            "simulationSeconds": 652318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3004347Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 652318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3137801Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 652318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3184258Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 652318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3327898Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 22 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 652318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3465347Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 8",
+            "pass": true,
+            "simulationSeconds": 682918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3510740Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 682918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3650706Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 682918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3700058Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 682918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3822154Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 23 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 682918.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3948456Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 9",
+            "pass": true,
+            "simulationSeconds": 713518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.3998814Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 713518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4140358Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target survival-sleep.",
+            "pass": true,
+            "simulationSeconds": 713518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4203956Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for survival-sleep | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 713518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4361212Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Physical bed begins rest 24 and locks movement.",
+            "pass": true,
+            "simulationSeconds": 713518.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4490897Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 9",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4547044Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real resource accounting keeps this supplied rest alive.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4643328Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Entire cultivation wait used accounted rest time and the actual requested beacon.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4750150Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Eight-day cultivation/rest uses exactly the common food ledger and drinking-plus-grow water rates, no double charging.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4866188Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Real elapsed cultivation reaches nominal harvest age, wakes the crew and updates visible crop state.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.4951408Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Visible hunger/hydration bars match the actual need services.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5032566Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one survival needs view is bound.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5120012Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 9",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5279820Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5330512Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt succeeds for grow-harvest | Harvest small supplement: 0.05 kg ration-equivalent game credit",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5476619Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "One physical harvest credits the exact small food equivalent and hides harvested seedlings on the same target.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5578964Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5614338Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.5774736Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Repeated harvest cannot duplicate food.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.6421152Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Capture uses the actual camera/document at 1280x720: 09-grow-harvested.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7479116Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Saved runtime binds exactly 28 distinct objects and interaction IDs.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7519663Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cockpit-console",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7625527Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: repair-power",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7716195Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: repair-life-support",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7801694Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: suit-locker",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7897692Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: airlock-controls",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.7990125Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: eva-exit",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8101001Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: eva-return",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8196233Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: repair-antenna",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8331358Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8448526Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8555675Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:water-tank",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8656592Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:water-tank",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8762477Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:food-locker",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8843689Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:food-locker",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.8947726Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:battery-module",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9078869Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:battery-module",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9178867Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:solar-wing",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9282020Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:solar-wing",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9385965Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9497038Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9618382Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-supply:spectrometer",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9753359Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: cargo-bay:spectrometer",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:19.9875732Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: survival-ration",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0007612Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: survival-water",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0129543Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: grow-harvest",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0247416Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: survival-sleep",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0363953Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: recovery-beacon",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0477648Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Target binds the current authoritative action: salvage-payload",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0588608Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "All original eight mission bindings remain unique and intact.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0690991Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "All fourteen cargo targets remain bound.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0806940Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Grow lifecycle uses one target with one trigger, never overlapping stage triggers.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.0928897Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Both old locker collision boxes are disabled.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1057050Z",
+            "stage": "paid rest, calendar and recovery beacon",
+            "message": "Exactly five authored habitat solid proxies are enabled.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1347846Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Composition teardown clears the habitat binding, world text and seedlings.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1410998Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1531965Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1664415Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1785517Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.1923156Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2029831Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Teardown unbinds all five physical habitat actions.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2145661Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Disposed presentation cannot re-credit the completed harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2557126Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Composition re-enable rebinds the same authoritative session, not a new simulation.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2626090Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Rebind restores final crop state without duplicate costs, food or rest commands.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2727115Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-ration has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2851501Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-water has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.2973984Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-sleep has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3085495Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "grow-harvest has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3191336Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "recovery-beacon has one active interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3327244Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Visible hunger/hydration bars match the actual need services.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3449499Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Exactly one survival needs view is bound.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3562399Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 9",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3779575Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Actual closest ray resolves aisle/cockpit target grow-harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.3860502Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Exactly one resolver attempt rejects for grow-harvest | No mature crop is ready to harvest.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4065518Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Rebound harvest remains spent and cannot duplicate yield.",
+            "pass": true,
+            "simulationSeconds": 724318.965642497
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4429844Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "In-place StartSession reset disposes the old authority and retains the saved C06 option.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4502339Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Restart clears growth, needs, rest and recovery chronology.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4608929Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Restart restores the original single inventory and unsalvaged payload.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4731908Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Restart restores Build on the same target and removes stale survival UI behind actual mode choice.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4865260Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-ration has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.4976574Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-water has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5091065Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "survival-sleep has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5208540Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "grow-build has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5310618Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "recovery-beacon has one disabled interaction trigger.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5406719Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Saved runtime binds exactly 28 distinct objects and interaction IDs.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5517897Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cockpit-console",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5638778Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: repair-power",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5740573Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: repair-life-support",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5826137Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: suit-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.5931725Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: airlock-controls",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6042710Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: eva-exit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6163910Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: eva-return",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6289777Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: repair-antenna",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6390462Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6491120Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:oxygen-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6596784Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6707386Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:water-tank",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6807879Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.6908537Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:food-locker",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7025461Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7151818Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:battery-module",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7253850Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7355053Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:solar-wing",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7466651Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7577652Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:spare-parts-kit",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7678453Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-supply:spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7790300Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: cargo-bay:spectrometer",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.7901612Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: survival-ration",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8002796Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: survival-water",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8088783Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: grow-build",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8179318Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: survival-sleep",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8275119Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: recovery-beacon",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8366703Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Target binds the current authoritative action: salvage-payload",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8456892Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "All original eight mission bindings remain unique and intact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8544059Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "All fourteen cargo targets remain bound.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8640203Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Grow lifecycle uses one target with one trigger, never overlapping stage triggers.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8739050Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Both old locker collision boxes are disabled.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8815227Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Exactly five authored habitat solid proxies are enabled.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.8913537Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Wall mission day is sourced from the authoritative calendar: MISSION DAY 1",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-14T19:28:20.9001360Z",
+            "stage": "habitat teardown and clean restart",
+            "message": "Final scene has the same 28 targets; no accumulated action objects.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        }
+    ]
+}

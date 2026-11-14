@@ -1,0 +1,688 @@
+{
+    "checks": [
+        {
+            "stage": "fixture startup",
+            "message": "Exactly one real Player/capsule.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "One fixture camera and released body/glove/bare presenters.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real Impact requested by cockpit command.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Actual repaired, unsuited session enables fixture control.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Original glove JSON binds without alternate rig.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual WORK skin is visible/readable and carries its bare-skin material.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Approach is pending before the real slow frame.",
+            "pass": true,
+            "frame": 11
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Exact pre-stall stage is Reaching.",
+            "pass": true,
+            "frame": 11
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "At least40ms of visible approach remains before the hitch.",
+            "pass": true,
+            "frame": 11
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Hitch consumes zero animation time and preserves the real joint pose.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "A static slow-frame contact does not create Player movement.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Imported palm triangle selected before action.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual rebaked bare palm <=3 mm: residual=1.04063031E-06 m; facing dot=1",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual bare contact skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 51
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Valid resumed approach issues exactly one actual Player push.",
+            "pass": true,
+            "frame": 52
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "No extra action after the hitch or return.",
+            "pass": true,
+            "frame": 161
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 161
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 168
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 168
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual WORK skin is visible/readable and carries its bare-skin material.",
+            "pass": true,
+            "frame": 168
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.",
+            "pass": true,
+            "frame": 168
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 169
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Approach is pending before the real slow frame.",
+            "pass": true,
+            "frame": 172
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Exact pre-stall stage is Reaching.",
+            "pass": true,
+            "frame": 172
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "At least40ms of visible approach remains before the hitch.",
+            "pass": true,
+            "frame": 172
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 173
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 173
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 173
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "A genuine target jump during a hitch never issues a stale push.",
+            "pass": true,
+            "frame": 258
+        },
+        {
+            "stage": "hitch: actual suit preparation",
+            "message": "Real domain command: EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "frame": 258
+        },
+        {
+            "stage": "hitch: actual suit preparation",
+            "message": "Hitch glove cases use the actual paid suit state.",
+            "pass": true,
+            "frame": 258
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 258
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 265
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 265
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 266
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Approach is pending before the real slow frame.",
+            "pass": true,
+            "frame": 273
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Exact pre-stall stage is Reaching.",
+            "pass": true,
+            "frame": 273
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "At least40ms of visible approach remains before the hitch.",
+            "pass": true,
+            "frame": 273
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 274
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 274
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 274
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Hitch consumes zero animation time and preserves the real joint pose.",
+            "pass": true,
+            "frame": 274
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "A static slow-frame contact does not create Player movement.",
+            "pass": true,
+            "frame": 274
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 317
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "Valid resumed approach issues exactly one actual Player push.",
+            "pass": true,
+            "frame": 318
+        },
+        {
+            "stage": "glove-hitch-approach-valid",
+            "message": "No extra action after the hitch or return.",
+            "pass": true,
+            "frame": 408
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 408
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 415
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 415
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 416
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=0 m.",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Successful physical grab sets the real held surface/point and emits one event.",
+            "pass": true,
+            "frame": 468
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Static real registered grip is held before injecting a long frame.",
+            "pass": true,
+            "frame": 469
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Exact pre-stall stage is Holding.",
+            "pass": true,
+            "frame": 469
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 470
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 470
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "A slow frame alone preserves Holding; current=Holding, validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 470
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Hitch consumes zero animation time and preserves the real joint pose.",
+            "pass": true,
+            "frame": 470
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "A static slow-frame contact does not create Player movement.",
+            "pass": true,
+            "frame": 470
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Static physical and visual grip survives the actual slow frame without another action.",
+            "pass": true,
+            "frame": 471
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Readback following the injected hitch does not retract the static held glove.",
+            "pass": true,
+            "frame": 524
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 524
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Release after hitch clears the real anchor once.",
+            "pass": true,
+            "frame": 612
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 612
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 619
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 619
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 620
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=0 m.",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Successful physical grab sets the real held surface/point and emits one event.",
+            "pass": true,
+            "frame": 687
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Static real registered grip is held before injecting a long frame.",
+            "pass": true,
+            "frame": 688
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Exact pre-stall stage is Holding.",
+            "pass": true,
+            "frame": 688
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 689
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 689
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "A slow frame alone preserves Holding; current=Holding, validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 689
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Hitch consumes zero animation time and preserves the real joint pose.",
+            "pass": true,
+            "frame": 689
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "A static slow-frame contact does not create Player movement.",
+            "pass": true,
+            "frame": 689
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Static physical and visual grip survives the actual slow frame without another action.",
+            "pass": true,
+            "frame": 690
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Readback following the injected hitch does not retract the static held glove.",
+            "pass": true,
+            "frame": 731
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Exact pre-stall stage is Holding.",
+            "pass": true,
+            "frame": 731
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 732
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 732
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 732
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Occluded slow frame cannot manufacture another grip.",
+            "pass": true,
+            "frame": 799
+        },
+        {
+            "stage": "glove-Right-hitch-held",
+            "message": "Two actual post-hitch held-grip screenshots captured; initial contact readback excluded for isolation.",
+            "pass": true,
+            "frame": 799
+        }
+    ]
+}

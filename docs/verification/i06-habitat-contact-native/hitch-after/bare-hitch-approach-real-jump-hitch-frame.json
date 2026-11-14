@@ -1,0 +1,29 @@
+{
+    "label": "bare-hitch-approach-real-jump",
+    "beforeStage": "Reaching",
+    "afterStage": "Returning",
+    "validationBefore": "accepted real nearest hit and wrist path",
+    "validationAfter": "accepted real nearest hit and wrist path",
+    "heldBefore": "none",
+    "heldAfter": "none",
+    "injectedFrame": 172,
+    "observedFrame": 173,
+    "callbacksBefore": 0,
+    "callbacksAfter": 0,
+    "actualDelta": 0.18021009862422944,
+    "elapsedBefore": 0.044895004481077197,
+    "elapsedAfter": 0.0,
+    "worstJointAngle": 0.0,
+    "worstJointPositionMetres": 0.0,
+    "blockedSeconds": 0.1594367,
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+}

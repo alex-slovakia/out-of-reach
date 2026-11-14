@@ -1,0 +1,166 @@
+{
+    "checks": [
+        {
+            "stage": "fixture startup",
+            "message": "Exactly one real Player/capsule.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "One fixture camera and released body/glove/bare presenters.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real Impact requested by cockpit command.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Actual repaired, unsuited session enables fixture control.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Original glove JSON binds without alternate rig.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "hitch: actual suit preparation",
+            "message": "Real domain command: EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "hitch: actual suit preparation",
+            "message": "Hitch glove cases use the actual paid suit state.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Actual original glove pad/tube frame <=2 mm: residual=0 m.",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Successful physical grab sets the real held surface/point and emits one event.",
+            "pass": true,
+            "frame": 79
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Static real registered grip is held before injecting a long frame.",
+            "pass": true,
+            "frame": 80
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Exact pre-stall stage is Holding.",
+            "pass": true,
+            "frame": 80
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 81
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 81
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "A slow frame alone preserves Holding; current=Returning, validation=accepted real nearest hit and wrist path",
+            "pass": false,
+            "frame": 81
+        },
+        {
+            "stage": "glove-Left-hitch-held",
+            "message": "System.InvalidOperationException: Observe hitch: System.InvalidOperationException: A slow frame alone preserves Holding; current=Returning, validation=accepted real nearest hit and wrist path\r\n  at ContactNativeQaDriver.Check (System.Boolean pass, System.String message) [0x00012] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\ContactNativeQa\\ContactNativeQa.cs:612 \r\n  at ContactNativeQaDriver+<>c__DisplayClass80_1.<InjectHitch>b__4 () [0x0024a] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\ContactNativeQa\\ContactNativeQa.cs:587 \r\n  at ContactNativeQaDriver.LateUpdate () [0x0002e] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\ContactNativeQa\\ContactNativeQa.cs:351 \r\n  at ContactNativeQaDriver+<Start>d__49.MoveNext () [0x00067] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\ContactNativeQa\\ContactNativeQa.cs:200 ",
+            "pass": false,
+            "frame": 82
+        }
+    ]
+}

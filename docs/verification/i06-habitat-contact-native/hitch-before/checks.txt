@@ -1,0 +1,31 @@
+PASS fixture startup | Exactly one real Player/capsule.
+PASS fixture startup | One fixture camera and released body/glove/bare presenters.
+PASS fixture startup | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS fixture startup | Real domain command: Cockpit check complete. Impact detected.
+PASS fixture startup | Real Impact requested by cockpit command.
+PASS fixture startup | Real domain command: power distribution repaired (2 spare parts).
+PASS fixture startup | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS fixture startup | Actual repaired, unsuited session enables fixture control.
+PASS fixture startup | Original glove JSON binds without alternate rig.
+PASS hitch: actual suit preparation | Real domain command: EVA suit on. Tank: 0.3 kg oxygen.
+PASS hitch: actual suit preparation | Hitch glove cases use the actual paid suit state.
+PASS glove-Left-hitch-held | Actual Player command: Done
+PASS glove-Left-hitch-held | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Left-hitch-held | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Left-hitch-held | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Left-hitch-held | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Left-hitch-held | No physical action/travel before visible anticipation completed.
+PASS glove-Left-hitch-held | Actual original glove pad/tube frame <=2 mm: residual=0 m.
+PASS glove-Left-hitch-held | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Left-hitch-held | Real controller contact command succeeds: Done
+PASS glove-Left-hitch-held | Successful physical grab sets the real held surface/point and emits one event.
+PASS glove-Left-hitch-held | Static real registered grip is held before injecting a long frame.
+PASS glove-Left-hitch-held | Exact pre-stall stage is Holding.
+PASS glove-Left-hitch-held | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS glove-Left-hitch-held | The actual hitch frame invokes no new contact action.
+FAIL glove-Left-hitch-held | A slow frame alone preserves Holding; current=Returning, validation=accepted real nearest hit and wrist path
+FAIL glove-Left-hitch-held | System.InvalidOperationException: Observe hitch: System.InvalidOperationException: A slow frame alone preserves Holding; current=Returning, validation=accepted real nearest hit and wrist path
+  at ContactNativeQaDriver.Check (System.Boolean pass, System.String message) [0x00012] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:612 
+  at ContactNativeQaDriver+<>c__DisplayClass80_1.<InjectHitch>b__4 () [0x0024a] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:587 
+  at ContactNativeQaDriver.LateUpdate () [0x0002e] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:351 
+  at ContactNativeQaDriver+<Start>d__49.MoveNext () [0x00067] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:200 

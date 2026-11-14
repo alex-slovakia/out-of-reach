@@ -1,0 +1,1 @@
+114 checks passed; 2 post-stall held-grip captures. Bounded fixture only; see scope.txt.

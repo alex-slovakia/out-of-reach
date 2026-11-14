@@ -535,7 +535,10 @@ namespace OutOfReach.Presentation.Hands
         private void AdvanceContact(float seconds)
         {
             if (!CanPresentContact()) { ResetToNeutral(); return; }
-            if (!Finite(seconds) || seconds < 0f || seconds > .1f) { CancelContact(); return; }
+            if (!Finite(seconds) || seconds < 0f) { CancelContact(); return; }
+            // A rendering hitch is not a lost contact. Discard its animation time (no catch-up/action
+            // jump), but still run the normal authoritative hold, geometry and movement-jump checks.
+            if (seconds > .1f) seconds = 0f;
             contactElapsed += seconds;
             if (ContactStage == HandContactStage.Returning)
             {

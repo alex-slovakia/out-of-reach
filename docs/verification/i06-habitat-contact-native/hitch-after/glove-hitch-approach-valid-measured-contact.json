@@ -1,0 +1,51 @@
+{
+    "name": "glove-hitch-approach-valid",
+    "hand": "Right",
+    "kind": "Push",
+    "command": "Done",
+    "callbackFrame": 317,
+    "captureFrame": 317,
+    "callbackCount": 1,
+    "pushedEvents": 1,
+    "grabbedEvents": 0,
+    "elapsedRealSeconds": 0.4260687828063965,
+    "reportedResidual": 1.1920928955078126e-7,
+    "measuredResidual": 1.1920928955078126e-7,
+    "skinNormalDot": 1.0,
+    "viewPitchDegrees": 0.0,
+    "point": {
+        "x": 0.17999999225139619,
+        "y": 1.649999976158142,
+        "z": 0.6000000238418579
+    },
+    "wrist": {
+        "x": 0.17999999225139619,
+        "y": 1.59499990940094,
+        "z": 0.5750000476837158
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    },
+    "bodyVisualOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    },
+    "bare": false,
+    "actualFloating": true,
+    "realSuitOn": true,
+    "rendererVisible": true,
+    "skinTriangle": []
+}

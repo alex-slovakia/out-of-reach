@@ -1,0 +1,114 @@
+PASS fixture startup | Exactly one real Player/capsule.
+PASS fixture startup | One fixture camera and released body/glove/bare presenters.
+PASS fixture startup | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS fixture startup | Real domain command: Cockpit check complete. Impact detected.
+PASS fixture startup | Real Impact requested by cockpit command.
+PASS fixture startup | Real domain command: power distribution repaired (2 spare parts).
+PASS fixture startup | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS fixture startup | Actual repaired, unsuited session enables fixture control.
+PASS fixture startup | Original glove JSON binds without alternate rig.
+PASS bare-hitch-approach-valid | Actual Player command: Done
+PASS bare-hitch-approach-valid | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-hitch-approach-valid | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-hitch-approach-valid | Actual WORK skin is visible/readable and carries its bare-skin material.
+PASS bare-hitch-approach-valid | Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.
+PASS bare-hitch-approach-valid | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-valid | Approach is pending before the real slow frame.
+PASS bare-hitch-approach-valid | Exact pre-stall stage is Reaching.
+PASS bare-hitch-approach-valid | At least40ms of visible approach remains before the hitch.
+PASS bare-hitch-approach-valid | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS bare-hitch-approach-valid | The actual hitch frame invokes no new contact action.
+PASS bare-hitch-approach-valid | A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-valid | Hitch consumes zero animation time and preserves the real joint pose.
+PASS bare-hitch-approach-valid | A static slow-frame contact does not create Player movement.
+PASS bare-hitch-approach-valid | Action callback repeats real live surface/path validation exactly once.
+PASS bare-hitch-approach-valid | No physical action/travel before visible anticipation completed.
+PASS bare-hitch-approach-valid | Imported palm triangle selected before action.
+PASS bare-hitch-approach-valid | Actual rebaked bare palm <=3 mm: residual=1.04063031E-06 m; facing dot=1
+PASS bare-hitch-approach-valid | Actual bare contact skin lies in the player camera frustum.
+PASS bare-hitch-approach-valid | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-hitch-approach-valid | Real controller contact command succeeds: Done
+PASS bare-hitch-approach-valid | Successful physical push sets actual velocity and emits one event.
+PASS bare-hitch-approach-valid | Valid resumed approach issues exactly one actual Player push.
+PASS bare-hitch-approach-valid | No extra action after the hitch or return.
+PASS bare-hitch-approach-real-jump | Actual Player command: Done
+PASS bare-hitch-approach-real-jump | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-hitch-approach-real-jump | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-hitch-approach-real-jump | Actual WORK skin is visible/readable and carries its bare-skin material.
+PASS bare-hitch-approach-real-jump | Measured wrist marker resolves to an actual imported palm triangle within 0.05 mm.
+PASS bare-hitch-approach-real-jump | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-real-jump | Approach is pending before the real slow frame.
+PASS bare-hitch-approach-real-jump | Exact pre-stall stage is Reaching.
+PASS bare-hitch-approach-real-jump | At least40ms of visible approach remains before the hitch.
+PASS bare-hitch-approach-real-jump | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS bare-hitch-approach-real-jump | The actual hitch frame invokes no new contact action.
+PASS bare-hitch-approach-real-jump | Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-real-jump | A genuine target jump during a hitch never issues a stale push.
+PASS hitch: actual suit preparation | Real domain command: EVA suit on. Tank: 0.3 kg oxygen.
+PASS hitch: actual suit preparation | Hitch glove cases use the actual paid suit state.
+PASS glove-hitch-approach-valid | Actual Player command: Done
+PASS glove-hitch-approach-valid | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-hitch-approach-valid | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-hitch-approach-valid | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-hitch-approach-valid | Approach is pending before the real slow frame.
+PASS glove-hitch-approach-valid | Exact pre-stall stage is Reaching.
+PASS glove-hitch-approach-valid | At least40ms of visible approach remains before the hitch.
+PASS glove-hitch-approach-valid | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS glove-hitch-approach-valid | The actual hitch frame invokes no new contact action.
+PASS glove-hitch-approach-valid | A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path
+PASS glove-hitch-approach-valid | Hitch consumes zero animation time and preserves the real joint pose.
+PASS glove-hitch-approach-valid | A static slow-frame contact does not create Player movement.
+PASS glove-hitch-approach-valid | Action callback repeats real live surface/path validation exactly once.
+PASS glove-hitch-approach-valid | No physical action/travel before visible anticipation completed.
+PASS glove-hitch-approach-valid | Actual original glove pad/tube frame <=2 mm: residual=1.1920929E-07 m.
+PASS glove-hitch-approach-valid | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-hitch-approach-valid | Real controller contact command succeeds: Done
+PASS glove-hitch-approach-valid | Successful physical push sets actual velocity and emits one event.
+PASS glove-hitch-approach-valid | Valid resumed approach issues exactly one actual Player push.
+PASS glove-hitch-approach-valid | No extra action after the hitch or return.
+PASS glove-Left-hitch-held | Actual Player command: Done
+PASS glove-Left-hitch-held | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Left-hitch-held | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Left-hitch-held | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Left-hitch-held | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Left-hitch-held | No physical action/travel before visible anticipation completed.
+PASS glove-Left-hitch-held | Actual original glove pad/tube frame <=2 mm: residual=0 m.
+PASS glove-Left-hitch-held | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Left-hitch-held | Real controller contact command succeeds: Done
+PASS glove-Left-hitch-held | Successful physical grab sets the real held surface/point and emits one event.
+PASS glove-Left-hitch-held | Static real registered grip is held before injecting a long frame.
+PASS glove-Left-hitch-held | Exact pre-stall stage is Holding.
+PASS glove-Left-hitch-held | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS glove-Left-hitch-held | The actual hitch frame invokes no new contact action.
+PASS glove-Left-hitch-held | A slow frame alone preserves Holding; current=Holding, validation=accepted real nearest hit and wrist path
+PASS glove-Left-hitch-held | Hitch consumes zero animation time and preserves the real joint pose.
+PASS glove-Left-hitch-held | A static slow-frame contact does not create Player movement.
+PASS glove-Left-hitch-held | Static physical and visual grip survives the actual slow frame without another action.
+PASS glove-Left-hitch-held | Readback following the injected hitch does not retract the static held glove.
+PASS glove-Left-hitch-held | Actual Player command: Done
+PASS glove-Left-hitch-held | Release after hitch clears the real anchor once.
+PASS glove-Right-hitch-held | Actual Player command: Done
+PASS glove-Right-hitch-held | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS glove-Right-hitch-held | Exclusive visible arm owner matches authoritative suit state.
+PASS glove-Right-hitch-held | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS glove-Right-hitch-held | Action callback repeats real live surface/path validation exactly once.
+PASS glove-Right-hitch-held | No physical action/travel before visible anticipation completed.
+PASS glove-Right-hitch-held | Actual original glove pad/tube frame <=2 mm: residual=0 m.
+PASS glove-Right-hitch-held | Presenter's own native contact residual agrees with the independent measure.
+PASS glove-Right-hitch-held | Real controller contact command succeeds: Done
+PASS glove-Right-hitch-held | Successful physical grab sets the real held surface/point and emits one event.
+PASS glove-Right-hitch-held | Static real registered grip is held before injecting a long frame.
+PASS glove-Right-hitch-held | Exact pre-stall stage is Holding.
+PASS glove-Right-hitch-held | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS glove-Right-hitch-held | The actual hitch frame invokes no new contact action.
+PASS glove-Right-hitch-held | A slow frame alone preserves Holding; current=Holding, validation=accepted real nearest hit and wrist path
+PASS glove-Right-hitch-held | Hitch consumes zero animation time and preserves the real joint pose.
+PASS glove-Right-hitch-held | A static slow-frame contact does not create Player movement.
+PASS glove-Right-hitch-held | Static physical and visual grip survives the actual slow frame without another action.
+PASS glove-Right-hitch-held | Readback following the injected hitch does not retract the static held glove.
+PASS glove-Right-hitch-held | Exact pre-stall stage is Holding.
+PASS glove-Right-hitch-held | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS glove-Right-hitch-held | The actual hitch frame invokes no new contact action.
+PASS glove-Right-hitch-held | Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path
+PASS glove-Right-hitch-held | Occluded slow frame cannot manufacture another grip.
+PASS glove-Right-hitch-held | Two actual post-hitch held-grip screenshots captured; initial contact readback excluded for isolation.

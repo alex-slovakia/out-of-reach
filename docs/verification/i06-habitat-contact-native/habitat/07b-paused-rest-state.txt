@@ -1,0 +1,11 @@
+phase=Survival
+outcome=None
+simulationSeconds=33718.965642496936
+resting=True
+controlAllowed=False
+cursor=None
+visibleLabels=
+Paused
+Reduced camera motion and light effects
+WASD move · Mouse look
+E interact · Tab systems · Esc resume
