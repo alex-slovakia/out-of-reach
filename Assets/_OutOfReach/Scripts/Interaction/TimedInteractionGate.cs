@@ -18,6 +18,8 @@ namespace OutOfReach.Interaction
     /// so its own result (success, or a refusal with nothing spent) is what gets published. Pause freezes the elapsed
     /// time; a cancel, an invalid session/focus (the caller's <c>stillValid</c> policy) or a new session spends nothing.
     /// It is not a second repair system and never awards a result on a timer: the domain decides at the end.
+    /// The working state is cleared before Finished; an attempt counter keeps handlers that cancel or restart from
+    /// letting a completion act on a replacement attempt; a stale session cancels even while paused.
     /// Interactables that are not wrapped keep their instant behavior.
     /// </summary>
     public sealed class TimedInteractionGate : IInteractable
@@ -28,6 +30,7 @@ namespace OutOfReach.Interaction
         private readonly Func<bool> stillValid;
         private readonly Func<bool> paused;
         private bool completing;
+        private int attempt;
 
         /// <param name="inner">The real interactable from the current session (for example the antenna repair).</param>
         /// <param name="activeSecondsRequired">Unpaused real seconds of visible work before the real command runs.</param>
@@ -100,7 +103,14 @@ namespace OutOfReach.Interaction
 
             State = TimedWorkState.Working;
             ElapsedActiveSeconds = 0d;
+            int started = ++attempt;
             Started?.Invoke();
+            if (started != attempt || State != TimedWorkState.Working)
+            {
+                // A Started handler cancelled (or replaced) this attempt: report that honestly.
+                return new CommandResult(false, CommandFailure.PreconditionsNotMet, "Work cancelled.");
+            }
+
             return new CommandResult(true, CommandFailure.None,
                 string.Format(CultureInfo.InvariantCulture, "Work started: {0:0.0} s", ActiveSecondsRequired));
         }
@@ -122,19 +132,27 @@ namespace OutOfReach.Interaction
                 return;
             }
 
-            if (paused != null && paused())
-            {
-                return;
-            }
-
+            // A stale session or lost focus ends the work even while paused: pause freezes time, not validity.
             if (!IsStillValid())
             {
                 Cancel("The work was interrupted.");
                 return;
             }
 
+            if (paused != null && paused())
+            {
+                return;
+            }
+
+            int current = attempt;
             ElapsedActiveSeconds = Math.Min(ActiveSecondsRequired, ElapsedActiveSeconds + activeRealSeconds);
             Progressed?.Invoke(Progress01);
+            if (current != attempt || State != TimedWorkState.Working)
+            {
+                // A Progressed handler cancelled or restarted: never complete a replacement attempt from here.
+                return;
+            }
+
             if (ElapsedActiveSeconds >= ActiveSecondsRequired)
             {
                 Complete();
@@ -182,6 +200,7 @@ namespace OutOfReach.Interaction
         {
             State = TimedWorkState.Idle;
             ElapsedActiveSeconds = 0d;
+            attempt++;
         }
     }
 }
