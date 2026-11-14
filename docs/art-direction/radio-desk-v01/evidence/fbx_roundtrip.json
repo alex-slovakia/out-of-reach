@@ -1,0 +1,500 @@
+{
+ "file": "RadioDesk.fbx",
+ "objects": {
+  "ControlContact_Channel": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.2,
+    1.005,
+    0.0627
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Distress": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.44,
+    0.81567,
+    0.00046
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Lamp": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.14,
+    0.83383,
+    0.00233
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Monitor": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.02,
+    0.83383,
+    0.00233
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_PTT": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.3,
+    0.8082,
+    0.00503
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Power": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.22,
+    0.83383,
+    0.00233
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Squelch": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.135,
+    0.895,
+    0.0647
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Transmit": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.1,
+    0.83383,
+    0.00233
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ControlContact_Volume": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.265,
+    0.895,
+    0.0647
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "DeskBody": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 9414,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_DeskKit",
+    "RD_Labels"
+   ]
+  },
+  "Handset": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.52,
+    0.86,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 632,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_DeskKit"
+   ]
+  },
+  "HandsetCord": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 10788,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_DeskKit"
+   ]
+  },
+  "HandsetGrip": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.52,
+    0.86,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "HandsetRest": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.52,
+    0.83,
+    -0.04
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "Indicator_PWR": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.22,
+    0.823228,
+    0.055916
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 108,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_Amber"
+   ]
+  },
+  "Indicator_TX": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.1,
+    0.823228,
+    0.055916
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 108,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_Amber"
+   ]
+  },
+  "LampEmitter": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.49081,
+    1.32313,
+    0.00633
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "LampLens": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.490813,
+    1.323135,
+    0.006325
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 112,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_LampWarm"
+   ]
+  },
+  "ScreenCenter": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.2,
+    1.1,
+    0.12
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ScreenSurface": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 2,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_Screen"
+   ],
+   "display": {
+    "corners_unity": [
+     [
+      -0.02,
+      0.97,
+      0.12
+     ],
+     [
+      0.42,
+      0.97,
+      0.12
+     ],
+     [
+      0.42,
+      1.23,
+      0.12
+     ],
+     [
+      -0.02,
+      1.23,
+      0.12
+     ]
+    ],
+    "normal_unity": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "size": [
+     0.44,
+     0.26
+    ],
+    "uv_by_corner": [
+     [
+      [
+       1.0,
+       0.0
+      ],
+      [
+       0.42,
+       0.97,
+       0.12
+      ]
+     ],
+     [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       -0.02,
+       1.23,
+       0.12
+      ]
+     ],
+     [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       -0.02,
+       0.97,
+       0.12
+      ]
+     ],
+     [
+      [
+       1.0,
+       0.0
+      ],
+      [
+       0.42,
+       0.97,
+       0.12
+      ]
+     ],
+     [
+      [
+       1.0,
+       1.0
+      ],
+      [
+       0.42,
+       1.23,
+       0.12
+      ]
+     ],
+     [
+      [
+       0.0,
+       1.0
+      ],
+      [
+       -0.02,
+       1.23,
+       0.12
+      ]
+     ]
+    ]
+   }
+  },
+  "Seat": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.66
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 1468,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "RD_DeskKit"
+   ]
+  },
+  "SeatEntry": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -1.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "SeatedCamera": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    1.2,
+    -0.7
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "triangles": 22632,
+ "bounds_unity": {
+  "min": [
+   -0.804,
+   0.0,
+   -0.90224
+  ],
+  "max": [
+   0.804,
+   1.451212,
+   0.325
+  ]
+ },
+ "drive_letter_paths": [],
+ "cameras_lights": []
+}

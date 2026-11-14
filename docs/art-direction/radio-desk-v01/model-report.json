@@ -1,0 +1,325 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/RadioDesk_BaseColor.png",
+    "Metallic": "textures/RadioDesk_Metallic.png",
+    "Roughness": "textures/RadioDesk_Roughness.png",
+    "Occlusion": "textures/RadioDesk_Occlusion.png",
+    "MetallicSmoothness": "textures/RadioDesk_MetallicSmoothness.png",
+    "Labels": "textures/RadioDesk_Labels.png"
+  },
+  "texture_size": 2048,
+  "label_font": "Inter (SIL OFL 1.1, bundled with Blender)",
+  "units": "metres; Unity axes: X width, Y up, Z depth; the seated player is on -Z facing +Z; origin = floor under the desk centre",
+  "desk_bounds_unity": {
+    "min": [
+      -0.804,
+      0.0,
+      -0.337
+    ],
+    "max": [
+      0.804,
+      1.4512,
+      0.325
+    ]
+  },
+  "seat_bounds_unity_occupied": {
+    "min": [
+      -0.25,
+      0.0,
+      -0.9022
+    ],
+    "max": [
+      0.23,
+      0.9566,
+      -0.46
+    ]
+  },
+  "seat_bounds_unity_stowed": {
+    "min": [
+      -0.25,
+      0.0,
+      -0.6822
+    ],
+    "max": [
+      0.23,
+      0.9566,
+      -0.24
+    ]
+  },
+  "seat_stow_offset_unity": [
+    0.0,
+    0.0,
+    0.22
+  ],
+  "clearances_m": {
+    "leg_room_width": 0.94,
+    "under_worktop_height": 0.712,
+    "leg_room_depth_from_front_edge": 0.607,
+    "seat_front_to_desk_bumper_occupied": 0.123,
+    "seat_entry_behind_seat_occupied": 0.098,
+    "eye_to_screen_centre": 0.85
+  },
+  "screen": {
+    "corners_unity": [
+      [
+        -0.01999999999999999,
+        0.9700000000000001,
+        0.12
+      ],
+      [
+        0.42000000000000004,
+        0.9700000000000001,
+        0.12
+      ],
+      [
+        0.42000000000000004,
+        1.23,
+        0.12
+      ],
+      [
+        -0.01999999999999999,
+        1.23,
+        0.12
+      ]
+    ],
+    "normal_unity": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "size_m": [
+      0.44,
+      0.26
+    ],
+    "uv": "(0,0) at the bottom-left corner, (1,1) at the top-right, as seen from the seat"
+  },
+  "anchors": {
+    "SeatEntry": {
+      "unity": [
+        -0.0,
+        0.0,
+        -1.0
+      ],
+      "brief": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "equal": true
+    },
+    "SeatedCamera": {
+      "unity": [
+        -0.0,
+        1.2,
+        -0.7
+      ],
+      "brief": [
+        0.0,
+        1.2,
+        -0.7
+      ],
+      "equal": true
+    },
+    "HandsetRest": {
+      "unity": [
+        -0.52,
+        0.83,
+        -0.04
+      ],
+      "brief": [
+        -0.52,
+        0.83,
+        -0.04
+      ],
+      "equal": true
+    },
+    "HandsetGrip": {
+      "unity": [
+        -0.52,
+        0.86,
+        -0.04
+      ],
+      "brief": [
+        -0.52,
+        0.86,
+        -0.04
+      ],
+      "equal": true
+    },
+    "ScreenCenter": {
+      "unity": [
+        0.2,
+        1.1,
+        0.12
+      ],
+      "brief": [
+        0.2,
+        1.1,
+        0.12
+      ],
+      "equal": true
+    },
+    "ControlContact_Power": {
+      "unity": [
+        -0.22,
+        0.83383,
+        0.00233
+      ],
+      "direction_unity": [
+        0.0,
+        0.9927,
+        -0.1202
+      ]
+    },
+    "ControlContact_Transmit": {
+      "unity": [
+        -0.1,
+        0.83383,
+        0.00233
+      ],
+      "direction_unity": [
+        0.0,
+        0.9927,
+        -0.1202
+      ]
+    },
+    "ControlContact_Monitor": {
+      "unity": [
+        0.02,
+        0.83383,
+        0.00233
+      ],
+      "direction_unity": [
+        0.0,
+        0.9927,
+        -0.1202
+      ]
+    },
+    "ControlContact_Lamp": {
+      "unity": [
+        0.14,
+        0.83383,
+        0.00233
+      ],
+      "direction_unity": [
+        0.0,
+        0.9927,
+        -0.1202
+      ]
+    },
+    "ControlContact_PTT": {
+      "unity": [
+        0.3,
+        0.8082,
+        0.00503
+      ],
+      "direction_unity": [
+        0.0,
+        0.907,
+        -0.4211
+      ]
+    },
+    "ControlContact_Distress": {
+      "unity": [
+        0.44,
+        0.81567,
+        0.00046
+      ],
+      "direction_unity": [
+        0.0,
+        0.907,
+        -0.4211
+      ]
+    },
+    "ControlContact_Volume": {
+      "unity": [
+        -0.265,
+        0.895,
+        0.0647
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "ControlContact_Squelch": {
+      "unity": [
+        -0.135,
+        0.895,
+        0.0647
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "ControlContact_Channel": {
+      "unity": [
+        -0.2,
+        1.005,
+        0.0627
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "LampEmitter": {
+      "unity": [
+        0.49081,
+        1.32313,
+        0.00633
+      ],
+      "direction_unity": [
+        -0.3828,
+        -0.9111,
+        -0.1531
+      ]
+    }
+  },
+  "triangles": {
+    "DeskBody": 9414,
+    "Handset": 632,
+    "HandsetCord": 10788,
+    "Seat": 1468,
+    "Indicator_PWR": 108,
+    "Indicator_TX": 108,
+    "LampLens": 112,
+    "ScreenSurface": 2
+  },
+  "triangles_total": 22632,
+  "materials": {
+    "DeskBody": [
+      "RD_DeskKit",
+      "RD_Labels"
+    ],
+    "Handset": [
+      "RD_DeskKit"
+    ],
+    "HandsetCord": [
+      "RD_DeskKit"
+    ],
+    "Seat": [
+      "RD_DeskKit"
+    ],
+    "Indicator_PWR": [
+      "RD_Amber"
+    ],
+    "Indicator_TX": [
+      "RD_Amber"
+    ],
+    "LampLens": [
+      "RD_LampWarm"
+    ],
+    "ScreenSurface": [
+      "RD_Screen"
+    ]
+  },
+  "blend_path_scrubbed": 2
+}

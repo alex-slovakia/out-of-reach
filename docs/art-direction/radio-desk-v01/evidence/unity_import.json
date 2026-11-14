@@ -1,0 +1,23 @@
+{
+  "anchors": {
+    "ControlContact_Channel": [-0.2, 1.005, 0.0627], 
+    "ControlContact_Distress": [0.44, 0.81567, 0.00046], 
+    "ControlContact_Lamp": [0.14, 0.83383, 0.00233], 
+    "ControlContact_Monitor": [0.02, 0.83383, 0.00233], 
+    "ControlContact_Power": [-0.22, 0.83383, 0.00233], 
+    "ControlContact_PTT": [0.3, 0.8082, 0.00503], 
+    "ControlContact_Squelch": [-0.135, 0.895, 0.0647], 
+    "ControlContact_Transmit": [-0.1, 0.83383, 0.00233], 
+    "ControlContact_Volume": [-0.265, 0.895, 0.0647], 
+    "HandsetGrip": [-0.52, 0.86, -0.04], 
+    "HandsetRest": [-0.52, 0.83, -0.04], 
+    "LampEmitter": [0.49081, 1.32313, 0.00633], 
+    "ScreenCenter": [0.2, 1.1, 0.12], 
+    "SeatedCamera": [0, 1.2, -0.7], 
+    "SeatEntry": [0, 0, -1]
+  },
+  "screen": {"size": [0.44, 0.26, 0], "centre": [0.2, 1.1, 0.12], "faces": [0, 0, -1], "vertices": [{"p": [0.42, 0.97, 0.12], "uv": [1, 0]}, {"p": [-0.02, 0.97, 0.12], "uv": [0, 0]}, {"p": [-0.02, 1.23, 0.12], "uv": [0, 1]}, {"p": [0.42, 1.23, 0.12], "uv": [1, 1]}]},
+  "meshes": 8, "triangles": 22592, "cameras": 0, "lights": 0,
+  "materials": ["RD_Amber", "RD_DeskKit", "RD_Labels", "RD_LampWarm", "RD_Screen"],
+  "problems": []
+}
