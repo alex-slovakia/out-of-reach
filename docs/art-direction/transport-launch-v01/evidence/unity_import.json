@@ -1,0 +1,24 @@
+{
+  "anchors": {
+    "BoardingThreshold": [0, 0, -2.5], 
+    "CargoBay_oxygen": [-0.985, 0.1, -1.025], 
+    "CargoBay_water": [-0.985, 0.1, -0.475], 
+    "CargoBay_food": [-0.985, 0.1, 0.075], 
+    "CargoBay_battery": [-0.985, 0.1, 0.625], 
+    "CargoBay_solar": [0.985, 0.1, -1.025], 
+    "CargoBay_spares": [0.985, 0.1, -0.475], 
+    "CargoBay_science": [0.985, 0.1, 0.075], 
+    "SeatEntry": [0, 0, 0.8], 
+    "SeatedCamera": [0, 1.16, 1.88], 
+    "HatchPivot": [-0.72, 0, -2.4], 
+    "HatchLatch": [0.58, 1.05, -2.33], 
+    "DockingPort": [0, 4.95, 0], 
+    "EngineEmitter": [0, -31.4, 0], 
+    "AccessArmPivot": [-0.9, 0, -6.9]
+  },
+  "Hatch_origin_to_pivot_m": 0,
+  "AccessArm_origin_to_pivot_m": 0,
+  "meshes": 10, "triangles": 23762, "cameras": 0, "lights": 0,
+  "materials": ["TL_DeckLamp", "TL_Exterior", "TL_Interior", "TL_Labels", "TL_LightPanel", "TL_Site", "TL_StatusGreen"],
+  "problems": []
+}
