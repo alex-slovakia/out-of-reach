@@ -28,6 +28,7 @@ Consolidated from Alex's playtest messages and accepted design requests. Updated
 | B21 | Reference HUD bars do not correspond to real quantities | Bind separate exertion, ship battery, food/hydration, cabin/suit oxygen states. Show only relevant bars; precise units remain available in systems detail. Never copy reference meter values. |
 | B22 | Terminal model looks generic and too smooth | Claude-assigned hardware revision: industrial proportions, recesses, seals, fasteners, tactile controls, mounting and plausible material variation, preserving integration anchors. Awaiting Claude ACK. |
 | B23 | Visible gap beside an interior wall/hatch; player fears falling outside | Priority P1 containment report. Inspect both hull mesh continuity and colliders; screenshot establishes visible gap, not yet a reproduced escape. Close the real seam and verify the player/camera cannot cross the pressure hull during cockpit-check phase. Independent read-only diagnosis assigned. |
+| B24 | Looking at a spot above the airlock timer fills the 3D view with cyan while HUD remains | Priority P1 rendering report. Inspect display/label surface dimensions, material/shader, backfaces and camera near-plane at that view. Screenshot is evidence of the symptom; cause is not yet reproduced. Fix before cosmetic additions. |
 
 ## Additions and accepted direction
 
