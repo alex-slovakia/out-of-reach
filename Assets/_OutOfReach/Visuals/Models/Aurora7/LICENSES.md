@@ -29,6 +29,10 @@ handrails, soft stowage bags, luminaires, hatch hardware, display-and-control la
 model, texture, drawing, photograph, logo or insignia is copied or included, and the vessel is fictional.
 The wording on labels and placards is our own.
 
+The concept boards in `docs/art-direction/review-01/` (generated images supplied by the integrator) were used
+as a visual target for form, colour and layout only. No pixel of them is used as a texture and nothing was
+traced from them; every mesh and texture here still comes from the scripts in `Source/`.
+
 ## If something third-party is added later
 
 Follow the pattern in `Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/PowerBox01/`: exact source URL, creator,

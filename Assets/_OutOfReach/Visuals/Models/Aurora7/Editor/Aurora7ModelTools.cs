@@ -354,15 +354,34 @@ namespace OutOfReach.ModelTools
             GameObject doors = Instantiate(Root + "/Meshes/A7_Doors.fbx", root.transform);
             doors.name = "DoorLeaves";
 
+            // Repair-bay parts the integrator may switch or animate, plus helper points (no components).
+            GameObject parts = Instantiate(Root + "/Meshes/A7_Parts.fbx", root.transform);
+            parts.name = "EngineeringParts";
+            Transform cover = parts.transform.Find("PowerCabinet_Cover");
+            if (cover == null)
+            {
+                throw new InvalidOperationException("A7_Parts.fbx has no PowerCabinet_Cover");
+            }
+
+            // The fitted cover is delivered switched off, so the breaker cabinet reads as open (review-01 R02).
+            cover.gameObject.SetActive(false);
+
             var props = new GameObject("Props");
             props.transform.SetParent(root.transform, false);
             string panelPath = Root + "/Props/ServicePanel/ServicePanel.prefab";
             if (AssetDatabase.LoadAssetAtPath<GameObject>(panelPath) != null)
             {
-                // EPS-2 service panel on the power rack: pivot 0.55 m up, front (+Z) into the room (+X).
+                // EPS-2 panel as the bus control panel on the wall plinth aft of the power rack:
+                // pivot 0.55 m up, back plane on the plinth, front (+Z) into the room (+X).
                 GameObject panel = Instantiate(panelPath, props.transform);
-                panel.name = "ServicePanel_PowerRepair";
-                panel.transform.SetPositionAndRotation(new Vector3(-1.63f, 0.55f, 6.1f), Quaternion.Euler(0f, 90f, 0f));
+                panel.name = "ServicePanel_EpsControl";
+                panel.transform.SetPositionAndRotation(new Vector3(-2.256f, 0.55f, 7.36f), Quaternion.Euler(0f, 90f, 0f));
+                Transform panelCollider = panel.transform.Find("CollisionProxy");
+                if (panelCollider != null)
+                {
+                    // Walkable space stays exactly the V01 envelope: only the COL_* proxies collide.
+                    panelCollider.gameObject.SetActive(false);
+                }
             }
 
             var collision = new GameObject("CollisionProxies");
@@ -476,7 +495,12 @@ namespace OutOfReach.ModelTools
             CheckProxy(instance, "COL_Engineering_PowerRack", new Vector3(-2.02f, 1.15f, 6.1f), problems);
             CheckProxy(instance, "COL_Engineering_Tank1", new Vector3(1.99f, 1.1f, 4.85f), problems);
             CheckProxy(instance, "COL_Cockpit_ForwardBulkhead", new Vector3(0f, 1.55f, -3.05f), problems);
+            // Part pivots and helper points must survive the export: checked against the generator's numbers.
+            CheckProxy(instance, "PowerCabinet_IsolatorHandle", new Vector3(-1.83f, 0.8036f, 5.85f), problems);
+            CheckProxy(instance, "ScrubberCanister_A", new Vector3(1.855f, 0.8f, 8.24f), problems);
+            CheckProxy(instance, "LightAnchor_PowerCabinetWork", new Vector3(-1.758f, 1.72f, 6.35f), problems);
             int colliders = instance.GetComponentsInChildren<Collider>(true).Length;
+            int activeColliders = instance.GetComponentsInChildren<Collider>(false).Length;
             if (instance.GetComponentsInChildren<Camera>(true).Length + instance.GetComponentsInChildren<AudioListener>(true).Length +
                 instance.GetComponentsInChildren<Light>(true).Length + instance.GetComponentsInChildren<MonoBehaviour>(true).Length > 0)
             {
@@ -488,13 +512,14 @@ namespace OutOfReach.ModelTools
             text.Append(",\n \"materials\": ").Append(materials.Count);
             text.Append(",\n \"textures\": ").Append(textures.Count);
             text.Append(",\n \"colliders\": ").Append(colliders);
+            text.Append(",\n \"colliders_active\": ").Append(activeColliders);
             text.Append(",\n \"bounds_min\": ").Append(Vec(overall.min)).Append(",\n \"bounds_max\": ").Append(Vec(overall.max));
             text.Append(",\n \"problems\": [").Append(string.Join(", ", problems.Select(p => "\"" + p.Replace("\"", "'") + "\""))).Append("]\n}\n");
             File.WriteAllText(Root + "/Meshes/a7_unity_import_report.json", text.ToString());
             UnityEngine.Object.DestroyImmediate(instance);
             AssetDatabase.ImportAsset(Root + "/Meshes/a7_unity_import_report.json");
             Debug.Log("[A7] import report: " + total + " triangles, " + materials.Count + " materials, " + textures.Count + " textures, " +
-                      colliders + " colliders, problems: " + problems.Count);
+                      colliders + " colliders (" + activeColliders + " active), problems: " + problems.Count);
             if (problems.Count > 0)
             {
                 throw new InvalidOperationException("[A7] validation failed: " + string.Join("; ", problems));
@@ -538,8 +563,10 @@ namespace OutOfReach.ModelTools
             ("cockpit_from_spawn", new Vector3(0f, 1.65f, 0.8f), new Vector3(0f, 1.55f, -3f), 78f),
             ("cockpit_three_quarter", new Vector3(2.2f, 1.95f, 2.3f), new Vector3(-0.6f, 1.15f, -2.2f), 70f),
             ("engineering_corridor", new Vector3(0.25f, 1.65f, 3.6f), new Vector3(0f, 1.35f, 11f), 76f),
-            ("engineering_power", new Vector3(0.55f, 1.5f, 7.5f), new Vector3(-2.1f, 1.2f, 6f), 62f),
-            ("engineering_eclss", new Vector3(-0.55f, 1.5f, 6.7f), new Vector3(2.1f, 1.2f, 8.2f), 62f),
+            // review-01 R02 framing at 1.65 m eye height; 90 degrees horizontal is close to a 60 degree vertical game camera
+            ("engineering_r02", new Vector3(0.6f, 1.65f, 3.4f), new Vector3(-0.9f, 1.3f, 11f), 90f),
+            ("engineering_power", new Vector3(-0.25f, 1.55f, 6.75f), new Vector3(-2f, 1.2f, 6.05f), 72f),
+            ("engineering_eclss", new Vector3(0.25f, 1.55f, 7.5f), new Vector3(2f, 1.2f, 8.15f), 72f),
             ("storage", new Vector3(0f, 1.65f, 11.5f), new Vector3(0f, 1.3f, 17f), 76f),
             ("airlock", new Vector3(0.2f, 1.65f, 17.35f), new Vector3(-0.2f, 1.3f, 21f), 80f),
             ("exterior_finale", new Vector3(9f, 5f, 27f), new Vector3(0.5f, 1.6f, 12f), 58f),
@@ -554,11 +581,11 @@ namespace OutOfReach.ModelTools
             ShaderUtil.allowAsyncCompilation = false;
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-            PrefabUtility.InstantiatePrefab(prefab);
+            var shipInstance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
 
             RenderSettings.skybox = null;
             RenderSettings.ambientMode = AmbientMode.Flat;
-            RenderSettings.ambientLight = new Color(0.16f, 0.17f, 0.19f);
+            RenderSettings.ambientLight = new Color(0.085f, 0.078f, 0.07f);
             RenderSettings.fog = false;
             RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
             RenderSettings.customReflectionTexture = RoomReflection();
@@ -570,14 +597,27 @@ namespace OutOfReach.ModelTools
                 var light = new GameObject("PreviewLight " + z.ToString("0.0", CultureInfo.InvariantCulture)).AddComponent<Light>();
                 light.type = LightType.Spot;
                 light.transform.SetPositionAndRotation(new Vector3(0f, 2.93f, z), Quaternion.Euler(90f, 0f, 0f));
-                light.color = new Color(1f, 0.965f, 0.9f);
-                light.intensity = 13f;
+                light.color = new Color(1f, 0.92f, 0.81f);
+                light.intensity = 10f;
                 light.range = 7.5f;
                 light.spotAngle = 150f;
                 light.innerSpotAngle = 110f;
                 light.shadows = index % 2 == 0 ? LightShadows.Soft : LightShadows.None;
                 light.shadowStrength = 0.75f;
                 index++;
+            }
+
+            // Preview stand-in for the amber work light in the breaker cabinet (the prefab carries only the anchor).
+            foreach (Transform anchor in shipInstance.GetComponentsInChildren<Transform>(true)
+                         .Where(t => t.name == "LightAnchor_PowerCabinetWork"))
+            {
+                var work = new GameObject("Preview " + anchor.name).AddComponent<Light>();
+                work.type = LightType.Point;
+                work.transform.position = anchor.position;
+                work.color = new Color(1f, 0.58f, 0.2f);
+                work.intensity = 0.8f;
+                work.range = 1.2f;
+                work.shadows = LightShadows.Soft;
             }
 
             // Hard sunlight is switched on for the exterior views only.
@@ -602,7 +642,7 @@ namespace OutOfReach.ModelTools
             var colour = profile.Add<ColorAdjustments>(true);
             colour.postExposure.Override(0.35f);
             colour.contrast.Override(10f);
-            colour.saturation.Override(-6f);
+            colour.saturation.Override(-10f);
             var vignette = profile.Add<Vignette>(true);
             vignette.intensity.Override(0.2f);
             vignette.smoothness.Override(0.5f);
@@ -651,7 +691,7 @@ namespace OutOfReach.ModelTools
             AssetDatabase.Refresh();
         }
 
-        /// <summary>Soft grey box so metals reflect a bright room instead of a black sky. Preview only.</summary>
+        /// <summary>Soft warm box so metals reflect a lit room instead of a black sky. Preview only.</summary>
         private static Cubemap RoomReflection()
         {
             const int size = 32;
@@ -678,7 +718,8 @@ namespace OutOfReach.ModelTools
                             value = Mathf.Lerp(0.95f, 0.28f, y / (float)(size - 1));
                         }
 
-                        pixels[y * size + x] = new Color(value, value * 0.985f, value * 0.95f, 1f);
+                        value *= 0.6f;
+                        pixels[y * size + x] = new Color(value, value * 0.95f, value * 0.88f, 1f);
                     }
                 }
 

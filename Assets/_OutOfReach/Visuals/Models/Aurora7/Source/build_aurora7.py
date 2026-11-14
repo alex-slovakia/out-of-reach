@@ -1,10 +1,11 @@
 """
 OUT OF REACH - AURORA-7 model build (Blender 5.3 entry point). Original work, generated from code.
 
-    blender -b --factory-startup --python build_aurora7.py -- [--work DIR] [--render] [--views a,b] [--samples N]
+    blender -b --factory-startup --python build_aurora7.py -- [--work DIR] [--render] [--views a,b] [--samples N] [--no-export] [--hide a,b]
 
 Reads   ../Textures/a7_decals.json, a7_screens.json and a7_materials.json (run a7_textures.py first)
-Writes  ../Meshes/A7_<Module>.fbx          Unity-ready meshes (metres, Y up after import, normals included)
+Writes  ../Meshes/A7_<Module>.fbx          Unity-ready static meshes (metres, Y up after import, normals included)
+        ../Meshes/A7_<Group>.fbx           separately addressable objects with their own pivots (Doors, Parts) and helper points
         ../Meshes/a7_model_report.json     triangle / material counts and bounds, in Unity coordinates
         <work>/Aurora7.blend and <work>/renders/*.png   (outside the Unity project; --render only)
 
@@ -43,8 +44,10 @@ TEXTURES = os.path.normpath(os.path.join(HERE, "..", "Textures"))
 MESHES = os.path.normpath(os.path.join(HERE, "..", "Meshes"))
 WORK = os.path.abspath(arg("--work", os.path.join(HERE, "..", "..", "..", "..", "..", "..", ".local", "aurora7-work")))
 RENDER = bool(arg("--render", False))
+EXPORT = not bool(arg("--no-export", False))   # --no-export renders stills without rewriting the FBX files
 SAMPLES = int(arg("--samples", 96))
 VIEWS = arg("--views", None)
+HIDE = arg("--hide", "PowerCabinet_Cover")   # objects left out of the stills; the prefab keeps the cover inactive too
 
 
 def log(*parts):
@@ -210,13 +213,15 @@ def make_collision(boxes, material, collection):
 
 
 def export_fbx(objects, path):
+    if not EXPORT:
+        return
     bpy.ops.object.select_all(action="DESELECT")
     for obj in objects:
         obj.hide_set(False)
         obj.select_set(True)
     bpy.context.view_layer.objects.active = objects[0]
     bpy.ops.export_scene.fbx(
-        filepath=path, use_selection=True, object_types={"MESH"}, use_mesh_modifiers=True,
+        filepath=path, use_selection=True, object_types={"MESH", "EMPTY"}, use_mesh_modifiers=True,
         mesh_smooth_type="OFF", apply_unit_scale=True, apply_scale_options="FBX_SCALE_ALL",
         bake_space_transform=True, axis_forward="-Z", axis_up="Y", add_leaf_bones=False, bake_anim=False,
         path_mode="AUTO", embed_textures=False, use_tspace=False)
@@ -228,8 +233,9 @@ CAMERAS = {
     "cockpit_three_quarter": ((2.2, 1.95, 2.3), (-0.6, 1.15, -2.2), 70),
     "cockpit_console": ((0.0, 1.45, -0.75), (0.0, 1.25, -2.4), 74),
     "engineering_corridor": ((0.25, 1.65, 3.6), (0.0, 1.35, 11.0), 76),
-    "engineering_power": ((0.55, 1.5, 7.5), (-2.1, 1.2, 6.0), 62),
-    "engineering_eclss": ((-0.55, 1.5, 6.7), (2.1, 1.2, 8.2), 62),
+    "engineering_r02": ((0.6, 1.65, 3.4), (-0.9, 1.30, 11.0), 90),   # review-01 R02 framing at 1.65 m eye height
+    "engineering_power": ((-0.25, 1.55, 6.75), (-2.0, 1.2, 6.05), 72),
+    "engineering_eclss": ((0.25, 1.55, 7.5), (2.0, 1.2, 8.15), 72),
     "storage": ((0.0, 1.65, 11.5), (0.0, 1.3, 17.0), 76),
     "airlock": ((0.2, 1.65, 17.35), (-0.2, 1.3, 21.0), 80),
     "exterior_finale": ((9.0, 5.0, 27.0), (0.5, 1.6, 12.0), 58),
@@ -286,10 +292,19 @@ def setup_render(scene):
             data.shape = "RECTANGLE"
             data.size = 1.1
             data.size_y = 0.28
-            data.energy = 95.0
-            data.color = (1.0, 0.965, 0.90)
+            data.energy = 70.0
+            data.color = (1.0, 0.92, 0.81)
             light = bpy.data.objects.new("A7_PreviewLight_%s_%.1f" % (name, z), data)
             light.location = to_blender_point((0.0, a7_ship.CEILING - 0.135, z))
+            scene.collection.objects.link(light)
+    for name, point in a7_ship.ANCHORS.items():
+        if name == "LightAnchor_PowerCabinetWork":
+            data = bpy.data.lights.new("A7_PreviewWorkLight", "POINT")
+            data.energy = 9.0
+            data.color = (1.0, 0.55, 0.16)
+            data.shadow_soft_size = 0.05
+            light = bpy.data.objects.new("A7_Preview_" + name, data)
+            light.location = to_blender_point(point)
             scene.collection.objects.link(light)
     # hard sunlight for the exterior views; inside, the hull and bulkheads block it
     sun_data = bpy.data.lights.new("A7_PreviewSun", "SUN")
@@ -344,20 +359,34 @@ def main():
 
     os.makedirs(MESHES, exist_ok=True)
     report = {"blender": bpy.app.version_string, "units": "metres, Unity axes (x right, y up, z forward)", "modules": {}}
-    doors = []
+    # Static modules get one FBX each. Movable or switchable objects keep their own origin and are
+    # exported together per group (Doors, Parts), so the integrator can address them separately.
+    groups = {}
     for name, model in models.items():
         collection = bpy.data.collections.new("A7_" + name)
         scene.collection.children.link(collection)
         origin = getattr(model, "origin", (0.0, 0.0, 0.0))
-        obj, info = make_object("A7_" + name if not name.startswith("DoorLeaf") else name, model, materials, collection, origin)
+        group = getattr(model, "group", None)
+        obj, info = make_object(name if group else "A7_" + name, model, materials, collection, origin)
         report["modules"][name] = info
         log(name, info["triangles"], "triangles,", len(info["per_material"]), "materials")
-        if name.startswith("DoorLeaf"):
-            doors.append(obj)
+        if group:
+            info["group"] = group
+            groups.setdefault(group, []).append(obj)
         else:
             export_fbx([obj], os.path.join(MESHES, "A7_%s.fbx" % name))
-    if doors:
-        export_fbx(doors, os.path.join(MESHES, "A7_Doors.fbx"))
+    if a7_ship.ANCHORS:
+        collection = bpy.data.collections.new("A7_Anchors")
+        scene.collection.children.link(collection)
+        for name, point in sorted(a7_ship.ANCHORS.items()):
+            empty = bpy.data.objects.new(name, None)
+            empty.empty_display_size = 0.1
+            empty.location = to_blender_point(point)
+            collection.objects.link(empty)
+            groups.setdefault("Parts", []).append(empty)
+        report["anchors"] = {name: [round(float(c), 4) for c in point] for name, point in sorted(a7_ship.ANCHORS.items())}
+    for group, objects in groups.items():
+        export_fbx(objects, os.path.join(MESHES, "A7_%s.fbx" % group))
     collection = bpy.data.collections.new("A7_Collision")
     scene.collection.children.link(collection)
     collision_objects = make_collision(proxies, materials["A7_Collision"], collection)
@@ -368,12 +397,17 @@ def main():
     report["collision_proxies"] = [{"name": n, "centre": list(c), "size": list(s)} for n, c, s in proxies]
     report["triangles_total"] = sum(info["triangles"] for info in report["modules"].values())
     report["materials_used"] = used
-    with open(os.path.join(MESHES, "a7_model_report.json"), "w", encoding="utf-8") as handle:
-        json.dump(report, handle, indent=1)
+    if EXPORT:
+        with open(os.path.join(MESHES, "a7_model_report.json"), "w", encoding="utf-8") as handle:
+            json.dump(report, handle, indent=1)
     log("exported", len(models), "modules,", report["triangles_total"], "triangles,", len(proxies), "collision proxies")
 
     if RENDER:
         os.makedirs(WORK, exist_ok=True)
+        for name in (HIDE.split(",") if isinstance(HIDE, str) else []):
+            if name in bpy.data.objects:
+                bpy.data.objects[name].hide_render = True
+                log("left out of the stills:", name)
         device = setup_render(scene)
         log("render device", device)
         render_views(scene, os.path.join(WORK, "renders"))

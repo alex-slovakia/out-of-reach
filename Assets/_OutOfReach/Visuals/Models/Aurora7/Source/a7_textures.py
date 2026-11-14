@@ -258,6 +258,24 @@ def gen_deck(n=1024):
     save_set("A7_Deck", gray(tone), height, 0.0, 0.85 + 0.15 * grit, smooth, 3.2)
 
 
+def gen_grate(n=1024):
+    """Perforated anti-slip deck plate: rounded-square holes on a 15.6 mm pitch (one tile is 0.25 m)."""
+    rng = np.random.default_rng(23)
+    u, v = uv_grid(n)
+    cells = 16
+    fx = (u * cells) % 1.0 - 0.5
+    fy = (v * cells) % 1.0 - 0.5
+    distance = (np.abs(fx) ** 4 + np.abs(fy) ** 4) ** 0.25
+    bar = 1.0 - np.clip((0.33 - distance) / 0.045, 0.0, 1.0)
+    rim = np.clip(1.0 - np.abs(distance - 0.365) / 0.035, 0.0, 1.0) * bar
+    wear = fbm(n, 6, 4, rng)
+    grit = fbm(n, 200, 2, rng)
+    height = bar * (0.82 + 0.18 * grit)
+    tone = 0.03 + bar * (0.36 + 0.12 * (wear - 0.5) + 0.05 * (grit - 0.5)) + 0.12 * rim * np.clip(wear + 0.15, 0, 1)
+    smooth = bar * (0.36 + 0.20 * np.clip(wear - 0.4, 0, 1) + 0.14 * rim)
+    save_set("A7_Grate", gray(tone), height, bar * 0.7, 0.2 + 0.8 * bar, smooth, 6.0)
+
+
 def gen_rubber(n=512):
     rng = np.random.default_rng(17)
     grain = fbm(n, 96, 3, rng)
@@ -588,9 +606,91 @@ def switch_legend(labels):
     return paint
 
 
+def stencil_lines(lines, fill=(58, 60, 63, 255), weight="Bold"):
+    """Left-aligned stencilled lines in one size, as painted on a rack fascia."""
+    def paint(tile, draw, w, h):
+        row = h / len(lines)
+        size = min(fit_text(draw, text, w * 0.98, row * 0.72, weight)[0].size for text in lines)
+        f = font(size, weight)
+        for index, text in enumerate(lines):
+            box = draw.textbbox((0, 0), text, font=f)
+            draw.text((w * 0.01 - box[0], row * index + (row - (box[3] - box[1])) / 2 - box[1]), text, font=f, fill=fill)
+    return paint
+
+
+def breaker_tags(codes, ratings):
+    """One strip for a row of breakers: a yellow rating tag and a white circuit number per module."""
+    def paint(tile, draw, w, h):
+        cell = w / len(codes)
+        for index, (code, rating) in enumerate(zip(codes, ratings)):
+            x = cell * index
+            draw.rounded_rectangle((x + cell * 0.12, h * 0.03, x + cell * 0.88, h * 0.50), radius=max(2, int(h * 0.06)), fill=YELLOW)
+            f, box = fit_text(draw, rating, cell * 0.62, h * 0.34, "Bold")
+            draw.text((x + (cell - (box[2] - box[0])) / 2 - box[0], h * 0.265 - (box[3] - box[1]) / 2 - box[1]), rating, font=f, fill=INK)
+            draw.rectangle((x + cell * 0.12, h * 0.60, x + cell * 0.88, h * 0.97), fill=WHITE)
+            f, box = fit_text(draw, code, cell * 0.66, h * 0.25, "SemiBold")
+            draw.text((x + (cell - (box[2] - box[0])) / 2 - box[0], h * 0.785 - (box[3] - box[1]) / 2 - box[1]), code, font=f, fill=INK)
+    return paint
+
+
+def isolator_face():
+    """Position marks around a rotary isolator handle: O (off) at nine o'clock, I (on) at twelve."""
+    def paint(tile, draw, w, h):
+        cx, cy = w / 2, h * 0.46
+        radius = w * 0.37
+        line = max(2, int(w * 0.014))
+        draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), outline=INK, width=line)
+        for text, (px, py) in (("O", (0.075, 0.46)), ("I", (0.5, 0.045))):
+            f, box = fit_text(draw, text, w * 0.12, h * 0.11, "Black")
+            draw.text((w * px - (box[2] - box[0]) / 2 - box[0], h * py - (box[3] - box[1]) / 2 - box[1]), text, font=f, fill=INK)
+        for text, px in (("OFF", 0.13), ("ON", 0.87)):
+            f, box = fit_text(draw, text, w * 0.22, h * 0.065, "Bold")
+            draw.text((w * px - (box[2] - box[0]) / 2 - box[0], h * 0.07 - (box[3] - box[1]) / 2 - box[1]), text, font=f, fill=INK)
+        f, box = fit_text(draw, "MAIN ISOLATOR", w * 0.92, h * 0.075, "Bold")
+        draw.text(((w - (box[2] - box[0])) / 2 - box[0], h * 0.945 - (box[3] - box[1]) / 2 - box[1]), "MAIN ISOLATOR", font=f, fill=INK)
+    return paint
+
+
+def canister_label(bed, serial):
+    """Wrap-around label of a replaceable sorbent canister."""
+    def paint(tile, draw, w, h):
+        draw.rounded_rectangle((0, 0, w - 1, h - 1), radius=int(w * 0.04), fill=WHITE)
+        band = int(h * 0.20)
+        draw.rounded_rectangle((0, 0, w - 1, band), radius=int(w * 0.04), fill=YELLOW)
+        draw.rectangle((0, band // 2, w - 1, band), fill=YELLOW)
+        f, box = fit_text(draw, "CO2 SORBENT", w * 0.86, band * 0.52, "Bold")
+        draw.text(((w - (box[2] - box[0])) / 2 - box[0], (band - (box[3] - box[1])) / 2 - box[1]), "CO2 SORBENT", font=f, fill=INK)
+        f, box = fit_text(draw, "BED " + bed, w * 0.70, h * 0.13, "Black")
+        draw.text((w * 0.08 - box[0], h * 0.25 - box[1]), "BED " + bed, font=f, fill=INK)
+        size = max(7, int(h * 0.048))
+        for index, line in enumerate(("LiOH CARTRIDGE  2.4 kg", "P/N 7A-2210-04", "S/N " + serial, "REPLACE AT 0.7 kPa ppCO2",
+                                      "CLOSE VALVE V-3 FIRST")):
+            draw.text((w * 0.08, h * (0.43 + 0.075 * index)), line, font=font(size, "Medium"), fill=INK)
+        x = w * 0.08
+        code_rng = np.random.default_rng(zlib.crc32(serial.encode("ascii")))
+        while x < w * 0.92:
+            bar = max(1, int(code_rng.integers(1, 4) * w * 0.006))
+            draw.rectangle((x, h * 0.84, x + bar, h * 0.95), fill=INK)
+            x += bar + max(1, int(code_rng.integers(1, 4) * w * 0.006))
+        draw.rounded_rectangle((1, 1, w - 2, h - 2), radius=int(w * 0.04), outline=INK, width=2)
+    return paint
+
+
 def build_decals():
     atlas = Atlas(4096, PPM)
     add = atlas.add
+
+    # Service rack fascias and the hardware inside the two repair bays (assets A02 and A03)
+    add("fascia_power", 0.62, 0.20, stencil_lines(["POWER", "DISTRIBUTION"]))
+    add("fascia_scrubber", 0.62, 0.20, stencil_lines(["LIFE-SUPPORT", "SCRUBBER"]))
+    add("brk_main", 0.10, 0.034, breaker_tags(["MAIN  Q1"], ["63 A"]))
+    add("brk_row_a", 0.40, 0.034, breaker_tags(["CB-%02d" % i for i in range(1, 9)],
+                                                ["C16", "C16", "C10", "C10", "C10", "B6", "B6", "C20"]))
+    add("brk_row_b", 0.45, 0.034, breaker_tags(["CB-%02d" % i for i in range(9, 18)],
+                                                ["C10", "C10", "B6", "B6", "C16", "C16", "B10", "B10", "C6"]))
+    add("isolator_face", 0.19, 0.19, isolator_face())
+    for bed, serial in (("A", "0417"), ("B", "0418"), ("C", "0422")):
+        add("can_label_" + bed.lower(), 0.115, 0.16, canister_label(bed, serial))
 
     # Compartment and portal signage
     for key, number, name in (("sign_flightdeck", "01", "FLIGHT DECK"), ("sign_engineering", "02", "ENGINEERING"),
@@ -858,6 +958,7 @@ def main():
         gen_fabric()
         gen_quilt()
         gen_deck()
+        gen_grate()
         gen_rubber()
         gen_carbon()
         gen_mli()
