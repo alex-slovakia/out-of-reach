@@ -174,9 +174,14 @@ with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRi
 in `Interaction Targets`. The runtime opens and closes the gates every frame and clips the player to the route
 exactly while the mission says the crew is outside.
 
-On the route the player has no gravity and no free flight: movement follows the view direction, is clamped to
-0.5 m around the waypoint line and cannot pass either end (tether length = line length, 1 m/s). These limits are
-serialized on `TetheredRoute`.
+On the route the player has no gravity and no free flight. **Traversal (fixed after desktop play, 2026-11-14):** the
+feet stay exactly on the waypoint line and move by distance along it, so nothing can jump between segments.
+W moves along the tether towards the end the player roughly faces (body heading only; looking up or down never
+moves the player), S moves the other way, A and D do nothing. Vertical stretches need no looking down. Inside a
+dead band (looking sideways, or along a vertical stretch) W keeps leading the way it led last. Both ends stop the
+player (tether length = line length, 1 m/s, serialized on `TetheredRoute`). `FirstPersonController` exposes
+`RouteDistanceMetres`, `RouteDirection`, `IsAtRouteStart` and `IsAtRouteEnd` for presentation. The last waypoint
+must stay within 2 m of `AntennaRepair` so the repair is reachable from the end of the tether.
 
 ### EVA HUD data (`IEvaStatus`)
 
@@ -482,6 +487,14 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
    needs waypoint transforms along the hull from `EvaStart` to the antenna (V03).
 8. **Citations.** The BVAD references and the communication assumptions above should be added to `NASA-DATA.md`
    by the integrator; its "runtime integration pending" status can now be updated.
+
+## EVA traversal fix (2026-11-14, Unity 6000.3.28f1 batch mode)
+
+- **EditMode 253 / 253, PlayMode 25 / 25.** New: 3 route-geometry tests (point at a distance, continuity and
+  round trip, heading with the vertical fallback) and 5 PlayMode tests with a free-looking player: look-only
+  and sideways input never move, W while looking straight down or up stays level and on the line round a corner,
+  facing back returns, sideways keeps the sense, S reverses, a descending tether with a level view, clean stops
+  at both ends, pause. Every frame is checked to stay on the line and move at most one frame's route speed.
 
 ## Evidence (C05-B, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 

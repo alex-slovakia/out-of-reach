@@ -48,6 +48,8 @@ namespace OutOfReach.Player
         private IPlayerInputSource inputSource;
         private float verticalVelocity;
         private float speedMultiplier = 1f;
+        private float routeDistance;
+        private int routeDirection = 1;
         private bool cursorApplied;
         private bool cursorCaptured;
 
@@ -90,6 +92,30 @@ namespace OutOfReach.Player
         /// <summary>The constrained route the player is clipped to, or null while walking.</summary>
         public TetheredRoute ActiveRoute { get; private set; }
 
+        /// <summary>Forward or back input below this is ignored on the route, so a resting stick never creeps.</summary>
+        public const float RouteInputDeadZone = 0.1f;
+
+        /// <summary>
+        /// How clearly the player must face along the route (cosine) before W changes its sense. Inside this band,
+        /// for example when looking sideways or along a vertical stretch, W keeps leading the way it led last.
+        /// </summary>
+        public const float RouteHeadingDeadBand = 0.35f;
+
+        /// <summary>Within this distance, metres, of an end the player counts as at that end.</summary>
+        public const float RouteEndToleranceMetres = 0.01f;
+
+        /// <summary>Distance of the feet from the route start along the tether, metres; 0 while walking.</summary>
+        public float RouteDistanceMetres => ActiveRoute != null ? routeDistance : 0f;
+
+        /// <summary>+1 while W leads away from the hatch towards the work site, -1 while it leads back.</summary>
+        public int RouteDirection => routeDirection;
+
+        /// <summary>True on a route at its start, by the outer hatch.</summary>
+        public bool IsAtRouteStart => ActiveRoute != null && routeDistance <= RouteEndToleranceMetres;
+
+        /// <summary>True on a route at its end, the work site.</summary>
+        public bool IsAtRouteEnd => ActiveRoute != null && routeDistance >= ActiveRoute.LengthMetres - RouteEndToleranceMetres;
+
         public bool IsOnRoute => ActiveRoute != null;
 
         /// <summary>Result of the most recent interact press, or null.</summary>
@@ -122,8 +148,10 @@ namespace OutOfReach.Player
         }
 
         /// <summary>
-        /// Clips the player to a constrained route: the feet move to its start, gravity and collisions are off and
-        /// movement is clamped to the route corridor until <see cref="ExitRoute"/> or <see cref="Teleport"/>.
+        /// Clips the player to a constrained route: the feet move to its start, gravity and collisions are off, and
+        /// until <see cref="ExitRoute"/> or <see cref="Teleport"/> the feet stay on the route line. W and S move along
+        /// it towards the end the player roughly faces (heading only; looking up or down never moves the player),
+        /// A and D do nothing, and both ends stop the player.
         /// </summary>
         public void EnterRoute(TetheredRoute route)
         {
@@ -135,6 +163,8 @@ namespace OutOfReach.Player
             Body.enabled = false;
             ActiveRoute = route;
             verticalVelocity = 0f;
+            routeDistance = 0f;
+            routeDirection = 1;
             transform.position = route.StartPosition;
         }
 
@@ -284,6 +314,12 @@ namespace OutOfReach.Player
             controller.Move((horizontal + (Vector3.up * verticalVelocity)) * deltaSeconds);
         }
 
+        /// <summary>
+        /// Moves the feet by distance along the route line, so the position is always on the line and can never
+        /// jump between segments. The sense of W comes from the body heading compared with the route's heading
+        /// (pitch is ignored); inside the dead band the previous sense is kept, so looking sideways or along a
+        /// vertical stretch never reverses the player. S always moves the other way.
+        /// </summary>
         private void MoveAlongRoute(Vector2 move, float deltaSeconds)
         {
             if (deltaSeconds <= 0f)
@@ -291,11 +327,32 @@ namespace OutOfReach.Player
                 return;
             }
 
-            // Pull along the tether in the direction of view (including up or down), then clamp to the corridor.
-            Vector2 intent = Vector2.ClampMagnitude(move, 1f);
-            Vector3 forward = viewPivot != null ? viewPivot.forward : transform.forward;
-            Vector3 wish = ((transform.right * intent.x) + (forward * intent.y)) * (ActiveRoute.SpeedMetresPerSecond * deltaSeconds);
-            transform.position = ActiveRoute.Constrain(transform.position + wish);
+            float along = Mathf.Clamp(move.y, -1f, 1f);
+            if (Mathf.Abs(along) < RouteInputDeadZone)
+            {
+                return;
+            }
+
+            Vector3 heading = ActiveRoute.HeadingAt(routeDistance);
+            Vector3 facing = transform.forward;
+            facing.y = 0f;
+            if (heading.sqrMagnitude > 0f && facing.sqrMagnitude > 1e-6f)
+            {
+                float alignment = Vector3.Dot(facing.normalized, heading);
+                if (alignment > RouteHeadingDeadBand)
+                {
+                    routeDirection = 1;
+                }
+                else if (alignment < -RouteHeadingDeadBand)
+                {
+                    routeDirection = -1;
+                }
+            }
+
+            float length = ActiveRoute.LengthMetres;
+            float step = routeDirection * along * ActiveRoute.SpeedMetresPerSecond * deltaSeconds;
+            routeDistance = Mathf.Clamp(routeDistance + step, 0f, length);
+            transform.position = ActiveRoute.PointAt(routeDistance);
         }
 
         private void ApplyCursor(bool capture)
