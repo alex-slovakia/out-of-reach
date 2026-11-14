@@ -175,7 +175,10 @@ namespace OutOfReach.Composition
             if (flightBoard) flightBoard.SetMenuOverlayVisible(showingMode || paused);
             composition.SetMenuPresentationVisible(visible);
             modal.EnableInClassList("reduced-motion", composition.Cinematics && composition.Cinematics.ReducedEffects);
-            modal.style.display = visible && !showRecord ? DisplayStyle.Flex : DisplayStyle.None;
+            bool menuShown = visible && !showRecord;
+            modal.style.display = menuShown ? DisplayStyle.Flex : DisplayStyle.None;
+            // A hidden menu keeps no keyboard/gamepad focus, so play input (gamepad South is Interact) cannot reach it.
+            if (!menuShown) BlurFocusWithin(modal);
             controlsHint.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
             if (paused && !showingOutcome)
             {
@@ -339,7 +342,26 @@ namespace OutOfReach.Composition
 
         private void OnReducedChanged(ChangeEvent<bool> change)
         {
+            // A stray submit into a closed menu flips the toggle: put the shown value back and change nothing.
+            // Programmatic SetValueWithoutNotify (Refresh) sends no change event and is never affected.
+            if (reduced != null && !IsShown(reduced))
+            {
+                reduced.SetValueWithoutNotify(change.previousValue);
+                return;
+            }
+
             if (composition) composition.SetReducedEffects(change.newValue);
+        }
+
+        /// <summary>
+        /// Clears keyboard/gamepad focus held by <paramref name="container"/> or anything inside it; focus elsewhere
+        /// is left alone. Refresh calls it for the session menu whenever that menu is hidden.
+        /// </summary>
+        public static void BlurFocusWithin(VisualElement container)
+        {
+            if (container?.focusController?.focusedElement is VisualElement focused
+                && (focused == container || container.Contains(focused)))
+                focused.Blur();
         }
 
         /// <summary>

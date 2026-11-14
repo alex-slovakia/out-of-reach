@@ -413,7 +413,10 @@ until handoff). No scene, UI file, Core or Contracts change.
   it for native checks and tests (null restores the real one); `IsQuitArmed` and `QuitRequested` expose the state.
   UI Toolkit still delivers submit (Enter, gamepad South) to a focused button inside a hidden menu, so a press on a
   hidden quit button neither arms nor quits; the two existing menu actions got the same guard, so a stray Enter in
-  play can no longer resume, start or restart through a closed menu.
+  play can no longer resume, start or restart through a closed menu. Follow-up (root GO 6885646676): Refresh blurs
+  any focus held inside the menu when it hides it (`BlurFocusWithin`), and the reduced-effects toggle puts its
+  shown value back when a change arrives while its menu is hidden (`SetValueWithoutNotify` from Refresh sends no
+  change event and is unaffected).
 - Pause help (root 6885223398), only in the existing Paused hint, chosen by `ControlsHintFor(floating, onRoute,
   suited)` from the actual player: walking "WASD move · Shift sprint"; tether route "W/S move along the tether";
   floating: click a surface in reach to push off, WASD only aims a push, Space foot push only on support, and for a
