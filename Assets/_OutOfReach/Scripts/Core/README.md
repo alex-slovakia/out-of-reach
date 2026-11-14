@@ -379,6 +379,23 @@ effective with the next session). Only with Preflight Walk and timed planning; w
 - Pause changes nothing in the window. A restart builds a fresh, unsealed session with the same switch.
 - No Contracts change: presentation reads `MissionRuntime.AwaitingBoarding` (or `Session.PlanningDeadline`).
 
+## REPAIR-PRESENTATION-GATE-01: visible timed work for one interaction (opt-in, off by default)
+
+`OutOfReach.Interaction.TimedInteractionGate` wraps ONE real interactable (intended: the antenna repair) so that E
+starts visible work and the real command runs once at the end. Nothing else changes: interactables that are not
+wrapped stay instant, and Core repair/resource authority is untouched (no Contracts change).
+
+- Wrap after the session's own binding: `antennaTarget.Bind(new TimedInteractionGate(real, 3.0, stillValid, paused))`.
+  `stillValid` is your policy (current session, focus on the work site, control); `paused` freezes the time.
+- E (`TryInteract`): idle and available -> success `Work started: 3.0 s` (nothing spent, no domain call, no
+  `SystemConditionChanged`); unavailable -> the real refusal text, nothing called; working -> refused
+  `Work already in progress`. `Prompt` reads `Working: 40%` meanwhile; `CanInteract` is false.
+- Each frame the tool visual plays: `Advance(unpausedRealSeconds)`. At the end the real availability is checked again
+  and `inner.TryInteract()` runs exactly once; `Finished(CommandResult)` carries the domain's own result.
+- `Cancel(reason)` (look away, walk away, disable, restart, new session) and an invalid `stillValid` spend nothing; a
+  new E starts from zero. Events: `Started`, `Progressed(progress01)`, `Finished(result)`, `Cancelled(reason)`.
+- Show `Finished` yourself: the resolver's `InteractionAttempted` only reports the start of the work.
+
 ## C05-B: payload salvage and the CO₂ absorber cartridge
 
 Two field modifications. Both only convert what was carried; nothing is created. **Each is offered only where its
