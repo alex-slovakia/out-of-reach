@@ -316,6 +316,7 @@ namespace OutOfReach.Composition.Editor
 
         public static void BuildI04Windows() => BuildWindowsCheckpoint("I04");
         public static void BuildI05Windows() => BuildWindowsCheckpoint("I05");
+        public static void BuildI06Windows() => BuildWindowsCheckpoint("I06");
 
         private static void BuildWindowsCheckpoint(string checkpoint)
         {
