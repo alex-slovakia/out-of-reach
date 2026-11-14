@@ -1,0 +1,184 @@
+PASS fixture startup | Exactly one real Player/capsule.
+PASS fixture startup | One fixture camera and released body/glove/bare presenters.
+PASS fixture startup | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS fixture startup | Real domain command: Cockpit check complete. Impact detected.
+PASS fixture startup | Real Impact requested by cockpit command.
+PASS fixture startup | Real domain command: power distribution repaired (2 spare parts).
+PASS fixture startup | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS fixture startup | Actual repaired, unsuited session enables fixture control.
+PASS fixture startup | Original glove JSON binds without alternate rig.
+PASS bare-Left-Push | Actual Player command: Done
+PASS bare-Left-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Left-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Left-Push | Actual WORK skin is visible and readable.
+PASS bare-Left-Push | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-Left-Push | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-Left-Push | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-Left-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Left-Push | Request acceptance is not an immediate gameplay action.
+PASS bare-Left-Push | Action callback repeats real live surface/path validation exactly once.
+PASS bare-Left-Push | No physical action/travel before visible anticipation completed.
+PASS bare-Left-Push | Actual support vertex and complete visible-skin set selected before action.
+PASS bare-Left-Push | Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=2.751676E-07
+PASS bare-Left-Push | Actual native support patch is a finite2D palm area, not a lone fingertip/line.
+PASS bare-Left-Push | Actual bare support skin lies in the player camera frustum.
+PASS bare-Left-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-Left-Push | Real controller contact command succeeds: Done
+PASS bare-Left-Push | Successful physical push sets actual velocity and emits one event.
+PASS bare-Left-Push | Exactly one real controller command/event.
+PASS bare-Left-Push | Actual successful push produces collision-aware body travel.
+PASS bare-Left-Push | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-Left-Push | Return animation never repeats the action.
+PASS bare-Right-Push | Actual Player command: Done
+PASS bare-Right-Push | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Right-Push | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Right-Push | Actual WORK skin is visible and readable.
+PASS bare-Right-Push | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-Right-Push | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-Right-Push | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-Right-Push | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Right-Push | Request acceptance is not an immediate gameplay action.
+PASS bare-Right-Push | Action callback repeats real live surface/path validation exactly once.
+PASS bare-Right-Push | No physical action/travel before visible anticipation completed.
+PASS bare-Right-Push | Actual support vertex and complete visible-skin set selected before action.
+PASS bare-Right-Push | Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=4.9623327E-07
+PASS bare-Right-Push | Actual native support patch is a finite2D palm area, not a lone fingertip/line.
+PASS bare-Right-Push | Actual bare support skin lies in the player camera frustum.
+PASS bare-Right-Push | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-Right-Push | Real controller contact command succeeds: Done
+PASS bare-Right-Push | Successful physical push sets actual velocity and emits one event.
+PASS bare-Right-Push | Exactly one real controller command/event.
+PASS bare-Right-Push | Actual successful push produces collision-aware body travel.
+PASS bare-Right-Push | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-Right-Push | Return animation never repeats the action.
+PASS bare refusals | Actual Player command: Done
+PASS bare refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS bare refusals | A genuine distant ray hit refuses before any animation/command.
+PASS bare refusals | Actual Player command: Done
+PASS bare refusals | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare refusals | Exclusive visible arm owner matches authoritative suit state.
+PASS bare refusals | A real intervening solid refuses the formerly visible target.
+PASS bare-Left-reverse-partial | Actual Player command: Done
+PASS bare-Left-reverse-partial | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Left-reverse-partial | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Left-reverse-partial | Actual WORK skin is visible and readable.
+PASS bare-Left-reverse-partial | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-Left-reverse-partial | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-Left-reverse-partial | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-Left-reverse-partial | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Left-reverse-partial | Explicit reversal starts before any physical action.
+PASS bare-Left-reverse-partial | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-Left-reverse-partial | Partial reversal causes no action or travel.
+PASS bare-Right-reverse-partial | Actual Player command: Done
+PASS bare-Right-reverse-partial | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-Right-reverse-partial | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-Right-reverse-partial | Actual WORK skin is visible and readable.
+PASS bare-Right-reverse-partial | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-Right-reverse-partial | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-Right-reverse-partial | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-Right-reverse-partial | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-Right-reverse-partial | Explicit reversal starts before any physical action.
+PASS bare-Right-reverse-partial | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-Right-reverse-partial | Partial reversal causes no action or travel.
+PASS bare interruption pause | Actual Player command: Done
+PASS bare interruption pause | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption pause | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption pause | Actual WORK skin is visible and readable.
+PASS bare interruption pause | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare interruption pause | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare interruption pause | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare interruption pause | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption pause | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption pause | Real domain command: Simulation paused.
+PASS bare interruption pause | Body reset releases the old arm lease before its new pose is sampled.
+PASS bare interruption pause | Real session pause denies Player control.
+PASS bare interruption pause | Paused pose is stable after cancellation; no callback advances.
+PASS bare interruption pause | Real domain command: Simulation resumed.
+PASS bare interruption pause | Cancellation never fires a stale action on resume/return.
+PASS bare interruption removed | Actual Player command: Done
+PASS bare interruption removed | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption removed | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption removed | Actual WORK skin is visible and readable.
+PASS bare interruption removed | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare interruption removed | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare interruption removed | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare interruption removed | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption removed | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption removed | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare interruption removed | Cancellation never fires a stale action on resume/return.
+PASS bare interruption occluded | Actual Player command: Done
+PASS bare interruption occluded | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption occluded | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption occluded | Actual WORK skin is visible and readable.
+PASS bare interruption occluded | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare interruption occluded | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare interruption occluded | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare interruption occluded | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption occluded | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption occluded | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare interruption occluded | Cancellation never fires a stale action on resume/return.
+PASS bare interruption body-pose | Actual Player command: Done
+PASS bare interruption body-pose | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare interruption body-pose | Exclusive visible arm owner matches authoritative suit state.
+PASS bare interruption body-pose | Actual WORK skin is visible and readable.
+PASS bare interruption body-pose | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare interruption body-pose | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare interruption body-pose | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare interruption body-pose | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare interruption body-pose | Interruption occurs during visible anticipation, before the command.
+PASS bare interruption body-pose | Body pose reset synchronously cancels the borrowed WORK bones.
+PASS bare interruption body-pose | Body reset releases the old arm lease before its new pose is sampled.
+PASS bare interruption body-pose | Cancellation never fires a stale action on resume/return.
+PASS unsafe imported-neutral refusal | Actual Player command: Done
+PASS unsafe imported-neutral refusal | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS unsafe imported-neutral refusal | Exclusive visible arm owner matches authoritative suit state.
+PASS unsafe imported-neutral refusal | Negative source clip truly puts bare skin through the wall by more than20mm.
+PASS unsafe imported-neutral refusal | Unsafe authored hand pose is refused without moving Player/camera/surface or granting an action. reason=Authored starting hand skin already crosses the target plane.
+PASS unsafe imported-neutral refusal | Refusal specifically identifies the measured unsafe starting skin.
+PASS bare-hitch-approach-valid | Actual Player command: Done
+PASS bare-hitch-approach-valid | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-hitch-approach-valid | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-hitch-approach-valid | Actual WORK skin is visible and readable.
+PASS bare-hitch-approach-valid | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-hitch-approach-valid | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-hitch-approach-valid | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-hitch-approach-valid | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-valid | Approach is pending before the real slow frame.
+PASS bare-hitch-approach-valid | Exact pre-stall stage is Reaching.
+PASS bare-hitch-approach-valid | At least40ms of visible approach remains before the hitch.
+PASS bare-hitch-approach-valid | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS bare-hitch-approach-valid | The actual hitch frame invokes no new contact action.
+PASS bare-hitch-approach-valid | A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-valid | Hitch consumes zero animation time and preserves the real joint pose.
+PASS bare-hitch-approach-valid | A static slow-frame contact does not create Player movement.
+PASS bare-hitch-approach-valid | Action callback repeats real live surface/path validation exactly once.
+PASS bare-hitch-approach-valid | No physical action/travel before visible anticipation completed.
+PASS bare-hitch-approach-valid | Actual support vertex and complete visible-skin set selected before action.
+PASS bare-hitch-approach-valid | Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=4.9623327E-07
+PASS bare-hitch-approach-valid | Actual native support patch is a finite2D palm area, not a lone fingertip/line.
+PASS bare-hitch-approach-valid | Actual bare support skin lies in the player camera frustum.
+PASS bare-hitch-approach-valid | Presenter's own native contact residual agrees with the independent measure.
+PASS bare-hitch-approach-valid | Real controller contact command succeeds: Done
+PASS bare-hitch-approach-valid | Successful physical push sets actual velocity and emits one event.
+PASS bare-hitch-approach-valid | Valid resumed approach issues exactly one actual Player push.
+PASS bare-hitch-approach-valid | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-hitch-approach-valid | No extra action after the hitch or return.
+PASS bare-hitch-approach-real-jump | Actual Player command: Done
+PASS bare-hitch-approach-real-jump | Real EnterFloat at the visible fixture surface with actual control allowed.
+PASS bare-hitch-approach-real-jump | Exclusive visible arm owner matches authoritative suit state.
+PASS bare-hitch-approach-real-jump | Actual WORK skin is visible and readable.
+PASS bare-hitch-approach-real-jump | Independent material-index set includes every visible skin vertex and actual support/patch.
+PASS bare-hitch-approach-real-jump | Final V04 actual native skin agrees with the source141mm neutral clearance.
+PASS bare-hitch-approach-real-jump | Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.
+PASS bare-hitch-approach-real-jump | Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-real-jump | Approach is pending before the real slow frame.
+PASS bare-hitch-approach-real-jump | Exact pre-stall stage is Reaching.
+PASS bare-hitch-approach-real-jump | At least40ms of visible approach remains before the hitch.
+PASS bare-hitch-approach-real-jump | Observed the actual immediate >100ms frame after a measured >=150ms stall.
+PASS bare-hitch-approach-real-jump | The actual hitch frame invokes no new contact action.
+PASS bare-hitch-approach-real-jump | Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path
+PASS bare-hitch-approach-real-jump | All borrowed arm/finger rotations restored to the exact authored V04 baseline.
+PASS bare-hitch-approach-real-jump | A genuine target jump during a hitch never issues a stale push.
+PASS bare-hitch-approach-real-jump | At least20 actual rendered frames independently measured across full approaches/returns/cancellations.
+PASS bare-hitch-approach-real-jump | Native actual contact and both reverse-path captures recorded.

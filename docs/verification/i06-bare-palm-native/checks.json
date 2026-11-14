@@ -1,0 +1,1108 @@
+{
+    "checks": [
+        {
+            "stage": "fixture startup",
+            "message": "Exactly one real Player/capsule.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "One fixture camera and released body/glove/bare presenters.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real Impact requested by cockpit command.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Actual repaired, unsuited session enables fixture control.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "fixture startup",
+            "message": "Original glove JSON binds without alternate rig.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual support vertex and complete visible-skin set selected before action.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=2.751676E-07",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual native support patch is a finite2D palm area, not a lone fingertip/line.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual bare support skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 31
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 32
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 56
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 92
+        },
+        {
+            "stage": "bare-Left-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 93
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 93
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 100
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 101
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Request acceptance is not an immediate gameplay action.",
+            "pass": true,
+            "frame": 101
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual support vertex and complete visible-skin set selected before action.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=4.9623327E-07",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual native support patch is a finite2D palm area, not a lone fingertip/line.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual bare support skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 129
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Exactly one real controller command/event.",
+            "pass": true,
+            "frame": 130
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Actual successful push produces collision-aware body travel.",
+            "pass": true,
+            "frame": 156
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 197
+        },
+        {
+            "stage": "bare-Right-Push",
+            "message": "Return animation never repeats the action.",
+            "pass": true,
+            "frame": 198
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 198
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 205
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 205
+        },
+        {
+            "stage": "bare refusals",
+            "message": "A genuine distant ray hit refuses before any animation/command.",
+            "pass": true,
+            "frame": 205
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 205
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 212
+        },
+        {
+            "stage": "bare refusals",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 212
+        },
+        {
+            "stage": "bare refusals",
+            "message": "A real intervening solid refuses the formerly visible target.",
+            "pass": true,
+            "frame": 212
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 212
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 219
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 220
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Explicit reversal starts before any physical action.",
+            "pass": true,
+            "frame": 222
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 276
+        },
+        {
+            "stage": "bare-Left-reverse-partial",
+            "message": "Partial reversal causes no action or travel.",
+            "pass": true,
+            "frame": 278
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 279
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 286
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 287
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Explicit reversal starts before any physical action.",
+            "pass": true,
+            "frame": 289
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 342
+        },
+        {
+            "stage": "bare-Right-reverse-partial",
+            "message": "Partial reversal causes no action or travel.",
+            "pass": true,
+            "frame": 344
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 345
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 352
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 353
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real domain command: Simulation paused.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Body reset releases the old arm lease before its new pose is sampled.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real session pause denies Player control.",
+            "pass": true,
+            "frame": 359
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Paused pose is stable after cancellation; no callback advances.",
+            "pass": true,
+            "frame": 417
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Real domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 417
+        },
+        {
+            "stage": "bare interruption pause",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 472
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 472
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 479
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 480
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 485
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 486
+        },
+        {
+            "stage": "bare interruption removed",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 542
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 542
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 549
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 550
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 552
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 553
+        },
+        {
+            "stage": "bare interruption occluded",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 592
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 592
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 599
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 600
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Interruption occurs during visible anticipation, before the command.",
+            "pass": true,
+            "frame": 600
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Body pose reset synchronously cancels the borrowed WORK bones.",
+            "pass": true,
+            "frame": 600
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Body reset releases the old arm lease before its new pose is sampled.",
+            "pass": true,
+            "frame": 600
+        },
+        {
+            "stage": "bare interruption body-pose",
+            "message": "Cancellation never fires a stale action on resume/return.",
+            "pass": true,
+            "frame": 645
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 645
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Negative source clip truly puts bare skin through the wall by more than20mm.",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Unsafe authored hand pose is refused without moving Player/camera/surface or granting an action. reason=Authored starting hand skin already crosses the target plane.",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "unsafe imported-neutral refusal",
+            "message": "Refusal specifically identifies the measured unsafe starting skin.",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 652
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 659
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 660
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Approach is pending before the real slow frame.",
+            "pass": true,
+            "frame": 661
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Exact pre-stall stage is Reaching.",
+            "pass": true,
+            "frame": 661
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "At least40ms of visible approach remains before the hitch.",
+            "pass": true,
+            "frame": 661
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 662
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 662
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "A slow frame alone preserves Reaching; current=Reaching, validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 662
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Hitch consumes zero animation time and preserves the real joint pose.",
+            "pass": true,
+            "frame": 662
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "A static slow-frame contact does not create Player movement.",
+            "pass": true,
+            "frame": 662
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Action callback repeats real live surface/path validation exactly once.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "No physical action/travel before visible anticipation completed.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual support vertex and complete visible-skin set selected before action.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual=4.9623327E-07",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual native support patch is a finite2D palm area, not a lone fingertip/line.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Actual bare support skin lies in the player camera frustum.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Presenter's own native contact residual agrees with the independent measure.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Real controller contact command succeeds: Done",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Successful physical push sets actual velocity and emits one event.",
+            "pass": true,
+            "frame": 673
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "Valid resumed approach issues exactly one actual Player push.",
+            "pass": true,
+            "frame": 674
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 735
+        },
+        {
+            "stage": "bare-hitch-approach-valid",
+            "message": "No extra action after the hitch or return.",
+            "pass": true,
+            "frame": 736
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual Player command: Done",
+            "pass": true,
+            "frame": 736
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Real EnterFloat at the visible fixture surface with actual control allowed.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Exclusive visible arm owner matches authoritative suit state.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual WORK skin is visible and readable.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Independent material-index set includes every visible skin vertex and actual support/patch.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Final V04 actual native skin agrees with the source141mm neutral clearance.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.",
+            "pass": true,
+            "frame": 743
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Actual surface begins anticipation; last root validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 744
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Approach is pending before the real slow frame.",
+            "pass": true,
+            "frame": 745
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Exact pre-stall stage is Reaching.",
+            "pass": true,
+            "frame": 745
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "At least40ms of visible approach remains before the hitch.",
+            "pass": true,
+            "frame": 745
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Observed the actual immediate >100ms frame after a measured >=150ms stall.",
+            "pass": true,
+            "frame": 746
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "The actual hitch frame invokes no new contact action.",
+            "pass": true,
+            "frame": 746
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Genuine changed geometry still cancels on the slow frame; validation=accepted real nearest hit and wrist path",
+            "pass": true,
+            "frame": 746
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "All borrowed arm/finger rotations restored to the exact authored V04 baseline.",
+            "pass": true,
+            "frame": 792
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "A genuine target jump during a hitch never issues a stale push.",
+            "pass": true,
+            "frame": 793
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "At least20 actual rendered frames independently measured across full approaches/returns/cancellations.",
+            "pass": true,
+            "frame": 793
+        },
+        {
+            "stage": "bare-hitch-approach-real-jump",
+            "message": "Native actual contact and both reverse-path captures recorded.",
+            "pass": true,
+            "frame": 793
+        }
+    ]
+}

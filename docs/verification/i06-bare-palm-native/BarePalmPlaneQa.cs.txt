@@ -1,0 +1,752 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.Hands;
+using OutOfReach.Presentation.Motion;
+using OutOfReach.Composition.Editor;
+using UnityEngine.Rendering;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using Object = UnityEngine.Object;
+
+// Temporary unsaved native contact fixture. No domain substitution or saved scene writes.
+[InitializeOnLoad]
+public static class BarePalmPlaneQa
+{
+    [Serializable] sealed class RunResult { public bool pass; public string message, utc; }
+    const string Flag = "OutOfReach.BarePalmPlaneQa", OutputKey = Flag + ".Output", Deadline = Flag + ".Deadline", Errors = Flag + ".Errors";
+    public const string ScenePath = "Assets/_OutOfReach/Scenes/Bootstrap.unity"; // source provenance only; fixture is unsaved
+    public static string Output => SessionState.GetString(OutputKey, Path.GetFullPath(".local/bare-palm-plane-qa"));
+    public static bool HitchMode => SessionState.GetBool(Flag + ".Hitch", false);
+    public static bool HitchHeldOnly => SessionState.GetBool(Flag + ".HitchHeldOnly", false);
+    static BarePalmPlaneQa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+    public static void Run() => RunCore(false);
+    public static void RunHitch() => RunCore(true);
+    public static void RunHitchHeld() => RunCore(true,true);
+    static void RunCore(bool hitch,bool heldOnly=false)
+    {
+        try
+        {
+            string project = Path.GetFullPath(Path.Combine(Application.dataPath, "..")).Replace('\\', '/');
+            if (!Application.isBatchMode) throw new InvalidOperationException("Batch-only runner.");
+            if (project.IndexOf("/.local/", StringComparison.OrdinalIgnoreCase) < 0) throw new InvalidOperationException("Run only in the isolated .local project.");
+            if (Application.unityVersion != "6000.3.28f1") throw new InvalidOperationException("Unity 6000.3.28f1 required.");
+            if (SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null) throw new InvalidOperationException("Real GPU captures require graphics; omit -nographics.");
+            if (EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Start in Edit mode.");
+            SessionState.SetBool(Flag + ".Hitch", hitch);
+            SessionState.SetBool(Flag + ".HitchHeldOnly", heldOnly);
+            SessionState.SetString(OutputKey, Path.Combine(project, hitch ? ".local/contact-hitch-qa" : ".local/bare-palm-plane-qa", DateTime.UtcNow.ToString("yyyyMMddTHHmmssfffZ")));
+            Directory.CreateDirectory(Output);
+            SessionState.SetString(Errors, "");
+            SessionState.SetString(Deadline, DateTime.UtcNow.AddSeconds(100).ToString("O", CultureInfo.InvariantCulture));
+            SessionState.SetString(Flag, "entering");
+            File.WriteAllText(Path.Combine(Output, "scope.txt"),
+                "Unsaved bounded wall/rail fixture, NOT Bootstrap/full-game/input-binding acceptance.\n"
+                + "One real Player and MissionSession. Real launch/cockpit/repairs/suit command; actual pending Impact acknowledged skipped.\n"
+                + "Real EnterFloat at a visible nearby solid. Public Teleport/ClearMotion reset positions BETWEEN cases only. Scripted zero device intent.\n"
+                + "No synthetic phase/suit/mode/inventory; session is not auto-ticked during geometry probes. Body authoring reuses imported released models.\n"
+                + "Closest-hit validator plus 10 mm padded wrist path; NOT whole-arm collision/IK acceptance. All material-defined bare skin rebaked on every rendered active/return frame and at callback.\n"
+                + "1280x720 actual camera, endCameraRendering capture on contact frame. Native art acceptance still needs human viewing. 100s watchdog.\n");
+            if (hitch) File.AppendAllText(Path.Combine(Output, "scope.txt"),
+                "CONTACT-HITCH: real 160ms main-thread stalls after presenter LateUpdate, then observe actual next-frame delta/pose/stage/action counts.\n"
+                + "No private presentation advance is invoked. Private elapsed is read-only instrumentation. All original geometry validation remains unchanged.\n"
+                + "Initial contact GPU readback is suppressed in hitch mode to isolate the injected stall; measured contact JSON remains. Two PNGs show held grips AFTER the stall.\n"
+                + "WORK/glove approaches retain animation time and issue no hitch-frame action; static grips remain, geometry jumps/occlusion still cancel.\n");
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            BuildFixture();
+            WriteManifest();
+            EditorApplication.isPlaying = true;
+        }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || SessionState.GetString(Flag, "") != "entering") return;
+        SessionState.SetString(Flag, "running");
+        new GameObject("Contact native acceptance - QA only").AddComponent<BarePalmPlaneQaDriver>();
+    }
+    static void Watchdog()
+    {
+        if (string.IsNullOrEmpty(SessionState.GetString(Flag, ""))) return;
+        if (DateTime.TryParse(SessionState.GetString(Deadline, ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime deadline) && DateTime.UtcNow > deadline)
+            Finish(false, "100-second watchdog expired. Last completed assertion is in checks.json/checks.txt.");
+    }
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (string.IsNullOrEmpty(SessionState.GetString(Flag, "")) || (type != LogType.Error && type != LogType.Exception && type != LogType.Assert)) return;
+        string entry = type + ": " + message + "\n" + stack + "\n";
+        // Preserve the same narrowly identified Editor Search startup issue separately; never ignore game errors.
+        if (type == LogType.Exception && message.StartsWith("ArgumentOutOfRangeException:", StringComparison.Ordinal)
+            && stack.Contains("UnityEditor.Search.SearchDatabase") && stack.Contains("UnityEditor.Search.SearchInit.IndexationOnStartup") && !stack.Contains("OutOfReach"))
+        { File.AppendAllText(Path.Combine(Output, "editor-environment-errors.txt"), entry); return; }
+        SessionState.SetString(Errors, SessionState.GetString(Errors, "") + entry);
+        File.AppendAllText(Path.Combine(Output, "runtime-errors.txt"), entry);
+    }
+    public static void RequireNoErrors()
+    {
+        string errors = SessionState.GetString(Errors, "");
+        if (!string.IsNullOrEmpty(errors)) throw new InvalidOperationException("Runtime errors:\n" + errors);
+    }
+    public static void Finish(bool pass, string message)
+    {
+        SessionState.SetString(Flag, "");
+        Directory.CreateDirectory(Output);
+        File.WriteAllText(Path.Combine(Output, pass ? "PASS.txt" : "FAIL.txt"), message);
+        File.WriteAllText(Path.Combine(Output, "result.json"), JsonUtility.ToJson(new RunResult { pass = pass, message = message, utc = DateTime.UtcNow.ToString("O") }, true));
+        Debug.Log((pass ? "CONTACT_NATIVE_QA_PASS " : "CONTACT_NATIVE_QA_FAIL ") + message + " output=" + Output);
+        EditorApplication.Exit(pass ? 0 : 1);
+    }
+    static void WriteManifest()
+    {
+        var paths = Directory.GetFiles("Assets/_OutOfReach", "*", SearchOption.AllDirectories)
+            .Where(p => p.EndsWith(".cs") || p.EndsWith(".fbx") || p.EndsWith(".prefab") || p.EndsWith(".json") || p.EndsWith(".mat") || p.EndsWith(".asmdef"))
+            .Concat(Directory.GetFiles("Assets/Editor", "BarePalmPlaneQa.cs", SearchOption.AllDirectories))
+            .Concat(new[] { ScenePath, "ProjectSettings/ProjectVersion.txt" }).OrderBy(p => p, StringComparer.Ordinal);
+        using (var sha = SHA256.Create())
+            File.WriteAllLines(Path.Combine(Output, "source-sha256.txt"), paths.Select(p =>
+                BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes(p))).Replace("-", "").ToLowerInvariant() + "  " + p.Replace('\\', '/')));
+    }
+    static void BuildFixture()
+    {
+        var rig=new GameObject("Contact QA player");
+        var cc=rig.AddComponent<CharacterController>(); cc.height=1.8f; cc.radius=.3f; cc.center=new Vector3(0,.9f,0); cc.skinWidth=.03f; cc.stepOffset=.3f;
+        Transform eye=Child("Unbobbed reach origin",rig.transform); eye.localPosition=new Vector3(0,1.65f,0);
+        var resolver=eye.gameObject.AddComponent<InteractionResolver>(); resolver.Configure(eye,rig.transform,.85f);
+        var player=rig.AddComponent<FirstPersonController>(); player.Configure(eye,resolver);
+        Camera camera=Child("Contact QA camera",eye).gameObject.AddComponent<Camera>();
+        camera.tag="MainCamera"; camera.fieldOfView=68; camera.nearClipPlane=.05f; camera.farClipPlane=30;
+        camera.clearFlags=CameraClearFlags.SolidColor; camera.backgroundColor=new Color(.025f,.035f,.045f); camera.allowHDR=false; camera.allowMSAA=false;
+        camera.gameObject.AddComponent<AudioListener>();
+        Transform presentation=Child("Contact QA presentation",null);
+        I06BodyAuthoring.Create(presentation,rig.transform,camera);
+        const string path="Assets/_OutOfReach/Visuals/Character/FirstPersonBody/FloatNeutralV04/Animations/BODY_FloatNeutral_V04.fbx";
+        using(var sha=SHA256.Create())
+            if(BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes(path))).Replace("-","").ToLowerInvariant()
+                !="63b33733541644cfbbd1e16d94d3ece44601de95b2829406039f111efffb37d8")
+                throw new InvalidOperationException("Import the final rest-bind V04 clip with its approved hash first.");
+        var importer=AssetImporter.GetAtPath(path) as ModelImporter;
+        if(importer==null||importer.animationType!=ModelImporterAnimationType.Generic||importer.optimizeGameObjects||!importer.preserveHierarchy
+            ||importer.animationCompression!=ModelImporterAnimationCompression.Off)
+            throw new InvalidOperationException("V04 requires Generic/unoptimized/uncompressed/preserveHierarchy import; root owns that asset change.");
+        var clip=AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>().SingleOrDefault(c=>!c.name.StartsWith("__preview__",StringComparison.Ordinal));
+        if(!clip||clip.legacy)throw new InvalidOperationException("Exactly one non-legacy V04 clip is required.");
+        var body=Object.FindFirstObjectByType<EmbodiedBodyPresenter>();
+        var serialized=new SerializedObject(body);
+        serialized.FindProperty("work").FindPropertyRelative("floating").objectReferenceValue=clip;
+        serialized.FindProperty("eva").FindPropertyRelative("floating").objectReferenceValue=clip;
+        serialized.ApplyModifiedPropertiesWithoutUndo();
+        body.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating,Vector3.zero); // unsaved fixture instance only
+
+        var prefab=AssetDatabase.LoadAssetAtPath<GameObject>(I01BootstrapBuilder.HandsPath);
+        var json=AssetDatabase.LoadAssetAtPath<TextAsset>(I01BootstrapBuilder.HandsRigPath);
+        if (!prefab||!json) throw new InvalidOperationException("Original glove prefab/rig missing.");
+        Transform mount=Child("Original glove mount",camera.transform);
+        var model=(GameObject)PrefabUtility.InstantiatePrefab(prefab,mount);
+        model.transform.SetLocalPositionAndRotation(Vector3.zero,Quaternion.identity); model.transform.localScale=Vector3.one;
+        presentation.gameObject.AddComponent<AstronautHandsPresenter>().ConfigureModel(model.transform,mount,json);
+        presentation.gameObject.AddComponent<BareArmContactPresenter>();
+        RenderSettings.ambientMode=AmbientMode.Flat; RenderSettings.ambientLight=new Color(.42f,.46f,.50f);
+        var key=Child("Fixture key",null).gameObject.AddComponent<Light>(); key.type=LightType.Directional; key.intensity=1.6f; key.transform.rotation=Quaternion.Euler(35,-25,0);
+        var fill=Child("Fixture fill",null).gameObject.AddComponent<Light>(); fill.type=LightType.Point; fill.intensity=3; fill.range=5; fill.transform.position=new Vector3(-.6f,1.9f,-.5f);
+    }
+    static Transform Child(string name,Transform parent) { var t=new GameObject(name).transform; if(parent)t.SetParent(parent,false); return t; }
+
+}
+
+[DefaultExecutionOrder(300)]
+public sealed class BarePalmPlaneQaDriver : MonoBehaviour
+{
+    [Serializable] sealed class CheckEntry { public string stage,message; public bool pass; public int frame; }
+    [Serializable] sealed class CheckSet { public List<CheckEntry> checks=new List<CheckEntry>(); }
+    [Serializable] sealed class ContactEvidence
+    {
+        public string name,hand,kind,command; public int callbackFrame,captureFrame,callbackCount,pushedEvents,grabbedEvents;
+        public float elapsedRealSeconds,reportedResidual,measuredResidual,skinNormalDot,viewPitchDegrees; public Vector3 point,wrist,playerBefore,playerAfter,velocity,bodyVisualOffset;
+        public bool bare,actualFloating,realSuitOn,rendererVisible; public int[] skinTriangle;
+    }
+    sealed class QuietInput:IPlayerInputSource
+    {
+        public Vector2 RequestedLook;
+        public Vector2 Move=>Vector2.zero;
+        public Vector2 LookDegrees { get {var value=RequestedLook;RequestedLook=Vector2.zero;return value;} }
+        public bool InteractPressedThisFrame=>false;public bool PausePressedThisFrame=>false;
+    }
+    readonly CheckSet checks=new CheckSet();
+    FirstPersonController player; EmbodiedBodyPresenter body; AstronautHandsPresenter gloves; BareArmContactPresenter bare;
+    MissionSession session; Camera cameraView; Transform eye; RenderTexture captureTarget; Material wallMaterial,railMaterial,blockMaterial;
+    GameObject surfaces; Collider wall,rail,blocker; Collider activeSurface; ContactHand activeHand; HandContactKind activeKind;
+    bool bareMode,originalBackground; int callbacks,pushes,grabs; float requestedAt; Vector3 requestedPosition; QuietInput quietInput;
+    int[] palmTriangle; SkinnedMeshRenderer palmSkin; Transform palmWrist;
+    string stage="fixture startup",captureName,captureError,lastValidation="not called"; ContactEvidence pendingCapture; int captures,lookDownCaptures;
+    Action beginAfterPresenters;
+    int observeHitchAt = -1;
+    Action afterHitchFrame;
+    bool captureHitchStill;
+    [Serializable] sealed class HitchEvidence
+    {
+        public string label, beforeStage, afterStage, validationBefore, validationAfter, heldBefore, heldAfter;
+        public int injectedFrame, observedFrame, callbacksBefore, callbacksAfter;
+        public float actualDelta, elapsedBefore, elapsedAfter, worstJointAngle, worstJointPositionMetres;
+        public double blockedSeconds;
+        public Vector3 playerBefore, playerAfter;
+    }
+    bool Control()=>session!=null&&session.IsPlayerControlAllowed;
+    bool Lease()=>Control()&&player&&player.ControlAllowed&&player.IsFloating&&!player.IsOnRoute&&!session.Eva.IsOutside;
+    bool BareLease(ContactHand hand)=>Lease()&&!session.Eva.IsSuitOn&&body.IsVisible&&body.CurrentPose==EmbodiedBodyPresenter.BodyPose.Floating;
+    IEnumerator Start()
+    {
+        originalBackground=Application.runInBackground;Application.runInBackground=true;
+        var stack=new Stack<IEnumerator>();stack.Push(Exercise());
+        while(stack.Count>0)
+        {
+            bool more=false;object current=null;Exception failure=null;
+            try {BarePalmPlaneQa.RequireNoErrors();if(captureError!=null)throw new InvalidOperationException(captureError);more=stack.Peek().MoveNext();if(more)current=stack.Peek().Current;}
+            catch(Exception e){failure=e;}
+            if(failure!=null)
+            {
+                foreach(var it in stack)try{(it as IDisposable)?.Dispose();}catch{}
+                Add(false,failure.ToString());Cleanup();BarePalmPlaneQa.Finish(false,"Stage: "+stage+"\n"+failure);yield break;
+            }
+            if(!more){stack.Pop();continue;}if(current is IEnumerator child){stack.Push(child);continue;}yield return current;
+        }
+        Cleanup();BarePalmPlaneQa.Finish(true,checks.checks.Count+" checks passed; "+captures
+            +(BarePalmPlaneQa.HitchMode?" post-stall held-grip captures.":" contact-frame and "+lookDownCaptures+" look-down captures.")+" Bounded fixture only; see scope.txt.");
+    }
+    IEnumerator Exercise()
+    {
+        player=Object.FindFirstObjectByType<FirstPersonController>();body=Object.FindFirstObjectByType<EmbodiedBodyPresenter>();
+        gloves=Object.FindFirstObjectByType<AstronautHandsPresenter>();bare=Object.FindFirstObjectByType<BareArmContactPresenter>();cameraView=Camera.main;eye=player.ViewPivot;
+        Check(Object.FindObjectsByType<FirstPersonController>(FindObjectsSortMode.None).Length==1&&Object.FindObjectsByType<CharacterController>(FindObjectsSortMode.None).Length==1,"Exactly one real Player/capsule.");
+        Check(Object.FindObjectsByType<Camera>(FindObjectsSortMode.None).Length==1&&body&&gloves&&bare,"One fixture camera and released body/glove/bare presenters.");
+        quietInput=new QuietInput();player.InputSource=quietInput;player.SendMessage("OnApplicationFocus",true,SendMessageOptions.RequireReceiver);
+        session=new MissionSession(subscriberErrorSink: e=>Debug.LogException(e));player.ControlGate=Control;
+        Cmd(session.Planner.TryLaunch());Cmd(session.Director.TryCompleteCockpitCheck());
+        Check(session.Cinematics.IsWaiting&&session.Cinematics.ActiveCinematic==CinematicId.Impact,"Real Impact requested by cockpit command.");
+        session.Events.Publish(new CinematicFinished(CinematicId.Impact,session.Cinematics.ActiveSequenceId,true));
+        Cmd(session.Systems.Power.TryRepair(session.Resources));Cmd(session.Systems.LifeSupport.TryRepair(session.Resources));
+        Check(session.State.Phase==GamePhase.Repair&&!session.Eva.IsSuitOn&&session.IsPlayerControlAllowed,"Actual repaired, unsuited session enables fixture control.");
+        body.ConfigureSession(session.Eva,session.ClockView,()=>session!=null&&!session.State.IsClosed,()=>player.IsFloating,
+            ()=>session.Eva.IsSuitOn?EmbodiedBodyPresenter.BodyArmVisibility.None:EmbodiedBodyPresenter.BodyArmVisibility.Both);
+        body.PoseWillReset+=bare.CancelImmediately;
+        bare.Configure(WorkArm("L",body.WorkLeftArmRenderer),WorkArm("R",body.WorkRightArmRenderer),eye,session.ClockView,BareLease,()=>body.PoseRevision,Validate);
+        Check(gloves.ConfigureSession(session.Eva,session.State,session.ClockView,Lease),"Original glove JSON binds without alternate rig.");
+        gloves.ConfigureRouteProgress(()=>player.IsOnRoute?player.RouteDistanceMetres:float.NaN);gloves.ConfigureContacts(eye,Lease,Validate);
+        player.Pushed+=OnPush;player.Grabbed+=OnGrab;
+        captureTarget=new RenderTexture(1280,720,24,RenderTextureFormat.ARGB32);captureTarget.Create();cameraView.targetTexture=captureTarget;cameraView.aspect=1280f/720;
+        RenderPipelineManager.endCameraRendering+=OnEndCamera;
+        wallMaterial=MakeMaterial("Fixture graphite",new Color(.25f,.31f,.34f));railMaterial=MakeMaterial("Fixture rail",new Color(.68f,.72f,.70f));blockMaterial=MakeMaterial("Fixture blocker",new Color(.65f,.32f,.08f));
+        yield return Positive(true,ContactHand.Left,HandContactKind.Push);
+        yield return Positive(true,ContactHand.Right,HandContactKind.Push);
+        yield return Refusals(true);
+        yield return ReversePartial(ContactHand.Left);
+        yield return ReversePartial(ContactHand.Right);
+        yield return Interrupt(true,"pause");yield return Interrupt(true,"removed");yield return Interrupt(true,"occluded");yield return Interrupt(true,"body-pose");
+        yield return UnsafeNeutral();
+        // Keep the proven slow-frame regression in this source combination, with no extra fake action.
+        yield return ApproachHitch(true,false);
+        yield return ApproachHitch(true,true);
+        Check(renderedSweepFrames>=20,"At least20 actual rendered frames independently measured across full approaches/returns/cancellations.");
+        Check(captures>=3&&lookDownCaptures==2,"Native actual contact and both reverse-path captures recorded.");
+        File.WriteAllText(Path.Combine(BarePalmPlaneQa.Output,"whole-skin-summary.json"),
+            "{\"renderedFrames\":"+renderedSweepFrames+",\"minimumClearanceMetres\":"+worstClearance.ToString("R",CultureInfo.InvariantCulture)
+            +",\"maximumWaypointCorrectionMetres\":"+worstCorrection.ToString("R",CultureInfo.InvariantCulture)+"}");
+
+    }
+    BareArmContactRig WorkArm(string side,SkinnedMeshRenderer skin)=>new BareArmContactRig(body.GetWorkBone("upperarm01."+side),body.GetWorkBone("lowerarm01."+side),body.GetWorkBone("wrist."+side),
+        body.GetWorkBone("finger2-1."+side),body.GetWorkBone("finger3-1."+side),body.GetWorkBone("finger5-1."+side),body.GetWorkBone("finger1-1."+side),skin);
+    IEnumerator Setup(bool useBare,HandContactKind kind)
+    {
+        watchingSkin=false; bare.CancelImmediately();gloves.ResetToNeutral();body.SetSeatedPose(false);player.ClearMotion();
+        if(rail)player.UnregisterHandhold(rail);if(surfaces)Object.DestroyImmediate(surfaces);
+        surfaces=new GameObject("Contact QA surfaces");bareMode=useBare;activeKind=kind;
+        float distance=useBare?.30f:.60f;
+        wall=Box("Actual push wall",new Vector3(0,1.4f,distance+.05f),new Vector3(2.4f,2.8f,.1f),wallMaterial);
+        Box("Fixture floor",new Vector3(0,-.06f,0),new Vector3(3,.1f,3),wallMaterial);
+        var tube=GameObject.CreatePrimitive(PrimitiveType.Cylinder);tube.name="Registered 15 mm rail";tube.transform.SetParent(surfaces.transform,false);
+        tube.transform.SetPositionAndRotation(new Vector3(0,1.65f,distance+.015f),Quaternion.Euler(0,0,90));tube.transform.localScale=new Vector3(.03f,.55f,.03f);tube.GetComponent<Renderer>().sharedMaterial=railMaterial;
+        rail=tube.GetComponent<Collider>();rail.gameObject.SetActive(kind==HandContactKind.Grip);wall.gameObject.SetActive(kind==HandContactKind.Push);player.RegisterHandhold(rail);
+        blocker=Box("Occluding solid",Vector3.zero,new Vector3(.13f,.13f,.04f),blockMaterial);blocker.gameObject.SetActive(false);
+        activeSurface=kind==HandContactKind.Grip?rail:wall;
+        player.Teleport(Vector3.zero,0);Physics.SyncTransforms();Done(player.EnterFloat());body.RefreshPresentation();
+        yield return Frames(3);yield return StableFrames();
+        callbacks=pushes=grabs=0;palmTriangle=null;pendingCapture=null;captureName=null;
+        Check(player.IsFloating&&player.ControlAllowed&&session.IsPlayerControlAllowed,"Real EnterFloat at the visible fixture surface with actual control allowed.");
+        Check(useBare?body.IsVisible&&!body.IsEvaVisible&&body.VisibleArms==EmbodiedBodyPresenter.BodyArmVisibility.Both&&!gloves.IsVisible
+            :body.IsEvaVisible&&body.VisibleArms==EmbodiedBodyPresenter.BodyArmVisibility.None&&gloves.IsVisible,"Exclusive visible arm owner matches authoritative suit state.");
+    }
+    IEnumerator Positive(bool useBare,ContactHand hand,HandContactKind kind)
+    {
+        stage=(useBare?"bare":"glove")+"-"+hand+"-"+kind;yield return Setup(useBare,kind);activeHand=hand;
+        var target=TargetAt(hand,kind);captureName=stage;
+        yield return BeginReach(target,useBare);
+        Check(callbacks==0&&pushes==0&&grabs==0&&player.FloatVelocity==Vector3.zero,"Request acceptance is not an immediate gameplay action.");
+        yield return WaitFor(()=>callbacks==1,2,"Visible reach/action callback");
+        yield return WaitFor(()=>pendingCapture==null,3,"Actual contact-frame camera capture");
+        Check(callbacks==1&&(kind==HandContactKind.Push?pushes==1&&grabs==0:grabs==1&&pushes==0),"Exactly one real controller command/event.");
+        if(kind==HandContactKind.Grip)
+        {
+            yield return Seconds(.12f);Check(player.HeldHandhold==rail&&gloves.ContactStage==HandContactStage.Holding,"Actual static registered grip stays held and presented. held="+(player.HeldHandhold?player.HeldHandhold.name:"none")+" stage="+gloves.ContactStage+" validation="+lastValidation+" feet="+player.transform.position.ToString("F6")+" eye="+eye.position.ToString("F6")+" anchor="+player.HeldGripPoint);
+            Done(player.Release());yield return WaitFor(()=>gloves.ContactStage==HandContactStage.None,2,"Release retracts hand");
+            Check(player.HeldGripPoint==null&&callbacks==1,"Real Release clears the anchor without another callback.");
+        }
+        else
+        {
+            yield return Seconds(.12f);Check(Vector3.Dot(player.transform.position-requestedPosition,Vector3.back)>.001f,"Actual successful push produces collision-aware body travel.");
+            player.ClearMotion();yield return WaitFor(()=>Stage==HandContactStage.None,2,"Push returns to fitting pose");
+            Check(callbacks==1,"Return animation never repeats the action.");
+        }
+    }
+    IEnumerator Refusals(bool useBare)
+    {
+        stage=(useBare?"bare":"glove")+" refusals";yield return Setup(useBare,HandContactKind.Push);activeHand=ContactHand.Right;
+        wall.transform.position+=Vector3.forward*1.2f;Physics.SyncTransforms();var far=TargetAt(activeHand,HandContactKind.Push);
+        Check(!StartRequest(far)&&callbacks==0&&Stage==HandContactStage.None,"A genuine distant ray hit refuses before any animation/command.");
+        yield return Setup(useBare,HandContactKind.Push);activeHand=ContactHand.Right;var target=TargetAt(activeHand,HandContactKind.Push);
+        PlaceBlocker(target);Check(!StartRequest(target)&&callbacks==0&&Stage==HandContactStage.None,"A real intervening solid refuses the formerly visible target.");
+    }
+    IEnumerator LookDownCaptures()
+    {
+        stage="bare floating camera fit";yield return Setup(true,HandContactKind.Push);
+        Vector3 before=body.VisualRoot.position;Quaternion rotation=body.VisualRoot.rotation;
+        foreach(float angle in new[]{60f,80f})
+        {
+            quietInput.RequestedLook=new Vector2(0,-angle-player.PitchDegrees);
+            yield return WaitFor(()=>Math.Abs(player.PitchDegrees+angle)<.01f,2,"Actual Player look-down input");
+            yield return Frames(2);
+            Check(body.CurrentPose==EmbodiedBodyPresenter.BodyPose.Floating&&Vector3.Distance(before,body.VisualRoot.position)<.0001f
+                &&Quaternion.Angle(rotation,body.VisualRoot.rotation)<.001f,"Actual camera looks down while the floating body world pose stays fixed.");
+            pendingCapture=new ContactEvidence{name="body-float-lookdown-"+angle.ToString("0",CultureInfo.InvariantCulture),kind="visual-only; no contact action",
+                callbackFrame=Time.frameCount,viewPitchDegrees=player.PitchDegrees,bodyVisualOffset=body.GetVisualFeetOffset(body.CurrentPose),bare=true,actualFloating=player.IsFloating,
+                rendererVisible=body.IsVisible,realSuitOn=session.Eva.IsSuitOn,playerBefore=player.transform.position,playerAfter=player.transform.position};
+            yield return WaitFor(()=>pendingCapture==null,3,"Actual look-down camera capture");
+        }
+        Check(callbacks==0&&pushes==0&&grabs==0,"Look-down probes issue no physical contact command.");
+    }
+    IEnumerator Interrupt(bool useBare,string reason)
+    {
+        stage=(useBare?"bare":"glove")+" interruption "+reason;yield return Setup(useBare,HandContactKind.Push);activeHand=ContactHand.Right;
+        var target=TargetAt(activeHand,HandContactKind.Push);yield return BeginReach(target,false);
+        yield return WaitFor(()=>Time.realtimeSinceStartup-requestedAt>=.08f,1,"Partial anticipation");
+        Check(callbacks==0&&Stage==HandContactStage.Reaching,"Interruption occurs during visible anticipation, before the command.");
+        if(reason=="pause")
+        {
+            Cmd(session.Clock.Pause());yield return Frames(2);Check(!player.ControlAllowed,"Real session pause denies Player control.");
+            Transform[] bones=(useBare?body.VisualRoot:gloves.ModelRoot).GetComponentsInChildren<Transform>(true);Quaternion[] pose=bones.Select(b=>b.localRotation).ToArray();
+            yield return Seconds(.14f);Check(callbacks==0&&bones.Select((b,i)=>Quaternion.Angle(b.localRotation,pose[i])<.001f).All(x=>x),"Paused pose is stable after cancellation; no callback advances.");
+            Cmd(session.Clock.Resume());
+        }
+        else if(reason=="body-pose") {int revision=body.PoseRevision;body.SetSeatedPose(true);Check(body.PoseRevision>revision&&bare.ContactStage==HandContactStage.None,"Body pose reset synchronously cancels the borrowed WORK bones.");}
+        else if(reason=="removed") {activeSurface.enabled=false;Physics.SyncTransforms();}
+        else PlaceBlocker(target);
+        yield return WaitFor(()=>Stage==HandContactStage.None,2,"Cancellation returns safely");yield return Seconds(.12f);
+        Check(callbacks==0&&pushes==0&&grabs==0&&player.FloatVelocity==Vector3.zero,"Cancellation never fires a stale action on resume/return.");
+    }
+    HandContactStage Stage=>bareMode?bare.ContactStage:gloves.ContactStage;
+    // Begin after orders 140/200/250 have run. The first pose delta then belongs to a real subsequent frame.
+    void LateUpdate()
+    {
+        if(observeHitchAt>=0&&Time.frameCount>=observeHitchAt)
+        {
+            observeHitchAt=-1;var observe=afterHitchFrame;afterHitchFrame=null;
+            if(observe!=null)try{observe();}catch(Exception e){captureError="Observe hitch: "+e;}
+        }
+        var begin=beginAfterPresenters;beginAfterPresenters=null;
+        if(begin!=null)try{begin();}catch(Exception e){captureError="Begin contact: "+e;}
+    }
+    IEnumerator BeginReach(HandContactTarget target,bool measureSkin)
+    {
+        bool completed=false,accepted=false;
+        beginAfterPresenters=()=>{accepted=StartRequest(target);completed=true;};
+        yield return WaitFor(()=>completed,1,"Request starts after presenters' LateUpdate");
+        Check(accepted,"Actual surface begins anticipation; last root validation="+lastValidation);
+    }
+    HandContactTarget TargetAt(ContactHand hand,HandContactKind kind)
+    {
+        Vector3 guess=new Vector3(hand==ContactHand.Left?-.18f:.18f,bareMode?1.50f:1.65f,activeSurface.bounds.min.z);
+        Vector3 ray=guess-eye.position;
+        // Direct target acquisition; the independent nearest-hit validator can reject an intervening solid.
+        if(!activeSurface.Raycast(new Ray(eye.position,ray.normalized),out RaycastHit hit,3))throw new InvalidOperationException("Fixture surface ray missed.");
+        return Frame(activeSurface,hit.point,hit.normal,kind==HandContactKind.Grip?Vector3.right:Vector3.up,kind==HandContactKind.Grip?.015f:0);
+    }
+    static HandContactTarget Frame(Collider c,Vector3 point,Vector3 normal,Vector3 tangent,float radius)=>new HandContactTarget(c.transform,c.transform.InverseTransformPoint(point),
+        c.transform.localToWorldMatrix.transpose.MultiplyVector(normal).normalized,c.transform.InverseTransformVector(tangent).normalized,radius);
+    bool StartRequest(HandContactTarget target)
+    {
+        requestedAt=Time.realtimeSinceStartup;requestedPosition=player.transform.position;
+        bool accepted=bareMode?bare.TryReachPush(activeHand,target,ActionAtContact)
+            :gloves.TryReachContact(activeHand,activeKind,target,ActionAtContact,activeKind==HandContactKind.Grip?(Func<HandContactTarget?>)ReadHeld:null);
+        if(accepted&&bareMode)SelectPalmTriangle();
+        return accepted;
+    }
+    bool Owned(Collider c)=>c&&c.transform.IsChildOf(player.transform);
+    bool Nearest(Vector3 from,Vector3 to,out RaycastHit nearest)
+    {
+        nearest=default;Vector3 delta=to-from;if(delta.magnitude<.0001f)return false;
+        float best=float.PositiveInfinity;
+        foreach(var hit in Physics.RaycastAll(from,delta.normalized,delta.magnitude+.004f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
+            if(!Owned(hit.collider)&&hit.distance<best){nearest=hit;best=hit.distance;}
+        return best<float.PositiveInfinity;
+    }
+    bool Validate(HandContactSample s)
+    {
+        if(!Lease()||!activeSurface||s.Surface!=activeSurface.transform||!activeSurface.enabled||activeSurface.isTrigger||!activeSurface.gameObject.activeInHierarchy
+            ||s.Hand!=activeHand||s.Kind!=activeKind||(bareMode&&!BareLease(s.Hand))||(!bareMode&&!session.Eva.IsSuitOn))return RejectValidation("authority/surface/hand lease");
+        if(s.Kind==HandContactKind.Grip&&(!player.IsHandhold(activeSurface)||activeSurface!=rail||Math.Abs(s.GripRadiusMetres-.015f)>.00001f))return RejectValidation("registered real rail/radius");
+        if(Vector3.Distance(eye.position,s.Point)>player.Microgravity.ReachMetres||!Nearest(eye.position,s.Point,out RaycastHit hit)
+            ||hit.collider!=activeSurface||Vector3.Distance(hit.point,s.Point)>.004f||Vector3.Dot(hit.normal,s.Normal)<.97f)return RejectValidation("closest eye hit/anchor/normal/reach");
+        Vector3 path=s.WristPoint-s.CurrentWristPoint;float length=path.magnitude;
+        foreach(var c in Physics.OverlapSphere(s.CurrentWristPoint,.01f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
+            if(!Owned(c))return RejectValidation("wrist starts overlapping "+c.name);
+        if(length>.0001f)
+            foreach(var h in Physics.SphereCastAll(s.CurrentWristPoint,.01f,path/length,length,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))
+                if(!Owned(h.collider)&&(h.collider!=activeSurface||h.distance<length-.025f))return RejectValidation("padded wrist path blocked by "+h.collider.name);
+        lastValidation="accepted real nearest hit and wrist path";return true;
+    }
+    bool RejectValidation(string why){lastValidation=why;return false;}
+    HandContactTarget? ReadHeld()
+    {
+        if(player.HeldHandhold!=rail||activeSurface!=rail||!player.HeldGripPoint.HasValue)return null;
+        Vector3 point=player.HeldGripPoint.Value;
+        if(!Nearest(eye.position,point,out RaycastHit hit)||hit.collider!=rail||Vector3.Distance(point,hit.point)>.004f)return null;
+        return Frame(rail,point,hit.normal,Vector3.right,.015f);
+    }
+    bool ActionAtContact(HandContactSample s)
+    {
+        callbacks++;Check(callbacks==1&&Validate(s),"Action callback repeats real live surface/path validation exactly once.");
+        Check(Vector3.Distance(player.transform.position,requestedPosition)<.0001f&&Time.realtimeSinceStartup-requestedAt>=.15f,"No physical action/travel before visible anticipation completed.");
+        float measured,normalDot=1;
+        if(bareMode)
+        {
+            Check(watchingSkin,"Actual support vertex and complete visible-skin set selected before action.");
+            var proof=MeasureWholeSkin("callback");measured=proof.supportResidual;
+            Check(measured<=.003f&&proof.minimumClearance>=-.0001f&&proof.patchPlaneDistance<=.003f,
+                "Actual full bare skin clears plane; real palm support and non-collinear patch are within3mm. residual="+measured.ToString("R",CultureInfo.InvariantCulture));
+            Check(proof.patchExtentU>=.012f&&proof.patchExtentV>=.012f&&proof.patchArea>=.0002f&&proof.patchSmallEigen>=.000004f,
+                "Actual native support patch is a finite2D palm area, not a lone fingertip/line.");
+            Vector3 support=palmSkin.transform.TransformPoint(skinVertices[supportIndex]);
+            Vector3 screen=cameraView.WorldToViewportPoint(support);
+            Check(screen.z>cameraView.nearClipPlane&&screen.x>0&&screen.x<1&&screen.y>0&&screen.y<1,"Actual bare support skin lies in the player camera frustum.");
+
+        }
+        else
+        {
+            Transform wrist=gloves.ModelRoot.GetComponentsInChildren<Transform>(true).Single(t=>t.name==(s.Hand==ContactHand.Left?"L_Hand":"R_Hand"));
+            Vector3 p=wrist.TransformPoint(s.Kind==HandContactKind.Grip?new Vector3(0,-.033f,.082f):new Vector3(0,-.025f,.055f));
+            if(s.Kind==HandContactKind.Grip)p+=s.Normal*s.GripRadiusMetres;
+            measured=Vector3.Distance(p,s.Point);Check(measured<=.002f,"Actual original glove pad/tube frame <=2 mm: residual="+measured.ToString("R",CultureInfo.InvariantCulture)+" m.");
+        }
+        float reported=bareMode?bare.ContactErrorMetres:gloves.ContactErrorMetres;
+        Check(!float.IsNaN(reported)&&reported<=(bareMode?.003f:.002f),"Presenter's own native contact residual agrees with the independent measure.");
+        FloatActionResult result=s.Kind==HandContactKind.Grip?player.TryGrab(activeSurface,s.Point):player.TryPushOff(activeSurface,s.Point,s.Normal,.10f);
+        Check(result==FloatActionResult.Done,"Real controller contact command succeeds: "+result);
+        if(s.Kind==HandContactKind.Push)Check(player.FloatVelocity.magnitude>.099f&&pushes==1,"Successful physical push sets actual velocity and emits one event.");
+        else Check(player.HeldHandhold==rail&&player.HeldGripPoint.HasValue&&grabs==1,"Successful physical grab sets the real held surface/point and emits one event.");
+        pendingCapture=new ContactEvidence {name=captureName,hand=s.Hand.ToString(),kind=s.Kind.ToString(),command=result.ToString(),callbackFrame=Time.frameCount,callbackCount=callbacks,
+            pushedEvents=pushes,grabbedEvents=grabs,elapsedRealSeconds=Time.realtimeSinceStartup-requestedAt,reportedResidual=reported,measuredResidual=measured,skinNormalDot=normalDot,
+            point=s.Point,wrist=s.WristPoint,playerBefore=requestedPosition,playerAfter=player.transform.position,velocity=player.FloatVelocity,bare=bareMode,actualFloating=player.IsFloating,
+            realSuitOn=session.Eva.IsSuitOn,rendererVisible=bareMode?palmSkin.enabled&&palmSkin.gameObject.activeInHierarchy:gloves.IsVisible,skinTriangle=palmTriangle,
+            viewPitchDegrees=player.PitchDegrees,bodyVisualOffset=body.GetVisualFeetOffset(body.CurrentPose)};
+        return true;
+    }
+    [Serializable] sealed class SkinFrame
+    {
+        public string label,stage; public int frame,skinVertices,supportVertex,patchVertices,attempts,poseRevision;
+        public float blendElapsed,minimumClearance,supportResidual,patchPlaneDistance,waypointCorrection,
+            upperLength,lowerLength,patchExtentU,patchExtentV,patchArea,patchSmallEigen;
+        public Vector3 playerPosition;
+    }
+    Mesh skinBake; readonly List<Vector3> skinVertices=new List<Vector3>(30000);
+    int[] allSkinIndices,patchIndices; int supportIndex,sweepRevision,renderedSweepFrames;
+    Transform[] sweepBones; Vector3[] sweepPositions,sweepScales; Quaternion[] sweepRotations;
+    Transform sweepUpper,sweepLower; float upperLength,lowerLength;
+    Vector3 planeLocalPoint,planeLocalNormal; bool watchingSkin;
+    float worstClearance=float.PositiveInfinity,worstCorrection;
+    void SelectPalmTriangle() // Historical method name; now selects real vertex + area, never a virtual triangle marker.
+    {
+        palmSkin=activeHand==ContactHand.Left?body.WorkLeftArmRenderer:body.WorkRightArmRenderer;
+        string suffix=activeHand==ContactHand.Left?"L":"R";
+        palmWrist=body.GetWorkBone("wrist."+suffix);sweepUpper=body.GetWorkBone("upperarm01."+suffix);sweepLower=body.GetWorkBone("lowerarm01."+suffix);
+        Check(palmSkin.enabled&&palmSkin.sharedMesh.isReadable,"Actual WORK skin is visible and readable.");
+        var set=new HashSet<int>();var mesh=palmSkin.sharedMesh;var materials=palmSkin.sharedMaterials;
+        for(int sub=0;sub<mesh.subMeshCount;sub++)if(sub<materials.Length&&materials[sub]&&materials[sub].name=="MAT_Cabin_BareHands")
+            foreach(int index in mesh.GetIndices(sub))set.Add(index);
+        allSkinIndices=set.OrderBy(i=>i).ToArray();supportIndex=bare.ContactSupportVertexIndex;
+        patchIndices=Enumerable.Range(0,bare.ContactPatchVertexCount).Select(bare.GetContactPatchVertexIndex).ToArray();
+        Check(allSkinIndices.Length>5000&&allSkinIndices.Length==bare.ContactHandVertexCount&&set.Contains(supportIndex)
+            &&patchIndices.Length>=6&&patchIndices.All(set.Contains),"Independent material-index set includes every visible skin vertex and actual support/patch.");
+        palmTriangle=new[]{supportIndex}; // Evidence now contains an actual support vertex, not3 triangle indices.
+        sweepBones=sweepUpper.GetComponentsInChildren<Transform>(true);sweepPositions=sweepBones.Select(t=>t.localPosition).ToArray();
+        sweepScales=sweepBones.Select(t=>t.localScale).ToArray();sweepRotations=sweepBones.Select(t=>t.localRotation).ToArray();
+        upperLength=Vector3.Distance(sweepUpper.position,sweepLower.position);lowerLength=Vector3.Distance(sweepLower.position,palmWrist.position);
+        HandContactTarget target=TargetAt(activeHand,HandContactKind.Push);planeLocalPoint=target.LocalPoint;planeLocalNormal=target.LocalNormal;
+        sweepRevision=body.PoseRevision;watchingSkin=true;
+        if(!skinBake)skinBake=new Mesh{name="Native whole bare skin probe - reused"};
+        var initial=MeasureWholeSkin("accepted-neutral");
+        Check(initial.minimumClearance>=.13f&&initial.minimumClearance<=.15f,"Final V04 actual native skin agrees with the source141mm neutral clearance.");
+        float side=activeHand==ContactHand.Left?-1f:1f;
+        Check(Vector3.Distance(sweepUpper.position,new Vector3(side*.178632f,1.410813f,-.133188f))<.004f
+            &&Vector3.Distance(palmWrist.position,new Vector3(side*.231699f,.965126f,.043957f))<.004f,
+            "Final V04 imported shoulder/wrist positions agree with source within4mm, before any contact solve.");
+    }
+    SkinFrame MeasureWholeSkin(string label)
+    {
+        palmSkin.BakeMesh(skinBake);skinBake.GetVertices(skinVertices);
+        Vector3 point=activeSurface.transform.TransformPoint(planeLocalPoint);
+        Vector3 normal=activeSurface.transform.localToWorldMatrix.inverse.transpose.MultiplyVector(planeLocalNormal).normalized;
+        Vector3 tangent=Vector3.ProjectOnPlane(Vector3.up,normal).normalized,cross=Vector3.Cross(normal,tangent);
+        Matrix4x4 matrix=palmSkin.transform.localToWorldMatrix;
+        float min=float.PositiveInfinity,maxPatch=0,minU=float.PositiveInfinity,minV=minU,maxU=float.NegativeInfinity,maxV=maxU;
+        float su=0,sv=0,suu=0,svv=0,suv=0;
+        foreach(int index in allSkinIndices)min=Mathf.Min(min,Vector3.Dot(matrix.MultiplyPoint3x4(skinVertices[index])-point,normal));
+        foreach(int index in patchIndices)
+        {
+            Vector3 p=matrix.MultiplyPoint3x4(skinVertices[index])-point;
+            maxPatch=Mathf.Max(maxPatch,Mathf.Abs(Vector3.Dot(p,normal)));
+            float u=Vector3.Dot(p,tangent),v=Vector3.Dot(p,cross);minU=Mathf.Min(minU,u);maxU=Mathf.Max(maxU,u);minV=Mathf.Min(minV,v);maxV=Mathf.Max(maxV,v);
+            su+=u;sv+=v;suu+=u*u;svv+=v*v;suv+=u*v;
+        }
+        float count=patchIndices.Length,varU=suu/count-su*su/(count*count),varV=svv/count-sv*sv/(count*count),cov=suv/count-su*sv/(count*count);
+        for(int i=0;i<sweepBones.Length;i++)
+            if(Vector3.Distance(sweepBones[i].localPosition,sweepPositions[i])>.00001f||Vector3.Distance(sweepBones[i].localScale,sweepScales[i])>.00001f)
+                throw new InvalidOperationException("Bare contact changed actual bone position/scale: "+sweepBones[i].name);
+        float a=Vector3.Distance(sweepUpper.position,sweepLower.position),b=Vector3.Distance(sweepLower.position,palmWrist.position);
+        if(Mathf.Abs(a-upperLength)>.00001f||Mathf.Abs(b-lowerLength)>.00001f)throw new InvalidOperationException("Anatomical arm length changed.");
+        if(float.IsNaN(min)||min<-.0001f)throw new InvalidOperationException("Actual whole bare skin crossed plane: "+min.ToString("R",CultureInfo.InvariantCulture)+" at "+label+"/"+Stage);
+        worstClearance=Mathf.Min(worstClearance,min);worstCorrection=Mathf.Max(worstCorrection,bare.MeasuredWaypointCorrectionMetres);
+        if(bare.MeasuredWaypointCorrectionMetres>.060001f||bare.SafeSolveAttempts>4)throw new InvalidOperationException("Avoidance exceeded approved bounds.");
+        var result=new SkinFrame{label=label,stage=Stage.ToString(),frame=Time.frameCount,skinVertices=allSkinIndices.Length,supportVertex=supportIndex,
+            patchVertices=patchIndices.Length,minimumClearance=min,supportResidual=Vector3.Distance(matrix.MultiplyPoint3x4(skinVertices[supportIndex]),point),
+            patchPlaneDistance=maxPatch,waypointCorrection=bare.MeasuredWaypointCorrectionMetres,attempts=bare.SafeSolveAttempts,poseRevision=body.PoseRevision,
+            blendElapsed=ReadContactElapsed(),upperLength=a,lowerLength=b,playerPosition=player.transform.position,patchExtentU=maxU-minU,patchExtentV=maxV-minV,
+            patchArea=(maxU-minU)*(maxV-minV),patchSmallEigen=.5f*(varU+varV-Mathf.Sqrt((varU-varV)*(varU-varV)+4*cov*cov))};
+        File.AppendAllText(Path.Combine(BarePalmPlaneQa.Output,"whole-skin-frames.jsonl"),JsonUtility.ToJson(result)+"\n");
+        return result;
+    }
+    void ObserveRenderedSkin()
+    {
+        if(!watchingSkin)return;
+        if(body.PoseRevision!=sweepRevision)
+        {watchingSkin=false;Check(Stage==HandContactStage.None,"Body reset releases the old arm lease before its new pose is sampled.");return;}
+        MeasureWholeSkin("endCameraRendering");renderedSweepFrames++;
+        if(Stage==HandContactStage.None)
+        {
+            Check(sweepBones.Select((t,i)=>Quaternion.Angle(t.localRotation,sweepRotations[i])<.05f).All(x=>x),
+                "All borrowed arm/finger rotations restored to the exact authored V04 baseline.");
+            watchingSkin=false;
+        }
+    }
+    IEnumerator ReversePartial(ContactHand selected)
+    {
+        stage="bare-"+selected+"-reverse-partial";yield return Setup(true,HandContactKind.Push);activeHand=selected;
+        var target=TargetAt(selected,HandContactKind.Push);yield return BeginReach(target,true);
+        yield return WaitFor(()=>ReadContactElapsed()>=.07f,1,"Measured partial reach");
+        Check(Stage==HandContactStage.Reaching&&callbacks==0,"Explicit reversal starts before any physical action.");bare.CancelContact();
+        yield return WaitFor(()=>Stage==HandContactStage.None,2,"Skin-checked reverse path");yield return Frames(1);
+        Check(callbacks==0&&pushes==0&&player.FloatVelocity==Vector3.zero,"Partial reversal causes no action or travel.");
+        pendingCapture=new ContactEvidence{name=stage+"-returned",kind="visual-only reverse-path return; no action",callbackFrame=Time.frameCount,
+            bare=true,actualFloating=player.IsFloating,rendererVisible=palmSkin.enabled,viewPitchDegrees=player.PitchDegrees};
+        yield return WaitFor(()=>pendingCapture==null,3,"Actual returned-hand capture");
+    }
+    IEnumerator UnsafeNeutral()
+    {
+        stage="unsafe imported-neutral refusal";yield return Setup(true,HandContactKind.Push);activeHand=ContactHand.Right;
+        // Explicit negative art fixture: the old V02 floating arm is known to protrude through this plane.
+        // No wall is moved inside the capsule. Restore the final V04 body through its owner immediately after.
+        var old=AssetDatabase.LoadAllAssetsAtPath(I06BodyAuthoring.WorkPath).OfType<AnimationClip>().Single(c=>c.name=="BODY_FloatNeutral");
+        var serialized=new SerializedObject(body);Transform model=(Transform)serialized.FindProperty("work").FindPropertyRelative("modelRoot").objectReferenceValue;
+        old.SampleAnimation(model.gameObject,0);
+        var negativeSkin=body.WorkRightArmRenderer;var negativeMesh=new Mesh();float unsafeMinimum=float.PositiveInfinity;
+        try
+        {
+            negativeSkin.BakeMesh(negativeMesh);var vertices=negativeMesh.vertices;var materials=negativeSkin.sharedMaterials;
+            for(int sub=0;sub<negativeMesh.subMeshCount;sub++)if(sub<materials.Length&&materials[sub]&&materials[sub].name=="MAT_Cabin_BareHands")
+                foreach(int index in negativeMesh.GetIndices(sub))unsafeMinimum=Mathf.Min(unsafeMinimum,.30f-negativeSkin.transform.TransformPoint(vertices[index]).z);
+        }finally{Object.Destroy(negativeMesh);}
+        Check(unsafeMinimum<-.02f,"Negative source clip truly puts bare skin through the wall by more than20mm.");
+        Check(!StartRequest(TargetAt(activeHand,HandContactKind.Push))&&callbacks==0&&Stage==HandContactStage.None,
+            "Unsafe authored hand pose is refused without moving Player/camera/surface or granting an action. reason="+bare.LastRefusalReason);
+        Check(bare.LastRefusalReason.Contains("starting hand skin"),"Refusal specifically identifies the measured unsafe starting skin.");
+        body.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating,Vector3.zero);body.RefreshPresentation();
+    }
+    void PlaceBlocker(HandContactTarget t)
+    {blocker.transform.position=Vector3.Lerp(eye.position,t.Surface.TransformPoint(t.LocalPoint),.55f);blocker.gameObject.SetActive(true);Physics.SyncTransforms();}
+    Collider Box(string name,Vector3 position,Vector3 scale,Material material)
+    {var go=GameObject.CreatePrimitive(PrimitiveType.Cube);go.name=name;go.transform.SetParent(surfaces.transform,false);go.transform.position=position;go.transform.localScale=scale;go.GetComponent<Renderer>().sharedMaterial=material;return go.GetComponent<Collider>();}
+    Material MakeMaterial(string name,Color color)
+    {var shader=Shader.Find("Universal Render Pipeline/Lit");if(!shader)throw new InvalidOperationException("URP Lit missing.");var m=new Material(shader){name=name};m.SetColor("_BaseColor",color);m.SetFloat("_Smoothness",.35f);return m;}
+    void OnPush(Vector3 velocity)=>pushes++;
+    void OnGrab(Collider c)=>grabs++;
+    void OnEndCamera(ScriptableRenderContext context,Camera camera)
+    {
+        if(camera!=cameraView)return;
+        try{ObserveRenderedSkin();}catch(Exception e){captureError="Every-rendered-frame skin proof: "+e;}
+        if(pendingCapture==null)return;
+        var evidence=pendingCapture;pendingCapture=null;RenderTexture old=RenderTexture.active;Texture2D image=null;
+        try
+        {
+            evidence.captureFrame=Time.frameCount;if(evidence.captureFrame!=evidence.callbackFrame)throw new InvalidOperationException("Capture missed the requested native frame.");
+            if(BarePalmPlaneQa.HitchMode&&!captureHitchStill)
+            {
+                File.WriteAllText(Path.Combine(BarePalmPlaneQa.Output,evidence.name+"-measured-contact.json"),JsonUtility.ToJson(evidence,true));
+                return;
+            }
+            captureHitchStill=false;
+            RenderTexture.active=captureTarget;image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();
+            File.WriteAllBytes(Path.Combine(BarePalmPlaneQa.Output,evidence.name+".png"),image.EncodeToPNG());
+            File.WriteAllText(Path.Combine(BarePalmPlaneQa.Output,evidence.name+".json"),JsonUtility.ToJson(evidence,true));
+            if(evidence.kind.StartsWith("visual-only",StringComparison.Ordinal))lookDownCaptures++;else captures++;
+        }
+        catch(Exception e){captureError=e.ToString();}
+        finally{RenderTexture.active=old;if(image)Object.Destroy(image);}
+    }
+    IEnumerator HitchChecks()
+    {
+        if(!BarePalmPlaneQa.HitchHeldOnly)
+        {
+            yield return ApproachHitch(true,false);
+            yield return ApproachHitch(true,true);
+        }
+        stage="hitch: actual suit preparation";Cmd(session.Eva.TryPrepareSuit());
+        Check(session.Eva.IsSuitOn,"Hitch glove cases use the actual paid suit state.");
+        if(!BarePalmPlaneQa.HitchHeldOnly)yield return ApproachHitch(false,false);
+        yield return HeldHitch(ContactHand.Left,false);
+        yield return HeldHitch(ContactHand.Right,true);
+        Check(captures==2,"Two actual post-hitch held-grip screenshots captured; initial contact readback excluded for isolation.");
+    }
+    IEnumerator ApproachHitch(bool useBare,bool moveSurface)
+    {
+        stage=(useBare?"bare":"glove")+"-hitch-approach"+(moveSurface?"-real-jump":"-valid");
+        yield return Setup(useBare,HandContactKind.Push);activeHand=ContactHand.Right;captureName=stage;
+        HandContactTarget requested=TargetAt(activeHand,HandContactKind.Push);
+        yield return BeginReach(requested,useBare);
+        yield return WaitFor(()=>ReadContactElapsed()>=.04f,1,"Partial real presentation approach");
+        Check(callbacks==0&&Stage==HandContactStage.Reaching,"Approach is pending before the real slow frame.");
+        Action change=moveSurface?(Action)(()=>{wall.transform.position+=Vector3.right*.13f;Physics.SyncTransforms();}):null;
+        yield return InjectHitch(stage,HandContactStage.Reaching,!moveSurface,change);
+        if(moveSurface)
+        {
+            yield return WaitFor(()=>Stage==HandContactStage.None,2,"Real 13cm target jump still cancels");
+            Check(callbacks==0&&pushes==0&&player.FloatVelocity==Vector3.zero,"A genuine target jump during a hitch never issues a stale push.");
+        }
+        else
+        {
+            yield return WaitFor(()=>callbacks==1,2,"Visible approach completes on subsequent ordinary frames");
+            Check(pushes==1&&grabs==0,"Valid resumed approach issues exactly one actual Player push.");
+            player.ClearMotion();yield return WaitFor(()=>Stage==HandContactStage.None,2,"Normal post-push return");
+            Check(callbacks==1,"No extra action after the hitch or return.");
+        }
+    }
+    IEnumerator HeldHitch(ContactHand selected,bool occlude)
+    {
+        stage="glove-"+selected+"-hitch-held";
+        yield return Setup(false,HandContactKind.Grip);activeHand=selected;captureName=stage;
+        HandContactTarget requested=TargetAt(selected,HandContactKind.Grip);
+        yield return BeginReach(requested,false);
+        yield return WaitFor(()=>callbacks==1,2,"Real grip established before stall");
+        Check(player.HeldHandhold==rail&&Stage==HandContactStage.Holding,"Static real registered grip is held before injecting a long frame.");
+        yield return InjectHitch(stage,HandContactStage.Holding,true,null);
+        Check(player.HeldHandhold==rail&&Stage==HandContactStage.Holding&&callbacks==1,"Static physical and visual grip survives the actual slow frame without another action.");
+        captureHitchStill=true;
+        pendingCapture=new ContactEvidence{name=stage+"-after-stall",kind="existing held grip after actual slow frame; not new action",
+            hand=selected.ToString(),callbackFrame=Time.frameCount,callbackCount=callbacks,grabbedEvents=grabs,pushedEvents=pushes,
+            actualFloating=player.IsFloating,realSuitOn=session.Eva.IsSuitOn,rendererVisible=gloves.IsVisible,
+            point=player.HeldGripPoint.Value,playerBefore=player.transform.position,playerAfter=player.transform.position,reportedResidual=gloves.ContactErrorMetres};
+        yield return WaitFor(()=>pendingCapture==null,3,"Actual post-hitch held capture");
+        yield return Seconds(.12f);
+        Check(player.HeldHandhold==rail&&Stage==HandContactStage.Holding&&callbacks==1,"Readback following the injected hitch does not retract the static held glove.");
+        if(occlude)
+        {
+            yield return InjectHitch(stage+"-occluded",HandContactStage.Holding,false,()=>PlaceBlocker(requested));
+            yield return WaitFor(()=>player.HeldHandhold==null&&Stage==HandContactStage.None,2,"Actual occlusion releases Player and retracts glove");
+            Check(callbacks==1,"Occluded slow frame cannot manufacture another grip.");
+        }
+        else
+        {
+            Done(player.Release());yield return WaitFor(()=>Stage==HandContactStage.None,2,"Explicit real release still retracts");
+            Check(callbacks==1&&player.HeldGripPoint==null,"Release after hitch clears the real anchor once.");
+        }
+    }
+    IEnumerator InjectHitch(string label,HandContactStage wanted,bool remainsValid,Action mutate)
+    {
+        bool observed=false;
+        beginAfterPresenters=()=>
+        {
+            Check(Stage==wanted,"Exact pre-stall stage is "+wanted+".");
+            if(wanted==HandContactStage.Reaching)Check(ReadContactElapsed()<.16f,"At least40ms of visible approach remains before the hitch.");
+            Transform[] joints=(bareMode?body.VisualRoot:gloves.ModelRoot).GetComponentsInChildren<Transform>(true);
+            Quaternion[] rotations=joints.Select(t=>t.localRotation).ToArray();
+            Vector3[] positions=joints.Select(t=>t.localPosition).ToArray();
+            var sample=new HitchEvidence{label=label,injectedFrame=Time.frameCount,beforeStage=Stage.ToString(),elapsedBefore=ReadContactElapsed(),
+                callbacksBefore=callbacks,validationBefore=lastValidation,heldBefore=player.HeldHandhold?player.HeldHandhold.name:"none",playerBefore=player.transform.position};
+            var watch=System.Diagnostics.Stopwatch.StartNew();
+            System.Threading.Thread.Sleep(160); // Deliberate Editor-only real frame stall, not mocked delta or production timing.
+            watch.Stop();sample.blockedSeconds=watch.Elapsed.TotalSeconds;
+            mutate?.Invoke();
+            observeHitchAt=Time.frameCount+1;
+            afterHitchFrame=()=>
+            {
+                sample.observedFrame=Time.frameCount;sample.actualDelta=Time.unscaledDeltaTime;sample.afterStage=Stage.ToString();
+                sample.elapsedAfter=ReadContactElapsed();sample.callbacksAfter=callbacks;sample.validationAfter=lastValidation;
+                sample.heldAfter=player.HeldHandhold?player.HeldHandhold.name:"none";sample.playerAfter=player.transform.position;
+                sample.worstJointAngle=joints.Select((t,i)=>Quaternion.Angle(t.localRotation,rotations[i])).Max();
+                sample.worstJointPositionMetres=joints.Select((t,i)=>Vector3.Distance(t.localPosition,positions[i])).Max();
+                File.WriteAllText(Path.Combine(BarePalmPlaneQa.Output,label+"-hitch-frame.json"),JsonUtility.ToJson(sample,true));
+                Check(sample.observedFrame==sample.injectedFrame+1&&sample.actualDelta>.1f&&sample.blockedSeconds>=.15,"Observed the actual immediate >100ms frame after a measured >=150ms stall.");
+                Check(callbacks==sample.callbacksBefore,"The actual hitch frame invokes no new contact action.");
+                if(remainsValid)
+                {
+                    Check(Stage==wanted,"A slow frame alone preserves "+wanted+"; current="+Stage+", validation="+lastValidation);
+                    Check(Math.Abs(sample.elapsedAfter-sample.elapsedBefore)<.00001f&&sample.worstJointAngle<.01f
+                        &&sample.worstJointPositionMetres<.00001f,"Hitch consumes zero animation time and preserves the real joint pose.");
+                    Check(Vector3.Distance(sample.playerBefore,sample.playerAfter)<.0001f,"A static slow-frame contact does not create Player movement.");
+                }
+                else Check(Stage!=wanted,"Genuine changed geometry still cancels on the slow frame; validation="+lastValidation);
+                observed=true;
+            };
+        };
+        yield return WaitFor(()=>observed,3,"Injected slow frame observed after real presenters");
+    }
+    float ReadContactElapsed()
+    {
+        object presenter=bareMode?(object)bare:gloves;
+        string field=bareMode?"elapsed":"contactElapsed";
+        return (float)presenter.GetType().GetField(field,BindingFlags.Instance|BindingFlags.NonPublic).GetValue(presenter);
+    }
+    IEnumerator StableFrames()
+    {int stable=0;float until=Time.realtimeSinceStartup+5;while(stable<4){if(Time.realtimeSinceStartup>until)throw new InvalidOperationException("Could not obtain four <80 ms native frames before anticipation.");yield return null;stable=Time.unscaledDeltaTime<=.08f?stable+1:0;}}
+    static IEnumerator Frames(int n){for(int i=0;i<n;i++)yield return null;}
+    static IEnumerator Seconds(float n){float end=Time.realtimeSinceStartup+n;while(Time.realtimeSinceStartup<end)yield return null;}
+    static IEnumerator WaitFor(Func<bool> condition,float seconds,string label)
+    {float end=Time.realtimeSinceStartup+seconds;while(!condition()){if(Time.realtimeSinceStartup>=end)throw new TimeoutException(label);yield return null;}}
+    void Cmd(CommandResult result)=>Check(result.Succeeded,"Real domain command: "+result.Explanation);
+    void Done(FloatActionResult result)=>Check(result==FloatActionResult.Done,"Actual Player command: "+result);
+    void Check(bool pass,string message){Add(pass,message);if(!pass)throw new InvalidOperationException(message);}
+    void Add(bool pass,string message)
+    {checks.checks.Add(new CheckEntry{stage=stage,message=message,pass=pass,frame=Time.frameCount});File.WriteAllText(Path.Combine(BarePalmPlaneQa.Output,"checks.json"),JsonUtility.ToJson(checks,true));File.AppendAllText(Path.Combine(BarePalmPlaneQa.Output,"checks.txt"),(pass?"PASS ":"FAIL ")+stage+" | "+message+"\n");}
+    void Cleanup()
+    {
+        watchingSkin=false;if(skinBake)Object.Destroy(skinBake);
+        beginAfterPresenters=null;
+        afterHitchFrame=null;observeHitchAt=-1;
+        RenderPipelineManager.endCameraRendering-=OnEndCamera;
+        if(body&&bare)body.PoseWillReset-=bare.CancelImmediately;if(bare)bare.ClearBinding();if(gloves)gloves.ClearBinding();if(body)body.ClearBinding();
+        if(player){player.Pushed-=OnPush;player.Grabbed-=OnGrab;player.ClearMotion();player.ExitFloat();player.InputSource=null;player.ControlGate=()=>false;}
+        session?.Dispose();session=null;if(cameraView)cameraView.targetTexture=null;if(captureTarget){captureTarget.Release();Object.Destroy(captureTarget);}
+        if(wallMaterial)Object.Destroy(wallMaterial);if(railMaterial)Object.Destroy(railMaterial);if(blockMaterial)Object.Destroy(blockMaterial);Application.runInBackground=originalBackground;
+    }
+}

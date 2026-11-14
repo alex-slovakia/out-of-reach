@@ -1,0 +1,6 @@
+Unsaved bounded wall/rail fixture, NOT Bootstrap/full-game/input-binding acceptance.
+One real Player and MissionSession. Real launch/cockpit/repairs/suit command; actual pending Impact acknowledged skipped.
+Real EnterFloat at a visible nearby solid. Public Teleport/ClearMotion reset positions BETWEEN cases only. Scripted zero device intent.
+No synthetic phase/suit/mode/inventory; session is not auto-ticked during geometry probes. Body authoring reuses imported released models.
+Closest-hit validator plus 10 mm padded wrist path; NOT whole-arm collision/IK acceptance. All material-defined bare skin rebaked on every rendered active/return frame and at callback.
+1280x720 actual camera, endCameraRendering capture on contact frame. Native art acceptance still needs human viewing. 100s watchdog.

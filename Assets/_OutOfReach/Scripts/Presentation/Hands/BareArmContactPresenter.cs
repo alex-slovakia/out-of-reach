@@ -17,14 +17,29 @@ namespace OutOfReach.Presentation.Hands
         private Func<int> readRevision;
         private Func<HandContactSample, bool> validate, action;
         private HandContactTarget target;
+        private BarePalmContactPose calibration;
+        private HandContactSample lastSample;
         private ContactHand hand;
         private int poseRevision, generation;
-        private float elapsed;
+        private float elapsed, lastBlend, returnFromBlend;
+        private Vector3 lastFinalWrist;
+        private Quaternion lastFinalRotation;
         private Vector3 palmPoint, startWrist, elbowPole, previousPoint, previousEye;
         private Quaternion palmFrame, startWristRotation;
-        private readonly Quaternion[] baseline = new Quaternion[3], returnStart = new Quaternion[3];
+        private readonly Quaternion[] baseline = new Quaternion[13], previousPose = new Quaternion[13];
+        private const float PlaneTolerance = .0001f;
         public HandContactStage ContactStage { get; private set; }
         public float ContactErrorMetres { get; private set; } = float.NaN;
+        public float MinimumHandPlaneClearanceMetres { get; private set; } = float.NaN;
+        public float PalmPatchPlaneDistanceMetres { get; private set; } = float.NaN;
+        public float MeasuredWaypointCorrectionMetres { get; private set; }
+        public int SafeSolveAttempts { get; private set; }
+        public string LastRefusalReason { get; private set; } = string.Empty;
+        public int ContactSupportVertexIndex => calibration?.SupportIndex ?? -1;
+        public int ContactHandVertexCount => calibration?.SkinIndices.Length ?? 0;
+        public int ContactPatchVertexCount => calibration?.PatchIndices.Length ?? 0;
+        public int GetContactPatchVertexIndex(int index) => calibration != null && index >= 0 && index < calibration.PatchIndices.Length
+            ? calibration.PatchIndices[index] : -1;
 
         /// <summary>Root must subscribe CancelImmediately to EmbodiedBodyPresenter.PoseWillReset before use.</summary>
         public void Configure(BareArmContactRig leftArm, BareArmContactRig rightArm, Transform unbobbedEye,
@@ -43,20 +58,25 @@ namespace OutOfReach.Presentation.Hands
         public bool TryReachPush(ContactHand requestedHand, HandContactTarget actualSurface,
             Func<HandContactSample, bool> tryPushAtContact)
         {
+            LastRefusalReason = string.Empty;
             if (!isActiveAndEnabled || clock == null || clock.IsPaused || ContactStage != HandContactStage.None
                 || (requestedHand != ContactHand.Left && requestedHand != ContactHand.Right)
                 || tryPushAtContact == null || !leaseAllowed(requestedHand)) return false;
             active = requestedHand == ContactHand.Left ? left : right; hand = requestedHand;
             if (!active.IsUsable || !active.Renderer.enabled || !active.Renderer.gameObject.activeInHierarchy) { Forget(); return false; }
             poseRevision = readRevision(); target = actualSurface;
-            if (!BarePalmCalibration.TryMeasure(active, out palmPoint, out palmFrame)) { Forget(); return false; }
-            baseline[0] = active.Upper.localRotation; baseline[1] = active.Lower.localRotation; baseline[2] = active.Wrist.localRotation;
+            CapturePose(baseline);
+            if (!BarePalmCalibration.TryMeasure(active, out calibration)) { LastRefusalReason = "No valid anatomical palm support patch."; Forget(); return false; }
+            palmPoint = calibration.LocalPoint; palmFrame = calibration.LocalFrame;
             startWrist = active.Upper.parent.InverseTransformPoint(active.Wrist.position);
             startWristRotation = Quaternion.Inverse(active.Upper.parent.rotation) * active.Wrist.rotation;
             elbowPole = active.Upper.parent.InverseTransformVector(active.Lower.position - active.Upper.position);
             previousPoint = actualSurface.Surface ? actualSurface.Surface.TransformPoint(actualSurface.LocalPoint) : Vector3.zero;
             previousEye = eye.position;
-            if (!TryTarget(out _, out Vector3 point, out Quaternion rotation) || !CanReach(point)) { Forget(); return false; }
+            if (!TryTarget(out HandContactSample sample, out Vector3 point, out Quaternion rotation) || !CanReach(point)) { Forget(); return false; }
+            if (!MeasureSkin(sample) || MinimumHandPlaneClearanceMetres < -PlaneTolerance)
+            { LastRefusalReason = "Authored starting hand skin already crosses the target plane."; Forget(); return false; }
+            lastSample = sample; lastFinalWrist = point; lastFinalRotation = rotation; lastBlend = 0f;
             action = tryPushAtContact; elapsed = 0f; ContactStage = HandContactStage.Reaching;
             return true;
         }
@@ -72,8 +92,8 @@ namespace OutOfReach.Presentation.Hands
         public void CancelContact()
         {
             if (active == null || ContactStage == HandContactStage.None || ContactStage == HandContactStage.Returning) return;
-            returnStart[0] = active.Upper.localRotation; returnStart[1] = active.Lower.localRotation; returnStart[2] = active.Wrist.localRotation;
-            generation++; action = null; target = default; elapsed = 0f;
+            returnFromBlend = lastBlend;
+            generation++; action = null; elapsed = 0f;
             ContactErrorMetres = float.NaN; ContactStage = HandContactStage.Returning;
         }
 
@@ -86,8 +106,11 @@ namespace OutOfReach.Presentation.Hands
         private void OnDestroy() => ClearBinding();
         private void Forget()
         {
+            calibration?.Dispose(); calibration = null;
             generation++; active = null; action = null; target = default;
             ContactStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN;
+            MinimumHandPlaneClearanceMetres = PalmPatchPlaneDistanceMetres = float.NaN;
+            MeasuredWaypointCorrectionMetres = 0f; SafeSolveAttempts = 0; lastBlend = returnFromBlend = 0f;
         }
 
         private void LateUpdate()
@@ -106,24 +129,24 @@ namespace OutOfReach.Presentation.Hands
             if (ContactStage == HandContactStage.Returning)
             {
                 float t = Mathf.Clamp01(elapsed / Mathf.Clamp(returnSeconds, .15f, .35f));
-                Restore(returnStart, Mathf.SmoothStep(0f, 1f, t));
-                if (t >= 1f) Forget();
+                // Reverse the same measured path; direct quaternion return can sweep fingers through a wall.
+                float reverse = returnFromBlend * (1f - Mathf.SmoothStep(0f, 1f, t));
+                if (!TryApplySafePose(reverse, lastFinalWrist, lastFinalRotation, lastSample))
+                { CancelImmediately(); return; }
+                if (t >= 1f) { Restore(baseline, 1f); Forget(); }
                 return;
             }
             if (!TryTarget(out HandContactSample sample, out Vector3 finalWrist, out Quaternion finalRotation))
             { CancelContact(); return; }
             float reach = Mathf.Clamp01(elapsed / Mathf.Clamp(reachSeconds, .15f, .25f));
             float blend = ContactStage == HandContactStage.Reaching ? Mathf.SmoothStep(0f, 1f, reach) : 1f;
-            Vector3 wrist = Vector3.Lerp(active.Upper.parent.TransformPoint(startWrist), finalWrist, blend);
-            Quaternion rotation = Quaternion.Slerp(active.Upper.parent.rotation * startWristRotation, finalRotation, blend);
-            // Solve from the captured fitting pose every frame, never accumulating rotations or changing bone lengths.
-            Restore(baseline, 1f);
-            if (!SolveArm(wrist, rotation)) { CancelContact(); return; }
-            ContactErrorMetres = Vector3.Distance(active.Wrist.TransformPoint(palmPoint), sample.Point);
+            if (!TryApplySafePose(blend, finalWrist, finalRotation, sample)) { CancelContact(); return; }
+            lastSample = sample; lastFinalWrist = finalWrist; lastFinalRotation = finalRotation; lastBlend = blend;
             if (ContactStage == HandContactStage.PushContact)
             { if (elapsed >= .06f) CancelContact(); return; }
             if (reach < 1f) return;
-            if (ContactErrorMetres > .003f) { CancelContact(); return; }
+            if (ContactErrorMetres > .003f || PalmPatchPlaneDistanceMetres > .003f
+                || MinimumHandPlaneClearanceMetres < -PlaneTolerance) { CancelContact(); return; }
             var callback = action; action = null;
             ContactStage = HandContactStage.PushContact; elapsed = 0f;
             int token = generation;
@@ -140,6 +163,66 @@ namespace OutOfReach.Presentation.Hands
             if (active.Upper) active.Upper.localRotation = Quaternion.Slerp(from[0], baseline[0], blend);
             if (active.Lower) active.Lower.localRotation = Quaternion.Slerp(from[1], baseline[1], blend);
             if (active.Wrist) active.Wrist.localRotation = Quaternion.Slerp(from[2], baseline[2], blend);
+            for (int digit = 0; digit < 5; digit++) for (int joint = 0; joint < 2; joint++)
+            {
+                int index = 3 + digit * 2 + joint;
+                Transform bone = active.Fingers[digit * 3 + joint];
+                if (bone) bone.localRotation = Quaternion.Slerp(from[index], baseline[index], blend);
+            }
+        }
+
+        private void CapturePose(Quaternion[] destination)
+        {
+            destination[0] = active.Upper.localRotation; destination[1] = active.Lower.localRotation; destination[2] = active.Wrist.localRotation;
+            for (int digit = 0; digit < 5; digit++) for (int joint = 0; joint < 2; joint++)
+                destination[3 + digit * 2 + joint] = active.Fingers[digit * 3 + joint].localRotation;
+        }
+
+        private bool MeasureSkin(HandContactSample sample)
+        {
+            if (calibration == null || !calibration.Measure(sample.Point, sample.Normal, out float clearance, out float error, out float patch)) return false;
+            MinimumHandPlaneClearanceMetres = clearance; ContactErrorMetres = error; PalmPatchPlaneDistanceMetres = patch;
+            return true;
+        }
+
+        private bool TryApplySafePose(float blend, Vector3 finalWrist, Quaternion finalRotation, HandContactSample sample)
+        {
+            if (active == null || calibration == null) return false;
+            CapturePose(previousPose);
+            Vector3 currentWrist = active.Wrist.position;
+            Vector3 desired = Vector3.Lerp(active.Upper.parent.TransformPoint(startWrist), finalWrist, blend);
+            Quaternion rotation = Quaternion.Slerp(active.Upper.parent.rotation * startWristRotation, finalRotation, blend);
+            float correction = 0f; int token = generation;
+            for (int attempt = 0; attempt < 4; attempt++)
+            {
+                Vector3 waypoint = desired + sample.Normal * correction;
+                var path = new HandContactSample(hand, HandContactKind.Push, target, sample.Point, sample.Normal,
+                    sample.Tangent, currentWrist, waypoint);
+                bool clear;
+                try { clear = validate != null && validate(path); }
+                catch (Exception error) { Debug.LogException(error, this); clear = false; }
+                if (token != generation || active == null || readRevision() != poseRevision) return false;
+                if (!clear || !CanReach(waypoint)) { LastRefusalReason = "Measured waypoint is blocked or outside real arm reach."; break; }
+                Restore(baseline, 1f);
+                for (int digit = 0; digit < 5; digit++) for (int joint = 0; joint < 2; joint++)
+                {
+                    int index = digit * 2 + joint;
+                    active.Fingers[digit * 3 + joint].localRotation = Quaternion.Slerp(baseline[3 + index], calibration.OpenFingers[index], blend);
+                }
+                if (!SolveArm(waypoint, rotation) || !MeasureSkin(sample)) { LastRefusalReason = "The actual skinned hand could not be solved safely."; break; }
+                SafeSolveAttempts = attempt + 1; MeasuredWaypointCorrectionMetres = correction;
+                if (MinimumHandPlaneClearanceMetres >= -PlaneTolerance) return true;
+                // Only the measured intermediate skin violation moves this waypoint. The actual palm
+                // support point remains the endpoint; large endpoint stand-off cannot pass its residual gate.
+                correction += -MinimumHandPlaneClearanceMetres + PlaneTolerance;
+                if (correction > .06f) { LastRefusalReason = "Required plane avoidance exceeds the 60mm presentation bound."; break; }
+            }
+            if (active != null && readRevision() == poseRevision)
+            {
+                Restore(previousPose, 0f);
+                MeasureSkin(sample); // Diagnostics describe the retained visible pose, not a rejected trial.
+            }
+            return false;
         }
 
         private bool TryTarget(out HandContactSample sample, out Vector3 wrist, out Quaternion rotation)
