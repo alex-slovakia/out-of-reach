@@ -1,0 +1,23 @@
+{
+  "name": "OutOfReach.Tests.Composition",
+  "rootNamespace": "OutOfReach.Tests.Composition",
+  "references": [
+    "UnityEngine.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Composition",
+    "OutOfReach.UI.Report"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

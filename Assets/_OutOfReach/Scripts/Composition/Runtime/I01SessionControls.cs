@@ -7,10 +7,33 @@ using UnityEngine.UIElements;
 
 namespace OutOfReach.Composition
 {
-    /// <summary>Small composition-owned mode/pause controls. Buttons only invoke the real runtime commands.</summary>
+    /// <summary>
+    /// Small composition-owned mode/pause controls. Buttons only invoke the real runtime commands.
+    /// QUIT-TO-DESKTOP-01: every menu (planning-mode choice, Paused, Mission ended and the mission record end card)
+    /// offers "Quit to desktop". The first press only arms it ("Click again to quit") for a few real seconds; a second
+    /// press inside that window runs the quit action once. A changed or hidden menu disarms it.
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class I01SessionControls : MonoBehaviour
     {
+        public const string QuitLabel = "Quit to desktop";
+        public const string QuitConfirmLabel = "Click again to quit";
+        public const string QuittingLabel = "Quitting…";
+        public const string QuitButtonName = "session-quit-to-desktop";
+        public const string RecordQuitButtonName = "reportQuitButton";
+        /// <summary>The mission record end card's action column (FlightRecorderPresenter), where its quit button goes.</summary>
+        public const string RecordActionsName = "reportEndActions";
+        public const float DefaultQuitConfirmSeconds = 3f;
+
+        // Pause help for the actual movement mode (root 6885223398). Floating has no WASD thrust and no bare-hand grip.
+        public const string WalkingControlsHint = "WASD move · Shift sprint · Mouse look\nE interact · Tab systems · Esc resume";
+        public const string RouteControlsHint = "W/S move along the tether · Mouse look\nE interact · Tab systems · Esc resume";
+        public const string FloatingPushHint = "Left/right click a surface in reach: push off\n"
+            + "WASD only aims a push: hold it while clicking\n"
+            + "Space: foot push, only while your feet touch support";
+        public const string SuitedRailHint = "Suit: click a rail to grip, click again to let go";
+        public const string FloatingSystemsHint = "Mouse look · E use equipment · Tab systems · Esc resume";
+
         [SerializeField] private UIDocument document;
         [SerializeField] private Font font;
         [SerializeField] private StyleSheet reportStyleSheet;
@@ -34,12 +57,45 @@ namespace OutOfReach.Composition
         private bool showingMode;
         private bool showingOutcome;
         private float feedbackUntil;
+        private Button quit;
+        private Button recordQuit;
+        private System.Action quitAction;
+        private readonly SessionQuitConfirmation quitConfirmation = new SessionQuitConfirmation();
+        private float quitConfirmSeconds = DefaultQuitConfirmSeconds;
+        private int quitMenuContext;
+        private bool quitRequested;
 
         public void ConfigureDocument(UIDocument boundDocument, Font bodyFont, StyleSheet reportStyles = null)
         {
             document = boundDocument;
             font = bodyFont;
             reportStyleSheet = reportStyles;
+        }
+
+        /// <summary>Real seconds the first quit press stays armed (default 3, clamped to 0.25–10).</summary>
+        public float QuitConfirmSeconds
+        {
+            get => quitConfirmSeconds;
+            set => quitConfirmSeconds = float.IsNaN(value) || float.IsInfinity(value)
+                ? DefaultQuitConfirmSeconds : Mathf.Clamp(value, .25f, 10f);
+        }
+
+        /// <summary>True while the first quit press waits for its confirmation.</summary>
+        public bool IsQuitArmed => quitConfirmation.IsArmed;
+
+        /// <summary>True once a confirmed press has handed the quit to the quit action.</summary>
+        public bool QuitRequested => quitRequested;
+
+        /// <summary>
+        /// Replaces the quit action so native checks and tests can assert it without closing anything. Null restores
+        /// the real action: Application.Quit, and leaving Play Mode in the editor.
+        /// </summary>
+        public void ConfigureQuitAction(System.Action action)
+        {
+            quitAction = action;
+            quitRequested = false;
+            quitConfirmation.Disarm();
+            RefreshQuitButtons();
         }
 
         public void Configure(I01MissionComposition owner)
@@ -67,6 +123,7 @@ namespace OutOfReach.Composition
             if (composition && root == null) { EnsureView(); Refresh(); }
             if (feedback != null && feedback.style.display.value != DisplayStyle.None && Time.unscaledTime >= feedbackUntil)
                 feedback.style.display = DisplayStyle.None;
+            if (quitConfirmation.Expire(Time.unscaledTime, quitConfirmSeconds)) RefreshQuitButtons();
             RefreshCommunications();
         }
 
@@ -90,6 +147,9 @@ namespace OutOfReach.Composition
                     recorder = new FlightRecorderPresenter(reportHost, reportStyleSheet);
                     recorder.RestartRequested += OnReportRestart;
                     recorder.MenuFeedbackRequested += OnReportMenuFeedback;
+                    // The record replaces the session menu when the mission ends: its end card gets the same quit.
+                    recordQuit = AddRecordQuitButton(recorder.Root, () => OnQuit(recordQuit), () => { if (composition) composition.PlayMenuCue(); });
+                    RefreshQuitButtons();
                 }
                 recorder.SetReducedMotion(composition.Cinematics && composition.Cinematics.ReducedEffects);
                 if (!ReferenceEquals(displayedReport, composition.Runtime.Report))
@@ -104,11 +164,25 @@ namespace OutOfReach.Composition
                 displayedReport = null;
             }
             bool visible = showingMode || paused || showingOutcome;
+            // An armed quit belongs to the menu it was pressed in: any other or no menu disarms it.
+            int menuContext = !visible ? 0 : showRecord ? 4 : showingOutcome ? 3 : showingMode ? 1 : 2;
+            if (menuContext != quitMenuContext)
+            {
+                quitMenuContext = menuContext;
+                quitConfirmation.Disarm();
+            }
+            RefreshQuitButtons();
             if (flightBoard) flightBoard.SetMenuOverlayVisible(showingMode || paused);
             composition.SetMenuPresentationVisible(visible);
             modal.EnableInClassList("reduced-motion", composition.Cinematics && composition.Cinematics.ReducedEffects);
             modal.style.display = visible && !showRecord ? DisplayStyle.Flex : DisplayStyle.None;
             controlsHint.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
+            if (paused && !showingOutcome)
+            {
+                var player = composition.Runtime.Player;
+                var eva = composition.Runtime.Eva;
+                controlsHint.text = ControlsHintFor(player && player.IsFloating, player && player.IsOnRoute, eva != null && eva.IsSuitOn);
+            }
             if (!visible) feedback.style.display = DisplayStyle.None;
             RefreshCommunications();
             if (!visible) return;
@@ -166,8 +240,11 @@ namespace OutOfReach.Composition
             detail.AddToClassList("session-menu-detail");
             primary = ActionButton(OnPrimary, true);
             secondary = ActionButton(OnSecondary, false);
+            quit = ActionButton(() => OnQuit(quit), false);
+            quit.name = QuitButtonName;
             panel.Add(primary);
             panel.Add(secondary);
+            panel.Add(quit);
             panel.Add(detail);
             reduced = new Toggle("Reduced camera motion and light effects");
             reduced.AddToClassList("session-reduced");
@@ -177,7 +254,7 @@ namespace OutOfReach.Composition
             feedback.AddToClassList("session-menu-feedback");
             feedback.style.display = DisplayStyle.None;
             panel.Add(feedback);
-            controlsHint = new Label("WASD move · Mouse look\nE interact · Tab systems · Esc resume") { pickingMode = PickingMode.Ignore };
+            controlsHint = new Label(WalkingControlsHint) { pickingMode = PickingMode.Ignore };
             controlsHint.AddToClassList("session-menu-controls");
             panel.Add(controlsHint);
             communications = new Label { pickingMode = PickingMode.Ignore };
@@ -195,6 +272,7 @@ namespace OutOfReach.Composition
             reportHost.style.top = reportHost.style.bottom = 0;
             reportHost.style.display = DisplayStyle.None;
             root.Add(reportHost);
+            RefreshQuitButtons();
         }
 
         private void RefreshCommunications()
@@ -243,7 +321,8 @@ namespace OutOfReach.Composition
 
         private void OnPrimary()
         {
-            if (!composition) return;
+            // A closed menu's focused button must not start, resume or restart from a stray Enter in play.
+            if (!composition || !IsShown(primary)) return;
             if (showingMode) composition.StartTimedPlanning();
             else if (showingOutcome) composition.Restart();
             else composition.Resume();
@@ -252,7 +331,7 @@ namespace OutOfReach.Composition
 
         private void OnSecondary()
         {
-            if (!composition) return;
+            if (!composition || !IsShown(secondary)) return;
             if (showingMode) composition.StartPractice();
             else composition.Restart();
             composition.PlayMenuCue(true);
@@ -261,6 +340,90 @@ namespace OutOfReach.Composition
         private void OnReducedChanged(ChangeEvent<bool> change)
         {
             if (composition) composition.SetReducedEffects(change.newValue);
+        }
+
+        /// <summary>
+        /// The pause help for the player's actual movement mode. Floating wins over a tether route (the controller
+        /// gives floating no WASD thrust either way); only a suited player is told about rail grips.
+        /// </summary>
+        public static string ControlsHintFor(bool floating, bool onRoute, bool suited)
+        {
+            if (!floating) return onRoute ? RouteControlsHint : WalkingControlsHint;
+            return FloatingPushHint + (suited ? "\n" + SuitedRailHint : string.Empty) + "\n" + FloatingSystemsHint;
+        }
+
+        /// <summary>
+        /// Appends a "Quit to desktop" button to a mission record end card, after "Plan again", with the record's own
+        /// button style. Returns the button; its click runs <paramref name="onQuit"/>, hover and focus run
+        /// <paramref name="onCue"/>. No UI file is changed: the record's action column is found by name.
+        /// </summary>
+        public static Button AddRecordQuitButton(VisualElement recordRoot, System.Action onQuit, System.Action onCue = null)
+        {
+            if (recordRoot == null) throw new System.ArgumentNullException(nameof(recordRoot));
+            if (onQuit == null) throw new System.ArgumentNullException(nameof(onQuit));
+            VisualElement actions = recordRoot.Q<VisualElement>(RecordActionsName);
+            if (actions == null)
+                Debug.LogWarning("I01SessionControls: the mission record has no '" + RecordActionsName + "'; its quit button goes to the record root.");
+            var button = new Button(onQuit) { name = RecordQuitButtonName, text = QuitLabel };
+            button.AddToClassList("recorder-button");
+            if (onCue != null)
+            {
+                button.RegisterCallback<PointerEnterEvent>(_ => onCue());
+                button.RegisterCallback<FocusInEvent>(_ => onCue());
+            }
+            (actions ?? recordRoot).Add(button);
+            return button;
+        }
+
+        private void OnQuit(Button source)
+        {
+            // A hidden menu keeps no say: a button that kept keyboard focus after its menu closed must not arm or quit.
+            if (quitRequested || source == null || !source.enabledInHierarchy || !IsShown(source)) return;
+            if (!quitConfirmation.Press(Time.unscaledTime, quitConfirmSeconds))
+            {
+                // The first press only arms: one stray click never closes the game.
+                RefreshQuitButtons();
+                if (composition) composition.PlayMenuCue(true);
+                return;
+            }
+            quitRequested = true;
+            RefreshQuitButtons();
+            if (composition) composition.PlayMenuCue(true);
+            try { (quitAction ?? QuitApplication).Invoke(); }
+            catch
+            {
+                quitRequested = false;
+                RefreshQuitButtons();
+                throw;
+            }
+        }
+
+        // UI Toolkit still delivers submit (Enter, gamepad South) to a focused button inside a hidden menu. The menus are
+        // hidden by inline display (Refresh) or the record's "recorder-hidden" class; both are current immediately,
+        // unlike resolved styles, so a press right after a menu opens is never refused.
+        private static bool IsShown(VisualElement element)
+        {
+            for (VisualElement current = element; current != null; current = current.parent)
+            {
+                if (current.style.display == DisplayStyle.None || current.ClassListContains("recorder-hidden")) return false;
+            }
+
+            return true;
+        }
+
+        private void RefreshQuitButtons()
+        {
+            string text = quitRequested ? QuittingLabel : quitConfirmation.IsArmed ? QuitConfirmLabel : QuitLabel;
+            if (quit != null) { quit.text = text; quit.SetEnabled(!quitRequested); }
+            if (recordQuit != null) { recordQuit.text = text; recordQuit.SetEnabled(!quitRequested); }
+        }
+
+        private static void QuitApplication()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            Application.Quit();
         }
 
         private void ReleaseView()
@@ -281,13 +444,62 @@ namespace OutOfReach.Composition
             root = modal = panel = null;
             heading = detail = feedback = controlsHint = communications = null;
             reportHost = null;
-            primary = secondary = null;
+            primary = secondary = quit = recordQuit = null;
             reduced = null;
+            quitConfirmation.Disarm();
+            quitMenuContext = 0;
         }
 
         private void OnReportMenuFeedback(bool confirm)
         {
             if (composition) composition.PlayMenuCue(confirm);
+        }
+    }
+
+    /// <summary>
+    /// QUIT-TO-DESKTOP-01 two-step confirmation: the first press only arms for a window of real seconds; a second press
+    /// inside that window confirms. A press after the window (or with time running backwards) arms again instead.
+    /// </summary>
+    public sealed class SessionQuitConfirmation
+    {
+        private float armedAt;
+
+        public bool IsArmed { get; private set; }
+
+        /// <summary>True when this press confirms; false when it only armed the confirmation.</summary>
+        public bool Press(float now, float windowSeconds)
+        {
+            Validate(now, windowSeconds);
+            if (IsArmed && Inside(now, windowSeconds))
+            {
+                IsArmed = false;
+                return true;
+            }
+
+            IsArmed = true;
+            armedAt = now;
+            return false;
+        }
+
+        /// <summary>Disarms a confirmation whose window has passed; true when that changed the state.</summary>
+        public bool Expire(float now, float windowSeconds)
+        {
+            Validate(now, windowSeconds);
+            if (!IsArmed || Inside(now, windowSeconds)) return false;
+            IsArmed = false;
+            return true;
+        }
+
+        public void Disarm() => IsArmed = false;
+
+        private bool Inside(float now, float windowSeconds) => now >= armedAt && now - armedAt <= windowSeconds;
+
+        private static void Validate(float now, float windowSeconds)
+        {
+            if (float.IsNaN(now) || float.IsInfinity(now))
+                throw new System.ArgumentOutOfRangeException(nameof(now), now, "Time must be finite.");
+            if (float.IsNaN(windowSeconds) || float.IsInfinity(windowSeconds) || windowSeconds <= 0f)
+                throw new System.ArgumentOutOfRangeException(nameof(windowSeconds), windowSeconds, "The window must be finite and above zero.");
         }
     }
 }
