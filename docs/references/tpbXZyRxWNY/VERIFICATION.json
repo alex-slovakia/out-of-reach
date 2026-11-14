@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "selected_frames": 8,
+  "dimensions": [
+    640,
+    360
+  ],
+  "source_fps": 30,
+  "timestamp_check": "select_references.py confirmed each requested source PTS with ffprobe",
+  "image_checks": "8 PNG signatures/dimensions/SHA-256 valid; contact sheet visually inspected",
+  "source_video_bytes": 51588202,
+  "source_video_sha256": "19f8ce913032f28e1b5feb60223c0861897aac44f093b76421daa647ab666cea",
+  "limitations": [
+    "No audio or transcript analysis; subtitles HTTP 429",
+    "No Unity launched, no compile/build/playtest",
+    "No production edits, no Git mutations, no external messages"
+  ]
+}

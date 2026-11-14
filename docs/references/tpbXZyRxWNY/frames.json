@@ -1,0 +1,74 @@
+[
+  {
+    "id": "F01",
+    "timestamp": "09:52.000",
+    "seconds": 592.0,
+    "frame_index_30fps": 17760,
+    "file": "selected/F01-10h-blackout-to-play.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=592s",
+    "sha256": "a601baf84ef35db79058ef1fcaa3158d22ff5dc6736b57fd7deaf7ece13bf05f"
+  },
+  {
+    "id": "F02",
+    "timestamp": "10:21.200",
+    "seconds": 621.2,
+    "frame_index_30fps": 18636,
+    "file": "selected/F02-10h-visible-body.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=621s",
+    "sha256": "c4e84322dc011552c1f8b8a6c7850e2964e03cebe1bc82e47c39f281de91d9f5"
+  },
+  {
+    "id": "F03",
+    "timestamp": "15:42.000",
+    "seconds": 942.0,
+    "frame_index_30fps": 28260,
+    "file": "selected/F03-100h-sparse-menu.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=942s",
+    "sha256": "cb8bd9095f115dc18d475ab7a94b8a75286c9c38ab64772d05bc2fcb792bac75"
+  },
+  {
+    "id": "F04",
+    "timestamp": "16:22.000",
+    "seconds": 982.0,
+    "frame_index_30fps": 29460,
+    "file": "selected/F04-100h-cockpit-impact.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=982s",
+    "sha256": "04896f94f89d1a4667ecc1c7fe2793fb3b628d63ad07152826855a5007e397e9"
+  },
+  {
+    "id": "F05",
+    "timestamp": "16:56.400",
+    "seconds": 1016.4,
+    "frame_index_30fps": 30492,
+    "file": "selected/F05-100h-context-prompt.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=1016s",
+    "sha256": "cf71845f85bdfd4950e9c44343b87004c1e0a6cbb31d2dc56b44688d282ce587"
+  },
+  {
+    "id": "F06",
+    "timestamp": "18:18.000",
+    "seconds": 1098.0,
+    "frame_index_30fps": 32940,
+    "file": "selected/F06-100h-hand-object-contact.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=1098s",
+    "sha256": "2e98fbc15f1b851c41b66f5944f4b12158500f6f8b83f1e22c2e6e5977531a96"
+  },
+  {
+    "id": "F07",
+    "timestamp": "20:03.000",
+    "seconds": 1203.0,
+    "frame_index_30fps": 36090,
+    "file": "selected/F07-100h-ladder-grip.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=1203s",
+    "sha256": "99ded90147acd29597973a615136db83399a6300b1353912b88d56ddc1b05180"
+  },
+  {
+    "id": "F08",
+    "timestamp": "20:30.000",
+    "seconds": 1230.0,
+    "frame_index_30fps": 36900,
+    "file": "selected/F08-100h-swim-hands.png",
+    "source_url": "https://www.youtube.com/watch?v=tpbXZyRxWNY&t=1230s",
+    "sha256": "998fa1f7ba3d21eaaed340531390dbf764d014635e8df3df5572efc72e6ffbba"
+  }
+]
