@@ -2,7 +2,7 @@
 
 ## Status
 
-One real NASA/JPL dataset is downloaded, normalized and verified offline. It is a **reference artifact, not yet connected to gameplay**. Claude owns the simulation and communications implementation; the integrator owns importing a reviewed runtime copy into Unity. Do not describe the demo as using these values in play until the integration checks below pass.
+The committed NASA/JPL Horizons dataset now drives C04 communications in the integrated I02 mission. At runtime revision `7e41699`, the 198-check scene harness exercised actual outbound/return delay, processing, reception and reporting. Original-project merge `4784913` contains the same runtime plus two unused optional C05 interfaces and passed Unity import/compilation. This is scripted scene evidence, not a completed manual standalone playthrough. Stars remain procedural in this checkpoint; the GMAT catalogue package is being prepared separately and must not be described as already rendered in game.
 
 The objective is an understandable educational simulation. OUT OF REACH is not NASA-certified flight software, and including a dataset does not by itself guarantee award eligibility.
 
@@ -10,7 +10,7 @@ The objective is an understandable educational simulation. OUT OF REACH is not N
 
 | ID | Source | What it supports | Use/status |
 | --- | --- | --- | --- |
-| NASA-01 | [NASA/JPL Horizons API](https://ssd-api.jpl.nasa.gov/doc/horizons.html) and the exact query in [manifest.json](docs/data/horizons/manifest.json) | Computed Earth-to-Mars geometric positions and range for specified epochs | Real offline data; verified; runtime integration pending |
+| NASA-01 | [NASA/JPL Horizons API](https://ssd-api.jpl.nasa.gov/doc/horizons.html) and the exact query in [manifest.json](docs/data/horizons/manifest.json) | Computed Earth-to-Mars geometric positions and range for specified epochs | Integrated into C04/I02 communications; exact revision and evidence above |
 | NASA-02 | [NASA Environmental Control and Life Support Systems](https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/) | Life support has distinct oxygen generation, air revitalization and water recovery functions. Removing CO2 and supplying oxygen are different jobs. | Scientific background; does not calibrate our damage rates or danger thresholds |
 | NASA-03 | [NASA Mars Communications Disruption and Delay](https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf) | Signal delay depends on distance; communication availability and latency are different problems. | Basis for delayed contact; no instantaneous reply or rescue |
 | CHALLENGE | [Space Mission Design Game](https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/) | Mission design, constraints, operational consequences and evaluation belong in the game | Planner and debrief must connect engineering choices to outcomes |
