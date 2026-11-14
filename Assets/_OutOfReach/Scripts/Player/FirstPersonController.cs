@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using OutOfReach.Contracts;
 using OutOfReach.Interaction;
 using UnityEngine;
@@ -14,6 +15,15 @@ namespace OutOfReach.Player
     /// <see cref="ControlGate"/> (phase, pause and cinematics, supplied by the composition root). While control is
     /// not allowed the player stands still, the focus is cleared and the cursor is released.
     /// Units: metres, seconds, degrees. Movement uses real frame time, never simulated time.
+    /// <para>
+    /// Optional microgravity mode (off until <see cref="EnterFloat"/>, which needs a solid surface within reach):
+    /// no gravity and no stepping; the body keeps its momentum through collision-aware moves and, with the default
+    /// zero drag, a push carries it on until it meets a surface. Speed only comes from pushes off verified solid
+    /// surfaces within reach and in line of sight (<see cref="TryPushOff"/>); <see cref="TryBrace"/> stops an
+    /// approach against such a surface; only registered handholds can be gripped (<see cref="TryGrab"/>). WASD and
+    /// sprint do nothing while floating (no thrust, no hidden force); look stays upright. The composition root
+    /// registers the handholds and binds the hand inputs to these calls; tuning is in <see cref="MicrogravityLocomotion"/>.
+    /// </para>
     /// </summary>
     [RequireComponent(typeof(CharacterController))]
     [DisallowMultipleComponent]
@@ -37,6 +47,9 @@ namespace OutOfReach.Player
         [SerializeField, Range(1f, 2f)] private float sprintSpeedMultiplier = 1.5f;
 
         [SerializeField] private PlayerExertion exertion = new PlayerExertion();
+
+        [Header("Microgravity (optional, off until EnterFloat)")]
+        [SerializeField] private MicrogravityLocomotion microgravity = new MicrogravityLocomotion();
 
         [Header("Interaction")]
         [SerializeField] private InteractionResolver interaction;
@@ -62,6 +75,23 @@ namespace OutOfReach.Player
         private bool sprintReleaseRequired;
         private bool sprinting;
         private bool wasMovementActive;
+        private bool floating;
+        private Vector3 floatVelocity;
+        private Collider heldHandhold;
+        private float floatClock;
+        private float lastPushAt = float.NegativeInfinity;
+        private float strandedFor;
+        private float savedStepOffset;
+        private readonly List<FloatContactPoint> contacts = new List<FloatContactPoint>(4);
+        private readonly HashSet<Collider> handholds = new HashSet<Collider>();
+
+        private static readonly Vector3[] ProbeDirections = BuildProbeDirections();
+
+        private struct FloatContactPoint
+        {
+            public Collider Collider;
+            public Vector3 Normal;
+        }
 
         /// <summary>Input for this player. Assign a scripted source in tests; otherwise Input System actions are created.</summary>
         public IPlayerInputSource InputSource
@@ -141,6 +171,62 @@ namespace OutOfReach.Player
         /// <summary>Raised when the pause control is pressed (also while control is not allowed, so it can resume).</summary>
         public event Action PauseRequested;
 
+        /// <summary>True in the optional microgravity mode: no gravity, no stepping, no walking bob or footsteps.</summary>
+        public bool IsFloating => floating;
+
+        /// <summary>Current drift velocity while floating, metres per second; zero otherwise.</summary>
+        public Vector3 FloatVelocity => floating ? floatVelocity : Vector3.zero;
+
+        /// <summary>The handhold currently gripped while floating, or null.</summary>
+        public Collider HeldHandhold => floating ? heldHandhold : null;
+
+        /// <summary>Microgravity tuning (read-only view for presentation and tests).</summary>
+        public MicrogravityLocomotion Microgravity => microgravity;
+
+        /// <summary>
+        /// Diagnostic only, no force: a floating player is stranded after the stranded time with no solid surface
+        /// within reach while almost still. Entry near a surface and zero drag keep this from happening in normal play;
+        /// it can follow a ClearMotion away from every surface. Any recovery assist is a separate, disclosed proposal.
+        /// </summary>
+        public bool IsStranded => floating && heldHandhold == null && floatVelocity.magnitude < microgravity.StrandedSpeed
+            && strandedFor >= microgravity.StrandedSeconds;
+
+        /// <summary>Registers a physical grippable handhold collider (the composition root does this at scene bind).</summary>
+        public void RegisterHandhold(Collider handhold)
+        {
+            if (handhold != null)
+            {
+                handholds.Add(handhold);
+            }
+        }
+
+        /// <summary>Removes a handhold from the registry; a grip on it ends.</summary>
+        public void UnregisterHandhold(Collider handhold)
+        {
+            if (handhold != null && handholds.Remove(handhold) && heldHandhold == handhold)
+            {
+                ReleaseHold();
+            }
+        }
+
+        /// <summary>True for a registered grippable handhold.</summary>
+        public bool IsHandhold(Collider candidate)
+        {
+            return candidate != null && handholds.Contains(candidate);
+        }
+
+        /// <summary>Raised after a successful push with the new velocity.</summary>
+        public event Action<Vector3> Pushed;
+
+        /// <summary>Raised when a handhold is gripped.</summary>
+        public event Action<Collider> Grabbed;
+
+        /// <summary>Raised when the grip on a handhold ends (release, push, mode change or a vanished handhold).</summary>
+        public event Action<Collider> Released;
+
+        /// <summary>Raised when the floating body meets a surface, with the impact speed into it (m/s).</summary>
+        public event Action<Collider, float> FloatContact;
+
         /// <summary>Explicit wiring for code-built rigs; scenes normally use the serialized fields.</summary>
         public void Configure(Transform pivot, InteractionResolver resolver)
         {
@@ -154,6 +240,7 @@ namespace OutOfReach.Player
         /// </summary>
         public void Teleport(Vector3 feetPosition, float yawDegrees)
         {
+            ExitFloat();
             CancelSprint();
             wasMovementActive = false;
             CharacterController controller = Body;
@@ -179,6 +266,7 @@ namespace OutOfReach.Player
                 return;
             }
 
+            ExitFloat();
             CancelSprint();
             Body.enabled = false;
             ActiveRoute = route;
@@ -186,6 +274,209 @@ namespace OutOfReach.Player
             routeDistance = 0f;
             routeDirection = 1;
             transform.position = route.StartPosition;
+        }
+
+        /// <summary>
+        /// Starts the optional microgravity mode where the player is: no gravity, no stepping, zero velocity. Only at a
+        /// safe entry with a solid surface within reach (NoSurface otherwise), never on the EVA route (OnRoute), which
+        /// keeps its own movement. Nothing else changes until this is called.
+        /// </summary>
+        public FloatActionResult EnterFloat()
+        {
+            if (ActiveRoute != null)
+            {
+                return FloatActionResult.OnRoute;
+            }
+
+            if (floating)
+            {
+                return FloatActionResult.Done;
+            }
+
+            if (!SurfaceWithinReach())
+            {
+                return FloatActionResult.NoSurface;
+            }
+
+            CancelSprint();
+            CharacterController controller = Body;
+            savedStepOffset = controller.stepOffset;
+            controller.stepOffset = 0f;
+            floating = true;
+            verticalVelocity = 0f;
+            floatVelocity = Vector3.zero;
+            heldHandhold = null;
+            strandedFor = 0f;
+            floatClock = 0f;
+            lastPushAt = float.NegativeInfinity;
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>Ends the microgravity mode: lets go, drops the velocity and walks again with gravity and stepping.</summary>
+        public void ExitFloat()
+        {
+            if (!floating)
+            {
+                return;
+            }
+
+            ReleaseHold();
+            floating = false;
+            floatVelocity = Vector3.zero;
+            verticalVelocity = 0f;
+            strandedFor = 0f;
+            Body.stepOffset = savedStepOffset;
+        }
+
+        /// <summary>Stops any drift and lets go (for rest, a body lease or a cinematic hand-over); stays floating.</summary>
+        public void ClearMotion()
+        {
+            floatVelocity = Vector3.zero;
+            strandedFor = 0f;
+            ReleaseHold();
+        }
+
+        /// <summary>
+        /// Pushes off a solid surface the hand can reach. The surface is verified, not trusted: a non-trigger collider
+        /// that is the closest hit of a ray from the eye within reach (nothing in between), and the direction must
+        /// point away from it. One push changes the
+        /// speed by at most the per-push limit (scaled by strength), the total stays capped, and a cooldown stops a
+        /// held button from accelerating continuously. A push lets go of a held handhold.
+        /// </summary>
+        public FloatActionResult TryPushOff(Collider surface, Vector3 surfacePoint, Vector3 direction, float strength01 = 1f)
+        {
+            if (!floating)
+            {
+                return FloatActionResult.NotFloating;
+            }
+
+            if (!ControlAllowed)
+            {
+                return FloatActionResult.ControlDenied;
+            }
+
+            if (!IsFinite(surfacePoint) || !IsFinite(direction) || direction.sqrMagnitude < 1e-6f
+                || float.IsNaN(strength01) || strength01 <= 0f)
+            {
+                return FloatActionResult.InvalidInput;
+            }
+
+            if (floatClock - lastPushAt < microgravity.PushCooldownSeconds)
+            {
+                return FloatActionResult.Cooldown;
+            }
+
+            FloatActionResult verified = VerifySurface(surface, surfacePoint, out Vector3 normal);
+            if (verified != FloatActionResult.Done)
+            {
+                return verified;
+            }
+
+            Vector3 away = direction.normalized;
+            if (Vector3.Dot(away, normal) < microgravity.MinimumAwayDot)
+            {
+                return FloatActionResult.IntoSurface;
+            }
+
+            ReleaseHold();
+            floatVelocity = microgravity.Push(floatVelocity, away, strength01);
+            lastPushAt = floatClock;
+            strandedFor = 0f;
+            Pushed?.Invoke(floatVelocity);
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>
+        /// Grips a registered handhold the hand can reach in line of sight (same verification as a push); a smooth wall
+        /// is not grippable (NotAHandhold, use TryBrace). The body is never moved to the handhold; while held, the
+        /// drift settles to rest.
+        /// </summary>
+        public FloatActionResult TryGrab(Collider handhold, Vector3 gripPoint)
+        {
+            if (!floating)
+            {
+                return FloatActionResult.NotFloating;
+            }
+
+            if (!ControlAllowed)
+            {
+                return FloatActionResult.ControlDenied;
+            }
+
+            if (!IsFinite(gripPoint))
+            {
+                return FloatActionResult.InvalidInput;
+            }
+
+            if (heldHandhold != null)
+            {
+                return FloatActionResult.AlreadyHolding;
+            }
+
+            if (!IsHandhold(handhold))
+            {
+                return FloatActionResult.NotAHandhold;
+            }
+
+            FloatActionResult verified = VerifySurface(handhold, gripPoint, out Vector3 unusedNormal);
+            if (verified != FloatActionResult.Done)
+            {
+                return verified;
+            }
+
+            heldHandhold = handhold;
+            strandedFor = 0f;
+            Grabbed?.Invoke(handhold);
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>Lets go of the held handhold; the body keeps whatever little velocity it still has.</summary>
+        public FloatActionResult Release()
+        {
+            if (!floating)
+            {
+                return FloatActionResult.NotFloating;
+            }
+
+            if (heldHandhold == null)
+            {
+                return FloatActionResult.NotHolding;
+            }
+
+            ReleaseHold();
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>
+        /// Braces against a solid surface the hand can reach in line of sight (same verification as a push): the part
+        /// of the drift towards that surface stops; sliding along it continues, because a smooth wall gives no grip.
+        /// </summary>
+        public FloatActionResult TryBrace(Collider surface, Vector3 surfacePoint)
+        {
+            if (!floating)
+            {
+                return FloatActionResult.NotFloating;
+            }
+
+            if (!ControlAllowed)
+            {
+                return FloatActionResult.ControlDenied;
+            }
+
+            if (!IsFinite(surfacePoint))
+            {
+                return FloatActionResult.InvalidInput;
+            }
+
+            FloatActionResult verified = VerifySurface(surface, surfacePoint, out Vector3 normal);
+            if (verified != FloatActionResult.Done)
+            {
+                return verified;
+            }
+
+            floatVelocity = MicrogravityLocomotion.RemoveInto(floatVelocity, normal);
+            strandedFor = 0f;
+            return FloatActionResult.Done;
         }
 
         /// <summary>Releases the route and stands the player at a walking position.</summary>
@@ -241,6 +532,7 @@ namespace OutOfReach.Player
         {
             CancelSprint();
             wasMovementActive = false;
+            ClearMotion();
             if (ownedInput != null)
             {
                 ownedInput.Disable();
@@ -336,7 +628,14 @@ namespace OutOfReach.Player
             sprinting = false;
             float motionFraction;
             ExertionActivity activity;
-            if (ActiveRoute != null)
+            if (floating)
+            {
+                // No thrust: WASD and sprint do nothing while floating; only pushes, grips and contacts change motion.
+                Float(Time.deltaTime);
+                motionFraction = 0f;
+                activity = ExertionActivity.Resting;
+            }
+            else if (ActiveRoute != null)
             {
                 motionFraction = MoveAlongRoute(input.Move, Time.deltaTime);
                 activity = ExertionActivity.TetherTraversal;
@@ -461,6 +760,185 @@ namespace OutOfReach.Player
             routeDistance = Mathf.Clamp(routeDistance + step, 0f, length);
             transform.position = ActiveRoute.PointAt(routeDistance);
             return speed > 0f ? Mathf.Clamp01(Mathf.Abs(routeDistance - before) / (speed * deltaSeconds)) : 0f;
+        }
+
+        /// <summary>One frame of floating: grip settling, exact drift, collision-aware move, inelastic contacts.</summary>
+        private void Float(float deltaSeconds)
+        {
+            CharacterController controller = Body;
+            if (!controller.enabled || deltaSeconds <= 0f)
+            {
+                return;
+            }
+
+            floatClock += deltaSeconds;
+            if (!ReferenceEquals(heldHandhold, null) && (heldHandhold == null || !heldHandhold.enabled || !heldHandhold.gameObject.activeInHierarchy))
+            {
+                ReleaseHold();
+            }
+
+            if (heldHandhold != null)
+            {
+                floatVelocity = microgravity.Settle(floatVelocity, deltaSeconds);
+            }
+
+            Vector3 displacement = microgravity.Integrate(ref floatVelocity, deltaSeconds);
+            if (displacement.sqrMagnitude > 0f)
+            {
+                contacts.Clear();
+                controller.Move(displacement);
+                foreach (FloatContactPoint contact in contacts)
+                {
+                    float impact = -Vector3.Dot(floatVelocity, contact.Normal);
+                    floatVelocity = MicrogravityLocomotion.RemoveInto(floatVelocity, contact.Normal);
+                    if (impact > 0.01f)
+                    {
+                        FloatContact?.Invoke(contact.Collider, impact);
+                    }
+                }
+
+                contacts.Clear();
+            }
+
+            bool stranded = heldHandhold == null && floatVelocity.magnitude < microgravity.StrandedSpeed && !SurfaceWithinReach();
+            strandedFor = stranded ? strandedFor + deltaSeconds : 0f;
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (floating && hit.collider != null && contacts.Count < 8)
+            {
+                contacts.Add(new FloatContactPoint { Collider = hit.collider, Normal = hit.normal });
+            }
+        }
+
+        private Vector3 ReachOrigin => viewPivot != null ? viewPivot.position : transform.position + (Vector3.up * 1.5f);
+
+        private FloatActionResult VerifySurface(Collider surface, Vector3 point, out Vector3 normal)
+        {
+            normal = Vector3.zero;
+            if (surface == null || !surface.enabled || !surface.gameObject.activeInHierarchy || surface.isTrigger)
+            {
+                return FloatActionResult.NoSurface;
+            }
+
+            Vector3 origin = ReachOrigin;
+            if (!IsFinite(origin))
+            {
+                return FloatActionResult.NoSurface;
+            }
+
+            Vector3 toPoint = point - origin;
+            float distance = toPoint.magnitude;
+            if (distance > microgravity.ReachMetres)
+            {
+                return FloatActionResult.OutOfReach;
+            }
+
+            Vector3 ray = distance > 1e-4f ? toPoint / distance : (surface.bounds.center - origin).normalized;
+            if (ray.sqrMagnitude < 0.5f || !ClosestHit(origin, ray, microgravity.ReachMetres + 0.02f, out RaycastHit hit))
+            {
+                return FloatActionResult.NoSurface;
+            }
+
+            if (hit.collider != surface)
+            {
+                return FloatActionResult.Occluded;
+            }
+
+            if (hit.distance > microgravity.ReachMetres)
+            {
+                return FloatActionResult.OutOfReach;
+            }
+
+            normal = hit.normal;
+            return FloatActionResult.Done;
+        }
+
+        /// <summary>Closest solid, non-trigger hit along a ray, ignoring the player own capsule.</summary>
+        private bool ClosestHit(Vector3 origin, Vector3 direction, float maxDistance, out RaycastHit closest)
+        {
+            closest = default(RaycastHit);
+            float nearest = float.PositiveInfinity;
+            CharacterController own = Body;
+            foreach (RaycastHit hit in Physics.RaycastAll(origin, direction, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            {
+                if (hit.collider != own && hit.distance < nearest)
+                {
+                    nearest = hit.distance;
+                    closest = hit;
+                }
+            }
+
+            return nearest < float.PositiveInfinity;
+        }
+
+        private bool SurfaceWithinReach()
+        {
+            return NearestSurfaceDirection(microgravity.ReachMetres, out Vector3 unused);
+        }
+
+        /// <summary>Nearest solid, non-trigger surface along 14 probe rays from the eye (own collider ignored).</summary>
+        private bool NearestSurfaceDirection(float maxDistance, out Vector3 direction)
+        {
+            direction = Vector3.zero;
+            float nearest = float.PositiveInfinity;
+            Vector3 origin = ReachOrigin;
+            CharacterController own = Body;
+            foreach (Vector3 probe in ProbeDirections)
+            {
+                RaycastHit[] hits = Physics.RaycastAll(origin, probe, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+                foreach (RaycastHit hit in hits)
+                {
+                    if (hit.collider == own || hit.distance >= nearest)
+                    {
+                        continue;
+                    }
+
+                    nearest = hit.distance;
+                    direction = probe;
+                }
+            }
+
+            return nearest < float.PositiveInfinity;
+        }
+
+        private void ReleaseHold()
+        {
+            if (ReferenceEquals(heldHandhold, null))
+            {
+                return;
+            }
+
+            Collider released = heldHandhold;
+            heldHandhold = null;
+            Released?.Invoke(released);
+        }
+
+        private static Vector3[] BuildProbeDirections()
+        {
+            var directions = new List<Vector3>
+            {
+                Vector3.right, Vector3.left, Vector3.up, Vector3.down, Vector3.forward, Vector3.back,
+            };
+            for (int x = -1; x <= 1; x += 2)
+            {
+                for (int y = -1; y <= 1; y += 2)
+                {
+                    for (int z = -1; z <= 1; z += 2)
+                    {
+                        directions.Add(new Vector3(x, y, z).normalized);
+                    }
+                }
+            }
+
+            return directions.ToArray();
+        }
+
+        private static bool IsFinite(Vector3 v)
+        {
+            return !float.IsNaN(v.x) && !float.IsNaN(v.y) && !float.IsNaN(v.z)
+                && !float.IsInfinity(v.x) && !float.IsInfinity(v.y) && !float.IsInfinity(v.z);
         }
 
         private void ApplyCursor(bool capture)
