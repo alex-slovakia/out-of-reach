@@ -52,6 +52,52 @@ namespace OutOfReach.Tests.Editor
             Assert.That(along, Is.EqualTo(7f).Within(1e-5f), "the tether length is the limit");
         }
 
+        private static readonly Vector3[] Descent =
+        {
+            new Vector3(0f, 0f, 0f), new Vector3(2f, 0f, 0f), new Vector3(2f, -3f, 0f), new Vector3(3f, -3f, 0f),
+        };
+
+        [Test]
+        public void PointAtDistance_WalksTheLine_AndClampsToBothEnds()
+        {
+            Assert.That(Vector3.Distance(RouteMath.PointAtDistance(Route, 1.5f), new Vector3(1.5f, 0f, 0f)), Is.LessThan(1e-5f));
+            Assert.That(Vector3.Distance(RouteMath.PointAtDistance(Route, 3f), new Vector3(3f, 0f, 0f)), Is.LessThan(1e-5f), "the corner");
+            Assert.That(Vector3.Distance(RouteMath.PointAtDistance(Route, 5f), new Vector3(3f, 0f, -2f)), Is.LessThan(1e-5f));
+            Assert.That(RouteMath.PointAtDistance(Route, -4f), Is.EqualTo(Route[0]));
+            Assert.That(RouteMath.PointAtDistance(Route, 40f), Is.EqualTo(Route[2]));
+            Assert.That(RouteMath.PointAtDistance(Route, float.NaN), Is.EqualTo(Route[0]));
+            Assert.That(Vector3.Distance(RouteMath.PointAtDistance(Descent, 3.5f), new Vector3(2f, -1.5f, 0f)), Is.LessThan(1e-5f), "vertical stretch");
+        }
+
+        [Test]
+        public void PointAtDistance_IsContinuous_AndRoundTripsThroughClosestPoint()
+        {
+            Vector3 previous = RouteMath.PointAtDistance(Descent, 0f);
+            for (float s = 0.01f; s <= 6f; s += 0.01f)
+            {
+                Vector3 point = RouteMath.PointAtDistance(Descent, s);
+                Assert.That(Vector3.Distance(point, previous), Is.LessThanOrEqualTo(0.0101f), "no jump at " + s);
+                RouteMath.ClosestPoint(Descent, point, out float along);
+                Assert.That(along, Is.EqualTo(s).Within(1e-4f));
+                previous = point;
+            }
+        }
+
+        [Test]
+        public void HorizontalHeading_FollowsTheLine_AndFallsBackToTheOverallHeadingOnVerticalStretches()
+        {
+            Vector3 east = new Vector3(1f, 0f, 0f);
+            Assert.That(Vector3.Distance(RouteMath.HorizontalHeading(Route, 1f, 0.5f), east), Is.LessThan(1e-5f));
+            Assert.That(Vector3.Distance(RouteMath.HorizontalHeading(Route, 5.5f, 0.5f), new Vector3(0f, 0f, -1f)), Is.LessThan(1e-5f));
+            Vector3 corner = RouteMath.HorizontalHeading(Route, 3f, 1.5f);
+            Assert.That(corner.x, Is.EqualTo(0.7071f).Within(1e-3f), "diagonal across the corner");
+            Assert.That(corner.z, Is.EqualTo(-0.7071f).Within(1e-3f));
+
+            Assert.That(Vector3.Distance(RouteMath.HorizontalHeading(Descent, 3.5f, 1f), east), Is.LessThan(1e-5f), "vertical stretch: overall heading");
+            Assert.That(RouteMath.HorizontalHeading(Descent, 3.5f, 1f).y, Is.EqualTo(0f));
+            Assert.That(RouteMath.HorizontalHeading(new[] { Vector3.zero, new Vector3(0f, -5f, 0f) }, 2f, 1f), Is.EqualTo(Vector3.zero), "a vertical route has no heading");
+        }
+
         [Test]
         public void DegenerateRoutes_DoNotThrow()
         {

@@ -5,9 +5,10 @@ namespace OutOfReach.Player
 {
     /// <summary>
     /// The short, constrained EVA route: waypoints for the player's feet from the outer hatch (EvaStart) to the work
-    /// site near AntennaRepair. While on it the player has no gravity and no free flight; movement is clamped to a
-    /// narrow corridor around the waypoint line and cannot pass either end. Limits are explicit GAME ASSUMPTIONS
-    /// (tether length = line length, lateral freedom, traverse speed), not a tether physics model.
+    /// site near AntennaRepair. While on it the player has no gravity and no free flight: the feet stay exactly on
+    /// the waypoint line and move along it, never past either end. Vertical stretches are traversed like any other
+    /// part of the line. Limits are explicit GAME ASSUMPTIONS (tether length = line length, traverse speed), not a
+    /// tether physics model.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class TetheredRoute : MonoBehaviour
@@ -15,7 +16,7 @@ namespace OutOfReach.Player
         [Tooltip("Feet positions along the tether, in order. The first is the EVA start by the outer hatch.")]
         [SerializeField] private Transform[] waypoints = new Transform[0];
 
-        [Tooltip("How far the player may drift sideways from the waypoint line, metres.")]
+        [Tooltip("Corridor half-width used by Constrain, metres. The player controller keeps the feet exactly on the line.")]
         [SerializeField] private float lateralFreedomMetres = 0.5f;
 
         [Tooltip("Traverse speed along the route, metres per second.")]
@@ -38,6 +39,22 @@ namespace OutOfReach.Player
 
         /// <summary>Tether length: the length of the waypoint line, metres.</summary>
         public float LengthMetres => RouteMath.Length(RefreshPoints());
+
+        /// <summary>Half-length of the stretch of route used to judge its heading, metres.</summary>
+        public const float HeadingWindowMetres = 1.5f;
+
+        /// <summary>The feet position at a distance from the start, along the line (clamped to both ends).</summary>
+        public Vector3 PointAt(float distanceMetres)
+        {
+            List<Vector3> line = RefreshPoints();
+            return line.Count > 0 ? RouteMath.PointAtDistance(line, distanceMetres) : transform.position;
+        }
+
+        /// <summary>Horizontal unit direction towards the route's end around a distance; zero for an all-vertical route.</summary>
+        public Vector3 HeadingAt(float distanceMetres)
+        {
+            return RouteMath.HorizontalHeading(RefreshPoints(), distanceMetres, HeadingWindowMetres);
+        }
 
         /// <summary>Explicit wiring for code-built scenes; authored scenes use the serialized fields.</summary>
         public void Configure(Transform[] routeWaypoints, float lateralFreedom, float speed)
