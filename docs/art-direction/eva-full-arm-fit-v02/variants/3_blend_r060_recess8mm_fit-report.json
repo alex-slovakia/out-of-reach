@@ -1,0 +1,958 @@
+{
+ "blender": "5.3.0",
+ "device": "OPTIX",
+ "fit": {
+  "R": {
+   "k_mm": 0.0,
+   "lateral_thumb_mm": -1.5,
+   "lateral_back_mm": 0.0,
+   "sleeve_vertices_visible_in_bind": 0,
+   "sleeve_vertices_in_glove_zone": 98,
+   "sleeve_end_axis_vs_forearm_deg": 20.23,
+   "boot_proximal_radius_mm": [
+    37.1,
+    59.0
+   ],
+   "seam_weight_blend": {
+    "changed_torso_vertices": 404,
+    "max_weight_change": 0.5404,
+    "radius_m": 0.06,
+    "region_m": 0.18,
+    "recessed_torso_vertices": 404,
+    "recess_max_m": 0.008
+   }
+  },
+  "L": {
+   "k_mm": 0.0,
+   "lateral_thumb_mm": -1.5,
+   "lateral_back_mm": 0.0,
+   "sleeve_vertices_visible_in_bind": 0,
+   "sleeve_vertices_in_glove_zone": 98,
+   "sleeve_end_axis_vs_forearm_deg": 20.23,
+   "boot_proximal_radius_mm": [
+    37.1,
+    59.0
+   ],
+   "seam_weight_blend": {
+    "changed_torso_vertices": 314,
+    "max_weight_change": 0.5404,
+    "radius_m": 0.06,
+    "region_m": 0.18,
+    "recessed_torso_vertices": 314,
+    "recess_max_m": 0.008
+   }
+  }
+ },
+ "targets": {
+  "Neutral": {
+   "frame": 10,
+   "sides": {
+    "R": {
+     "original_target_eye": [
+      0.19,
+      -0.215,
+      0.4
+     ],
+     "original_shoulder_distance_m": 0.5339,
+     "original_short_by_mm": 23.4,
+     "pulled_towards_eye_mm": 40.8,
+     "solved_target_eye": [
+      0.19,
+      -0.215,
+      0.3592
+     ],
+     "comfortable_reach_m": 0.4931,
+     "glove_pivot_error_mm": 0.0,
+     "shoulder_eye": [
+      0.1786,
+      -0.2392,
+      -0.1332
+     ],
+     "upper_arm_m": 0.2424,
+     "forearm_to_glove_pivot_m": 0.268,
+     "shoulder_to_target_m": 0.4832,
+     "short_by_mm": 0.0,
+     "elbow_interior_deg": 142.3,
+     "forearm_twist_deg": -45.1,
+     "twist_wanted_deg": -45.1,
+     "clavicle_share_deg": 20.0,
+     "wrist_turn_deg": 21.1,
+     "wanted_deg": 21.1,
+     "residual_deg": 0.0,
+     "finger_pose": "Neutral"
+    },
+    "L": {
+     "original_target_eye": [
+      -0.19,
+      -0.215,
+      0.4
+     ],
+     "original_shoulder_distance_m": 0.5339,
+     "original_short_by_mm": 23.4,
+     "pulled_towards_eye_mm": 40.8,
+     "solved_target_eye": [
+      -0.19,
+      -0.215,
+      0.3592
+     ],
+     "comfortable_reach_m": 0.4931,
+     "glove_pivot_error_mm": 0.0,
+     "shoulder_eye": [
+      -0.1786,
+      -0.2392,
+      -0.1332
+     ],
+     "upper_arm_m": 0.2424,
+     "forearm_to_glove_pivot_m": 0.268,
+     "shoulder_to_target_m": 0.4832,
+     "short_by_mm": 0.0,
+     "elbow_interior_deg": 142.3,
+     "forearm_twist_deg": 45.1,
+     "twist_wanted_deg": 45.1,
+     "clavicle_share_deg": 20.0,
+     "wrist_turn_deg": 21.1,
+     "wanted_deg": 21.1,
+     "residual_deg": 0.0,
+     "finger_pose": "Neutral"
+    }
+   },
+   "measure": {
+    "R": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 0,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 164,
+     "sleeve_vs_torso_overlap_tris_limb": 3,
+     "sleeve_into_torso_max_depth_m": 0.15291698276996613,
+     "eye_to_nearest_surface_m": 0.1542
+    },
+    "L": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 0,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 165,
+     "sleeve_vs_torso_overlap_tris_limb": 3,
+     "sleeve_into_torso_max_depth_m": 0.15597352385520935,
+     "eye_to_nearest_surface_m": 0.1542
+    }
+   }
+  },
+  "RailGrip": {
+   "frame": 20,
+   "sides": {
+    "R": {
+     "original_target_eye": [
+      0.1368,
+      -0.1655,
+      0.3857
+     ],
+     "original_shoulder_distance_m": 0.5258,
+     "original_short_by_mm": 15.3,
+     "pulled_towards_eye_mm": 33.1,
+     "solved_target_eye": [
+      0.1368,
+      -0.1655,
+      0.3526
+     ],
+     "comfortable_reach_m": 0.4931,
+     "glove_pivot_error_mm": 0.0,
+     "shoulder_eye": [
+      0.1786,
+      -0.2392,
+      -0.1332
+     ],
+     "upper_arm_m": 0.2424,
+     "forearm_to_glove_pivot_m": 0.268,
+     "shoulder_to_target_m": 0.4826,
+     "short_by_mm": 0.0,
+     "elbow_interior_deg": 141.9,
+     "forearm_twist_deg": -79.0,
+     "twist_wanted_deg": -79.0,
+     "clavicle_share_deg": 20.0,
+     "grip": {
+      "grip_centre_to_axis_mm": 0.0,
+      "gripped_radius_mm": 17.0,
+      "finger_flex_scale_used": {
+       "Thumb": 0.2,
+       "Index": 0.8,
+       "Middle": 0.9,
+       "Ring": 0.8,
+       "Little": 0.7
+      },
+      "glove_into_gripped_part_max_mm": 0.75,
+      "glove_vertices_inside": 1,
+      "finger_scale_scan": {
+       "Thumb": [
+        [
+         1.0,
+         15.92
+        ],
+        [
+         0.9,
+         16.33
+        ],
+        [
+         0.8,
+         16.59
+        ],
+        [
+         0.7,
+         16.66
+        ],
+        [
+         0.6,
+         14.27
+        ],
+        [
+         0.5,
+         14.5
+        ],
+        [
+         0.4,
+         16.3
+        ],
+        [
+         0.3,
+         2.85
+        ],
+        [
+         0.2,
+         0.0
+        ],
+        [
+         0.1,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "Index": [
+        [
+         1.0,
+         13.49
+        ],
+        [
+         0.9,
+         7.47
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Middle": [
+        [
+         1.0,
+         9.85
+        ],
+        [
+         0.9,
+         0.75
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Ring": [
+        [
+         1.0,
+         9.62
+        ],
+        [
+         0.9,
+         3.52
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Little": [
+        [
+         1.0,
+         15.71
+        ],
+        [
+         0.9,
+         13.33
+        ],
+        [
+         0.8,
+         7.4
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ]
+      },
+      "depth_by_part_mm": {
+       "R_Middle3": 0.75
+      },
+      "grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -44.5
+      ],
+      "original_grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -33.0
+      ]
+     },
+     "wrist_turn_deg": 11.7,
+     "wanted_deg": 11.7,
+     "residual_deg": 0.0,
+     "finger_pose": "Grip"
+    }
+   },
+   "measure": {
+    "R": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 0,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 177,
+     "sleeve_vs_torso_overlap_tris_limb": 46,
+     "sleeve_into_torso_max_depth_m": 0.09936434030532837,
+     "eye_to_nearest_surface_m": 0.1542
+    },
+    "L": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 99,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 133,
+     "sleeve_vs_torso_overlap_tris_limb": 146,
+     "sleeve_into_torso_max_depth_m": 0.01988954283297062,
+     "eye_to_nearest_surface_m": 0.1542
+    }
+   }
+  },
+  "WrenchLockStart": {
+   "frame": 30,
+   "sides": {
+    "R": {
+     "original_target_eye": [
+      0.1786,
+      -0.2555,
+      0.273
+     ],
+     "original_shoulder_distance_m": 0.4065,
+     "original_short_by_mm": 0.0,
+     "pulled_towards_eye_mm": 0.0,
+     "solved_target_eye": [
+      0.1786,
+      -0.2555,
+      0.273
+     ],
+     "comfortable_reach_m": 0.4931,
+     "glove_pivot_error_mm": 0.0,
+     "shoulder_eye": [
+      0.1786,
+      -0.2392,
+      -0.1332
+     ],
+     "upper_arm_m": 0.2424,
+     "forearm_to_glove_pivot_m": 0.268,
+     "shoulder_to_target_m": 0.4059,
+     "short_by_mm": 0.0,
+     "elbow_interior_deg": 105.2,
+     "forearm_twist_deg": -78.8,
+     "twist_wanted_deg": -78.8,
+     "clavicle_share_deg": 12.6,
+     "grip": {
+      "grip_centre_to_axis_mm": 0.0,
+      "gripped_radius_mm": 17.5,
+      "finger_flex_scale_used": {
+       "Thumb": 0.2,
+       "Index": 0.8,
+       "Middle": 0.9,
+       "Ring": 0.8,
+       "Little": 0.7
+      },
+      "glove_into_gripped_part_max_mm": 2.23,
+      "glove_vertices_inside": 5,
+      "finger_scale_scan": {
+       "Thumb": [
+        [
+         1.0,
+         15.82
+        ],
+        [
+         0.9,
+         15.76
+        ],
+        [
+         0.8,
+         14.55
+        ],
+        [
+         0.7,
+         15.26
+        ],
+        [
+         0.6,
+         16.33
+        ],
+        [
+         0.5,
+         16.46
+        ],
+        [
+         0.4,
+         16.03
+        ],
+        [
+         0.3,
+         9.25
+        ],
+        [
+         0.2,
+         0.0
+        ],
+        [
+         0.1,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "Index": [
+        [
+         1.0,
+         11.75
+        ],
+        [
+         0.9,
+         4.15
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Middle": [
+        [
+         1.0,
+         9.11
+        ],
+        [
+         0.9,
+         0.0
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Ring": [
+        [
+         1.0,
+         11.32
+        ],
+        [
+         0.9,
+         5.18
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Little": [
+        [
+         1.0,
+         15.87
+        ],
+        [
+         0.9,
+         15.12
+        ],
+        [
+         0.8,
+         11.57
+        ],
+        [
+         0.7,
+         2.23
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ]
+      },
+      "depth_by_part_mm": {
+       "R_Little3": 2.23
+      },
+      "grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -44.5
+      ],
+      "original_grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -33.0
+      ]
+     },
+     "wrist_turn_deg": 17.4,
+     "wanted_deg": 17.4,
+     "residual_deg": 0.0,
+     "finger_pose": "Grip"
+    }
+   },
+   "measure": {
+    "R": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 0,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 81,
+     "sleeve_vs_torso_overlap_tris_limb": 0,
+     "sleeve_into_torso_max_depth_m": 0.10877950489521027,
+     "eye_to_nearest_surface_m": 0.1542
+    },
+    "L": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 99,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 133,
+     "sleeve_vs_torso_overlap_tris_limb": 146,
+     "sleeve_into_torso_max_depth_m": 0.01988954283297062,
+     "eye_to_nearest_surface_m": 0.1542
+    }
+   }
+  },
+  "WrenchLocked": {
+   "frame": 40,
+   "sides": {
+    "R": {
+     "original_target_eye": [
+      0.1812,
+      -0.332,
+      0.273
+     ],
+     "original_shoulder_distance_m": 0.4167,
+     "original_short_by_mm": 0.0,
+     "pulled_towards_eye_mm": 0.0,
+     "solved_target_eye": [
+      0.1812,
+      -0.332,
+      0.273
+     ],
+     "comfortable_reach_m": 0.4931,
+     "glove_pivot_error_mm": 0.0,
+     "shoulder_eye": [
+      0.1786,
+      -0.2392,
+      -0.1332
+     ],
+     "upper_arm_m": 0.2424,
+     "forearm_to_glove_pivot_m": 0.268,
+     "shoulder_to_target_m": 0.418,
+     "short_by_mm": 0.0,
+     "elbow_interior_deg": 109.8,
+     "forearm_twist_deg": -64.6,
+     "twist_wanted_deg": -64.6,
+     "clavicle_share_deg": 10.0,
+     "grip": {
+      "grip_centre_to_axis_mm": 0.0,
+      "gripped_radius_mm": 17.5,
+      "finger_flex_scale_used": {
+       "Thumb": 0.2,
+       "Index": 0.8,
+       "Middle": 0.9,
+       "Ring": 0.8,
+       "Little": 0.7
+      },
+      "glove_into_gripped_part_max_mm": 2.23,
+      "glove_vertices_inside": 5,
+      "finger_scale_scan": {
+       "Thumb": [
+        [
+         1.0,
+         15.82
+        ],
+        [
+         0.9,
+         15.76
+        ],
+        [
+         0.8,
+         14.55
+        ],
+        [
+         0.7,
+         15.26
+        ],
+        [
+         0.6,
+         16.33
+        ],
+        [
+         0.5,
+         16.46
+        ],
+        [
+         0.4,
+         16.03
+        ],
+        [
+         0.3,
+         9.25
+        ],
+        [
+         0.2,
+         0.0
+        ],
+        [
+         0.1,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ],
+       "Index": [
+        [
+         1.0,
+         11.75
+        ],
+        [
+         0.9,
+         4.15
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Middle": [
+        [
+         1.0,
+         9.12
+        ],
+        [
+         0.9,
+         0.0
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Ring": [
+        [
+         1.0,
+         11.32
+        ],
+        [
+         0.9,
+         5.18
+        ],
+        [
+         0.8,
+         0.0
+        ],
+        [
+         0.7,
+         0.0
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ],
+       "Little": [
+        [
+         1.0,
+         15.87
+        ],
+        [
+         0.9,
+         15.12
+        ],
+        [
+         0.8,
+         11.57
+        ],
+        [
+         0.7,
+         2.23
+        ],
+        [
+         0.6,
+         0.0
+        ],
+        [
+         0.5,
+         0.0
+        ],
+        [
+         0.4,
+         0.0
+        ],
+        [
+         0.3,
+         0.0
+        ]
+       ]
+      },
+      "depth_by_part_mm": {
+       "R_Little3": 2.23
+      },
+      "grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -44.5
+      ],
+      "original_grip_centre_in_hand_mm": [
+       0.0,
+       -82.0,
+       -33.0
+      ]
+     },
+     "wrist_turn_deg": 6.3,
+     "wanted_deg": 6.3,
+     "residual_deg": 0.0,
+     "finger_pose": "Grip"
+    }
+   },
+   "measure": {
+    "R": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 0,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 76,
+     "sleeve_vs_torso_overlap_tris_limb": 0,
+     "sleeve_into_torso_max_depth_m": 0.0,
+     "eye_to_nearest_surface_m": 0.1542
+    },
+    "L": {
+     "sleeve_vertices_visible_under_glove": 0,
+     "sleeve_vertices_in_glove_zone": 98,
+     "thumb_vs_sleeve_boot_ring_overlap_tris": 0,
+     "glove_vs_torso_overlap_tris": 99,
+     "sleeve_vs_torso_overlap_tris_shoulder_seam": 133,
+     "sleeve_vs_torso_overlap_tris_limb": 146,
+     "sleeve_into_torso_max_depth_m": 0.01988954283297062,
+     "eye_to_nearest_surface_m": 0.1542
+    }
+   }
+  }
+ },
+ "base_pose": "BODY_FloatNeutral_V04 (26d0ee0) at zero visual offset, eye at 1.65 m above the feet root",
+ "elbow_comfort_limit_deg": 150.0
+}
