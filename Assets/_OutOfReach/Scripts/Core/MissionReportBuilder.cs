@@ -34,6 +34,7 @@ namespace OutOfReach.Core
             CommunicationSystem link = director.Communications;
             EvaOperations eva = director.Eva;
             EvaSpec evaSpec = definition.Scenario.Eva;
+            FieldModifications mods = director.FieldModifications;
 
             ResourceSnapshot atLaunch = configuration.InitialResources;
             ResourceSnapshot atEnd = session.Resources.IsInitialized ? session.Resources.Snapshot : atLaunch;
@@ -68,7 +69,11 @@ namespace OutOfReach.Core
                 SuitPreparationCount = eva.SuitPreparationCount,
                 AirlockCycleCount = eva.AirlockCycleCount,
                 ScienceObjectives = configuration.ScienceObjectives,
-                ScienceDataReturned = configuration.HasSciencePayload && state.Outcome == MissionOutcome.RecoveryPossible,
+                ScienceDataReturned = configuration.HasSciencePayload && !mods.SciencePayloadSalvaged && state.Outcome == MissionOutcome.RecoveryPossible,
+                SciencePayloadSalvaged = mods.SciencePayloadSalvaged,
+                AbsorberCartridgesBuilt = mods.CartridgesBuilt,
+                AbsorberCartridgesInstalled = mods.CartridgesInstalled,
+                AbsorbedCarbonDioxideKg = mods.AbsorbedCarbonDioxideKg,
                 Communication = new ReportCommunication(link, director.Calendar, definition.Scenario.Pacing.TransmissionTimeScale),
                 FalseSignalReplayed = director.LinkDiagnosticRequested,
                 Holding = HoldingEstimate.Compute(atEnd, session.Resources.Rates),
@@ -79,13 +84,14 @@ namespace OutOfReach.Core
 
             report.Systems = BuildSystems(definition, director);
             report.Expenditures = BuildExpenditures(report, director, evaSpec, link);
+            double? salvagedAt = mods.SalvagedAtSimulationSeconds;
             report.Sections = Array.AsReadOnly(new[]
             {
                 OutcomeSection(report),
                 MissionDesignSection(report, definition, session),
                 ResourcesSection(report, session),
-                SystemsSection(report),
-                ScienceSection(report),
+                SystemsSection(report, mods.Spec),
+                ScienceSection(report, salvagedAt),
                 CommunicationSection(report),
                 TimelineSection(report),
                 NasaDataSection(report),
@@ -191,6 +197,9 @@ namespace OutOfReach.Core
             double evaOxygen = (report.SuitPreparationCount * evaSpec.SuitPreparationOxygenKg) + (report.AirlockCycleCount * evaSpec.AirlockCycleOxygenLossKg);
             double evaBattery = report.AirlockCycleCount * evaSpec.AirlockCycleEnergyKWh;
             double transmitBattery = link.HasTransmitted ? link.TransmitEnergyKWh : 0d;
+            FieldModifications mods = director.FieldModifications;
+            double modsBattery = (mods.SciencePayloadSalvaged ? mods.Spec.SalvageEnergyKWh : 0d) + (mods.CartridgesBuilt * mods.Spec.CartridgeEnergyKWh);
+            int modsParts = (mods.CartridgesBuilt * mods.Spec.CartridgeSpareParts) - (mods.SciencePayloadSalvaged ? mods.Spec.SalvageSpareParts : 0);
 
             ResourceSnapshot start = report.ResourcesAtLaunch;
             ResourceSnapshot end = report.ResourcesAtEnd;
@@ -199,14 +208,15 @@ namespace OutOfReach.Core
                 (start.OxygenKg - end.OxygenKg) - repairOxygen - evaOxygen,
                 (start.WaterLitres - end.WaterLitres) - repairWater,
                 (start.FoodKg - end.FoodKg) - repairFood,
-                (start.BatteryKWh - end.BatteryKWh) - repairBattery - evaBattery - transmitBattery,
-                (start.SparePartsCount - end.SparePartsCount) - repairParts);
+                (start.BatteryKWh - end.BatteryKWh) - repairBattery - evaBattery - transmitBattery - modsBattery,
+                (start.SparePartsCount - end.SparePartsCount) - repairParts - modsParts);
 
             return Array.AsReadOnly(new[]
             {
                 new ReportExpenditure("repairs", repairOxygen, repairWater, repairFood, repairBattery, repairParts),
                 new ReportExpenditure("EVA", evaOxygen, 0d, 0d, evaBattery, 0),
                 new ReportExpenditure("transmission", 0d, 0d, 0d, transmitBattery, 0),
+                new ReportExpenditure("field modifications", 0d, 0d, 0d, modsBattery, modsParts),
                 overTime,
             });
         }
@@ -361,11 +371,40 @@ namespace OutOfReach.Core
                     continue;
                 }
 
+                if (expenditure.Purpose == "field modifications")
+                {
+                    if (report.SciencePayloadSalvaged || report.AbsorberCartridgesBuilt > 0)
+                    {
+                        lines.Add(Line("Field modifications", DescribeFieldModifications(report, expenditure)));
+                    }
+
+                    continue;
+                }
+
                 lines.Add(Line("Spent on " + (expenditure.Purpose == "EVA" ? "the EVA" : expenditure.Purpose == "transmission" ? "the transmission" : expenditure.Purpose),
                     DescribeSpending(expenditure)));
             }
 
             return Section(MissionReportSections.Resources, "Resources", lines);
+        }
+
+        private static string DescribeFieldModifications(MissionReport report, ReportExpenditure expenditure)
+        {
+            var parts = new List<string>();
+            if (report.SciencePayloadSalvaged)
+            {
+                parts.Add("science instrument dismantled for spare parts");
+            }
+
+            if (report.AbsorberCartridgesBuilt > 0)
+            {
+                parts.Add(string.Format(Invariant, "{0} CO2 absorber cartridge{1} built", report.AbsorberCartridgesBuilt, report.AbsorberCartridgesBuilt == 1 ? string.Empty : "s"));
+            }
+
+            string net = expenditure.SpareParts < 0
+                ? string.Format(Invariant, "net +{0} spare part{1}", -expenditure.SpareParts, expenditure.SpareParts == -1 ? string.Empty : "s")
+                : string.Format(Invariant, "net {0} spare part{1} used", expenditure.SpareParts, expenditure.SpareParts == 1 ? string.Empty : "s");
+            return string.Format(Invariant, "{0}; {1}, {2:0.00} kWh", string.Join(", ", parts), net, expenditure.BatteryKWh);
         }
 
         private static string DescribeSpending(ReportExpenditure expenditure)
@@ -399,7 +438,7 @@ namespace OutOfReach.Core
             return parts.Count == 0 ? "nothing" : string.Join(", ", parts);
         }
 
-        private static MissionReportSection SystemsSection(MissionReport report)
+        private static MissionReportSection SystemsSection(MissionReport report, FieldModificationSpec modificationSpec)
         {
             var lines = new List<MissionReportLine>();
             foreach (ReportSystemStatus system in report.Systems)
@@ -430,10 +469,19 @@ namespace OutOfReach.Core
                     report.CompletedEvaCount, report.SuitPreparationCount, report.SuitPreparationCount == 1 ? string.Empty : "s",
                     report.AirlockCycleCount, report.AirlockCycleCount == 1 ? string.Empty : "s");
             lines.Add(Line("EVA", evaValue));
+            if (report.AbsorberCartridgesBuilt > 0)
+            {
+                lines.Add(Line("CO2 absorber", string.Format(Invariant,
+                    "{0} of {1} built cartridge{2} installed; {3:0.00} kg CO2 taken up. GAME ASSUMPTION: {4:0.000} kg per cartridge, stated as {5:0.##} crew-hours of the cited {6:0.00} kg per crew-day; not a rated scrubber.",
+                    report.AbsorberCartridgesInstalled, report.AbsorberCartridgesBuilt, report.AbsorberCartridgesBuilt == 1 ? string.Empty : "s",
+                    report.AbsorbedCarbonDioxideKg, modificationSpec.CartridgeCapacityKg, modificationSpec.CartridgeCrewHours,
+                    CrewMetabolicAssumptions.CarbonDioxideKgPerCrewDay)));
+            }
+
             return Section(MissionReportSections.Systems, "Systems and repairs", lines);
         }
 
-        private static MissionReportSection ScienceSection(MissionReport report)
+        private static MissionReportSection ScienceSection(MissionReport report, double? salvagedAtSimulationSeconds)
         {
             var lines = new List<MissionReportLine>();
             if (report.ScienceObjectives == null || report.ScienceObjectives.Count == 0)
@@ -449,7 +497,12 @@ namespace OutOfReach.Core
             }
 
             string result;
-            if (report.ScienceDataReturned)
+            if (report.SciencePayloadSalvaged)
+            {
+                result = "Abandoned: the instrument was dismantled for spare parts at "
+                    + MissionCalendar.FormatElapsed(salvagedAtSimulationSeconds ?? 0d) + ". Nothing can be returned.";
+            }
+            else if (report.ScienceDataReturned)
             {
                 result = "Returned: with the link restored, the instrument's data can be sent to Earth.";
             }
@@ -593,6 +646,7 @@ namespace OutOfReach.Core
                 Line("Life support", "Simplified for education. Consumption follows the cited NASA document; damage, leak and scrubber rates and repair costs are gameplay tuning. Loss levels are game rules anchored to cited operational levels, not medical limits."),
                 Line("Communication", "Link availability, occultation, acquisition and message length are not modelled. Processing time on Earth and transmit energy are game assumptions."),
                 Line("False signal", "The signal heard before the transmission is a story beat: a damaged local buffer replaying an old recording. It is not an echo from space and not a model of a NASA link."),
+                Line("Field modifications", "The salvage yield and the cartridge's cost and capacity are game assumptions. The capacity is stated in crew-hours of the cited metabolic CO2 output; it is not sized from or rated like a real lithium-hydroxide canister."),
                 Line("Outcome", "A reply permits recovery planning. It does not show that a rescue is feasible."),
                 Line("Budget", "Credits are fictional, not cost estimates."),
                 Line("Attribution", "Earth-Mars reference ephemeris: NASA/JPL Horizons. AURORA-7 uses a fictional Mars-vicinity distance approximation. Life-support behavior is simplified for education. Mission timing may be compressed."),

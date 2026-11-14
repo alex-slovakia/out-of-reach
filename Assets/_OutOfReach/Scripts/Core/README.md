@@ -5,8 +5,9 @@ integrator; root documentation stays integrator-owned. Status and requests live 
 
 **Done:** C01 (mission foundation), C02 (first playable repair loop), C03 (suit, airlock, constrained EVA,
 antenna repair) and C04 (NASA/JPL-driven reply delay, the one transmission, both outcomes, the ending sequence,
-report data, restart), including the shared `IMissionReport` and `IEvaStatus` contracts. The gameplay loop is
-complete from planning to report.
+report data, restart), including the shared `IMissionReport` and `IEvaStatus` contracts, C05-A (physical
+preflight cargo loading, switched off by default) and C05-B (payload salvage, CO₂ absorber cartridge and its
+bay, offered only where their scene targets are bound). The gameplay loop is complete from planning to report.
 
 ## Assemblies
 
@@ -35,12 +36,15 @@ complete from planning to report.
 | `IEvaStatus` | `OutOfReach.Core.EvaOperations` |
 | `ICommunicationSystem` | `OutOfReach.Simulation.CommunicationSystem` |
 | `IMissionReport` | `OutOfReach.Core.MissionReport` (sections use the contract's `MissionReportSection` / `MissionReportLine`) |
+| `ICargoLoading` | `OutOfReach.Core.CargoLoading` |
+| `IFieldModifications` | `OutOfReach.Core.FieldModifications` |
 | `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
 | `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
 
 Contracts added after the baseline come from the integrator's shared-only commits on
-`feature/visuals-cinematics`, adopted here by cherry-pick: `39dfb92` (clock, planning deadline) as `50b2f8a` and
-`84cbf64` (EVA status, mission report) as `3c4aa83`. The visuals branch itself was never merged;
+`feature/visuals-cinematics`, adopted here by cherry-pick: `39dfb92` (clock, planning deadline) as `50b2f8a`,
+`84cbf64` (EVA status, mission report) as `3c4aa83`, `37f39a0` (field modifications) as `f0e9603` and `f8ceefe`
+(cargo loading). The visuals branch itself was never merged;
 `TEAM-COMMANDS.md` was not taken, so it arrives once from the integrator's branch.
 
 ## Scene integration (I01: plan → accident → interior repair)
@@ -307,6 +311,89 @@ the final rates), `Timeline`, real play time and simulated time passed in chapte
 
 Not modelled: link availability, occultation, acquisition, message length, body motion during propagation.
 
+## C05-A: physical preflight cargo loading (off by default)
+
+### What it is
+During Planning the player walks, carries **one crate at a time** from a type's supply pallet to that type's stack
+in the cargo bay (or back), and launches from the cockpit console. It replaces clicking a list, not the planner:
+
+- **The planner's draft is the only inventory.** A crate in a bay stack is one unit in `IMissionPlanner.Draft`.
+  Loading and unloading call the existing `TrySetEquipment(id, quantity ± 1)`. Mass, budget, power and supply
+  validation, the 60-second deadline, its last-valid fallback and the launch are untouched and identical to the list.
+- **The crate in hands is the only extra state** (`CargoLoading.CarriedEquipmentId`). It is not aboard: at launch
+  or at the deadline it stays behind and is never counted; the timeline says so.
+- Supply left on a pallet is derived: the type's maximum minus what is loaded minus the crate in hands.
+- Loading past a limit is allowed, as in the list: the draft shows the violation and the launch is refused.
+- The bay starts with the default loadout aboard, exactly as the list planner starts with it. The player swaps
+  crates; the last-valid fallback therefore always exists.
+- **Carry speed** = walk speed × max(0.5, 1 − crate mass / 180 kg), from the authoritative unit mass: spare-parts
+  kit 0.86, oxygen tank 0.83, food locker 0.81, water tank 0.73, battery module 0.69, solar wing 0.61,
+  spectrometer 0.50. GAMEPLAY TUNING; nobody hand-carries 90 kg, so presentation should show a handling cart.
+
+### Switch
+`MissionRuntime` → **Preflight Walk** (serialized, default **off**) and **Preflight Spawn** (optional transform).
+- Off: nothing changes. No player control during Planning, the console stays "on standby until launch".
+- On: the player has control during Planning and starts at Preflight Spawn. `cockpit-console` during Planning reads
+  `Begin mission: 546 of 600 kg, 720 of 800 credits` or the exact violation that blocks the launch, and launches.
+  When the mission leaves Planning (console, UI button or deadline) the runtime moves the player to Player Spawn.
+The cargo interactions exist in both modes; without player control nothing can reach them.
+
+### Scene bindings (all Claude-owned components; no Codex prefab is edited)
+| Target | ID | Prompt examples |
+|---|---|---|
+| Supply pallet of a type | `cargo-supply:<equipmentId>` | `Pick up oxygen tank: 30 kg, 40 credits, +12 kg oxygen (4 on the pallet)` · `Put the oxygen tank back on the pallet` · `Hands full: carrying a battery module` · `The only atmospheric spectrometer is already aboard` |
+| Bay stack of a type | `cargo-bay:<equipmentId>` | `Load battery module: payload 546 -> 601 of 600 kg (over the limit)` · `Unload one spare parts kit (2 aboard)` · `No deployable solar wing aboard` |
+
+Equipment IDs: `oxygen-tank`, `water-tank`, `food-locker`, `battery-module`, `solar-wing`, `spare-parts-kit`,
+`spectrometer` (14 targets). Each needs a collider within 2 m of where the player stands, like every target. Add
+them to `MissionRuntime` → Interaction Targets. After launch every cargo target reads
+`The cargo bay is sealed after launch.`
+
+### Presentation data
+- `MissionRuntime.Cargo` (`CargoLoading`): `CarriedEquipmentId` (null with empty hands), `CarrySpeedFactor`,
+  `GetSupplyRemaining(equipmentId)`, `GetLoaded(equipmentId)` and a `Changed` event for the crate in hands. The
+  class implements the shared `ICargoLoading` (`GetLoaded` is an extra for code that references Core).
+- Bay stacks: `IMissionPlanner.Draft.Equipment` (quantity per ID). One generic case model per crate is enough.
+- Timer: `IPlanningDeadline.RemainingRealSeconds` after `MissionRuntime.BeginTimedPlanning()`.
+- The runtime applies the carry speed to the player itself (`FirstPersonController.SpeedMultiplier`).
+
+## C05-B: payload salvage and the CO₂ absorber cartridge
+
+Two field modifications. Both only convert what was carried; nothing is created. **Each is offered only where its
+scene targets are bound** (`MissionRuntime` checks this when it binds a scene): a ship without them plays exactly
+as before, including the "mission objective unrecoverable" rule.
+
+| ID | Bound means | What it does | Cost (GAME ASSUMPTIONS) |
+|---|---|---|---|
+| `salvage-payload` | salvage offered | Dismantles the science instrument, once: **+3 spare parts**, its 300 W load leaves the bus exactly once, the **science objective is abandoned for good** | 0.2 kWh |
+| `workbench` | cartridge offered, together with the bay | Builds one CO₂ absorber cartridge; it is carried until installed | 1 spare part + 0.2 kWh |
+| `absorber-bay` | cartridge offered, together with the bench | Installs a carried cartridge; a working one is left alone, a spent one is replaced | 1 cartridge |
+
+- **Where:** inside the ship in `Emergency`, `Repair` and `Transmission`. Never during an EVA, never before the impact.
+- **Cartridge model.** While cabin CO₂ would rise, an installed cartridge takes up as much as the crew produces,
+  so the concentration **stops rising** until the capacity is used: 0.505 kg, stated as 12 crew-hours at the cited
+  1.01 kg per crew-day. It needs no power. It is **not** used up while the main scrubbers cope or the crew
+  breathes suit oxygen. It does not stop the oxygen leak and is not a life-support repair: an EVA still needs the
+  real repair. The capacity is a game assumption, not a rated lithium-hydroxide canister; the report says so.
+- **Time.** The step loop splits exactly where a cartridge is used up. With one cartridge installed at the impact
+  the CO₂ loss comes exactly 12 simulated hours later, in one jump or frame by frame.
+- **Loss rule.** While the instrument can still be dismantled, its 3 parts count: the mission is "unrecoverable"
+  only if parts in hand + 3 are fewer than the antenna needs. The bench prompt warns before a build that would
+  make the antenna unrepairable (`… Warning: that leaves 2 spare parts; the antenna needs 3.`); the choice stays
+  the player's.
+- **Prompts** (examples): `Dismantle science instrument: +3 spare parts for 0.2 kWh. The science objective is
+  abandoned for good.` · `Build CO2 absorber cartridge: 1 spare part, 0.2 kWh.` · `Install CO2 absorber cartridge:
+  cabin CO2 stops rising for up to 12 h 00 min` · `CO2 absorber working: 11 h 40 min of capacity left` ·
+  `Cartridge spent. Build a new one at the workbench.` · `No science payload aboard`.
+- **HUD data:** `MissionRuntime.FieldModifications` (`IFieldModifications`): `SciencePayloadSalvaged`,
+  `AbsorberCartridgesCarried`, `AbsorberInstalled`, `AbsorberRemainingSimulationSeconds`, `Changed`.
+- **Report:** `resources` gets a "Field modifications" line, `systems` a "CO2 absorber" line with the disclosed
+  assumption, `science` reads "Abandoned: the instrument was dismantled for spare parts at T+…", and
+  `fictional-scenario` labels all of it as game assumptions. Expenditure sums still equal launch minus end (a
+  salvage is a negative spare-parts cost). No section ID changed.
+- **Live electrical load.** `IMissionConfiguration.RequiredPowerWatts` is the frozen launch loadout and still
+  includes the instrument. The live figure after a salvage is `MissionDirector.PowerState.LoadWatts`.
+
 ## Emergency model (one model for nominal flight and the accident)
 
 | Input | Effect |
@@ -396,22 +483,22 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 8. **Citations.** The BVAD references and the communication assumptions above should be added to `NASA-DATA.md`
    by the integrator; its "runtime integration pending" status can now be updated.
 
-## Evidence (C04, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
+## Evidence (C05-B, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 215 passed, 0 failed, 0 skipped.** 63 new: the packaged snapshot (identity, byte equality with the
-  canonical CSV, manifest, known rows, units, selection, 11 damaged-table rejections), the link alone (timing,
-  early-reply prevention, repeated and rejected sends, stray advance, unpowered link, dates), the whole finale
-  (console steps, event order, exact reply time in a jump and frame by frame, pause, low battery, loss before /
-  at / after the reply, ending cinematics with stale completions and timeouts, mission-day sampling, end of the
-  snapshot, unrecoverable objective) and the report (both outcomes, expenditure sums, timeline, loadout names,
-  planning fallback, restart, the shared `IMissionReport` and `IEvaStatus` views).
-- **PlayMode: 15 passed, 0 failed.** New: the finale through the console interaction with the wait driven by
-  runtime steps to the report and a clean restart, and `SkipSimulatedTime`.
-- The run machine uses a decimal-comma culture, so invariant parsing and formatting were exercised for real.
-- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` (147 GUIDs) and
+- **EditMode: 250 passed, 0 failed, 0 skipped.** 14 new for the field modifications: nothing offered by default,
+  salvage once with one atomic event and 300 W removed exactly once, refusals (no payload, before the impact,
+  during an EVA, too little energy), a starved ship that trades its science for contact, the loss rule after the
+  instrument is gone and the bench warning, cartridge build and install rules, CO₂ held for exactly the capacity
+  inside one jump without power, the CO₂ loss exactly one cartridge later, no use while the scrubbers cope,
+  replacing a spent cartridge, report lines with sums that still add up, restart. 21 earlier ones cover C05-A.
+- **PlayMode: 20 passed, 0 failed.** 2 new: bench, bay and instrument through their scene targets; a scene without
+  the targets offers no modification. 3 earlier ones cover the physical preflight.
+- The harness scene was regenerated (bench, instrument rack, absorber bay, 7 pallets, 7 bay stacks).
+  `PlayerRig.prefab` is byte-identical.
+- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` and
   `tools/nasa/horizons_snapshot.py` PASS.
-- Earlier checkpoints: C03 at `e36343a` 152 / 13 and C02 at `91e6215` 129 / 8, both also verified independently.
+- Earlier checkpoints: C05-A at `9a6c2e4` 236 / 18, C04 at `6bb788b` 215 / 15, C03 at `e36343a` 152 / 13.
 - **Not verified:** an independent run of this revision, integration with Codex's ship, UI and cinematics, a
-  Windows build, a human play-through, performance, the report rendered in a real UI.
+  Windows build, a human play-through (carry speeds, whether a cartridge is ever worth its part), performance.
 - Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
   `ProjectSettings/SceneTemplateSettings.json`.

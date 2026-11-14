@@ -18,7 +18,10 @@ namespace OutOfReach.Core
     /// <item>After every simulation step and every repair the rates are recomputed from one model
     /// (<see cref="EmergencyResourceModel"/>), so a battery that runs flat stops the scrubbers at that exact moment.</item>
     /// <item>Survival rules end the mission as Lost with a causal explanation; nothing is skipped across long steps.
-    /// A stabilized ship that can never repair its antenna is also Lost: no contact, no recovery plan.</item>
+    /// A stabilized ship that can never repair its antenna (not even by salvaging the science payload) is also
+    /// Lost: no contact, no recovery plan.</item>
+    /// <item>Field modifications feed the same model: a salvaged instrument's load leaves the bus, and an installed
+    /// CO2 absorber cartridge takes up a rising cabin CO2 rate until its capacity is used, split exactly in time.</item>
     /// <item>In Transmission the console first runs a link diagnostic, once: Core requests the FalseSignal
     /// cinematic (the damaged receive buffer replays an old local recording). It grants nothing and is not a reply.
     /// Only then can the distress call be sent, once; when Earth's reply is received the mission ends as
@@ -82,6 +85,8 @@ namespace OutOfReach.Core
 
             Systems = new ShipSystems(systems);
             Eva = new EvaOperations(definition.Scenario.Eva, events, state, resources, Systems, RefreshRates, Journal.Record);
+            FieldModifications = new FieldModifications(definition.Scenario.FieldModifications, definition, events, state, planner,
+                resources, Systems, OnFieldModified, Journal.Record);
             Communications = new CommunicationSystem(
                 events,
                 resources,
@@ -102,6 +107,9 @@ namespace OutOfReach.Core
 
         /// <summary>Suit, airlock and outside state for the EVA.</summary>
         public EvaOperations Eva { get; }
+
+        /// <summary>Payload salvage and the CO2 absorber cartridge.</summary>
+        public FieldModifications FieldModifications { get; }
 
         /// <summary>The link to Earth: reference distance, light time, the one transmission and the reply timer.</summary>
         public CommunicationSystem Communications { get; }
@@ -283,6 +291,7 @@ namespace OutOfReach.Core
             }
 
             boundary = Math.Min(boundary, Eva.TimeToNextBoundary());
+            boundary = Math.Min(boundary, FieldModifications.TimeToNextBoundary());
             return Math.Min(boundary, Communications.TimeToNextBoundary());
         }
 
@@ -319,6 +328,13 @@ namespace OutOfReach.Core
             events.CommunicationChanged -= OnCommunicationChanged;
             events.MissionEnded -= OnMissionEnded;
             state.SetTransitionGuard(null);
+        }
+
+        /// <summary>After a salvage, a built or an installed cartridge: same model, same rules, immediately.</summary>
+        private void OnFieldModified()
+        {
+            RefreshRates();
+            EvaluateSurvival();
         }
 
         private void OnFalseSignalFinished(CinematicCompletion completion)
@@ -592,14 +608,22 @@ namespace OutOfReach.Core
 
             var inputs = new ShipPowerInputs(
                 definition.CrewCount,
-                launched.RequiredPowerWatts,
+                Math.Max(0d, launched.RequiredPowerWatts - FieldModifications.RemovedLoadWatts),
                 launched.AvailablePowerWatts,
                 Systems.Power.Condition01,
                 Systems.LifeSupport.Condition01,
                 resources.Snapshot.BatteryKWh <= 0d,
                 Eva.IsSuitSealed);
             PowerState = EmergencyResourceModel.Evaluate(inputs);
-            resources.TrySetRates(PowerState.Rates);
+            ResourceRates rates = PowerState.Rates;
+            double absorbed = FieldModifications.AbsorbPpmPerSecond(rates.CarbonDioxideChangePpmPerSecond);
+            if (absorbed > 0d)
+            {
+                rates = new ResourceRates(rates.OxygenUseKgPerSecond, rates.WaterUseLitresPerSecond, rates.FoodUseKgPerSecond,
+                    rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond - absorbed);
+            }
+
+            resources.TrySetRates(rates);
         }
 
         private void TrackPeakCarbonDioxide()
@@ -666,7 +690,7 @@ namespace OutOfReach.Core
                 && !Systems.Antenna.IsOperational
                 && Systems.Power.IsOperational
                 && Systems.LifeSupport.IsOperational
-                && available < needed;
+                && available + FieldModifications.SalvageablePartsNow < needed;
         }
 
         private string DescribeContactImpossible(int needed, int available)

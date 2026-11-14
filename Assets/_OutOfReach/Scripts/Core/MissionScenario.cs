@@ -110,7 +110,8 @@ namespace OutOfReach.Core
             EvaSpec eva = null,
             CommunicationSpec communication = null,
             DateTime? missionEpochAtStartUtc = null,
-            double endingCinematicTimeoutRealSeconds = DefaultEndingCinematicTimeoutRealSeconds)
+            double endingCinematicTimeoutRealSeconds = DefaultEndingCinematicTimeoutRealSeconds,
+            FieldModificationSpec fieldModifications = null)
         {
             if (systems == null)
             {
@@ -156,6 +157,7 @@ namespace OutOfReach.Core
                 ? DateTime.SpecifyKind(missionEpochAtStartUtc.Value, DateTimeKind.Utc)
                 : (DateTime?)null;
             EndingCinematicTimeoutRealSeconds = endingCinematicTimeoutRealSeconds;
+            FieldModifications = fieldModifications ?? new FieldModificationSpec();
         }
 
         /// <summary>Fallback for each ending cinematic: long enough for a reply voice-over or a final camera move.</summary>
@@ -182,6 +184,9 @@ namespace OutOfReach.Core
 
         /// <summary>Unpaused real seconds Core waits for each ending cinematic before continuing without it.</summary>
         public double EndingCinematicTimeoutRealSeconds { get; }
+
+        /// <summary>Salvage yield and CO2 absorber cartridge assumptions.</summary>
+        public FieldModificationSpec FieldModifications { get; }
 
         public ShipSystemSpec GetSystem(ShipSystemId systemId)
         {

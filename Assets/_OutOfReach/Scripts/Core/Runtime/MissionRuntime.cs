@@ -66,6 +66,13 @@ namespace OutOfReach.Core.Runtime
 
         [SerializeField] private MissionRestartMode restartMode = MissionRestartMode.ReloadActiveScene;
 
+        [Header("Physical preflight (C05-A)")]
+        [Tooltip("Off: planning is a list, the player has no control before launch. On: the player walks during Planning, carries crates between cargo-supply and cargo-bay targets and launches from the cockpit console.")]
+        [SerializeField] private bool preflightWalk;
+
+        [Tooltip("Feet position and heading the player starts from during the physical preflight. Empty uses Player Spawn.")]
+        [SerializeField] private Transform preflightSpawn;
+
         [Header("Timed planning")]
         [Tooltip("Unpaused real seconds for BeginTimedPlanning.")]
         [SerializeField] private double planningDeadlineRealSeconds = OutOfReach.Core.PlanningDeadline.DefaultDurationRealSeconds;
@@ -79,6 +86,7 @@ namespace OutOfReach.Core.Runtime
 
         private bool playerSubscribed;
         private bool playerOutside;
+        private bool playerInPreflight;
         private int lastStepFrame = -1;
 
         /// <summary>The current mission session, or null before start and after teardown.</summary>
@@ -136,6 +144,23 @@ namespace OutOfReach.Core.Runtime
         /// </summary>
         public CommunicationSystem CommunicationDetails => Session != null ? Session.Communications : null;
 
+        /// <summary>
+        /// Read-only field-modification state for the HUD: payload salvaged, cartridges carried, absorber installed
+        /// and its remaining time. A modification is offered only when its targets are bound in this scene:
+        /// salvage-payload for the salvage; workbench and absorber-bay together for the cartridge.
+        /// </summary>
+        public IFieldModifications FieldModifications => Session != null ? Session.FieldModifications : null;
+
+        /// <summary>
+        /// Preflight crate handling for presentation: the crate in hands (CarriedEquipmentId), the carry speed
+        /// factor, the supply left per type and a Changed event. The bay's content is IMissionPlanner.Draft.
+        /// The returned object implements the shared ICargoLoading.
+        /// </summary>
+        public CargoLoading Cargo => Session != null ? Session.Cargo : null;
+
+        /// <summary>True when this runtime runs the physical preflight (walking and crates during Planning).</summary>
+        public bool PreflightWalk => preflightWalk;
+
         /// <summary>Mission date on the simulation clock (T0 + elapsed simulated time), for date and "mission day" labels.</summary>
         public MissionCalendar Calendar => Session != null ? Session.Calendar : null;
 
@@ -192,6 +217,16 @@ namespace OutOfReach.Core.Runtime
         }
 
         /// <summary>
+        /// Explicit preflight wiring for code-built scenes; authored scenes use the serialized fields. Takes effect
+        /// with the next session (StartSession or RestartMission).
+        /// </summary>
+        public void ConfigurePreflight(bool walkDuringPlanning, Transform spawn)
+        {
+            preflightWalk = walkDuringPlanning;
+            preflightSpawn = spawn;
+        }
+
+        /// <summary>
         /// Applies mission state to the scene: the inner gate is walkable only while the airlock is InnerOpen, the
         /// outer gate is never walkable, and the player is clipped to the EVA route exactly while the mission says
         /// the crew is outside. Runs every frame; safe to call directly after a manual step.
@@ -203,6 +238,7 @@ namespace OutOfReach.Core.Runtime
                 return;
             }
 
+            SyncPreflight();
             EvaOperations eva = Session.Eva;
             if (gates != null)
             {
@@ -253,7 +289,7 @@ namespace OutOfReach.Core.Runtime
         {
             EndSession();
             string preset = string.IsNullOrWhiteSpace(startingPresetId) ? null : startingPresetId;
-            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset);
+            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk);
             BindScene();
             if (SessionStarted != null)
             {
@@ -487,6 +523,10 @@ namespace OutOfReach.Core.Runtime
                 }
             }
 
+            Session.EnableFieldModifications(
+                IsTargetBound(InteractionIds.SalvagePayload),
+                IsTargetBound(InteractionIds.Workbench) && IsTargetBound(InteractionIds.AbsorberBay));
+
             if (gates != null)
             {
                 foreach (GameplayGate gate in gates)
@@ -499,16 +539,61 @@ namespace OutOfReach.Core.Runtime
             }
 
             playerOutside = false;
+            playerInPreflight = Session.PreflightWalkEnabled && Session.State.Phase == GamePhase.Planning;
             if (player != null)
             {
                 player.ControlGate = IsPlayerControlAllowed;
-                if (playerSpawn != null)
+                player.SpeedMultiplier = 1f;
+                Transform start = playerInPreflight && preflightSpawn != null ? preflightSpawn : playerSpawn;
+                if (start != null)
                 {
-                    player.Teleport(playerSpawn.position, playerSpawn.eulerAngles.y);
+                    player.Teleport(start.position, start.eulerAngles.y);
                 }
             }
 
             SyncScene();
+        }
+
+        /// <summary>
+        /// Carry speed while a crate is in hands, and the move to the cockpit when the mission leaves Planning
+        /// (the crate in hands stays behind; Core has already dropped it).
+        /// </summary>
+        private void SyncPreflight()
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            player.SpeedMultiplier = Session.Cargo.CarrySpeedFactor;
+            if (!playerInPreflight || Session.State.Phase == GamePhase.Planning)
+            {
+                return;
+            }
+
+            playerInPreflight = false;
+            if (playerSpawn != null)
+            {
+                player.Teleport(playerSpawn.position, playerSpawn.eulerAngles.y);
+            }
+        }
+
+        private bool IsTargetBound(string interactionId)
+        {
+            if (interactionTargets == null)
+            {
+                return false;
+            }
+
+            foreach (InteractableTarget target in interactionTargets)
+            {
+                if (target != null && target.InteractionId == interactionId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsPlayerControlAllowed()
