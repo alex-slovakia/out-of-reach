@@ -38,6 +38,8 @@ namespace OutOfReach.Composition
         [SerializeField] private I01AirlockDoorView airlockDoors;
         [SerializeField] private ShipLightingPresenter shipLighting;
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
+        [SerializeField] private EmbodiedBodyPresenter embodiedBody;
+        [SerializeField] private I06HabitatBindings habitat;
         [SerializeField] private Transform firstPersonMotionPivot;
         [SerializeField] private OpeningMenuMotionPresenter openingMenuMotion;
         [SerializeField] private Transform openingMenuMotionPivot;
@@ -132,8 +134,21 @@ namespace OutOfReach.Composition
 
         public void ConfigureFootsteps(FootstepAudioPresenter presenter) => footsteps = presenter;
 
-        // This candidate still uses the existing grounded controller. The floating-mode
-        // integration must also exclude IsFloating here, even when touching a floor.
+        public void ConfigureBody(EmbodiedBodyPresenter presenter) => embodiedBody = presenter;
+        public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
+
+        // A pause keeps the body in the actual scene behind the menu. Contact commands
+        // use the stricter player-control gate; visibility alone never grants input.
+        private bool CanPresentBody() => isActiveAndEnabled && attached && modeChosen && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && runtime.Player && cinematics && !cinematics.IsPlaying
+            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && runtime.GameState.Phase != GamePhase.Outcome && runtime.GameState.Phase != GamePhase.Report;
+
+        private EmbodiedBodyPresenter.BodyArmVisibility BodyArmMask() =>
+            (cargoHands && cargoHands.IsVisible) || (astronautHands && astronautHands.IsVisible)
+                ? EmbodiedBodyPresenter.BodyArmVisibility.None : EmbodiedBodyPresenter.BodyArmVisibility.Both;
+
         private bool CanPresentGroundedStepAudio() => CanPresentWalkMotion() && modeChosen
             && !menuPresentationVisible && !(boundSession.SurvivalRecovery?.IsResting ?? false);
 
@@ -141,7 +156,7 @@ namespace OutOfReach.Composition
         // Read the real controller's gate; never replace it or introduce another input/movement authority.
         private bool CanPresentWalkMotion() => isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
-            && runtime.Player && runtime.Player.ControlAllowed && !runtime.Player.IsOnRoute
+            && runtime.Player && runtime.Player.ControlAllowed && !runtime.Player.IsOnRoute && !runtime.Player.IsFloating
             && cinematics && !cinematics.IsPlaying;
 
         public void ConfigureOpeningMenuMotion(OpeningMenuMotionPresenter presenter, Transform visualOffset)
@@ -370,6 +385,7 @@ namespace OutOfReach.Composition
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
             flightBoard.ConfigureExertion(() => runtime && runtime.Player ? runtime.Player.ExertionRemaining01 : float.NaN);
             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
+            if (habitat) habitat.ConfigureSession(runtime);
             if (cargoPresentation)
                 cargoPresentation.Configure(runtime.Cargo, runtime.Planner, runtime.GameState);
             if (cargoHands)
@@ -397,6 +413,9 @@ namespace OutOfReach.Composition
                 astronautHands.ConfigureRouteProgress(() => runtime && runtime.Player && runtime.Player.IsOnRoute
                     ? runtime.Player.RouteDistanceMetres : float.NaN);
             }
+            if (embodiedBody)
+                embodiedBody.ConfigureSession(runtime.EvaStatus, runtime.Clock, CanPresentBody,
+                    () => runtime && runtime.Player && runtime.Player.IsFloating, BodyArmMask);
             if (firstPersonMotion && firstPersonMotionPivot && runtime.Player)
             {
                 firstPersonMotion.Configure(runtime.Player.GetComponent<CharacterController>(), firstPersonMotionPivot,
@@ -437,6 +456,8 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (habitat) habitat.ClearBinding();
+            if (embodiedBody) embodiedBody.ClearBinding();
             if (footsteps) footsteps.ClearBinding();
             if (survivalUi) survivalUi.ClearBinding();
             menuPresentationVisible = false;

@@ -161,6 +161,7 @@ namespace OutOfReach.Presentation.Hands
         /// <summary>Cancels the gesture and restores neutral joints, without moving the model root or mount.</summary>
         public void ResetToNeutral()
         {
+            ForgetContact();
             gesture = Gesture.None;
             gestureElapsed = gestureBlend = 0f;
             ResetTravelSample();
@@ -170,7 +171,8 @@ namespace OutOfReach.Presentation.Hands
         private bool TryStartGesture(Gesture requested, bool left)
         {
             RefreshPresentation();
-            if (!IsVisible || (IsGesturePlaying && !(requested == Gesture.Press && gesture == Gesture.Grip)))
+            if (!IsVisible || clock.IsPaused || ContactStage != HandContactStage.None
+                || (IsGesturePlaying && !(requested == Gesture.Press && gesture == Gesture.Grip)))
                 return false; // Press may smoothly replace a glove flex; no queue or delayed feedback.
             foreach (JointBinding binding in bindings)
             {
@@ -241,6 +243,10 @@ namespace OutOfReach.Presentation.Hands
 
         public void ClearBinding()
         {
+            ForgetContact();
+            contactOrigin = null;
+            contactModeAllowed = null;
+            validateContact = null;
             Unsubscribe();
             gesture = Gesture.None;
             gestureElapsed = gestureBlend = 0f;
@@ -264,6 +270,7 @@ namespace OutOfReach.Presentation.Hands
         {
             RefreshPresentation();
             if (!IsVisible || clock.IsPaused) return; // Keep the last visible pose; never advance while paused.
+            if (ContactStage != HandContactStage.None) { AdvanceContact(Time.unscaledDeltaTime); return; }
             SampleRouteTravel();
             AdvanceGesture(Time.unscaledDeltaTime);
         }
@@ -292,7 +299,7 @@ namespace OutOfReach.Presentation.Hands
                 HideModel();
                 return;
             }
-            if (clock.IsPaused) return;
+            if (clock.IsPaused) { CancelContact(); return; } // Cancel pending actions; freeze the visible pose until resume.
             if (firstPersonViewAllowed == null || !firstPersonViewAllowed())
             {
                 ResetToNeutral(); // Cinematic/menu/control lock cancels rather than queues a hidden gesture.
@@ -411,6 +418,254 @@ namespace OutOfReach.Presentation.Hands
             }
             if (assigned.Count != 34) throw new InvalidOperationException(poseName + " does not cover every joint.");
         }
+
+        [Header("Validated world contact (optional)")]
+        [SerializeField, Range(.15f, .25f)] private float contactReachSeconds = .20f;
+        [SerializeField, Range(.15f, .35f)] private float contactReturnSeconds = .24f;
+        [SerializeField, Range(.35f, .8f)] private float contactReachMetres = .8f;
+        private static readonly Vector3 PalmContactInHand = new Vector3(0f, -.025f, .055f);
+        private static readonly Vector3 TubeCentreInHand = new Vector3(0f, -.033f, .082f);
+        private Transform contactOrigin;
+        private Func<bool> contactModeAllowed;
+        private Func<HandContactSample, bool> validateContact, performContact;
+        private Func<HandContactTarget?> readHeldContact;
+        private HandContactTarget contactTarget;
+        private ContactHand contactHand;
+        private HandContactKind contactKind;
+        private JointBinding contactArm, contactWrist;
+        private float contactElapsed;
+        private Vector3 previousContactPoint, previousContactOrigin;
+        private bool hasContactSample;
+        private int contactVersion;
+        public HandContactStage ContactStage { get; private set; }
+        public bool IsHoldingWorldContact => ContactStage == HandContactStage.Holding;
+        public float ContactErrorMetres { get; private set; } = float.NaN;
+
+        /// <summary>
+        /// Optional root binding after ConfigureSession. Origin is the unbobbed eye/reach origin.
+        /// Mode gate MUST exclude cargo, route, rest, menus, cinematics and all non-contact movement modes.
+        /// Validation MUST confirm the actual collider, reach and unobstructed eye AND wrist-to-contact path;
+        /// for Grip it must also verify a registered rail, its axis/radius and available hand authority.
+        /// It is called throughout the reach/hold, not just on the initiating click.
+        /// </summary>
+        public void ConfigureContacts(Transform unbobbedReachOrigin, Func<bool> isContactModeAllowed,
+            Func<HandContactSample, bool> isContactStillValid)
+        {
+            ResetToNeutral();
+            if (!bound || !unbobbedReachOrigin || isContactModeAllowed == null || isContactStillValid == null)
+                throw new ArgumentException("Bind the hand session, unbobbed origin and live contact validation first.");
+            contactOrigin = unbobbedReachOrigin;
+            contactModeAllowed = isContactModeAllowed;
+            validateContact = isContactStillValid;
+        }
+
+        /// <summary>
+        /// Starts anticipation, NOT a physics action. One selected hand at a time matches the current single-grip owner.
+        /// The action is invoked once only after the rendered rig reaches the freshly validated real contact.
+        /// Grip additionally requires an authoritative anchor query; null means released/invalid.
+        /// Queries must be read-only. Action may reject; it must never partially succeed then return false.
+        /// </summary>
+        public bool TryReachContact(ContactHand hand, HandContactKind kind, HandContactTarget target,
+            Func<HandContactSample, bool> tryActionAtContact, Func<HandContactTarget?> readAuthoritativeGrip = null)
+        {
+            RefreshPresentation();
+            if (!CanPresentContact() || ContactStage != HandContactStage.None || tryActionAtContact == null
+                || (hand != ContactHand.Left && hand != ContactHand.Right)
+                || (kind != HandContactKind.Push && kind != HandContactKind.Grip)
+                || (kind == HandContactKind.Grip && readAuthoritativeGrip == null)) return false;
+            ResetToNeutral();
+            contactHand = hand; contactKind = kind; contactTarget = target;
+            foreach (JointBinding joint in bindings)
+            {
+                if (!joint.Joint) { ClearBinding(); return false; }
+                if (joint.Left != (hand == ContactHand.Left)) continue;
+                if (joint.Joint.name.EndsWith("_Arm", StringComparison.Ordinal)) contactArm = joint;
+                if (joint.Joint.name.EndsWith("_Hand", StringComparison.Ordinal)) contactWrist = joint;
+            }
+            if (contactArm == null || contactWrist == null || contactWrist.AuthoredPosition != Vector3.zero
+                || !TryContactPose(out _, out _, out _, out _)) { ForgetContact(); return false; }
+            CaptureContactPose();
+            performContact = tryActionAtContact; readHeldContact = readAuthoritativeGrip;
+            contactElapsed = 0f;
+            ContactStage = HandContactStage.Reaching;
+            return true;
+        }
+
+        /// <summary>Presentation cancellation only: never issues Player.Release or another gameplay command.</summary>
+        public void CancelContact()
+        {
+            if (ContactStage == HandContactStage.None || ContactStage == HandContactStage.Returning) return;
+            CaptureContactPose();
+            contactVersion++;
+            performContact = null; readHeldContact = null; contactTarget = default;
+            ContactErrorMetres = float.NaN;
+            contactElapsed = 0f;
+            ContactStage = HandContactStage.Returning;
+        }
+
+        private void ForgetContact()
+        {
+            contactVersion++;
+            ContactStage = HandContactStage.None;
+            performContact = null; readHeldContact = null; contactTarget = default;
+            contactArm = contactWrist = null;
+            hasContactSample = false;
+            contactElapsed = 0f; ContactErrorMetres = float.NaN;
+        }
+
+        private bool CanPresentContact()
+        {
+            if (!IsVisible || clock == null || clock.IsPaused || !contactOrigin || contactModeAllowed == null
+                || validateContact == null || suit.IsOutside || state.Phase == GamePhase.Eva) return false;
+            // A real route sample is an independent veto even if the composition gate was misconfigured.
+            try { return (routeProgress == null || !Finite(routeProgress())) && contactModeAllowed(); }
+            catch (Exception error) { Debug.LogException(error, this); return false; }
+        }
+
+        private void CaptureContactPose()
+        {
+            foreach (JointBinding joint in bindings)
+            {
+                if (!joint.Joint) continue;
+                joint.GestureStartPosition = joint.Joint.localPosition;
+                joint.GestureStartRotation = joint.Joint.localRotation;
+            }
+        }
+
+        private void AdvanceContact(float seconds)
+        {
+            if (!CanPresentContact()) { ResetToNeutral(); return; }
+            if (!Finite(seconds) || seconds < 0f || seconds > .1f) { CancelContact(); return; }
+            contactElapsed += seconds;
+            if (ContactStage == HandContactStage.Returning)
+            {
+                float t = Mathf.Clamp01(contactElapsed / Mathf.Clamp(contactReturnSeconds, .15f, .35f));
+                if (!BlendContactJoints(Mathf.SmoothStep(0f, 1f, t), true)) return;
+                if (t >= 1f) ResetToNeutral();
+                return;
+            }
+            if (ContactStage == HandContactStage.Holding)
+            {
+                HandContactTarget? held;
+                int version = contactVersion;
+                try { held = readHeldContact?.Invoke(); }
+                catch (Exception error) { Debug.LogException(error, this); CancelContact(); return; }
+                if (version != contactVersion) return;
+                if (!held.HasValue || held.Value.Surface != contactTarget.Surface) { CancelContact(); return; }
+                contactTarget = held.Value;
+            }
+            if (!TryContactPose(out HandContactSample sample, out Vector3 wristPosition,
+                out Quaternion armRotation, out Quaternion handRotation)) { CancelContact(); return; }
+            float reach = Mathf.Clamp01(contactElapsed / Mathf.Clamp(contactReachSeconds, .15f, .25f));
+            float blend = ContactStage == HandContactStage.Reaching ? Mathf.SmoothStep(0f, 1f, reach) : 1f;
+            if (!BlendContactJoints(blend, false)) return;
+            contactArm.Joint.SetLocalPositionAndRotation(
+                Vector3.Lerp(contactArm.GestureStartPosition, modelRoot.InverseTransformPoint(wristPosition), blend),
+                Quaternion.Slerp(contactArm.GestureStartRotation, Quaternion.Inverse(modelRoot.rotation) * armRotation, blend));
+            contactWrist.Joint.localRotation = Quaternion.Slerp(contactWrist.GestureStartRotation,
+                Quaternion.Inverse(armRotation) * handRotation, blend);
+            Vector3 reference = contactWrist.Joint.TransformPoint(contactKind == HandContactKind.Grip
+                ? TubeCentreInHand : PalmContactInHand);
+            if (contactKind == HandContactKind.Grip) reference += sample.Normal * sample.GripRadiusMetres;
+            ContactErrorMetres = Vector3.Distance(reference, sample.Point);
+            if (ContactStage == HandContactStage.PushContact)
+            {
+                if (contactElapsed >= .06f) CancelContact();
+                return;
+            }
+            if (ContactStage != HandContactStage.Reaching || reach < 1f) return;
+            if (ContactErrorMetres > .002f) { CancelContact(); return; }
+            // Install the next state before outward code: a callback can teardown/rebind this same presenter.
+            Func<HandContactSample, bool> action = performContact;
+            performContact = null;
+            ContactStage = HandContactStage.PushContact;
+            contactElapsed = 0f;
+            int actionVersion = contactVersion;
+            bool accepted;
+            try { accepted = action != null && action(sample); }
+            catch (Exception error) { Debug.LogException(error, this); accepted = false; }
+            if (actionVersion != contactVersion) return;
+            if (!accepted) { CancelContact(); return; }
+            if (contactKind == HandContactKind.Grip)
+            {
+                ContactStage = HandContactStage.Holding;
+                // Verify success immediately; an accepted command alone does not establish a displayed grip.
+                AdvanceContact(0f);
+            }
+        }
+
+        private bool BlendContactJoints(float blend, bool returning)
+        {
+            foreach (JointBinding joint in bindings)
+            {
+                if (!joint.Joint) { ClearBinding(); return false; }
+                if (joint.Left != (contactHand == ContactHand.Left)) continue;
+                Quaternion target = returning ? joint.NeutralRotation
+                    : contactKind == HandContactKind.Grip ? joint.GripRotation : joint.AuthoredRotation;
+                Vector3 position = returning ? joint.NeutralPosition : joint.AuthoredPosition;
+                joint.Joint.SetLocalPositionAndRotation(Vector3.Lerp(joint.GestureStartPosition, position, blend),
+                    Quaternion.Slerp(joint.GestureStartRotation, target, blend));
+            }
+            return true;
+        }
+
+        private bool TryContactPose(out HandContactSample sample, out Vector3 wristPosition,
+            out Quaternion armRotation, out Quaternion handRotation)
+        {
+            sample = default; wristPosition = default; armRotation = handRotation = Quaternion.identity;
+            Transform surface = contactTarget.Surface;
+            if (!surface || !surface.gameObject.activeInHierarchy || !contactOrigin || !modelRoot
+                || contactArm == null || !contactArm.Joint || contactWrist == null || !contactWrist.Joint
+                || (modelRoot.lossyScale - Vector3.one).sqrMagnitude > .000001f
+                || !FiniteVector(contactTarget.LocalPoint) || !FiniteVector(contactTarget.LocalNormal)
+                || !FiniteVector(contactTarget.LocalTangent)) return false;
+            Vector3 point = surface.TransformPoint(contactTarget.LocalPoint);
+            Vector3 normal = surface.localToWorldMatrix.inverse.transpose.MultiplyVector(contactTarget.LocalNormal).normalized;
+            Vector3 tangent = Vector3.ProjectOnPlane(surface.TransformVector(contactTarget.LocalTangent), normal).normalized;
+            if (!FiniteVector(point) || !FiniteVector(normal) || !FiniteVector(tangent)
+                || normal.sqrMagnitude < .99f || tangent.sqrMagnitude < .99f) return false;
+            if (hasContactSample && (Vector3.Distance(previousContactPoint, point) > .12f
+                || Vector3.Distance(previousContactOrigin, contactOrigin.position) > .25f)) return false;
+            Vector3 eyeToPoint = point - contactOrigin.position;
+            Vector3 local = Quaternion.Inverse(contactOrigin.rotation) * eyeToPoint;
+            float sign = contactHand == ContactHand.Left ? -1f : 1f;
+            if (eyeToPoint.magnitude > Mathf.Clamp(contactReachMetres, .35f, .8f) || local.z < .12f
+                || Mathf.Abs(local.x) > .55f || local.y < -.55f || local.y > .45f || local.x * sign < -.18f
+                || Vector3.Dot(normal, -eyeToPoint.normalized) < .15f) return false;
+            Vector3 reference = PalmContactInHand;
+            Vector3 anchor = point;
+            if (contactKind == HandContactKind.Grip)
+            {
+                if (!Finite(contactTarget.GripRadiusMetres) || contactTarget.GripRadiusMetres < .012f
+                    || contactTarget.GripRadiusMetres > .017f) return false;
+                reference = TubeCentreInHand;
+                anchor -= normal * contactTarget.GripRadiusMetres;
+                handRotation = Quaternion.LookRotation(Vector3.Cross(tangent, normal), normal);
+            }
+            else handRotation = Quaternion.LookRotation(tangent, normal);
+            wristPosition = anchor - handRotation * reference;
+            // This is bounded rigid forearm placement, not a shoulder/elbow IK chain.
+            Vector3 shoulderProxy = contactOrigin.position + contactOrigin.rotation * new Vector3(sign * .18f, -.28f, -.08f);
+            Vector3 forearmForward = wristPosition - shoulderProxy;
+            if (forearmForward.magnitude < .18f || forearmForward.magnitude > .72f) return false;
+            Vector3 armUp = Vector3.ProjectOnPlane(normal, forearmForward.normalized);
+            if (armUp.sqrMagnitude < .01f) armUp = Vector3.ProjectOnPlane(contactOrigin.up, forearmForward.normalized);
+            if (armUp.sqrMagnitude < .01f) return false;
+            armRotation = Quaternion.LookRotation(forearmForward, armUp);
+            if (Quaternion.Angle(armRotation, handRotation) > 80f) return false;
+            sample = new HandContactSample(contactHand, contactKind, contactTarget, point, normal, tangent,
+                contactWrist.Joint.position, wristPosition);
+            int version = contactVersion;
+            try
+            {
+                if (validateContact == null || !validateContact(sample) || version != contactVersion) return false;
+                previousContactPoint = point; previousContactOrigin = contactOrigin.position; hasContactSample = true;
+                return true;
+            }
+            catch (Exception error) { Debug.LogException(error, this); return false; }
+        }
+
+        private static bool FiniteVector(Vector3 value) => Finite(value.x) && Finite(value.y) && Finite(value.z);
 
         private static Vector3 Vector(float[] values)
         {

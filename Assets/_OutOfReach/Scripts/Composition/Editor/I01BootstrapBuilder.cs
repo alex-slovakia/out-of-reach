@@ -72,7 +72,12 @@ namespace OutOfReach.Composition.Editor
             ship.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             ShipVisualAnchors anchors = ship.GetComponent<ShipVisualAnchors>();
             ValidateAnchors(anchors);
-            AttachDeliveredModels(scene, ship, anchors);
+            Transform deliveredModelRoot = AttachDeliveredModels(scene, ship, anchors);
+            if (!deliveredModelRoot) throw new InvalidOperationException("The C06 habitat requires the delivered ship model.");
+            Transform ShipNode(string name) => deliveredModelRoot.GetComponentsInChildren<Transform>(true).Single(t => t.name == name);
+            var habitat = I06HabitatAuthoring.Create(deliveredModelRoot, ShipNode("A7_Storage"),
+                ShipNode("COL_Storage_LockersL").GetComponent<Collider>(),
+                ShipNode("COL_Storage_LockersR").GetComponent<Collider>(), font);
 
             GameObject playerObject = (GameObject)PrefabUtility.InstantiatePrefab(playerAsset, scene);
             FirstPersonController player = playerObject.GetComponent<FirstPersonController>();
@@ -135,7 +140,21 @@ namespace OutOfReach.Composition.Editor
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
             };
             var cargoStage = CargoStageAuthoring.Create(null, cameraTransform, font);
-            var allTargets = targets.Concat(cargoStage.Targets).ToArray();
+            var habitatTargets = new[]
+            {
+                HabitatTarget(habitat.RationInteractionSurface, InteractionIds.ConsumeRation, Vector3.zero, new Vector3(.32f, .25f, .06f)),
+                HabitatTarget(habitat.WaterInteractionSurface, InteractionIds.DrinkWater, Vector3.zero, new Vector3(.38f, .45f, .06f)),
+                HabitatTarget(habitat.GrowInteraction, InteractionIds.BuildGrowModule, Vector3.zero, new Vector3(.45f, .45f, .08f)),
+                HabitatTarget(habitat.SleepEntry, InteractionIds.SurvivalSleep, new Vector3(0, 1.25f, .20f), new Vector3(.50f, .65f, .08f)),
+                HabitatTarget(anchors.CockpitConsole, InteractionIds.RecoveryBeacon, new Vector3(.65f, .35f, .3f), new Vector3(.28f, .35f, .12f))
+            };
+            // The existing engineering science bay is the real carried payload, not a free parts dispenser.
+            // Core permanently removes that objective and its electrical load when salvage succeeds.
+            Transform sciencePayload = Child("Science payload salvage surface", deliveredModelRoot);
+            sciencePayload.SetPositionAndRotation(new Vector3(2.14f, 1.5f, 10.2f), Quaternion.LookRotation(Vector3.left));
+            InteractableTarget salvageTarget = HabitatTarget(sciencePayload, InteractionIds.SalvagePayload,
+                Vector3.zero, new Vector3(.6f, .7f, .10f));
+            var allTargets = targets.Concat(cargoStage.Targets).Concat(habitatTargets).Concat(new[] { salvageTarget }).ToArray();
             GameplayGate innerGate = Gate(anchors.AirlockInner, GateIds.AirlockInner);
             GameplayGate outerGate = Gate(anchors.AirlockOuter, GateIds.AirlockOuter);
             innerGate.SetOpen(true); // Nominal editor pose; MissionRuntime reads actual authority at Awake and every frame.
@@ -204,6 +223,7 @@ namespace OutOfReach.Composition.Editor
             runtime.Configure(player, anchors.PlayerSpawn, allTargets);
             runtime.ConfigurePreflight(true, cargoStage.Spawn);
             runtime.ConfigureImpactMovement(true);
+            runtime.ConfigureSurvivalExtension(true);
             runtime.ConfigureEva(new[] { innerGate, outerGate }, route, reentry);
             var runtimeFields = new SerializedObject(runtime);
             runtimeFields.FindProperty("startingPresetId").stringValue = AuroraMission.ScienceFocusPresetId;
@@ -229,6 +249,10 @@ namespace OutOfReach.Composition.Editor
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-latch-motor.wav"),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-safe-chirp.wav"));
             composition.ConfigureHands(hands);
+            composition.ConfigureBody(I06BodyAuthoring.Create(presentationRoot, player.transform, camera));
+            I06HabitatBindings habitatBindings = missionRoot.gameObject.AddComponent<I06HabitatBindings>();
+            habitatBindings.ConfigureViews(habitat.Status, habitatTargets[2], habitatTargets);
+            composition.ConfigureHabitat(habitatBindings);
             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/SFX/planning_tick.wav"));
             composition.ConfigureCargoPresentation(cargoStage.Presenter);
@@ -406,10 +430,10 @@ namespace OutOfReach.Composition.Editor
             ShipVisualAnchors anchors = ExactlyOne<ShipVisualAnchors>(roots);
             ValidateAnchors(anchors);
             var targets = roots.SelectMany(root => root.GetComponentsInChildren<InteractableTarget>(true)).ToArray();
-            if (targets.Length != 22 || runtime.InteractionTargets.Count != 22
-                || runtime.InteractionTargets.Distinct().Count() != 22
+            if (targets.Length != 28 || runtime.InteractionTargets.Count != 28
+                || runtime.InteractionTargets.Distinct().Count() != 28
                 || runtime.InteractionTargets.Any(target => !target || !targets.Contains(target)))
-                throw new InvalidOperationException("C05-A requires the eight mission targets and fourteen distinct, explicitly bound cargo targets.");
+                throw new InvalidOperationException("C06 requires eight mission, fourteen cargo, five habitat/recovery and one science-salvage target.");
             var runtimeFields = new SerializedObject(runtime);
             Transform preflightSpawn = runtimeFields.FindProperty("preflightSpawn").objectReferenceValue as Transform;
             Transform planningPivot = compositionFields.FindProperty("planningFramingPivot").objectReferenceValue as Transform;
@@ -419,7 +443,8 @@ namespace OutOfReach.Composition.Editor
                 || !planningPivot || planningPivot.localPosition != Vector3.zero || planningPivot.localRotation != Quaternion.identity)
                 throw new InvalidOperationException("C05-A needs its explicit cargo presenter, storage preflight spawn and body-relative planning camera.");
             string[] expectedIds = { InteractionIds.CockpitConsole, InteractionIds.RepairPower, InteractionIds.RepairLifeSupport,
-                InteractionIds.SuitLocker, InteractionIds.AirlockControls, InteractionIds.EvaExit, InteractionIds.EvaReturn, InteractionIds.RepairAntenna };
+                InteractionIds.SuitLocker, InteractionIds.AirlockControls, InteractionIds.EvaExit, InteractionIds.EvaReturn, InteractionIds.RepairAntenna,
+                InteractionIds.ConsumeRation, InteractionIds.DrinkWater, InteractionIds.BuildGrowModule, InteractionIds.SurvivalSleep, InteractionIds.RecoveryBeacon, InteractionIds.SalvagePayload };
             expectedIds = expectedIds.Concat(CargoStageAuthoring.EquipmentIds.SelectMany(id =>
                 new[] { InteractionIds.CargoSupply(id), InteractionIds.CargoBay(id) })).ToArray();
             foreach (string id in expectedIds)
@@ -434,6 +459,16 @@ namespace OutOfReach.Composition.Editor
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaExit), new Vector3(0, 1.7f, 19.8f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaReturn), runtime.EvaRoute.StartPosition + Vector3.up * 1.65f, player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairAntenna), runtime.EvaRoute.EndPosition + Vector3.up * 1.65f, player.transform);
+            if (!runtimeFields.FindProperty("survivalExtension").boolValue
+                || !compositionFields.FindProperty("habitat").objectReferenceValue)
+                throw new InvalidOperationException("C06 survival and its physical habitat must be bound together.");
+            foreach (string id in new[] { InteractionIds.ConsumeRation, InteractionIds.DrinkWater, InteractionIds.BuildGrowModule, InteractionIds.SurvivalSleep })
+            {
+                InteractableTarget target = targets.Single(t => t.InteractionId == id);
+                CheckReach(target, new Vector3(0, 1.65f, target.transform.position.z), player.transform);
+            }
+            CheckReach(targets.Single(t => t.InteractionId == InteractionIds.RecoveryBeacon), new Vector3(.65f, 1.7f, -.1f), player.transform);
+            CheckReach(targets.Single(t => t.InteractionId == InteractionIds.SalvagePayload), new Vector3(.45f, 1.65f, 10.2f), player.transform);
             // Keep all original eight reach checks above; add the fourteen explicit preflight stations.
             for (int i = 0; i < CargoStageAuthoring.EquipmentIds.Length; i++)
             {
@@ -457,13 +492,14 @@ namespace OutOfReach.Composition.Editor
                     if (renderer.sharedMaterials.Any(material => !material))
                         throw new InvalidOperationException("Missing material on " + renderer.name);
             }
-            Debug.Log("I01_SCENE_VALIDATION_PASS cameras=1 listeners=1 runtimes=1 players=1 targets=22 unobstructedWithin2m=22 gates=2 | edit-time structure and physics queries only");
+            Debug.Log("I01_SCENE_VALIDATION_PASS cameras=1 listeners=1 runtimes=1 players=1 targets=" + targets.Length
+                + " unobstructedWithin2m=" + targets.Length + " gates=2 | edit-time structure and physics queries only");
         }
 
-        private static void AttachDeliveredModels(Scene scene, GameObject fallback, ShipVisualAnchors anchors)
+        private static Transform AttachDeliveredModels(Scene scene, GameObject fallback, ShipVisualAnchors anchors)
         {
             GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath);
-            if (!asset) return; // The original functional checkpoint remains authorable without art delivery.
+            if (!asset) return null;
             if (asset.GetComponentsInChildren<Camera>(true).Length != 0
                 || asset.GetComponentsInChildren<Light>(true).Length != 0
                 || asset.GetComponentsInChildren<AudioListener>(true).Length != 0
@@ -509,6 +545,7 @@ namespace OutOfReach.Composition.Editor
             anchors.OuterDoorRight = Leaf("DoorLeaf_Outer_R");
             PrefabUtility.RecordPrefabInstancePropertyModifications(anchors);
             Debug.Log("I01_MODEL_DELIVERY_ATTACHED " + ModelPath + " | old meshes/colliders disabled; source prefabs unchanged");
+            return model.transform;
         }
 
         private static void RequireVerificationProject()
@@ -604,6 +641,13 @@ namespace OutOfReach.Composition.Editor
             collider.size = new Vector3(.9f, .8f, .25f);
             var target = child.gameObject.AddComponent<InteractableTarget>();
             target.InteractionId = id;
+            return target;
+        }
+
+        private static InteractableTarget HabitatTarget(Transform anchor, string id, Vector3 localOffset, Vector3 size)
+        {
+            InteractableTarget target = Target(anchor, id, localOffset);
+            target.GetComponent<BoxCollider>().size = size;
             return target;
         }
 

@@ -1,0 +1,80 @@
+{
+  "Workwear_Graphite": {
+    "base_color_srgb": "#384650",
+    "roughness": 0.83,
+    "metallic": 0,
+    "weave_uv_tiling": 14
+  },
+  "Workwear_Cordura": {
+    "base_color_srgb": "#303B44",
+    "roughness": 0.86,
+    "metallic": 0,
+    "weave_uv_tiling": 14
+  },
+  "EVA_WarmIvory": {
+    "base_color_srgb": "#D5D3CB",
+    "roughness": 0.77,
+    "metallic": 0,
+    "weave_uv_tiling": 14
+  },
+  "EVA_FlexGrey": {
+    "base_color_srgb": "#6A7379",
+    "roughness": 0.84,
+    "metallic": 0,
+    "weave_uv_tiling": 14
+  },
+  "Webbing": {
+    "base_color_srgb": "#2B2B2C",
+    "roughness": 0.86,
+    "metallic": 0,
+    "weave_uv_tiling": 14
+  },
+  "Boot_Rubber": {
+    "base_color_srgb": "#22272C",
+    "roughness": 0.9,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "Boot_Reinforcement": {
+    "base_color_srgb": "#424B51",
+    "roughness": 0.74,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "BrushedTitanium": {
+    "base_color_srgb": "#919CA3",
+    "roughness": 0.39,
+    "metallic": 0.8,
+    "weave_uv_tiling": 0
+  },
+  "AmberThread": {
+    "base_color_srgb": "#D9AA55",
+    "roughness": 0.8,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "SafetyRed": {
+    "base_color_srgb": "#B32A22",
+    "roughness": 0.74,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "Cabin_BareHands": {
+    "base_color_srgb": "#A67A64",
+    "roughness": 0.65,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "REF_UnchangedOriginalGloves": {
+    "base_color_srgb": "#D5D3CB",
+    "roughness": 0.73,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  },
+  "ReviewFloor": {
+    "base_color_srgb": "#343E45",
+    "roughness": 0.88,
+    "metallic": 0,
+    "weave_uv_tiling": 0
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "anchors": [
+    {
+      "name": "SleepEntry",
+      "point": [
+        -1.58,
+        0.0,
+        13.03
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "SleepCamera",
+      "point": [
+        -2.14,
+        1.96,
+        13.03
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "PersonalStowage",
+      "point": [
+        -1.83,
+        1.25,
+        13.87
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "RationPickup",
+      "point": [
+        -1.72,
+        1.72,
+        14.395
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "WaterDispenser",
+      "point": [
+        -2.08,
+        1.13,
+        15.195
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "GrowInteraction",
+      "point": [
+        1.85,
+        1.125,
+        14.75
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "GrowTray",
+      "point": [
+        2.12,
+        1.21,
+        14.75
+      ],
+      "forward": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  ],
+  "colliders": [
+    {
+      "name": "COL_Habitat_Berth",
+      "centre": [
+        -2.1125,
+        1.275,
+        13.25
+      ],
+      "size": [
+        0.535,
+        2.55,
+        1.446
+      ]
+    },
+    {
+      "name": "COL_Habitat_Galley",
+      "centre": [
+        -2.145,
+        1.2,
+        14.75
+      ],
+      "size": [
+        0.47,
+        2.4,
+        1.446
+      ]
+    },
+    {
+      "name": "COL_Habitat_GalleyDrawerOpen",
+      "centre": [
+        -1.785,
+        1.675,
+        14.395
+      ],
+      "size": [
+        0.25,
+        0.2,
+        0.67
+      ]
+    },
+    {
+      "name": "COL_Habitat_GalleyTable",
+      "centre": [
+        -1.7485,
+        0.9025,
+        14.47
+      ],
+      "size": [
+        0.343,
+        0.297,
+        0.84
+      ]
+    },
+    {
+      "name": "COL_Habitat_GrowCassette",
+      "centre": [
+        2.1175,
+        1.227,
+        14.75
+      ],
+      "size": [
+        0.525,
+        1.654,
+        1.006
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "HB_Labels",
+      "atlas": "HB_Labels",
+      "surface": "cutout",
+      "metallic": 0.0,
+      "smoothness": 0.25
+    },
+    {
+      "name": "HB_Leaf",
+      "set": "HB_Leaf",
+      "tint": "#FFFFFF",
+      "tiling": 1.0,
+      "normal": 0.6,
+      "uv": "explicit 0..1 per leaf"
+    },
+    {
+      "name": "HB_GrowLight",
+      "tint": "#2A2328",
+      "emission": "#FFD6EA",
+      "emission_strength": 3.0,
+      "metallic": 0.0,
+      "smoothness": 0.4
+    },
+    {
+      "name": "HB_BerthLight",
+      "tint": "#3A2A18",
+      "emission": "#FFC48A",
+      "emission_strength": 1.6,
+      "metallic": 0.0,
+      "smoothness": 0.4
+    },
+    {
+      "name": "HB_Water",
+      "tint": "#4FA9C2",
+      "surface": "transparent",
+      "alpha": 0.4,
+      "metallic": 0.0,
+      "smoothness": 0.95
+    },
+    {
+      "name": "HB_ScreenOff",
+      "tint": "#0C0F12",
+      "metallic": 0.0,
+      "smoothness": 0.92
+    },
+    {
+      "name": "HB_BagQuilt",
+      "set": "A7_Quilt",
+      "tint": "#56606F",
+      "tiling": 2.5,
+      "normal": 1.0
+    }
+  ]
+}

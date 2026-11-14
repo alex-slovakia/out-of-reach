@@ -1,0 +1,253 @@
+{
+  "task": "BODY-FIT-02",
+  "status": "STAGED_ART_BLENDER_VERIFIED_UNITY_PENDING",
+  "utc": "2026-11-14T18:21:48.975597+00:00",
+  "source_sha256": "8d26987b378bc7d84f29df1683400e33a63c60f08bfe6cf49feb054f00410db5",
+  "immutable_source_match": true,
+  "existing_gloves_modified": false,
+  "outfits": {
+    "WORK": {
+      "parts": [
+        "A7_WORK_TorsoLegs",
+        "A7_WORK_Arm_L",
+        "A7_WORK_Arm_R"
+      ],
+      "vertices": 26065,
+      "triangles": 51650
+    },
+    "EVA": {
+      "parts": [
+        "A7_EVA_TorsoLegs",
+        "A7_EVA_Arm_L",
+        "A7_EVA_Arm_R"
+      ],
+      "vertices": 12761,
+      "triangles": 25132
+    }
+  },
+  "baked_clips": [
+    "BODY_StandRelaxed",
+    "BODY_SeatedFit",
+    "BODY_FloatNeutral"
+  ],
+  "roundtrip_max_surface_error_m": 1.5773426866871887e-06,
+  "roundtrip_max_bone_error_m": 1.4385602934535946e-06,
+  "real_render_count": 12,
+  "unity_run": false,
+  "walk_cycle_included": false,
+  "license": "Pinned MakeHuman CC0 base/rig/initial weights; original project garments/maps/split/pose work. Existing glove reference retains project authorship.",
+  "provenance": [
+    "Provenance/ContinuousV1-manifest.json",
+    "Provenance/MakeHumanCC0-manifest.json",
+    "Source/MakeHuman_LICENSE.md",
+    "Source/MakeHuman_LICENSE.ASSETS.md"
+  ],
+  "artifacts": [
+    {
+      "path": "Animations/BODY_FloatNeutral.fbx",
+      "bytes": 1407980,
+      "sha256": "501ef3aeb0848a53ec568b87264c23b73958edc107da81e87639bb5adcabde3c"
+    },
+    {
+      "path": "Animations/BODY_SeatedFit.fbx",
+      "bytes": 1407964,
+      "sha256": "65d60a62b4d23a76abb588069c5886e46e2a09af97ce3585119c6b413de868e9"
+    },
+    {
+      "path": "Animations/BODY_StandRelaxed.fbx",
+      "bytes": 1407980,
+      "sha256": "1b18433c325ef017fad9e9572879e9a9e24566d1536d8ab6a59f1a437e8e4351"
+    },
+    {
+      "path": "Exports/A7_BodyFit02_EVA.fbx",
+      "bytes": 5694332,
+      "sha256": "4d5d04efcd81469c14122a64e2ff2069d7d400ea97ff94fad6504d174bf05ace"
+    },
+    {
+      "path": "Exports/A7_BodyFit02_WORK.fbx",
+      "bytes": 7111548,
+      "sha256": "46b3051a592f2e2fe3a0e7579ad281411415a6eb71ad4546c2899e47cf5eec90"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 3381,
+      "sha256": "4cc04d21fde015e7c7d5e8de946b869093ea573a3cb5c2cc57edc0c036861452"
+    },
+    {
+      "path": "materials.json",
+      "bytes": 1752,
+      "sha256": "e371e6ff0c2f16e61e1675b2b2bb2c253bd0bd7ff14b59a0a28006679484edec"
+    },
+    {
+      "path": "poses.json",
+      "bytes": 1396797,
+      "sha256": "1e3e0add18215c21bf287daf169291821f0334fac2a5070e8f2cebadcbb7ffd4"
+    },
+    {
+      "path": "Provenance/ContinuousV1-manifest.json",
+      "bytes": 7551,
+      "sha256": "f337b395554cd844f3e83da57a6c9268419a0bd03b94aa1c1584711f437a8662"
+    },
+    {
+      "path": "Provenance/MakeHumanCC0-manifest.json",
+      "bytes": 1954,
+      "sha256": "3b59ade0cf4c8f44fb232eb600a4ef8aa660175a46aaffe6d94d30002bfb8d3b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8726,
+      "sha256": "ff669e4845f10bbd1939ffc5a67e709171a904ca2dffcc1b9473de0cefb5f8d0"
+    },
+    {
+      "path": "Renders/EVA_01_StandLookDown.png",
+      "bytes": 1423164,
+      "sha256": "81f2ab9dfad03f35fd83df44581005f705dd107fe8b504c5bba924fdbcf6e265"
+    },
+    {
+      "path": "Renders/EVA_02_BodyOnlyLookDown.png",
+      "bytes": 1409435,
+      "sha256": "160e97a368fe3a0672f69d34c20a7e45581c1699ce773b1d89b9125cfc6a8e52"
+    },
+    {
+      "path": "Renders/EVA_03_SeatedLookDown.png",
+      "bytes": 1449240,
+      "sha256": "0e66f72e79055e2fd47235a67cbbe39adf2a9b25778b0d26d085943430cbcbb0"
+    },
+    {
+      "path": "Renders/EVA_04_FloatLookDown.png",
+      "bytes": 1490403,
+      "sha256": "24f6646b4e1a6d2da7702850c3cc923fd9fe8d7208b2d685bb34fb1de2e49597"
+    },
+    {
+      "path": "Renders/EVA_05_RelaxedBody.png",
+      "bytes": 1358628,
+      "sha256": "a9e1b120160d539b0b180a8568c420cb97e2d0ac8f1b79353bd7efd22a59bc95"
+    },
+    {
+      "path": "Renders/EVA_06_ShoulderClosure.png",
+      "bytes": 1351372,
+      "sha256": "c04d6094c2806eeb300ec8fc3333877953b4e2220f3835a20cf0172fd0d6a2eb"
+    },
+    {
+      "path": "Renders/WORK_01_StandLookDown.png",
+      "bytes": 1423409,
+      "sha256": "e7f0d1ec43c56c4b123fecefcf5568b064f16c1ad443678dbf781563f167e68b"
+    },
+    {
+      "path": "Renders/WORK_02_BodyOnlyLookDown.png",
+      "bytes": 1414219,
+      "sha256": "8f6397a80f6922377fb72594634840222127059309e555196c0bfa3d493f8355"
+    },
+    {
+      "path": "Renders/WORK_03_SeatedLookDown.png",
+      "bytes": 1431711,
+      "sha256": "980e7c918abf093a7ef877d558193990a3a48a08460d23ece8a0c88c6fd2cf72"
+    },
+    {
+      "path": "Renders/WORK_04_FloatLookDown.png",
+      "bytes": 1482681,
+      "sha256": "3b0d0fd2d953247c8562889db9b083e724d499f0a65673c01649935ba738105e"
+    },
+    {
+      "path": "Renders/WORK_05_RelaxedBody.png",
+      "bytes": 1357817,
+      "sha256": "05c6ce7af1be21418b0bcb33800a2095d3570994d43a341519ee0bb42a19e4d3"
+    },
+    {
+      "path": "Renders/WORK_06_ShoulderClosure.png",
+      "bytes": 1353631,
+      "sha256": "e70c043c4c3c664957ccdc606093e1d25ba6f9a2d97c657bda44b29a87b5cfa8"
+    },
+    {
+      "path": "Source/A7_BodyFit02.blend",
+      "bytes": 20942508,
+      "sha256": "a223207931df309e0bffd7c76eff98d099f72e3b1bce2a8b3760774fe324795a"
+    },
+    {
+      "path": "Source/audit_fbx.py",
+      "bytes": 1274,
+      "sha256": "02f7d00d7888db0c6cb088c9aa97d8f7a03e81fadd20d04da4b2f314c45e09ca"
+    },
+    {
+      "path": "Source/build_fit.py",
+      "bytes": 14070,
+      "sha256": "2a902590e98278c16e0062b71a6a305386801bf4a000ccf6a7b19df105dd9f3c"
+    },
+    {
+      "path": "Source/inspect_source.py",
+      "bytes": 1492,
+      "sha256": "c492dd3a0375b703c04be0f54888c15c1b41ffa91c955e86278bf0735418c601"
+    },
+    {
+      "path": "Source/MakeHuman_LICENSE.ASSETS.md",
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    {
+      "path": "Source/MakeHuman_LICENSE.md",
+      "bytes": 3598,
+      "sha256": "edd99571ca62698f78c943fd4fffb159a413c315fa0d4819d3cec5cadaf8b4f1"
+    },
+    {
+      "path": "Source/render_fit.py",
+      "bytes": 2686,
+      "sha256": "5abe2c654487251ec25cd41b1b75875d4ed45957bdba803446a703f00fd9e8d0"
+    },
+    {
+      "path": "Source/verify_fit.py",
+      "bytes": 6627,
+      "sha256": "0bbb600ef0677b405cc93a88d8409a3e5ebaf3a235b62796e2ddf80bcf472b8f"
+    },
+    {
+      "path": "Source/write_manifest.py",
+      "bytes": 2595,
+      "sha256": "6e4c6beb71100f1b4210557ccce9d7383cf837d538bdfc9f7e33bd5c1b2f78f1"
+    },
+    {
+      "path": "Textures/Body_Weave_BaseColor.png",
+      "bytes": 1040275,
+      "sha256": "e9399340180f9afd62771f4e4285c9a37ae9627dc844f5df078f0e9d69094941"
+    },
+    {
+      "path": "Textures/Body_Weave_MetallicSmoothness.png",
+      "bytes": 1021073,
+      "sha256": "9aa63ec34d50871be564d54835735ac87e76dcc2b49774ebe60c51f728ddaae6"
+    },
+    {
+      "path": "Textures/Body_Weave_Normal.png",
+      "bytes": 1930056,
+      "sha256": "16dafa4973256888109888ddaa00aab83341745e069563931a9ece8f7cf71f54"
+    },
+    {
+      "path": "Validation/build-report.json",
+      "bytes": 1008,
+      "sha256": "ceba5302084e5590139319b80eeba257f9a7d8778cd0e944afb9e10a67c409db"
+    },
+    {
+      "path": "Validation/fbx-axis-records.json",
+      "bytes": 5231,
+      "sha256": "81121c06f7f691af9574c507f47c469d1bca2035f0bfd9ecf94cac1f0554f743"
+    },
+    {
+      "path": "Validation/fbx-roundtrip.json",
+      "bytes": 10239,
+      "sha256": "55e47e6677f818c89d89560f2e410ce432528564431c24173aebbf70e5cd45b6"
+    },
+    {
+      "path": "Validation/render-manifest.json",
+      "bytes": 6639,
+      "sha256": "66dd30d7df0dc6a0a63632b04de8b825e7ab2f3e9490402a2fa37ffe420025e2"
+    },
+    {
+      "path": "Validation/source-inspection.json",
+      "bytes": 26362,
+      "sha256": "8dff860ae23de388fa8fce96b67a4fba6ddac644187a54943ba68ae531287428"
+    },
+    {
+      "path": "Validation/split-boundaries.json",
+      "bytes": 14602,
+      "sha256": "6295b74c0d4c7aa02384a3809d28a2d4f18ef15ab1a08f4f2bf5f94fb0341235"
+    }
+  ],
+  "excluded_backups_and_logs": "blend1 backups and command logs are not production imports; final logs retained separately in Validation."
+}

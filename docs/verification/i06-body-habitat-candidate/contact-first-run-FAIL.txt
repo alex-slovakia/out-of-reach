@@ -1,0 +1,5 @@
+Stage: glove-Right-Grip
+System.InvalidOperationException: Actual static registered grip stays held and presented.
+  at ContactNativeQaDriver.Check (System.Boolean pass, System.String message) [0x00012] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:463 
+  at ContactNativeQaDriver+<Positive>d__49.MoveNext () [0x0022b] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:263 
+  at ContactNativeQaDriver+<Start>d__45.MoveNext () [0x00073] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\ContactNativeQa\ContactNativeQa.cs:177 

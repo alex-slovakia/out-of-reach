@@ -13,6 +13,7 @@
     "OutOfReach.Presentation.Lighting",
     "OutOfReach.Presentation.Motion",
     "OutOfReach.Presentation.Hands",
+    "OutOfReach.Presentation.Habitat",
     "OutOfReach.Presentation.Cargo",
     "OutOfReach.AirlockPanel",
     "OutOfReach.AirlockPanel.Editor",

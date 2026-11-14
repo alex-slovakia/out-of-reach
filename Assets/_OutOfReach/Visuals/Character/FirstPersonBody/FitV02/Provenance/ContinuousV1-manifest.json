@@ -1,0 +1,207 @@
+{
+  "task": "BODY-V1",
+  "status": "STAGED_RENDERED_RIGGED_V1_REQUIRES_ART_AND_UNITY_REVIEW",
+  "created_utc": "2026-11-14T16:29:16.361298+00:00",
+  "license_sources": {
+    "MakeHuman_core_graphical_data": "CC0-1.0, pinned revision a8bc2d54ff0ac92e78ff71431b1023eda42bf482",
+    "original_garments_maps_and_assembly": "Original project contribution",
+    "existing_gloves": "Existing original project assets by Claude / Apoliak; geometry and Neutral joint rotations unchanged; not re-licensed as CC0"
+  },
+  "upstream_manifest": "../Candidate/MakeHumanCC0/manifest.json",
+  "verified_upstream_data": [
+    {
+      "path": "base.obj",
+      "bytes": 1749303,
+      "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c"
+    },
+    {
+      "path": "LICENSE.md",
+      "bytes": 3598,
+      "sha256": "edd99571ca62698f78c943fd4fffb159a413c315fa0d4819d3cec5cadaf8b4f1"
+    },
+    {
+      "path": "LICENSE.ASSETS.md",
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    {
+      "path": "default.mhskel",
+      "bytes": 117790,
+      "sha256": "99f179bce0aa850b45d4191a1d0d234c5851f881c057439470ded3bddf729a24"
+    },
+    {
+      "path": "default_weights.mhw",
+      "bytes": 897521,
+      "sha256": "0f3641d651ae3d00ad6b4ccee43142edb109d3bd909d27d9e4139ef1beed8625"
+    }
+  ],
+  "existing_glove_reference_hashes": [
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands.fbx",
+      "bytes": 354364,
+      "sha256": "69f8300612626eea4bd159bfb8228c4309dab6dc47323052d8ff4a99a26215b5"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands_rig.json",
+      "bytes": 19149,
+      "sha256": "025b9e5c798b345979366d36f4904d51ceb138443dd20916a0b46e747a62dd3e"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/README.md",
+      "bytes": 13505,
+      "sha256": "afb585f4c7a88426525222696929d4586a50b6b21aa9263f7f490d535901bc9d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/Textures/AstronautHands_BaseColor.png",
+      "bytes": 1414686,
+      "sha256": "d9cea1335ce7e20cba3142ed031f60d1a24dda213daee1a9d3ad6d07fc2e5794"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/Textures/AstronautHands_MetallicSmoothness.png",
+      "bytes": 2311148,
+      "sha256": "f07437237fb8a80fdced625b7035e2c7d9abd339c310c5b585b5331c6f81e093"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/Textures/AstronautHands_Occlusion.png",
+      "bytes": 1310187,
+      "sha256": "401f60ca13321ff297a9e479692c5052d37bba31e4a3fc82f26e4217e76626ce"
+    }
+  ],
+  "scripts_relative_to_staging_root": [
+    {
+      "path": "Source/build_continuous_body.py",
+      "bytes": 23650,
+      "sha256": "2f8b4e27ddb7617744b073a9cda84b920b97a1af69a38e16ea8bca23f488cf96"
+    },
+    {
+      "path": "Source/verify_continuous_exports.py",
+      "bytes": 4539,
+      "sha256": "1aec5210e9361b22c43b8d3ea735a868edbc5fef2c2a8df40e425dc17007ca69"
+    },
+    {
+      "path": "Source/refine_seated_floor.py",
+      "bytes": 2105,
+      "sha256": "2bb066a01119126258ee6f57cc824862914b9ab1900e7c1444b34704375d54e9"
+    },
+    {
+      "path": "Source/write_manifest.py",
+      "bytes": 2718,
+      "sha256": "a197ca22d4e8edfa9d5266290352a1a2232a83af2ac95104ab80bd4b4629e985"
+    }
+  ],
+  "artifacts_relative_to_ContinuousV1": [
+    {
+      "path": "Exports/A7_ContinuousBody_EVA.fbx",
+      "bytes": 1669292,
+      "sha256": "9202ae8bc336b17c65a0e3c0db9bf10ee9612f07a74381b1f2ec35e3cceabeff"
+    },
+    {
+      "path": "Exports/A7_ContinuousBody_WORK.fbx",
+      "bytes": 3095228,
+      "sha256": "da257d870e81b75aada113cf920ede4ba4244df4ca3e606c94715481f309fa65"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 4617,
+      "sha256": "aeff295be7399097c16d88c80ccc096a024af978838ea0e62d399529c9d47088"
+    },
+    {
+      "path": "materials.json",
+      "bytes": 1752,
+      "sha256": "e371e6ff0c2f16e61e1675b2b2bb2c253bd0bd7ff14b59a0a28006679484edec"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8313,
+      "sha256": "f1711fb7617ee66c58bba26deecb847a73a25bcd82bc6f5d9392a465a47ce690"
+    },
+    {
+      "path": "Renders/EVA_01_LookDown.png",
+      "bytes": 1422121,
+      "sha256": "081d3ec8e23b643b8896ac35cfcc3f5ef599b73ed6622bcc39e87aec6f87aec4"
+    },
+    {
+      "path": "Renders/EVA_02_RelaxedBody.png",
+      "bytes": 1353529,
+      "sha256": "1dc743e42bee1adbb8280cb7460bf3fedc86ea6f2d2afbc4422cdfa08cbb4bc3"
+    },
+    {
+      "path": "Renders/EVA_03_SeatedLookDown.png",
+      "bytes": 1447008,
+      "sha256": "a618405d68b3f133b73aa60fa0d91fdaf5587aa9ac8c01efaec2eac9fa37bdfa"
+    },
+    {
+      "path": "Renders/EVA_04_SeatedFit.png",
+      "bytes": 1333854,
+      "sha256": "0ce748ba60eaf0a014604f6e484487d2a05b5e04592658f2ebf54686dd79dce0"
+    },
+    {
+      "path": "Renders/WORK_01_LookDown.png",
+      "bytes": 1421839,
+      "sha256": "0661f5a3d3e2007d74b337d1fe9e5d8fc8cbbf416715ce9bebadc1281500e444"
+    },
+    {
+      "path": "Renders/WORK_02_RelaxedBody.png",
+      "bytes": 1354330,
+      "sha256": "91e45438dc46e7f76cde95bed66199a1bcda9a6ab1fa5bc3f688a9adabc19dc0"
+    },
+    {
+      "path": "Renders/WORK_03_SeatedLookDown.png",
+      "bytes": 1427078,
+      "sha256": "00caa405a7fd682fcb0f7220b08c2cdb2146b4657b87ca0ff971329bce6531cb"
+    },
+    {
+      "path": "Renders/WORK_04_SeatedFit.png",
+      "bytes": 1339983,
+      "sha256": "49ff6d0efda623a824c926733283e203e5903167430fbeb6d5688643c09f9d0a"
+    },
+    {
+      "path": "rig.json",
+      "bytes": 46826,
+      "sha256": "15fbc18740334da01f5ec446630b85efd5cb797edc5e12719beb1111be404522"
+    },
+    {
+      "path": "Source/A7_ContinuousBody.blend",
+      "bytes": 8806024,
+      "sha256": "8d26987b378bc7d84f29df1683400e33a63c60f08bfe6cf49feb054f00410db5"
+    },
+    {
+      "path": "Source/MakeHuman_LICENSE.ASSETS.md",
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    {
+      "path": "Source/MakeHuman_LICENSE.md",
+      "bytes": 3598,
+      "sha256": "edd99571ca62698f78c943fd4fffb159a413c315fa0d4819d3cec5cadaf8b4f1"
+    },
+    {
+      "path": "Textures/Body_Weave_BaseColor.png",
+      "bytes": 1040275,
+      "sha256": "e9399340180f9afd62771f4e4285c9a37ae9627dc844f5df078f0e9d69094941"
+    },
+    {
+      "path": "Textures/Body_Weave_MetallicSmoothness.png",
+      "bytes": 1021073,
+      "sha256": "9aa63ec34d50871be564d54835735ac87e76dcc2b49774ebe60c51f728ddaae6"
+    },
+    {
+      "path": "Textures/Body_Weave_Normal.png",
+      "bytes": 1930056,
+      "sha256": "16dafa4973256888109888ddaa00aab83341745e069563931a9ece8f7cf71f54"
+    },
+    {
+      "path": "Validation/fbx-roundtrip.json",
+      "bytes": 4391,
+      "sha256": "591d465b434e8580e1b4bbfa64955590eb084857d4a9cabc98557e01bcaf7360"
+    },
+    {
+      "path": "Validation/source-report.json",
+      "bytes": 1276,
+      "sha256": "2671536818403a7e41391db5317155fa66c53e82470304fb3420280097882e48"
+    }
+  ],
+  "unity_run": false,
+  "project_or_runtime_files_modified": false,
+  "note": "No live project assets or source were modified. This manifest records staged outputs, not acceptance of their visual quality."
+}

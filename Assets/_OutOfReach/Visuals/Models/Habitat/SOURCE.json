@@ -1,0 +1,64 @@
+{
+  "source_commit": "5b0f1ca1cfa7443ff93ed8aca59cc9a601cb0c40",
+  "integration_layout_commit": "7e919a5",
+  "rights": "Original team work; see ATTRIBUTION.md. No external models or copied photographs.",
+  "shared_A7_materials": "Existing canonical materials reused without mutation, preserving their original texture GUIDs. HB_BagQuilt uses original A7_Quilt maps.",
+  "records": [
+    {
+      "source": "docs/art-direction/habitat-v01/integration/textures/HB_Labels.png",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Textures/HB_Labels.png",
+      "sha256": "47805ca0d6951ee1e27a6fdfdb26194e0643a385201b31ff2dfa50f39bc3256d",
+      "bytes": 109374,
+      "lfs_oid": "47805ca0d6951ee1e27a6fdfdb26194e0643a385201b31ff2dfa50f39bc3256d"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/textures/HB_Leaf_BaseColor.png",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Textures/HB_Leaf_BaseColor.png",
+      "sha256": "29d3e765f76ab768a5d7a7637be885db93abddb55cc956456f2cac59e4af4808",
+      "bytes": 97552,
+      "lfs_oid": "29d3e765f76ab768a5d7a7637be885db93abddb55cc956456f2cac59e4af4808"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/textures/HB_Leaf_Normal.png",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Textures/HB_Leaf_Normal.png",
+      "sha256": "73607c7c1d63c4481c09e21b32c5f8a5d1011779209ab5f60acf159f9ab61a7a",
+      "bytes": 133401,
+      "lfs_oid": "73607c7c1d63c4481c09e21b32c5f8a5d1011779209ab5f60acf159f9ab61a7a"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/textures/HB_Leaf_MODS.png",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Textures/HB_Leaf_MODS.png",
+      "sha256": "0c4e2b6c8f7096dccea40e754fc284087b10fb56506ce0705116468b5d6fdc57",
+      "bytes": 1844,
+      "lfs_oid": "0c4e2b6c8f7096dccea40e754fc284087b10fb56506ce0705116468b5d6fdc57"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/A7_Storage_Habitat.fbx",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Meshes/A7_Storage_Habitat.fbx",
+      "sha256": "e2750e0bd13ef2e9f8ecc32a338be5efa947cb90fc03cd1ce65ca2daa8fd99e7",
+      "bytes": 599644,
+      "lfs_oid": "e2750e0bd13ef2e9f8ecc32a338be5efa947cb90fc03cd1ce65ca2daa8fd99e7"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/HB_Habitat_Placed.fbx",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Meshes/HB_Habitat_Placed.fbx",
+      "sha256": "94c6126bbd085c11d2495f8ba48d00137337fbdd9b462dd6c65936338ac18eaf",
+      "bytes": 1045708,
+      "lfs_oid": "94c6126bbd085c11d2495f8ba48d00137337fbdd9b462dd6c65936338ac18eaf"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/integration/HB_Habitat_Collision.fbx",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/Meshes/HB_Habitat_Collision.fbx",
+      "sha256": "bcaafea461a31c6cd56fd4cc95578c53b8cdd205ed09285110e4679d1f9dda19",
+      "bytes": 25020,
+      "lfs_oid": "bcaafea461a31c6cd56fd4cc95578c53b8cdd205ed09285110e4679d1f9dda19"
+    },
+    {
+      "source": "docs/art-direction/habitat-v01/ATTRIBUTION.md",
+      "destination": "Assets/_OutOfReach/Visuals/Models/Habitat/ATTRIBUTION.md",
+      "sha256": "c54efad942a082195bf3a7ade5e8de910febf6f4601274184bbed2d600c87aea",
+      "bytes": 1668,
+      "lfs_oid": null
+    }
+  ]
+}
