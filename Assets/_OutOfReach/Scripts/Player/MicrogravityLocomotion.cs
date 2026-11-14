@@ -25,14 +25,18 @@ namespace OutOfReach.Player
     /// Tuning and exact math of the optional microgravity mode of <see cref="FirstPersonController"/>, which stays the
     /// only movement authority: this class holds plain values and pure functions, and the controller does the
     /// collision queries and moves the body. Every value is GAME TUNING, not measured astronaut performance.
-    /// There is no thrust and no hidden force: speed only comes from pushes off verified solid surfaces within reach,
-    /// and with the default zero drag a push carries the body on until it meets a surface.
+    /// There is no thrust and no hidden force: speed only comes from pushes off verified solid surfaces, by hand
+    /// within reach or by foot from an actual contact, and with the default zero drag a push carries the body on
+    /// until it meets a surface.
     /// </summary>
     [Serializable]
     public sealed class MicrogravityLocomotion
     {
-        [Tooltip("Hand reach from the eye point, metres. Entry, push, brace and grip targets must be within it.")]
+        [Tooltip("Hand reach from the eye point, metres. Entry, hand push, brace and grip targets must be within it; a grip holds the body within it.")]
         [SerializeField, Min(0.1f)] private float reachMetres = 0.85f;
+
+        [Tooltip("How far below the capsule's bottom (beyond the skin width) a surface still counts as touching the feet, metres.")]
+        [SerializeField, Min(0.005f)] private float footContactMetres = 0.05f;
 
         [Tooltip("Largest speed change one full push gives, metres per second.")]
         [SerializeField, Min(0f)] private float maxPushSpeed = 1f;
@@ -40,7 +44,7 @@ namespace OutOfReach.Player
         [Tooltip("Speed cap while floating, metres per second.")]
         [SerializeField, Min(0.1f)] private float maxSpeed = 1.5f;
 
-        [Tooltip("Minimum time between pushes, seconds, so a held button cannot accelerate continuously.")]
+        [Tooltip("Minimum time between pushes (hand or foot), seconds, so a held button cannot accelerate continuously.")]
         [SerializeField, Min(0f)] private float pushCooldownSeconds = 0.35f;
 
         [Tooltip("Exponential damping per second. Default 0: no hidden force, a push carries on until a surface. Any value above 0 is a disclosed gameplay compromise.")]
@@ -60,6 +64,8 @@ namespace OutOfReach.Player
 
         public float ReachMetres => reachMetres;
 
+        public float FootContactMetres => footContactMetres;
+
         public float MaxPushSpeed => maxPushSpeed;
 
         public float MaxSpeed => maxSpeed;
@@ -67,6 +73,8 @@ namespace OutOfReach.Player
         public float PushCooldownSeconds => pushCooldownSeconds;
 
         public float DragPerSecond => dragPerSecond;
+
+        public float GripSettleSeconds => gripSettleSeconds;
 
         public float MinimumAwayDot => minimumAwayDot;
 
@@ -87,31 +95,27 @@ namespace OutOfReach.Player
         }
 
         /// <summary>
-        /// Exact displacement over one interval, and the velocity at its end. With drag it uses the exact exponential
-        /// solution, so a drift covers the same path at 30 and at 240 frames per second either way.
+        /// Exact displacement over one interval, and the velocity at its end, for the combined exponential decay of
+        /// drag and (while gripping) the arm's settling. The closed form makes a free drift and a grip settle cover the
+        /// same path at 30 and at 240 frames per second.
         /// </summary>
-        public Vector3 Integrate(ref Vector3 velocity, float deltaSeconds)
+        public Vector3 Integrate(ref Vector3 velocity, float deltaSeconds, bool gripped = false)
         {
             if (deltaSeconds <= 0f || float.IsNaN(deltaSeconds))
             {
                 return Vector3.zero;
             }
 
-            if (dragPerSecond <= 1e-6f)
+            float rate = dragPerSecond + (gripped ? 1f / gripSettleSeconds : 0f);
+            if (rate <= 1e-6f)
             {
                 return velocity * deltaSeconds;
             }
 
-            float decay = Mathf.Exp(-dragPerSecond * deltaSeconds);
-            Vector3 displacement = velocity * ((1f - decay) / dragPerSecond);
+            float decay = Mathf.Exp(-rate * deltaSeconds);
+            Vector3 displacement = velocity * ((1f - decay) / rate);
             velocity *= decay;
             return displacement;
-        }
-
-        /// <summary>A gripped handhold removes the velocity with the grip time constant (exact for any interval).</summary>
-        public Vector3 Settle(Vector3 velocity, float deltaSeconds)
-        {
-            return deltaSeconds > 0f ? velocity * Mathf.Exp(-deltaSeconds / gripSettleSeconds) : velocity;
         }
 
         /// <summary>Removes the part of the velocity that points into a surface: an inelastic contact that keeps sliding.</summary>

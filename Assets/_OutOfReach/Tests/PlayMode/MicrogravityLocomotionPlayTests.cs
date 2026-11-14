@@ -19,6 +19,8 @@ namespace OutOfReach.Tests.PlayMode
 
         private RepairLoopHarness harness;
         private bool gateOpen;
+        private Collider floor;
+        private Collider ceiling;
         private Collider back;
         private Collider front;
         private Collider left;
@@ -54,8 +56,8 @@ namespace OutOfReach.Tests.PlayMode
         /// </summary>
         private void BuildCabin()
         {
-            harness.AddWall(new Vector3(0f, 49.9f, 3f), new Vector3(4.4f, 0.2f, 6.4f));
-            harness.AddWall(new Vector3(0f, 53.1f, 3f), new Vector3(4.4f, 0.2f, 6.4f));
+            floor = harness.AddWall(new Vector3(0f, 49.9f, 3f), new Vector3(4.4f, 0.2f, 6.4f)).GetComponent<Collider>();
+            ceiling = harness.AddWall(new Vector3(0f, 53.1f, 3f), new Vector3(4.4f, 0.2f, 6.4f)).GetComponent<Collider>();
             left = harness.AddWall(new Vector3(-2.1f, 51.5f, 3f), new Vector3(0.2f, 3.4f, 6.4f)).GetComponent<Collider>();
             harness.AddWall(new Vector3(2.1f, 51.5f, 3f), new Vector3(0.2f, 3.4f, 6.4f));
             back = harness.AddWall(new Vector3(0f, 51.5f, -0.1f), new Vector3(4.4f, 3.4f, 0.2f)).GetComponent<Collider>();
@@ -307,6 +309,90 @@ namespace OutOfReach.Tests.PlayMode
             Done(Player.EnterFloat());
             Place(new Vector3(-1.3f, 50.2f, 0.6f));
             Assert.That(Player.IsFloating, Is.False, "a teleport ends in walking");
+        }
+
+        // Codex 6881979236: the floor trap and the grip reach.
+        [UnityTest]
+        public IEnumerator ACeilingPush_LandsOutOfHandReach_AndOnlyARealFootContactRecovers()
+        {
+            FloatAt(new Vector3(0f, 51f, 1.5f));
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "no foot contact mid-air");
+            Done(Player.TryPushOff(ceiling, new Vector3(0f, 53f, 1.5f), Vector3.down));
+            yield return Frames(75);
+            Assert.That(Position.y, Is.EqualTo(50f).Within(0.05f), "landed on the floor");
+            Assert.That(Player.FloatVelocity.y, Is.EqualTo(0f).Within(1e-4f), "inelastic landing");
+            Assert.That(Player.TryPushOff(floor, new Vector3(0f, 50f, 1.5f), Vector3.up), Is.EqualTo(FloatActionResult.OutOfReach), "the hands cannot reach the floor");
+            yield return Frames(160);
+            Assert.That(Player.IsStranded, Is.True, "without the feet this would be the reported trap");
+
+            Vector3 resting = Player.FloatVelocity;
+            Assert.That(Player.TryPushFromFootContact(Vector3.down), Is.EqualTo(FloatActionResult.IntoSurface));
+            gateOpen = false;
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.ControlDenied));
+            gateOpen = true;
+            Assert.That(Player.FloatVelocity, Is.EqualTo(resting), "refusals change nothing");
+            Assert.That(resting, Is.EqualTo(Vector3.zero), "the landing left an exact stop");
+
+            Done(Player.TryPushFromFootContact(Vector3.up, 0.5f));
+            Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.5f).Within(1e-5f));
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.Cooldown));
+            yield return Frames(40);
+            Assert.That(Position.y, Is.GreaterThan(50.3f), "recovered by a real foot push");
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "the feet have left the floor");
+
+            Player.EnterRoute(harness.Route);
+            Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NotFloating), "never on the EVA route");
+        }
+
+        [UnityTest]
+        public IEnumerator AnOutwardGripNearTheReachLimit_HoldsTheBodyWithinReach_AndAnchorsTheHand()
+        {
+            FloatAt(new Vector3(-1.4f, 50.2f, 1.5f));
+            Vector3 grip = new Vector3(-1.9f, 51.6f, 1.5f);
+            Done(Player.TryPushOff(left, new Vector3(-2f, 50.2f + Eye, 1.5f), Vector3.right));
+            float distance = 0f;
+            for (int i = 0; i < 40 && distance < 0.83f; i++)
+            {
+                yield return null;
+                distance = Vector3.Distance(Position + (Vector3.up * Eye), grip);
+            }
+
+            Assert.That(distance, Is.InRange(0.83f, 0.85f), "near the reach limit, still moving outward at 1 m/s");
+            Done(Player.TryGrab(handhold, grip));
+            Vector3 anchor = Player.HeldGripPoint.Value;
+            Assert.That(Vector3.Distance(anchor, grip), Is.LessThan(0.01f), "the anchor is the verified grip point");
+            for (int i = 0; i < 50; i++)
+            {
+                yield return null;
+                Assert.That(Player.HeldHandhold, Is.SameAs(handhold));
+                Assert.That(Vector3.Distance(Position + (Vector3.up * Eye), anchor), Is.LessThanOrEqualTo(Player.Microgravity.ReachMetres + 1e-3f),
+                    "the arm holds the body within reach (frame " + i + ")");
+            }
+
+            Assert.That(Player.FloatVelocity.magnitude, Is.LessThan(0.01f));
+        }
+
+        [UnityTest]
+        public IEnumerator AGripSettle_At30And240Fps_EndsInTheSamePlace()
+        {
+            var ends = new Vector3[2];
+            int[] rates = { 30, 240 };
+            Vector3 grip = new Vector3(-1.9f, 51.6f, 1.5f);
+            for (int run = 0; run < 2; run++)
+            {
+                int fps = rates[run];
+                Time.captureDeltaTime = 1f / fps;
+                FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
+                yield return null; // the new frame time applies from here
+                Done(Player.TryPushOff(back, BackPoint, Vector3.forward, 0.5f));
+                yield return Frames(Mathf.RoundToInt(1.8f * fps));
+                Done(Player.TryGrab(handhold, grip));
+                yield return Frames(fps);
+                Assert.That(Player.HeldHandhold, Is.SameAs(handhold));
+                ends[run] = Position;
+            }
+
+            Assert.That(Vector3.Distance(ends[0], ends[1]), Is.LessThan(1e-3f), "the grip settle is frame-rate independent");
         }
     }
 }
