@@ -85,7 +85,8 @@ namespace OutOfReach.Core
     /// </list>
     /// Each modification exists only when it is enabled, which the scene binding decides: a ship without the
     /// workbench, the bay or a reachable instrument behaves exactly as before. Inside the ship only (Emergency,
-    /// Repair, Transmission). Every rejected command changes nothing; time passes only through the session clock.
+    /// Repair, Transmission and the optional post-contact Survival chapter; never during an EVA or before the
+    /// emergency). Every rejected command changes nothing; time passes only through the session clock.
     /// </summary>
     public sealed class FieldModifications : IFieldModifications
     {
@@ -403,6 +404,8 @@ namespace OutOfReach.Core
                 case GamePhase.Emergency:
                 case GamePhase.Repair:
                 case GamePhase.Transmission:
+                case GamePhase.Survival:
+                    // Survival is the optional post-contact chapter: the crew is still inside the ship, out of the suit.
                     return Ok(string.Empty);
                 case GamePhase.Eva:
                     return Fail(CommandFailure.WrongPhase, "Not possible during an EVA.");

@@ -13,10 +13,14 @@ namespace OutOfReach.Core
     /// false signal: an old local recording, not a reply), the second sends the single distress call (the prompt
     /// gives its energy cost, Earth's distance and the earliest reply), and then the prompt shows the remaining wait.
     /// With the physical preflight on, the console also launches the mission during Planning: its prompt shows the
-    /// loadout totals, or the exact violation that blocks the launch.
+    /// loadout totals, or the exact violation that blocks the launch. Once Earth's reply is in and the mission goes
+    /// on (the optional post-contact Survival chapter), it reports the restored contact and offers nothing to send.
     /// </summary>
     public sealed class CockpitConsoleInteraction : IInteractable
     {
+        /// <summary>Prompt after Earth's reply while the mission continues: the one distress call has been answered.</summary>
+        public const string ContactRestoredPrompt = "Contact with Earth restored: Earth's reply has been received";
+
         private readonly MissionDirector director;
         private readonly MissionGameState state;
         private readonly CommunicationSystem communications;
@@ -49,6 +53,11 @@ namespace OutOfReach.Core
                     case GamePhase.Report:
                         return state.Outcome == MissionOutcome.RecoveryPossible ? "Contact with Earth restored" : "Console offline";
                     default:
+                        if (IsContactRestored)
+                        {
+                            return ContactRestoredPrompt;
+                        }
+
                         if (communications.State == CommunicationState.AwaitingReply)
                         {
                             return communications.IsReplyHeldByUnpoweredLink
@@ -74,11 +83,14 @@ namespace OutOfReach.Core
         /// <summary>True while the next console action in Transmission is the one-time link diagnostic.</summary>
         private bool IsDiagnosticNext => state.Phase == GamePhase.Transmission && !director.LinkDiagnosticRequested;
 
+        /// <summary>True while the mission runs after Earth's reply: there is nothing left to send.</summary>
+        private bool IsContactRestored => !state.IsClosed && communications.State == CommunicationState.ReplyReceived;
+
         public bool CanInteract
         {
             get
             {
-                if (state.IsClosed)
+                if (state.IsClosed || IsContactRestored)
                 {
                     return false;
                 }
@@ -107,6 +119,12 @@ namespace OutOfReach.Core
             if (state.Phase == GamePhase.Intro || state.Phase == GamePhase.Planning)
             {
                 return director.TryCompleteCockpitCheck();
+            }
+
+            if (IsContactRestored)
+            {
+                return new CommandResult(false, CommandFailure.AlreadyComplete,
+                    "Contact with Earth is already restored: the one distress call has been answered.");
             }
 
             return IsDiagnosticNext ? director.TryRunLinkDiagnostic() : communications.TryTransmit();
