@@ -1,0 +1,221 @@
+{
+ "units": {
+  "GC_MealPouch": {
+   "objects": {
+    "GC_MealPouch_Sealed": {
+     "triangles": 1736,
+     "per_material": {
+      "GC_Foil": 1448,
+      "GC_Labels": 288
+     },
+     "bounds_min": [
+      -0.0705,
+      -0.085,
+      -0.0145
+     ],
+     "bounds_max": [
+      0.0705,
+      0.093,
+      0.0145
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "GC_MealPouch_Opened": {
+     "triangles": 2484,
+     "per_material": {
+      "GC_Foil": 2148,
+      "GC_Food": 144,
+      "GC_Labels": 192
+     },
+     "bounds_min": [
+      -0.0705,
+      -0.085,
+      -0.0145
+     ],
+     "bounds_max": [
+      0.0705,
+      0.054,
+      0.0145
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "anchors": {
+    "MealGrip": {
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "up": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "note": "hand grip at the centre of the lower body"
+    },
+    "MealMouth": {
+     "point": [
+      0.0,
+      0.058,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "centre of the cut opening of the Opened variant"
+    }
+   },
+   "fbx": "GC_MealPouch.fbx",
+   "triangles": 4220
+  },
+  "GC_DrinkPouch": {
+   "objects": {
+    "GC_DrinkPouch_Closed": {
+     "triangles": 2338,
+     "per_material": {
+      "A7_PlasticWhite": 204,
+      "A7_Rubber": 140,
+      "GC_AmberPlastic": 296,
+      "GC_Foil": 1184,
+      "GC_Labels": 194,
+      "GC_Silicone": 160,
+      "GC_StrawPE": 160
+     },
+     "bounds_min": [
+      -0.0555,
+      -0.095,
+      -0.0125
+     ],
+     "bounds_max": [
+      0.0555,
+      0.1647,
+      0.0125
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "GC_DrinkPouch_Open": {
+     "triangles": 2278,
+     "per_material": {
+      "A7_PlasticWhite": 204,
+      "A7_Rubber": 80,
+      "GC_AmberPlastic": 296,
+      "GC_Foil": 1184,
+      "GC_Labels": 194,
+      "GC_Silicone": 160,
+      "GC_StrawPE": 160
+     },
+     "bounds_min": [
+      -0.0555,
+      -0.095,
+      -0.0125
+     ],
+     "bounds_max": [
+      0.0555,
+      0.1585,
+      0.0125
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "anchors": {
+    "DrinkGrip": {
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "up": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "note": "hand grip at the centre of the lower body"
+    },
+    "DrinkStrawTip": {
+     "point": [
+      -0.004,
+      0.16,
+      0.006
+     ],
+     "forward": [
+      -0.1003,
+      0.9231,
+      0.3712
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "open straw end (Open variant; capped when Closed)"
+    },
+    "DrinkFillPort": {
+     "point": [
+      0.0,
+      0.0985,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "silicone septum where the dispenser needle injects water before the straw goes in"
+    }
+   },
+   "fbx": "GC_DrinkPouch.fbx",
+   "triangles": 4616
+  }
+ },
+ "total_triangles": 8836,
+ "materials": [
+  "A7_PlasticWhite",
+  "A7_Rubber",
+  "GC_AmberPlastic",
+  "GC_Foil",
+  "GC_Food",
+  "GC_Labels",
+  "GC_Silicone",
+  "GC_StrawPE"
+ ],
+ "convention": "Unity metres, y up; label side faces +z; each prop's origin is its centre; the variants of a prop share that origin"
+}

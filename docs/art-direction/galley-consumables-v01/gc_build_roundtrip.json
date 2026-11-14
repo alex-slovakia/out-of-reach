@@ -1,0 +1,89 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "GC_MealPouch": {
+   "fbx": "GC_MealPouch.fbx",
+   "objects_in_file": 4,
+   "checks": [
+    {
+     "object": "GC_MealPouch_Sealed",
+     "ok": true,
+     "triangles": 1736,
+     "expected": 1736
+    },
+    {
+     "object": "GC_MealPouch_Opened",
+     "ok": true,
+     "triangles": 2484,
+     "expected": 2484
+    },
+    {
+     "anchor": "MealGrip",
+     "ok": true,
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ]
+    },
+    {
+     "anchor": "MealMouth",
+     "ok": true,
+     "point": [
+      0.0,
+      0.058,
+      0.0
+     ]
+    }
+   ]
+  },
+  "GC_DrinkPouch": {
+   "fbx": "GC_DrinkPouch.fbx",
+   "objects_in_file": 5,
+   "checks": [
+    {
+     "object": "GC_DrinkPouch_Closed",
+     "ok": true,
+     "triangles": 2338,
+     "expected": 2338
+    },
+    {
+     "object": "GC_DrinkPouch_Open",
+     "ok": true,
+     "triangles": 2278,
+     "expected": 2278
+    },
+    {
+     "anchor": "DrinkGrip",
+     "ok": true,
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ]
+    },
+    {
+     "anchor": "DrinkStrawTip",
+     "ok": true,
+     "point": [
+      -0.004,
+      0.16,
+      0.006
+     ]
+    },
+    {
+     "anchor": "DrinkFillPort",
+     "ok": true,
+     "point": [
+      0.0,
+      0.0985,
+      0.0
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

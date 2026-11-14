@@ -1,0 +1,220 @@
+{
+ "_comment": "HABITAT-DETAILS-V1 materials. Entries marked shared_with_ship use the AURORA-7 values and maps unchanged: bind them to the existing ship materials of the same name. HB_* are new. Same fields as Aurora7/Source/a7_materials.json (set = tiling PBR set, atlas = label atlas, tint = sRGB multiplier, smoothness = 1 - roughness).",
+ "materials": [
+  {
+   "name": "A7_PaintWhite",
+   "set": "A7_Paint",
+   "tint": "#B5B3AE",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_PaintGray",
+   "set": "A7_Paint",
+   "tint": "#8A8884",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_PaintAmber",
+   "set": "A7_Paint",
+   "tint": "#C68A1C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_PlasticWhite",
+   "set": "A7_Paint",
+   "tint": "#DDDCD4",
+   "tiling": 2.0,
+   "normal": 0.12,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_AnodizedBlack",
+   "set": "A7_Anodized",
+   "tint": "#232528",
+   "tiling": 2.0,
+   "normal": 0.5,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_AnodizedClear",
+   "set": "A7_Anodized",
+   "tint": "#B6B9BC",
+   "tiling": 2.0,
+   "normal": 0.5,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_FabricWhite",
+   "set": "A7_Fabric",
+   "tint": "#D4D1C8",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_FabricCanvas",
+   "set": "A7_Fabric",
+   "tint": "#B5A88C",
+   "tiling": 5.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_FabricDark",
+   "set": "A7_Fabric",
+   "tint": "#2C313B",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_FabricStrap",
+   "set": "A7_Fabric",
+   "tint": "#4B4F53",
+   "tiling": 8.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_QuiltWhite",
+   "set": "A7_Quilt",
+   "tint": "#C2BFB8",
+   "tiling": 2.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_Grate",
+   "set": "A7_Grate",
+   "tint": "#FFFFFF",
+   "tiling": 4.0,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_Rubber",
+   "set": "A7_Rubber",
+   "tint": "#1B1B1C",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_MLISilver",
+   "set": "A7_MLI",
+   "tint": "#C8CCD0",
+   "tiling": 1.2,
+   "normal": 1.0,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_Glass",
+   "tint": "#A9C0CC",
+   "surface": "transparent",
+   "alpha": 0.1,
+   "metallic": 0.0,
+   "smoothness": 0.96,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_LedCyan",
+   "tint": "#082E38",
+   "emission": "#19D3FF",
+   "emission_strength": 2.5,
+   "metallic": 0.0,
+   "smoothness": 0.6,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_CableBlue",
+   "set": "A7_Rubber",
+   "tint": "#2D60A9",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true
+  },
+  {
+   "name": "A7_LightPanel",
+   "tint": "#F3EDE0",
+   "emission": "#FFE7C4",
+   "emission_strength": 4.0,
+   "metallic": 0.0,
+   "smoothness": 0.3,
+   "shared_with_ship": true
+  },
+  {
+   "name": "HB_Labels",
+   "atlas": "HB_Labels",
+   "surface": "cutout",
+   "metallic": 0.0,
+   "smoothness": 0.25
+  },
+  {
+   "name": "HB_Leaf",
+   "set": "HB_Leaf",
+   "tint": "#FFFFFF",
+   "tiling": 1.0,
+   "normal": 0.6,
+   "uv": "explicit 0..1 per leaf"
+  },
+  {
+   "name": "HB_GrowLight",
+   "tint": "#2A2328",
+   "emission": "#FFD6EA",
+   "emission_strength": 3.0,
+   "metallic": 0.0,
+   "smoothness": 0.4
+  },
+  {
+   "name": "HB_BerthLight",
+   "tint": "#3A2A18",
+   "emission": "#FFC48A",
+   "emission_strength": 1.6,
+   "metallic": 0.0,
+   "smoothness": 0.4
+  },
+  {
+   "name": "HB_Water",
+   "tint": "#4FA9C2",
+   "surface": "transparent",
+   "alpha": 0.4,
+   "metallic": 0.0,
+   "smoothness": 0.95
+  },
+  {
+   "name": "HB_ScreenOff",
+   "tint": "#0C0F12",
+   "metallic": 0.0,
+   "smoothness": 0.92
+  },
+  {
+   "name": "HB_BagQuilt",
+   "set": "A7_Quilt",
+   "tint": "#56606F",
+   "tiling": 2.5,
+   "normal": 1.0
+  }
+ ]
+}

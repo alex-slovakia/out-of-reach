@@ -1,0 +1,298 @@
+{
+ "kit": "GALLEY-PROPS-01",
+ "status": "authored Blender art kit; not integrated in Unity; no animation or gameplay",
+ "coordinates": "Unity metres, y up. Label side faces +z; each prop's origin is its centre; the variants of one prop share that origin and can be swapped in place. Blender (x, y, z) = Unity (x, z, y), exported with bake_space_transform, axis_forward -Z, axis_up Y (the AURORA-7 pipeline).",
+ "fbx_contents": "meshes and anchor empties only, flat hierarchy, no cameras, lights or texture records; materials bind by name",
+ "total_triangles": 8836,
+ "roundtrip": {
+  "pass": true,
+  "tolerance_m": 0.001,
+  "tool": "Blender 5.3.0"
+ },
+ "props": {
+  "GC_MealPouch": {
+   "fbx": "GC_MealPouch.fbx",
+   "triangles": 4220,
+   "variants": {
+    "GC_MealPouch_Sealed": {
+     "triangles": 1736,
+     "bounds_min_m": [
+      -0.0705,
+      -0.085,
+      -0.0145
+     ],
+     "bounds_max_m": [
+      0.0705,
+      0.093,
+      0.0145
+     ],
+     "materials": [
+      "GC_Foil",
+      "GC_Labels"
+     ]
+    },
+    "GC_MealPouch_Opened": {
+     "triangles": 2484,
+     "bounds_min_m": [
+      -0.0705,
+      -0.085,
+      -0.0145
+     ],
+     "bounds_max_m": [
+      0.0705,
+      0.054,
+      0.0145
+     ],
+     "materials": [
+      "GC_Foil",
+      "GC_Food",
+      "GC_Labels"
+     ]
+    }
+   },
+   "anchors": {
+    "MealGrip": {
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "up": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "note": "hand grip at the centre of the lower body"
+    },
+    "MealMouth": {
+     "point": [
+      0.0,
+      0.058,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "centre of the cut opening of the Opened variant"
+    }
+   }
+  },
+  "GC_DrinkPouch": {
+   "fbx": "GC_DrinkPouch.fbx",
+   "triangles": 4616,
+   "variants": {
+    "GC_DrinkPouch_Closed": {
+     "triangles": 2338,
+     "bounds_min_m": [
+      -0.0555,
+      -0.095,
+      -0.0125
+     ],
+     "bounds_max_m": [
+      0.0555,
+      0.1647,
+      0.0125
+     ],
+     "materials": [
+      "A7_PlasticWhite",
+      "A7_Rubber",
+      "GC_AmberPlastic",
+      "GC_Foil",
+      "GC_Labels",
+      "GC_Silicone",
+      "GC_StrawPE"
+     ]
+    },
+    "GC_DrinkPouch_Open": {
+     "triangles": 2278,
+     "bounds_min_m": [
+      -0.0555,
+      -0.095,
+      -0.0125
+     ],
+     "bounds_max_m": [
+      0.0555,
+      0.1585,
+      0.0125
+     ],
+     "materials": [
+      "A7_PlasticWhite",
+      "A7_Rubber",
+      "GC_AmberPlastic",
+      "GC_Foil",
+      "GC_Labels",
+      "GC_Silicone",
+      "GC_StrawPE"
+     ]
+    }
+   },
+   "anchors": {
+    "DrinkGrip": {
+     "point": [
+      0.0,
+      -0.02,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "up": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "note": "hand grip at the centre of the lower body"
+    },
+    "DrinkStrawTip": {
+     "point": [
+      -0.004,
+      0.16,
+      0.006
+     ],
+     "forward": [
+      -0.1003,
+      0.9231,
+      0.3712
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "open straw end (Open variant; capped when Closed)"
+    },
+    "DrinkFillPort": {
+     "point": [
+      0.0,
+      0.0985,
+      0.0
+     ],
+     "forward": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "up": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "note": "silicone septum where the dispenser needle injects water before the straw goes in"
+    }
+   }
+  }
+ },
+ "materials": [
+  {
+   "name": "A7_PlasticWhite",
+   "set": "A7_Paint",
+   "tint": "#DDDCD4",
+   "tiling": 2.0,
+   "normal": 0.12,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "A7_Rubber",
+   "set": "A7_Rubber",
+   "tint": "#1B1B1C",
+   "tiling": 4.0,
+   "normal": 0.8,
+   "shared_with_ship": true,
+   "files": [
+    "textures/A7_Rubber_BaseColor.png",
+    "textures/A7_Rubber_Normal.png",
+    "textures/A7_Rubber_MODS.png"
+   ],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "GC_Foil",
+   "set": "A7_MLI",
+   "tint": "#C9CDD1",
+   "tiling": 6.0,
+   "normal": 0.6,
+   "note": "aluminium-laminate pouch film; the ship's MLI maps at a finer tiling",
+   "files": [
+    "textures/A7_MLI_BaseColor.png",
+    "textures/A7_MLI_Normal.png",
+    "textures/A7_MLI_MODS.png"
+   ],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "GC_AmberPlastic",
+   "set": "A7_Paint",
+   "tint": "#D08A1C",
+   "tiling": 4.0,
+   "normal": 0.15,
+   "note": "pinch clamp and tethered cap",
+   "files": [
+    "textures/A7_Paint_BaseColor.png",
+    "textures/A7_Paint_Normal.png",
+    "textures/A7_Paint_MODS.png"
+   ],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "GC_Silicone",
+   "tint": "#B9BCBF",
+   "metallic": 0.0,
+   "smoothness": 0.35,
+   "note": "septum",
+   "files": [],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "GC_StrawPE",
+   "tint": "#E7ECEE",
+   "surface": "transparent",
+   "alpha": 0.55,
+   "metallic": 0.0,
+   "smoothness": 0.8,
+   "note": "polyethylene straw",
+   "files": [],
+   "urp": "URP/Lit, transparent"
+  },
+  {
+   "name": "GC_Food",
+   "tint": "#5C3B22",
+   "metallic": 0.0,
+   "smoothness": 0.55,
+   "note": "stew surface in the opened pouch",
+   "files": [],
+   "urp": "URP/Lit, opaque"
+  },
+  {
+   "name": "GC_Labels",
+   "atlas": "GC_Labels",
+   "surface": "cutout",
+   "metallic": 0.0,
+   "smoothness": 0.25,
+   "files": [
+    "textures/GC_Labels.png",
+    "textures/gc_labels.json"
+   ],
+   "urp": "URP/Lit, alpha clip 0.5"
+  }
+ ]
+}
