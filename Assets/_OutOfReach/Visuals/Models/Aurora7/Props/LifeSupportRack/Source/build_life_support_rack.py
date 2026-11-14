@@ -1,5 +1,5 @@
 """
-OUT OF REACH - life-support rack ARS-1 (original asset, built from code).
+OUT OF REACH - air revitalization unit ARS-1 for the life-support rack (original asset, built from code).
 
 Builds the model, its label atlas and baked PBR textures, renders previews, saves the .blend
 and exports the FBX. Everything is generated here: no external models, textures or logos.
@@ -54,13 +54,13 @@ for folder in (OUT, TEX_DIR, RENDER_DIR):
 
 # ------------------------------------------------------------------ dimensions (metres)
 NAME = "LifeSupportRack"
-W, H, D = 0.80, 1.40, 0.26
+W, H, D = 0.80, 1.40, 0.22
 YB = D / 2.0                 # back face, against the wall
-YF = -D / 2.0                # front-most plane
+YF = -D / 2.0                # front-most plane: the handles of the seated canisters
 Y_PLATE = YB - 0.012         # front of the mounting plate
-Y_FACE = -0.020              # painted front face of the enclosure
+Y_FACE = YF + 0.110           # painted front face of the enclosure
 Y_SUB = Y_FACE - 0.004       # front of the graphite sub-panel
-BEZEL_Y0, BEZEL_Y1 = -0.042, -0.012
+BEZEL_Y0, BEZEL_Y1 = Y_FACE - 0.022, Y_FACE + 0.008
 BAR = 0.045                  # bezel bar width
 ENC_X, ENC_Z0, ENC_Z1 = 0.375, 0.025, 1.375
 IND_PLATE = (-0.345, -0.085, 1.150, 1.300)     # x0, x1, z0, z1
@@ -76,13 +76,13 @@ CAN_LEN = 0.096
 FAN_X, FAN_Z, FAN_R = -0.165, 0.470, 0.120
 DRAWER = (0.020, 0.335, 0.385, 0.555)          # x0, x1, z0, z1
 DRAWER_Y = Y_FACE - 0.014
-PIPE_Z, PIPE_Y, PIPE_R = 0.170, -0.050, 0.013
+PIPE_Z, PIPE_Y, PIPE_R = 0.170, Y_FACE - 0.030, 0.013
 VALVE_X = (-0.220, 0.0, 0.220)
 DROP_Z = 0.085
 
 # ------------------------------------------------------------------ materials
-MAT_KEYS = ["paint", "graphite", "steel", "dark", "connector", "interior", "copper", "insulator", "ceramic", "accent"]
-PAINT, GRAPHITE, STEEL, DARK, CONNECTOR, INTERIOR, COPPER, INSULATOR, CERAMIC, ACCENT = range(10)
+MAT_KEYS = ["paint", "graphite", "steel", "dark", "connector", "interior", "copper", "insulator", "ceramic", "accent", "blue"]
+PAINT, GRAPHITE, STEEL, DARK, CONNECTOR, INTERIOR, COPPER, INSULATOR, CERAMIC, ACCENT, BLUE = range(11)
 MAT_SPEC = {
     #             base sRGB  metal rough  wear  worn sRGB  worn metal  dirt
     "paint":     ("#C9CBC6", 0.00, 0.42, 0.60, "#8D8F92", 1.0, 0.70),
@@ -95,6 +95,7 @@ MAT_SPEC = {
     "insulator": ("#B79A5C", 0.00, 0.62, 0.00, "#B79A5C", 0.0, 0.45),
     "ceramic":   ("#E3E0D6", 0.00, 0.36, 0.00, "#E3E0D6", 0.0, 0.30),
     "accent":    ("#D49A1C", 0.00, 0.46, 0.45, "#8D8F92", 1.0, 0.50),
+    "blue":      ("#2B58A8", 1.00, 0.40, 0.30, "#A9ABAE", 1.0, 0.45),
 }
 INDICATORS = (("LS_Indicator_Cyan", "#19D3FF", 2.2), ("LS_Indicator_Amber", "#FFA61A", 1.8), ("LS_Indicator_Red", "#FF2A1A", 0.25))
 SOCK = {}        # material name -> bake source sockets
@@ -448,7 +449,7 @@ def manifold(bm):
         lathe(bm, stem, [(0.0100, 0.0), (0.0100, 0.0100), (0.0060, 0.0100), (0.0060, 0.0160)], 8, [STEEL] * 3, cap_mat=STEEL)
         turn = radians(90.0) if index == 2 else 0.0               # V3, the cabin vent, is closed
         lever = stem @ Matrix.Rotation(turn, 4, "Z") @ Matrix.Translation((0.028, 0.0, 0.019))
-        box_m(bm, lever, (0.080, 0.014, 0.006), ACCENT, bevel=0.002)
+        box_m(bm, lever, (0.080, 0.014, 0.006), BLUE, bevel=0.002)
         lathe(bm, upright(x, PIPE_Y, DROP_Z), [(0.0100, 0.0), (0.0100, PIPE_Z - 0.025 - DROP_Z)], 10, [STEEL])
         box(bm, x - 0.015, x + 0.015, PIPE_Y - 0.015, PIPE_Y + 0.015, DROP_Z - 0.015, DROP_Z + 0.015, CONNECTOR, bevel=0.003)
         lathe(bm, Matrix.Translation((x, PIPE_Y, DROP_Z)) @ RXM90, [(0.0100, 0.0), (0.0100, Y_FACE - PIPE_Y)], 10, [STEEL])
@@ -498,7 +499,7 @@ def build_body():
         for i in range(8):
             z = 0.950 + i * 0.045
             xa, xb = sorted((side * ENC_X, side * (ENC_X + 0.020)))
-            box(bm, xa, xb, 0.000, 0.090, z - 0.002, z + 0.002, GRAPHITE)
+            box(bm, xa, xb, Y_FACE + 0.020, Y_PLATE - 0.020, z - 0.002, z + 0.002, GRAPHITE)
     return bm
 
 
@@ -737,7 +738,7 @@ def placards():
     def add(key, host, cx, cz, w, h, y, style, texts, flip=False, shapes=()):
         items.append(dict(key=key, host=host, c=(cx, cz), s=(w, h), y=y, style=style, texts=texts, flip=flip, shapes=shapes))
 
-    add("title", "Body", 0.0, 1.328, 0.44, 0.026, Y_FACE, "dark", [("ARS-1   AIR REVITALIZATION RACK", 0.0, 0.0, 0.0125)])
+    add("title", "Body", 0.0, 1.328, 0.44, 0.026, Y_FACE, "dark", [("ARS-1   AIR REVITALIZATION UNIT", 0.0, 0.0, 0.0125)])
     add("hdr_status", "Body", -0.215, 1.286, 0.20, 0.016, Y_SUB, "dark", [("ATMOSPHERE STATUS", 0.0, 0.0, 0.0088)])
     for x, text in zip(LAMP_X, ("AIRFLOW", "CO2 HIGH", "FAULT")):
         add("lamp_" + text.replace(" ", "_"), "Body", x, 1.190, 0.070, 0.020, Y_SUB, "light", [(text, 0.0, 0.0, 0.0098)])
@@ -758,15 +759,18 @@ def placards():
     add("dial", "Body", GAUGE_X, GAUGE_Z, 0.084, 0.084, Y_FACE - 0.0030, "dial", dial_texts, shapes=ticks)
     add("gauge_label", "Body", GAUGE_X, 1.148, 0.13, 0.018, Y_FACE, "light", [("O2 SUPPLY PRESSURE", 0.0, 0.0, 0.0085)])
 
-    add("hazard", "Body", 0.0, 1.085, 0.48, 0.016, Y_FACE, "hazard", [("REPLACE SCRUBBER BED WHEN CO2 HIGH IS LIT", 0.0, 0.0, 0.0088)])
+    add("hazard", "Body", 0.0, 1.085, 0.48, 0.016, Y_FACE, "hazard", [("REPLACE LiOH CANISTER WHEN CO2 HIGH IS LIT", 0.0, 0.0, 0.0088)])
     for index, x in enumerate(CAN_X):
         letter = "AB"[index]
-        add("bay_" + letter, "Body", x, 1.022, 0.20, 0.021, Y_FACE, "light", [("CO2 SCRUBBER   BED " + letter, 0.0, 0.0, 0.0105)])
+        add("bay_" + letter, "Body", x, 1.022, 0.13, 0.021, Y_FACE, "light", [("CO2 BED " + letter, 0.0, 0.0, 0.0105)])
         add("can_" + letter, "Canister" + letter, x, CAN_Z - 0.040, 0.110, 0.040, CAN_BASE_Y - 0.082, "light",
-            [("BED " + letter, 0.0, 0.008, 0.018), ("LiOH CARTRIDGE", 0.0, -0.011, 0.0075)])
+            [("BED " + letter, 0.0, 0.008, 0.018), ("LiOH CANISTER", 0.0, -0.011, 0.0075)])
     add("caution", "Body", 0.1775, 0.650, 0.16, 0.085, Y_FACE, "caution",
         [("CAUTION", 0.0, 0.022, 0.021), ("ROTATING FAN", 0.0, -0.003, 0.0115), ("CLOSE V3 BEFORE SERVICE", 0.0, -0.024, 0.0078)])
     add("fan_id", "Body", FAN_X, 0.655, 0.15, 0.019, Y_FACE, "light", [("INLET FAN   FN-1", 0.0, 0.0, 0.0095)])
+    arrow = [("#101113", [(-0.0440, -0.0130), (-0.0380, -0.0130), (-0.0380, 0.0030), (-0.0440, 0.0030)]),     # shaft
+             ("#101113", [(-0.0500, 0.0030), (-0.0320, 0.0030), (-0.0410, 0.0140)])]                         # head
+    add("airflow", "Body", FAN_X, 0.705, 0.115, 0.042, Y_FACE, "light", [("AIRFLOW", 0.012, 0.0, 0.0105)], shapes=arrow)
     add("fan_label", "Body", FAN_X, 0.318, 0.17, 0.019, Y_FACE, "light", [("CABIN AIR INLET", 0.0, 0.0, 0.0098)])
     add("drawer_label", "Body", (DRAWER[0] + DRAWER[1]) / 2, 0.525, 0.19, 0.019, DRAWER_Y, "light", [("PARTICULATE FILTER   F-1", 0.0, 0.0, 0.0092)])
     for x, text in zip(VALVE_X, ("V1 O2 SUPPLY", "V2 CONDENSATE", "V3 CABIN VENT")):
