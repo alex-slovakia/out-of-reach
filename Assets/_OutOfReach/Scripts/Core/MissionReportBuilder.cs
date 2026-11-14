@@ -69,7 +69,8 @@ namespace OutOfReach.Core
                 SuitPreparationCount = eva.SuitPreparationCount,
                 AirlockCycleCount = eva.AirlockCycleCount,
                 ScienceObjectives = configuration.ScienceObjectives,
-                ScienceDataReturned = configuration.HasSciencePayload && !mods.SciencePayloadSalvaged && state.Outcome == MissionOutcome.RecoveryPossible,
+                ScienceDataReturned = configuration.HasSciencePayload && !mods.SciencePayloadSalvaged
+                    && (state.Outcome == MissionOutcome.RecoveryPossible || state.Outcome == MissionOutcome.Recovered),
                 SciencePayloadSalvaged = mods.SciencePayloadSalvaged,
                 AbsorberCartridgesBuilt = mods.CartridgesBuilt,
                 AbsorberCartridgesInstalled = mods.CartridgesInstalled,
@@ -87,7 +88,7 @@ namespace OutOfReach.Core
             double? salvagedAt = mods.SalvagedAtSimulationSeconds;
             report.Sections = Array.AsReadOnly(new[]
             {
-                OutcomeSection(report),
+                OutcomeSection(report, session),
                 MissionDesignSection(report, definition, session),
                 ResourcesSection(report, session),
                 SystemsSection(report, mods.Spec),
@@ -106,6 +107,8 @@ namespace OutOfReach.Core
         {
             switch (outcome)
             {
+                case MissionOutcome.Recovered:
+                    return "RECOVERED";
                 case MissionOutcome.RecoveryPossible:
                     return "RECOVERY POSSIBLE";
                 case MissionOutcome.Lost:
@@ -221,7 +224,7 @@ namespace OutOfReach.Core
             });
         }
 
-        private static MissionReportSection OutcomeSection(MissionReport report)
+        private static MissionReportSection OutcomeSection(MissionReport report, MissionSession session)
         {
             var lines = new List<MissionReportLine>
             {
@@ -244,6 +247,11 @@ namespace OutOfReach.Core
                 lines.Add(Line("What it means", "Contact and recovery planning, not a rescue. No craft has arrived; the ship must hold on its own reserves."));
             }
 
+            if (report.Outcome == MissionOutcome.Recovered && session.SurvivalRecovery != null)
+            {
+                lines.Add(Line("What it means", session.SurvivalRecovery.DescribeRecoveryForReport()));
+            }
+
             if (report.IsFinal && report.Holding.IsBounded && report.LossCause == SurvivalFailure.None)
             {
                 lines.Add(Line("Holding margin", string.Format(Invariant, "About {0:0} days at current use; {1} runs out first (estimate).",
@@ -262,10 +270,10 @@ namespace OutOfReach.Core
         {
             ResourceRates rates = session.Resources.Rates;
             if (!session.Survival.ContactRestoredAtSimulationSeconds.HasValue) return rates;
-            // Projection only. Actual food/water debits remain exclusively the player's commands and crop irrigation.
+            // Projection only. Actual food/water debits are the crew's commands, the rest draw and crop irrigation.
             double crewDaysPerSecond = session.Definition.CrewCount / CrewMetabolicAssumptions.SecondsPerDay;
             return new ResourceRates(rates.OxygenUseKgPerSecond,
-                CrewMetabolicAssumptions.WaterLitresPerCrewDay * crewDaysPerSecond + rates.WaterUseLitresPerSecond,
+                CrewMetabolicAssumptions.WaterLitresPerCrewDay * crewDaysPerSecond + session.Survival.GrowWaterLitresPerSecond,
                 CrewMetabolicAssumptions.FoodKgPerCrewDay * crewDaysPerSecond, rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond);
         }
 
@@ -402,9 +410,14 @@ namespace OutOfReach.Core
 
             if (session.Survival.ContactRestoredAtSimulationSeconds.HasValue)
             {
-                lines.Add(Line("Survival accounting", "Food and drinking water were spent by crew commands; crop irrigation and power used the same ledger. Net use includes building, planting and the one harvest credit; actions are in the timeline."));
+                lines.Add(Line("Survival accounting", "Awake, food and drinking water were spent by crew commands; while resting they were drawn at the BVAD crew-day rates. Crop irrigation and power used the same ledger. Net use includes building, planting and the one harvest credit; actions are in the timeline."));
                 lines.Add(Line("Holding projection", "Food and water assume full BVAD crew-day portions, not the zero automatic meal rate. This estimate is not a rescue ETA."));
                 lines.Add(Line("Grow module", session.Survival.GrowStage.ToString()));
+                if (session.SurvivalRecovery != null)
+                {
+                    lines.Add(Line("Rest", session.SurvivalRecovery.DescribeRestForReport()));
+                    lines.Add(Line("Recovery beacon", session.SurvivalRecovery.DescribeBeaconForReport()));
+                }
             }
             return Section(MissionReportSections.Resources, "Resources", lines);
         }

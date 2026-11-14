@@ -88,6 +88,7 @@ namespace OutOfReach.Core
                 Interactions.Add(new DelegatedInteraction(InteractionIds.HarvestCrop, survival.CheckHarvest, survival.TryHarvest));
                 SurvivalRecovery recovery = Director.SurvivalRecovery;
                 Interactions.Add(new DelegatedInteraction(InteractionIds.SurvivalSleep, recovery.CheckSleepInteraction, recovery.TrySleepInteraction));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.RecoveryBeacon, recovery.CheckPowerBeacon, recovery.TryPowerBeacon));
             }
 
             Cargo = new CargoLoading(Definition, Planner, State, Events, text => Director.Journal.Record(0d, text));

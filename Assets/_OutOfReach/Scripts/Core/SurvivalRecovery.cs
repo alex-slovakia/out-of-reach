@@ -6,21 +6,27 @@ using OutOfReach.Simulation;
 namespace OutOfReach.Core
 {
     /// <summary>
-    /// Optional rest and, from step R2, the fictional recovery timeline of the post-contact Survival chapter
-    /// (implements <see cref="ISurvivalRecovery"/>). It exists only when the survival extension is enabled.
+    /// Optional rest and the fictional recovery timeline of the post-contact Survival chapter (implements
+    /// <see cref="ISurvivalRecovery"/>). It exists only when the survival extension is enabled.
     /// <para>
-    /// A rest is an accelerated run of the one mission clock (<see cref="RestTimeScale"/>), never an instant skip:
-    /// the session advances every service through the same step loop. While the crew rests, food and drinking
+    /// REST. A rest is an accelerated run of the one mission clock (<see cref="RestTimeScale"/>), never an instant
+    /// skip: the session advances every service through the same step loop. While the crew rests, food and drinking
     /// water leave the ledger continuously at the BVAD crew-day rates (<see cref="CrewMetabolicAssumptions"/>),
     /// exactly as before contact, and the survival needs neither accrue nor reset. The awake manual portions are
-    /// refused meanwhile, so nothing is charged twice. Oxygen, CO2 and power run as always.
+    /// refused meanwhile, so nothing is charged twice. Oxygen, CO2 and power run as always. The step loop splits at
+    /// the planned end and at the CO2 danger margin; reserve depletion boundaries come from the ledger. After every
+    /// step the rest stops at the first danger (a store running out, power lost, cabin CO2 near the loss limit, the
+    /// crop finishing or failing), so no loss is stepped across while the crew sleeps; a danger wins a tie with the
+    /// planned end. A recovery milestone also wakes the crew. The Survival phase means inside the ship, out of the suit.
     /// </para>
     /// <para>
-    /// The step loop splits at the planned end of the rest and at the CO2 danger margin; reserve depletion
-    /// boundaries come from the ledger. After every step the rest stops at the first danger (a store running out,
-    /// power lost, cabin CO2 near the loss limit, the crop finishing or failing), so no loss is ever stepped across
-    /// while the crew sleeps. A danger wins a tie with the planned end; a loss decided in the same step ends the
-    /// rest as MissionEnded. The Survival phase means the crew is inside the ship, out of the suit.
+    /// RECOVERY (fictional, GAME ASSUMPTIONS): with Earth's reply a nearby recovery craft that is already in transit
+    /// plans a rendezvous <see cref="ArrivalAfterContactDays"/> days after contact. On day
+    /// <see cref="BeaconRequestAfterContactDays"/> it asks for the ship's beacon; powering it within
+    /// <see cref="BeaconWindowHours"/> h costs <see cref="BeaconEnergyKWh"/> kWh once, and a missed window delays the
+    /// rendezvous once by <see cref="MissedBeaconDelayDays"/> days. None of this timing is derived from the NASA
+    /// Earth-Mars range data. Reaching the rendezvous alive ends the mission as Recovered; a loss at the same instant
+    /// wins. Paused time uses none of the window, because simulation time does not pass.
     /// </para>
     /// </summary>
     public sealed class SurvivalRecovery : ISurvivalRecovery, IDisposable
@@ -37,7 +43,24 @@ namespace OutOfReach.Core
         /// <summary>GAME ASSUMPTION: a rest stops once cabin CO2 would reach the loss limit within this many simulated seconds.</summary>
         public const double CarbonDioxideDangerMarginSeconds = 2d * 3600d;
 
+        /// <summary>GAME ASSUMPTION (fictional): rendezvous of the in-transit recovery craft, days after contact.</summary>
+        public const double ArrivalAfterContactDays = 12d;
+
+        /// <summary>GAME ASSUMPTION (fictional): the craft asks for the ship's beacon this many days after contact.</summary>
+        public const double BeaconRequestAfterContactDays = 6d;
+
+        /// <summary>GAME ASSUMPTION (fictional): how long the beacon request stays open, hours.</summary>
+        public const double BeaconWindowHours = 2d;
+
+        /// <summary>GAME ASSUMPTION (fictional): one delay of the rendezvous after a missed beacon window, days.</summary>
+        public const double MissedBeaconDelayDays = 3d;
+
+        /// <summary>GAME ASSUMPTION: battery energy to run the beacon through the window (about 200 W for 2 h), charged once.</summary>
+        public const double BeaconEnergyKWh = 0.4d;
+
         private const double SecondsPerHour = 3600d;
+
+        private static readonly ResourceAmount[] BeaconCost = { new ResourceAmount(ResourceId.BatteryKWh, BeaconEnergyKWh) };
 
         private readonly int crewCount;
         private readonly MissionEventBus events;
@@ -50,16 +73,23 @@ namespace OutOfReach.Core
         private readonly Func<bool> powerLost;
         private readonly Action ratesChanged;
         private readonly Action<string> log;
+        private readonly Func<string, CommandResult> endRecovered;
         private bool resting;
         private double restTargetSeconds;
         private double restElapsedSeconds;
         private double restedBeforeSeconds;
         private GrowModuleStage cropStageAtRestStart;
+        private RecoveryStage stage = RecoveryStage.NotStarted;
+        private double? contactAt;
+        private double? beaconRequestAt;
+        private double? beaconWindowEndsAt;
+        private double? arrivalAt;
+        private bool beaconRequestIssued;
         private bool disposed;
 
         internal SurvivalRecovery(int crewCount, MissionEventBus events, MissionGameState state, ResourceLedger resources,
             SimulationClock clock, CinematicCoordinator cinematics, SurvivalExtension survival, MissionCalendar calendar,
-            Func<bool> powerLost, Action ratesChanged, Action<string> log)
+            Func<bool> powerLost, Action ratesChanged, Action<string> log, Func<string, CommandResult> endRecovered)
         {
             if (crewCount < 1)
             {
@@ -75,6 +105,7 @@ namespace OutOfReach.Core
             this.survival = survival ?? throw new ArgumentNullException(nameof(survival));
             this.calendar = calendar ?? throw new ArgumentNullException(nameof(calendar));
             this.powerLost = powerLost ?? throw new ArgumentNullException(nameof(powerLost));
+            this.endRecovered = endRecovered ?? throw new ArgumentNullException(nameof(endRecovered));
             this.ratesChanged = ratesChanged;
             this.log = log;
         }
@@ -94,17 +125,29 @@ namespace OutOfReach.Core
         /// <summary>Simulated time actually spent resting so far, all rests together, seconds.</summary>
         public double RestedSimulationSeconds => restedBeforeSeconds + (IsResting ? restElapsedSeconds : 0d);
 
-        /// <summary>Recovery timeline: step R2, not implemented yet (always NotStarted).</summary>
-        public RecoveryStage Stage => RecoveryStage.NotStarted;
+        public RecoveryStage Stage => stage;
 
-        /// <summary>Recovery timeline: step R2, not implemented yet (always null).</summary>
-        public double? ArrivalAtSimulationSeconds => null;
+        public double? ArrivalAtSimulationSeconds => arrivalAt;
 
-        /// <summary>+Infinity while no arrival is planned (step R2 is not implemented yet).</summary>
-        public double ArrivalRemainingSimulationSeconds => double.PositiveInfinity;
+        /// <summary>Simulated seconds to the rendezvous; 0 once arrived; +Infinity while no recovery is planned.</summary>
+        public double ArrivalRemainingSimulationSeconds => arrivalAt.HasValue
+            ? Math.Max(0d, arrivalAt.Value - state.ElapsedSimulationSeconds)
+            : double.PositiveInfinity;
 
-        /// <summary>Recovery timeline: step R2, not implemented yet (always null).</summary>
-        public double? BeaconWindowEndsAtSimulationSeconds => null;
+        /// <summary>End of the open beacon window, simulation seconds; null unless the beacon is requested right now.</summary>
+        public double? BeaconWindowEndsAtSimulationSeconds => stage == RecoveryStage.BeaconRequested ? beaconWindowEndsAt : null;
+
+        /// <summary>Simulation time at which Earth's reply restored contact and the recovery plan began, or null.</summary>
+        public double? ContactAtSimulationSeconds => contactAt;
+
+        /// <summary>When the beacon was powered, or null.</summary>
+        public double? BeaconPoweredAtSimulationSeconds { get; private set; }
+
+        /// <summary>True once the beacon window passed without the beacon (the one delay was applied).</summary>
+        public bool BeaconMissed { get; private set; }
+
+        /// <summary>When the recovery craft docked and the mission ended as Recovered, or null.</summary>
+        public double? RecoveredAtSimulationSeconds { get; private set; }
 
         public event Action Changed;
 
@@ -222,30 +265,164 @@ namespace OutOfReach.Core
 
         public CommandResult CheckPowerBeacon()
         {
-            return Fail(CommandFailure.PreconditionsNotMet, "No recovery beacon has been requested.");
+            CommandResult control = CheckControl();
+            if (!control.Succeeded)
+            {
+                return control;
+            }
+
+            if (BeaconPoweredAtSimulationSeconds.HasValue)
+            {
+                return Fail(CommandFailure.AlreadyComplete, "The beacon is already powered for the recovery craft.");
+            }
+
+            if (stage != RecoveryStage.BeaconRequested)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, BeaconMissed
+                    ? "The beacon window has passed; the rendezvous has slipped."
+                    : "The recovery craft has not asked for the beacon yet.");
+            }
+
+            if (IsResting)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "The crew is resting. Wake up first.");
+            }
+
+            CommandResult affordable = resources.CheckAffordable(BeaconCost);
+            if (!affordable.Succeeded)
+            {
+                return affordable;
+            }
+
+            double left = beaconWindowEndsAt.HasValue ? beaconWindowEndsAt.Value - state.ElapsedSimulationSeconds : 0d;
+            return Ok(string.Format(CultureInfo.InvariantCulture,
+                "Power the recovery beacon: {0:0.##} kWh; the window closes in {1}", BeaconEnergyKWh, FormatSpan(left)));
         }
 
         public CommandResult TryPowerBeacon()
         {
-            return CheckPowerBeacon();
+            CommandResult check = CheckPowerBeacon();
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
+            using (events.DeferDispatch())
+            {
+                CommandResult spent = resources.TryConsume(BeaconCost);
+                if (!spent.Succeeded)
+                {
+                    return spent;
+                }
+
+                BeaconPoweredAtSimulationSeconds = state.ElapsedSimulationSeconds;
+                stage = RecoveryStage.Inbound;
+                beaconWindowEndsAt = null;
+                ratesChanged?.Invoke();
+                log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                    "Recovery beacon powered on mission day {0} ({1:0.##} kWh): the rendezvous stays on mission day {2}.",
+                    MissionDay, BeaconEnergyKWh, DayAt(arrivalAt)));
+                Notify();
+            }
+
+            return Ok("Recovery beacon powered: the rendezvous stays on schedule.");
         }
 
-        /// <summary>Simulated seconds to the planned end of the rest or the CO2 danger margin; +Infinity awake.</summary>
+        /// <summary>The report's "What it means" line for a Recovered outcome.</summary>
+        public string DescribeRecoveryForReport()
+        {
+            double since = RecoveredAtSimulationSeconds.HasValue && contactAt.HasValue ? RecoveredAtSimulationSeconds.Value - contactAt.Value : 0d;
+            return string.Format(CultureInfo.InvariantCulture,
+                "A fictional recovery craft already in transit docked {0} after contact ({1}); the crew transferred aboard, and onward travel to Mars is a later chapter. This timeline is a game assumption, not derived from the NASA Earth-Mars data.",
+                FormatSpan(since),
+                BeaconMissed ? "3 days late after the missed beacon window" : "on schedule with the beacon powered");
+        }
+
+        /// <summary>The report's rest line.</summary>
+        public string DescribeRestForReport()
+        {
+            return string.Format(CultureInfo.InvariantCulture,
+                "{0} rest{1}, {2:0.#} h in total; food and water drawn at the BVAD crew-day rates while resting",
+                RestCount, RestCount == 1 ? string.Empty : "s", RestedSimulationSeconds / SecondsPerHour);
+        }
+
+        /// <summary>The report's beacon line.</summary>
+        public string DescribeBeaconForReport()
+        {
+            if (BeaconPoweredAtSimulationSeconds.HasValue)
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Powered on mission day {0} ({1:0.##} kWh)",
+                    DayAt(BeaconPoweredAtSimulationSeconds), BeaconEnergyKWh);
+            }
+
+            if (BeaconMissed)
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Missed: the rendezvous slipped {0:0} days, to mission day {1}",
+                    MissedBeaconDelayDays, DayAt(arrivalAt));
+            }
+
+            if (stage == RecoveryStage.BeaconRequested)
+            {
+                return "Requested, not powered yet";
+            }
+
+            return stage == RecoveryStage.NotStarted
+                ? "No recovery plan yet"
+                : string.Format(CultureInfo.InvariantCulture, "Not requested yet (mission day {0})", DayAt(beaconRequestAt));
+        }
+
+        /// <summary>Called by the director right after contact moves the mission into Survival: starts the one plan.</summary>
+        internal void BeginRecovery()
+        {
+            if (disposed || stage != RecoveryStage.NotStarted || !survival.ContactRestoredAtSimulationSeconds.HasValue)
+            {
+                return;
+            }
+
+            contactAt = survival.ContactRestoredAtSimulationSeconds.Value;
+            beaconRequestAt = contactAt.Value + (BeaconRequestAfterContactDays * CrewMetabolicAssumptions.SecondsPerDay);
+            arrivalAt = contactAt.Value + (ArrivalAfterContactDays * CrewMetabolicAssumptions.SecondsPerDay);
+            stage = RecoveryStage.Inbound;
+            log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                "Earth relays a recovery plan: a fictional recovery craft already in transit nearby can rendezvous {0:0} days after contact, on mission day {1}, and will ask for the ship's beacon on mission day {2}. This timeline is a game assumption, not derived from the NASA Earth-Mars data.",
+                ArrivalAfterContactDays, DayAt(arrivalAt), DayAt(beaconRequestAt)));
+            Notify();
+        }
+
+        /// <summary>
+        /// Simulated seconds to the next rest or recovery boundary: the planned end of a rest, the CO2 danger margin,
+        /// the beacon request, the end of its window, or the rendezvous; +Infinity when none is ahead.
+        /// </summary>
         internal double TimeToNextBoundary()
         {
-            if (!IsResting)
+            double boundary = double.PositiveInfinity;
+            if (IsResting)
             {
-                return double.PositiveInfinity;
+                boundary = Earlier(boundary, restTargetSeconds - restElapsedSeconds);
+                double untilDanger = resources.TimeUntilCarbonDioxideReaches(SurvivalRules.CarbonDioxideLossLimitPpm) - CarbonDioxideDangerMarginSeconds;
+                boundary = Earlier(boundary, untilDanger);
             }
 
-            double boundary = restTargetSeconds - restElapsedSeconds;
-            double untilDanger = resources.TimeUntilCarbonDioxideReaches(SurvivalRules.CarbonDioxideLossLimitPpm) - CarbonDioxideDangerMarginSeconds;
-            if (untilDanger > 0d && untilDanger < boundary)
+            if (!disposed && state.IsSimulationRunning)
             {
-                boundary = untilDanger;
+                double now = state.ElapsedSimulationSeconds;
+                if (stage == RecoveryStage.Inbound && !beaconRequestIssued && beaconRequestAt.HasValue)
+                {
+                    boundary = Earlier(boundary, beaconRequestAt.Value - now);
+                }
+
+                if (stage == RecoveryStage.BeaconRequested && beaconWindowEndsAt.HasValue)
+                {
+                    boundary = Earlier(boundary, beaconWindowEndsAt.Value - now);
+                }
+
+                if ((stage == RecoveryStage.Inbound || stage == RecoveryStage.Delayed) && arrivalAt.HasValue)
+                {
+                    boundary = Earlier(boundary, arrivalAt.Value - now);
+                }
             }
 
-            return boundary > 0d ? boundary : double.PositiveInfinity;
+            return boundary;
         }
 
         /// <summary>Called by the director inside each step, before the survival rules: counts the time rested.</summary>
@@ -259,9 +436,13 @@ namespace OutOfReach.Core
             restElapsedSeconds = Math.Min(restTargetSeconds, restElapsedSeconds + seconds);
         }
 
-        /// <summary>Called by the director after the survival rules of each step: stops the rest at the first reason.</summary>
-        internal void EvaluateRest()
+        /// <summary>
+        /// Called by the director after the survival rules of each step (so a loss at the same instant wins): moves
+        /// the recovery timeline on, which may end the mission as Recovered, then stops the rest at its first reason.
+        /// </summary>
+        internal void AfterStep()
         {
+            bool milestone = AdvanceTimeline();
             if (!resting)
             {
                 return;
@@ -277,6 +458,11 @@ namespace OutOfReach.Core
             if (reason == RestStopReason.None)
             {
                 reason = CropChange();
+            }
+
+            if (reason == RestStopReason.None && milestone)
+            {
+                reason = RestStopReason.RecoveryMilestone;
             }
 
             if (reason == RestStopReason.None && restElapsedSeconds >= restTargetSeconds - SurvivalRules.TimeToleranceSeconds)
@@ -303,6 +489,54 @@ namespace OutOfReach.Core
             Changed = null;
         }
 
+        private bool AdvanceTimeline()
+        {
+            if (disposed || !state.IsSimulationRunning || stage == RecoveryStage.NotStarted || stage == RecoveryStage.Arrived)
+            {
+                return false;
+            }
+
+            double now = state.ElapsedSimulationSeconds;
+            double tolerance = SurvivalRules.TimeToleranceSeconds;
+            if (stage == RecoveryStage.Inbound && !beaconRequestIssued && beaconRequestAt.HasValue && now >= beaconRequestAt.Value - tolerance)
+            {
+                beaconRequestIssued = true;
+                stage = RecoveryStage.BeaconRequested;
+                beaconWindowEndsAt = beaconRequestAt.Value + (BeaconWindowHours * SecondsPerHour);
+                log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                    "The recovery craft asks for the ship's beacon on mission day {0}: power it within {1:0} h ({2:0.##} kWh), or the rendezvous is delayed {3:0} days.",
+                    MissionDay, BeaconWindowHours, BeaconEnergyKWh, MissedBeaconDelayDays));
+                Notify();
+                return true;
+            }
+
+            if (stage == RecoveryStage.BeaconRequested && beaconWindowEndsAt.HasValue && now >= beaconWindowEndsAt.Value - tolerance)
+            {
+                stage = RecoveryStage.Delayed;
+                BeaconMissed = true;
+                beaconWindowEndsAt = null;
+                arrivalAt = arrivalAt.Value + (MissedBeaconDelayDays * CrewMetabolicAssumptions.SecondsPerDay);
+                log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                    "Beacon window missed: the recovery craft's rendezvous is delayed {0:0} days, to mission day {1}.",
+                    MissedBeaconDelayDays, DayAt(arrivalAt)));
+                Notify();
+                return true;
+            }
+
+            if ((stage == RecoveryStage.Inbound || stage == RecoveryStage.Delayed) && arrivalAt.HasValue && now >= arrivalAt.Value - tolerance)
+            {
+                stage = RecoveryStage.Arrived;
+                RecoveredAtSimulationSeconds = now;
+                log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                    "The recovery craft docked on mission day {0}; the crew transfers aboard.", MissionDay));
+                Notify();
+                endRecovered(DescribeRecoveryForReport());
+                return true;
+            }
+
+            return false;
+        }
+
         private CommandResult CheckControl()
         {
             if (disposed || state.IsClosed)
@@ -312,12 +546,12 @@ namespace OutOfReach.Core
 
             if (!survival.IsActive)
             {
-                return Fail(CommandFailure.WrongPhase, "Rest belongs to the post-contact survival chapter.");
+                return Fail(CommandFailure.WrongPhase, "This belongs to the post-contact survival chapter.");
             }
 
             if (clock.IsPaused || cinematics.IsWaiting)
             {
-                return Fail(CommandFailure.PreconditionsNotMet, "Resume crew control before resting.");
+                return Fail(CommandFailure.PreconditionsNotMet, "Resume crew control first.");
             }
 
             return Ok(string.Empty);
@@ -396,6 +630,44 @@ namespace OutOfReach.Core
             }
         }
 
+        private static double Earlier(double boundary, double candidate)
+        {
+            return candidate > 0d && candidate < boundary ? candidate : boundary;
+        }
+
+        private static int DayAt(double? elapsedSeconds)
+        {
+            return MissionCalendar.DayNumberAt(elapsedSeconds ?? 0d);
+        }
+
+        private static string FormatSpan(double seconds)
+        {
+            if (double.IsNaN(seconds) || double.IsInfinity(seconds))
+            {
+                return "an unknown time";
+            }
+
+            long minutes = (long)Math.Round(Math.Max(0d, seconds) / 60d);
+            long days = minutes / 1440;
+            long hours = (minutes % 1440) / 60;
+            long rest = minutes % 60;
+            if (days > 0)
+            {
+                return hours > 0
+                    ? string.Format(CultureInfo.InvariantCulture, "{0} d {1} h", days, hours)
+                    : string.Format(CultureInfo.InvariantCulture, "{0} d", days);
+            }
+
+            if (hours > 0)
+            {
+                return rest > 0
+                    ? string.Format(CultureInfo.InvariantCulture, "{0} h {1} min", hours, rest)
+                    : string.Format(CultureInfo.InvariantCulture, "{0} h", hours);
+            }
+
+            return string.Format(CultureInfo.InvariantCulture, "{0} min", rest);
+        }
+
         private static string Describe(RestStopReason reason)
         {
             switch (reason)
@@ -419,7 +691,7 @@ namespace OutOfReach.Core
                 case RestStopReason.CropFailed:
                     return "the grow module failed";
                 case RestStopReason.RecoveryMilestone:
-                    return "the recovery timeline needs the crew";
+                    return "the recovery craft needs the crew";
                 case RestStopReason.MissionEnded:
                     return "the mission ended";
                 default:

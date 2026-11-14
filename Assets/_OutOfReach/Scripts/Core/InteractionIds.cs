@@ -47,6 +47,9 @@ namespace OutOfReach.Core
         /// <summary>Sleep position (SleepEntry anchor): begins a rest of up to 8.5 h, or wakes the resting crew.</summary>
         public const string SurvivalSleep = "survival-sleep";
 
+        /// <summary>Recovery beacon (comms panel): powers the beacon while the recovery craft asks for it.</summary>
+        public const string RecoveryBeacon = "recovery-beacon";
+
         /// <summary>Prefix of a type's supply pallet during preflight: "cargo-supply:" + equipment ID.</summary>
         public const string CargoSupplyPrefix = "cargo-supply:";
 

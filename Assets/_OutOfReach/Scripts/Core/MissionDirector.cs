@@ -28,7 +28,8 @@ namespace OutOfReach.Core
     /// The opt-in extension instead enters Survival and keeps the same ledger and clock running.
     /// If a loss and the reply fall on the same instant, the loss wins.</item>
     /// <item>After any ending Core requests the ending cinematics (CommunicationRestored then EndingPullback after
-    /// a recovery, EndingPullback after a loss) and then enters Report by itself.</item>
+    /// a recovery, RecoveryArrival then MarsDeparture after the optional chapter's fictional rescue, EndingPullback
+    /// after a loss) and then enters Report by itself.</item>
     /// </list>
     /// </summary>
     public sealed class MissionDirector : IDisposable
@@ -102,7 +103,7 @@ namespace OutOfReach.Core
                 resources, clock, cinematics, HasGrowingConditions, RefreshRates, Journal.Record);
             SurvivalRecovery = survivalExtension
                 ? new SurvivalRecovery(definition.CrewCount, events, state, resources, clock, cinematics, Survival, Calendar,
-                    () => IsBrownout, RefreshRates, Journal.Record)
+                    () => IsBrownout, RefreshRates, Journal.Record, reason => TryEndMission(MissionOutcome.Recovered, reason))
                 : null;
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
@@ -324,7 +325,7 @@ namespace OutOfReach.Core
             SurvivalRecovery?.AdvanceTime(stepSeconds);
             TrackPeakCarbonDioxide();
             EvaluateSurvival();
-            SurvivalRecovery?.EvaluateRest();
+            SurvivalRecovery?.AfterStep();
             if (!state.IsSimulationRunning)
             {
                 return;
@@ -339,6 +340,7 @@ namespace OutOfReach.Core
                     {
                         Survival.Begin();
                         clock.TrySetTimeScale(Survival.Spec.TimeScale);
+                        SurvivalRecovery?.BeginRecovery();
                     }
                 }
                 else TryEndMission(MissionOutcome.RecoveryPossible, DescribeRecovery());
@@ -452,7 +454,9 @@ namespace OutOfReach.Core
             double endedAt = state.EndedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
             Journal.Record(endedAt, message.Outcome == MissionOutcome.RecoveryPossible
                 ? "Mission outcome: recovery possible."
-                : "Mission outcome: lost.");
+                : message.Outcome == MissionOutcome.Recovered
+                    ? "Mission outcome: recovered by the fictional recovery craft."
+                    : "Mission outcome: lost.");
             BeginEndingSequence(message.Outcome);
         }
 
@@ -472,6 +476,10 @@ namespace OutOfReach.Core
             if (outcome == MissionOutcome.RecoveryPossible)
             {
                 RequestEndingCinematic(CinematicId.CommunicationRestored, () => RequestEndingCinematic(CinematicId.EndingPullback, EnterReport));
+            }
+            else if (outcome == MissionOutcome.Recovered)
+            {
+                RequestEndingCinematic(CinematicId.RecoveryArrival, () => RequestEndingCinematic(CinematicId.MarsDeparture, EnterReport));
             }
             else
             {
