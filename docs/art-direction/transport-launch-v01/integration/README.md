@@ -30,6 +30,8 @@ engineering.
   - `ModuleEdgeGuardL` and `ModuleEdgeGuardR`, parent `AccessMastTower`.
   - Six `LandingRail*` boxes, parent `AccessMastLanding`, used only if the landing is kept.
   - `MastTower` is shortened to the new tower top.
+  - Review fix (18:05 UTC): `CabinWall_156.5` and `CabinWall_203.5`, two narrow wall boxes that close the 0.26 m gaps
+    between the 20° wall segments and the hatch jambs.
   - `HatchDoor` stays on `Hatch`, and `ArmFloor` and `ArmRail*` stay on `AccessArm`.
 - **Clear route** from your module to the hatch: 2.2 m at your exit, 1.8 m on the arm, 1.5 m in the throat and 1.40 m
   at the hatch. It is never under 1.2 m.
