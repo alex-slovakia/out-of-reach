@@ -1,0 +1,134 @@
+QA FOCUS SETUP: invoked the real controller focus-regain callback for this hidden batch scene; OS foreground focus is not exercised.
+PASS Saved Bootstrap scene loaded.
+PASS Saved physical mode uses actual controller input and runtime Update.
+PASS Saved 22 interaction targets are bound.
+PASS Initial mode menu blocks player control.
+PASS No destination is presented in the opening menu.
+saved shoulder closure rays
+PASS Saved solid closure bounds: CockpitEngineeringShoulder_L
+PASS Saved closure visual dimensions: CockpitEngineeringShoulder_L
+PASS Actual physics ray hits CockpitEngineeringShoulder_L at x=-2.5, z=2.89
+PASS Actual physics ray hits CockpitEngineeringShoulder_L at x=-2.7, z=2.89
+PASS Actual physics ray hits CockpitEngineeringShoulder_L at x=-2.9, z=2.89
+PASS Saved solid closure bounds: CockpitEngineeringShoulder_R
+PASS Saved closure visual dimensions: CockpitEngineeringShoulder_R
+PASS Actual physics ray hits CockpitEngineeringShoulder_R at x=2.5, z=2.89
+PASS Actual physics ray hits CockpitEngineeringShoulder_R at x=2.7, z=2.89
+PASS Actual physics ray hits CockpitEngineeringShoulder_R at x=2.9, z=2.89
+PASS Central passage ray stays clear at x=-0.6, y=0.4
+PASS Central passage ray stays clear at x=-0.6, y=1
+PASS Central passage ray stays clear at x=-0.6, y=1.65
+PASS Central passage ray stays clear at x=0, y=0.4
+PASS Central passage ray stays clear at x=0, y=1
+PASS Central passage ray stays clear at x=0, y=1.65
+PASS Central passage ray stays clear at x=0.6, y=0.4
+PASS Central passage ray stays clear at x=0.6, y=1
+PASS Central passage ray stays clear at x=0.6, y=1.65
+UI candidate: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI before single submission: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel; modeChosen=False controlAllowed=False deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=False playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS Submitted button is enabled, panel-attached and visible through every ancestor.
+UI NavigationSubmit received: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI clicked callback observed: count=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=Button  (x:0.00, y:132.00, width:459.43, height:58.29) world rect: (x:77.14, y:384.00, width:459.43, height:58.29)
+UI immediately after submission: events=1, clicks=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=Button  (x:0.00, y:132.00, width:459.43, height:58.29) world rect: (x:77.14, y:384.00, width:459.43, height:58.29)
+UI three frames after submission: events=1, clicks=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS One actual NavigationSubmit reaches exactly one real Button.clicked callback; events=1, clicks=1
+Practice result: modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS Real Practice UI releases control without a deadline.
+PASS Explicit focus-loss lifecycle callback blocks control in the isolated test.
+PASS Explicit focus-regain lifecycle callback restores an otherwise allowed control gate.
+PASS Saved scene enables normal walk motion for the bob check.
+PASS Full stamina meter is hidden before exertion.
+matched actual W and Shift+W
+QA TELEPORT: matched clear storage lane start; feet=(0.000, 0.050, 12.700); measured travel starts after settling. Not a navigation walkthrough.
+PASS Measured unobstructed W: 1.750853 m / 0.700341 s, exertion 1.000000 -> 1.000000
+PASS Forward W produces nonzero actual motion-pivot offset; peak m=0.004447
+PASS Unloaded ordinary W does not drain exertion.
+QA TELEPORT: matched clear storage lane start; feet=(0.000, 0.050, 12.700); measured travel starts after settling. Not a navigation walkthrough.
+PASS Measured unobstructed Shift+W: 2.562266 m / 0.702275 s, exertion 1.000000 -> 0.935476
+PASS Actual Shift+W is faster than W: 3.648525 vs 2.500002 m/s.
+PASS Actual sprint drains exertion: 1.000000 -> 0.935476
+PASS Visible stamina bar follows actual controller exertion during sprint; samples=286, hidden=0, max error=0.000000
+PASS Unpaused rest regenerates exertion: 0.935928 -> 0.956639
+PASS Actual Escape pauses with a measured exertion deficit.
+PASS Pause menu hides the depleted stamina gauge.
+PASS Composition re-enable retains the same paused domain session.
+PASS Composition re-enable does not refill exertion or advance paused simulation.
+UI candidate: text='Restart mission' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:382.29, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI before single submission: text='Restart mission' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:382.29, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel; modeChosen=False controlAllowed=False deadlineEnabled=False phase=Planning paused=True domainAllows=False composedGate=False playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS Submitted button is enabled, panel-attached and visible through every ancestor.
+UI NavigationSubmit received: text='Restart mission' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:382.29, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI clicked callback observed: count=1; Bound scene objects/session replaced or ended; awaiting normal restart rebind.
+UI immediately after submission: events=1, clicks=1; Bound scene objects/session replaced or ended; awaiting normal restart rebind.
+UI three frames after submission: events=1, clicks=1; Bound scene objects/session replaced or ended; awaiting normal restart rebind.
+PASS One actual NavigationSubmit reaches exactly one real Button.clicked callback; events=1, clicks=1
+QA FOCUS SETUP: invoked the real controller focus-regain callback for this hidden batch scene; OS foreground focus is not exercised.
+PASS Actual Restart returns to a clean mode menu.
+PASS Actual Restart resets exertion and clears sprint.
+UI candidate: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI before single submission: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel; modeChosen=False controlAllowed=False deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=False playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS Submitted button is enabled, panel-attached and visible through every ancestor.
+UI NavigationSubmit received: text='Practice · no deadline' path='MissionPanelSettings/MissionFlightBoard-container/i01-session-controls/i01-mode-pause-overlay//' enabled=True visible=True bounds=(x:77.14, y:384.00, width:459.43, height:58.29) opacity=1 panel=UnityEngine.UIElements.RuntimePanel
+UI clicked callback observed: count=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=Button  (x:0.00, y:132.00, width:459.43, height:58.29) world rect: (x:77.14, y:384.00, width:459.43, height:58.29)
+UI immediately after submission: events=1, clicks=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=Button  (x:0.00, y:132.00, width:459.43, height:58.29) world rect: (x:77.14, y:384.00, width:459.43, height:58.29)
+UI three frames after submission: events=1, clicks=1; modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+PASS One actual NavigationSubmit reaches exactly one real Button.clicked callback; events=1, clicks=1
+PASS Real Practice UI after restart releases control without a deadline. modeChosen=True controlAllowed=True deadlineEnabled=False phase=Planning paused=False domainAllows=True composedGate=True playerActive=True appFocused=False controllerFocused=True controllerAppPaused=False compositionAttached=True compositionActive=True currentSessionBound=True cinematicWaiting=False focusedUI=
+cargo destination and menu lifecycle
+PASS Actual kit supply is available for the cargo probe.
+QA TELEPORT: cargo-supply:spare-parts-kit; feet=(0.000, 0.050, 12.150); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available cargo-supply:spare-parts-kit
+PASS One actual E succeeds: cargo-supply:spare-parts-kit; Carrying spare parts kit.
+PASS Real supply E holds one kit without adding it to the planner.
+PASS Carried kit destination equals its exact saved cargo-bay target: (1.4400, 1.0000, 16.3500)
+PASS One actual carried-cargo destination marker exists.
+QA TELEPORT: cargo travel starting point; feet=(0.000, 0.050, 12.700); measured travel starts after settling. Not a navigation walkthrough.
+PASS Measured unobstructed W: 0.756043 m / 0.351195 s, exertion 1.000000 -> 0.991491
+PASS Real loaded W moves slower and drains exertion; m/s=2.152776
+PASS Capture 01-cargo-guide binds the existing camera and actual UIDocument at 1280x720.
+PASS Pause hides the carried destination API and actual marker.
+PASS Resume restores the same authoritative bay destination.
+QA TELEPORT: cargo-bay:spare-parts-kit; feet=(0.000, 0.050, 16.350); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available cargo-bay:spare-parts-kit
+PASS One actual E succeeds: cargo-bay:spare-parts-kit; Spare parts kit loaded.
+PASS Real bay E stows exactly one kit in the one planner authority.
+PASS Stowing hides both destination query and actual marker.
+QA TELEPORT: cargo-bay:spare-parts-kit; feet=(0.000, 0.050, 16.350); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available cargo-bay:spare-parts-kit
+PASS One actual E succeeds: cargo-bay:spare-parts-kit; Carrying spare parts kit.
+PASS Real bay E unloads one kit and restores its destination.
+PASS Actual payload remains valid before launch with a crate in hands.
+QA TELEPORT: cockpit-console; feet=(0.000, 0.050, -0.100); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available cockpit-console
+PASS One actual E succeeds: cockpit-console; AURORA-7 launched with 7 equipment line(s).
+PASS Actual cockpit E launches and discards the un-stowed carried case.
+PASS Launch hides the destination marker from an actually carrying state.
+physical movement during actual Impact
+QA TELEPORT: cockpit-console; feet=(0.000, 0.050, -0.100); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available cockpit-console
+PASS One actual E succeeds: cockpit-console; Cockpit check complete. Impact detected.
+PASS Saved opt-in permits controls during the actual pending Impact cinematic.
+QA AIM ONLY during Impact: face +Z; no player-position change.
+PASS Measured unobstructed W: 0.752805 m / 0.301122 s, exertion 1.000000 -> 1.000000
+PASS Actual W physically moves the CharacterController during Impact; distance=0.752805
+PASS Impact acknowledges normally into playable Emergency.
+real repairs and suited pause pose
+QA TELEPORT: repair-power; feet=(0.000, 0.050, 6.100); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available repair-power
+PASS One actual E succeeds: repair-power; power distribution repaired (2 spare parts).
+QA TELEPORT: repair-life-support; feet=(0.000, 0.050, 8.100); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available repair-life-support
+PASS One actual E succeeds: repair-life-support; life support repaired (2 spare parts, 1 kWh).
+PASS Real repair commands stabilize the ship before suit preparation.
+QA TELEPORT: suit-locker; feet=(0.200, 0.050, 19.000); measured travel starts after settling. Not a navigation walkthrough.
+PASS Actual saved raycast resolves available suit-locker
+PASS One actual E succeeds: suit-locker; EVA suit on. Tank: 0.3 kg oxygen.
+PASS Actual suit-locker E equips the suit and shows its bound gloves.
+PASS Actual right mouse input starts a visible hand gesture.
+PASS Pause retains the visible active suited-hand pose.
+PASS Entering pause preserves the exact last rendered glove pose and gesture time.
+PASS Pause pose snapshot contains the actual 34 original glove joints.
+PASS Capture 02-suited-pause binds the existing camera and actual UIDocument at 1280x720.
+PASS All 34 glove joint transforms and gesture time remain identical through pause and capture.
+PASS Pause freezes both authoritative mission clock and controller exertion.
+PASS Actual Escape resume starts from the identical frozen pose and restores player control.
+PASS Resumed glove gesture completes and keeps suited hands visible.
