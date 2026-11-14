@@ -488,6 +488,23 @@ as before, including the "mission objective unrecoverable" rule.
 | Suit oxygen | A sealed suit runs empty before repressurization completes |
 | Contact impossible | Stable ship, antenna damaged, too few spare parts for it: unrecoverable objective, no death claimed |
 
+## C06-ACCEPTANCE-AUDIT: the survival chapter in real frames (root GO 6885878756)
+
+- `Tests/EditMode/SurvivalExtension/C06AcceptanceTests.cs` plays the post-contact chapter in real 0.1 s frames at the
+  clock's own scales (300 awake, 3,600 resting) through the registered interactions: build, plant, harvest, beacon,
+  eat and drink whenever offered, rest after a 15.5 h waking day.
+- **No duplicated charge.** Every command changes the ledger by exactly its cost; a second E in the same frame, and
+  the cockpit console after the beacon, change nothing. Food and water reconcile with the rations, drinks, planting,
+  the irrigation of the growing days and the rests at the BVAD rate; awake time draws nothing else.
+- **No softlock.** Simulated time moves on every frame until an outcome: Recovered 12 days after contact with the
+  beacon, 15 after a missed window; an unattended crew is lost exactly at the thirst limit.
+- The default loadout has no spare part left after the repairs, so the grow module is an explained refusal; three
+  extra parts from planning give the full crop cycle, which takes its 8 growing days.
+- **Fixed:** right after the beacon request woke the crew, one more E on the bed began a rest that slept through the
+  whole 8 h window in 8 real seconds and slipped the rendezvous 3 days. `CheckRest` now refuses while the window is
+  open ("No rest now: the recovery craft is waiting for the beacon; power it first (the window closes in …)"). Not
+  powering it stays a choice: the window then passes awake in about 96 real seconds and rest is offered again.
+
 ## Sources and labels
 
 - **NASA reference values** (BVAD REV2, NASA/TP-2015-218570/REV2, checked by the science review SCIENCE-01):
