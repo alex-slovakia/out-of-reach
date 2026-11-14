@@ -155,6 +155,14 @@ namespace OutOfReach.Interaction
 
             if (ElapsedActiveSeconds >= ActiveSecondsRequired)
             {
+                // A Progressed handler may revoke the caller's policy (tool, session, focus) without calling Cancel, while
+                // the inner interactable still says yes: check the policy again right before the real command.
+                if (!IsStillValid())
+                {
+                    Cancel("The work was interrupted.");
+                    return;
+                }
+
                 Complete();
             }
         }

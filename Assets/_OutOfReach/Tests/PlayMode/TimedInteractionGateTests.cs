@@ -292,6 +292,44 @@ namespace OutOfReach.Tests.PlayMode
             }
         }
 
+        // Codex 6884992203: a Progressed handler that revokes the policy at progress 1 without calling Cancel.
+        [Test]
+        public void APolicyRevokedByAProgressedHandlerAtTheEnd_CancelsWithNothingSpent()
+        {
+            using (MissionSession session = Outside())
+            {
+                bool valid = true;
+                int conditionEvents = 0;
+                session.Events.SystemConditionChanged += _ => conditionEvents++;
+                ResourceSnapshot before = session.Resources.Snapshot;
+                IInteractable antenna = Antenna(session);
+                var gate = new TimedInteractionGate(antenna, Work, () => valid);
+                gate.Progressed += progress =>
+                {
+                    if (progress >= 1d)
+                    {
+                        valid = false;
+                    }
+                };
+                int cancels = 0;
+                bool finished = false;
+                gate.Cancelled += _ => cancels++;
+                gate.Finished += _ => finished = true;
+
+                Require(gate.TryInteract());
+                gate.Advance(Work);
+
+                Assert.That(antenna.CanInteract, Is.True, "the inner repair alone would still say yes");
+                Assert.That(finished, Is.False, "no real command after the policy was revoked");
+                Assert.That(cancels, Is.EqualTo(1));
+                Assert.That(gate.State, Is.EqualTo(TimedWorkState.Idle));
+                Assert.That(session.Systems.Antenna.IsOperational, Is.False);
+                Assert.That(conditionEvents, Is.EqualTo(0));
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(before.SparePartsCount), "nothing spent");
+                Assert.That(session.Resources.Snapshot.BatteryKWh, Is.EqualTo(before.BatteryKWh));
+            }
+        }
+
         [Test]
         public void AnUngatedRepair_StaysInstant_AndInvalidInputIsRejected()
         {
