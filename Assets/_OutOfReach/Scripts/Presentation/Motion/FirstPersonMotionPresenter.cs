@@ -18,7 +18,7 @@ namespace OutOfReach.Presentation.Motion
         [SerializeField] private bool reducedMotion;
 
         [Header("Very small camera offsets; metres / degrees")]
-        [SerializeField, Range(0f, .008f)] private float cameraVerticalMetres = .003f;
+        [SerializeField, Range(0f, .008f)] private float cameraVerticalMetres = .006f;
         [SerializeField, Range(0f, .005f)] private float cameraLateralMetres = .0015f;
         [SerializeField, Range(0f, .15f)] private float cameraRollDegrees = .06f;
 
@@ -308,7 +308,7 @@ namespace OutOfReach.Presentation.Motion
         private Vector3 ViewHeading() => cameraPivot && cameraPivot.parent
             ? Vector3.ProjectOnPlane(cameraPivot.parent.forward, Vector3.up) : Vector3.zero;
 
-        private static bool IsWalkingPhase(GamePhase phase) => phase == GamePhase.Intro
+        private static bool IsWalkingPhase(GamePhase phase) => phase == GamePhase.Planning || phase == GamePhase.Intro
             || phase == GamePhase.Emergency || phase == GamePhase.Repair || phase == GamePhase.Transmission;
 
         private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
