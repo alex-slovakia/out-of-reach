@@ -1,0 +1,190 @@
+{
+  "TL_Exterior": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "metallic": 1.0,
+    "roughness": 0.0,
+    "maps": {
+      "baseMap": {
+        "path": "textures/TransportLaunch_Exterior_BaseColor.png",
+        "colorSpace": "sRGB"
+      },
+      "metallicGlossMap": {
+        "path": "textures/TransportLaunch_Exterior_MetallicSmoothness.png",
+        "colorSpace": "linear",
+        "channels": "metallic in RGB, smoothness in A (URP: smoothness source = metallic alpha)"
+      },
+      "occlusionMap": {
+        "path": "textures/TransportLaunch_Exterior_Occlusion.png",
+        "colorSpace": "linear"
+      }
+    },
+    "urp": {
+      "_BaseColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "_Smoothness": 1.0,
+      "_OcclusionStrength": 1.0,
+      "keywords": [
+        "_METALLICSPECGLOSSMAP",
+        "_OCCLUSIONMAP"
+      ]
+    }
+  },
+  "TL_Interior": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "metallic": 1.0,
+    "roughness": 0.0,
+    "maps": {
+      "baseMap": {
+        "path": "textures/TransportLaunch_Interior_BaseColor.png",
+        "colorSpace": "sRGB"
+      },
+      "metallicGlossMap": {
+        "path": "textures/TransportLaunch_Interior_MetallicSmoothness.png",
+        "colorSpace": "linear",
+        "channels": "metallic in RGB, smoothness in A (URP: smoothness source = metallic alpha)"
+      },
+      "occlusionMap": {
+        "path": "textures/TransportLaunch_Interior_Occlusion.png",
+        "colorSpace": "linear"
+      }
+    },
+    "urp": {
+      "_BaseColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "_Smoothness": 1.0,
+      "_OcclusionStrength": 1.0,
+      "keywords": [
+        "_METALLICSPECGLOSSMAP",
+        "_OCCLUSIONMAP"
+      ]
+    }
+  },
+  "TL_Site": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "metallic": 1.0,
+    "roughness": 0.0,
+    "maps": {
+      "baseMap": {
+        "path": "textures/TransportLaunch_Site_BaseColor.png",
+        "colorSpace": "sRGB"
+      },
+      "metallicGlossMap": {
+        "path": "textures/TransportLaunch_Site_MetallicSmoothness.png",
+        "colorSpace": "linear",
+        "channels": "metallic in RGB, smoothness in A (URP: smoothness source = metallic alpha)"
+      },
+      "occlusionMap": {
+        "path": "textures/TransportLaunch_Site_Occlusion.png",
+        "colorSpace": "linear"
+      }
+    },
+    "urp": {
+      "_BaseColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "_Smoothness": 1.0,
+      "_OcclusionStrength": 1.0,
+      "keywords": [
+        "_METALLICSPECGLOSSMAP",
+        "_OCCLUSIONMAP"
+      ]
+    }
+  },
+  "TL_Labels": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "metallic": 0.0,
+    "roughness": 0.55,
+    "maps": {
+      "baseMap": {
+        "path": "textures/TransportLaunch_Labels.png",
+        "colorSpace": "sRGB"
+      }
+    },
+    "urp": {
+      "_Smoothness": 0.45
+    },
+    "covers": "legends on CapsuleInterior, CapsuleShell, Hatch and LaunchBarge (second slot); not emissive"
+  },
+  "TL_LightPanel": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      0.9,
+      0.85,
+      0.75
+    ],
+    "metallic": 0.0,
+    "roughness": 0.3,
+    "emissionLinear": [
+      1.0,
+      0.82,
+      0.62
+    ],
+    "emissionStrength": 3.0,
+    "covers": "CabinLights"
+  },
+  "TL_StatusGreen": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      0.006,
+      0.033,
+      0.01
+    ],
+    "metallic": 0.0,
+    "roughness": 0.3,
+    "emissionLinear": [
+      0.04,
+      0.75,
+      0.14
+    ],
+    "emissionStrength": 2.5,
+    "covers": "HatchStatusLamp"
+  },
+  "TL_DeckLamp": {
+    "shader": "Universal Render Pipeline/Lit",
+    "baseColorLinear": [
+      0.042,
+      0.017,
+      0.002
+    ],
+    "metallic": 0.0,
+    "roughness": 0.3,
+    "emissionLinear": [
+      1.0,
+      0.43,
+      0.1
+    ],
+    "emissionStrength": 5.0,
+    "covers": "DeckLamps"
+  }
+}
