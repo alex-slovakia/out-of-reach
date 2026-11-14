@@ -9,6 +9,12 @@ wrist disconnect ring with a lock collar and a red identification stripe on the 
 of **rigid parts on plain transforms: no skinning, no bones**. No gameplay state, script, Animator, camera,
 light, collider or audio listener.
 
+**The hands belong to the player rig, not to the ship.** The model writer imports this folder as files only and
+does not place the prefab in `Aurora7_Models.prefab`. The integrator or the gameplay owner attaches
+`AstronautHands.prefab` to the player's camera. The prefab works on its own: apart from the render pipeline's
+URP Lit shader it uses nothing outside this folder, and the import check ran in a checkout that does not
+contain the ship model.
+
 ## Interface
 
 | Fact | Value |
