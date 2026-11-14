@@ -1,0 +1,22 @@
+{
+  "anchors": {
+    "CableEntry": [0, 0, -0.156], 
+    "CableGrommet": [0.015, -0.24, 0], 
+    "ConnectorMount": [0, 0, 0], 
+    "PlugGrip": [0, 0, -0.045], 
+    "PlugGripBackedOut": [0, 0, -0.057], 
+    "WrenchGrip": [0.38, -0.03, -0.2], 
+    "WrenchTether": [0.475, -0.03, -0.2], 
+    "WrenchTip": [0.2, -0.03, -0.2]
+  },
+  "objects": {
+    "ConnectorDamaged": {"origin": [0, 0, 0], "localEuler": [270.0198, 0, 0], "triangles": 3006}, 
+    "ConnectorReceptacle": {"origin": [0, 0, 0], "localEuler": [270.0198, 0, 0], "triangles": 1114}, 
+    "ConnectorRepaired": {"origin": [0, 0, 0], "localEuler": [270.0198, 0, 0], "triangles": 1846}, 
+    "ServiceWrench": {"origin": [0.38, -0.03, -0.2], "localEuler": [270.0198, 0, 0], "triangles": 1192}
+  },
+  "engaged_on_backed_out_nut": {"wrench_origin": [0.18, 0, -0.057], "closest_radial_m": 0.03, "vertices_inside_nut": 0, "jaw_vertices_on_0_030_circle": 174},
+  "meshes": 4, "triangles": 7158, "cameras": 0, "lights": 0,
+  "materials": ["AR_Kit"],
+  "problems": []
+}

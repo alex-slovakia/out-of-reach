@@ -1,0 +1,216 @@
+{
+ "file": "AntennaRepair.fbx",
+ "objects": {
+  "CableEntry": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.156
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "CableGrommet": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.015,
+    -0.24,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ConnectorDamaged": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 3006,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "AR_Kit"
+   ]
+  },
+  "ConnectorMount": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ConnectorReceptacle": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 1114,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "AR_Kit"
+   ]
+  },
+  "ConnectorRepaired": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.0
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 1846,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "AR_Kit"
+   ]
+  },
+  "PlugGrip": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "PlugGripBackedOut": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "ServiceWrench": {
+   "type": "MESH",
+   "parent": null,
+   "location_unity": [
+    0.38,
+    -0.03,
+    -0.2
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "triangles": 1208,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "materials": [
+    "AR_Kit"
+   ]
+  },
+  "WrenchGrip": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.38,
+    -0.03,
+    -0.2
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "WrenchTether": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.475,
+    -0.03,
+    -0.2
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "WrenchTip": {
+   "type": "EMPTY",
+   "parent": null,
+   "location_unity": [
+    0.2,
+    -0.03,
+    -0.2
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "triangles": 7174,
+ "bounds_unity": {
+  "min": [
+   -0.045,
+   -0.264,
+   -0.259582
+  ],
+  "max": [
+   0.4885,
+   0.045,
+   0.0
+  ]
+ },
+ "drive_letter_paths": [],
+ "cameras_lights": []
+}

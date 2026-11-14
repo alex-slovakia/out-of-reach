@@ -1,0 +1,205 @@
+{
+  "blender": "5.3.0",
+  "stage": "full",
+  "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+  "textures": {
+    "BaseColor": "textures/AntennaRepair_BaseColor.png",
+    "MetallicSmoothness": "textures/AntennaRepair_MetallicSmoothness.png",
+    "Occlusion": "textures/AntennaRepair_Occlusion.png"
+  },
+  "texture_size": 2048,
+  "units": "metres; Unity axes: Y up; origin = ConnectorMount, the wall face the flange is screwed to (plane Z = 0); the technician is on -Z",
+  "objects": {
+    "ConnectorReceptacle": "static: bulkhead receptacle with flange and the cable grommet below it; origin ConnectorMount",
+    "ConnectorRepaired": "state 2: plug seated and locked (white marks aligned), safety wire, yellow ID sleeve, cable looped into the grommet; origin ConnectorMount",
+    "ConnectorDamaged": "state 1: plug backed out 0.012 m and turned 24 deg (marks misaligned), scorched nut and backshell, melted boot, torn jacket with bird-caged and broken copper strands; origin ConnectorMount",
+    "ServiceWrench": "tethered C-jaw connector wrench with rubber soft jaw, ratchet lever, 35 mm glove grip and tether ring; origin WrenchGrip"
+  },
+  "use": "Show exactly one of ConnectorDamaged / ConnectorRepaired over ConnectorReceptacle; all three share the origin, so the swap needs no offset. To engage the wrench, put WrenchTip on PlugGripBackedOut (damaged) or PlugGrip (seated) with the WrenchTip axis along the connector axis; the seating move is 0.012 m along +Z plus a 24 deg turn.",
+  "dimensions_m": {
+    "flange_square": 0.09,
+    "flange_thickness": 0.006,
+    "coupling_nut_diameter": 0.057,
+    "plug_tip_from_wall": 0.156,
+    "cable_diameter": 0.017,
+    "grommet_plate_square": 0.048,
+    "wrench_length": 0.3305,
+    "wrench_jaw_inner_diameter": 0.06,
+    "wrench_jaw_opening": 0.0344,
+    "wrench_grip_diameter": 0.035,
+    "wrench_grip_length": 0.12,
+    "damaged_backout": 0.012,
+    "damaged_turn_deg": 24.0
+  },
+  "anchors": {
+    "ConnectorMount": {
+      "unity": [
+        -0.0,
+        0.0,
+        -0.0
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "CableEntry": {
+      "unity": [
+        -0.0,
+        0.0,
+        -0.156
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "CableGrommet": {
+      "unity": [
+        0.015,
+        -0.24,
+        -0.0
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "PlugGrip": {
+      "unity": [
+        -0.0,
+        0.0,
+        -0.045
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "PlugGripBackedOut": {
+      "unity": [
+        -0.0,
+        0.0,
+        -0.057
+      ],
+      "direction_unity": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    "WrenchGrip": {
+      "unity": [
+        0.38,
+        -0.03,
+        -0.2
+      ],
+      "direction_unity": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "WrenchTip": {
+      "unity": [
+        0.2,
+        -0.03,
+        -0.2
+      ],
+      "direction_unity": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    "WrenchTether": {
+      "unity": [
+        0.475,
+        -0.03,
+        -0.2
+      ],
+      "direction_unity": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "bounds_unity": {
+    "ConnectorReceptacle": {
+      "min": [
+        -0.045,
+        -0.264,
+        -0.0375
+      ],
+      "max": [
+        0.045,
+        0.045,
+        0.0
+      ]
+    },
+    "ConnectorRepaired": {
+      "min": [
+        -0.0285,
+        -0.2481,
+        -0.2305
+      ],
+      "max": [
+        0.0348,
+        0.0346,
+        -0.0075
+      ]
+    },
+    "ConnectorDamaged": {
+      "min": [
+        -0.0308,
+        -0.2481,
+        -0.2596
+      ],
+      "max": [
+        0.0355,
+        0.0287,
+        -0.0063
+      ]
+    },
+    "ServiceWrench": {
+      "min": [
+        0.1656,
+        -0.049,
+        -0.2419
+      ],
+      "max": [
+        0.4885,
+        -0.011,
+        -0.1581
+      ]
+    }
+  },
+  "triangles": {
+    "ConnectorReceptacle": 1114,
+    "ConnectorRepaired": 1846,
+    "ConnectorDamaged": 3006,
+    "ServiceWrench": 1208
+  },
+  "triangles_total": 7174,
+  "materials": {
+    "ConnectorReceptacle": [
+      "AR_Kit"
+    ],
+    "ConnectorRepaired": [
+      "AR_Kit"
+    ],
+    "ConnectorDamaged": [
+      "AR_Kit"
+    ],
+    "ServiceWrench": [
+      "AR_Kit"
+    ]
+  },
+  "physical_assumptions": "Fictional hardware: a generic circular RF/data connector and an EVA-style tethered wrench, not a specific flight part; sizes are plausible for gloved hands.",
+  "blend_path_scrubbed": 2
+}
