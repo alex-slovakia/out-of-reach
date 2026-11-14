@@ -12,6 +12,7 @@ using OutOfReach.Presentation.Cargo;
 using OutOfReach.Presentation.Cargo.Editor;
 using OutOfReach.Presentation.AirlockPanel.Editor;
 using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.Cinematics.Preflight;
 using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
@@ -21,6 +22,7 @@ using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -97,6 +99,7 @@ namespace OutOfReach.Composition.Editor
             camera.backgroundColor = new Color(.005f, .008f, .015f);
             camera.allowHDR = true;
             camera.allowMSAA = true;
+            ConfigureCinematicGrade(camera);
             cameraTransform.gameObject.AddComponent<AudioListener>();
             // Keep the previous aim pose above the camera-only walk offset.
             player.Interaction.Configure(cinematicPivot, player.transform, 2f);
@@ -119,14 +122,14 @@ namespace OutOfReach.Composition.Editor
             Transform suitStation = Child("Suit locker interaction anchor", null);
             suitStation.SetPositionAndRotation(new Vector3(1.72f, 1.4f, 19f), Quaternion.Euler(0, -90, 0));
             Transform airlockPanel = Child("Airlock controls interaction anchor", null);
-            airlockPanel.SetPositionAndRotation(new Vector3(-1.65f, 1.4f, 19f), Quaternion.Euler(0, 90, 0));
+            airlockPanel.SetPositionAndRotation(new Vector3(1.45f, 1.375f, 20.83f), Quaternion.identity);
             var targets = new[]
             {
                 Target(anchors.CockpitConsole, InteractionIds.CockpitConsole, new Vector3(0, .35f, .3f)),
                 Target(anchors.PowerRepair, InteractionIds.RepairPower, new Vector3(0, .3f, .18f)),
                 Target(anchors.LifeSupportRepair, InteractionIds.RepairLifeSupport, new Vector3(0, .3f, .18f)),
                 Target(suitStation, InteractionIds.SuitLocker, new Vector3(0, 0, .12f)),
-                Target(airlockPanel, InteractionIds.AirlockControls, new Vector3(0, 0, .18f)),
+                Target(airlockPanel, InteractionIds.AirlockControls, new Vector3(0, 0, -.10f)),
                 Target(anchors.AirlockOuter, InteractionIds.EvaExit, new Vector3(0, 1.4f, -.35f)),
                 Target(anchors.EvaReturn, InteractionIds.EvaReturn, new Vector3(0, 1.4f, 0)),
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
@@ -215,7 +218,10 @@ namespace OutOfReach.Composition.Editor
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-latch-motor.wav"),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-safe-chirp.wav"));
             composition.ConfigureHands(hands);
+            composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
+                Required<AudioClip>("Assets/_OutOfReach/Audio/SFX/planning_tick.wav"));
             composition.ConfigureCargoPresentation(cargoStage.Presenter);
+            composition.ConfigureCargoHands(cargoStage.Hands);
             BindApprovedDialogue(composition, cinematics);
 
             // Physical preflight uses the actual body and aim pivot; list-mode retains its authored overview.
@@ -246,10 +252,17 @@ namespace OutOfReach.Composition.Editor
         [MenuItem("OUT OF REACH/Integration/Build I02 Windows x64 verification player")]
         public static void BuildWindows()
         {
+            BuildWindowsCheckpoint("I02");
+        }
+
+        public static void BuildI04Windows() => BuildWindowsCheckpoint("I04");
+
+        private static void BuildWindowsCheckpoint(string checkpoint)
+        {
             RequireVerificationProject();
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             ValidateScene(EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single));
-            string output = Path.GetFullPath(Path.Combine(Application.dataPath, "../Builds/I02/OutOfReach.exe"));
+            string output = Path.GetFullPath(Path.Combine(Application.dataPath, "../Builds/" + checkpoint + "/OutOfReach.exe"));
             Directory.CreateDirectory(Path.GetDirectoryName(output));
             var options = new BuildPlayerOptions
             {
@@ -260,8 +273,8 @@ namespace OutOfReach.Composition.Editor
             };
             BuildReport report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
-                throw new InvalidOperationException("I02 Windows build failed: " + report.summary.result);
-            Debug.Log("I02_WINDOWS_BUILD_PASS output=" + output + " bytes=" + report.summary.totalSize
+                throw new InvalidOperationException(checkpoint + " Windows build failed: " + report.summary.result);
+            Debug.Log(checkpoint + "_WINDOWS_BUILD_PASS output=" + output + " bytes=" + report.summary.totalSize
                 + " | Development Windows x64, Bootstrap only. Executable launch/playthrough not established by this build.");
         }
 
@@ -401,7 +414,7 @@ namespace OutOfReach.Composition.Editor
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairPower), new Vector3(0, 1.7f, 6.1f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairLifeSupport), new Vector3(0, 1.7f, 8.1f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.SuitLocker), new Vector3(.2f, 1.7f, 19), player.transform);
-            CheckReach(targets.Single(target => target.InteractionId == InteractionIds.AirlockControls), new Vector3(-.2f, 1.7f, 19), player.transform);
+            CheckReach(targets.Single(target => target.InteractionId == InteractionIds.AirlockControls), new Vector3(.3f, 1.7f, 19.8f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaExit), new Vector3(0, 1.7f, 19.8f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaReturn), runtime.EvaRoute.StartPosition + Vector3.up * 1.65f, player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairAntenna), runtime.EvaRoute.EndPosition + Vector3.up * 1.65f, player.transform);
@@ -492,7 +505,7 @@ namespace OutOfReach.Composition.Editor
         {
             RenderSettings.skybox = AssetDatabase.LoadAssetAtPath<Material>("Assets/_OutOfReach/Visuals/Space/DistantStars.mat");
             RenderSettings.ambientMode = AmbientMode.Flat;
-            RenderSettings.ambientLight = new Color(.18f, .20f, .23f);
+            RenderSettings.ambientLight = new Color(.22f, .23f, .25f);
             RenderSettings.ambientIntensity = 1;
             RenderSettings.reflectionIntensity = .25f;
             RenderSettings.fog = false;
@@ -506,6 +519,48 @@ namespace OutOfReach.Composition.Editor
             sun.shadows = LightShadows.Hard;
             sun.shadowStrength = 1f;
             RenderSettings.sun = sun;
+        }
+
+        private static void ConfigureCinematicGrade(Camera camera)
+        {
+            const string path = "Assets/_OutOfReach/Visuals/Ship/CinematicGrade.asset";
+            VolumeProfile profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
+            if (!profile)
+            {
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                profile.name = "AURORA restrained film grade";
+                AssetDatabase.CreateAsset(profile, path);
+            }
+            T Effect<T>() where T : VolumeComponent
+            {
+                if (profile.TryGet<T>(out T existing)) return existing;
+                T effect = profile.Add<T>(true);
+                AssetDatabase.AddObjectToAsset(effect, profile);
+                return effect;
+            }
+            var tone = Effect<Tonemapping>();
+            tone.mode.Override(TonemappingMode.ACES);
+            var grade = Effect<ColorAdjustments>();
+            grade.postExposure.Override(.45f);
+            grade.contrast.Override(2f);
+            grade.saturation.Override(-5f);
+            var vignette = Effect<Vignette>();
+            vignette.intensity.Override(.14f);
+            vignette.smoothness.Override(.65f);
+            var bloom = Effect<Bloom>();
+            bloom.threshold.Override(1.25f);
+            bloom.intensity.Override(.09f);
+            foreach (VolumeComponent effect in profile.components) EditorUtility.SetDirty(effect);
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+            Volume volume = new GameObject("Restrained cinematic grade").AddComponent<Volume>();
+            volume.isGlobal = true;
+            volume.priority = 10;
+            volume.sharedProfile = profile;
+            var cameraData = camera.GetUniversalAdditionalCameraData();
+            cameraData.renderPostProcessing = true;
+            cameraData.antialiasing = AntialiasingMode.FastApproximateAntialiasing;
+            cameraData.volumeLayerMask = 1; // Explicit Default-layer volumes, including pause focus.
         }
 
         private static T Required<T>(string path) where T : Object

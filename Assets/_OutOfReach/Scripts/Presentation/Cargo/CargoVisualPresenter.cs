@@ -98,6 +98,8 @@ namespace OutOfReach.Presentation.Cargo
             IMissionConfiguration draft = planner.Draft;
             if (draft == null) { Hide(); return; }
             bool planning = state.Phase == GamePhase.Planning;
+            string held = planning ? cargo.CarriedEquipmentId : null;
+            bool showStationLabels = string.IsNullOrEmpty(held);
             SetActive(temporarySupplyRoot, planning);
             SetTargets(planning);
             foreach (Slot slot in slots)
@@ -111,10 +113,10 @@ namespace OutOfReach.Presentation.Cargo
                 SetActive(slot.AboardCase, loaded > 0);
                 if (slot.SupplyLabel) slot.SupplyLabel.text = slot.DisplayName + "\nSUPPLY x" + supply;
                 if (slot.AboardLabel) slot.AboardLabel.text = slot.DisplayName + "\nABOARD x" + loaded;
-                if (slot.AboardLabel) slot.AboardLabel.gameObject.SetActive(true);
+                if (slot.SupplyLabel) slot.SupplyLabel.gameObject.SetActive(planning && showStationLabels);
+                if (slot.AboardLabel) slot.AboardLabel.gameObject.SetActive(showStationLabels);
             }
 
-            string held = planning ? cargo.CarriedEquipmentId : null;
             SetActive(carriedCaseRoot, !string.IsNullOrEmpty(held));
             if (carriedLabel && !string.IsNullOrEmpty(held))
             {

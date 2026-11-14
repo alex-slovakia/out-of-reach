@@ -9,6 +9,7 @@ using OutOfReach.Presentation.Cargo;
 using OutOfReach.Presentation.AirlockPanel;
 using OutOfReach.Presentation.Audio;
 using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.Cinematics.Preflight;
 using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
@@ -27,6 +28,9 @@ namespace OutOfReach.Composition
         [SerializeField] private MissionFlightBoard flightBoard;
         [SerializeField] private MissionCinematicPresenter cinematics;
         [SerializeField] private MissionAudioPresenter audioPresenter;
+        [SerializeField] private PreflightTensionPresenter preflightTension;
+        private MusicMood preflightPreviousMood;
+        private bool preflightMusicOwned;
         [SerializeField] private InteractionResolver interaction;
         [SerializeField] private I01SessionControls controls;
         [SerializeField] private I01AirlockDoorView airlockDoors;
@@ -42,6 +46,7 @@ namespace OutOfReach.Composition
         [SerializeField] private AudioClip airlockReady;
         [SerializeField] private AstronautHandsPresenter astronautHands;
         [SerializeField] private CargoVisualPresenter cargoPresentation;
+        [SerializeField] private PreflightCargoHandsPresenter cargoHands;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
         [Tooltip("Parent of the cinematic offset. This transform is used only to frame Planning.")]
@@ -158,6 +163,38 @@ namespace OutOfReach.Composition
             airlockReady = ready;
         }
 
+        public void ConfigurePreflightTension(PreflightTensionPresenter presenter, AudioClip existingTick)
+        {
+            if (Application.isPlaying && attached)
+                throw new InvalidOperationException("Configure preflight tension before enabling composition.");
+            preflightTension = presenter;
+            if (preflightTension) preflightTension.ConfigureCue(existingTick);
+        }
+
+        private bool CanPresentTimedPreflight() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && runtime.PreflightWalk && modeChosen && runtime.GameState.Phase == GamePhase.Planning;
+
+        private bool RequestPreflightPulse()
+        {
+            if (!CanPresentTimedPreflight() || !audioPresenter || audioPresenter.IsPresentationPaused) return false;
+            MusicMood previous = audioPresenter.CurrentMood;
+            if (!audioPresenter.SetMood(MusicMood.Tension, 3f)) return false;
+            preflightPreviousMood = previous;
+            preflightMusicOwned = previous != MusicMood.Tension;
+            return true;
+        }
+
+        private void ReleasePreflightPulse()
+        {
+            bool restore = preflightMusicOwned;
+            preflightMusicOwned = false;
+            // A phase transition owns its next mood. Never restore Planning music over Intro/Emergency.
+            if (restore && audioPresenter && runtime && runtime.GameState != null
+                && runtime.GameState.Phase == GamePhase.Planning && audioPresenter.CurrentMood == MusicMood.Tension)
+                audioPresenter.SetMood(preflightPreviousMood, 1.25f);
+        }
+
         // EVA is allowed here: these gloves depict an actually worn suit, including its exterior phase.
         private bool CanPresentHands() => isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
@@ -169,6 +206,8 @@ namespace OutOfReach.Composition
                 throw new InvalidOperationException("Configure cargo presentation before enabling composition.");
             cargoPresentation = presenter;
         }
+
+        public void ConfigureCargoHands(PreflightCargoHandsPresenter presenter) => cargoHands = presenter;
 
         // Add only the planning-mode UI lock to Core's existing gate. Speed stays entirely with MissionRuntime.
         private void BindPlanningControlGate()
@@ -282,6 +321,11 @@ namespace OutOfReach.Composition
             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
             if (cargoPresentation)
                 cargoPresentation.Configure(runtime.Cargo, runtime.Planner, runtime.GameState);
+            if (cargoHands)
+            {
+                cargoHands.SetReducedMotion(cinematics.ReducedEffects);
+                cargoHands.Configure(runtime.Cargo, runtime.GameState, runtime.Clock, CanPresentHands);
+            }
             flightBoard.ConfigureEva(runtime.EvaStatus);
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
@@ -290,7 +334,11 @@ namespace OutOfReach.Composition
             cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
             cinematics.enabled = true;
             if (astronautHands)
+            {
                 astronautHands.ConfigureSession(runtime.EvaStatus, runtime.GameState, runtime.Clock, CanPresentHands);
+                astronautHands.ConfigureRouteProgress(() => runtime && runtime.Player && runtime.Player.IsOnRoute
+                    ? runtime.Player.RouteDistanceMetres : float.NaN);
+            }
             if (firstPersonMotion && firstPersonMotionPivot && runtime.Player)
             {
                 firstPersonMotion.Configure(runtime.Player.GetComponent<CharacterController>(), firstPersonMotionPivot,
@@ -317,12 +365,22 @@ namespace OutOfReach.Composition
                 shipLighting.Configure(boundEvents, runtime.GameState, Repairable(ShipSystemId.Power), workingLights, emergencyLights, runtime.Clock);
             audioPresenter.SetPresentationPaused(runtime.IsPaused);
             ApplyPhasePresentation(runtime.GameState.Phase, false);
+            if (preflightTension)
+            {
+                preflightTension.SetReducedEffects(cinematics.ReducedEffects);
+                preflightTension.Configure(runtime.PlanningDeadline, runtime.GameState, runtime.Clock,
+                    CanPresentTimedPreflight, (clip, gain) => audioPresenter && audioPresenter.PlaySfx(clip, gain),
+                    RequestPreflightPulse, ReleasePreflightPulse);
+                preflightTension.RefreshPresentation();
+            }
             UpdateSystemLights();
             controls.Refresh();
         }
 
         private void UnbindSession()
         {
+            if (cargoHands) cargoHands.ClearBinding();
+            if (preflightTension) preflightTension.ClearBinding();
             if (airlockPanel) airlockPanel.ClearBinding();
             if (pauseBackdrop) pauseBackdrop.ClearBinding();
             if (openingMenuMotion) openingMenuMotion.ClearBinding();
@@ -374,6 +432,7 @@ namespace OutOfReach.Composition
             }
             modeChosen = true;
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
+            if (preflightTension) preflightTension.RefreshPresentation();
             audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
@@ -389,6 +448,7 @@ namespace OutOfReach.Composition
             }
             modeChosen = true;
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
+            if (preflightTension) preflightTension.RefreshPresentation();
             audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
@@ -402,6 +462,8 @@ namespace OutOfReach.Composition
             if (cinematics) cinematics.ReducedEffects = reduced;
             if (firstPersonMotion) firstPersonMotion.SetReducedMotion(reduced);
             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
+            if (preflightTension) preflightTension.SetReducedEffects(reduced);
+            if (cargoHands) cargoHands.SetReducedMotion(reduced);
         }
 
         private void OnPauseChanged(bool paused)
@@ -409,11 +471,13 @@ namespace OutOfReach.Composition
             if (openingMenuMotion) openingMenuMotion.ResetToNeutral();
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             if (audioPresenter) audioPresenter.SetPresentationPaused(paused);
+            if (preflightTension) preflightTension.RefreshPresentation();
             if (controls) controls.Refresh();
         }
 
         private void OnPhaseChanged(PhaseChanged message)
         {
+            if (preflightTension) preflightTension.RefreshPresentation();
             ApplyPhasePresentation(message.Current, true);
             controls.Refresh();
         }

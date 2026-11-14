@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using OutOfReach.Contracts;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace OutOfReach.Presentation.UI
@@ -26,14 +27,14 @@ namespace OutOfReach.Presentation.UI
         private readonly Label[] preflightResources;
         private bool physicalPlanning, planningDetailsHeld;
         private IMissionConfiguration displayedLastValid;
-        private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry;
+        private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry, timing;
         private readonly Label suitDuration, suitSeal;
         private readonly Button systems;
         private bool systemsPinned, systemsHeld, showingPlanning, evaContext, co2NeedsAttention;
         private readonly VisualElement interactionPrompt, subtitleOverlay;
         private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
         private readonly Label[] planningResources, hudResources;
-        private readonly ResourceGauge oxygenGauge, batteryGauge, co2Gauge, suitGauge;
+        private readonly ResourceGauge oxygenGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
         private ResourceSnapshot resourceReference, latestResources;
         private bool hasResourceReference, hasHudResources, hasCo2Thresholds;
         private double co2ActionPpm, co2EmergencyPpm;
@@ -120,6 +121,7 @@ namespace OutOfReach.Presentation.UI
             var preflightTiming = Element("preflight-timing");
             preflight.Add(preflightTiming);
             preflightCountdown = Text(string.Empty, "preflight-countdown");
+            preflightCountdown.name = "cargo-countdown";
             preflightTiming.Add(preflightCountdown);
             preflightClockNote = Text("Active real time", "preflight-clock-note");
             preflightTiming.Add(preflightClockNote);
@@ -170,12 +172,13 @@ namespace OutOfReach.Presentation.UI
             outcomeReason = Text(string.Empty, "outcome-reason");
             header.Add(outcomeReason);
 
-            var timing = Element("hud-timing");
-            hud.Add(timing);
+            timing = Element("systems-timing");
             elapsedTime = Text(string.Empty, "elapsed-time");
             timing.Add(elapsedTime);
+            var compression = Element("hud-timing");
+            hud.Add(compression);
             simulationTiming = Text(string.Empty, "simulation-timing");
-            timing.Add(simulationTiming);
+            compression.Add(simulationTiming);
 
             instruments = Element("hud-instruments");
             hud.Add(instruments);
@@ -189,14 +192,17 @@ namespace OutOfReach.Presentation.UI
             readouts.Add(expandedTelemetry);
             hudResources = new Label[6];
             oxygenGauge = new ResourceGauge(primaryTelemetry, "O₂ reserve", 0);
-            batteryGauge = new ResourceGauge(primaryTelemetry, "Battery", 3);
-            co2Gauge = new ResourceGauge(primaryTelemetry, "Cabin CO₂", 5);
-            hudResources[0] = oxygenGauge.Value;
-            hudResources[3] = batteryGauge.Value;
-            hudResources[5] = co2Gauge.Value;
-            suitGauge = new ResourceGauge(evaTelemetry, "Suit O₂", -1);
+            suitGauge = new ResourceGauge(primaryTelemetry, "Suit O₂", -1);
             suitGauge.Element.name = "suit-oxygen-gauge";
             suitGauge.Element.AddToClassList("suit-gauge");
+            foodGauge = new ResourceGauge(primaryTelemetry, "Food stores", 2);
+            batteryGauge = new ResourceGauge(primaryTelemetry, "Battery", 3);
+            co2Gauge = new ResourceGauge(readouts, "Cabin CO₂", 5);
+            co2Gauge.Element.AddToClassList("co2-alert");
+            hudResources[0] = oxygenGauge.Value;
+            hudResources[2] = foodGauge.Value;
+            hudResources[3] = batteryGauge.Value;
+            hudResources[5] = co2Gauge.Value;
             var duration = Element("suit-duration");
             duration.AddToClassList("resource-cell");
             duration.Add(Text("Time remaining", "resource-label"));
@@ -206,7 +212,6 @@ namespace OutOfReach.Presentation.UI
             duration.Add(suitSeal);
             evaTelemetry.Add(duration);
             hudResources[1] = AddResource(expandedTelemetry, "Water", 1);
-            hudResources[2] = AddResource(expandedTelemetry, "Food", 2);
             hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
             systems = new Button(() => { systemsPinned = !systemsPinned; RefreshTelemetry(); })
             {
@@ -214,6 +219,7 @@ namespace OutOfReach.Presentation.UI
                 tooltip = "Hold Tab to inspect all ship reserves. Click to keep them visible."
             };
             systems.AddToClassList("systems-button");
+            instruments.Add(timing);
             instruments.Add(systems);
             IgnorePicking(hud);
             systems.pickingMode = PickingMode.Position;
@@ -359,6 +365,7 @@ namespace OutOfReach.Presentation.UI
             planningTiming.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
             deadlineRule.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
             lastValidDetail.style.display = available && enabled ? DisplayStyle.Flex : DisplayStyle.None;
+            preflightCountdown.EnableInClassList("deadline-practice", !enabled);
             if (!available) { displayedLastValid = null; return; }
             if (!enabled)
             {
@@ -375,10 +382,14 @@ namespace OutOfReach.Presentation.UI
             deadlineCountdown.style.display = validRemaining ? DisplayStyle.Flex : DisplayStyle.None;
             deadlineCountdown.text = (paused ? "Paused · " : "Launch in ")
                 + Number(Math.Ceiling(Math.Max(0, remainingRealSeconds)), "0") + " s";
-            deadlineCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 15);
+            deadlineCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 10);
             SetVisible(preflightCountdown, validRemaining);
-            preflightCountdown.text = deadlineCountdown.text;
-            preflightCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 15);
+            double wholeSeconds = validRemaining ? Math.Ceiling(Math.Max(0, remainingRealSeconds)) : 0;
+            preflightCountdown.text = Number(Math.Floor(wholeSeconds / 60), "00") + ":"
+                + Number(wholeSeconds % 60, "00");
+            preflightCountdown.tooltip = "Automatic launch in " + Number(wholeSeconds, "0") + " active real seconds.";
+            preflightClockNote.text = paused ? "Paused" : "Until launch · active real time";
+            preflightCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 10);
             deadlineRule.text = "At zero, this payload launches automatically if valid. Otherwise, the last valid loadout below launches. The deadline uses unpaused real time.";
             preflightDeadlineRule.text = deadlineRule.text + " Carried cargo is not aboard.";
             if (lastValid == null)
@@ -435,9 +446,12 @@ namespace OutOfReach.Presentation.UI
         {
             bool inspect = systemsPinned || systemsHeld;
             SetVisible(expandedTelemetry, inspect);
-            SetVisible(primaryTelemetry, !evaContext || inspect);
+            SetVisible(primaryTelemetry, true);
+            SetVisible(oxygenGauge.Element, !evaContext || inspect);
+            SetVisible(suitGauge.Element, evaContext);
             SetVisible(co2Gauge.Element, co2NeedsAttention || inspect);
-            SetVisible(evaTelemetry, evaContext);
+            SetVisible(evaTelemetry, evaContext && inspect);
+            SetVisible(timing, inspect);
             instruments.EnableInClassList("inspecting-systems", inspect);
             instruments.EnableInClassList("eva-context", evaContext);
             systems.text = systemsPinned ? "Close systems" : "Tab  Systems";
@@ -597,13 +611,15 @@ namespace OutOfReach.Presentation.UI
             suitSeal.text = status.IsSuitSealed ? "Sealed" : "Suit open";
             suitGauge.SetLevel(known, fraction, known && fraction <= 0.25, known && fraction <= 0,
                 known && fraction <= 0 ? "Empty" : known && fraction <= 0.25 ? "Low reserve" : string.Empty);
-            suitGauge.Element.tooltip = "Suit oxygen from Core. Bar: actual suit capacity. Remaining duration is simulated time; no HUD countdown is calculated.";
+            suitGauge.Element.tooltip = "Suit oxygen: " + suitGauge.Value.text
+                + ". Bar: actual suit capacity. Exact reserve and simulated duration: Tab systems.";
             suitDuration.tooltip = Number(remaining, "#,0") + " simulated seconds remaining. Supplied by the suit system.";
         }
 
         private void UpdateGauges()
         {
             SetReserveGauge(oxygenGauge, latestResources.OxygenKg, resourceReference.OxygenKg, "Stored oxygen reserve");
+            SetReserveGauge(foodGauge, latestResources.FoodKg, resourceReference.FoodKg, "Stored food mass, not hunger or stamina");
             SetReserveGauge(batteryGauge, latestResources.BatteryKWh, resourceReference.BatteryKWh, "Available energy");
             double scale = hasCo2Thresholds ? co2EmergencyPpm : 10000d;
             double current = latestResources.CarbonDioxidePpm;
@@ -630,7 +646,8 @@ namespace OutOfReach.Presentation.UI
             bool empty = known && current <= 0;
             gauge.SetLevel(known, fraction, low, empty,
                 empty ? "Empty" : low ? "Low reserve" : string.Empty);
-            gauge.Element.tooltip = "Bar is relative to the committed launch reserve, not tank capacity or cabin oxygen percentage. Amber denotes 25% of launch reserve or less.";
+            gauge.Element.tooltip = description + ". " + gauge.Value.text
+                + ". Bar is relative to the committed launch reserve, not capacity. Amber: 25% of launch reserve or less. Exact values: Tab systems.";
         }
 
         private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
@@ -646,6 +663,19 @@ namespace OutOfReach.Presentation.UI
             commandFeedback.text = rejectedCommand ?? string.Empty;
             commandFeedback.style.display = string.IsNullOrWhiteSpace(rejectedCommand) ? DisplayStyle.None : DisplayStyle.Flex;
             launch.SetEnabled(succeeded && commandsEnabled && !physicalPlanning);
+        }
+
+        /// <summary>Ease painted bar widths only. ProgressBar values and warnings stay authoritative.</summary>
+        public void AdvancePresentation(float elapsedRealSeconds, bool paused)
+        {
+            if (paused || float.IsNaN(elapsedRealSeconds) || float.IsInfinity(elapsedRealSeconds)
+                || elapsedRealSeconds <= 0) return;
+            float step = Math.Min(elapsedRealSeconds, 0.1f);
+            oxygenGauge.Advance(step);
+            foodGauge.Advance(step);
+            batteryGauge.Advance(step);
+            suitGauge.Advance(step);
+            co2Gauge.Advance(step);
         }
 
         public void Dispose()
@@ -667,7 +697,7 @@ namespace OutOfReach.Presentation.UI
 
         private static Label[] AddResources(VisualElement parent)
         {
-            string[] names = { "Oxygen reserve", "Water", "Food", "Battery", "Spare parts", "Cabin CO₂" };
+            string[] names = { "Oxygen reserve", "Water", "Food stores", "Battery", "Spare parts", "Cabin CO₂" };
             var values = new Label[names.Length];
             for (int i = 0; i < names.Length; i++) values[i] = AddResource(parent, names[i], i);
             return values;
@@ -732,13 +762,21 @@ namespace OutOfReach.Presentation.UI
             public VisualElement Element { get; }
             public Label Value { get; }
             private readonly ProgressBar bar;
+            private readonly ReserveFill fill;
+            private readonly ResourcePictogram icon;
             private readonly Label note;
+            private readonly string accessibleName;
+            private bool initialized;
 
             public ResourceGauge(VisualElement parent, string title, int resourceIndex)
             {
+                accessibleName = title;
                 Element = FlightBoardView.Element("instrument-gauge");
                 Element.AddToClassList("resource-cell");
                 if (resourceIndex >= 0) Element.name = "resource-" + resourceIndex;
+                icon = new ResourcePictogram(resourceIndex);
+                icon.AddToClassList("resource-icon");
+                Element.Add(icon);
                 Element.Add(Text(title, "resource-label"));
                 Value = Text("—", "resource-value");
                 Element.Add(Value);
@@ -746,6 +784,9 @@ namespace OutOfReach.Presentation.UI
                 bar.name = resourceIndex >= 0 ? "resource-bar-" + resourceIndex : "suit-oxygen-bar";
                 bar.AddToClassList("gauge-bar");
                 Element.Add(bar);
+                fill = new ReserveFill();
+                fill.AddToClassList("reserve-fill");
+                bar.Add(fill);
                 note = Text(string.Empty, "gauge-note");
                 Element.Add(note);
                 parent.Add(Element);
@@ -753,13 +794,139 @@ namespace OutOfReach.Presentation.UI
 
             public void SetLevel(bool known, double fraction, bool low, bool critical, string detail, bool neutral = false)
             {
+                // Retain the real ProgressBar value for existing lookups and accessibility consumers.
                 bar.value = known ? (float)Math.Max(0, Math.Min(1, fraction)) : 0f;
+                Color tint = critical ? new Color(1f, .43f, .36f)
+                    : low ? new Color(.96f, .72f, .39f) : new Color(.95f, .94f, .89f);
+                fill.SetTarget(bar.value, known, tint, !initialized || !known || critical);
+                icon.SetTint(tint);
+                initialized = known;
                 Element.EnableInClassList("gauge-unknown", !known);
                 Element.EnableInClassList("gauge-neutral", neutral);
                 Element.EnableInClassList("gauge-low", low && !critical);
                 Element.EnableInClassList("gauge-critical", critical);
-                note.text = detail;
-                SetVisible(note, !string.IsNullOrEmpty(detail));
+                note.text = known ? detail : "Unavailable";
+                SetVisible(note, !string.IsNullOrEmpty(note.text));
+                bar.tooltip = accessibleName + ": " + Value.text + (string.IsNullOrEmpty(note.text) ? string.Empty : ". " + note.text);
+            }
+
+            public void Advance(float elapsedRealSeconds) => fill.Advance(elapsedRealSeconds);
+        }
+
+        private sealed class ReserveFill : VisualElement
+        {
+            private float displayed, target;
+            private bool known;
+            private Color tint;
+
+            public ReserveFill()
+            {
+                pickingMode = PickingMode.Ignore;
+                generateVisualContent += Draw;
+            }
+
+            public void SetTarget(float value, bool available, Color color, bool snap)
+            {
+                target = value;
+                known = available;
+                tint = color;
+                if (snap) displayed = target;
+                MarkDirtyRepaint();
+            }
+
+            public void Advance(float seconds)
+            {
+                if (Math.Abs(target - displayed) < .0005f) return;
+                displayed += (target - displayed) * (1f - (float)Math.Exp(-18f * seconds));
+                if (Math.Abs(target - displayed) < .0005f) displayed = target;
+                MarkDirtyRepaint();
+            }
+
+            private void Draw(MeshGenerationContext context)
+            {
+                float width = contentRect.width, height = contentRect.height;
+                if (width < 1 || height < 1) return;
+                var painter = context.painter2D;
+                const int count = 8;
+                float segment = (width - (count - 1) * 2f) / count;
+                for (int i = 0; i < count; i++)
+                {
+                    float x = i * (segment + 2f);
+                    Rectangle(painter, x, 0, segment, height, new Color(.04f, .05f, .05f, .84f));
+                    Rectangle(painter, x + 1, 1, segment - 2, height - 2, new Color(.95f, .94f, .89f, .22f));
+                    float amount = known ? Mathf.Clamp01(displayed * count - i) : 0;
+                    if (amount > 0) Rectangle(painter, x + 1, 1, (segment - 2) * amount, height - 2, tint);
+                }
+            }
+
+            private static void Rectangle(Painter2D painter, float x, float y, float w, float h, Color color)
+            {
+                painter.fillColor = color;
+                painter.BeginPath();
+                painter.MoveTo(new Vector2(x, y));
+                painter.LineTo(new Vector2(x + w, y));
+                painter.LineTo(new Vector2(x + w, y + h));
+                painter.LineTo(new Vector2(x, y + h));
+                painter.ClosePath();
+                painter.Fill();
+            }
+        }
+
+        /// <summary>Original functional line pictograms; no imported art or icon package.</summary>
+        private sealed class ResourcePictogram : VisualElement
+        {
+            private readonly int resource;
+            private Color tint = new Color(.95f, .94f, .89f);
+            public ResourcePictogram(int resourceIndex)
+            {
+                resource = resourceIndex;
+                pickingMode = PickingMode.Ignore;
+                generateVisualContent += Draw;
+            }
+            public void SetTint(Color value) { tint = value; MarkDirtyRepaint(); }
+            private void Draw(MeshGenerationContext context)
+            {
+                if (contentRect.width < 1 || contentRect.height < 1) return;
+                var p = context.painter2D;
+                p.strokeColor = tint;
+                p.lineWidth = 1.5f;
+                p.lineJoin = LineJoin.Round;
+                p.lineCap = LineCap.Round;
+                if (resource == 3)
+                {
+                    Stroke(p, new Vector2(2, 5), new Vector2(16, 5), new Vector2(16, 15), new Vector2(2, 15), new Vector2(2, 5));
+                    Stroke(p, new Vector2(18, 8), new Vector2(18, 12));
+                    Stroke(p, new Vector2(10, 7), new Vector2(7, 10), new Vector2(11, 10), new Vector2(8, 13));
+                }
+                else if (resource == 2)
+                {
+                    Stroke(p, new Vector2(6, 2), new Vector2(14, 2), new Vector2(14, 6), new Vector2(17, 17), new Vector2(3, 17), new Vector2(6, 6), new Vector2(6, 2));
+                    Stroke(p, new Vector2(6, 6), new Vector2(14, 6));
+                    Stroke(p, new Vector2(5, 12), new Vector2(15, 12));
+                }
+                else if (resource == 5)
+                {
+                    Stroke(p, new Vector2(10, 2), new Vector2(19, 18), new Vector2(1, 18), new Vector2(10, 2));
+                    Stroke(p, new Vector2(10, 7), new Vector2(10, 12));
+                    Stroke(p, new Vector2(10, 15), new Vector2(10, 15.2f));
+                }
+                else
+                {
+                    Stroke(p, new Vector2(8, 2), new Vector2(12, 2), new Vector2(12, 5), new Vector2(15, 7), new Vector2(15, 18), new Vector2(5, 18), new Vector2(5, 7), new Vector2(8, 5), new Vector2(8, 2));
+                }
+            }
+            private static void Stroke(Painter2D painter, params Vector2[] points)
+            {
+                Color foreground = painter.strokeColor;
+                painter.strokeColor = new Color(.04f, .05f, .05f, .84f);
+                painter.lineWidth = 3.5f;
+                painter.BeginPath();
+                painter.MoveTo(points[0]);
+                for (int i = 1; i < points.Length; i++) painter.LineTo(points[i]);
+                painter.Stroke();
+                painter.strokeColor = foreground;
+                painter.lineWidth = 1.5f;
+                painter.Stroke();
             }
         }
 

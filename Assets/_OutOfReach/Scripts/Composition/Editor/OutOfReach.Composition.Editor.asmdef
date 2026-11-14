@@ -19,7 +19,9 @@
     "OutOfReach.Presentation.Cargo.Editor",
     "OutOfReach.Audio",
     "OutOfReach.UI",
-    "UnityEngine.UI"
+    "UnityEngine.UI",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

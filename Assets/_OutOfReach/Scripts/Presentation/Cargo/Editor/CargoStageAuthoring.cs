@@ -19,6 +19,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
         public sealed class Result
         {
             public CargoVisualPresenter Presenter;
+            public PreflightCargoHandsPresenter Hands;
             public Transform Spawn;
             public InteractableTarget[] Targets;
         }
@@ -59,6 +60,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
             heldLabel.transform.localPosition = new Vector3(0, -.08f, -.23f);
             heldLabel.transform.localRotation = Quaternion.identity;
             heldLabel.characterSize = .0055f;
+            PreflightCargoHandsPresenter cargoHands = PreflightCargoHandsAuthoring.Create(held, carriedCase.transform);
             // All visuals are nonblocking and ignore interaction rays; only explicit station triggers can be hit.
             foreach (Transform item in held.GetComponentsInChildren<Transform>(true)) item.gameObject.layer = 2;
             held.gameObject.SetActive(false);
@@ -66,7 +68,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
             spawn.SetPositionAndRotation(new Vector3(0, .05f, 13.5f), Quaternion.Euler(0, 180, 0));
             CargoVisualPresenter presenter = root.gameObject.AddComponent<CargoVisualPresenter>();
             presenter.ConfigureScene(supply.gameObject, held.gameObject, heldLabel, slots, colliders.ToArray());
-            return new Result { Presenter = presenter, Spawn = spawn, Targets = targets.ToArray() };
+            return new Result { Presenter = presenter, Hands = cargoHands, Spawn = spawn, Targets = targets.ToArray() };
         }
 
         public static Vector3 SupplyPosition(int index) => new Vector3(-1.44f, .5f + .5f * (index % 4), 11.55f + .6f * (index / 4));
@@ -90,6 +92,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
             GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
             // Full-size case; front faces the aisle. Its floor is .145m below the interaction centre.
             instance.transform.SetPositionAndRotation(target + new Vector3(target.x < 0 ? -.16f : .16f, -.145f, 0), Quaternion.Euler(0, yaw, 0));
+            PreflightCargoHandsAuthoring.AddSideHandles(instance.transform);
             return instance;
         }
 
@@ -141,7 +144,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
             Shader shader = Shader.Find("Universal Render Pipeline/Lit");
             if (!shader) throw new InvalidOperationException("Existing URP Lit shader unavailable.");
             string[] names = { "MAT_Cargo_OffWhite", "MAT_Cargo_Graphite", "MAT_Cargo_Aluminium", "MAT_Cargo_Amber" };
-            string[] colors = { "#CCCFC7", "#262B2F", "#A6AEB5", "#CF8E23" };
+            string[] colors = { "#444944", "#262B2F", "#A6AEB5", "#CF8E23" };
             float[] metallic = { .05f, .05f, .82f, .05f }, smoothness = { .52f, .42f, .72f, .54f };
             var materials = new Dictionary<string, Material>(StringComparer.Ordinal);
             for (int i = 0; i < names.Length; i++)

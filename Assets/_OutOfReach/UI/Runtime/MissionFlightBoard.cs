@@ -180,6 +180,7 @@ namespace OutOfReach.Presentation.UI
             // never integrate deltaTime, decrement a deadline or infer elapsed simulation time.
             if (disposed) return;
             RefreshTiming();
+            view?.AdvancePresentation(Time.unscaledDeltaTime, menuOverlayVisible || (clock != null && clock.IsPaused));
             // Tab reveals telemetry only. It never changes player, camera, cursor or mission authority.
             view?.SetSystemsHeld(state != null && state.Phase != GamePhase.Planning
                 && Keyboard.current != null && Keyboard.current.tabKey.isPressed);
