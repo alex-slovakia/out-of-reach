@@ -1,0 +1,97 @@
+{
+ "skeleton": "A7_ContinuousBody_Rig",
+ "bones": 164,
+ "fps": 30,
+ "clip_frames": {
+  "0": "BasePose_FloatNeutralV04",
+  "10": "Neutral",
+  "20": "RailGrip",
+  "30": "WrenchLockStart",
+  "40": "WrenchLocked"
+ },
+ "import": "Unity ModelImporter: preserveHierarchy = true, animation type Generic, Anim. Compression Off; place the FBX root at the player's feet with zero visual offset (FloatNeutral V04 convention)",
+ "sides": {
+  "R": {
+   "glove_root": "GloveWrist_R",
+   "glove_root_parent_bone": "lowerarm02.R",
+   "parent_bone_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R",
+   "wrist_ring": "R_WristRing",
+   "adapter_boot": "R_AdapterBoot",
+   "ring_and_boot_parent_bone": "lowerarm02.R",
+   "hand": "R_Hand",
+   "hand_parent": "GloveWrist_R",
+   "fingers": {
+    "R_Index1": "R_Hand",
+    "R_Middle3": "R_Middle2",
+    "R_Index2": "R_Index1",
+    "R_Index3": "R_Index2",
+    "R_Ring1": "R_Hand",
+    "R_Ring3": "R_Ring2",
+    "R_Ring2": "R_Ring1",
+    "R_Thumb1": "R_Hand",
+    "R_Little1": "R_Hand",
+    "R_Thumb2": "R_Thumb1",
+    "R_Little2": "R_Little1",
+    "R_Thumb3": "R_Thumb2",
+    "R_Little3": "R_Little2",
+    "R_Middle1": "R_Hand",
+    "R_Middle2": "R_Middle1"
+   },
+   "wrist_flex": "rotate GloveWrist_R locally; the body's wrist.R is not used for EVA (its sleeve vertices stay put)",
+   "finger_poses": "AstronautHands_rig.json Neutral/Grip/Press rotations unchanged; Grip on a 34-35 mm handle uses these per-chain slerp scales from rest: {'Thumb': 0.2, 'Index': 0.8, 'Middle': 0.9, 'Ring': 0.8, 'Little': 0.7}",
+   "fit": {
+    "k_mm": 0.0,
+    "lateral_thumb_mm": -1.5,
+    "lateral_back_mm": 0.0,
+    "sleeve_vertices_visible_in_bind": 0,
+    "sleeve_vertices_in_glove_zone": 98,
+    "sleeve_end_axis_vs_forearm_deg": 20.23,
+    "boot_proximal_radius_mm": [
+     37.1,
+     59.0
+    ]
+   }
+  },
+  "L": {
+   "glove_root": "GloveWrist_L",
+   "glove_root_parent_bone": "lowerarm02.L",
+   "parent_bone_path": "A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L",
+   "wrist_ring": "L_WristRing",
+   "adapter_boot": "L_AdapterBoot",
+   "ring_and_boot_parent_bone": "lowerarm02.L",
+   "hand": "L_Hand",
+   "hand_parent": "GloveWrist_L",
+   "fingers": {
+    "L_Ring3": "L_Ring2",
+    "L_Little1": "L_Hand",
+    "L_Little2": "L_Little1",
+    "L_Little3": "L_Little2",
+    "L_Thumb1": "L_Hand",
+    "L_Middle1": "L_Hand",
+    "L_Index1": "L_Hand",
+    "L_Middle2": "L_Middle1",
+    "L_Thumb2": "L_Thumb1",
+    "L_Index2": "L_Index1",
+    "L_Middle3": "L_Middle2",
+    "L_Thumb3": "L_Thumb2",
+    "L_Ring1": "L_Hand",
+    "L_Index3": "L_Index2",
+    "L_Ring2": "L_Ring1"
+   },
+   "wrist_flex": "rotate GloveWrist_L locally; the body's wrist.L is not used for EVA (its sleeve vertices stay put)",
+   "finger_poses": "AstronautHands_rig.json Neutral/Grip/Press rotations unchanged; Grip on a 34-35 mm handle uses these per-chain slerp scales from rest: {}",
+   "fit": {
+    "k_mm": 0.0,
+    "lateral_thumb_mm": -1.5,
+    "lateral_back_mm": 0.0,
+    "sleeve_vertices_visible_in_bind": 0,
+    "sleeve_vertices_in_glove_zone": 98,
+    "sleeve_end_axis_vs_forearm_deg": 20.23,
+    "boot_proximal_radius_mm": [
+     37.1,
+     59.0
+    ]
+   }
+  }
+ }
+}

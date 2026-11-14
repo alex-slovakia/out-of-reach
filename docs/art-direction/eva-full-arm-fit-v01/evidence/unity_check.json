@@ -1,0 +1,14 @@
+{
+  "hierarchy_R": {"GloveWrist_parent": "lowerarm02.R", "Hand_parent": "GloveWrist_R", "WristRing_parent": "lowerarm02.R", "AdapterBoot_parent": "lowerarm02.R"},
+  "hierarchy_L": {"GloveWrist_parent": "lowerarm02.L", "Hand_parent": "GloveWrist_L", "WristRing_parent": "lowerarm02.L", "AdapterBoot_parent": "lowerarm02.L"},
+  "clip": {"name": "Scene", "length_s": 1.33333, "frame_rate": 30},
+  "targets": [
+    {"frame": 10, "target": "Neutral", "side": "R", "pivot": [0.19, 1.435, 0.35919], "expected": [0.19, 1.435, 0.3592], "error_mm": 0.00692}, 
+    {"frame": 10, "target": "Neutral", "side": "L", "pivot": [-0.19, 1.435, 0.35919], "expected": [-0.19, 1.435, 0.3592], "error_mm": 0.0068}, 
+    {"frame": 20, "target": "RailGrip", "side": "R", "pivot": [0.13684, 1.48446, 0.35259], "expected": [0.1368, 1.4845, 0.3526], "error_mm": 0.05772}, 
+    {"frame": 30, "target": "WrenchLockStart", "side": "R", "pivot": [0.17856, 1.3945, 0.273], "expected": [0.1786, 1.3945, 0.273], "error_mm": 0.04021}, 
+    {"frame": 40, "target": "WrenchLocked", "side": "R", "pivot": [0.18122, 1.31802, 0.273], "expected": [0.1812, 1.318, 0.273], "error_mm": 0.0303}
+  ],
+  "upper_arm_m": 0.24243, "elbow_to_glove_pivot_m": 0.26802, "max_segment_length_change_mm": 0.00045, "max_pivot_error_mm": 0.05772,
+  "problems": []
+}
