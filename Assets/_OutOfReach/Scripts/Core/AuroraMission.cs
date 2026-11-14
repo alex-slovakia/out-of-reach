@@ -44,8 +44,11 @@ namespace OutOfReach.Core
         /// <summary>Crew-days of consumables the launch review requires.</summary>
         public const double PlannedCrewDays = 30d;
 
-        /// <summary>Initial cabin CO2 concentration, ppm. GAMEPLAY ASSUMPTION, not a health limit.</summary>
-        public const double InitialCabinCarbonDioxidePpm = 1000d;
+        /// <summary>
+        /// Initial and baseline cabin CO2, ppm: the lower crew-compartment p[CO2] of NASA BVAD REV2 Table 4-1
+        /// (0.267 kPa, about 2,635 ppm in this cabin). Working scrubbers hold the cabin at this level.
+        /// </summary>
+        public static readonly double InitialCabinCarbonDioxidePpm = CabinAtmosphere.PpmFromKilopascals(CabinAtmosphere.BaselineCarbonDioxideKPa);
 
         public static MissionDefinition CreateDefinition()
         {
@@ -58,7 +61,7 @@ namespace OutOfReach.Core
                     "+40 L water.",
                     maxQuantity: 6, unitMassKg: 48d, unitPowerWatts: 0d, unitBudgetCredits: 20d, waterLitres: 40d),
                 new EquipmentDefinition(FoodLocker, "Food locker",
-                    "+27 kg packaged food (15 crew-days).",
+                    "+27 kg packaged food (about 15 crew-days).",
                     maxQuantity: 6, unitMassKg: 35d, unitPowerWatts: 0d, unitBudgetCredits: 25d, foodKg: 27d),
                 new EquipmentDefinition(BatteryModule, "Battery module",
                     "+10 kWh storage to ride out a power loss.",
@@ -119,7 +122,31 @@ namespace OutOfReach.Core
                 }),
             };
 
-            return new MissionDefinition(catalog, parameters, crew, presets, ScienceFocusPresetId);
+            return new MissionDefinition(catalog, parameters, crew, presets, ScienceFocusPresetId, CreateScenario());
+        }
+
+        /// <summary>
+        /// The scripted debris strike and what each repair needs. GAMEPLAY TUNING: the three repairs cost 7 spare
+        /// parts in total, exactly what the science-focus loadout carries; the redundancy loadout keeps 6 in hand.
+        /// The power repair needs no stored energy, so a flat battery can never make it impossible. Restarting
+        /// life support and realigning the antenna do need energy.
+        /// </summary>
+        public static MissionScenario CreateScenario()
+        {
+            return new MissionScenario(
+                new[]
+                {
+                    // Arguments: system, name, condition left by the impact, repair needs an EVA, repair costs.
+                    new ShipSystemSpec(ShipSystemId.Power, "power distribution", 0.2d, false,
+                        new ResourceAmount(ResourceId.SparePartsCount, 2d)),
+                    new ShipSystemSpec(ShipSystemId.LifeSupport, "life support", 0d, false,
+                        new ResourceAmount(ResourceId.SparePartsCount, 2d),
+                        new ResourceAmount(ResourceId.BatteryKWh, 1d)),
+                    new ShipSystemSpec(ShipSystemId.Antenna, "high-gain antenna", 0d, true,
+                        new ResourceAmount(ResourceId.SparePartsCount, 3d),
+                        new ResourceAmount(ResourceId.BatteryKWh, 0.5d)),
+                },
+                new MissionPacing());
         }
     }
 }

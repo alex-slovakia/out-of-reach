@@ -220,6 +220,58 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
+        public void CarbonDioxide_StaysBounded_BetweenTheCabinBaselineAndOneMillionPpm()
+        {
+            ResourceLedger ledger = NewLedger(new MissionEventBus(), new ResourceRates(0d, 0d, 0d, 0d, 1e300));
+
+            ledger.AdvanceTime(1e10);
+            Assert.That(ledger.Snapshot.CarbonDioxidePpm, Is.EqualTo(ResourceLedger.MaximumCarbonDioxidePpm), "finite and capped even across an absurd jump");
+
+            Assert.That(ledger.TrySetCarbonDioxideFloor(1000d).Succeeded, Is.True);
+            Assert.That(ledger.TrySetCarbonDioxideFloor(double.NaN).Failure, Is.EqualTo(CommandFailure.InvalidInput));
+            Assert.That(ledger.TrySetRates(new ResourceRates(0d, 0d, 0d, 0d, -0.5d)).Succeeded, Is.True);
+            ledger.AdvanceTime(1e9);
+            Assert.That(ledger.Snapshot.CarbonDioxidePpm, Is.EqualTo(1000d), "scrubbing stops at the cabin baseline");
+        }
+
+        [Test]
+        public void TimeUntilCarbonDioxideLimit_IsExact_AndInfiniteWhenNotRising()
+        {
+            ResourceLedger ledger = NewLedger(new MissionEventBus(), new ResourceRates(0d, 0d, 0d, 0d, 0.25d));
+
+            Assert.That(ledger.TimeUntilCarbonDioxideReaches(2000d), Is.EqualTo(4000d).Within(Fixtures.Tolerance));
+            Assert.That(ledger.TimeUntilCarbonDioxideReaches(900d), Is.EqualTo(0d), "already above");
+
+            Assert.That(ledger.TrySetRates(ResourceRates.Zero).Succeeded, Is.True);
+            Assert.That(ledger.TimeUntilCarbonDioxideReaches(2000d), Is.EqualTo(double.PositiveInfinity));
+        }
+
+        [Test]
+        public void InactiveMission_FreezesReserves_WhoeverCalls()
+        {
+            bool active = true;
+            var bus = new MissionEventBus();
+            var ledger = new ResourceLedger(bus, () => active);
+            Assert.That(ledger.Initialize(Initial, Initial.BatteryKWh, new ResourceRates(0.001d, 0d, 0d, 100d, 0.1d)).Succeeded, Is.True);
+
+            active = false;
+            using (var recorder = new EventRecorder(bus))
+            {
+                ledger.AdvanceTime(3600d);
+                CommandResult spend = ledger.TryConsume(new[] { Cost(ResourceId.SparePartsCount, 1d) });
+
+                Assert.That(spend.Failure, Is.EqualTo(CommandFailure.WrongPhase));
+                Fixtures.AssertSnapshot(Initial, ledger.Snapshot, 0d);
+                Assert.That(ledger.ElapsedSimulationSeconds, Is.EqualTo(0d));
+                Assert.That(recorder.Total, Is.EqualTo(0));
+            }
+
+            active = true;
+            ledger.AdvanceTime(1000d);
+            Assert.That(ledger.Snapshot.OxygenKg, Is.EqualTo(9d).Within(Fixtures.Tolerance));
+        }
+
+        [Test]
         public void InvalidRates_AreRejected_AndKeepThePreviousRates()
         {
             var original = new ResourceRates(0.001d, 0d, 0d, 100d, 0d);

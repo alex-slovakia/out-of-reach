@@ -20,9 +20,13 @@ namespace OutOfReach.Simulation
         /// <summary>A reserve at or below this after a debit or drain is exactly depleted (set to zero).</summary>
         public const double DepletionTolerance = 1e-12;
 
+        /// <summary>Physical ceiling of a concentration expressed in parts per million.</summary>
+        public const double MaximumCarbonDioxidePpm = 1000000d;
+
         private const int ResourceCount = 5;
 
         private readonly IMissionEventBus events;
+        private readonly Func<bool> isMissionActive;
         private readonly double?[] depletedAt = new double?[ResourceCount];
 
         private double oxygenKg;
@@ -31,11 +35,19 @@ namespace OutOfReach.Simulation
         private double batteryKWh;
         private int spareParts;
         private double carbonDioxidePpm;
+        private double carbonDioxideFloorPpm;
         private ResourceRates rates = ResourceRates.Zero;
 
-        public ResourceLedger(IMissionEventBus events)
+        /// <param name="events">Bus that receives ResourceChanged after each committed change.</param>
+        /// <param name="isMissionActive">
+        /// Optional gate supplied by Core: true only while the mission clock may run. When it returns false, spending
+        /// is rejected and time does not drain reserves, so this ledger and the game state can never disagree about
+        /// frozen phases or an ended session, whoever calls. Omitted in isolated tests (always active).
+        /// </param>
+        public ResourceLedger(IMissionEventBus events, Func<bool> isMissionActive = null)
         {
             this.events = events ?? throw new ArgumentNullException(nameof(events));
+            this.isMissionActive = isMissionActive;
         }
 
         /// <summary>False until launch loads the frozen configuration's reserves.</summary>
@@ -47,6 +59,9 @@ namespace OutOfReach.Simulation
         public double BatteryCapacityKWh { get; private set; }
 
         public ResourceRates Rates => rates;
+
+        /// <summary>Lowest concentration CO2 removal can reach (cabin baseline), ppm. Rising CO2 is never clamped.</summary>
+        public double CarbonDioxideFloorPpm => carbonDioxideFloorPpm;
 
         public ResourceSnapshot Snapshot => new ResourceSnapshot(oxygenKg, waterLitres, foodKg, batteryKWh, spareParts, carbonDioxidePpm);
 
@@ -173,6 +188,18 @@ namespace OutOfReach.Simulation
             return Ok("Rates updated: " + newRates + ".");
         }
 
+        /// <summary>Sets the baseline that scrubbing cannot go below. A concentration already lower is not raised.</summary>
+        public CommandResult TrySetCarbonDioxideFloor(double floorPpm)
+        {
+            if (!IsFinite(floorPpm) || floorPpm < 0d)
+            {
+                return Fail(CommandFailure.InvalidInput, "The CO2 floor must be a finite, non-negative concentration.");
+            }
+
+            carbonDioxideFloorPpm = floorPpm;
+            return Ok(string.Format(CultureInfo.InvariantCulture, "CO2 floor {0:0.#} ppm.", floorPpm));
+        }
+
         /// <summary>
         /// Simulation seconds until the next reserve reaches zero under the current rates; +Infinity if none.
         /// Core uses this to split long steps exactly at depletion boundaries.
@@ -193,8 +220,31 @@ namespace OutOfReach.Simulation
         }
 
         /// <summary>
+        /// Simulation seconds until rising cabin CO2 reaches the given concentration under the current rates;
+        /// zero if it is already there, +Infinity if it is not rising.
+        /// </summary>
+        public double TimeUntilCarbonDioxideReaches(double ppm)
+        {
+            if (!IsInitialized || double.IsNaN(ppm))
+            {
+                return double.PositiveInfinity;
+            }
+
+            if (carbonDioxidePpm >= ppm)
+            {
+                return 0d;
+            }
+
+            double rate = rates.CarbonDioxideChangePpmPerSecond;
+            return rate > 0d ? (ppm - carbonDioxidePpm) / rate : double.PositiveInfinity;
+        }
+
+        private bool IsActive => isMissionActive == null || isMissionActive();
+
+        /// <summary>
         /// Applies the current rates for a finite, non-negative number of simulated seconds. Invalid time throws
-        /// before any mutation. Reserves clamp at zero (depletion time recorded) and the battery at capacity.
+        /// before any mutation. Reserves clamp at zero (depletion time recorded), the battery at capacity and CO2
+        /// between the cabin baseline (when falling) and 1,000,000 ppm. Ignored while the mission is not active.
         /// Publishes one ResourceChanged when any value changed. Never reads Unity time.
         /// </summary>
         public void AdvanceTime(double simulationSeconds)
@@ -204,9 +254,14 @@ namespace OutOfReach.Simulation
                 throw new ArgumentOutOfRangeException(nameof(simulationSeconds), simulationSeconds, "Simulation time must be finite and non-negative.");
             }
 
-            if (!IsInitialized || simulationSeconds == 0d)
+            if (!IsInitialized || simulationSeconds == 0d || !IsActive)
             {
                 return;
+            }
+
+            if (double.IsInfinity(ElapsedSimulationSeconds + simulationSeconds))
+            {
+                throw new ArgumentOutOfRangeException(nameof(simulationSeconds), simulationSeconds, "Elapsed simulation time would overflow.");
             }
 
             double start = ElapsedSimulationSeconds;
@@ -215,13 +270,26 @@ namespace OutOfReach.Simulation
             waterLitres = Drain(waterLitres, rates.WaterUseLitresPerSecond * simulationSeconds, rates.WaterUseLitresPerSecond, start, simulationSeconds, ResourceId.WaterLitres);
             foodKg = Drain(foodKg, rates.FoodUseKgPerSecond * simulationSeconds, rates.FoodUseKgPerSecond, start, simulationSeconds, ResourceId.FoodKg);
             batteryKWh = AdvanceBattery(start, simulationSeconds);
-            carbonDioxidePpm = Math.Max(0d, carbonDioxidePpm + rates.CarbonDioxideChangePpmPerSecond * simulationSeconds);
+            carbonDioxidePpm = AdvanceCarbonDioxide(simulationSeconds);
             ElapsedSimulationSeconds = start + simulationSeconds;
 
             if (!SameValues(before, Snapshot))
             {
                 events.Publish(new ResourceChanged(Snapshot));
             }
+        }
+
+        private double AdvanceCarbonDioxide(double seconds)
+        {
+            double change = rates.CarbonDioxideChangePpmPerSecond * seconds;
+            if (change >= 0d)
+            {
+                return Math.Min(MaximumCarbonDioxidePpm, carbonDioxidePpm + change);
+            }
+
+            // Removal stops at the baseline; a concentration already below it is never raised.
+            double lowest = Math.Min(carbonDioxidePpm, carbonDioxideFloorPpm);
+            return Math.Max(lowest, carbonDioxidePpm + change);
         }
 
         private double AdvanceBattery(double start, double seconds)
@@ -350,6 +418,11 @@ namespace OutOfReach.Simulation
             if (!IsInitialized)
             {
                 return Fail(CommandFailure.WrongPhase, "Reserves are unavailable until the mission launches.");
+            }
+
+            if (!IsActive)
+            {
+                return Fail(CommandFailure.WrongPhase, "Reserves cannot be spent after the mission has ended.");
             }
 
             var shortfalls = new List<string>();

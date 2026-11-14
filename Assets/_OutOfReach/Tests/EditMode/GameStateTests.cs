@@ -57,8 +57,10 @@ namespace OutOfReach.Tests.EditMode
             using (var recorder = new EventRecorder(session.Events))
             {
                 Assert.That(session.Planner.TryLaunch().Succeeded, Is.True);
-                Assert.That(session.State.TryTransition(GamePhase.Emergency).Succeeded, Is.True);
-                Assert.That(session.State.TryTransition(GamePhase.Repair).Succeeded, Is.True);
+                Fixtures.TriggerImpact(session);
+                Fixtures.RepairOrFail(session, ShipSystemId.Power);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair), "the first interior repair ends the emergency");
+                Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
                 Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
                 Assert.That(session.State.TryTransition(GamePhase.Repair).Succeeded, Is.True, "return inside before the antenna is fixed");
                 Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
@@ -95,12 +97,38 @@ namespace OutOfReach.Tests.EditMode
             using (var session = Fixtures.LaunchedSession())
             using (var recorder = new EventRecorder(session.Events))
             {
-                Assert.That(session.State.TryTransition(GamePhase.Emergency).Succeeded, Is.True);
+                Fixtures.TriggerImpact(session);
                 CommandResult repeat = session.State.TryTransition(GamePhase.Emergency);
 
                 Assert.That(repeat.Succeeded, Is.False);
                 Assert.That(repeat.Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
                 Assert.That(recorder.Phases, Has.Count.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void LegalEdges_StayClosed_UntilTheirMissionConditionsHold()
+        {
+            using (var session = Fixtures.LaunchedSession())
+            using (var recorder = new EventRecorder(session.Events))
+            {
+                CommandResult skipImpact = session.State.TryTransition(GamePhase.Emergency);
+                Assert.That(skipImpact.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "no emergency without the impact sequence");
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Intro));
+
+                Fixtures.TriggerImpact(session);
+                CommandResult skipRepair = session.State.TryTransition(GamePhase.Repair);
+                Assert.That(skipRepair.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "Repair needs one interior system stabilized");
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Emergency));
+
+                Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
+                CommandResult earlyEva = session.State.TryTransition(GamePhase.Eva);
+                Assert.That(earlyEva.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "no EVA while power is damaged");
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair));
+
+                Fixtures.RepairOrFail(session, ShipSystemId.Power);
+                Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
+                Assert.That(recorder.Phases, Has.Count.EqualTo(3), "Intro->Emergency, Emergency->Repair, Repair->Eva");
             }
         }
 

@@ -1,18 +1,24 @@
 # Claude gameplay domain — handoff
 
 Branch `feature/survival-simulation`. Owner: Claude (Apoliak). This file is the running handoff for the
-integrator; root documentation stays integrator-owned.
+integrator; root documentation stays integrator-owned. Status and requests live on issue #7.
 
-## C01 — mission foundation (status: see "Evidence")
+**Done:** C01 (mission foundation) and C02 (first playable repair loop). **Not yet:** EVA, airlock, antenna
+interaction (C03), communications, outcomes for success, report data (C04).
 
-Pure C# domain with no `UnityEngine` reference. It contains no repairs, player, EVA, communications or MonoBehaviours yet.
+## Assemblies
 
 | Assembly | Path | References | Engine |
 |---|---|---|---|
 | `OutOfReach.Inventory` | `Scripts/Inventory` | Contracts | none (`noEngineReferences`) |
 | `OutOfReach.Simulation` | `Scripts/Simulation` | Contracts | none |
 | `OutOfReach.Core` | `Scripts/Core` | Contracts, Inventory, Simulation | none |
-| `OutOfReach.Tests.EditMode` | `Tests/EditMode` | the above + Unity Test Framework | Editor only |
+| `OutOfReach.Interaction` | `Scripts/Interaction` | Contracts | Unity |
+| `OutOfReach.Player` | `Scripts/Player` | Contracts, Interaction, Unity.InputSystem | Unity |
+| `OutOfReach.Core.Runtime` | `Scripts/Core/Runtime` | all of the above | Unity |
+| `OutOfReach.Tests.EditMode` | `Tests/EditMode` | pure assemblies + Test Framework | Editor |
+| `OutOfReach.Tests.PlayMode` | `Tests/PlayMode` | all + Test Framework | tests only |
+| `OutOfReach.Tests.Editor` | `Tests/Editor` | PlayMode tests + UnityEditor | Editor |
 
 | Shared contract | Implementation |
 |---|---|
@@ -21,83 +27,131 @@ Pure C# domain with no `UnityEngine` reference. It contains no repairs, player, 
 | `IMissionPlanner` | `OutOfReach.Core.MissionPlanner` |
 | `IMissionConfiguration` | `OutOfReach.Inventory.MissionConfiguration` |
 | `IResourceSystem` | `OutOfReach.Simulation.ResourceLedger` |
-| `IInteractable`, `IRepairable` | C02/C03 (not yet) |
+| `IRepairable` | `OutOfReach.Simulation.ShipSystem` (Power, LifeSupport, Antenna) |
+| `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `OutOfReach.Core.RepairInteraction` |
 | `ICommunicationSystem` | C04 (not yet) |
+| proposed `ISimulationClock` | `OutOfReach.Core.SimulationClockView` (same three members) |
+| proposed `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` (same four members) |
 
-`MissionSession` (Core) composes one mission: bus, state, planner, ledger, `SimulationClock`, `CinematicCoordinator`.
-It is the only driver of simulated time.
+## Scene integration (I01: plan → accident → interior repair)
 
-## Binding recipe for the integrator
+Everything below is Claude-owned and is bound in Bootstrap by the integrator. No Codex prefab is edited.
 
-```csharp
-// Composition (C02 adds the MonoBehaviour driver that does this inside Claude-owned paths).
-var session = new MissionSession(AuroraMission.CreateDefinition(), UnityEngine.Debug.LogException);
+1. **Mission root.** Add `OutOfReach.Core.Runtime.MissionRuntime` to one GameObject. It creates the session in
+   `Awake`, is the only simulation driver (one step per frame) and must exist exactly once (a second instance
+   disables itself with an error).
+2. **Player.** Place `Assets/_OutOfReach/Scripts/Player/PlayerRig.prefab` at `PlayerSpawn`.
+   - The rig has a `CharacterController` (1.8 m tall, 0.3 m radius), `FirstPersonController` and a `ViewPivot`
+     child at 1.65 m with the `InteractionResolver` (reach 2 m).
+   - It has **no camera and no audio listener**. Parent the single Bootstrap gameplay camera under `ViewPivot`.
+3. **Interaction points.** On a gameplay child at each anchor add a collider (a trigger works and does not block
+   walking) and `OutOfReach.Interaction.InteractableTarget` with one of these IDs:
 
-// Presentation receives contract interfaces only:
-IMissionPlanner planner = session.Planner;      // planner view: Catalog, Draft, TrySetEquipment, TryLaunch
-IGameState state = session.State;               // phase / outcome / elapsed simulation seconds
-IResourceSystem resources = session.Resources;  // HUD: read Snapshot first, then listen to ResourceChanged
-IMissionEventBus events = session.Events;       // all typed events; CinematicFinished replies
+   | Anchor | `interactionId` | What it does |
+   |---|---|---|
+   | `CockpitConsole` | `cockpit-console` | Intro: "Run cockpit systems check" triggers the impact once |
+   | `PowerRepair` | `repair-power` | Repairs power distribution: 2 spare parts |
+   | `LifeSupportRepair` | `repair-life-support` | Repairs life support: 2 spare parts + 1 kWh |
 
-// Once per frame, unscaled real seconds (clamp hitches so alt-tab cannot cause a catch-up drain):
-session.Tick(Math.Min(Time.unscaledDeltaTime, 0.25));
+4. **Wire `MissionRuntime` in the Inspector:** `Player` = the rig, `Player Spawn` = the `PlayerSpawn` anchor,
+   `Interaction Targets` = the three targets. Unknown IDs are reported as errors at start.
+5. **Presentation gets contracts only.** From the runtime component: `Events`, `GameState`, `Planner`,
+   `Resources`, `Configuration`, `Repairables`, `Clock`, `PlanningDeadline`, `TryGetInteractable(id, out ...)`.
+   - Views read current state first, then subscribe in `OnEnable` and unsubscribe in `OnDisable`.
+   - `Tests/PlayMode/Harness/MissionStatusListener.cs` is a working example of this pattern.
+6. **No-code wiring (UnityEvents and public methods):**
+   - `InteractionResolver.PromptChanged(string prompt, bool canInteract)`: prompt view. Empty text = nothing in focus.
+   - `InteractionResolver.InteractionAttempted(bool succeeded, string explanation)`: feedback line.
+   - `MissionRuntime.PauseChangedEvent(bool)` and `MissionRuntime.TogglePause()` / `SetPaused(bool)`: pause menu.
+   - `MissionRuntime.BeginTimedPlanning()`: starts the 60 s planning deadline. Not calling it = practice planning.
+   - `MissionRuntime.RestartMission()`: report Restart button. Disposes the session and reloads the active scene.
+     In a scene outside the build list it rebuilds the session in place and logs a warning.
 
-// Restart: dispose and rebuild (or reload Bootstrap). Nothing carries over.
-session.Dispose();
-session = new MissionSession(AuroraMission.CreateDefinition(), UnityEngine.Debug.LogException);
-```
+Controls are defined in code (`PlayerInputActions`; the shared input asset is untouched): WASD or arrows, mouse
+look, E or left mouse to interact, Esc to pause; gamepad sticks, south button, Start.
+
+**Try it by hand:** open `Assets/_OutOfReach/Tests/Harness/RepairLoopHarness.unity` (test fixture, not in the
+build list) and press Play. Enter launches the default loadout, R restarts. Regenerate the scene and the prefab
+with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRig prefab`.
 
 ## Behaviour presentation can rely on
 
-- **Events after commit.** Every event is published after its mutation is committed. Launch delivers
-  `ResourceChanged` and then `PhaseChanged(Planning → Intro)`.
-- **Ordering.** A message published while another is being delivered is queued, first in, first out.
-  Subscribers therefore always see commit order.
-- **Isolation.** A throwing subscriber is reported to the error sink. Later subscribers still run, and
-  gameplay is never rolled back.
-- **Subscriptions.** Subscribing the same delegate twice is ignored, so a doubled `OnEnable` cannot duplicate a
-  listener. Still unsubscribe in `OnDisable`. `Dispose()` on the session clears every subscription.
-- **Phases.** The graph is Planning → Intro → Emergency → Repair ⇄ Eva → Transmission, with Repair → Transmission
-  also allowed, and then Outcome → Report.
-  - Any running phase may go to Outcome, but only through Core (`TryEndMission`). `TryTransition(Outcome)` is rejected.
-  - Planning → Intro happens only through `IMissionPlanner.TryLaunch`.
-  - Report is terminal; restart creates a new session.
-  - A rejected or repeated transition publishes nothing.
-- **Planner.**
-  - `Catalog` lists one unit per entry with authoritative mass, power and credits, and is read-only.
-  - `TrySetEquipment` replaces the count. Zero removes the item. Unknown or case-mismatched IDs, negative
-    counts and counts above an item's limit are rejected. Edits outside Planning are rejected.
-  - An over-limit draft stays visible. `Draft.Validate()` explains each violated constraint with units, for example
-    `Mass 626.0 kg exceeds the 600.0 kg launch limit by 26.0 kg.`
-  - `TryLaunch` validates and freezes a fresh copy. A second launch returns `AlreadyComplete`.
-- **Resources.**
-  - `TryConsume` validates every entry and sums duplicate resources before checking affordability.
-  - Spending is all-or-nothing, and each successful spend publishes one event.
-  - Negative, NaN or infinite amounts, fractional spare parts and unknown resources are rejected without
-    mutation.
-  - Cabin CO₂ is `Snapshot.CarbonDioxidePpm`. It is never spendable.
-- **Clock.**
-  - Simulation time runs only in Intro…Transmission.
-  - `Clock.Pause()` discards real time, so resuming causes no catch-up drain. Paused time also stops the
-    cinematic fallback timer.
-  - `Clock.TrySetTimeScale(x)` sets simulated seconds per real second. The HUD must disclose any value other than 1×.
-  - `AdvanceSimulation(seconds)` is the chapter-jump entry point. It splits exactly where a reserve reaches zero,
-    so one long jump equals many frames.
-- **Cinematic handshake.**
-  - Core publishes `CinematicRequested(id, sequenceId)`. Sequence IDs are unique across sessions.
+- **Events after commit, in commit order.** A message published during a dispatch is queued. A throwing
+  subscriber is reported and never rolls gameplay back. Subscribing the same delegate twice is ignored.
+- **Phases.** Planning → Intro → Emergency → Repair ⇄ Eva → Transmission → Outcome → Report (Repair →
+  Transmission also legal). A legal edge still needs its mission condition, whoever asks:
+  - Planning → Intro: only `IMissionPlanner.TryLaunch` (or the planning deadline).
+  - Intro → Emergency: only after the impact sequence finished.
+  - Emergency → Repair: automatic on the first interior repair.
+  - → Eva: power and life support operational (C03 adds suit and airlock).
+  - → Outcome: only Core. Report is terminal; restart builds a new session.
+- **Accident.** The cockpit check triggers it once. Order of events: `CinematicRequested(Impact)`, then
+  `SystemConditionChanged` for Power (0.2), LifeSupport (0) and Antenna (0), then after the cinematic
+  `CinematicFinished` and `PhaseChanged(Intro → Emergency)`.
   - Presentation replies once with `CinematicFinished(sameId, sameSequenceId, wasSkipped)`.
-  - Stale, duplicate and mismatched replies are ignored.
-  - Without a reply, Core completes after 45 s of unpaused real time. With no presentation listener, it
-    completes on the next tick.
-  - Replying from inside the request handler (instant skip) is safe.
+  - Without a reply Core continues after 45 s of unpaused real time; with no listener, on the next frame.
+  - Player input is locked while the cinematic is active and always returns.
+- **Repairs.** Costs come from the domain. A repair debits all costs and restores the condition in one
+  transaction: `ResourceChanged`, `SystemConditionChanged(id, 1)`, then possibly `PhaseChanged`. A rejected or
+  repeated repair spends nothing and publishes nothing. The antenna is repairable only in the Eva phase.
+- **Prompts** always state the real cost or the exact reason, for example
+  `Repair life support: 2 spare parts, 1 kWh.` or
+  `Cannot repair power distribution: needs 2 spare parts, 1 spare part available.`
+- **Interaction focus.** One ray from the view pivot, reach 2 m. A solid collider in front of the target blocks
+  it; other trigger volumes are ignored. Nothing is targetable while the player has no control.
+- **Clock.** Runs only in Intro…Transmission. `Pause` discards real time and blocks both `Tick` and
+  `AdvanceSimulation`. Time scale per phase (GAMEPLAY TUNING, must be shown on the HUD): Intro ×1,
+  Emergency/Repair ×300 (1 s = 5 min), Eva ×60 and Transmission ×60 (placeholders until C03/C04). Maximum ×86,400.
+- **Chapter jumps.** `MissionSession.AdvanceSimulation(seconds)` splits exactly at every reserve depletion and
+  at the CO₂ limit, re-evaluates the rates and applies the survival rules synchronously after each part. A
+  jump that crosses a fatal boundary ends the mission at that exact time and discards the rest.
+- **Planning deadline.** Counted in unpaused real seconds, off unless started. At zero it launches the current
+  draft if valid, otherwise the last valid loadout (`UsedLastValidLoadoutAtDeadline = true`). Once, atomically,
+  and the launch frame spends no simulated time. Starting it without any valid loadout fails explicitly.
 
-## AURORA-7 catalog and limits (GAMEPLAY ASSUMPTIONS — fictional vessel, fictional credits)
+## Emergency model (one model for nominal flight and the accident)
+
+| Input | Effect |
+|---|---|
+| Power condition | Generation reaching the bus = configured generation × condition (20 % after the impact) |
+| Life-support condition | CO₂ removal, its 300 W load and the oxygen leak scale with it (0 after the impact) |
+| Battery empty and load > generation | Brownout: no stored energy, scrubbers stop even if repaired |
+
+- Cabin CO₂ rises by the crew's output with no scrubbing: about 0.32 ppm/s (1,157 ppm per hour) in the 20 m³
+  cabin, derived with the ideal gas law. Running scrubbers draw it back down to the cabin baseline.
+- A failed life-support loop leaks 2 kg of stored oxygen per day (GAMEPLAY TUNING).
+- After the impact the science-focus loadout reaches brownout in about 38.9 h, the redundancy loadout in
+  about 90.5 h (more battery, no 300 W spectrometer).
+- The three repairs cost 7 spare parts: exactly what science-focus carries; redundancy keeps 6 in hand.
+
+**Endings in C02 (all `Lost`, with a causal reason in `MissionEnded.Reason`):**
+
+| Cause | Rule |
+|---|---|
+| Cabin CO₂ | Reaches 2.67 kPa (about 26,350 ppm): about 20.5 h after scrubbers stop |
+| Stored oxygen | Not instant: the cabin's own air stays above 18.6 kPa p[O₂] for about 19.4 h, then lost |
+| Water or food | Reserve exhausted (simplification) |
+| Battery | Never an ending by itself; it stops the scrubbers, then CO₂ decides |
+
+## Sources and labels
+
+- **NASA reference values** (BVAD REV2, NASA/TP-2015-218570/REV2, checked by the science review SCIENCE-01):
+  O₂ 0.84 and CO₂ 1.01 kg per crew-day (Table 3-23), water 2.5 kg (Table 4-20), packaged food 1.83 kg
+  (Table 4-40). Cabin baseline p[CO₂] 0.267 kPa and p[O₂] 21.2 / 18.6 kPa (Table 4-1). ISS flight-rule levels
+  1.01 kPa (action) and 2.67 kPa (emergency) from section 4.1.1.
+- **Derived physics:** ppm from CO₂ mass and the oxygen buffer, both for the assumed cabin.
+- **Game assumptions:** one crew member, 20 m³ cabin at 101.325 kPa and 295 K, all catalog values, damage
+  levels, repair costs, leak rate, scrubber drawdown, time scales. The CO₂ and O₂ endings use cited operational
+  levels as game endings; they are not medical claims.
+- These citations should be added to `NASA-DATA.md` by the integrator before the report shows them.
+
+## AURORA-7 catalog and limits (GAME ASSUMPTIONS — fictional vessel, fictional credits)
 
 Launch limits: payload ≤ 600 kg, budget ≤ 800 credits, load ≤ generation, and supplies for 30 crew-days
-(O₂ ≥ 25.2 kg, water ≥ 90 L, food ≥ 54 kg).
+(O₂ ≥ 25.2 kg, water ≥ 75 L, food ≥ 54.9 kg).
 
 Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 20 L, food 10 kg, battery 8 kWh,
-1 spare part. Cabin CO₂ starts at 1,000 ppm.
+1 spare part. Cabin CO₂ starts at the 2,635 ppm baseline.
 
 | ID | Mass kg | Load W | Credits | Max | Adds |
 |---|---:|---:|---:|---:|---|
@@ -114,52 +168,34 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 | `science-focus` (default) | 546 kg | 720 | 1,400 / 1,900 W | 34 kg / 28 kWh / 7 | yes |
 | `redundancy` | 591 kg | 690 | 1,100 / 1,900 W | 46 kg / 38 kWh / 13 | no |
 
-The trade-off: the spectrometer needs a solar wing to stay within power, and together they consume mass and budget
-that would otherwise buy spare parts, batteries and oxygen for the emergency. Repairs in C02 will cost parts
-and energy, so the loadout decides which repairs are affordable.
+## Requests and review findings handled in C02
 
-## Assumptions to review
+| ID | Result |
+|---|---|
+| C01-PAUSE | Fixed. `AdvanceSimulation` is refused while paused; regression covers `Tick` and `AdvanceSimulation` |
+| C02-BOUNDARY | Built in. Survival rules run synchronously after every split of an advance, not from a listener |
+| C01-FINITE | Fixed. CO₂ capped at 1,000,000 ppm, time scale at ×86,400, elapsed-time overflow rejected before mutation |
+| COORD-DECISIONS-01 | Clock view and planning deadline implemented to the proposed member lists; restart reloads the scene |
+| Verifier findings 1–8 on `caee234` | Fixed: callback isolation on the timeout path, disposed sessions reject commands, one clock gate for ledger and state, mission end reads the ledger snapshot, two weak tests rewritten |
 
-- `CrewMetabolicAssumptions` (0.84 kg O₂, 3.0 L water and 1.8 kg food per crew-day; one crew member) is
-  **gameplay tuning, not sourced physiology**. Verify any citation (for example NASA BVAD) before it appears in the report.
-- With working scrubbers, nominal cabin CO₂ is held constant. The emergency model (C02) changes this.
-- Batteries launch full; capacity equals initial charge. Generation above load recharges up to capacity.
+## Open points
 
-## Contract questions for the integrator (no shared files were edited)
+1. **Wait-to-fail pacing.** A player who cannot repair anything waits for CO₂ (about 4 real minutes at ×300).
+   Options for I01: a "rest" interaction that jumps time, or a faster scale. Tuning lives in `MissionPacing`.
+2. **Prompt contract.** The focus prompt is exposed through UnityEvents and properties, not a contract. A small
+   read-only contract can be proposed if Codex prefers code binding.
+3. **Report data (C04)** still needs the small read-only report contract.
+4. **PlayerRig camera.** The integrator parents the Bootstrap camera under `ViewPivot`; the rig never creates one.
 
-1. **Clock visibility.** The HUD must disclose acceleration and pause, but no contract exposes them. Proposed:
-   `ISimulationClock { bool IsPaused; double TimeScale; double ElapsedSimulationSeconds; }`. Read-only;
-   `MissionSession.Clock` would implement it.
-2. **Restart command.** No contract carries a restart request. Proposed: wire the report's Restart button
-   (UnityEvent) to the Claude-owned runtime component's `RestartMission()` in C02/C04, or reload Bootstrap. No
-   contract change is needed if this is acceptable.
-3. **Equipment text.** `EquipmentSelection` has no display name or effect text. Either Codex keeps an ID → text
-   table (IDs above are stable), or an `EquipmentDescriptor` contract is added. `EquipmentDefinition` already
-   holds `DisplayName`/`Summary`.
-4. **Third ending.** The concept infographic shows rescue / survive longer / failure. The contract has
-   `RecoveryPossible` / `Lost`, and PRODUCT.md says a survivable holding state lives inside the success ending.
-   Plan: "survive longer" becomes a report variant of `RecoveryPossible`, unless the integrator adds an enum value.
-5. **Report data (C04)** will need a small read-only report contract; it will be proposed before C04 starts.
+## Evidence (C02, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-## Evidence (C01, 2026-11-14, Apoliak's machine)
-
-- **Unity 6000.3.28f1 (8f082d2fe476), Windows 11.** Batch mode `-runTests -testPlatform EditMode` (TESTING.md
-  command, no `-quit`) on exactly these sources:
-  - **77 passed, 0 failed, 0 skipped**; exit code 0; NUnit 3.5.
-  - Per fixture: CinematicCoordinator 9, EventBus 7, GameState 18, Planner 11, ResourceLedger 23, SessionClock 9.
-  - Results and log stay local (`TestResults/`, ignored).
-- **Compiler.** No compiler warnings or errors from the `OutOfReach.*` assemblies in the Unity log. A standalone
-  compile with Unity's bundled Roslyn (C# 9, netstandard 2.1, warning level 4) was also clean.
-- **Repository checks.** `python tools/verify_repository.py` PASS (76 asset GUIDs);
-  `python tools/nasa/horizons_snapshot.py` PASS.
-- **Import side effect, not committed.** On first import, Unity/URP upgrades the shared
-  `Assets/Settings/Mobile_RPAsset.asset` from asset version 12 to 13. The integrator may want to commit the upgraded
-  asset on `main` so clean clones stay clean.
-- **Not verified yet.** PlayMode, scenes, build and gameplay: C01 has none of them.
-- **Machine note.** Unity Hub 3.22.6 from winget (MSIX) ships Licensing Client 1.18.3. That client rejects editor
-  6000.3.28f1's protocol 1.19.0, and the MSIX Hub stores the license in its private package folder, so batch mode
-  reported "No valid Unity Editor license".
-  - Workaround used: copy `UnityEntitlementLicense.xml` from
-    `%LOCALAPPDATA%\Packages\UnityTechnologies.UnityHub_*\LocalCache\Local\Unity\licenses\` to
-    `%LOCALAPPDATA%\Unity\licenses\`.
-  - Launch Unity without a shared console (no `-NoNewWindow`), or the licensing client's Ctrl-C ends the run.
+- **EditMode: 128 passed, 0 failed.** 126 domain tests plus 2 fixture checks of the saved scene and prefab.
+- **PlayMode: 8 passed, 0 failed.** Walking speed and collision, bounded look, reach and line of sight, one
+  repair for the exact cost with a rejected repeat, pause, cinematic lock with fallback, re-enable and restart
+  without duplicate subscriptions.
+- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` PASS (121 asset GUIDs),
+  `tools/nasa/horizons_snapshot.py` PASS.
+- **Not verified:** integration with Codex's ship and UI, a Windows build, a human play-through of the harness
+  scene (it was generated and validated in batch mode only), performance.
+- Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
+  `ProjectSettings/SceneTemplateSettings.json`.

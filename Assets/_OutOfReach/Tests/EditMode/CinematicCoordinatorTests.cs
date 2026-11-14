@@ -130,19 +130,49 @@ namespace OutOfReach.Tests.EditMode
             using (var presentation = new EventRecorder(session.Events))
             {
                 var completions = new List<CinematicCompletion>();
+                CommandResult? chained = null;
                 Assert.That(session.Cinematics.TryRequest(CinematicId.Impact, first =>
                 {
                     completions.Add(first);
-                    Assert.That(session.Cinematics.TryRequest(CinematicId.FalseSignal, completions.Add).Succeeded, Is.True);
+                    chained = session.Cinematics.TryRequest(CinematicId.FalseSignal, completions.Add);
                 }).Succeeded, Is.True);
 
                 int firstId = presentation.CinematicRequests[0].SequenceId;
                 session.Events.Publish(new CinematicFinished(CinematicId.Impact, firstId, false));
 
+                Assert.That(chained.HasValue, Is.True, "the completion callback ran");
+                Assert.That(chained.Value.Succeeded, Is.True, chained.Value.Explanation);
                 Assert.That(presentation.CinematicRequests, Has.Count.EqualTo(2));
                 Assert.That(session.Cinematics.ActiveCinematic, Is.EqualTo(CinematicId.FalseSignal));
                 Assert.That(session.Cinematics.IsWaiting, Is.True);
                 Assert.That(presentation.CinematicRequests[1].SequenceId, Is.Not.EqualTo(firstId));
+            }
+        }
+
+        [Test]
+        public void ThrowingCompletionCallback_IsReported_OnBothPaths_AndNeverBreaksTheTick()
+        {
+            var errors = new List<System.Exception>();
+            using (var session = new MissionSession(AuroraMission.CreateDefinition(), errors.Add))
+            using (var presentation = new EventRecorder(session.Events))
+            {
+                Assert.That(session.Planner.TryLaunch().Succeeded, Is.True);
+
+                // Timeout path: the callback runs from Tick, outside any bus dispatch.
+                Assert.That(session.Cinematics.TryRequest(CinematicId.FalseSignal, _ => throw new System.InvalidOperationException("timeout continuation"), 1d).Succeeded, Is.True);
+                CommandResult tick = session.Tick(2d);
+
+                Assert.That(tick.Succeeded, Is.True, "the frame's simulation step still ran");
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(2d).Within(Fixtures.Tolerance));
+                Assert.That(errors, Has.Count.EqualTo(1));
+                Assert.That(session.Cinematics.IsWaiting, Is.False);
+
+                // Acknowledgement path: the callback runs inside the bus dispatch.
+                Assert.That(session.Cinematics.TryRequest(CinematicId.FalseSignal, _ => throw new System.InvalidOperationException("ack continuation")).Succeeded, Is.True);
+                session.Events.Publish(new CinematicFinished(CinematicId.FalseSignal, presentation.CinematicRequests.Last().SequenceId, false));
+
+                Assert.That(errors, Has.Count.EqualTo(2));
+                Assert.That(errors[1].Message, Is.EqualTo("ack continuation"));
             }
         }
 

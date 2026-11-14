@@ -1,0 +1,195 @@
+using System.Collections.Generic;
+using System.Globalization;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
+using UnityEngine;
+
+namespace OutOfReach.Tests.PlayMode
+{
+    /// <summary>
+    /// TEST FIXTURE, not production UI. A presentation-style listener that follows the documented binding pattern:
+    /// read current state, subscribe when enabled, unsubscribe when disabled, and rebind when the runtime starts a
+    /// new session. Tests use its counters; the harness scene also uses its plain debug overlay so the repair loop
+    /// can be played by hand.
+    /// </summary>
+    public sealed class MissionStatusListener : MonoBehaviour
+    {
+        [SerializeField] private MissionRuntime runtime;
+        [SerializeField] private InteractionResolver resolver;
+        [SerializeField] private bool drawOverlay;
+
+        private IMissionEventBus boundBus;
+        private string lastInteraction = string.Empty;
+
+        public int PhaseEvents { get; private set; }
+
+        public int ResourceEvents { get; private set; }
+
+        public List<SystemConditionChanged> SystemConditions { get; } = new List<SystemConditionChanged>();
+
+        public List<PhaseChanged> Phases { get; } = new List<PhaseChanged>();
+
+        public bool IsBound => boundBus != null;
+
+        public void Configure(MissionRuntime missionRuntime, InteractionResolver interactionResolver, bool overlay)
+        {
+            runtime = missionRuntime;
+            resolver = interactionResolver;
+            drawOverlay = overlay;
+        }
+
+        private void OnEnable()
+        {
+            if (runtime == null)
+            {
+                return;
+            }
+
+            runtime.SessionStarted += OnSessionStarted;
+            runtime.SessionEnding += OnSessionEnding;
+            if (runtime.Session != null)
+            {
+                Bind(runtime.Session.Events);
+            }
+
+            if (resolver != null)
+            {
+                resolver.Interacted += OnInteracted;
+            }
+        }
+
+        private void OnDisable()
+        {
+            Unbind();
+            if (runtime != null)
+            {
+                runtime.SessionStarted -= OnSessionStarted;
+                runtime.SessionEnding -= OnSessionEnding;
+            }
+
+            if (resolver != null)
+            {
+                resolver.Interacted -= OnInteracted;
+            }
+        }
+
+        private void OnSessionStarted(MissionSession session)
+        {
+            Bind(session.Events);
+        }
+
+        private void OnSessionEnding(MissionSession session)
+        {
+            Unbind();
+        }
+
+        private void Bind(IMissionEventBus bus)
+        {
+            Unbind();
+            boundBus = bus;
+            bus.PhaseChanged += OnPhaseChanged;
+            bus.ResourceChanged += OnResourceChanged;
+            bus.SystemConditionChanged += OnSystemConditionChanged;
+        }
+
+        private void Unbind()
+        {
+            if (boundBus == null)
+            {
+                return;
+            }
+
+            boundBus.PhaseChanged -= OnPhaseChanged;
+            boundBus.ResourceChanged -= OnResourceChanged;
+            boundBus.SystemConditionChanged -= OnSystemConditionChanged;
+            boundBus = null;
+        }
+
+        private void OnPhaseChanged(PhaseChanged message)
+        {
+            PhaseEvents++;
+            Phases.Add(message);
+        }
+
+        private void OnResourceChanged(ResourceChanged message)
+        {
+            ResourceEvents++;
+        }
+
+        private void OnSystemConditionChanged(SystemConditionChanged message)
+        {
+            SystemConditions.Add(message);
+        }
+
+        private void OnInteracted(CommandResult result)
+        {
+            lastInteraction = (result.Succeeded ? "OK: " : "Rejected: ") + result.Explanation;
+        }
+
+        private void Update()
+        {
+            // Hand-play conveniences for the harness scene only: no planner UI exists here.
+            if (!drawOverlay || runtime == null || runtime.Session == null)
+            {
+                return;
+            }
+
+            UnityEngine.InputSystem.Keyboard keyboard = UnityEngine.InputSystem.Keyboard.current;
+            if (keyboard == null)
+            {
+                return;
+            }
+
+            if (runtime.Session.State.Phase == GamePhase.Planning && keyboard.enterKey.wasPressedThisFrame)
+            {
+                runtime.Session.Planner.TryLaunch();
+            }
+
+            if (keyboard.rKey.wasPressedThisFrame)
+            {
+                runtime.RestartMission();
+            }
+        }
+
+        private void OnGUI()
+        {
+            if (!drawOverlay || runtime == null || runtime.Session == null)
+            {
+                return;
+            }
+
+            MissionSession session = runtime.Session;
+            ResourceSnapshot r = session.Resources.Snapshot;
+            CultureInfo c = CultureInfo.InvariantCulture;
+            var lines = new List<string>
+            {
+                "OUT OF REACH - C02 repair-loop harness (test fixture, not game UI)",
+                "Enter: launch default loadout | WASD + mouse | E: interact | Esc: pause | R: restart",
+                string.Format(c, "Phase {0} | time x{1:0} | elapsed {2:0.0} h{3}", session.State.Phase, session.Clock.TimeScale,
+                    session.State.ElapsedSimulationSeconds / 3600d, session.Clock.IsPaused ? " | PAUSED" : string.Empty),
+                string.Format(c, "O2 {0:0.00} kg | water {1:0.0} L | food {2:0.0} kg | battery {3:0.00} kWh | parts {4} | CO2 {5:0} ppm",
+                    r.OxygenKg, r.WaterLitres, r.FoodKg, r.BatteryKWh, r.SparePartsCount, r.CarbonDioxidePpm),
+                string.Format(c, "Power {0:P0} | life support {1:P0} | antenna {2:P0}{3}", session.Systems.Power.Condition01,
+                    session.Systems.LifeSupport.Condition01, session.Systems.Antenna.Condition01, session.Director.IsBrownout ? " | BROWNOUT" : string.Empty),
+            };
+            if (session.State.Outcome != MissionOutcome.None)
+            {
+                lines.Add("OUTCOME " + session.State.Outcome + ": " + session.State.OutcomeReason);
+            }
+
+            if (resolver != null && resolver.CurrentPrompt.Length > 0)
+            {
+                lines.Add((resolver.CurrentCanInteract ? "[E] " : "[unavailable] ") + resolver.CurrentPrompt);
+            }
+
+            if (lastInteraction.Length > 0)
+            {
+                lines.Add(lastInteraction);
+            }
+
+            GUI.Label(new Rect(12f, 12f, Screen.width - 24f, 24f * lines.Count + 12f), string.Join("\n", lines));
+        }
+    }
+}

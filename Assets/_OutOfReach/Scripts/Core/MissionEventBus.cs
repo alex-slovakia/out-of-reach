@@ -190,6 +190,12 @@ namespace OutOfReach.Core
             pending.Clear();
         }
 
+        /// <summary>Reports a failure in a Core continuation (for example a cinematic completion) to the same sink.</summary>
+        internal void ReportCallbackFailure(Exception exception)
+        {
+            ReportFailure(exception);
+        }
+
         private void Enqueue<T>(SubscriberList<T> subscribers, T message)
         {
             pending.Enqueue(() => subscribers.Dispatch(message, reportFailure));

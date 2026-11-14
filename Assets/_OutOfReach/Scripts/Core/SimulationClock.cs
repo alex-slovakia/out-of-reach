@@ -10,6 +10,9 @@ namespace OutOfReach.Core
     /// </summary>
     public sealed class SimulationClock
     {
+        /// <summary>Upper bound for acceleration: one simulated day per real second.</summary>
+        public const double MaximumTimeScale = 86400d;
+
         public bool IsPaused { get; private set; }
 
         public double TimeScale { get; private set; } = 1d;
@@ -38,9 +41,9 @@ namespace OutOfReach.Core
 
         public CommandResult TrySetTimeScale(double simulatedSecondsPerRealSecond)
         {
-            if (double.IsNaN(simulatedSecondsPerRealSecond) || double.IsInfinity(simulatedSecondsPerRealSecond) || simulatedSecondsPerRealSecond <= 0d)
+            if (double.IsNaN(simulatedSecondsPerRealSecond) || simulatedSecondsPerRealSecond <= 0d || simulatedSecondsPerRealSecond > MaximumTimeScale)
             {
-                return new CommandResult(false, CommandFailure.InvalidInput, "Time scale must be finite and greater than zero; use Pause to stop time.");
+                return new CommandResult(false, CommandFailure.InvalidInput, "Time scale must be greater than zero and at most 86,400x; use Pause to stop time.");
             }
 
             TimeScale = simulatedSecondsPerRealSecond;

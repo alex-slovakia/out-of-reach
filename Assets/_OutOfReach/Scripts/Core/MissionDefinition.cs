@@ -15,10 +15,12 @@ namespace OutOfReach.Core
             MissionParameters parameters,
             int crewCount,
             IEnumerable<KeyValuePair<string, IReadOnlyDictionary<string, int>>> namedPresets,
-            string defaultPresetId)
+            string defaultPresetId,
+            MissionScenario scenario)
         {
             Catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scenario = scenario ?? throw new ArgumentNullException(nameof(scenario));
             if (crewCount < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(crewCount), crewCount, "A crewed mission needs at least one crew member.");
@@ -67,6 +69,9 @@ namespace OutOfReach.Core
         public EquipmentCatalog Catalog { get; }
 
         public MissionParameters Parameters { get; }
+
+        /// <summary>Scripted accident, repair requirements and pacing.</summary>
+        public MissionScenario Scenario { get; }
 
         public int CrewCount { get; }
 

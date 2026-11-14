@@ -146,7 +146,21 @@ namespace OutOfReach.Core
             pendingCallback = null;
             waitedRealSeconds = 0d;
             LastCompletion = completion;
-            callback?.Invoke(completion);
+            if (callback == null)
+            {
+                return;
+            }
+
+            try
+            {
+                callback(completion);
+            }
+            catch (Exception exception)
+            {
+                // Same isolation on the acknowledgement and the timeout path: a failing continuation is reported
+                // and never interrupts the frame's simulation step.
+                events.ReportCallbackFailure(exception);
+            }
         }
     }
 }

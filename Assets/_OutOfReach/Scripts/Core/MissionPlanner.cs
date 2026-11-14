@@ -64,8 +64,16 @@ namespace OutOfReach.Core
 
         public bool HasLaunched => LaunchedConfiguration != null;
 
+        /// <summary>Raised after every accepted draft change (Core bookkeeping such as the planning deadline).</summary>
+        public event Action DraftChanged;
+
         public CommandResult TrySetEquipment(string equipmentId, int quantity)
         {
+            if (state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
             if (HasLaunched || state.Phase != GamePhase.Planning)
             {
                 return Fail(CommandFailure.WrongPhase, "The loadout can only change during Planning; it is frozen after launch.");
@@ -101,11 +109,60 @@ namespace OutOfReach.Core
             }
 
             draft = BuildDraft();
+            DraftChanged?.Invoke();
             return Ok(quantity == 0 ? $"Removed '{equipmentId}'." : $"Set '{equipmentId}' to {quantity}.");
+        }
+
+        /// <summary>
+        /// Replaces the draft with a previously valid configuration and launches it in one step. Used only by the
+        /// planning deadline when the current draft is invalid at zero; the draft then shows what was launched.
+        /// </summary>
+        internal CommandResult TryLaunchConfiguration(MissionConfiguration configuration)
+        {
+            if (configuration == null)
+            {
+                return Fail(CommandFailure.InvalidInput, "A configuration is required.");
+            }
+
+            if (state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
+            if (HasLaunched)
+            {
+                return Fail(CommandFailure.AlreadyComplete, "The mission has already launched; the loadout is frozen.");
+            }
+
+            if (state.Phase != GamePhase.Planning)
+            {
+                return Fail(CommandFailure.WrongPhase, $"Launch requires Planning; current phase is {state.Phase}.");
+            }
+
+            CommandResult validation = configuration.Validate();
+            if (!validation.Succeeded)
+            {
+                return validation;
+            }
+
+            draftQuantities.Clear();
+            foreach (KeyValuePair<string, int> entry in configuration.CopyQuantities())
+            {
+                draftQuantities[entry.Key] = entry.Value;
+            }
+
+            draft = BuildDraft();
+            DraftChanged?.Invoke();
+            return TryLaunch();
         }
 
         public CommandResult TryLaunch()
         {
+            if (state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
             if (HasLaunched)
             {
                 return Fail(CommandFailure.AlreadyComplete, "The mission has already launched; the loadout is frozen.");

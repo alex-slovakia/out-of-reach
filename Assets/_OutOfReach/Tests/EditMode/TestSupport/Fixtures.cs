@@ -21,6 +21,42 @@ namespace OutOfReach.Tests.EditMode
             return session;
         }
 
+        /// <summary>Launched, impact applied and acknowledged: the mission is in Emergency.</summary>
+        public static MissionSession EmergencySession(string presetId = null)
+        {
+            MissionSession session = LaunchedSession(presetId);
+            TriggerImpact(session);
+            return session;
+        }
+
+        /// <summary>Completes the cockpit check and acknowledges the Impact cinematic the way presentation would.</summary>
+        public static void TriggerImpact(MissionSession session)
+        {
+            CommandResult check = session.Director.TryCompleteCockpitCheck();
+            Assert.That(check.Succeeded, Is.True, check.Explanation);
+            AcknowledgeActiveCinematic(session);
+            Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Emergency));
+        }
+
+        public static void AcknowledgeActiveCinematic(MissionSession session, bool skipped = false)
+        {
+            if (session.Cinematics.IsWaiting)
+            {
+                session.Events.Publish(new CinematicFinished(session.Cinematics.ActiveCinematic, session.Cinematics.ActiveSequenceId, skipped));
+            }
+        }
+
+        public static CommandResult Repair(MissionSession session, ShipSystemId system)
+        {
+            return session.Systems.Get(system).TryRepair(session.Resources);
+        }
+
+        public static void RepairOrFail(MissionSession session, ShipSystemId system)
+        {
+            CommandResult result = Repair(session, system);
+            Assert.That(result.Succeeded, Is.True, result.Explanation);
+        }
+
         public static void AssertSnapshot(ResourceSnapshot expected, ResourceSnapshot actual, double tolerance = Tolerance)
         {
             Assert.That(actual.OxygenKg, Is.EqualTo(expected.OxygenKg).Within(tolerance), "OxygenKg");

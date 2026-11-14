@@ -28,6 +28,8 @@ namespace OutOfReach.Tests.EditMode
 
         public List<ResourceChanged> Resources { get; } = new List<ResourceChanged>();
 
+        public List<SystemConditionChanged> SystemConditions { get; } = new List<SystemConditionChanged>();
+
         public List<CinematicRequested> CinematicRequests { get; } = new List<CinematicRequested>();
 
         public List<CinematicFinished> CinematicFinishes { get; } = new List<CinematicFinished>();
@@ -63,6 +65,7 @@ namespace OutOfReach.Tests.EditMode
         private void OnSystemConditionChanged(SystemConditionChanged message)
         {
             Order.Add(nameof(SystemConditionChanged));
+            SystemConditions.Add(message);
         }
 
         private void OnCommunicationChanged(CommunicationChanged message)
