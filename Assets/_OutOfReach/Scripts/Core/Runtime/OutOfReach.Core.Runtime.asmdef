@@ -1,0 +1,21 @@
+{
+  "name": "OutOfReach.Core.Runtime",
+  "rootNamespace": "OutOfReach.Core.Runtime",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Inventory",
+    "OutOfReach.Simulation",
+    "OutOfReach.Interaction",
+    "OutOfReach.Player"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
