@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current override — 14 November, 18:45 CET
+
+Original project I05 **33f474f**, runtime3032686, is delivered and being played by Alex. Root107focused/274full-mission checks and Windows build pass; second-PC author290Edit/34Play and Bootstrap probe confirmed. [Exact full-row counts and owners](docs/playtest-review/06-status-1845.md). Reviewed C06 rest/recovery through968ab8e is isolated as475fe18, not yet enabled in original. Habitat36211e8 and transport6df81d3 are delivered art awaiting integration. Microgravity is newly requested and assigned as an optional prototype. [Final target boards/Slovak walkthrough](docs/art-direction/review-06-final-overview/README.md). Older claims below are historical.
+
 ## Current verified checkpoint — November14,15:37CET
 
 Runtime `375c535`: physical C05 cargo integrated with Claude ship/gloves/GMAT stars and continuous EVA fix3bde63b. Root ran273 scripted complete-mission checks (success/loss/restart) and25PlayMode tests; repository/NASA checks pass. [Evidence and limits](docs/verification/i04-375c535/README.md). Windows build and second-machine sync are not verified for I04. Later tables are historical checkpoints, not current completion claims.
