@@ -102,7 +102,11 @@ namespace OutOfReach.Core
     {
         private readonly Dictionary<ShipSystemId, ShipSystemSpec> byId = new Dictionary<ShipSystemId, ShipSystemSpec>();
 
-        public MissionScenario(IEnumerable<ShipSystemSpec> systems, MissionPacing pacing, double impactCinematicTimeoutRealSeconds = CinematicCoordinator.DefaultTimeoutRealSeconds)
+        public MissionScenario(
+            IEnumerable<ShipSystemSpec> systems,
+            MissionPacing pacing,
+            double impactCinematicTimeoutRealSeconds = CinematicCoordinator.DefaultTimeoutRealSeconds,
+            EvaSpec eva = null)
         {
             if (systems == null)
             {
@@ -137,6 +141,7 @@ namespace OutOfReach.Core
             Systems = ordered.AsReadOnly();
             Pacing = pacing ?? throw new ArgumentNullException(nameof(pacing));
             ImpactCinematicTimeoutRealSeconds = impactCinematicTimeoutRealSeconds;
+            Eva = eva ?? new EvaSpec();
         }
 
         public IReadOnlyList<ShipSystemSpec> Systems { get; }
@@ -145,6 +150,9 @@ namespace OutOfReach.Core
 
         /// <summary>Unpaused real seconds Core waits for the Impact cinematic before continuing without it.</summary>
         public double ImpactCinematicTimeoutRealSeconds { get; }
+
+        /// <summary>Suit and airlock assumptions for the EVA.</summary>
+        public EvaSpec Eva { get; }
 
         public ShipSystemSpec GetSystem(ShipSystemId systemId)
         {

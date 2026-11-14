@@ -30,6 +30,8 @@ namespace OutOfReach.Tests.EditMode
 
         public List<SystemConditionChanged> SystemConditions { get; } = new List<SystemConditionChanged>();
 
+        public List<AirlockState> Airlock { get; } = new List<AirlockState>();
+
         public List<CinematicRequested> CinematicRequests { get; } = new List<CinematicRequested>();
 
         public List<CinematicFinished> CinematicFinishes { get; } = new List<CinematicFinished>();
@@ -88,6 +90,7 @@ namespace OutOfReach.Tests.EditMode
         private void OnAirlockStateChanged(AirlockStateChanged message)
         {
             Order.Add(nameof(AirlockStateChanged));
+            Airlock.Add(message.State);
         }
 
         private void OnMissionEnded(MissionEnded message)

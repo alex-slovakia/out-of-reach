@@ -9,7 +9,10 @@ namespace OutOfReach.Simulation
         OxygenDepleted,
         CarbonDioxideLimit,
         WaterDepleted,
-        FoodDepleted
+        FoodDepleted,
+
+        /// <summary>The sealed suit ran out of oxygen before the crew was back in a pressurized cabin.</summary>
+        SuitOxygenDepleted
     }
 
     /// <summary>

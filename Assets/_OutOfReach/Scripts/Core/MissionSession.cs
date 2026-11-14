@@ -40,11 +40,23 @@ namespace OutOfReach.Core
             PlanningDeadline = new PlanningDeadline(Planner, State);
             ClockView = new SimulationClockView(Clock, State);
             Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics);
+            Director.Eva.BindSimulationAdvance(AdvanceSimulation);
 
             Interactions = new InteractionCatalog();
             Interactions.Add(new CockpitConsoleInteraction(Director, State));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairPower, Director.Systems.Power, Resources));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairLifeSupport, Director.Systems.LifeSupport, Resources));
+            Interactions.Add(new RepairInteraction(InteractionIds.RepairAntenna, Director.Systems.Antenna, Resources));
+
+            EvaOperations eva = Director.Eva;
+            Interactions.Add(new DelegatedInteraction(InteractionIds.SuitLocker, eva.CheckPrepareSuit, eva.TryPrepareSuit,
+                () => eva.IsSuitOn ? "EVA suit on: " + eva.SuitOxygenKg.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + " kg oxygen in the tank" : null));
+            Interactions.Add(new DelegatedInteraction(InteractionIds.AirlockControls,
+                () => eva.Airlock == AirlockState.OuterOpen ? eva.CheckEndEva() : eva.CheckBeginEva(),
+                () => eva.Airlock == AirlockState.OuterOpen ? eva.TryEndEva() : eva.TryBeginEva(),
+                () => DescribeAirlockTransition(eva)));
+            Interactions.Add(new DelegatedInteraction(InteractionIds.EvaExit, eva.CheckGoOutside, eva.TryGoOutside));
+            Interactions.Add(new DelegatedInteraction(InteractionIds.EvaReturn, eva.CheckReturnInside, eva.TryReturnInside));
         }
 
         public MissionDefinition Definition { get; }
@@ -70,6 +82,9 @@ namespace OutOfReach.Core
         public MissionDirector Director { get; }
 
         public ShipSystems Systems => Director.Systems;
+
+        /// <summary>Suit, airlock and outside state for the EVA.</summary>
+        public EvaOperations Eva => Director.Eva;
 
         public InteractionCatalog Interactions { get; }
 
@@ -200,6 +215,7 @@ namespace OutOfReach.Core
 
                     Resources.AdvanceTime(step);
                     State.AdvanceTime(step);
+                    Director.Eva.AdvanceTime(step);
                     remaining -= step;
                     Director.AfterSimulationStep();
                 }
@@ -224,6 +240,18 @@ namespace OutOfReach.Core
             Director.Dispose();
             Cinematics.Dispose();
             Events.ClearAllSubscriptions();
+        }
+
+        private static string DescribeAirlockTransition(EvaOperations eva)
+        {
+            if (eva.Airlock == AirlockState.Depressurizing)
+            {
+                return "Depressurizing: " + EvaOperations.FormatDuration(eva.AirlockTransitionRemainingSeconds) + " left";
+            }
+
+            return eva.Airlock == AirlockState.Repressurizing
+                ? "Repressurizing: " + EvaOperations.FormatDuration(eva.AirlockTransitionRemainingSeconds) + " left"
+                : null;
         }
 
         private static bool IsFiniteNonNegative(double value)

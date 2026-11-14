@@ -57,6 +57,51 @@ namespace OutOfReach.Tests.EditMode
             Assert.That(result.Succeeded, Is.True, result.Explanation);
         }
 
+        /// <summary>Emergency with power and life support repaired: the mission is in Repair.</summary>
+        public static MissionSession StabilizedSession(string presetId = null)
+        {
+            MissionSession session = EmergencySession(presetId);
+            RepairOrFail(session, ShipSystemId.Power);
+            RepairOrFail(session, ShipSystemId.LifeSupport);
+            Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair));
+            return session;
+        }
+
+        public static void SuitUp(MissionSession session)
+        {
+            CommandResult result = session.Eva.TryPrepareSuit();
+            Assert.That(result.Succeeded, Is.True, result.Explanation);
+        }
+
+        /// <summary>Seals and depressurizes the airlock and waits until the outer hatch is open (Eva phase).</summary>
+        public static void OpenOuterHatch(MissionSession session)
+        {
+            CommandResult begun = session.Eva.TryBeginEva();
+            Assert.That(begun.Succeeded, Is.True, begun.Explanation);
+            Assert.That(session.AdvanceSimulation(session.Eva.Spec.DepressurizationSeconds).Succeeded, Is.True);
+            Assert.That(session.Eva.Airlock, Is.EqualTo(AirlockState.OuterOpen));
+        }
+
+        public static void GoOutside(MissionSession session)
+        {
+            CommandResult result = session.Eva.TryGoOutside();
+            Assert.That(result.Succeeded, Is.True, result.Explanation);
+        }
+
+        /// <summary>Returns inside if needed, closes the outer hatch and waits for repressurization.</summary>
+        public static void ReturnAndRepressurize(MissionSession session)
+        {
+            if (session.Eva.IsOutside)
+            {
+                Assert.That(session.Eva.TryReturnInside().Succeeded, Is.True);
+            }
+
+            CommandResult ended = session.Eva.TryEndEva();
+            Assert.That(ended.Succeeded, Is.True, ended.Explanation);
+            Assert.That(session.AdvanceSimulation(session.Eva.Spec.RepressurizationSeconds).Succeeded, Is.True);
+            Assert.That(session.Eva.Airlock, Is.EqualTo(AirlockState.InnerOpen));
+        }
+
         public static void AssertSnapshot(ResourceSnapshot expected, ResourceSnapshot actual, double tolerance = Tolerance)
         {
             Assert.That(actual.OxygenKg, Is.EqualTo(expected.OxygenKg).Within(tolerance), "OxygenKg");

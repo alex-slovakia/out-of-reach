@@ -61,10 +61,16 @@ namespace OutOfReach.Tests.EditMode
                 Fixtures.RepairOrFail(session, ShipSystemId.Power);
                 Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair), "the first interior repair ends the emergency");
                 Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
-                Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
-                Assert.That(session.State.TryTransition(GamePhase.Repair).Succeeded, Is.True, "return inside before the antenna is fixed");
-                Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
-                Assert.That(session.State.TryTransition(GamePhase.Transmission).Succeeded, Is.True);
+                Fixtures.SuitUp(session);
+                Fixtures.OpenOuterHatch(session);
+                Fixtures.ReturnAndRepressurize(session);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair), "back inside before the antenna is fixed");
+                Fixtures.SuitUp(session);
+                Fixtures.OpenOuterHatch(session);
+                Fixtures.GoOutside(session);
+                Fixtures.RepairOrFail(session, ShipSystemId.Antenna);
+                Fixtures.ReturnAndRepressurize(session);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Transmission));
                 Assert.That(session.State.TryEndMission(MissionOutcome.RecoveryPossible, "Contact restored.", session.Resources.Snapshot).Succeeded, Is.True);
                 Assert.That(session.State.TryTransition(GamePhase.Report).Succeeded, Is.True);
 
@@ -127,7 +133,14 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Repair));
 
                 Fixtures.RepairOrFail(session, ShipSystemId.Power);
-                Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
+                CommandResult withoutAirlock = session.State.TryTransition(GamePhase.Eva);
+                Assert.That(withoutAirlock.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "an EVA starts at the airlock with the suit on");
+                Assert.That(session.State.TryTransition(GamePhase.Transmission).Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "no transmission with a broken antenna");
+
+                Fixtures.SuitUp(session);
+                Fixtures.OpenOuterHatch(session);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Eva));
+                Assert.That(session.State.TryTransition(GamePhase.Repair).Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "no way back in except through the airlock");
                 Assert.That(recorder.Phases, Has.Count.EqualTo(3), "Intro->Emergency, Emergency->Repair, Repair->Eva");
             }
         }

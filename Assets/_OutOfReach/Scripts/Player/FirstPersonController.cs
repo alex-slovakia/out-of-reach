@@ -76,6 +76,11 @@ namespace OutOfReach.Player
 
         public InteractionResolver Interaction => interaction;
 
+        /// <summary>The constrained route the player is clipped to, or null while walking.</summary>
+        public TetheredRoute ActiveRoute { get; private set; }
+
+        public bool IsOnRoute => ActiveRoute != null;
+
         /// <summary>Result of the most recent interact press, or null.</summary>
         public CommandResult? LastInteraction { get; private set; }
 
@@ -89,17 +94,43 @@ namespace OutOfReach.Player
             interaction = resolver;
         }
 
-        /// <summary>Places the feet at a position with a heading, level view and no residual velocity.</summary>
+        /// <summary>
+        /// Places the feet at a position with a heading, level view and no residual velocity. Always ends in
+        /// walking mode: any constrained route is released.
+        /// </summary>
         public void Teleport(Vector3 feetPosition, float yawDegrees)
         {
             CharacterController controller = Body;
-            bool wasEnabled = controller.enabled;
+            ActiveRoute = null;
             controller.enabled = false;
             transform.SetPositionAndRotation(feetPosition, Quaternion.Euler(0f, yawDegrees, 0f));
-            controller.enabled = wasEnabled;
+            controller.enabled = true;
             verticalVelocity = 0f;
             PitchDegrees = 0f;
             ApplyPitch();
+        }
+
+        /// <summary>
+        /// Clips the player to a constrained route: the feet move to its start, gravity and collisions are off and
+        /// movement is clamped to the route corridor until <see cref="ExitRoute"/> or <see cref="Teleport"/>.
+        /// </summary>
+        public void EnterRoute(TetheredRoute route)
+        {
+            if (route == null || !route.IsValid)
+            {
+                return;
+            }
+
+            Body.enabled = false;
+            ActiveRoute = route;
+            verticalVelocity = 0f;
+            transform.position = route.StartPosition;
+        }
+
+        /// <summary>Releases the route and stands the player at a walking position.</summary>
+        public void ExitRoute(Vector3 feetPosition, float yawDegrees)
+        {
+            Teleport(feetPosition, yawDegrees);
         }
 
         private CharacterController Body
@@ -186,7 +217,15 @@ namespace OutOfReach.Player
             }
 
             Look(input.LookDegrees);
-            Walk(input.Move, Time.deltaTime);
+            if (ActiveRoute != null)
+            {
+                MoveAlongRoute(input.Move, Time.deltaTime);
+            }
+            else
+            {
+                Walk(input.Move, Time.deltaTime);
+            }
+
             if (input.InteractPressedThisFrame && interaction != null)
             {
                 LastInteraction = interaction.TryInteract();
@@ -232,6 +271,20 @@ namespace OutOfReach.Player
 
             verticalVelocity -= gravityMetresPerSecondSquared * deltaSeconds;
             controller.Move((horizontal + (Vector3.up * verticalVelocity)) * deltaSeconds);
+        }
+
+        private void MoveAlongRoute(Vector2 move, float deltaSeconds)
+        {
+            if (deltaSeconds <= 0f)
+            {
+                return;
+            }
+
+            // Pull along the tether in the direction of view (including up or down), then clamp to the corridor.
+            Vector2 intent = Vector2.ClampMagnitude(move, 1f);
+            Vector3 forward = viewPivot != null ? viewPivot.forward : transform.forward;
+            Vector3 wish = ((transform.right * intent.x) + (forward * intent.y)) * (ActiveRoute.SpeedMetresPerSecond * deltaSeconds);
+            transform.position = ActiveRoute.Constrain(transform.position + wish);
         }
 
         private void ApplyCursor(bool capture)

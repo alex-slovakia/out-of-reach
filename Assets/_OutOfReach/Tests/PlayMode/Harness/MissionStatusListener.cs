@@ -174,6 +174,12 @@ namespace OutOfReach.Tests.PlayMode
                 string.Format(c, "Power {0:P0} | life support {1:P0} | antenna {2:P0}{3}", session.Systems.Power.Condition01,
                     session.Systems.LifeSupport.Condition01, session.Systems.Antenna.Condition01, session.Director.IsBrownout ? " | BROWNOUT" : string.Empty),
             };
+            EvaOperations eva = session.Eva;
+            lines.Add(string.Format(c, "Airlock {0}{1} | suit {2}{3}{4}", eva.Airlock,
+                eva.AirlockTransitionRemainingSeconds > 0d ? string.Format(c, " ({0:0} s)", eva.AirlockTransitionRemainingSeconds) : string.Empty,
+                eva.IsSuitOn ? "on" : "off",
+                eva.IsSuitOn ? string.Format(c, " {0:0.00} kg O2 ({1:0} min)", eva.SuitOxygenKg, eva.SuitOxygenSecondsRemaining / 60d) : string.Empty,
+                eva.IsOutside ? " | OUTSIDE on the tether" : string.Empty));
             if (session.State.Outcome != MissionOutcome.None)
             {
                 lines.Add("OUTCOME " + session.State.Outcome + ": " + session.State.OutcomeReason);

@@ -3,8 +3,8 @@
 Branch `feature/survival-simulation`. Owner: Claude (Apoliak). This file is the running handoff for the
 integrator; root documentation stays integrator-owned. Status and requests live on issue #7.
 
-**Done:** C01 (mission foundation) and C02 (first playable repair loop). **Not yet:** EVA, airlock, antenna
-interaction (C03), communications, outcomes for success, report data (C04).
+**Done:** C01 (mission foundation), C02 (first playable repair loop) and C03 (suit, airlock, constrained EVA,
+antenna repair). **Not yet:** communications, outcomes for success, report data (C04).
 
 ## Assemblies
 
@@ -28,7 +28,8 @@ interaction (C03), communications, outcomes for success, report data (C04).
 | `IMissionConfiguration` | `OutOfReach.Inventory.MissionConfiguration` |
 | `IResourceSystem` | `OutOfReach.Simulation.ResourceLedger` |
 | `IRepairable` | `OutOfReach.Simulation.ShipSystem` (Power, LifeSupport, Antenna) |
-| `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `OutOfReach.Core.RepairInteraction` |
+| `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `RepairInteraction`, `DelegatedInteraction` |
+| `AirlockState` / `AirlockStateChanged` | published by `OutOfReach.Core.EvaOperations` |
 | `ICommunicationSystem` | C04 (not yet) |
 | `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
 | `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
@@ -117,6 +118,77 @@ with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRi
   draft if valid, otherwise the last valid loadout (`UsedLastValidLoadoutAtDeadline = true`). Once, atomically,
   and the launch frame spends no simulated time. Starting it without any valid loadout fails explicitly.
 
+## C03: suit, airlock and the constrained EVA
+
+### What the player does
+
+1. **Suit locker** (`suit-locker`): puts the suit on. Needs power and life support repaired. Costs 0.84 kg of
+   stored oxygen and jumps simulated time by 2 h 20 min of preparation.
+2. **Airlock controls** (`airlock-controls`, inside the airlock): "Seal inner hatch and depressurize". Costs
+   0.11 kg oxygen and 0.2 kWh, seals the suit and enters the Eva phase. After 10 simulated minutes the outer
+   hatch is open.
+3. **Outer hatch, inside** (`eva-exit`): "Clip tether and go outside". The player is moved onto the route.
+4. **Route** to the antenna work site, then `repair-antenna`: 3 spare parts and 0.5 kWh, only while outside.
+5. **Outer hatch, outside** (`eva-return`): "Enter the airlock". Always possible, costs nothing.
+6. **Airlock controls** again: "Close outer hatch and repressurize". Refused while the player is outside. After
+   10 simulated minutes the inner hatch opens, the suit comes off and the mission goes to Transmission if the
+   antenna works, otherwise back to Repair (a second EVA pays the suit and airlock costs again).
+
+### Guarantees
+
+- **Hatches are never open together.** They are distinct values of the shared `AirlockState`; events arrive in the
+  order `Sealed`, `Depressurizing`, `OuterOpen`, `Repressurizing`, `InnerOpen`.
+- **No unsuited or unsafe exit.** Going outside needs a sealed suit and `OuterOpen`. Direct phase requests cannot
+  bypass the airlock. A door animation changes nothing: the gameplay gates below decide.
+- **Suit oxygen.** While sealed, the crew breathes the suit tank (0.30 kg at 0.1 kg/h = 3 h), not the ship reserve,
+  and puts no CO2 into the cabin. If it runs out before repressurization completes, the mission is `Lost` at
+  that exact time, with the reason saying where ("outside the ship" or "in the airlock").
+- **Interrupted repair.** An antenna repair without enough parts or energy spends nothing; the return still works.
+- **Pause and chapter jumps** apply to the suit and the airlock timers like to everything else.
+
+### Scene bindings for V03 and I02 (all Claude-owned; no Codex prefab is edited)
+
+| Where | Component and ID | Notes |
+|---|---|---|
+| `AirlockInner` | `GameplayGate`, `airlock-inner`, with a collider filling the doorway | Walkable only while the airlock is `InnerOpen` |
+| `AirlockOuter` | `GameplayGate`, `airlock-outer`, with a collider filling the hatch | Never walkable: the hatch is crossed only through the two interactions below |
+| `AirlockOuter`, inside face | `InteractableTarget`, `eva-exit` | |
+| `EvaReturn` | `InteractableTarget`, `eva-return` | Outside, within 2 m of the first waypoint |
+| `AntennaRepair` | `InteractableTarget`, `repair-antenna` | Within 2 m of the last waypoint |
+| Inside the airlock | `InteractableTarget`, `airlock-controls` | No anchor exists yet: place it on a wall between the hatches |
+| Cabin or airlock | `InteractableTarget`, `suit-locker` | No anchor exists yet: place it at the suit stowage |
+| `EvaStart` ... work site | `OutOfReach.Player.TetheredRoute` with waypoint transforms | First waypoint = `EvaStart` (feet position); last one about 1.2 m short of the antenna |
+| Inside by the outer hatch | any transform as `Eva Reentry Point` | Feet position and heading after re-entry |
+
+`MissionRuntime` Inspector fields: `Gates` (both gates), `Eva Route`, `Eva Reentry Point`, plus the five new targets
+in `Interaction Targets`. The runtime opens and closes the gates every frame and clips the player to the route
+exactly while the mission says the crew is outside.
+
+On the route the player has no gravity and no free flight: movement follows the view direction, is clamped to
+0.5 m around the waypoint line and cannot pass either end (tether length = line length, 1 m/s). These limits are
+serialized on `TetheredRoute`.
+
+### EVA HUD data (no contract yet)
+
+`MissionRuntime.Eva` returns `OutOfReach.Core.EvaOperations`: `IsSuitOn`, `IsSuitSealed`, `SuitOxygenKg`,
+`SuitOxygenCapacityKg`, `SuitOxygenSecondsRemaining`, `IsOutside`, `Airlock`, `AirlockTransitionRemainingSeconds`
+and a `Changed` event. Proposal for the integrator: a read-only `IEvaStatus` contract with exactly these members.
+Until it exists, the integrator can adapt the properties. Airlock door visuals only need `AirlockStateChanged`.
+
+### EVA assumptions (GAME ASSUMPTIONS for a fictional suit and airlock)
+
+| Value | Used | Reference it follows (other designs, not a universal minimum) |
+|---|---|---|
+| Preparation time | 2 h 20 min | ISS EMU exercise prebreathe, 80 + 60 min (BVAD REV2 section 4.6.3) |
+| Suit purge oxygen | 0.54 kg per EVA | xEMU prediction (BVAD REV2 section 4.6.2) |
+| Suit tank / use | 0.30 kg / 0.1 kg per hour | xEMU prediction of 0.1 kg/h |
+| Airlock loss | 10 % of the air in 4 m³ = 0.11 kg O2 per cycle | about 10 % per cycle (BVAD REV2 section 4.6.2) |
+| Pump energy | 0.2 kWh per cycle | none |
+| Depressurize / repressurize | 10 min each | none |
+
+A solo EVA is itself a fictional emergency: the cited protocol requires two crew members. The report (C04)
+should say so. Time scale in the Eva phase is ×60 (placeholder; tuning in `MissionPacing`).
+
 ## Emergency model (one model for nominal flight and the accident)
 
 | Input | Effect |
@@ -140,6 +212,7 @@ with the menu `OUT OF REACH/Tests/Rebuild repair-loop harness scene and PlayerRi
 | Stored oxygen | Not instant: the cabin's own air stays above 18.6 kPa p[O₂] for about 19.4 h, then lost |
 | Water or food | Reserve exhausted (simplification) |
 | Battery | Never an ending by itself; it stops the scrubbers, then CO₂ decides |
+| Suit oxygen | A sealed suit runs empty before repressurization completes |
 
 ## Sources and labels
 
@@ -194,17 +267,22 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
    read-only contract can be proposed if Codex prefers code binding.
 3. **Report data (C04)** still needs the small read-only report contract.
 4. **PlayerRig camera.** The integrator parents the Bootstrap camera under `ViewPivot`; the rig never creates one.
+5. **Suit-up time jump.** The 2 h 20 min preparation is a real jump of simulated time with no event of its own.
+   A chapter card can key on the `suit-locker` interaction result or on `EvaOperations.Changed`.
+6. **EVA anchors.** `airlock-controls` and `suit-locker` have no anchor in the visual prefab yet, and the route
+   needs waypoint transforms along the hull from `EvaStart` to the antenna (V03).
 
-## Evidence (C02, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
+## Evidence (C03, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 129 passed, 0 failed.** 127 domain tests plus 2 fixture checks of the saved scene and prefab.
-  (128 passed on the C02 commit itself; one contract test was added with the adoption commit.)
-- **PlayMode: 8 passed, 0 failed.** Walking speed and collision, bounded look, reach and line of sight, one
-  repair for the exact cost with a rejected repeat, pause, cinematic lock with fallback, re-enable and restart
-  without duplicate subscriptions.
-- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` PASS (121 asset GUIDs),
+- **EditMode: 152 passed, 0 failed.** 145 domain tests (18 new for the suit and the airlock), 5 route geometry
+  tests and 2 fixture checks of the regenerated scene and prefab.
+- **PlayMode: 13 passed, 0 failed.** The 8 repair-loop tests plus 5 for the EVA: gates following the airlock,
+  refused exit without the airlock cycle, a full EVA driven through the interactions (suit, depressurize, exit,
+  traverse, repair, return, repressurize), suit running empty outside, and restart while outside.
+- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` and
   `tools/nasa/horizons_snapshot.py` PASS.
-- **Not verified:** integration with Codex's ship and UI, a Windows build, a human play-through of the harness
-  scene (it was generated and validated in batch mode only), performance.
+- Earlier checkpoints: C02 at `91e6215` was 129 EditMode / 8 PlayMode, also verified independently in a separate clone.
+- **Not verified:** integration with Codex's ship, exterior and UI, a Windows build, a human play-through of the
+  harness scene (generated and validated in batch mode only), performance.
 - Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
   `ProjectSettings/SceneTemplateSettings.json`.

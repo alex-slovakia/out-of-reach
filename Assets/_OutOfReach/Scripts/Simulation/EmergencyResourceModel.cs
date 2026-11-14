@@ -11,7 +11,8 @@ namespace OutOfReach.Simulation
             double availablePowerWatts,
             double powerCondition01,
             double lifeSupportCondition01,
-            bool batteryEmpty)
+            bool batteryEmpty,
+            bool crewOnSuitOxygen = false)
         {
             CrewCount = crewCount;
             RequiredPowerWatts = requiredPowerWatts;
@@ -19,6 +20,7 @@ namespace OutOfReach.Simulation
             PowerCondition01 = powerCondition01;
             LifeSupportCondition01 = lifeSupportCondition01;
             BatteryEmpty = batteryEmpty;
+            CrewOnSuitOxygen = crewOnSuitOxygen;
         }
 
         public int CrewCount { get; }
@@ -36,6 +38,12 @@ namespace OutOfReach.Simulation
         public double LifeSupportCondition01 { get; }
 
         public bool BatteryEmpty { get; }
+
+        /// <summary>
+        /// True while the crew breathes from a sealed suit: no stored ship oxygen is drawn for breathing and no
+        /// crew CO2 enters the cabin. Water and food use continue.
+        /// </summary>
+        public bool CrewOnSuitOxygen { get; }
     }
 
     /// <summary>Result of one evaluation: the constant rates to apply and the facts that explain them.</summary>
@@ -116,12 +124,13 @@ namespace OutOfReach.Simulation
             double scrubbing = brownout ? 0d : inputs.LifeSupportCondition01;
 
             double crewPerSecond = inputs.CrewCount / CrewMetabolicAssumptions.SecondsPerDay;
-            double crewCarbonDioxide = CabinAtmosphere.CrewCarbonDioxidePpmPerSecond(inputs.CrewCount);
-            double removalCapacity = crewCarbonDioxide + ScrubberDrawdownPpmPerSecond;
+            int crewBreathingCabinAir = inputs.CrewOnSuitOxygen ? 0 : inputs.CrewCount;
+            double crewCarbonDioxide = CabinAtmosphere.CrewCarbonDioxidePpmPerSecond(crewBreathingCabinAir);
+            double removalCapacity = CabinAtmosphere.CrewCarbonDioxidePpmPerSecond(inputs.CrewCount) + ScrubberDrawdownPpmPerSecond;
             double oxygenLeak = DamagedLifeSupportOxygenLeakKgPerDay / CrewMetabolicAssumptions.SecondsPerDay * (1d - inputs.LifeSupportCondition01);
 
             var rates = new ResourceRates(
-                (CrewMetabolicAssumptions.OxygenKgPerCrewDay * crewPerSecond) + oxygenLeak,
+                (CrewMetabolicAssumptions.OxygenKgPerCrewDay * crewBreathingCabinAir / CrewMetabolicAssumptions.SecondsPerDay) + oxygenLeak,
                 CrewMetabolicAssumptions.WaterLitresPerCrewDay * crewPerSecond,
                 CrewMetabolicAssumptions.FoodKgPerCrewDay * crewPerSecond,
                 brownout ? 0d : net,

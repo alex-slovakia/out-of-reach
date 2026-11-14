@@ -40,6 +40,16 @@ namespace OutOfReach.Core.Runtime
 
         [SerializeField] private InteractableTarget[] interactionTargets = new InteractableTarget[0];
 
+        [Header("EVA")]
+        [Tooltip("Gameplay gates the airlock controls: airlock-inner and airlock-outer.")]
+        [SerializeField] private GameplayGate[] gates = new GameplayGate[0];
+
+        [Tooltip("Constrained route from EvaStart to the antenna work site.")]
+        [SerializeField] private TetheredRoute evaRoute;
+
+        [Tooltip("Feet position and heading after re-entering the airlock, inside by the outer hatch.")]
+        [SerializeField] private Transform evaReentryPoint;
+
         [Header("Session")]
         [Tooltip("Create the mission session in Awake.")]
         [SerializeField] private bool startOnAwake = true;
@@ -67,6 +77,7 @@ namespace OutOfReach.Core.Runtime
         [SerializeField] private UnityEvent<bool> pauseChanged = new UnityEvent<bool>();
 
         private bool playerSubscribed;
+        private bool playerOutside;
         private int lastStepFrame = -1;
 
         /// <summary>The current mission session, or null before start and after teardown.</summary>
@@ -95,6 +106,18 @@ namespace OutOfReach.Core.Runtime
         public FirstPersonController Player => player;
 
         public IReadOnlyList<InteractableTarget> InteractionTargets => interactionTargets;
+
+        public IReadOnlyList<GameplayGate> Gates => gates;
+
+        public TetheredRoute EvaRoute => evaRoute;
+
+        public Transform EvaReentryPoint => evaReentryPoint;
+
+        /// <summary>
+        /// Suit, airlock and outside state for an EVA HUD (suit oxygen, time left, airlock timer). There is no
+        /// shared contract for it yet; the integrator can adapt these read-only properties.
+        /// </summary>
+        public EvaOperations Eva => Session != null ? Session.Eva : null;
 
         public MissionRestartMode RestartMode
         {
@@ -130,6 +153,71 @@ namespace OutOfReach.Core.Runtime
             if (Application.isPlaying && isActiveAndEnabled)
             {
                 SubscribePlayer();
+            }
+        }
+
+        /// <summary>Explicit EVA wiring for code-built scenes; authored scenes use the serialized fields.</summary>
+        public void ConfigureEva(IEnumerable<GameplayGate> airlockGates, TetheredRoute route, Transform reentryPoint)
+        {
+            gates = airlockGates != null ? new List<GameplayGate>(airlockGates).ToArray() : new GameplayGate[0];
+            evaRoute = route;
+            evaReentryPoint = reentryPoint;
+        }
+
+        /// <summary>
+        /// Applies mission state to the scene: the inner gate is walkable only while the airlock is InnerOpen, the
+        /// outer gate is never walkable, and the player is clipped to the EVA route exactly while the mission says
+        /// the crew is outside. Runs every frame; safe to call directly after a manual step.
+        /// </summary>
+        public void SyncScene()
+        {
+            if (Session == null)
+            {
+                return;
+            }
+
+            EvaOperations eva = Session.Eva;
+            if (gates != null)
+            {
+                foreach (GameplayGate gate in gates)
+                {
+                    if (gate != null)
+                    {
+                        gate.SetOpen(gate.GateId == GateIds.AirlockInner && eva.IsInnerHatchPassable);
+                    }
+                }
+            }
+
+            bool outside = eva.IsOutside;
+            if (outside == playerOutside)
+            {
+                return;
+            }
+
+            playerOutside = outside;
+            if (player == null)
+            {
+                return;
+            }
+
+            if (outside)
+            {
+                if (evaRoute != null && evaRoute.IsValid)
+                {
+                    player.EnterRoute(evaRoute);
+                }
+                else
+                {
+                    Debug.LogError("MissionRuntime: the crew went outside but no valid EVA route is assigned.", this);
+                }
+            }
+            else
+            {
+                Transform reentry = evaReentryPoint != null ? evaReentryPoint : playerSpawn;
+                if (reentry != null)
+                {
+                    player.ExitRoute(reentry.position, reentry.eulerAngles.y);
+                }
             }
         }
 
@@ -283,6 +371,8 @@ namespace OutOfReach.Core.Runtime
             {
                 Step(Time.unscaledDeltaTime);
             }
+
+            SyncScene();
         }
 
         private void OnDestroy()
@@ -346,16 +436,28 @@ namespace OutOfReach.Core.Runtime
                 }
             }
 
-            if (player == null)
+            if (gates != null)
             {
-                return;
+                foreach (GameplayGate gate in gates)
+                {
+                    if (gate != null && gate.GateId != GateIds.AirlockInner && gate.GateId != GateIds.AirlockOuter)
+                    {
+                        Debug.LogError($"MissionRuntime: gameplay gate '{gate.name}' uses unknown gate ID '{gate.GateId}'.", gate);
+                    }
+                }
             }
 
-            player.ControlGate = IsPlayerControlAllowed;
-            if (playerSpawn != null)
+            playerOutside = false;
+            if (player != null)
             {
-                player.Teleport(playerSpawn.position, playerSpawn.eulerAngles.y);
+                player.ControlGate = IsPlayerControlAllowed;
+                if (playerSpawn != null)
+                {
+                    player.Teleport(playerSpawn.position, playerSpawn.eulerAngles.y);
+                }
             }
+
+            SyncScene();
         }
 
         private bool IsPlayerControlAllowed()

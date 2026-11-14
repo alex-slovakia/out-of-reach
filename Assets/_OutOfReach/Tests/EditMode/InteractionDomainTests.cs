@@ -14,13 +14,15 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
-        public void Catalog_ExposesTheInteriorInteractions_ByStableId()
+        public void Catalog_ExposesEveryInteraction_ByStableId()
         {
             using (var session = Fixtures.NewSession())
             {
                 Assert.That(session.Interactions.All.Select(item => item.InteractionId), Is.EqualTo(new[]
                 {
                     InteractionIds.CockpitConsole, InteractionIds.RepairPower, InteractionIds.RepairLifeSupport,
+                    InteractionIds.RepairAntenna, InteractionIds.SuitLocker, InteractionIds.AirlockControls,
+                    InteractionIds.EvaExit, InteractionIds.EvaReturn,
                 }));
                 Assert.That(session.Interactions.TryGet("unknown", out _), Is.False);
                 Assert.That(session.Interactions.TryGet(null, out _), Is.False);

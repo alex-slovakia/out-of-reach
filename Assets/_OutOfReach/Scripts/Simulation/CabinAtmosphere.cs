@@ -39,6 +39,24 @@ namespace OutOfReach.Simulation
         /// <summary>BVAD REV2 Table 4-1: p[O2] below which measurable impairment occurs before acclimatization, kPa.</summary>
         public const double ImpairmentOxygenKPa = 18.6;
 
+        /// <summary>Mean molar mass of dry air, kg/mol.</summary>
+        public const double AirMolarMassKgPerMole = 0.028965;
+
+        /// <summary>Mass fraction of oxygen in dry air.</summary>
+        public const double OxygenMassFractionOfAir = 0.2314;
+
+        /// <summary>Density of cabin air at the assumed pressure and temperature, about 1.197 kg/m³.</summary>
+        public static double CabinAirDensityKgPerCubicMetre()
+        {
+            return GasMoles(1d, CabinPressureKPa * 1000d, CabinTemperatureKelvin) * AirMolarMassKgPerMole;
+        }
+
+        /// <summary>Oxygen mass in a volume of cabin air, kg (about 0.277 kg per m³).</summary>
+        public static double OxygenKgInCabinAir(double volumeCubicMetres)
+        {
+            return volumeCubicMetres * CabinAirDensityKgPerCubicMetre() * OxygenMassFractionOfAir;
+        }
+
         /// <summary>Moles of gas in a volume: n = P V / (R T), with pressure in Pa.</summary>
         public static double GasMoles(double volumeCubicMetres, double pressurePascals, double temperatureKelvin)
         {

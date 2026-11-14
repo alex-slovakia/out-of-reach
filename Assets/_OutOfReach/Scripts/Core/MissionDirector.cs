@@ -56,11 +56,15 @@ namespace OutOfReach.Core
             }
 
             Systems = new ShipSystems(systems);
+            Eva = new EvaOperations(definition.Scenario.Eva, events, state, resources, Systems, RefreshRates);
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
         }
 
         public ShipSystems Systems { get; }
+
+        /// <summary>Suit, airlock and outside state for the EVA.</summary>
+        public EvaOperations Eva { get; }
 
         /// <summary>True once the scripted impact has been applied. It can never be applied twice.</summary>
         public bool AccidentTriggered { get; private set; }
@@ -154,7 +158,7 @@ namespace OutOfReach.Core
                 }
             }
 
-            return boundary;
+            return Math.Min(boundary, Eva.TimeToNextBoundary());
         }
 
         /// <summary>Called by the session after each simulation sub-step: keeps rates and survival consistent.</summary>
@@ -222,9 +226,14 @@ namespace OutOfReach.Core
             bool requiresEva = definition.Scenario.GetSystem(system.SystemId).RepairRequiresEva;
             if (requiresEva)
             {
-                return state.Phase == GamePhase.Eva
+                if (state.Phase != GamePhase.Eva)
+                {
+                    return Fail(CommandFailure.WrongPhase, $"The {system.DisplayName} can only be repaired outside, during an EVA.");
+                }
+
+                return Eva.IsOutside
                     ? Ok("Exterior repair allowed.")
-                    : Fail(CommandFailure.WrongPhase, $"The {system.DisplayName} can only be repaired outside, during an EVA.");
+                    : Fail(CommandFailure.PreconditionsNotMet, $"Go outside to reach the {system.DisplayName}.");
             }
 
             return state.Phase == GamePhase.Emergency || state.Phase == GamePhase.Repair
@@ -249,6 +258,21 @@ namespace OutOfReach.Core
                 return Fail(CommandFailure.PreconditionsNotMet, "Power and life support must be operational before an EVA.");
             }
 
+            if (to == GamePhase.Eva && (!Eva.IsSuitOn || Eva.Airlock != AirlockState.Depressurizing))
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "An EVA starts at the airlock controls with the suit on.");
+            }
+
+            if (from == GamePhase.Eva && (to == GamePhase.Repair || to == GamePhase.Transmission) && Eva.Airlock != AirlockState.InnerOpen)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "Return through the airlock and repressurize first.");
+            }
+
+            if (to == GamePhase.Transmission && !Systems.Antenna.IsOperational)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, "The antenna must be repaired before transmitting.");
+            }
+
             return Ok("Transition allowed.");
         }
 
@@ -266,7 +290,8 @@ namespace OutOfReach.Core
                 launched.AvailablePowerWatts,
                 Systems.Power.Condition01,
                 Systems.LifeSupport.Condition01,
-                resources.Snapshot.BatteryKWh <= 0d);
+                resources.Snapshot.BatteryKWh <= 0d,
+                Eva.IsSuitSealed);
             PowerState = EmergencyResourceModel.Evaluate(inputs);
             resources.TrySetRates(PowerState.Rates);
         }
@@ -275,6 +300,15 @@ namespace OutOfReach.Core
         {
             if (!state.IsSimulationRunning)
             {
+                return;
+            }
+
+            if (Eva.IsSuitSealed && Eva.SuitOxygenKg <= 0d)
+            {
+                LossCause = SurvivalFailure.SuitOxygenDepleted;
+                string where = Eva.IsOutside ? "outside the ship" : "in the airlock";
+                string before = Eva.IsOutside ? "before the return to the airlock" : "before repressurization completed";
+                TryEndMission(MissionOutcome.Lost, $"Suit oxygen ran out {where} {FormatDuration(state.ElapsedSimulationSeconds)} after launch, {before}.");
                 return;
             }
 

@@ -111,8 +111,14 @@ namespace OutOfReach.Tests.EditMode
 
                 Fixtures.RepairOrFail(session, ShipSystemId.Power);
                 Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
-                Assert.That(session.State.TryTransition(GamePhase.Eva).Succeeded, Is.True);
+                Fixtures.SuitUp(session);
+                Fixtures.OpenOuterHatch(session);
 
+                CommandResult fromTheAirlock = Fixtures.Repair(session, ShipSystemId.Antenna);
+                Assert.That(fromTheAirlock.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "the antenna is out of reach from inside the airlock");
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(3));
+
+                Fixtures.GoOutside(session);
                 Fixtures.RepairOrFail(session, ShipSystemId.Antenna);
                 Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(0), "science-focus carries exactly the 7 parts the three repairs need");
                 Assert.That(session.Systems.Antenna.IsOperational, Is.True);
