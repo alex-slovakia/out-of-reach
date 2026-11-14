@@ -1,5 +1,7 @@
 using System;
+using System.Globalization;
 using OutOfReach.Contracts;
+using OutOfReach.Inventory;
 using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
@@ -10,18 +12,25 @@ namespace OutOfReach.Core
     /// its prompt says why the link is unavailable. In Transmission the first use runs the link diagnostic (the
     /// false signal: an old local recording, not a reply), the second sends the single distress call (the prompt
     /// gives its energy cost, Earth's distance and the earliest reply), and then the prompt shows the remaining wait.
+    /// With the physical preflight on, the console also launches the mission during Planning: its prompt shows the
+    /// loadout totals, or the exact violation that blocks the launch.
     /// </summary>
     public sealed class CockpitConsoleInteraction : IInteractable
     {
         private readonly MissionDirector director;
         private readonly MissionGameState state;
         private readonly CommunicationSystem communications;
+        private readonly MissionPlanner planner;
+        private readonly bool launchesFromConsole;
 
-        public CockpitConsoleInteraction(MissionDirector director, MissionGameState state, CommunicationSystem communications)
+        public CockpitConsoleInteraction(MissionDirector director, MissionGameState state, CommunicationSystem communications,
+            MissionPlanner planner = null, bool launchesFromConsole = false)
         {
             this.director = director ?? throw new ArgumentNullException(nameof(director));
             this.state = state ?? throw new ArgumentNullException(nameof(state));
             this.communications = communications ?? throw new ArgumentNullException(nameof(communications));
+            this.planner = planner;
+            this.launchesFromConsole = launchesFromConsole && planner != null;
         }
 
         public string InteractionId => InteractionIds.CockpitConsole;
@@ -33,7 +42,7 @@ namespace OutOfReach.Core
                 switch (state.Phase)
                 {
                     case GamePhase.Planning:
-                        return "Console on standby until launch";
+                        return launchesFromConsole ? DescribeLaunch() : "Console on standby until launch";
                     case GamePhase.Intro:
                         return director.AccidentTriggered ? "Impact detected" : "Run cockpit systems check";
                     case GamePhase.Outcome:
@@ -50,6 +59,16 @@ namespace OutOfReach.Core
                         return IsDiagnosticNext ? director.CheckLinkDiagnostic().Explanation : communications.CheckTransmit().Explanation;
                 }
             }
+        }
+
+        private string DescribeLaunch()
+        {
+            MissionConfiguration draft = planner.DraftConfiguration;
+            CommandResult valid = draft.Validate();
+            return valid.Succeeded
+                ? string.Format(CultureInfo.InvariantCulture, "Begin mission: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
+                    draft.TotalMassKg, draft.MassLimitKg, draft.TotalBudgetCredits, draft.BudgetLimitCredits)
+                : valid.Explanation;
         }
 
         /// <summary>True while the next console action in Transmission is the one-time link diagnostic.</summary>
@@ -69,12 +88,22 @@ namespace OutOfReach.Core
                     return !director.AccidentTriggered;
                 }
 
+                if (state.Phase == GamePhase.Planning)
+                {
+                    return launchesFromConsole && planner.DraftConfiguration.Validate().Succeeded;
+                }
+
                 return IsDiagnosticNext ? director.CheckLinkDiagnostic().Succeeded : communications.CheckTransmit().Succeeded;
             }
         }
 
         public CommandResult TryInteract()
         {
+            if (state.Phase == GamePhase.Planning && launchesFromConsole)
+            {
+                return planner.TryLaunch();
+            }
+
             if (state.Phase == GamePhase.Intro || state.Phase == GamePhase.Planning)
             {
                 return director.TryCompleteCockpitCheck();

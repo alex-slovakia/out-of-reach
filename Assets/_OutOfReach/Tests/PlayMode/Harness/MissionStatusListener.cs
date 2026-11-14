@@ -149,6 +149,11 @@ namespace OutOfReach.Tests.PlayMode
                 runtime.Session.Planner.TryLaunch();
             }
 
+            if (runtime.Session.State.Phase == GamePhase.Planning && keyboard.tKey.wasPressedThisFrame)
+            {
+                runtime.BeginTimedPlanning();
+            }
+
             if (keyboard.rKey.wasPressedThisFrame)
             {
                 runtime.RestartMission();
@@ -168,7 +173,7 @@ namespace OutOfReach.Tests.PlayMode
             var lines = new List<string>
             {
                 "OUT OF REACH - gameplay harness (test fixture, not game UI)",
-                "Enter: launch default loadout | WASD + mouse | E: interact | Esc: pause | R: restart",
+                "Enter or the cockpit console: launch | T: start the 60 s timer | WASD + mouse | E: interact | Esc: pause | R: restart",
                 string.Format(c, "Phase {0} | time x{1:0} | elapsed {2:0.0} h{3}", session.State.Phase, session.Clock.TimeScale,
                     session.State.ElapsedSimulationSeconds / 3600d, session.Clock.IsPaused ? " | PAUSED" : string.Empty),
                 string.Format(c, "O2 {0:0.00} kg | water {1:0.0} L | food {2:0.0} kg | battery {3:0.00} kWh | parts {4} | CO2 {5:0} ppm",
@@ -182,6 +187,20 @@ namespace OutOfReach.Tests.PlayMode
                 eva.IsSuitOn ? "on" : "off",
                 eva.IsSuitOn ? string.Format(c, " {0:0.00} kg O2 ({1:0} min)", eva.SuitOxygenKg, eva.SuitOxygenSecondsRemaining / 60d) : string.Empty,
                 eva.IsOutside ? " | OUTSIDE on the tether" : string.Empty));
+            if (session.State.Phase == GamePhase.Planning)
+            {
+                OutOfReach.Inventory.MissionConfiguration draft = session.Planner.DraftConfiguration;
+                lines.Add(string.Format(c, "Loading: payload {0:0}/{1:0} kg | {2:0}/{3:0} credits | {4:0}/{5:0} W | in hands: {6}{7}",
+                    draft.TotalMassKg, draft.MassLimitKg, draft.TotalBudgetCredits, draft.BudgetLimitCredits,
+                    draft.RequiredPowerWatts, draft.AvailablePowerWatts, session.Cargo.CarriedEquipmentId ?? "nothing",
+                    session.PlanningDeadline.IsEnabled ? string.Format(c, " | launch in {0:0} s", session.PlanningDeadline.RemainingRealSeconds) : string.Empty));
+                OutOfReach.Contracts.CommandResult valid = draft.Validate();
+                if (!valid.Succeeded)
+                {
+                    lines.Add("NOT READY: " + valid.Explanation);
+                }
+            }
+
             CommunicationSystem link = session.Communications;
             lines.Add(string.Format(c, "Day {0} ({1}) | link {2} | Earth {3}, one-way {4}{5}", session.Calendar.DayNumber,
                 MissionCalendar.Format(session.Calendar.NowUtc), link.State, CommunicationSystem.FormatDistance(link.ReferenceDistanceKm),

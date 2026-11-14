@@ -47,6 +47,7 @@ namespace OutOfReach.Player
         private PlayerInputActions ownedInput;
         private IPlayerInputSource inputSource;
         private float verticalVelocity;
+        private float speedMultiplier = 1f;
         private bool cursorApplied;
         private bool cursorCaptured;
 
@@ -69,6 +70,16 @@ namespace OutOfReach.Player
         public float PitchDegrees { get; private set; }
 
         public float WalkSpeedMetresPerSecond => walkSpeedMetresPerSecond;
+
+        /// <summary>
+        /// Share of the walk speed currently available, 0 to 1 (1 = unhindered). The composition root sets it from
+        /// gameplay state, for example while carrying a crate. It does not affect the constrained EVA route.
+        /// </summary>
+        public float SpeedMultiplier
+        {
+            get { return speedMultiplier; }
+            set { speedMultiplier = float.IsNaN(value) ? 1f : Mathf.Clamp01(value); }
+        }
 
         public float MaxPitchDegrees => maxPitchDegrees;
 
@@ -263,7 +274,7 @@ namespace OutOfReach.Player
             }
 
             Vector2 intent = Vector2.ClampMagnitude(move, 1f);
-            Vector3 horizontal = ((transform.right * intent.x) + (transform.forward * intent.y)) * walkSpeedMetresPerSecond;
+            Vector3 horizontal = ((transform.right * intent.x) + (transform.forward * intent.y)) * (walkSpeedMetresPerSecond * speedMultiplier);
             if (controller.isGrounded && verticalVelocity < 0f)
             {
                 verticalVelocity = -1f;

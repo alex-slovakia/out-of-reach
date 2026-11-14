@@ -18,12 +18,24 @@ namespace OutOfReach.Tests.EditMode
         {
             using (var session = Fixtures.NewSession())
             {
-                Assert.That(session.Interactions.All.Select(item => item.InteractionId), Is.EqualTo(new[]
+                string[] ids = session.Interactions.All.Select(item => item.InteractionId).ToArray();
+                Assert.That(ids.Take(8), Is.EqualTo(new[]
                 {
                     InteractionIds.CockpitConsole, InteractionIds.RepairPower, InteractionIds.RepairLifeSupport,
                     InteractionIds.RepairAntenna, InteractionIds.SuitLocker, InteractionIds.AirlockControls,
                     InteractionIds.EvaExit, InteractionIds.EvaReturn,
-                }));
+                }), "the mission's own interactions keep their order");
+                Assert.That(ids.Skip(8), Is.EqualTo(new[]
+                {
+                    "cargo-supply:oxygen-tank", "cargo-bay:oxygen-tank",
+                    "cargo-supply:water-tank", "cargo-bay:water-tank",
+                    "cargo-supply:food-locker", "cargo-bay:food-locker",
+                    "cargo-supply:battery-module", "cargo-bay:battery-module",
+                    "cargo-supply:solar-wing", "cargo-bay:solar-wing",
+                    "cargo-supply:spare-parts-kit", "cargo-bay:spare-parts-kit",
+                    "cargo-supply:spectrometer", "cargo-bay:spectrometer",
+                }), "one pallet and one bay stack per catalog item, in catalog order");
+                Assert.That(ids.Distinct().Count(), Is.EqualTo(ids.Length));
                 Assert.That(session.Interactions.TryGet("unknown", out _), Is.False);
                 Assert.That(session.Interactions.TryGet(null, out _), Is.False);
             }

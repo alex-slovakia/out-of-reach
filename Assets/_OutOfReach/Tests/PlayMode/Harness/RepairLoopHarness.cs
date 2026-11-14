@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using OutOfReach.Contracts;
 using OutOfReach.Core;
 using OutOfReach.Core.Runtime;
@@ -12,7 +13,8 @@ namespace OutOfReach.Tests.PlayMode
     /// scene (through the Configure methods that set the serialized fields):
     /// a cabin with the cockpit console and two repair panels, a suit locker, an airlock corridor with an inner and
     /// an outer gameplay gate and its control panel, and outside a short tethered route to the antenna.
-    /// Metres; the player spawns at the origin facing +Z. The airlock runs along -Z.
+    /// Metres; the player spawns at the origin facing +Z. The airlock runs along -Z. Behind the console, at +Z,
+    /// is the preflight pad: one supply pallet and one bay stack per equipment type, with a walkway between them.
     /// </summary>
     public sealed class RepairLoopHarness
     {
@@ -31,6 +33,17 @@ namespace OutOfReach.Tests.PlayMode
         public static readonly Vector3 EvaReturnPosition = new Vector3(-0.9f, 1.4f, -7.3f);
         public static readonly Vector3 AntennaPosition = new Vector3(3f, 1.4f, -13.2f);
         public static readonly Vector3 ReentryPosition = new Vector3(0f, 0.02f, -6f);
+        public const float PalletRowZ = 8f;
+        public const float BayRowZ = 5f;
+        public static readonly Vector3 PreflightSpawnPosition = new Vector3(0f, 0.02f, 6.5f);
+
+        /// <summary>Catalog order, one column each from x = -6 to x = 6.</summary>
+        public static readonly string[] CargoEquipmentIds =
+        {
+            AuroraMission.OxygenTank, AuroraMission.WaterTank, AuroraMission.FoodLocker, AuroraMission.BatteryModule,
+            AuroraMission.SolarWing, AuroraMission.SparePartsKit, AuroraMission.Spectrometer,
+        };
+
         public static readonly Vector3[] RouteWaypoints =
         {
             new Vector3(0f, 0.02f, -8f), new Vector3(3f, 0.02f, -8f), new Vector3(3f, 0.02f, -12f),
@@ -74,13 +87,35 @@ namespace OutOfReach.Tests.PlayMode
 
         public TetheredRoute Route { get; private set; }
 
+        public Dictionary<string, InteractableTarget> CargoSupply { get; } = new Dictionary<string, InteractableTarget>();
+
+        public Dictionary<string, InteractableTarget> CargoBay { get; } = new Dictionary<string, InteractableTarget>();
+
+        public Transform PreflightSpawn { get; private set; }
+
         public MissionSession Session => Runtime.Session;
+
+        public static float CargoColumnX(string equipmentId)
+        {
+            return -6f + (2f * System.Array.IndexOf(CargoEquipmentIds, equipmentId));
+        }
+
+        public static Vector3 PalletPosition(string equipmentId)
+        {
+            return new Vector3(CargoColumnX(equipmentId), 1.4f, PalletRowZ);
+        }
+
+        public static Vector3 BayStackPosition(string equipmentId)
+        {
+            return new Vector3(CargoColumnX(equipmentId), 1.4f, BayRowZ);
+        }
 
         /// <summary>
         /// Builds the layout. With scripted input the player is driven by tests; for authoring (the saved harness
-        /// scene) the real Input System bindings and the debug overlay are used instead.
+        /// scene) the real Input System bindings and the debug overlay are used instead. With preflight the player
+        /// starts on the pad and may walk and load crates during Planning.
         /// </summary>
-        public static RepairLoopHarness Build(bool authoring = false)
+        public static RepairLoopHarness Build(bool authoring = false, bool preflight = false)
         {
             var harness = new RepairLoopHarness();
             harness.Root = new GameObject("RepairLoopHarness");
@@ -118,6 +153,16 @@ namespace OutOfReach.Tests.PlayMode
             harness.Route = routeObject.AddComponent<TetheredRoute>();
             harness.Route.Configure(waypoints, 0.5f, 1f);
 
+            // Preflight pad: pallets in the far row, bay stacks in the near row, the player walks between them.
+            harness.PreflightSpawn = CreatePoint(root, "PreflightSpawn", PreflightSpawnPosition, 0f);
+            foreach (string equipmentId in CargoEquipmentIds)
+            {
+                harness.CargoSupply[equipmentId] = CreateTarget(root, "CargoSupply_" + equipmentId, InteractionIds.CargoSupply(equipmentId),
+                    PalletPosition(equipmentId), new Vector3(0.8f, 1f, 0.6f));
+                harness.CargoBay[equipmentId] = CreateTarget(root, "CargoBay_" + equipmentId, InteractionIds.CargoBay(equipmentId),
+                    BayStackPosition(equipmentId), new Vector3(0.8f, 1f, 0.6f));
+            }
+
             var rig = new GameObject("PlayerRig");
             rig.transform.SetParent(root, false);
             rig.transform.position = SpawnPosition;
@@ -146,12 +191,20 @@ namespace OutOfReach.Tests.PlayMode
             var mission = new GameObject("Mission");
             mission.transform.SetParent(root, false);
             harness.Runtime = mission.AddComponent<MissionRuntime>();
-            harness.Runtime.Configure(harness.Player, harness.Spawn, new[]
+            var targets = new List<InteractableTarget>
             {
                 harness.Console, harness.PowerPanel, harness.LifeSupportPanel, harness.SuitLocker,
                 harness.AirlockControls, harness.EvaExit, harness.EvaReturn, harness.Antenna,
-            });
+            };
+            foreach (string equipmentId in CargoEquipmentIds)
+            {
+                targets.Add(harness.CargoSupply[equipmentId]);
+                targets.Add(harness.CargoBay[equipmentId]);
+            }
+
+            harness.Runtime.Configure(harness.Player, harness.Spawn, targets);
             harness.Runtime.ConfigureEva(new[] { harness.InnerGate, harness.OuterGate }, harness.Route, reentry);
+            harness.Runtime.ConfigurePreflight(preflight, harness.PreflightSpawn);
             harness.Runtime.RestartMode = MissionRestartMode.RebuildInPlace;
             harness.Listener = mission.AddComponent<MissionStatusListener>();
             harness.Listener.Configure(harness.Runtime, harness.Resolver, authoring);

@@ -27,5 +27,23 @@ namespace OutOfReach.Core
 
         /// <summary>At the outer hatch, outside: enter the airlock.</summary>
         public const string EvaReturn = "eva-return";
+
+        /// <summary>Prefix of a type's supply pallet during preflight: "cargo-supply:" + equipment ID.</summary>
+        public const string CargoSupplyPrefix = "cargo-supply:";
+
+        /// <summary>Prefix of a type's stack in the cargo bay during preflight: "cargo-bay:" + equipment ID.</summary>
+        public const string CargoBayPrefix = "cargo-bay:";
+
+        /// <summary>Pallet of one equipment type: pick a crate up, or put the carried crate of that type back.</summary>
+        public static string CargoSupply(string equipmentId)
+        {
+            return CargoSupplyPrefix + equipmentId;
+        }
+
+        /// <summary>Bay stack of one equipment type: load the carried crate of that type, or take one out.</summary>
+        public static string CargoBay(string equipmentId)
+        {
+            return CargoBayPrefix + equipmentId;
+        }
     }
 }

@@ -5,8 +5,9 @@ integrator; root documentation stays integrator-owned. Status and requests live 
 
 **Done:** C01 (mission foundation), C02 (first playable repair loop), C03 (suit, airlock, constrained EVA,
 antenna repair) and C04 (NASA/JPL-driven reply delay, the one transmission, both outcomes, the ending sequence,
-report data, restart), including the shared `IMissionReport` and `IEvaStatus` contracts. The gameplay loop is
-complete from planning to report.
+report data, restart), including the shared `IMissionReport` and `IEvaStatus` contracts, and C05-A (physical
+preflight cargo loading, switched off by default). The gameplay loop is complete from planning to report.
+**Next:** C05-B (payload salvage, CO₂ absorber cartridge and its bay; accepted on #7, not started).
 
 ## Assemblies
 
@@ -35,6 +36,7 @@ complete from planning to report.
 | `IEvaStatus` | `OutOfReach.Core.EvaOperations` |
 | `ICommunicationSystem` | `OutOfReach.Simulation.CommunicationSystem` |
 | `IMissionReport` | `OutOfReach.Core.MissionReport` (sections use the contract's `MissionReportSection` / `MissionReportLine`) |
+| `ICargoLoading` (proposed on #7, not published yet) | `OutOfReach.Core.CargoLoading` has the proposed members |
 | `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
 | `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
 
@@ -307,6 +309,52 @@ the final rates), `Timeline`, real play time and simulated time passed in chapte
 
 Not modelled: link availability, occultation, acquisition, message length, body motion during propagation.
 
+## C05-A: physical preflight cargo loading (off by default)
+
+### What it is
+During Planning the player walks, carries **one crate at a time** from a type's supply pallet to that type's stack
+in the cargo bay (or back), and launches from the cockpit console. It replaces clicking a list, not the planner:
+
+- **The planner's draft is the only inventory.** A crate in a bay stack is one unit in `IMissionPlanner.Draft`.
+  Loading and unloading call the existing `TrySetEquipment(id, quantity ± 1)`. Mass, budget, power and supply
+  validation, the 60-second deadline, its last-valid fallback and the launch are untouched and identical to the list.
+- **The crate in hands is the only extra state** (`CargoLoading.CarriedEquipmentId`). It is not aboard: at launch
+  or at the deadline it stays behind and is never counted; the timeline says so.
+- Supply left on a pallet is derived: the type's maximum minus what is loaded minus the crate in hands.
+- Loading past a limit is allowed, as in the list: the draft shows the violation and the launch is refused.
+- The bay starts with the default loadout aboard, exactly as the list planner starts with it. The player swaps
+  crates; the last-valid fallback therefore always exists.
+- **Carry speed** = walk speed × max(0.5, 1 − crate mass / 180 kg), from the authoritative unit mass: spare-parts
+  kit 0.86, oxygen tank 0.83, food locker 0.81, water tank 0.73, battery module 0.69, solar wing 0.61,
+  spectrometer 0.50. GAMEPLAY TUNING; nobody hand-carries 90 kg, so presentation should show a handling cart.
+
+### Switch
+`MissionRuntime` → **Preflight Walk** (serialized, default **off**) and **Preflight Spawn** (optional transform).
+- Off: nothing changes. No player control during Planning, the console stays "on standby until launch".
+- On: the player has control during Planning and starts at Preflight Spawn. `cockpit-console` during Planning reads
+  `Begin mission: 546 of 600 kg, 720 of 800 credits` or the exact violation that blocks the launch, and launches.
+  When the mission leaves Planning (console, UI button or deadline) the runtime moves the player to Player Spawn.
+The cargo interactions exist in both modes; without player control nothing can reach them.
+
+### Scene bindings (all Claude-owned components; no Codex prefab is edited)
+| Target | ID | Prompt examples |
+|---|---|---|
+| Supply pallet of a type | `cargo-supply:<equipmentId>` | `Pick up oxygen tank: 30 kg, 40 credits, +12 kg oxygen (4 on the pallet)` · `Put the oxygen tank back on the pallet` · `Hands full: carrying a battery module` · `The only atmospheric spectrometer is already aboard` |
+| Bay stack of a type | `cargo-bay:<equipmentId>` | `Load battery module: payload 546 -> 601 of 600 kg (over the limit)` · `Unload one spare parts kit (2 aboard)` · `No deployable solar wing aboard` |
+
+Equipment IDs: `oxygen-tank`, `water-tank`, `food-locker`, `battery-module`, `solar-wing`, `spare-parts-kit`,
+`spectrometer` (14 targets). Each needs a collider within 2 m of where the player stands, like every target. Add
+them to `MissionRuntime` → Interaction Targets. After launch every cargo target reads
+`The cargo bay is sealed after launch.`
+
+### Presentation data
+- `MissionRuntime.Cargo` (`CargoLoading`): `CarriedEquipmentId` (null with empty hands), `CarrySpeedFactor`,
+  `GetSupplyRemaining(equipmentId)`, `GetLoaded(equipmentId)` and a `Changed` event for the crate in hands. These
+  are the members of the `ICargoLoading` contract proposed on #7; the class implements it once it is published.
+- Bay stacks: `IMissionPlanner.Draft.Equipment` (quantity per ID). One generic case model per crate is enough.
+- Timer: `IPlanningDeadline.RemainingRealSeconds` after `MissionRuntime.BeginTimedPlanning()`.
+- The runtime applies the carry speed to the player itself (`FirstPersonController.SpeedMultiplier`).
+
 ## Emergency model (one model for nominal flight and the accident)
 
 | Input | Effect |
@@ -396,22 +444,22 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 8. **Citations.** The BVAD references and the communication assumptions above should be added to `NASA-DATA.md`
    by the integrator; its "runtime integration pending" status can now be updated.
 
-## Evidence (C04, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
+## Evidence (C05-A, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 215 passed, 0 failed, 0 skipped.** 63 new: the packaged snapshot (identity, byte equality with the
-  canonical CSV, manifest, known rows, units, selection, 11 damaged-table rejections), the link alone (timing,
-  early-reply prevention, repeated and rejected sends, stray advance, unpowered link, dates), the whole finale
-  (console steps, event order, exact reply time in a jump and frame by frame, pause, low battery, loss before /
-  at / after the reply, ending cinematics with stale completions and timeouts, mission-day sampling, end of the
-  snapshot, unrecoverable objective) and the report (both outcomes, expenditure sums, timeline, loadout names,
-  planning fallback, restart, the shared `IMissionReport` and `IEvaStatus` views).
-- **PlayMode: 15 passed, 0 failed.** New: the finale through the console interaction with the wait driven by
-  runtime steps to the report and a clean restart, and `SkipSimulatedTime`.
-- The run machine uses a decimal-comma culture, so invariant parsing and formatting were exercised for real.
-- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` (147 GUIDs) and
+- **EditMode: 236 passed, 0 failed, 0 skipped.** 21 new for the cargo loading: one crate in hands, load and unload
+  change the draft by exactly one, own pallet and own stack only, empty pallets and stacks, loading past a limit
+  blocks the launch with the list planner's words, hand swaps equal list edits, a crate in hands at launch or at
+  the deadline is never aboard, list edits while carrying, carry speed per type, player control and console launch
+  only with the switch on, restart.
+- **PlayMode: 18 passed, 0 failed.** 3 new in the harness with the switch on: walk during Planning, pick up, walk
+  measurably slower, load, console refuses with the planner's reason, unload, launch and arrive in the cockpit;
+  deadline fallback with a crate in hands; restart on the pad.
+- The harness scene was regenerated (7 pallets, 7 bay stacks, preflight spawn; it now runs the physical preflight).
+  `PlayerRig.prefab` is byte-identical.
+- No compiler warnings or errors from `OutOfReach.*` code. `tools/verify_repository.py` and
   `tools/nasa/horizons_snapshot.py` PASS.
-- Earlier checkpoints: C03 at `e36343a` 152 / 13 and C02 at `91e6215` 129 / 8, both also verified independently.
+- Earlier checkpoints: C04 at `6bb788b` 215 / 15, C03 at `e36343a` 152 / 13, C02 at `91e6215` 129 / 8.
 - **Not verified:** an independent run of this revision, integration with Codex's ship, UI and cinematics, a
-  Windows build, a human play-through, performance, the report rendered in a real UI.
+  Windows build, a human play-through (including how the carry speeds feel), performance.
 - Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
   `ProjectSettings/SceneTemplateSettings.json`.

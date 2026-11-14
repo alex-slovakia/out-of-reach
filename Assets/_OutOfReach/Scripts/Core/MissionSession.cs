@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
+using OutOfReach.Inventory;
 using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
@@ -30,8 +31,16 @@ namespace OutOfReach.Core
         private int cachedReportJournalCount = -1;
         private GamePhase cachedReportPhase;
 
-        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null)
+        /// <param name="definition">Mission to play; null means AURORA-7.</param>
+        /// <param name="subscriberErrorSink">Receives exceptions thrown by event subscribers.</param>
+        /// <param name="startingPresetId">Loadout the draft starts with; null means the mission default.</param>
+        /// <param name="preflightWalk">
+        /// True for the physical preflight: the player may move and interact during Planning (to carry crates) and
+        /// the cockpit console launches the mission. False keeps planning a pure list: no control before launch.
+        /// </param>
+        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false)
         {
+            PreflightWalkEnabled = preflightWalk;
             Definition = definition ?? AuroraMission.CreateDefinition();
             Events = new MissionEventBus(subscriberErrorSink);
             State = new MissionGameState(Events);
@@ -48,7 +57,7 @@ namespace OutOfReach.Core
             Director.Eva.BindSimulationAdvance(AdvanceSimulation);
 
             Interactions = new InteractionCatalog();
-            Interactions.Add(new CockpitConsoleInteraction(Director, State, Director.Communications));
+            Interactions.Add(new CockpitConsoleInteraction(Director, State, Director.Communications, Planner, preflightWalk));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairPower, Director.Systems.Power, Resources));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairLifeSupport, Director.Systems.LifeSupport, Resources));
             Interactions.Add(new RepairInteraction(InteractionIds.RepairAntenna, Director.Systems.Antenna, Resources));
@@ -62,6 +71,16 @@ namespace OutOfReach.Core
                 () => DescribeAirlockTransition(eva)));
             Interactions.Add(new DelegatedInteraction(InteractionIds.EvaExit, eva.CheckGoOutside, eva.TryGoOutside));
             Interactions.Add(new DelegatedInteraction(InteractionIds.EvaReturn, eva.CheckReturnInside, eva.TryReturnInside));
+
+            Cargo = new CargoLoading(Definition, Planner, State, Events, text => Director.Journal.Record(0d, text));
+            foreach (EquipmentDefinition item in Definition.Catalog.Definitions)
+            {
+                string equipmentId = item.Id;
+                Interactions.Add(new DelegatedInteraction(InteractionIds.CargoSupply(equipmentId),
+                    () => Cargo.CheckSupply(equipmentId), () => Cargo.TryUseSupply(equipmentId)));
+                Interactions.Add(new DelegatedInteraction(InteractionIds.CargoBay(equipmentId),
+                    () => Cargo.CheckBay(equipmentId), () => Cargo.TryUseBay(equipmentId)));
+            }
         }
 
         public MissionDefinition Definition { get; }
@@ -96,6 +115,12 @@ namespace OutOfReach.Core
 
         /// <summary>Mission date on the simulation clock.</summary>
         public MissionCalendar Calendar => Director.Calendar;
+
+        /// <summary>Preflight crate handling: the crate in hands and the carry speed. The bay itself is the planner's draft.</summary>
+        public CargoLoading Cargo { get; }
+
+        /// <summary>True when the player walks and loads crates during Planning (physical preflight).</summary>
+        public bool PreflightWalkEnabled { get; }
 
         public InteractionCatalog Interactions { get; }
 
@@ -141,10 +166,22 @@ namespace OutOfReach.Core
         public IMissionConfiguration Configuration => (IMissionConfiguration)Planner.LaunchedConfiguration ?? Planner.Draft;
 
         /// <summary>
-        /// True while the player may move and interact: a running phase, not paused and no cinematic in progress.
-        /// The cinematic lock always releases, because the handshake has a fallback timeout.
+        /// True while the player may move and interact: a running phase (or Planning, when the physical preflight
+        /// is on), not paused and no cinematic in progress. The cinematic lock always releases, because the
+        /// handshake has a fallback timeout.
         /// </summary>
-        public bool IsPlayerControlAllowed => !IsDisposed && State.IsSimulationRunning && !Clock.IsPaused && !Cinematics.IsWaiting;
+        public bool IsPlayerControlAllowed
+        {
+            get
+            {
+                if (IsDisposed || State.IsClosed || Clock.IsPaused || Cinematics.IsWaiting)
+                {
+                    return false;
+                }
+
+                return State.IsSimulationRunning || (PreflightWalkEnabled && State.Phase == GamePhase.Planning);
+            }
+        }
 
         /// <summary>
         /// Frame entry for a Unity driver. During Planning the full unscaled frame time feeds the planning deadline,

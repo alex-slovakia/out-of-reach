@@ -9,7 +9,8 @@ namespace OutOfReach.Tests.Editor
 {
     /// <summary>
     /// Regenerates the two authored fixtures from the same code the PlayMode tests use, so they cannot drift:
-    /// the hand-playable harness scene (test-only, never in the build list) and the camera-less PlayerRig prefab
+    /// the hand-playable harness scene (test-only, never in the build list; it runs the physical preflight, so
+    /// the player starts on the loading pad) and the camera-less PlayerRig prefab
     /// the integrator places at the PlayerSpawn anchor.
     /// Batch: Unity -batchmode -projectPath . -executeMethod OutOfReach.Tests.Editor.RepairLoopHarnessBuilder.Rebuild -quit
     /// </summary>
@@ -22,7 +23,7 @@ namespace OutOfReach.Tests.Editor
         public static void Rebuild()
         {
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            RepairLoopHarness harness = RepairLoopHarness.Build(true);
+            RepairLoopHarness harness = RepairLoopHarness.Build(true, true);
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             Directory.CreateDirectory(Path.GetDirectoryName(PlayerRigPrefabPath));
