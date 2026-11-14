@@ -14,6 +14,10 @@ namespace OutOfReach.Presentation.Cargo
         [SerializeField] private Transform leftGripFrame, rightGripFrame;
         [SerializeField] private TextAsset rigDefinition;
         [SerializeField, Range(.1f, .5f)] private float pickupSeconds = .24f;
+        [Tooltip("Roll around each real handle tube so both forearms approach from the lower outer view.")]
+        [SerializeField, Range(0f, 50f)] private float carryGripRollDegrees = 42f;
+        [Tooltip("Mirrored wrist adjustment aims the sleeves toward the carrier while fingers keep their authored grip.")]
+        [SerializeField, Range(0f, 35f)] private float carryWristYawCorrectionDegrees = 28f;
         private static readonly Vector3 GripPointInHand = new Vector3(0f, -.033f, .082f);
         private static readonly Vector3 PickupOffset = new Vector3(0f, -.018f, -.025f);
         private ICargoLoading cargo, subscribedCargo;
@@ -117,7 +121,7 @@ namespace OutOfReach.Presentation.Cargo
         private void LateUpdate()
         {
             Refresh();
-            if (!IsVisible) return;
+            if (!IsVisible || clock.IsPaused) return;
             pickupElapsed = Mathf.Min(Mathf.Max(.1f, pickupSeconds), pickupElapsed + Mathf.Max(0f, Time.unscaledDeltaTime));
             ApplyPose();
         }
@@ -132,7 +136,9 @@ namespace OutOfReach.Presentation.Cargo
                 observedHeld = held; pickupElapsed = 0f;
                 if (string.IsNullOrEmpty(held)) settlingRoot.SetLocalPositionAndRotation(neutralPosition, neutralRotation);
             }
-            if (string.IsNullOrEmpty(held) || clock.IsPaused || !viewAllowed()) { Hide(); return; }
+            if (string.IsNullOrEmpty(held)) { Hide(); return; }
+            if (clock.IsPaused) return; // Preserve the last visible pose under the pause menu.
+            if (!viewAllowed()) { Hide(); return; }
             // Place joints before enabling renderers; the original cargo presenter still owns its child visibility.
             ApplyPose();
             modelRoot.gameObject.SetActive(true);
@@ -147,14 +153,24 @@ namespace OutOfReach.Presentation.Cargo
             settlingRoot.SetLocalPositionAndRotation(neutralPosition + PickupOffset * remainder, neutralRotation);
             foreach (JointBinding joint in joints)
                 joint.Node.SetLocalPositionAndRotation(joint.RestPosition, joint.GripRotation);
-            SeatArm(leftArm, leftHand, leftGripFrame);
-            SeatArm(rightArm, rightHand, rightGripFrame);
+            // The mirrored frames share local X as their tube axis. The same roll
+            // fans both forearms outward without tilting the fingers off the bar.
+            Quaternion carryRoll = Quaternion.AngleAxis(Mathf.Clamp(carryGripRollDegrees, 0f, 50f), Vector3.right);
+            float wristYaw = Mathf.Clamp(carryWristYawCorrectionDegrees, 0f, 35f);
+            SeatArm(leftArm, leftHand, leftGripFrame, carryRoll, wristYaw);
+            SeatArm(rightArm, rightHand, rightGripFrame, carryRoll, -wristYaw);
         }
 
-        private static void SeatArm(JointBinding arm, JointBinding hand, Transform grip)
+        private static void SeatArm(JointBinding arm, JointBinding hand, Transform grip, Quaternion carryRoll, float wristYaw)
         {
-            Quaternion armRotation = grip.rotation * Quaternion.Inverse(hand.GripRotation);
-            arm.Node.SetPositionAndRotation(grip.position - grip.rotation * GripPointInHand, armRotation);
+            // Grip's camera-facing wrist pose originally points the sleeve into
+            // the crate. Adjust only the wrist; preserve all finger rotations.
+            hand.Node.localRotation = hand.GripRotation * Quaternion.AngleAxis(wristYaw, Vector3.up);
+            Quaternion handRotation = grip.rotation * carryRoll;
+            Quaternion armRotation = handRotation * Quaternion.Inverse(hand.Node.localRotation);
+            // Solve the wrist around the unchanged contact point, rather than
+            // translating a posed glove away from its actual handle to expose it.
+            arm.Node.SetPositionAndRotation(grip.position - handRotation * GripPointInHand, armRotation);
         }
 
         private void Hide()

@@ -39,6 +39,8 @@ namespace OutOfReach.Presentation.Audio
         private Transform channelRoot;
         private AudioSource dialogueSource;
         private AudioSource sfxSource;
+        private AudioSource menuSource;
+        private float lastMenuCueTime = -10f;
         private readonly AudioSource[] musicSources = new AudioSource[3];
         private readonly bool[] musicStarted = new bool[3];
         private readonly float[] musicWeights = new float[3];
@@ -215,6 +217,32 @@ namespace OutOfReach.Presentation.Audio
             return match == null ? Reject("SFX cue is not configured: " + cueId) : PlaySfx(match.Clip, match.Volume);
         }
 
+        /// <summary>Menu feedback remains usable while gameplay sound is paused; it does not resume other channels.</summary>
+        public bool TryPlayMenuCue(bool confirm = false)
+        {
+            if (!Application.isPlaying || !isActiveAndEnabled) return false;
+            if (!confirm && Time.unscaledTime - lastMenuCueTime < .075f) return false;
+            string id = confirm ? "ui_confirm" : "ui_select";
+            SfxCueBinding match = null;
+            foreach (SfxCueBinding cue in sfxCues ?? Array.Empty<SfxCueBinding>())
+            {
+                if (cue == null || cue.CueId != id) continue;
+                if (match != null) return Reject("Duplicate configured menu SFX id: " + id);
+                match = cue;
+            }
+            if (match == null || !PrepareClip(match.Clip)) return false;
+            EnsureSources();
+            if (!menuSource)
+            {
+                menuSource = MakeSource("Menu feedback", false, sfxOutput, 48);
+                menuSource.ignoreListenerPause = true;
+            }
+            menuSource.volume = Safe01(masterVolume) * Safe01(sfxVolume);
+            menuSource.PlayOneShot(match.Clip, Safe01(match.Volume) * (confirm ? .8f : .45f));
+            lastMenuCueTime = Time.unscaledTime;
+            return true;
+        }
+
         /// <summary>Freezes this presenter's audio and fades without changing Time.timeScale or the simulation clock.</summary>
         public void SetPresentationPaused(bool paused)
         {
@@ -230,6 +258,7 @@ namespace OutOfReach.Presentation.Audio
         {
             StopDialogue();
             if (sfxSource) sfxSource.Stop();
+            if (menuSource) menuSource.Stop();
             for (int i = 0; i < musicSources.Length; i++)
             {
                 if (musicSources[i]) musicSources[i].Stop();

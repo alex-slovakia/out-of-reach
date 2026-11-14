@@ -43,11 +43,13 @@ namespace OutOfReach.Presentation.Cargo.Editor
                 slot.SupplyLabel = Label(supply, Names[i] + "\nSUPPLY", source + new Vector3(.09f, .22f, 0), -90f, labelFont);
                 slot.AboardLabel = Label(aboard, Names[i] + "\nABOARD", destination + new Vector3(-.09f, .22f, 0), 90f, labelFont);
                 targets.Add(Target(supply, "cargo-supply:" + EquipmentIds[i], source, colliders));
-                targets.Add(Target(aboard, "cargo-bay:" + EquipmentIds[i], destination, colliders));
+                InteractableTarget bay = Target(aboard, "cargo-bay:" + EquipmentIds[i], destination, colliders);
+                targets.Add(bay);
+                slot.DestinationAnchor = bay.transform;
                 slots[i] = slot;
             }
             Transform held = Child("Supported cargo view - no physics", gameplayCamera);
-            held.localPosition = new Vector3(.24f, -.48f, .8f);
+            held.localPosition = new Vector3(0f, -.44f, .90f);
             GameObject carriedCase = (GameObject)PrefabUtility.InstantiatePrefab(casePrefab, held);
             carriedCase.transform.localPosition = Vector3.zero;
             carriedCase.transform.localRotation = Quaternion.Euler(0, 180, 0);
@@ -61,6 +63,10 @@ namespace OutOfReach.Presentation.Cargo.Editor
             heldLabel.transform.localRotation = Quaternion.identity;
             heldLabel.characterSize = .0055f;
             PreflightCargoHandsPresenter cargoHands = PreflightCargoHandsAuthoring.Create(held, carriedCase.transform);
+            var handPose = new SerializedObject(cargoHands);
+            handPose.FindProperty("carryGripRollDegrees").floatValue = 42f;
+            handPose.FindProperty("carryWristYawCorrectionDegrees").floatValue = 28f;
+            handPose.ApplyModifiedPropertiesWithoutUndo();
             // All visuals are nonblocking and ignore interaction rays; only explicit station triggers can be hit.
             foreach (Transform item in held.GetComponentsInChildren<Transform>(true)) item.gameObject.layer = 2;
             held.gameObject.SetActive(false);
@@ -108,7 +114,10 @@ namespace OutOfReach.Presentation.Cargo.Editor
             label.alignment = TextAlignment.Center;
             label.color = new Color(.82f, .91f, .93f);
             label.text = text;
-            child.GetComponent<MeshRenderer>().sharedMaterial = font.material;
+            Material depthLabel = AssetDatabase.LoadAssetAtPath<Material>("Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat");
+            if (!depthLabel) throw new InvalidOperationException("Cargo labels require the existing depth-tested label material.");
+            child.gameObject.AddComponent<ShipLabelAtlasBinder>().Configure(label,
+                child.GetComponent<MeshRenderer>(), font, depthLabel);
             Material plate = AssetDatabase.LoadAssetAtPath<Material>(PropRoot + "/Materials/MAT_Cargo_Graphite.mat");
             Box(child, "Printed manifest plate", new Vector3(0, 0, .008f), new Vector3(.46f, .13f, .012f), plate);
             return label;

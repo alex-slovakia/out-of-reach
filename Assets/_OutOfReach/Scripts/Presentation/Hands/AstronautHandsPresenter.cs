@@ -143,7 +143,7 @@ namespace OutOfReach.Presentation.Hands
         }
 
         /// <summary>Local confirmation only. Caller must first receive a successful real action.</summary>
-        public bool TryPlayPress() => TryStartGesture(Gesture.Press, false);
+        public bool TryPlayPress(bool leftHand = false) => TryStartGesture(Gesture.Press, leftHand);
 
         /// <summary>A short glove-flex check; it does not imply attachment to an object or rail.</summary>
         public bool TryPlayGrip(bool leftHand = false) => TryStartGesture(Gesture.Grip, leftHand);
@@ -263,7 +263,7 @@ namespace OutOfReach.Presentation.Hands
         private void LateUpdate()
         {
             RefreshPresentation();
-            if (!IsVisible) return; // Pause hides and freezes elapsed time; no wall-clock catch-up on resume.
+            if (!IsVisible || clock.IsPaused) return; // Keep the last visible pose; never advance while paused.
             SampleRouteTravel();
             AdvanceGesture(Time.unscaledDeltaTime);
         }
@@ -292,7 +292,7 @@ namespace OutOfReach.Presentation.Hands
                 HideModel();
                 return;
             }
-            if (clock.IsPaused) { HideModel(); return; }
+            if (clock.IsPaused) return;
             if (firstPersonViewAllowed == null || !firstPersonViewAllowed())
             {
                 ResetToNeutral(); // Cinematic/menu/control lock cancels rather than queues a hidden gesture.

@@ -16,7 +16,7 @@ namespace OutOfReach.Presentation.Cargo.Editor
         public const float HandleCentreX = .278f;
         public const float HandleCentreY = .175f;
 
-        /// <param name="carriedRoot">Existing camera-child Supported cargo view - no physics, at (.24,-.48,.8).</param>
+        /// <param name="carriedRoot">Existing camera-child Supported cargo view - no physics, centred at (0,-.44,.90).</param>
         /// <param name="caseInstance">The actual PreflightCargo_Visual child at zero position, yaw180, unit scale.</param>
         public static PreflightCargoHandsPresenter Create(Transform carriedRoot, Transform caseInstance)
         {

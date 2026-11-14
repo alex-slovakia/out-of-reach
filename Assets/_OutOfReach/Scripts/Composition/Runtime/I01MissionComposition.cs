@@ -209,6 +209,16 @@ namespace OutOfReach.Composition
 
         public void ConfigureCargoHands(PreflightCargoHandsPresenter presenter) => cargoHands = presenter;
 
+        public void SetMenuPresentationVisible(bool visible)
+        {
+            if (cargoPresentation) cargoPresentation.SetMenuOverlayVisible(visible);
+        }
+
+        public void PlayMenuCue(bool confirm = false)
+        {
+            if (audioPresenter) audioPresenter.TryPlayMenuCue(confirm);
+        }
+
         // Add only the planning-mode UI lock to Core's existing gate. Speed stays entirely with MissionRuntime.
         private void BindPlanningControlGate()
         {
@@ -250,6 +260,13 @@ namespace OutOfReach.Composition
 
         private void Update()
         {
+            if (astronautHands && CanPresentHands() && runtime && !runtime.IsPaused
+                && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId))
+            {
+                var mouse = UnityEngine.InputSystem.Mouse.current;
+                if (mouse != null && mouse.leftButton.wasPressedThisFrame) astronautHands.TryPlayPress(true);
+                else if (mouse != null && mouse.rightButton.wasPressedThisFrame) astronautHands.TryPlayPress(false);
+            }
             if (rejectionUntil > 0f && Time.unscaledTime >= rejectionUntil)
             {
                 rejectionUntil = 0f;
@@ -303,7 +320,12 @@ namespace OutOfReach.Composition
             if (controls) controls.ClearBinding();
         }
 
-        private void OnSessionStarted(MissionSession session) => BindSession(session);
+        private void OnSessionStarted(MissionSession session)
+        {
+            // A new mission resets exertion; re-enabling this presenter must not refill it.
+            if (runtime && runtime.Player) runtime.Player.ResetExertionForNewSession();
+            BindSession(session);
+        }
         private void OnSessionEnding(MissionSession session)
         {
             if (ReferenceEquals(session, boundSession)) UnbindSession();
@@ -318,6 +340,7 @@ namespace OutOfReach.Composition
             BindPlanningControlGate();
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
+            flightBoard.ConfigureExertion(() => runtime && runtime.Player ? runtime.Player.ExertionRemaining01 : float.NaN);
             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
             if (cargoPresentation)
                 cargoPresentation.Configure(runtime.Cargo, runtime.Planner, runtime.GameState);
@@ -409,6 +432,7 @@ namespace OutOfReach.Composition
             {
                 flightBoard.ClearInteractionPrompt();
                 flightBoard.ClearSubtitle();
+                flightBoard.ConfigureExertion(null);
                 flightBoard.enabled = false;
                 flightBoard.ConfigurePhysicalPlanning(false, null);
             }
@@ -433,7 +457,6 @@ namespace OutOfReach.Composition
             modeChosen = true;
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             if (preflightTension) preflightTension.RefreshPresentation();
-            audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
 
@@ -449,7 +472,6 @@ namespace OutOfReach.Composition
             modeChosen = true;
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             if (preflightTension) preflightTension.RefreshPresentation();
-            audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
 
@@ -652,7 +674,10 @@ namespace OutOfReach.Composition
                 case InteractionIds.RepairAntenna:
                 case InteractionIds.AirlockControls:
                 case InteractionIds.CockpitConsole:
-                    astronautHands.TryPlayPress();
+                    // Mouse input also drives the free hand gesture. Both paths choose the same hand
+                    // so their Update order cannot turn a left click into a right-hand press.
+                    astronautHands.TryPlayPress(UnityEngine.InputSystem.Mouse.current != null
+                        && UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame);
                     break;
             }
         }

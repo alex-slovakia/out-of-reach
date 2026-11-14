@@ -142,10 +142,11 @@
 .interaction-prompt { position: absolute; left: 50%; top: 54%; max-width: 440px; margin-left: 18px; flex-direction: row; align-items: center; }
 .flight-board .interaction-key { flex-shrink: 0; font-size: 16px; width: 28px; height: 28px; color: rgb(23, 25, 23); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); -unity-text-align: middle-center; background-color: rgb(240, 238, 229); margin-right: 10px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); }
 .interaction-text { min-width: 0; flex-shrink: 1; white-space: normal; font-size: 18px; -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); padding: 4px 8px; background-color: rgba(13, 15, 15, 0.82); }
-.subtitle-overlay { position: absolute; left: 24%; right: 24%; bottom: 18%; align-items: center; }
-.subtitle-box { max-width: 760px; padding: 8px 14px 10px; background-color: rgba(8, 9, 8, 0.76); }
+.subtitle-overlay { position: absolute; left: 18%; right: 18%; bottom: 9%; align-items: center; }
+.subtitle-box { max-width: 820px; padding: 4px 8px; background-color: rgba(0, 0, 0, 0); }
 .subtitle-speaker { font-size: 12px; color: rgb(213, 215, 204); margin-bottom: 3px; -unity-text-align: middle-center; white-space: normal; }
-.subtitle-text { font-size: 18px; color: rgb(255, 254, 247); -unity-text-align: middle-center; white-space: normal; text-shadow: 0 1px 2px rgba(0, 0, 0, 1); }
+.subtitle-text { font-size: 20px; color: rgb(247, 246, 240); -unity-text-align: middle-center; white-space: normal; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.9); }
+.interaction-prompt .interaction-text.constraint-exceeded { color: rgb(227, 228, 220); font-size: 16px; background-color: rgba(0, 0, 0, 0); }
 .flight-board .is-hidden { display: none; }
 .flight-board.report-visible .hud { display: none; }
 .preflight { position: absolute; left: 36px; right: 36px; top: 30px; bottom: 30px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95); }
@@ -155,13 +156,12 @@
 .preflight-countdown.deadline-practice { font-size: 18px; }
 .preflight-countdown.deadline-urgent { color: rgb(255, 110, 92); }
 .preflight-clock-note { font-size: 14px; color: rgb(235, 234, 222); margin-top: 0; -unity-text-align: middle-center; }
-.preflight-loadout { position: absolute; left: 0; bottom: 0; width: 480px; max-width: 48%; }
-.preflight-carried { font-size: 17px; white-space: normal; margin-bottom: 16px; }
+.preflight-loadout { position: absolute; left: 0; bottom: 0; }
+.preflight-carried { font-size: 22px; -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); }
 .preflight-constraints { flex-direction: row; }
 .preflight-constraints .constraint-label { color: rgb(218, 220, 210); font-size: 14px; }
 .preflight-constraints .constraint-value { font-size: 18px; }
 .preflight-validation { margin-top: 10px; font-size: 16px; white-space: normal; }
-.preflight-details-hint { margin-top: 9px; font-size: 14px; color: rgb(206, 210, 199); }
 .preflight-details { position: absolute; left: 0; top: 65px; width: 560px; max-width: 48%; padding: 4px 18px 18px; background-color: rgba(13, 15, 15, 0.94); }
 .preflight-details .details-title { font-size: 16px; }
 .preflight-details .last-valid-counts { font-size: 14px; }
@@ -181,6 +181,10 @@
 .session-menu .session-menu-action:focus { color: rgb(249, 201, 137); border-bottom-width: 1px; border-bottom-color: rgb(249, 201, 137); }
 .session-menu .session-menu-action:active { color: rgb(255, 255, 247); }
 .session-menu .session-menu-action:disabled { color: rgb(153, 158, 149); }
+.session-menu .session-menu-action { transform-origin: left center; transition-property: scale, translate, color; transition-duration: 0.16s; transition-timing-function: ease-out; }
+.session-menu .session-menu-action:hover, .session-menu .session-menu-action:focus { scale: 1.035 1.035; translate: 6px 0; }
+.session-menu .session-menu-action:active { scale: 1.01 1.01; }
+.session-menu.reduced-motion .session-menu-action { transition-duration: 0s; scale: 1 1; translate: 0 0; }
 .session-menu .session-menu-detail { margin: 18px 0 0; padding: 0; font-size: 16px; color: rgb(233, 233, 221); white-space: normal; }
 .session-menu .session-reduced { margin: 28px 0 0; padding: 0; min-height: 32px; font-size: 16px; color: rgb(242, 240, 233); white-space: normal; }
 .session-reduced .unity-toggle__checkmark { width: 20px; height: 20px; margin-right: 10px; background-color: rgba(8, 10, 10, 0.6); border-width: 1px; border-color: rgb(218, 220, 210); }
@@ -188,3 +192,30 @@
 .session-reduced:focus .unity-toggle__checkmark { border-width: 2px; border-color: rgb(249, 201, 137); }
 .session-menu .session-menu-controls { margin: 22px 0 0; padding: 0; font-size: 15px; color: rgb(222, 224, 213); white-space: normal; }
 .session-menu .session-menu-feedback { margin: 14px 0 0; padding: 0; font-size: 16px; color: rgb(249, 201, 137); white-space: normal; }
+.cargo-destination {
+    position: absolute;
+    width: 220px;
+    align-items: center;
+    color: rgb(242, 237, 221);
+}
+.cargo-destination-arrow {
+    width: 12px;
+    height: 12px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-right-color: rgb(242, 237, 221);
+    border-bottom-color: rgb(242, 237, 221);
+    margin-bottom: 12px;
+}
+.cargo-destination-caption {
+    font-size: 18px;
+    -unity-text-align: middle-center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+.exertion-readout {
+    position: absolute;
+    right: 36px;
+    bottom: 30px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+.exertion-readout .resource-cell { width: 254px; }

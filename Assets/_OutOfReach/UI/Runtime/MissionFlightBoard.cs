@@ -36,8 +36,15 @@ namespace OutOfReach.Presentation.UI
         private string subtitleSpeaker = string.Empty;
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
+        private Func<float> readExertionRemaining;
 
         public StyleSheet SharedStyleSheet => styleSheet;
+
+        public void ConfigureExertion(Func<float> readRemaining)
+        {
+            readExertionRemaining = readRemaining;
+            if (readRemaining == null) view?.SetExertion(float.NaN);
+        }
 
         /// <summary>Composition-owned mode/pause overlay; hides presentation without changing mission state.</summary>
         public void SetMenuOverlayVisible(bool visible)
@@ -180,6 +187,8 @@ namespace OutOfReach.Presentation.UI
             // never integrate deltaTime, decrement a deadline or infer elapsed simulation time.
             if (disposed) return;
             RefreshTiming();
+            view?.SetExertion(readExertionRemaining != null && state != null && state.Outcome == MissionOutcome.None
+                ? readExertionRemaining() : float.NaN);
             view?.AdvancePresentation(Time.unscaledDeltaTime, menuOverlayVisible || (clock != null && clock.IsPaused));
             // Tab reveals telemetry only. It never changes player, camera, cursor or mission authority.
             view?.SetSystemsHeld(state != null && state.Phase != GamePhase.Planning
@@ -228,6 +237,7 @@ namespace OutOfReach.Presentation.UI
             deadline = null;
             evaStatus = null;
             cargoLoading = null;
+            readExertionRemaining = null;
             physicalPlanning = false;
             hasResourceReference = false;
             subtitleText = string.Empty;

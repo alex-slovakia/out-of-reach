@@ -1,7 +1,7 @@
 {
   "name": "OutOfReach.Presentation.Cargo.Editor",
   "rootNamespace": "OutOfReach.Presentation.Cargo.Editor",
-  "references": ["OutOfReach.Presentation.Cargo", "OutOfReach.Interaction", "OutOfReach.Contracts"],
+  "references": ["OutOfReach.Presentation.Cargo", "OutOfReach.Presentation", "OutOfReach.Interaction", "OutOfReach.Contracts"],
   "includePlatforms": ["Editor"],
   "autoReferenced": true
 }

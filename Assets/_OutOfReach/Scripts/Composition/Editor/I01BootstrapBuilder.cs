@@ -158,6 +158,9 @@ namespace OutOfReach.Composition.Editor
 
             Transform presentationRoot = Child("I01 presentation", null);
             FirstPersonMotionPresenter walkMotion = presentationRoot.gameObject.AddComponent<FirstPersonMotionPresenter>();
+            var motionFields = new SerializedObject(walkMotion);
+            motionFields.FindProperty("cameraVerticalMetres").floatValue = .006f;
+            motionFields.ApplyModifiedPropertiesWithoutUndo();
             OpeningMenuMotionPresenter menuMotion = presentationRoot.gameObject.AddComponent<OpeningMenuMotionPresenter>();
             AstronautHandsPresenter hands = presentationRoot.gameObject.AddComponent<AstronautHandsPresenter>();
             hands.ConfigureModel(handsObject.transform, handsMount, handsRig);
@@ -194,6 +197,7 @@ namespace OutOfReach.Composition.Editor
             MissionRuntime runtime = missionRoot.gameObject.AddComponent<MissionRuntime>();
             runtime.Configure(player, anchors.PlayerSpawn, allTargets);
             runtime.ConfigurePreflight(true, cargoStage.Spawn);
+            runtime.ConfigureImpactMovement(true);
             runtime.ConfigureEva(new[] { innerGate, outerGate }, route, reentry);
             var runtimeFields = new SerializedObject(runtime);
             runtimeFields.FindProperty("startingPresetId").stringValue = AuroraMission.ScienceFocusPresetId;
@@ -221,6 +225,8 @@ namespace OutOfReach.Composition.Editor
             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/SFX/planning_tick.wav"));
             composition.ConfigureCargoPresentation(cargoStage.Presenter);
+            presentationRoot.gameObject.AddComponent<CargoDestinationGuide>().Configure(cargoStage.Presenter, camera,
+                document, Required<StyleSheet>("Assets/_OutOfReach/UI/Styles/MissionFlightBoard.uss"), font);
             composition.ConfigureCargoHands(cargoStage.Hands);
             BindApprovedDialogue(composition, cinematics);
 
@@ -256,6 +262,7 @@ namespace OutOfReach.Composition.Editor
         }
 
         public static void BuildI04Windows() => BuildWindowsCheckpoint("I04");
+        public static void BuildI05Windows() => BuildWindowsCheckpoint("I05");
 
         private static void BuildWindowsCheckpoint(string checkpoint)
         {
@@ -470,6 +477,8 @@ namespace OutOfReach.Composition.Editor
             model.name = "AURORA-7 delivered Blender models";
             model.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             model.transform.localScale = Vector3.one;
+            I05HullClosureBuilder.Build(model.transform,
+                Required<Material>("Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat"));
             // Paired play-mode captures show malformed geometry when these imported modules
             // are statically batched. Keep the source prefab intact and disable only this
             // optimization on the integrated scene instances; other static flags remain.

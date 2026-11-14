@@ -51,8 +51,8 @@ namespace OutOfReach.Composition
 
         public void ClearBinding()
         {
-            composition = null;
             ReleaseView();
+            composition = null;
         }
 
         private void OnEnable()
@@ -103,6 +103,8 @@ namespace OutOfReach.Composition
             }
             bool visible = showingMode || paused || showingOutcome;
             if (flightBoard) flightBoard.SetMenuOverlayVisible(showingMode || paused);
+            composition.SetMenuPresentationVisible(visible);
+            modal.EnableInClassList("reduced-motion", composition.Cinematics && composition.Cinematics.ReducedEffects);
             modal.style.display = visible && !showRecord ? DisplayStyle.Flex : DisplayStyle.None;
             controlsHint.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
             if (!visible) feedback.style.display = DisplayStyle.None;
@@ -225,11 +227,13 @@ namespace OutOfReach.Composition
             element.style.left = element.style.right = element.style.top = element.style.bottom = 0;
         }
 
-        private static Button ActionButton(System.Action handler, bool highlighted)
+        private Button ActionButton(System.Action handler, bool highlighted)
         {
             var button = new Button(handler);
             button.AddToClassList("session-menu-action");
             button.EnableInClassList("session-menu-primary", highlighted);
+            button.RegisterCallback<PointerEnterEvent>(_ => { if (composition) composition.PlayMenuCue(); });
+            button.RegisterCallback<FocusInEvent>(_ => { if (composition) composition.PlayMenuCue(); });
             return button;
         }
 
@@ -239,6 +243,7 @@ namespace OutOfReach.Composition
             if (showingMode) composition.StartTimedPlanning();
             else if (showingOutcome) composition.Restart();
             else composition.Resume();
+            composition.PlayMenuCue(true);
         }
 
         private void OnSecondary()
@@ -246,6 +251,7 @@ namespace OutOfReach.Composition
             if (!composition) return;
             if (showingMode) composition.StartPractice();
             else composition.Restart();
+            composition.PlayMenuCue(true);
         }
 
         private void OnReducedChanged(ChangeEvent<bool> change)
@@ -256,6 +262,7 @@ namespace OutOfReach.Composition
         private void ReleaseView()
         {
             if (flightBoard) flightBoard.SetMenuOverlayVisible(false);
+            if (composition) composition.SetMenuPresentationVisible(false);
             flightBoard = null;
             if (recorder != null)
             {

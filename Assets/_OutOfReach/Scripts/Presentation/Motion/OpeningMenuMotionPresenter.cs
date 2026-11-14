@@ -91,11 +91,11 @@ namespace OutOfReach.Presentation.Motion
                 ResetToNeutral();
                 return;
             }
-            double cycle = Mathf.Clamp(cycleRealSeconds, 12f, 20f);
+            double cycle = clock.IsPaused ? 12d : Mathf.Clamp(cycleRealSeconds, 12f, 20f);
             elapsedRealSeconds = (elapsedRealSeconds + step) % cycle;
             // A slow out-and-back arc starts and turns at zero velocity. No FOV, roll or forward zoom.
             float drift = (float)((1d - Math.Cos(elapsedRealSeconds * Math.PI * 2d / cycle)) * .5d);
-            if (clock.IsPaused) drift *= .35f; // Background only; no simulation advancement while paused.
+            if (clock.IsPaused) drift *= .8f; // Background only; no simulation advancement while paused.
             offset.SetLocalPositionAndRotation(neutralPosition + new Vector3(
                 Mathf.Clamp(lateralMetres, 0f, .018f) * drift,
                 Mathf.Clamp(verticalMetres, 0f, .004f) * drift, 0f),

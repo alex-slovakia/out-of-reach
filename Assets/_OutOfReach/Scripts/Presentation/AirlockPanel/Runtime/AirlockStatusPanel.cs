@@ -13,7 +13,7 @@ namespace OutOfReach.Presentation.AirlockPanel
         private IEvaStatus status;
         private ISimulationClock clock;
         private static readonly Color White = new Color(.91f, .94f, .96f, 1);
-        private static readonly Color Amber = new Color(.95f, .68f, .30f, 1);
+        private static readonly Color Amber = new Color(.69f, .48f, .20f, 1);
         private static readonly Color Cyan = new Color(.36f, .84f, .88f, 1);
         private static readonly Color Muted = new Color(.35f, .41f, .46f, 1);
 

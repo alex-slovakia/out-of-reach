@@ -23,7 +23,7 @@ namespace OutOfReach.Presentation.UI
         private readonly VisualElement preflight, preflightDetails, preflightLastValidDetail;
         private readonly Label preflightMass, preflightBudget, preflightPower, preflightValidation;
         private readonly Label preflightCountdown, preflightClockNote, preflightCarried, preflightCarryPace;
-        private readonly Label preflightDeadlineRule, preflightLastValidCounts;
+        private readonly Label preflightDeadlineRule, preflightLastValidCounts, preflightLoadedCounts;
         private readonly Label[] preflightResources;
         private bool physicalPlanning, planningDetailsHeld;
         private IMissionConfiguration displayedLastValid;
@@ -35,6 +35,8 @@ namespace OutOfReach.Presentation.UI
         private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
         private readonly Label[] planningResources, hudResources;
         private readonly ResourceGauge oxygenGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
+        private readonly ResourceGauge exertionGauge;
+        private readonly VisualElement exertionReadout;
         private ResourceSnapshot resourceReference, latestResources;
         private bool hasResourceReference, hasHudResources, hasCo2Thresholds;
         private double co2ActionPpm, co2EmergencyPpm;
@@ -127,22 +129,27 @@ namespace OutOfReach.Presentation.UI
             preflightTiming.Add(preflightClockNote);
             var preflightLoadout = Element("preflight-loadout");
             preflight.Add(preflightLoadout);
-            preflightCarried = Text("Hands free", "preflight-carried");
+            preflightCarried = Text(string.Empty, "preflight-carried");
+            preflightCarried.name = "carried-cargo-mass";
             preflightLoadout.Add(preflightCarried);
+            SetVisible(preflightCarried, false);
+            preflightDetails = Element("preflight-details");
+            preflight.Add(preflightDetails);
             var preflightConstraints = Element("preflight-constraints");
-            preflightLoadout.Add(preflightConstraints);
+            preflightDetails.Add(preflightConstraints);
             preflightMass = AddConstraint(preflightConstraints, "Loaded mass");
             preflightBudget = AddConstraint(preflightConstraints, "Credits");
             preflightPower = AddConstraint(preflightConstraints, "Load / generation");
             preflightValidation = Text(string.Empty, "preflight-validation");
-            preflightLoadout.Add(preflightValidation);
-            preflightLoadout.Add(Text("Hold Tab · reserves & launch details", "preflight-details-hint"));
-            preflightDetails = Element("preflight-details");
-            preflight.Add(preflightDetails);
+            preflightDetails.Add(preflightValidation);
             var preflightDetailColumns = Element("preflight-detail-columns");
             preflightDetails.Add(preflightDetailColumns);
             var preflightReserveColumn = Element("preflight-detail-column");
             preflightDetailColumns.Add(preflightReserveColumn);
+            preflightReserveColumn.Add(Text("Aboard cargo", "details-title"));
+            preflightLoadedCounts = Text(string.Empty, "last-valid-counts");
+            preflightLoadedCounts.name = "preflight-loaded-counts";
+            preflightReserveColumn.Add(preflightLoadedCounts);
             preflightReserveColumn.Add(Text("Aboard reserves", "details-title"));
             var preflightReserves = Element("preflight-reserves");
             preflightReserveColumn.Add(preflightReserves);
@@ -244,7 +251,24 @@ namespace OutOfReach.Presentation.UI
             subtitleBox.Add(subtitleText);
             IgnorePicking(subtitleOverlay);
             ClearSubtitle();
+            exertionReadout = Element("exertion-readout");
+            exertionReadout.AddToClassList("hud-readouts");
+            root.Add(exertionReadout);
+            exertionGauge = new ResourceGauge(exertionReadout, "Stamina", 6);
+            exertionGauge.Element.name = "player-stamina-gauge";
+            IgnorePicking(exertionReadout);
+            SetExertion(float.NaN);
             ShowUnbound();
+        }
+
+        public void SetExertion(float remaining)
+        {
+            bool available = !float.IsNaN(remaining) && !float.IsInfinity(remaining);
+            SetVisible(exertionReadout, available && remaining < .995f);
+            if (!available) return;
+            remaining = Mathf.Clamp01(remaining);
+            exertionGauge.Value.text = (remaining * 100f).ToString("0", CultureInfo.InvariantCulture) + "%";
+            exertionGauge.SetLevel(true, remaining, remaining < .3f, remaining < .12f, string.Empty);
         }
 
         public void ShowUnbound()
@@ -410,7 +434,8 @@ namespace OutOfReach.Presentation.UI
             string id = cargo?.CarriedEquipmentId;
             if (string.IsNullOrEmpty(id))
             {
-                preflightCarried.text = "Hands free";
+                preflightCarried.text = string.Empty;
+                SetVisible(preflightCarried, false);
                 preflightCarryPace.text = string.Empty;
                 SetVisible(preflightCarryPace, false);
                 return;
@@ -419,9 +444,11 @@ namespace OutOfReach.Presentation.UI
             if (catalog != null)
                 foreach (var item in catalog)
                     if (item.EquipmentId == id) { unitMassKg = item.UnitMassKg; break; }
-            preflightCarried.text = "Carrying " + EquipmentCopy.Name(id) + " · "
-                + Number(unitMassKg, "0.#") + " kg · not aboard";
-            preflightCarryPace.text = "Carry pace: " + Number(cargo.CarrySpeedFactor * 100d, "0")
+            bool knownMass = Finite(unitMassKg) && unitMassKg >= 0;
+            preflightCarried.text = knownMass ? Number(unitMassKg, "0.#") + " kg" : string.Empty;
+            SetVisible(preflightCarried, knownMass);
+            preflightCarryPace.text = "Carrying " + EquipmentCopy.Name(id) + " · "
+                + Number(unitMassKg, "0.#") + " kg · not aboard.\nCarry pace: " + Number(cargo.CarrySpeedFactor * 100d, "0")
                 + "% of unladen speed.";
             SetVisible(preflightCarryPace, true);
         }
@@ -521,6 +548,7 @@ namespace OutOfReach.Presentation.UI
         public void SetEquipment(IReadOnlyList<EquipmentSelection> catalog,
             IReadOnlyList<EquipmentSelection> selections, bool editable)
         {
+            preflightLoadedCounts.text = FormatLoadoutCounts(selections, catalog);
             bool rebuild = equipmentRows.Count != catalog.Count;
             if (!rebuild)
                 foreach (var item in catalog)
@@ -676,6 +704,7 @@ namespace OutOfReach.Presentation.UI
             batteryGauge.Advance(step);
             suitGauge.Advance(step);
             co2Gauge.Advance(step);
+            exertionGauge.Advance(step);
         }
 
         public void Dispose()
@@ -892,7 +921,14 @@ namespace OutOfReach.Presentation.UI
                 p.lineWidth = 1.5f;
                 p.lineJoin = LineJoin.Round;
                 p.lineCap = LineCap.Round;
-                if (resource == 3)
+                if (resource == 6)
+                {
+                    Stroke(p, new Vector2(12, 2), new Vector2(14, 3), new Vector2(12, 5), new Vector2(10, 3), new Vector2(12, 2));
+                    Stroke(p, new Vector2(4, 9), new Vector2(7, 6), new Vector2(11, 7), new Vector2(15, 10), new Vector2(18, 10));
+                    Stroke(p, new Vector2(11, 7), new Vector2(8, 12), new Vector2(4, 17));
+                    Stroke(p, new Vector2(8, 12), new Vector2(13, 13), new Vector2(15, 18));
+                }
+                else if (resource == 3)
                 {
                     Stroke(p, new Vector2(2, 5), new Vector2(16, 5), new Vector2(16, 15), new Vector2(2, 15), new Vector2(2, 5));
                     Stroke(p, new Vector2(18, 8), new Vector2(18, 12));
