@@ -38,9 +38,10 @@ namespace OutOfReach.Core
         /// True for the physical preflight: the player may move and interact during Planning (to carry crates) and
         /// the cockpit console launches the mission. False keeps planning a pure list: no control before launch.
         /// </param>
-        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false)
+        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false)
         {
             PreflightWalkEnabled = preflightWalk;
+            AllowMovementDuringImpact = allowMovementDuringImpact;
             Definition = definition ?? AuroraMission.CreateDefinition();
             Events = new MissionEventBus(subscriberErrorSink);
             State = new MissionGameState(Events);
@@ -130,6 +131,9 @@ namespace OutOfReach.Core
         /// <summary>True when the player walks and loads crates during Planning (physical preflight).</summary>
         public bool PreflightWalkEnabled { get; }
 
+        /// <summary>Opt-in playable impact. Other cinematic locks and pause still block control.</summary>
+        public bool AllowMovementDuringImpact { get; }
+
         public InteractionCatalog Interactions { get; }
 
         /// <summary>Unpaused real seconds this session was driven through flight phases by <see cref="Tick"/>.</summary>
@@ -193,7 +197,8 @@ namespace OutOfReach.Core
         {
             get
             {
-                if (IsDisposed || State.IsClosed || Clock.IsPaused || Cinematics.IsWaiting)
+                if (IsDisposed || State.IsClosed || Clock.IsPaused
+                    || (Cinematics.IsWaiting && !(AllowMovementDuringImpact && Cinematics.ActiveCinematic == CinematicId.Impact)))
                 {
                     return false;
                 }

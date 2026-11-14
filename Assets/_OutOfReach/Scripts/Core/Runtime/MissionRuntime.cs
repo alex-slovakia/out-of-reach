@@ -70,6 +70,9 @@ namespace OutOfReach.Core.Runtime
         [Tooltip("Off: planning is a list, the player has no control before launch. On: the player walks during Planning, carries crates between cargo-supply and cargo-bay targets and launches from the cockpit console.")]
         [SerializeField] private bool preflightWalk;
 
+        [Tooltip("Allow player control during the first Impact sequence. Pause and other sequences still lock control.")]
+        [SerializeField] private bool allowMovementDuringImpact;
+
         [Tooltip("Feet position and heading the player starts from during the physical preflight. Empty uses Player Spawn.")]
         [SerializeField] private Transform preflightSpawn;
 
@@ -220,6 +223,12 @@ namespace OutOfReach.Core.Runtime
         /// Explicit preflight wiring for code-built scenes; authored scenes use the serialized fields. Takes effect
         /// with the next session (StartSession or RestartMission).
         /// </summary>
+        /// <summary>Configures playable impact movement for the next session; default is off.</summary>
+        public void ConfigureImpactMovement(bool enabled)
+        {
+            allowMovementDuringImpact = enabled;
+        }
+
         public void ConfigurePreflight(bool walkDuringPlanning, Transform spawn)
         {
             preflightWalk = walkDuringPlanning;
@@ -289,7 +298,7 @@ namespace OutOfReach.Core.Runtime
         {
             EndSession();
             string preset = string.IsNullOrWhiteSpace(startingPresetId) ? null : startingPresetId;
-            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk);
+            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact);
             BindScene();
             if (SessionStarted != null)
             {
