@@ -64,6 +64,15 @@ namespace OutOfReach.Core
 
         public bool HasLaunched => LaunchedConfiguration != null;
 
+        /// <summary>
+        /// True after a boarding-mode deadline sealed the manifest (C05-BOARDING-01): the draft can no longer change
+        /// and only the cockpit console launches it. Always false in the legacy flow.
+        /// </summary>
+        public bool IsSealed { get; private set; }
+
+        /// <summary>Raised once when the manifest is sealed (Core bookkeeping: the crate in hands stays behind).</summary>
+        internal event Action Sealed;
+
         /// <summary>Raised after every accepted draft change (Core bookkeeping such as the planning deadline).</summary>
         public event Action DraftChanged;
 
@@ -77,6 +86,11 @@ namespace OutOfReach.Core
             if (HasLaunched || state.Phase != GamePhase.Planning)
             {
                 return Fail(CommandFailure.WrongPhase, "The loadout can only change during Planning; it is frozen after launch.");
+            }
+
+            if (IsSealed)
+            {
+                return Fail(CommandFailure.WrongPhase, PlanningDeadline.LoadingClosedMessage);
             }
 
             if (string.IsNullOrEmpty(equipmentId) || !definition.Catalog.TryGet(equipmentId, out EquipmentDefinition item))
@@ -156,7 +170,75 @@ namespace OutOfReach.Core
             return TryLaunch();
         }
 
+        /// <summary>
+        /// Seals the manifest for boarding (C05-BOARDING-01). With a replacement (the last valid loadout when the
+        /// draft is invalid at the deadline) the draft becomes that loadout first. The sealed draft is always valid;
+        /// nothing launches and no reserve is loaded here. Rejected commands change nothing.
+        /// </summary>
+        internal CommandResult TrySeal(MissionConfiguration replacement)
+        {
+            if (state.IsClosed)
+            {
+                return Fail(CommandFailure.WrongPhase, "The mission session has ended.");
+            }
+
+            if (HasLaunched || state.Phase != GamePhase.Planning)
+            {
+                return Fail(CommandFailure.WrongPhase, "Only an unlaunched Planning loadout can be sealed.");
+            }
+
+            if (IsSealed)
+            {
+                return Fail(CommandFailure.AlreadyComplete, PlanningDeadline.LoadingClosedMessage);
+            }
+
+            CommandResult validation = (replacement ?? draft).Validate();
+            if (!validation.Succeeded)
+            {
+                return validation;
+            }
+
+            if (replacement != null)
+            {
+                draftQuantities.Clear();
+                foreach (KeyValuePair<string, int> entry in replacement.CopyQuantities())
+                {
+                    draftQuantities[entry.Key] = entry.Value;
+                }
+
+                draft = BuildDraft();
+                DraftChanged?.Invoke();
+            }
+
+            IsSealed = true;
+            Sealed?.Invoke();
+            return Ok(PlanningDeadline.LoadingClosedMessage);
+        }
+
+        /// <summary>
+        /// The seat's launch of the sealed manifest (the cockpit console during the boarding window). Exactly the
+        /// normal launch; only the public <see cref="TryLaunch"/> is closed while the manifest is sealed.
+        /// </summary>
+        internal CommandResult TryLaunchSealed()
+        {
+            return IsSealed || HasLaunched ? Launch() : Fail(CommandFailure.PreconditionsNotMet, "Loading is still open.");
+        }
+
+        /// <summary>
+        /// Launches the draft. While a boarding-mode deadline has sealed the manifest it is rejected with
+        /// <see cref="PlanningDeadline.LoadingClosedMessage"/>: only the seat launches then.
+        /// </summary>
         public CommandResult TryLaunch()
+        {
+            if (IsSealed && !HasLaunched && !state.IsClosed && state.Phase == GamePhase.Planning)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, PlanningDeadline.LoadingClosedMessage);
+            }
+
+            return Launch();
+        }
+
+        private CommandResult Launch()
         {
             if (state.IsClosed)
             {

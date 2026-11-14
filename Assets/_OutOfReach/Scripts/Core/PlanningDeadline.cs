@@ -13,22 +13,43 @@ namespace OutOfReach.Core
     /// Implements the shared read-only <see cref="IPlanningDeadline"/>; presentation only displays it.
     /// A manual launch and the expiry can never both launch: whichever commits first leaves Planning, and the
     /// other is rejected or ignored.
+    /// <para>
+    /// Opt-in boarding window (C05-BOARDING-01, physical preflight only): at zero the deadline SEALS instead of
+    /// launching. The valid draft, or the restored last valid loadout, becomes the sealed manifest; cargo and
+    /// the list are closed, a crate in hands stays behind, and the mission stays in Planning until the player
+    /// launches from the cockpit console (the transport seat). The window has no timer and no death rule.
+    /// </para>
     /// </summary>
     public sealed class PlanningDeadline : IPlanningDeadline
     {
         public const double DefaultDurationRealSeconds = 60d;
 
+        /// <summary>What the closed cargo, the closed list and the blocked launch say during the boarding window.</summary>
+        public const string LoadingClosedMessage = "Loading closed. Board and secure your seat.";
+
         private readonly MissionPlanner planner;
         private readonly MissionGameState state;
         private MissionConfiguration lastValid;
 
-        internal PlanningDeadline(MissionPlanner planner, MissionGameState state)
+        internal PlanningDeadline(MissionPlanner planner, MissionGameState state, bool boardingAfterExpiry = false)
         {
             this.planner = planner ?? throw new ArgumentNullException(nameof(planner));
             this.state = state ?? throw new ArgumentNullException(nameof(state));
+            BoardingAfterExpiry = boardingAfterExpiry;
             planner.DraftChanged += CaptureDraftIfValid;
             CaptureDraftIfValid();
         }
+
+        /// <summary>True when expiry seals the loading and waits for the seat instead of launching (opt-in, off by default).</summary>
+        public bool BoardingAfterExpiry { get; }
+
+        /// <summary>
+        /// True between the sealing expiry and the seat launch: cargo and the list are closed, the mission is still in
+        /// Planning and only the cockpit console (the transport seat) launches. Presentation shows
+        /// <see cref="LoadingClosedMessage"/> meanwhile.
+        /// </summary>
+        public bool IsAwaitingBoarding => BoardingAfterExpiry && HasExpired && planner.IsSealed && !planner.HasLaunched
+            && !state.IsClosed && state.Phase == GamePhase.Planning;
 
         /// <summary>True once timed planning was started for this mission.</summary>
         public bool IsEnabled { get; private set; }
@@ -44,10 +65,10 @@ namespace OutOfReach.Core
         /// <summary>True when the deadline launched the last valid loadout because the draft at zero was invalid.</summary>
         public bool UsedLastValidLoadoutAtDeadline { get; private set; }
 
-        /// <summary>True once the deadline reached zero and performed its single launch attempt.</summary>
+        /// <summary>True once the deadline reached zero and performed its single launch attempt (or, with boarding, its seal).</summary>
         public bool HasExpired { get; private set; }
 
-        /// <summary>Result of the launch the deadline performed, or null if it has not expired.</summary>
+        /// <summary>Result of the launch the deadline performed; null before expiry and when it sealed for boarding instead.</summary>
         public CommandResult? DeadlineLaunchResult { get; private set; }
 
         /// <summary>Starts timed planning. Planning phase only, once, and only with a valid loadout to fall back to.</summary>
@@ -108,7 +129,19 @@ namespace OutOfReach.Core
             }
 
             HasExpired = true;
-            if (planner.DraftConfiguration.Validate().Succeeded)
+            bool draftValid = planner.DraftConfiguration.Validate().Succeeded;
+            if (BoardingAfterExpiry)
+            {
+                if (planner.TrySeal(draftValid ? null : lastValid).Succeeded)
+                {
+                    UsedLastValidLoadoutAtDeadline = !draftValid;
+                    return;
+                }
+
+                // A seal that cannot happen must never strand the player in Planning: launch as before.
+            }
+
+            if (draftValid)
             {
                 DeadlineLaunchResult = planner.TryLaunch();
                 return;

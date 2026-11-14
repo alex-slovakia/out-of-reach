@@ -39,9 +39,14 @@ namespace OutOfReach.Core
         /// True for the physical preflight: the player may move and interact during Planning (to carry crates) and
         /// the cockpit console launches the mission. False keeps planning a pure list: no control before launch.
         /// </param>
-        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null)
+        /// <param name="boardAfterLoadingDeadline">
+        /// C05-BOARDING-01, only with <paramref name="preflightWalk"/>: an expiring timed deadline seals the loading and
+        /// the mission launches only from the cockpit console (the transport seat). False keeps the immediate launch.
+        /// </param>
+        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null, bool boardAfterLoadingDeadline = false)
         {
             PreflightWalkEnabled = preflightWalk;
+            BoardingAfterDeadlineEnabled = preflightWalk && boardAfterLoadingDeadline;
             AllowMovementDuringImpact = allowMovementDuringImpact;
             Definition = definition ?? AuroraMission.CreateDefinition();
             Events = new MissionEventBus(subscriberErrorSink);
@@ -53,7 +58,7 @@ namespace OutOfReach.Core
             string presetId = startingPresetId ?? Definition.DefaultPresetId;
             IReadOnlyDictionary<string, int> startingLoadout = presetId == null ? null : Definition.GetPreset(presetId);
             Planner = new MissionPlanner(Definition, State, Resources, Events, startingLoadout);
-            PlanningDeadline = new PlanningDeadline(Planner, State);
+            PlanningDeadline = new PlanningDeadline(Planner, State, BoardingAfterDeadlineEnabled);
             ClockView = new SimulationClockView(Clock, State);
             Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics, survivalExtension, survivalSpec);
             Director.Eva.BindSimulationAdvance(AdvanceSimulation);
@@ -152,6 +157,12 @@ namespace OutOfReach.Core
 
         /// <summary>True when the player walks and loads crates during Planning (physical preflight).</summary>
         public bool PreflightWalkEnabled { get; }
+
+        /// <summary>
+        /// True when an expiring timed deadline seals the loading and waits for the seat (C05-BOARDING-01). Only with
+        /// the physical preflight: without player control nobody could reach the seat, so the legacy launch applies.
+        /// </summary>
+        public bool BoardingAfterDeadlineEnabled { get; }
 
         /// <summary>Opt-in playable impact. Other cinematic locks and pause still block control.</summary>
         public bool AllowMovementDuringImpact { get; }
