@@ -1,0 +1,7 @@
+Unsaved actual imported body/glove/Player fixture; not Bootstrap or full-game routing acceptance.
+Real InputSystem virtual mouse/keyboard/gamepad events through default PlayerInputActions, staged routing owner and real bridge; no scripted input-source substitution except explicit unknown-source refusal case.
+Actual current MissionSession launch/cockpit/repairs/suit; pending Impact event acknowledged skipped because this isolated fixture has no cinematic presenter. No state/outcome/force grants.
+Explicit approved EnterFloatFromFootSupport on actual floor before Arm. Setup Teleport/ClearMotion occur only between independent cases. Mouse deltas drive real look.
+Real bridge validates anticipation/contact before actual Player force/grip. Counts are actual Player and InteractionResolver events. No fabricated contact success.
+Pause uses real Core clock; root permission and session identity are supplied predicates. Temporary device disable is local to this Unity process and restored in cleanup. No OS input/desktop control.
+No native execution claimed until result files exist. 180-second watchdog.

@@ -1,0 +1,1324 @@
+{
+    "checks": [
+        {
+            "stage": "startup",
+            "message": "Actual default PlayerInputActions, not scripted source.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Actual domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Actual domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Actual domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Actual domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Real Repair session without fabricated phase/suit.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Bind original glove owner.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 4
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 6
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=-26.565052 actual=-26.565052",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 12
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Physical click begins delayed bare left reach without Interact or early impulse:  / ",
+            "pass": true,
+            "frame": 15
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Correct selected hand reaches actual surface.",
+            "pass": true,
+            "frame": 15
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Original reticle still names the actual wall.",
+            "pass": true,
+            "frame": 15
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Selected WORK palm point is6cm toward the chosen hand on the same actual ray-verified wall; no virtual palm offset: (-0.06, 1.51, 0.30)",
+            "pass": true,
+            "frame": 15
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Actual native skin at physical callback: all material vertices=7322 unique positions at1um=6855 support=1673 patchVertices=100 minimum=2.08616257E-07 residual=5.243139E-07 patch=0.002981037",
+            "pass": true,
+            "frame": 80
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Only the actual Player contact callback creates velocity.",
+            "pass": true,
+            "frame": 81
+        },
+        {
+            "stage": "bare left actual click push",
+            "message": "Held mouse never repeats push.",
+            "pass": true,
+            "frame": 754
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 756
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 758
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 762
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 762
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=-26.565052 actual=-26.565052",
+            "pass": true,
+            "frame": 764
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 764
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 764
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Physical click begins delayed bare right reach without Interact or early impulse:  / ",
+            "pass": true,
+            "frame": 767
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Correct selected hand reaches actual surface.",
+            "pass": true,
+            "frame": 767
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Original reticle still names the actual wall.",
+            "pass": true,
+            "frame": 767
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Selected WORK palm point is6cm toward the chosen hand on the same actual ray-verified wall; no virtual palm offset: (0.06, 1.51, 0.30)",
+            "pass": true,
+            "frame": 767
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Actual native skin at physical callback: all material vertices=7322 unique positions at1um=6855 support=1180 patchVertices=100 minimum=-1.49011612E-07 residual=5.39961547E-07 patch=0.002981037",
+            "pass": true,
+            "frame": 871
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Only the actual Player contact callback creates velocity.",
+            "pass": true,
+            "frame": 872
+        },
+        {
+            "stage": "bare right actual click push",
+            "message": "Held mouse never repeats push.",
+            "pass": true,
+            "frame": 1526
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 1528
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 1530
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 1534
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 1534
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=-26.565052 actual=-26.565052",
+            "pass": true,
+            "frame": 1536
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 1536
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 1536
+        },
+        {
+            "stage": "Left WORK patch edge refusal",
+            "message": "Narrow panel retains a genuine centered ray hit before the hand request.",
+            "pass": true,
+            "frame": 1540
+        },
+        {
+            "stage": "Left WORK patch edge refusal",
+            "message": "Unverified off-edge palm placement refuses before animation or physics, with no center/other-surface fallback.",
+            "pass": true,
+            "frame": 1542
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 1546
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 1548
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 1552
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 1552
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=-26.565052 actual=-26.565052",
+            "pass": true,
+            "frame": 1554
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 1554
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 1554
+        },
+        {
+            "stage": "Right WORK patch edge refusal",
+            "message": "Narrow panel retains a genuine centered ray hit before the hand request.",
+            "pass": true,
+            "frame": 1558
+        },
+        {
+            "stage": "Right WORK patch edge refusal",
+            "message": "Unverified off-edge palm placement refuses before animation or physics, with no center/other-surface fallback.",
+            "pass": true,
+            "frame": 1560
+        },
+        {
+            "stage": "actual suit",
+            "message": "Actual domain command: EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "frame": 1562
+        },
+        {
+            "stage": "actual suit",
+            "message": "Actual paid suit action.",
+            "pass": true,
+            "frame": 1565
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 1567
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 1569
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 1573
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 1573
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 1575
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 1575
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 1575
+        },
+        {
+            "stage": "glove left actual click push",
+            "message": "Physical click begins delayed glove left reach without Interact or early impulse:  / The actual skinned hand could not be solved safely.",
+            "pass": true,
+            "frame": 1578
+        },
+        {
+            "stage": "glove left actual click push",
+            "message": "Correct selected hand reaches actual surface.",
+            "pass": true,
+            "frame": 1578
+        },
+        {
+            "stage": "glove left actual click push",
+            "message": "Only the actual Player contact callback creates velocity.",
+            "pass": true,
+            "frame": 1798
+        },
+        {
+            "stage": "glove left actual click push",
+            "message": "Held mouse never repeats push.",
+            "pass": true,
+            "frame": 2150
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 2152
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 2154
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 2158
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 2158
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 2160
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 2160
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 2160
+        },
+        {
+            "stage": "glove right actual click push",
+            "message": "Physical click begins delayed glove right reach without Interact or early impulse:  / The actual skinned hand could not be solved safely.",
+            "pass": true,
+            "frame": 2163
+        },
+        {
+            "stage": "glove right actual click push",
+            "message": "Correct selected hand reaches actual surface.",
+            "pass": true,
+            "frame": 2163
+        },
+        {
+            "stage": "glove right actual click push",
+            "message": "Only the actual Player contact callback creates velocity.",
+            "pass": true,
+            "frame": 2293
+        },
+        {
+            "stage": "glove right actual click push",
+            "message": "Held mouse never repeats push.",
+            "pass": true,
+            "frame": 2910
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 2912
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 2914
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 2918
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 2918
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 2920
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 2920
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 2920
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Suited registered rail prefers delayed Grip.",
+            "pass": true,
+            "frame": 2923
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Actual Player holds registered rail; no push/ordinary interaction.",
+            "pass": true,
+            "frame": 3108
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Next click releases only the owned physical grip.",
+            "pass": true,
+            "frame": 3112
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 3116
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 3118
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 3122
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 3122
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 3124
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 3124
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 3124
+        },
+        {
+            "stage": "Right real click rail grip",
+            "message": "Suited registered rail prefers delayed Grip.",
+            "pass": true,
+            "frame": 3127
+        },
+        {
+            "stage": "Right real click rail grip",
+            "message": "Actual Player holds registered rail; no push/ordinary interaction.",
+            "pass": true,
+            "frame": 3330
+        },
+        {
+            "stage": "Right real click rail grip",
+            "message": "Next click releases only the owned physical grip.",
+            "pass": true,
+            "frame": 3334
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 3338
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 3340
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 3344
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 3344
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 3346
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 3346
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 3346
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Suited registered rail prefers delayed Grip.",
+            "pass": true,
+            "frame": 3349
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Actual Player holds registered rail; no push/ordinary interaction.",
+            "pass": true,
+            "frame": 3672
+        },
+        {
+            "stage": "Left real click rail grip",
+            "message": "Next click releases only the owned physical grip.",
+            "pass": true,
+            "frame": 3676
+        },
+        {
+            "stage": "directional rail departure through real input",
+            "message": "Held movement alone produces no airborne force.",
+            "pass": true,
+            "frame": 3680
+        },
+        {
+            "stage": "directional rail departure through real input",
+            "message": "D+LMB starts a new physical Push from released rail, not another Grip or immediate impulse.",
+            "pass": true,
+            "frame": 3681
+        },
+        {
+            "stage": "directional rail departure through real input",
+            "message": "Actual contact emits captured right-tangent plus outward impulse despite later opposite input: (0.34, 0.00, -0.09)",
+            "pass": true,
+            "frame": 3911
+        },
+        {
+            "stage": "directional rail departure through real input",
+            "message": "Rail departure preserves exactly one real grip/release and no ordinary LMB action.",
+            "pass": true,
+            "frame": 3911
+        },
+        {
+            "stage": "directional rail departure through real input",
+            "message": "Holding movement/click does not repeat rail thrust.",
+            "pass": true,
+            "frame": 4483
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 4485
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 4487
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 4491
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 4491
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 4493
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 4493
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 4493
+        },
+        {
+            "stage": "E/gamepad ordinary routing",
+            "message": "Real resolver focuses actual repair target.",
+            "pass": true,
+            "frame": 4495
+        },
+        {
+            "stage": "E/gamepad ordinary routing",
+            "message": "E dispatches exactly one ordinary interaction and no contact.",
+            "pass": true,
+            "frame": 4499
+        },
+        {
+            "stage": "E/gamepad ordinary routing",
+            "message": "Gamepad south still dispatches ordinary interaction only.",
+            "pass": true,
+            "frame": 4503
+        },
+        {
+            "stage": "E/gamepad ordinary routing",
+            "message": "Disarm restores original LMB ordinary interaction exactly once.",
+            "pass": true,
+            "frame": 4509
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 4511
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 4513
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 4517
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 4517
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 4519
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 4519
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 4519
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Actual domain command: Simulation paused.",
+            "pass": true,
+            "frame": 4522
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Pause retains leased contact ownership while blocking permission.",
+            "pass": true,
+            "frame": 4525
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Paused mouse/Space produce no contact or ordinary LMB fallback.",
+            "pass": true,
+            "frame": 4528
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Actual domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 4529
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Resume with mouse still held does not replay click.",
+            "pass": true,
+            "frame": 4532
+        },
+        {
+            "stage": "pause and supplied permission",
+            "message": "Menu/rest/terminal/cargo policy refusal retains ownership without contact.",
+            "pass": true,
+            "frame": 4536
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 4540
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 4542
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 4546
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 4546
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 4548
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 4548
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 4548
+        },
+        {
+            "stage": "deliberate actual foot contact",
+            "message": "Space invokes only actual validated foot push away from support.",
+            "pass": true,
+            "frame": 4552
+        },
+        {
+            "stage": "deliberate actual foot contact",
+            "message": "Holding Space never repeats thrust.",
+            "pass": true,
+            "frame": 6096
+        },
+        {
+            "stage": "deliberate actual foot contact",
+            "message": "Fresh Space in mid-air refuses without additional velocity.",
+            "pass": true,
+            "frame": 6102
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 6104
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 6106
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 6110
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 6110
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 6112
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 6112
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 6112
+        },
+        {
+            "stage": "shallow directional foot push",
+            "message": "Movement before Space has no floating force.",
+            "pass": true,
+            "frame": 6116
+        },
+        {
+            "stage": "shallow directional foot push",
+            "message": "A+Space uses actual floor support for one shallow tangent/outward impulse: (-0.34, 0.08, 0.00)",
+            "pass": true,
+            "frame": 6118
+        },
+        {
+            "stage": "shallow directional foot push",
+            "message": "Holding Space does not repeat the foot impulse.",
+            "pass": true,
+            "frame": 8470
+        },
+        {
+            "stage": "shallow directional foot push",
+            "message": "Directional foot push also refuses fresh Space after actual loss of floor contact.",
+            "pass": true,
+            "frame": 8474
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 8476
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 8478
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 8482
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 8482
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 8484
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 8484
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 8484
+        },
+        {
+            "stage": "actual capsule first-portal clearance fixture",
+            "message": "Actual floor permits explicit entry at the ship spawn coordinates.",
+            "pass": true,
+            "frame": 8488
+        },
+        {
+            "stage": "actual capsule first-portal clearance fixture",
+            "message": "Explicit input ownership after supported entry.",
+            "pass": true,
+            "frame": 8492
+        },
+        {
+            "stage": "actual capsule first-portal clearance fixture",
+            "message": "Real W+Space starts the shallow first-portal pass.",
+            "pass": true,
+            "frame": 8496
+        },
+        {
+            "stage": "actual capsule first-portal clearance fixture",
+            "message": "One verified foot impulse clears the complete 1.8m-wide/2.5m-high portal with unchanged 1.8m capsule: feet=(0.00, 0.66, 3.45)",
+            "pass": true,
+            "frame": 19844
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 19846
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 19848
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 19852
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 19852
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 19854
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 19854
+        },
+        {
+            "stage": "EVA glove rail",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 19854
+        },
+        {
+            "stage": "foreign grip refusal",
+            "message": "Actual external-owner grip ray.",
+            "pass": true,
+            "frame": 19856
+        },
+        {
+            "stage": "foreign grip refusal",
+            "message": "Fixture's other owner acquires an actual validated Player grip.",
+            "pass": true,
+            "frame": 19856
+        },
+        {
+            "stage": "foreign grip refusal",
+            "message": "Router does not release another owner's grip.",
+            "pass": true,
+            "frame": 19860
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 19862
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 19864
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 19868
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 19868
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 19870
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 19870
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 19870
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Unknown source cancels contact and restores old binding; decorative suppression stays asserted until root disarms.",
+            "pass": true,
+            "frame": 19874
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Unknown source refuses a fresh Arm.",
+            "pass": true,
+            "frame": 19874
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Explicit default-source reacquire.",
+            "pass": true,
+            "frame": 19876
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "External rebind is not erased by ownership loss.",
+            "pass": true,
+            "frame": 19878
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Disarm preserves external replacement.",
+            "pass": true,
+            "frame": 19878
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Explicit clean re-arm after external rebind.",
+            "pass": true,
+            "frame": 19880
+        },
+        {
+            "stage": "source/rebind boundaries",
+            "message": "Current-session predicate change releases old routing before new input.",
+            "pass": true,
+            "frame": 19882
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 19884
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 19886
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 19890
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 19890
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=0 actual=0",
+            "pass": true,
+            "frame": 19892
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 19892
+        },
+        {
+            "stage": "EVA glove wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 19892
+        },
+        {
+            "stage": "actual EVA chamber phase versus exterior ownership",
+            "message": "Actual domain command: Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "frame": 19894
+        },
+        {
+            "stage": "actual EVA chamber phase versus exterior ownership",
+            "message": "Real EVA phase while inside chamber retains floating input ownership; actual permission still gates actions.",
+            "pass": true,
+            "frame": 19897
+        },
+        {
+            "stage": "actual EVA chamber phase versus exterior ownership",
+            "message": "Actual domain command: Simulation advanced.",
+            "pass": true,
+            "frame": 19897
+        },
+        {
+            "stage": "actual EVA chamber phase versus exterior ownership",
+            "message": "Actual domain command: Outside on the tether.",
+            "pass": true,
+            "frame": 19897
+        },
+        {
+            "stage": "actual EVA chamber phase versus exterior ownership",
+            "message": "Actual outside transition disarms/restores input without waiting for phase change. MissionRuntime route transfer is outside this unsaved fixture.",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Actual domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Actual domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Actual domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Actual domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Real Repair session without fabricated phase/suit.",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "Bind original glove owner.",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "new session teardown",
+            "message": "New session starts with original mouse binding and no contact mode.",
+            "pass": true,
+            "frame": 19899
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual domain repair action exists.",
+            "pass": true,
+            "frame": 19901
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit real foot-supported float entry before Arm; no impulse/teleport.",
+            "pass": true,
+            "frame": 19903
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual outfit/float visual state.",
+            "pass": true,
+            "frame": 19907
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Stable single hand presentation owner.",
+            "pass": true,
+            "frame": 19907
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Actual Mouse delta drives look before the routed contact. expected=-26.565052 actual=-26.565052",
+            "pass": true,
+            "frame": 19909
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Explicit Arm immediately owns default LMB before queued input.",
+            "pass": true,
+            "frame": 19909
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Only LMB Interact disabled; map/look/pause/E remain enabled.",
+            "pass": true,
+            "frame": 19909
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "New actual session explicitly reacquires lease.",
+            "pass": true,
+            "frame": 19911
+        },
+        {
+            "stage": "WORK bare wall",
+            "message": "Disable restores exact owned binding and cancels bridge.",
+            "pass": true,
+            "frame": 19913
+        }
+    ]
+}

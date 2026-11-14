@@ -148,20 +148,36 @@ namespace OutOfReach.Composition
                 return;
             }
             if (bridge.IsBusy) { Refuse("The current hand contact is still in progress."); return; }
-            bool accepted = suit.IsSuitOn && PreferRailGrip()
-                ? bridge.TryGrab(hand, eye.forward) : bridge.TryPush(hand, eye.forward, handStrength);
+            // Movement is sampled once at this click, never integrated as airborne thrust.
+            Vector2 move = source.Move;
+            bool directed = move.sqrMagnitude > .01f;
+            Vector3 travel = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y));
+            bool accepted = directed
+                ? bridge.TryPushDirected(hand, eye.forward, travel, handStrength)
+                : suit.IsSuitOn && PreferRailGrip()
+                    ? bridge.TryGrab(hand, eye.forward) : bridge.TryPush(hand, eye.forward, handStrength);
             if (!accepted) Refuse(bridge.LastRefusal); // No decorative press and no second action after refusal.
         }
         void DispatchFoot()
         {
             LastFootResult = null; LastRefusal = string.Empty;
             if (bridge.IsBusy || player.HeldHandhold) { Refuse("Release the hand contact before pushing from foot support."); return; }
-            LastFootResult = player.TryPushFromFootContact(player.transform.up, footStrength);
+            Vector2 move = source.Move;
+            Vector3 up = player.transform.up, direction = up;
+            if (move.sqrMagnitude > .01f)
+            {
+                Vector3 tangent = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)).normalized;
+                // Flat-deck tuning: at default MinimumAwayDot=.2 this is .225 upward, .974 tangent.
+                // Actual Player still proves foot contact and validates the real support normal; slopes may refuse.
+                float away = Mathf.Clamp(Mathf.Max(.225f, player.Microgravity.MinimumAwayDot + .025f), 0f, 1f);
+                direction = up * away + tangent * Mathf.Sqrt(1f - away * away);
+            }
+            LastFootResult = player.TryPushFromFootContact(direction, footStrength);
             if (LastFootResult != FloatActionResult.Done) Refuse("Foot push refused: " + LastFootResult + ".");
         }
         bool ModeValid() => player && bridge && bridge.IsBound && eye && eye == player.ViewPivot && player.IsFloating
             && !player.IsOnRoute && !suit.IsOutside && state.Outcome == MissionOutcome.None
-            && state.Phase != GamePhase.Planning && state.Phase != GamePhase.Eva
+            && state.Phase != GamePhase.Planning
             && state.Phase != GamePhase.Outcome && state.Phase != GamePhase.Report;
         bool SessionCurrent()
         {

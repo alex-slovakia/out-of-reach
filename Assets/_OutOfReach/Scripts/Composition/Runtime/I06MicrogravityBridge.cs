@@ -34,6 +34,7 @@ namespace OutOfReach.Composition
         Collider surface, ownedGrip;
         HandContactTarget target;
         float pushStrength, requestStarted;
+        Vector3 localPushDirection;
 
         public bool IsBound => bound;
         /// <summary>Explicit routing mode, not permission. A rejected request must not fall back to a decorative press.</summary>
@@ -88,6 +89,19 @@ namespace OutOfReach.Composition
             return Begin(selectedHand, HandContactKind.Push, aimDirection, strength01);
         }
 
+        /// <summary>
+        /// One contact-only directional push. Travel intent is projected onto the actual hit plane, with a bounded
+        /// outward component. The resulting direction is captured in that surface's local space and dispatched
+        /// only after the existing visible skin contact proof. Changing input during anticipation adds no force.
+        /// </summary>
+        public bool TryPushDirected(ContactHand selectedHand, Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01 = .35f)
+        {
+            if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f
+                || !Finite(desiredTravelWorld) || desiredTravelWorld.sqrMagnitude < .0001f)
+                return Refuse("Invalid directional push request.");
+            return Begin(selectedHand, HandContactKind.Push, aimDirection, strength01, desiredTravelWorld);
+        }
+
         /// <summary>Suited glove only; nearest hit must be a registered straight capsule rail with actual 12–17mm radius.</summary>
         public bool TryGrab(ContactHand selectedHand, Vector3 aimDirection) => Begin(selectedHand, HandContactKind.Grip, aimDirection, 0f);
 
@@ -140,7 +154,7 @@ namespace OutOfReach.Composition
                 || (stage != HandContactStage.Holding && Time.unscaledTime - requestStarted > 1.5f)) CancelOwnedContact();
         }
 
-        bool Begin(ContactHand selectedHand, HandContactKind requestedKind, Vector3 aimDirection, float strength)
+        bool Begin(ContactHand selectedHand, HandContactKind requestedKind, Vector3 aimDirection, float strength, Vector3 desiredTravelWorld = default)
         {
             LastRefusal = string.Empty; LastCommandResult = null;
             if (!ModeAllowed()) return Refuse("Contact mode is unavailable.");
@@ -151,6 +165,11 @@ namespace OutOfReach.Composition
             if (!Finite(aimDirection) || aimDirection.sqrMagnitude < .00001f
                 || !Nearest(player.ViewPivot.position, aimDirection.normalized, Reach, out RaycastHit hit))
                 return Refuse("No unobstructed solid surface within reach.");
+            // WORK crosshair names the intended surface; the selected palm lands 6cm toward that hand.
+            // This is a new real point on the same aimed plane, never a skin/arm offset or a larger reach.
+            if (requestedKind == HandContactKind.Push && !suit.IsSuitOn
+                && !TryWorkPalmPoint(selectedHand, hit, out hit))
+                return Refuse("No verified same-surface WORK palm point within the original reach.");
             Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
             float radius = 0f;
             if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
@@ -161,6 +180,18 @@ namespace OutOfReach.Composition
             if (requestedKind == HandContactKind.Grip) tangent = OrientRailAxisAtRequest(tangent, player.ViewPivot);
             hand = selectedHand; kind = requestedKind; surface = hit.collider;
             target = Frame(surface, hit.point, hit.normal, tangent, radius);
+            Vector3 direction = hit.normal;
+            if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f)
+            {
+                Vector3 travelTangent = Vector3.ProjectOnPlane(desiredTravelWorld, hit.normal);
+                if (travelTangent.sqrMagnitude > .0001f)
+                {
+                    float away = Mathf.Clamp(Mathf.Max(.25f, player.Microgravity.MinimumAwayDot + .025f), 0f, 1f);
+                    direction = hit.normal * away + travelTangent.normalized * Mathf.Sqrt(1f - away * away);
+                }
+                // Intent straight into/out of the surface has no tangent: retain an ordinary normal push.
+            }
+            localPushDirection = surface.transform.InverseTransformVector(direction).normalized;
             pushStrength = strength; pendingSuited = suit.IsSuitOn; actionSent = false; pending = true;
             requestStarted = Time.unscaledTime; // Presentation watchdog only; never advances simulation or physics.
             generation++;
@@ -172,12 +203,27 @@ namespace OutOfReach.Composition
             return Refuse("The actual hand pose, arm reach or approach path refused this contact.");
         }
 
+        bool TryWorkPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, out RaycastHit palmHit)
+        {
+            palmHit = default;
+            Vector3 across = Vector3.ProjectOnPlane(player.ViewPivot.right, aimedHit.normal);
+            if (across.sqrMagnitude < .01f) return false;
+            Vector3 proposed = aimedHit.point + across.normalized * (selectedHand == ContactHand.Left ? -.06f : .06f);
+            Vector3 delta = proposed - player.ViewPivot.position;
+            float distance = delta.magnitude;
+            if (!Finite(proposed) || distance < .001f || distance > Reach
+                || !Nearest(player.ViewPivot.position, delta / distance, Mathf.Min(Reach, distance + PointTolerance), out palmHit)) return false;
+            // Do not jump an edge, find a second object, expand the envelope, or apply force after refusal.
+            return palmHit.collider == aimedHit.collider && Vector3.Dot(palmHit.normal, aimedHit.normal) > .999f
+                && Vector3.Distance(palmHit.point, proposed) <= PointTolerance;
+        }
+
         bool ModeAllowed()
         {
             if (!bound || !armed || !isActiveAndEnabled || !player || !body || !bare || !gloves
                 || !player.IsFloating || player.IsOnRoute || !player.ControlAllowed || !player.ViewPivot
                 || clock.IsPaused || suit.IsOutside || state.Outcome != MissionOutcome.None
-                || state.Phase == GamePhase.Planning || state.Phase == GamePhase.Eva
+                || state.Phase == GamePhase.Planning
                 || state.Phase == GamePhase.Outcome || state.Phase == GamePhase.Report) return false;
             try
             {
@@ -223,13 +269,16 @@ namespace OutOfReach.Composition
             if (actionSent || !ValidateContact(sample)) return false;
             float error = pendingSuited ? gloves.ContactErrorMetres : bare.ContactErrorMetres;
             if (!Finite(error) || error > (pendingSuited ? .002f : .003f)) return false;
+            Vector3 direction = surface.transform.TransformVector(localPushDirection).normalized;
+            if (kind == HandContactKind.Push && (!Finite(direction) || direction.sqrMagnitude < .99f
+                || Vector3.Dot(direction, sample.Normal) < player.Microgravity.MinimumAwayDot)) return false;
             actionSent = true; int token = generation;
             // Claim only the intended collider before Player emits its synchronous Grabbed event. A root
             // teardown inside that event can then release the just-created grip instead of leaking it.
             if (kind == HandContactKind.Grip) ownedGrip = surface;
             FloatActionResult result = kind == HandContactKind.Grip
                 ? player.TryGrab(surface, sample.Point)
-                : player.TryPushOff(surface, sample.Point, sample.Normal, pushStrength);
+                : player.TryPushOff(surface, sample.Point, direction, pushStrength);
             if (token != generation) return result == FloatActionResult.Done;
             LastCommandResult = result;
             if (result != FloatActionResult.Done) ownedGrip = null;
@@ -355,7 +404,7 @@ namespace OutOfReach.Composition
             cancelling = true;
             try
             {
-                generation++; pending = false; actionSent = false; surface = null; target = default;
+                generation++; pending = false; actionSent = false; surface = null; target = default; localPushDirection = default;
                 Collider release = ownedGrip; ownedGrip = null;
                 if (bare) bare.CancelImmediately();
                 if (gloves) gloves.ResetToNeutral();
