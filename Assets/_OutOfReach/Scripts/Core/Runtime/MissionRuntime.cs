@@ -57,7 +57,7 @@ namespace OutOfReach.Core.Runtime
 
         [Header("Timed planning")]
         [Tooltip("Unpaused real seconds for BeginTimedPlanning.")]
-        [SerializeField] private double planningDeadlineRealSeconds = PlanningDeadline.DefaultDurationRealSeconds;
+        [SerializeField] private double planningDeadlineRealSeconds = OutOfReach.Core.PlanningDeadline.DefaultDurationRealSeconds;
 
         [Header("Events for presentation wiring")]
         [Tooltip("Raised after a session was created and bound (also after a restart in place).")]
@@ -84,11 +84,11 @@ namespace OutOfReach.Core.Runtime
 
         public IReadOnlyList<IRepairable> Repairables => Session != null ? Session.Systems.Repairables : null;
 
-        /// <summary>Read-only clock for the HUD (shape of the proposed ISimulationClock).</summary>
-        public SimulationClockView Clock => Session != null ? Session.ClockView : null;
+        /// <summary>Read-only clock for the HUD: pause, disclosed time scale, elapsed simulated time.</summary>
+        public ISimulationClock Clock => Session != null ? Session.ClockView : null;
 
-        /// <summary>Planning deadline state (shape of the proposed IPlanningDeadline).</summary>
-        public PlanningDeadline PlanningDeadline => Session != null ? Session.PlanningDeadline : null;
+        /// <summary>Read-only planning deadline. Start timed planning with <see cref="BeginTimedPlanning"/>.</summary>
+        public IPlanningDeadline PlanningDeadline => Session != null ? Session.PlanningDeadline : null;
 
         public bool IsPaused => Session != null && Session.Clock.IsPaused;
 
@@ -170,7 +170,12 @@ namespace OutOfReach.Core.Runtime
             StartSession();
         }
 
-        /// <summary>Starts the real-time planning deadline (timed mode). Wire to the planner's start button.</summary>
+        /// <summary>
+        /// Starts the real-time planning deadline (timed mode). Wire the planner's "start timed planning" control
+        /// to it with a UnityEvent. Lifecycle: a new session starts in Planning with the deadline disabled
+        /// (practice); call this once, before or during planning, to arm it. It needs a valid loadout to fall
+        /// back to and cannot be disarmed afterwards. Not calling it keeps practice planning.
+        /// </summary>
         public void BeginTimedPlanning()
         {
             if (Session == null)

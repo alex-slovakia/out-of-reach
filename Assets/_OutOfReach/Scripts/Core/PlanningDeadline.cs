@@ -10,10 +10,11 @@ namespace OutOfReach.Core
     /// launched if it is valid; otherwise the last valid loadout the player had is restored and launched, and
     /// <see cref="UsedLastValidLoadoutAtDeadline"/> records that for the report. This happens once and atomically;
     /// a default preset is never forced silently. Enabling fails if no valid loadout exists to fall back to.
-    /// Member names match the proposed shared contract IPlanningDeadline (COORD-DECISIONS-01), so adopting it
-    /// later is a one-line change.
+    /// Implements the shared read-only <see cref="IPlanningDeadline"/>; presentation only displays it.
+    /// A manual launch and the expiry can never both launch: whichever commits first leaves Planning, and the
+    /// other is rejected or ignored.
     /// </summary>
-    public sealed class PlanningDeadline
+    public sealed class PlanningDeadline : IPlanningDeadline
     {
         public const double DefaultDurationRealSeconds = 60d;
 

@@ -128,18 +128,57 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
-        public void ClockView_ReportsPauseScaleAndElapsedTime_FromTheSingleClock()
+        public void ExpiryAndManualLaunch_CanNeverBothLaunch()
+        {
+            using (var session = Fixtures.NewSession())
+            using (var recorder = new EventRecorder(session.Events))
+            {
+                Assert.That(session.PlanningDeadline.TryEnable(10d).Succeeded, Is.True);
+                session.Tick(10d);
+                CommandResult lateClick = session.Planner.TryLaunch();
+
+                Assert.That(lateClick.Failure, Is.EqualTo(CommandFailure.AlreadyComplete), "the expiry launched first; the click in the same frame is rejected");
+                Assert.That(recorder.Phases, Has.Count.EqualTo(1));
+                Assert.That(recorder.Resources, Has.Count.EqualTo(1), "reserves were loaded once");
+            }
+
+            using (var session = Fixtures.NewSession())
+            using (var recorder = new EventRecorder(session.Events))
+            {
+                Assert.That(session.PlanningDeadline.TryEnable(10d).Succeeded, Is.True);
+                session.Tick(9.99d);
+                Assert.That(session.Planner.TryLaunch().Succeeded, Is.True, "the player launches just before zero");
+                session.Tick(1d);
+
+                Assert.That(session.PlanningDeadline.HasExpired, Is.False, "the deadline no longer acts after a manual launch");
+                Assert.That(session.PlanningDeadline.UsedLastValidLoadoutAtDeadline, Is.False);
+                Assert.That(recorder.Phases, Has.Count.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void ClockAndDeadline_ImplementTheSharedContracts_WithTheirDocumentedSemantics()
         {
             using (var session = Fixtures.EmergencySession())
             {
+                ISimulationClock clock = session.ClockView;
+                IPlanningDeadline deadline = session.PlanningDeadline;
+                IGameState state = session.State;
                 session.AdvanceSimulation(120d);
 
-                Assert.That(session.ClockView.ElapsedSimulationSeconds, Is.EqualTo(session.State.ElapsedSimulationSeconds));
-                Assert.That(session.ClockView.TimeScale, Is.EqualTo(300d));
-                Assert.That(session.ClockView.IsPaused, Is.False);
+                Assert.That(clock.ElapsedSimulationSeconds, Is.EqualTo(state.ElapsedSimulationSeconds), "delegates to mission state, no second counter");
+                Assert.That(clock.TimeScale, Is.EqualTo(300d));
+                Assert.That(clock.IsPaused, Is.False);
 
                 Assert.That(session.Clock.Pause().Succeeded, Is.True);
-                Assert.That(session.ClockView.IsPaused, Is.True);
+                Assert.That(clock.IsPaused, Is.True);
+                Assert.That(clock.TimeScale, Is.EqualTo(300d), "the time scale keeps its value while paused");
+
+                Assert.That(deadline.IsEnabled, Is.False, "practice planning was used");
+                Assert.That(deadline.RemainingRealSeconds, Is.EqualTo(0d));
+                Assert.That(deadline.UsedLastValidLoadoutAtDeadline, Is.False);
+                Assert.That(deadline.LastValidConfiguration, Is.Not.Null);
+                Assert.That(deadline.LastValidConfiguration.Validate().Succeeded, Is.True);
             }
         }
     }

@@ -1,13 +1,14 @@
 using System;
+using OutOfReach.Contracts;
 
 namespace OutOfReach.Core
 {
     /// <summary>
-    /// Read-only view of the mission clock for the HUD: pause state, disclosed acceleration and elapsed simulated
-    /// time. Elapsed time is delegated to the game state, so there is no second counter. Member names match the
-    /// proposed shared contract ISimulationClock (COORD-DECISIONS-01), so adopting it later is a one-line change.
+    /// Read-only view of the mission clock for the HUD (implements the shared <see cref="ISimulationClock"/>):
+    /// pause state, disclosed acceleration and elapsed simulated time. TimeScale keeps its value while paused.
+    /// Elapsed time is delegated to the game state, so there is no second counter.
     /// </summary>
-    public sealed class SimulationClockView
+    public sealed class SimulationClockView : ISimulationClock
     {
         private readonly SimulationClock clock;
         private readonly MissionGameState state;

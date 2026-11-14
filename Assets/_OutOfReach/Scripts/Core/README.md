@@ -30,8 +30,12 @@ interaction (C03), communications, outcomes for success, report data (C04).
 | `IRepairable` | `OutOfReach.Simulation.ShipSystem` (Power, LifeSupport, Antenna) |
 | `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `OutOfReach.Core.RepairInteraction` |
 | `ICommunicationSystem` | C04 (not yet) |
-| proposed `ISimulationClock` | `OutOfReach.Core.SimulationClockView` (same three members) |
-| proposed `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` (same four members) |
+| `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
+| `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
+
+The two newest contracts come from the integrator's shared-only commit `39dfb92` on `feature/visuals-cinematics`,
+adopted here by cherry-pick as `50b2f8a` (the visuals branch itself was not merged; `TEAM-COMMANDS.md` was not
+taken, so it arrives once from the integrator's branch).
 
 ## Scene integration (I01: plan → accident → interior repair)
 
@@ -63,7 +67,11 @@ Everything below is Claude-owned and is bound in Bootstrap by the integrator. No
    - `InteractionResolver.PromptChanged(string prompt, bool canInteract)`: prompt view. Empty text = nothing in focus.
    - `InteractionResolver.InteractionAttempted(bool succeeded, string explanation)`: feedback line.
    - `MissionRuntime.PauseChangedEvent(bool)` and `MissionRuntime.TogglePause()` / `SetPaused(bool)`: pause menu.
-   - `MissionRuntime.BeginTimedPlanning()`: starts the 60 s planning deadline. Not calling it = practice planning.
+   - `public void MissionRuntime.BeginTimedPlanning()`: the Practice/Timed entry point.
+     - Lifecycle: every new session starts in Planning with the deadline disabled (practice).
+     - Call it once, before or during planning, to arm the deadline (`Planning Deadline Real Seconds`, default 60).
+       It cannot be disarmed afterwards and needs a valid loadout to fall back to.
+     - Never calling it keeps practice planning. Read the countdown from `MissionRuntime.PlanningDeadline`.
    - `MissionRuntime.RestartMission()`: report Restart button. Disposes the session and reloads the active scene.
      In a scene outside the build list it rebuilds the session in place and logs a warning.
 
@@ -175,7 +183,7 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 | C01-PAUSE | Fixed. `AdvanceSimulation` is refused while paused; regression covers `Tick` and `AdvanceSimulation` |
 | C02-BOUNDARY | Built in. Survival rules run synchronously after every split of an advance, not from a listener |
 | C01-FINITE | Fixed. CO₂ capped at 1,000,000 ppm, time scale at ×86,400, elapsed-time overflow rejected before mutation |
-| COORD-DECISIONS-01 | Clock view and planning deadline implemented to the proposed member lists; restart reloads the scene |
+| COORD-DECISIONS-01 | `ISimulationClock` and `IPlanningDeadline` adopted and implemented; restart reloads the scene; a manual launch and the expiry can never both launch (tested both orders) |
 | Verifier findings 1–8 on `caee234` | Fixed: callback isolation on the timeout path, disposed sessions reject commands, one clock gate for ledger and state, mission end reads the ledger snapshot, two weak tests rewritten |
 
 ## Open points
@@ -189,7 +197,8 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 
 ## Evidence (C02, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 128 passed, 0 failed.** 126 domain tests plus 2 fixture checks of the saved scene and prefab.
+- **EditMode: 129 passed, 0 failed.** 127 domain tests plus 2 fixture checks of the saved scene and prefab.
+  (128 passed on the C02 commit itself; one contract test was added with the adoption commit.)
 - **PlayMode: 8 passed, 0 failed.** Walking speed and collision, bounded look, reach and line of sight, one
   repair for the exact cost with a rejected repeat, pause, cinematic lock with fallback, re-enable and restart
   without duplicate subscriptions.
