@@ -4,21 +4,21 @@
   {
    "name": "A7_PaintWhite",
    "set": "A7_Paint",
-   "tint": "#CDCFCA",
+   "tint": "#B5B3AE",
    "tiling": 1.0,
    "normal": 0.35
   },
   {
    "name": "A7_PaintGray",
    "set": "A7_Paint",
-   "tint": "#8A8E92",
+   "tint": "#8A8884",
    "tiling": 1.0,
    "normal": 0.35
   },
   {
    "name": "A7_PaintGraphite",
    "set": "A7_Paint",
-   "tint": "#25272B",
+   "tint": "#2B2B2C",
    "tiling": 1.0,
    "normal": 0.35
   },
@@ -35,6 +35,20 @@
    "tint": "#DDB02E",
    "tiling": 1.0,
    "normal": 0.35
+  },
+  {
+   "name": "A7_PaintAmber",
+   "set": "A7_Paint",
+   "tint": "#C68A1C",
+   "tiling": 1.0,
+   "normal": 0.35
+  },
+  {
+   "name": "A7_PlasticWhite",
+   "set": "A7_Paint",
+   "tint": "#DDDCD4",
+   "tiling": 2.0,
+   "normal": 0.12
   },
   {
    "name": "A7_AnodizedBlack",
@@ -72,9 +86,15 @@
    "normal": 0.6
   },
   {
+   "name": "A7_Chrome",
+   "tint": "#DCDEE0",
+   "metallic": 1.0,
+   "smoothness": 0.78
+  },
+  {
    "name": "A7_FabricWhite",
    "set": "A7_Fabric",
-   "tint": "#D8D6CE",
+   "tint": "#C9C2B2",
    "tiling": 4.0,
    "normal": 1.0
   },
@@ -95,15 +115,22 @@
   {
    "name": "A7_QuiltWhite",
    "set": "A7_Quilt",
-   "tint": "#D5D3CA",
+   "tint": "#C2BFB8",
    "tiling": 2.0,
    "normal": 1.0
   },
   {
    "name": "A7_Deck",
    "set": "A7_Deck",
-   "tint": "#72777C",
+   "tint": "#85827D",
    "tiling": 2.0,
+   "normal": 1.0
+  },
+  {
+   "name": "A7_Grate",
+   "set": "A7_Grate",
+   "tint": "#FFFFFF",
+   "tiling": 4.0,
    "normal": 1.0
   },
   {
@@ -124,6 +151,20 @@
    "name": "A7_CableBlue",
    "set": "A7_Rubber",
    "tint": "#2D60A9",
+   "tiling": 4.0,
+   "normal": 0.8
+  },
+  {
+   "name": "A7_CableRed",
+   "set": "A7_Rubber",
+   "tint": "#B22A20",
+   "tiling": 4.0,
+   "normal": 0.8
+  },
+  {
+   "name": "A7_CableYellow",
+   "set": "A7_Rubber",
+   "tint": "#D2A322",
    "tiling": 4.0,
    "normal": 0.8
   },
@@ -172,8 +213,8 @@
   },
   {
    "name": "A7_LightPanel",
-   "tint": "#F4F2EA",
-   "emission": "#FFF6E6",
+   "tint": "#F3EDE0",
+   "emission": "#FFE7C4",
    "emission_strength": 4.0,
    "metallic": 0.0,
    "smoothness": 0.3
@@ -209,6 +250,14 @@
    "emission_strength": 2.5,
    "metallic": 0.0,
    "smoothness": 0.6
+  },
+  {
+   "name": "A7_WorkLight",
+   "tint": "#3A2408",
+   "emission": "#FF9B2F",
+   "emission_strength": 7.0,
+   "metallic": 0.0,
+   "smoothness": 0.5
   },
   {
    "name": "A7_Decals",

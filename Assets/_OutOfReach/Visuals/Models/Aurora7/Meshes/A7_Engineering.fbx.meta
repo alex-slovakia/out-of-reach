@@ -42,8 +42,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_CableRed
+    second: {fileID: 2100000, guid: 10328b2be41268f4dbf548784bd845b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_CableYellow
+    second: {fileID: 2100000, guid: 9c619982b16b37a4588d56a8ff6a4103, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_Carbon
     second: {fileID: 2100000, guid: 1905cd1ad8351c043bbe851268addc07, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_Chrome
+    second: {fileID: 2100000, guid: 15db933fbf0a4ee4b810bb43393f21fe, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -57,8 +72,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_FabricWhite
+    second: {fileID: 2100000, guid: bef2a72159ad40a45b1ececd476d5d40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_Grate
+    second: {fileID: 2100000, guid: 280560e164c930646bbb94248effa7fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_LedAmber
     second: {fileID: 2100000, guid: 7673519e01ced8444b664e93322bdc68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_LedCyan
+    second: {fileID: 2100000, guid: 7bcc76d58ca5a034382f98e5bf3c3fa9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -69,6 +99,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: A7_LightPanel
     second: {fileID: 2100000, guid: fdaeba4eb6854664aa065afce2d2dae7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PaintAmber
+    second: {fileID: 2100000, guid: 28506ed5728b54b4cba5d44687df6925, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -87,6 +122,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_PaintYellow
+    second: {fileID: 2100000, guid: f8654620899c8e148b74f99d22f6944d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PlasticWhite
+    second: {fileID: 2100000, guid: d3ea712a0ae299147a2efccebce77abd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_QuiltWhite
     second: {fileID: 2100000, guid: 2f2019bb6d49c7b40aa6a77cd0f6610f, type: 2}
   - first:
@@ -99,6 +144,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: A7_Screens
     second: {fileID: 2100000, guid: dc575c5998fbd49459a06606e70676da, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_WorkLight
+    second: {fileID: 2100000, guid: 6fda0f3ef9dcee1499afb95fc6549a20, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -27,6 +27,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_AnodizedGold
+    second: {fileID: 2100000, guid: 03847c896a3e42d48a8d4c1335ecac3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_CableBlue
     second: {fileID: 2100000, guid: 282eaf285aab09d42af30f3fd3be0c88, type: 2}
   - first:
@@ -34,6 +39,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: A7_CableOrange
     second: {fileID: 2100000, guid: 9eeef3261fd71ba4ebca9fcdf0816f9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_CableRed
+    second: {fileID: 2100000, guid: 10328b2be41268f4dbf548784bd845b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_CableYellow
+    second: {fileID: 2100000, guid: 9c619982b16b37a4588d56a8ff6a4103, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -57,6 +72,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_Grate
+    second: {fileID: 2100000, guid: 280560e164c930646bbb94248effa7fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_LedGreen
     second: {fileID: 2100000, guid: 647532c6e7a03e54ab9a20ef63efb951, type: 2}
   - first:
@@ -64,6 +84,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: A7_LightPanel
     second: {fileID: 2100000, guid: fdaeba4eb6854664aa065afce2d2dae7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PaintAmber
+    second: {fileID: 2100000, guid: 28506ed5728b54b4cba5d44687df6925, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
