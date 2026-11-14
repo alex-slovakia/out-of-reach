@@ -632,6 +632,8 @@ namespace OutOfReach.ModelTools
             ("airlock_r04", new Vector3(-0.75f, 1.65f, 17.55f), new Vector3(0.85f, 1.3f, 21f), 90f),
             ("exterior_finale", new Vector3(9f, 5f, 27f), new Vector3(0.5f, 1.6f, 12f), 58f),
             ("exterior_forward", new Vector3(-9.5f, 4.5f, -11f), new Vector3(0f, 1.6f, 4f), 55f),
+            // review-01 R05 framing: the whole vessel from ahead and to starboard
+            ("exterior_r05", new Vector3(10.5f, 6.5f, -13f), new Vector3(0f, 1.4f, 5f), 60f),
             ("exterior_eva", new Vector3(2.2f, 1.6f, 24.6f), new Vector3(1.2f, 2.2f, 14f), 72f),
             // towards review-01 R06: the antenna work site from 0.6 m off the skin, aft of the pad, head away from the hull
             ("exterior_antenna", new Vector3(3.514f, 2.431f, 14.25f), new Vector3(3.434f, 2.462f, 12.9f), 90f),
@@ -734,6 +736,18 @@ namespace OutOfReach.ModelTools
             foreach (var view in Views)
             {
                 sun.enabled = view.name.StartsWith("exterior", StringComparison.Ordinal);
+                // Preview sun: astern for the aft views, ahead and on the camera's side for the two bow views.
+                Vector3 sunDirection = new Vector3(-0.45f, -0.62f, -0.64f);
+                if (view.name == "exterior_r05")
+                {
+                    sunDirection = new Vector3(-0.5f, -0.55f, 0.67f);
+                }
+                else if (view.name == "exterior_forward")
+                {
+                    sunDirection = new Vector3(0.5f, -0.55f, 0.67f);
+                }
+
+                sun.transform.rotation = Quaternion.LookRotation(sunDirection);
                 camera.transform.position = view.eye;
                 // Outside, "up" for a crew member at the antenna is the hull normal there, not the ship's deck normal.
                 Vector3 up = view.name == "exterior_antenna" ? new Vector3(3.2f, 2.4f - 1.56f, 0f).normalized : Vector3.up;

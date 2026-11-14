@@ -1932,23 +1932,251 @@ def antenna(art):
     return base, parts, anchors
 
 
+def _nose_rim(a, z, r):
+    """Point on the bow cone at clock angle a (radians, 0 = starboard, 90 degrees = top), station z, radius r."""
+    return np.array([r * math.cos(a), AXIS_Y + r * math.sin(a), z])
+
+
+def _facing(v, t, direction):
+    """Triangles of one flat face, wound so that their normal points along `direction`."""
+    a, b, c = v[t[0][0]], v[t[0][1]], v[t[0][2]]
+    t = np.asarray(t, dtype=np.int64)
+    return t if np.dot(np.cross(b - a, c - a), direction) > 0 else t[:, ::-1]
+
+
+def bow_nose(m, art):
+    """Unpressurised sensor nose below the windscreen line (review-01 R05).
+
+    A faceted truncated cone, open at the top and closed there by an anti-glare deck that slopes down forward,
+    so the two flight-deck windows look out over it. The flat front carries sensors, floodlights and marker lights."""
+    z0, z1, r0, r1 = -3.12, -5.0, R_FWD, 1.9
+    facets = 16
+    edge = np.linspace(math.radians(175.0), math.radians(365.0), facets + 1)
+
+    rim, facing = _nose_rim, _facing
+
+    # flat facets, each with its own vertices, so the nose reads as plated panels
+    for k in range(facets):
+        quad = np.array([rim(edge[k], z0, r0), rim(edge[k + 1], z0, r0), rim(edge[k + 1], z1, r1), rim(edge[k], z1, r1)])
+        outward = quad.mean(axis=0) - np.array([0.0, AXIS_Y, quad[:, 2].mean()])
+        m.add(GRAY, quad, facing(quad, [(0, 1, 2), (0, 2, 3)], outward))
+    for a in edge:
+        m.tube(ALU, [rim(a, z0, r0 + 0.004), rim(a, z1, r1 + 0.004)], 0.014, 6)
+        for s in (0.2, 0.5, 0.8):                         # rivets down each joint
+            p = rim(a, z0 + (z1 - z0) * s, r0 + (r1 - r0) * s + 0.016)
+            m.sphere(ANO_CLEAR, p, 0.012, 6, 4)
+    fine = np.linspace(edge[0], edge[-1], 49)
+    m.tube(ALU, [rim(a, z0, r0 + 0.012) for a in fine], 0.03, 6)
+    m.tube(ALU, [rim(a, z1, r1 + 0.006) for a in fine], 0.024, 6)
+    # anti-glare deck between the two top edges
+    deck = np.array([rim(edge[0], z0, r0), rim(edge[-1], z0, r0), rim(edge[-1], z1, r1), rim(edge[0], z1, r1)])
+    m.add(GRAPHITE, deck, facing(deck, [(0, 1, 2), (0, 2, 3)], np.array([0.0, 1.0, 0.0])))
+    m.tube(ALU, [deck[3] + np.array([0, 0.004, 0]), deck[2] + np.array([0, 0.004, 0])], 0.02, 6)
+    for sx, corner in ((-1, 0), (1, 1)):
+        rear, front = deck[corner], deck[3 - corner]
+        along = front - rear
+        m.tube(ANO_GOLD, [rear + along * 0.25 + np.array([-sx * 0.25, 0.0, 0.0]), rear + along * 0.25 + np.array([-sx * 0.25, 0.09, 0.0]),
+                          rear + along * 0.60 + np.array([-sx * 0.25, 0.09, 0.0]), rear + along * 0.60 + np.array([-sx * 0.25, 0.0, 0.0])],
+               0.017, 8, 0.04)
+    # flat front: plate, sensor bay, floodlights, marker lights
+    arc = [rim(a, z1, r1) for a in fine]
+    centre = np.mean(arc, axis=0)
+    front = np.array([centre] + arc)
+    fan = [(0, k, k + 1) for k in range(1, len(arc))] + [(0, len(arc), 1)]
+    m.add(GRAY, front, facing(front, fan, np.array([0.0, 0.0, -1.0])))
+    f = front_frame((0, AXIS_Y, z1), (0, 0, -1))
+    m.plate(GRAPHITE, (0, -0.55, 0.0), 1.30, 0.62, 0.03, 0.08, 0.006, f, 4)
+    for sx in (-1, 1):
+        m.cyl(ANO, (sx * 0.34, -0.55, 0.03), (sx * 0.34, -0.55, 0.11), 0.13, 20, 0.012, f)
+        m.cyl(GLASS, (sx * 0.34, -0.55, 0.11), (sx * 0.34, -0.55, 0.114), 0.105, 20, 0.0, f, (False, True))
+        m.cyl(ALU, (sx * 1.15, -0.95, 0.0), (sx * 1.15, -0.95, 0.10), 0.11, 16, 0.01, f)
+        m.cyl(LIGHT, (sx * 1.15, -0.95, 0.10), (sx * 1.15, -0.95, 0.106), 0.09, 16, 0.0, f, (False, True))
+    m.box(ANO, (0, -0.55, 0.05), (0.16, 0.16, 0.06), 0.012, f)
+    for i in range(3):
+        m.box(LED_A, (-0.10 + i * 0.10, -0.16, 0.012), (0.06, 0.03, 0.012), 0.003, f)
+    for bx in np.linspace(-0.6, 0.6, 5):
+        for by in (-0.27, -0.83):
+            bolt(m, bx, by, 0.03, 0.01, 0.006, ALU, f)
+    # the ship's name on both upper flank facets, running along the nose
+    for k in (0, facets - 1):
+        quad = np.array([rim(edge[k], z0, r0), rim(edge[k + 1], z0, r0), rim(edge[k + 1], z1, r1), rim(edge[k], z1, r1)])
+        mid = quad.mean(axis=0)
+        normal = np.cross(quad[1] - quad[0], quad[2] - quad[0])
+        normal = normal / np.linalg.norm(normal)
+        if np.dot(normal, mid - np.array([0.0, AXIS_Y, mid[2]])) < 0:
+            normal = -normal
+        up = np.array([0.0, 1.0, 0.0])
+        up = up - normal * np.dot(up, normal)
+        m.decal(art.decals, "stencil_aurora", (0, 0, 0.004), front_frame(mid, normal, up), 1.5)
+
+
+def bow_hood(m, art):
+    """Faceted brow over the window band (review-01 R05), on the same cone as the sensor nose below it.
+
+    Two cheek facets and eleven hood facets continue the nose upwards but stop 0.93 m out at a flat front face, so
+    the two flight-deck windows look out through a dark visor slot between the hood and the anti-glare deck."""
+    z0, r0, zh = -3.12, R_FWD, -4.05
+    rh = r0 + (1.9 - r0) * (zh - z0) / (-5.0 - z0)        # the bow_nose cone: R_FWD at -3.12 to 1.9 at -5.0
+    edge = np.radians([5.0] + list(np.linspace(22.0, 158.0, 12)) + [175.0])
+    for k in range(len(edge) - 1):
+        quad = np.array([_nose_rim(edge[k], z0, r0), _nose_rim(edge[k + 1], z0, r0),
+                         _nose_rim(edge[k + 1], zh, rh), _nose_rim(edge[k], zh, rh)])
+        outward = quad.mean(axis=0) - np.array([0.0, AXIS_Y, quad[:, 2].mean()])
+        tris = _facing(quad, [(0, 1, 2), (0, 2, 3)], outward)
+        m.add(GRAY, quad, tris)
+        if k in (0, len(edge) - 2):                       # the cheeks are also the side walls of the slot
+            m.add(GRAPHITE, quad, tris[:, ::-1])
+    for a in edge[1:-1]:                                  # the 5 and 175 degree joints belong to the nose
+        m.tube(ALU, [_nose_rim(a, z0, r0 + 0.004), _nose_rim(a, zh, rh + 0.004)], 0.014, 6)
+        for s in (0.33, 0.67):
+            m.sphere(ANO_CLEAR, _nose_rim(a, z0 + (zh - z0) * s, r0 + (rh - r0) * s + 0.016), 0.012, 6, 4)
+    over_top = np.linspace(edge[0], edge[-1], 41)
+    m.tube(ALU, [_nose_rim(a, z0, r0 + 0.012) for a in over_top], 0.03, 6)
+    m.tube(ALU, [_nose_rim(a, zh, rh + 0.006) for a in over_top], 0.024, 6)
+    lip = np.array([0.0, -0.006, 0.0])
+    m.tube(ALU, [_nose_rim(edge[1], zh, rh) + lip, _nose_rim(edge[-2], zh, rh) + lip], 0.02, 6)
+    # dark soffit over the windows
+    soffit = np.array([_nose_rim(edge[1], z0, r0), _nose_rim(edge[-2], z0, r0),
+                       _nose_rim(edge[-2], zh, rh), _nose_rim(edge[1], zh, rh)])
+    m.add(GRAPHITE, soffit, _facing(soffit, [(0, 1, 2), (0, 2, 3)], np.array([0.0, -1.0, 0.0])))
+    # flat front face: the mission emblem, amber marker lights, a bolt row along the slot
+    arc = [_nose_rim(a, zh, rh) for a in np.linspace(edge[1], edge[-2], 41)]
+    front = np.array([np.mean(arc, axis=0)] + arc)
+    fan = [(0, k, k + 1) for k in range(1, len(arc))] + [(0, len(arc), 1)]
+    m.add(GRAY, front, _facing(front, fan, np.array([0.0, 0.0, -1.0])))
+    f = front_frame((0, AXIS_Y, zh), (0, 0, -1))
+    m.decal(art.decals, "emblem", (0, 1.88, 0.004), f, width=1.0)
+    for sx in (-1, 1):
+        m.box(ANO, (sx * 2.0, 1.20, 0.02), (0.16, 0.07, 0.04), 0.006, f)
+        m.box(LED_A, (sx * 2.0, 1.20, 0.042), (0.12, 0.04, 0.006), 0.002, f)
+    for bx in np.linspace(-2.2, 2.2, 12):
+        bolt(m, bx, 1.09, 0.0, 0.01, 0.006, ALU, f)
+    # star tracker and two handholds on the top facet
+    k = int(np.argmin([abs((edge[i] + edge[i + 1]) / 2 - math.pi / 2) for i in range(len(edge) - 1)]))
+    quad = np.array([_nose_rim(edge[k], z0, r0), _nose_rim(edge[k + 1], z0, r0),
+                     _nose_rim(edge[k + 1], zh, rh), _nose_rim(edge[k], zh, rh)])
+    centre = quad.mean(axis=0)
+    normal = np.cross(quad[1] - quad[0], quad[2] - quad[0])
+    normal = normal / np.linalg.norm(normal)
+    if np.dot(normal, centre - np.array([0.0, AXIS_Y, centre[2]])) < 0:
+        normal = -normal
+    s = front_frame(centre, normal, (0, 0, 1))
+    m.box(ANO, (0, 0.06, 0.09), (0.26, 0.30, 0.18), 0.012, s)
+    m.cyl(ANO, (0, 0.0, 0.18), (0, 0.0, 0.40), 0.075, 16, 0.006, s)
+    m.cyl(GLASS, (0, 0.0, 0.40), (0, 0.0, 0.404), 0.06, 16, 0.0, s, (False, True))
+    for sx in (-1, 1):
+        handrail(m, (sx * 0.25, -0.32), (sx * 0.25, 0.32), 0.0, s, 0.08, ANO_GOLD)
+
+
+def hull_patch(m, mat, a0, a1, z0, z1, radius, depth, segs=6):
+    """Curved slab on the hull between clock angles a0 < a1 (degrees) and stations z0 < z1: skin and four edges."""
+    ang = np.radians(np.linspace(a0, a1, segs + 1))
+
+    def row(r, z):
+        return np.stack([r * np.cos(ang), AXIS_Y + r * np.sin(ang), np.full(segs + 1, z)], axis=1)
+
+    inner0, inner1, outer0, outer1 = row(radius, z0), row(radius, z1), row(radius + depth, z0), row(radius + depth, z1)
+    faces = []
+    for k in range(segs):
+        mid = (ang[k] + ang[k + 1]) / 2
+        faces.append(([outer0[k], outer0[k + 1], outer1[k + 1], outer1[k]], (math.cos(mid), math.sin(mid), 0.0)))
+        faces.append(([inner0[k], inner0[k + 1], outer0[k + 1], outer0[k]], (0.0, 0.0, -1.0)))
+        faces.append(([inner1[k], inner1[k + 1], outer1[k + 1], outer1[k]], (0.0, 0.0, 1.0)))
+    faces.append(([inner0[0], outer0[0], outer1[0], inner1[0]], (math.sin(ang[0]), -math.cos(ang[0]), 0.0)))
+    faces.append(([inner0[-1], outer0[-1], outer1[-1], inner1[-1]], (-math.sin(ang[-1]), math.cos(ang[-1]), 0.0)))
+    v, t = [], []
+    for quad, direction in faces:
+        quad = np.array(quad)
+        t.append(_facing(quad, [(0, 1, 2), (0, 2, 3)], np.array(direction)) + len(v) * 4)
+        v.append(quad)
+    m.add(mat, np.concatenate(v), np.concatenate(t))
+
+
+def frame_ring(m, z, radius, bolts=24):
+    """Bolted structural ring between blanket bays: a grooved band with bolt heads on both flat tops."""
+    profile = [(radius, 0.0), (radius + 0.03, 0.012), (radius + 0.045, 0.032), (radius + 0.045, 0.058),
+               (radius + 0.036, 0.064), (radius + 0.036, 0.076), (radius + 0.045, 0.082), (radius + 0.045, 0.108),
+               (radius + 0.03, 0.128), (radius, 0.14)]
+    m.lathe(ALU, (0, AXIS_Y, z - 0.07), (0, 0, 1), profile, 64, None, (False, False))
+    for k in range(bolts):
+        for dz in (-0.025, 0.025):
+            base, normal = on_hull(k * 360.0 / bolts + 7.5, radius + 0.045, z + dz)
+            bolt(m, 0, 0, -0.004, 0.011, 0.010, ALU, front_frame(base, normal, (0, 0, 1)))
+
+
+def access_panel(m, art, angle, z, radius, label, width=1.0, length=1.2):
+    """Amber-edged access panel curved to the skin, with bolts, quarter-turn fasteners and a grab handle.
+
+    `label` is a fixed atlas key: the exterior must not draw from the shared label cycle, or every compartment
+    built after it would get different part numbers."""
+    half = math.degrees(width / 2 / radius)
+    a0, a1, z0, z1 = angle - half, angle + half, z - length / 2, z + length / 2
+    hull_patch(m, WHITE, a0, a1, z0, z1, radius, 0.03)
+    rim = radius + 0.03
+    edge = math.degrees(0.05 / radius)
+    hull_patch(m, AMBER, a0, a1, z0, z0 + 0.05, rim, 0.006)
+    hull_patch(m, AMBER, a0, a1, z1 - 0.05, z1, rim, 0.006)
+    hull_patch(m, AMBER, a0, a0 + edge, z0 + 0.05, z1 - 0.05, rim, 0.006, 1)
+    hull_patch(m, AMBER, a1 - edge, a1, z0 + 0.05, z1 - 0.05, rim, 0.006, 1)
+    for a in (a0 + edge / 2, a1 - edge / 2):
+        for zz in (z0 + 0.025, z, z1 - 0.025):
+            base, normal = on_hull(a, rim + 0.006, zz)
+            bolt(m, 0, 0, -0.002, 0.013, 0.009, ALU, front_frame(base, normal, (0, 0, 1)))
+    for a in (angle - math.degrees(0.30 / rim), angle + math.degrees(0.30 / rim)):
+        base, normal = on_hull(a, rim, z)
+        q = front_frame(base, normal, (0, 0, 1))
+        m.cyl(ALU, (0, 0, -0.002), (0, 0, 0.010), 0.035, 12, 0.003, q)
+        m.box(ANO, (0, 0, 0.012), (0.05, 0.012, 0.006), 0.001, q)
+    base, normal = on_hull(angle, rim, z)
+    f = front_frame(base, normal, (0, 0, 1))
+    u_handle(m, (-0.16, -0.30), (0.16, -0.30), -0.004, 0.05, 0.013, ANO_GOLD, f)
+    m.decal(art.decals, label, (0, 0.32, 0.0), f, 1.8)
+
+
+STRAP_ANGLES = (35, 90, 145, 235, 270, 305)   # longitudinal straps: clear of the panels, rails, pads, quads and names
+
+
+def hull_dressing(m, art):
+    """Blanket straps, bolted frame rings, amber-edged access panels and handholds (review-01 R05).
+
+    Dark webbing straps hold the quilted blanket: circumferential bands every 1.5 m and six longitudinal straps,
+    with a buckle at every crossing. Bolted frame rings close the ends of both sections and split the aft one."""
+    sections = ((R_FWD, -2.91, 2.85, (-1.5, 0.0, 1.5)),
+                (R_AFT, 4.04, 20.96, (5.4, 6.9, 8.4, 12.9, 14.4, 17.4, 18.9, 20.4)))
+    for radius, z0, z1, bands in sections:
+        for z in bands:
+            m.lathe(STRAP, (0, AXIS_Y, z - 0.06), (0, 0, 1), [(radius + 0.003, 0.0), (radius + 0.011, 0.008),
+                                                           (radius + 0.011, 0.112), (radius + 0.003, 0.12)],
+                    64, None, (False, False))
+        for angle in STRAP_ANGLES:
+            base, normal = on_hull(angle, radius, (z0 + z1) / 2)
+            m.box(STRAP, (0, 0, 0.015), (0.12, z1 - z0, 0.008), 0.002, front_frame(base, normal, (0, 0, 1)))
+            for z in bands:
+                base, normal = on_hull(angle, radius, z)
+                f = front_frame(base, normal, (0, 0, 1))
+                m.box(ANO_CLEAR, (0, 0, 0.024), (0.17, 0.17, 0.010), 0.003, f)
+                m.box(ALU, (0, 0.03, 0.031), (0.13, 0.03, 0.006), 0.0, f)
+    for z in (-2.98, 2.92):
+        frame_ring(m, z, R_FWD)
+    for z in (3.97, 9.9, 15.9, 21.03):
+        frame_ring(m, z, R_AFT)
+    panels = ((0, -0.75, R_FWD), (180, -0.75, R_FWD),
+              (0, 6.15, R_AFT), (55, 6.15, R_AFT), (125, 6.15, R_AFT), (180, 6.15, R_AFT),
+              (55, 10.65, R_AFT), (125, 10.65, R_AFT), (-40, 10.65, R_AFT), (220, 10.65, R_AFT))
+    for i, (angle, z, radius) in enumerate(panels):
+        access_panel(m, art, angle, z, radius, "pn_%02d" % ((3 + 11 * i) % 28))
+    for angle in (75, 105):
+        for z0 in np.arange(4.3, 12.0, 1.5):
+            eva_handrail(m, angle, R_AFT, z0, z0 + 0.9)
+
+
 def build_exterior(art):
     from a7kit import ring, rounded_rect
     m = Model("Exterior")
     # pressure hull: wide flight-deck section, conical adapter, long aft section
     hull_shell(m, [(-3.12, R_FWD), (3.0, R_FWD), (3.9, R_AFT), (21.1, R_AFT)])
-    for z in (-3.08, -1.5, 0.0, 1.5, 3.0):
-        hull_band(m, z, R_FWD)
-    for z in np.arange(3.9, 21.2, 1.5):
-        hull_band(m, float(min(z, 21.06)), R_AFT)
-    for angle in range(0, 360, 30):
-        for z0, z1, radius in ((-3.0, 2.9, R_FWD), (4.0, 21.0, R_AFT)):
-            p0, normal = on_hull(angle, radius, z0, 0.006)
-            p1, _ = on_hull(angle, radius, z1, 0.006)
-            f = front_frame((p0 + p1) / 2, normal, (0, 0, 1))
-            m.box(ALU, (0, 0, 0), (0.03, z1 - z0, 0.012), 0.002, f)
 
-    # forward face: skin around the window band, exterior pane frames, a sun brow and the ship's name
+    # forward face: skin around the window band, exterior pane frames, the outer shield, the sensor nose and the hood
     end_cap(m, -3.12, R_FWD, (0.0, 2.0, 4.42, 1.60, 0.02), -1)
     f = front_frame((0, 0, -3.12), (0, 0, -1))
     for cx, w in ((-1.82, 0.74), (-0.94, 0.74), (0.0, 0.86), (0.94, 0.74), (1.82, 0.74)):
@@ -1957,11 +2185,20 @@ def build_exterior(art):
         for bx in np.linspace(-w / 2 + 0.06, w / 2 - 0.06, 5):
             for by in (2.0 - 0.765, 2.0 + 0.765):
                 bolt(m, cx + bx, by, 0.05, 0.009, 0.007, ALU, f)
-    m.box(ALU, (0, 2.95, 0.22), (4.7, 0.05, 0.5), 0.01, f)
-    for sx in (-2.2, 0.0, 2.2):
-        m.box(ALU, (sx, 2.9, 0.1), (0.05, 0.14, 0.24), 0.006, f)
-    m.decal(art.decals, "stencil_aurora", (0, 0.72, 0.004), f, 2.4)
-    m.decal(art.decals, "emblem", (0, 4.25, 0.004), f, 2.6)
+    # outer shield over the pane band: the same two small windows as from inside, at the back of the visor slot
+    for cx, w in ((0.0, 0.94), (-1.81, 0.80), (1.81, 0.80)):
+        m.box(WHITE, (cx, 2.0, 0.10), (w, 1.66, 0.03), 0.006, f)
+    for cx in (-0.94, 0.94):
+        v, t = ring(rounded_rect(0.94, 1.66, 0.004, 5), rounded_rect(0.50, 0.56, 0.09, 5) + np.array([0.0, 0.25]), 0.03, True)
+        m.add(WHITE, v + vec(cx, 2.0, 0.085), t, f)
+        m.frame(GRAPHITE, (cx, 2.25, -0.14), 0.54, 0.60, 0.02, 0.255, 0.11, f, 5)
+        m.frame(GRAPHITE, (cx, 2.25, 0.115), 0.68, 0.74, 0.09, 0.03, 0.18, f, 5)
+        for bx in np.linspace(-0.22, 0.22, 4):
+            for by in (-0.33, 0.33):
+                bolt(m, cx + bx, 2.25 + by, 0.145, 0.009, 0.006, ALU, f)
+    bow_nose(m, art)
+    bow_hood(m, art)
+    hull_dressing(m, art)
 
     # aft bulkhead with the EVA hatch, porch, lights and translation aids
     end_cap(m, 21.1, R_AFT, (0.0, 1.24, 2.1, 2.84, 0.3), 1)
@@ -2030,11 +2267,11 @@ def build_exterior(art):
     for angle in (45, 135, 225, 315):
         rcs_quad(m, angle, R_FWD, -1.0)
         rcs_quad(m, angle, R_AFT, 19.4)
-    # ship name along both flanks
+    # ship name along both flanks, between the frame ring at 9.9 and the strap at 12.9
     for side in (-1, 1):
-        base, normal = on_hull(0 if side > 0 else 180, R_AFT, 11.2, 0.004)
+        base, normal = on_hull(0 if side > 0 else 180, R_AFT, 11.4, 0.004)
         f = front_frame(base, normal, (0, 1, 0))
-        m.decal(art.decals, "stencil_aurora", (0, 0, 0), f, 4.0)
+        m.decal(art.decals, "stencil_aurora", (0, 0, 0), f, width=2.7)
     return m, parts
 
 
