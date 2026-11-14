@@ -1,0 +1,1 @@
+107 real checks passed. See checks.txt, source-sha256.txt and capture-manifest.txt. Automated smoke; no human-play claim.

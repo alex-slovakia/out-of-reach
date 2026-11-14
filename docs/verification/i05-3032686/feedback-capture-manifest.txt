@@ -1,0 +1,4 @@
+01-cargo-guide.png | 1280x720 | Existing camera + actual UIDocument; excludes overlay UGUI | phase=Planning paused=False
+01b-cargo-details.png | 1280x720 | Existing camera + actual UIDocument; excludes overlay UGUI | phase=Planning paused=False
+01c-cargo-pause.png | 1280x720 | Existing camera + actual UIDocument; excludes overlay UGUI | phase=Planning paused=True
+02-suited-pause.png | 1280x720 | Existing camera + actual UIDocument; excludes overlay UGUI | phase=Repair paused=True

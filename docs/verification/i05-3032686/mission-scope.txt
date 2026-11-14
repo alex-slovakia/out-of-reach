@@ -1,0 +1,5 @@
+Automated saved-Bootstrap smoke, not a desktop/human play pass.
+Actual UI submissions and Input System events; QA teleports explicitly recorded.
+Runtime stepping suspended only around exact repair accounting and captures. No fabricated repair/outcome.
+ScreenCapture is attempted; 1280x720 fallback uses the existing camera plus actual UIDocument.
+Offscreen captures exclude ScreenSpaceOverlay UGUI and occur outside impact only.

@@ -1,0 +1,7 @@
+Saved Bootstrap feedback smoke. Real UI submissions and queued Input System events.
+QA teleports set starting positions only; every movement measurement uses actual W/Shift.
+No inventory/resource grants, manual simulation stepping or shortened cinematics.
+Composition disable/re-enable is the explicit lifecycle probe. Restart uses the actual UI and saved restart policy.
+1280x720 images use the existing camera and existing UIDocument; overlay UGUI is excluded. No human walkthrough claim.
+Hull ray checks verify the boundary closure, not a reproduced CharacterController escape.
+120-second wall watchdog.
