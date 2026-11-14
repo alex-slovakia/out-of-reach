@@ -1,0 +1,38 @@
+{
+  "repo": "nasa/GMAT",
+  "commit": "b8aec552a8f34a9212063adc3f249bd2315397a3",
+  "files": [
+    {
+      "filename": "gmat-stars.raw.txt",
+      "source_path": "application/data/graphics/stars/inp_StarCatalog.txt",
+      "url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/application/data/graphics/stars/inp_StarCatalog.txt",
+      "retrieved_at_utc": "2026-11-14T12:41:24.479485+00:00",
+      "sha256": "d6b66913176142dd12610fa5c2220f6c0f85e1ed2bd817230cf5619ab8f569f5",
+      "bytes": 1094631
+    },
+    {
+      "filename": "gmat-LICENSE.txt",
+      "source_path": "License.txt",
+      "url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/License.txt",
+      "retrieved_at_utc": "2026-11-14T12:41:24.800576+00:00",
+      "sha256": "b9ea20f6e648554b46334d2322b9c237657febc746d862f52e47ea1bfacb87be",
+      "bytes": 10201
+    },
+    {
+      "filename": "gmat-README.txt",
+      "source_path": "application/README.txt",
+      "url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/application/README.txt",
+      "retrieved_at_utc": "2026-11-14T12:41:25.136645+00:00",
+      "sha256": "e3e498dbb5d23560a6ac8c6ead8563056e9b9b1f932fa4ff29ee3742ff8bd655",
+      "bytes": 9605
+    },
+    {
+      "filename": "gmat-GLStars.cpp",
+      "source_path": "src/gui/rendering/GLStars.cpp",
+      "url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/src/gui/rendering/GLStars.cpp",
+      "retrieved_at_utc": "2026-11-14T12:41:25.466886+00:00",
+      "sha256": "fe9941a046facbbd6c8dc587326ac940a3ce7a9088a2817c72f58e16aff69212",
+      "bytes": 16901
+    }
+  ]
+}

@@ -1,0 +1,471 @@
+{
+  "reference": "jpl-horizons-earth-mars-2026-v1",
+  "radii_mean_km": {
+    "Earth": 6371.0084,
+    "Mars": 3389.5
+  },
+  "physical_model": "simultaneous geometric centres, spherical discs, no apparent-place corrections",
+  "ship_model": "authored static sample positions, not a dynamically propagated trajectory",
+  "max_adjacent_reference_direction_change_deg": 0.4519805145778776,
+  "samples": [
+    {
+      "sample_index": 0,
+      "epoch_utc": "2026-11-14T08:00:00Z",
+      "scenario": "near_mars_same_earth_range_50000km",
+      "observer_earth_relative_icrf_km": [
+        -161149102.42442638,
+        102298468.2327219,
+        51521199.087756254
+      ],
+      "Earth": {
+        "distance_km": 197707975.99085295,
+        "direction_icrf": [
+          0.8150865012743947,
+          -0.5174220600865126,
+          -0.26059241580693693
+        ],
+        "direction_unity_celestial": [
+          -0.5174220600865126,
+          -0.26059241580693693,
+          0.8150865012743947
+        ],
+        "ra_deg": 327.5923617216029,
+        "dec_deg": -15.105216897112948,
+        "angular_diameter_deg": 0.0036926369894400117,
+        "angular_diameter_arcsec": 13.293493161984042,
+        "disc_diameter_at_1000_unity_units": 0.06444867356896729
+      },
+      "Mars": {
+        "distance_km": 49999.99999999877,
+        "direction_icrf": [
+          -0.21990376832426134,
+          0.139596301312152,
+          -0.9654818513761698
+        ],
+        "direction_unity_celestial": [
+          0.139596301312152,
+          -0.9654818513761698,
+          -0.21990376832426134
+        ],
+        "ra_deg": 147.59236172154786,
+        "dec_deg": -74.9020281039202,
+        "angular_diameter_deg": 7.774123868020824,
+        "angular_diameter_arcsec": 27986.845924874964,
+        "disc_diameter_at_1000_unity_units": 135.89260571163592
+      },
+      "earth_mars_separation_deg": 89.99275499896687,
+      "earth_one_way_seconds": 659.4828212484683,
+      "earth_minimum_frozen_round_trip_seconds": 1318.9656424969367,
+      "existing_c04_one_way_seconds": 659.482821248,
+      "compatible_with_current_c04_range": true
+    },
+    {
+      "sample_index": 0,
+      "epoch_utc": "2026-11-14T08:00:00Z",
+      "scenario": "geometric_midpoint_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -80580048.8064213,
+        51152724.02389375,
+        25736462.497593723
+      ],
+      "Earth": {
+        "distance_km": 98853987.99542649,
+        "direction_icrf": [
+          0.8151421145513053,
+          -0.5174573637460165,
+          -0.2603482471418799
+        ],
+        "direction_unity_celestial": [
+          -0.5174573637460165,
+          -0.2603482471418799,
+          0.8151421145513053
+        ],
+        "ra_deg": 327.5923617216029,
+        "dec_deg": -15.090726895033205,
+        "angular_diameter_deg": 0.007385273982714485,
+        "angular_diameter_arcsec": 26.586986337772146,
+        "disc_diameter_at_1000_unity_units": 0.12889734733870659
+      },
+      "Mars": {
+        "distance_km": 98853987.99542649,
+        "direction_icrf": [
+          -0.8151421145513053,
+          0.5174573637460165,
+          0.2603482471418799
+        ],
+        "direction_unity_celestial": [
+          0.5174573637460165,
+          0.2603482471418799,
+          -0.8151421145513053
+        ],
+        "ra_deg": 147.5923617216029,
+        "dec_deg": 15.090726895033205,
+        "angular_diameter_deg": 0.00392910895424129,
+        "angular_diameter_arcsec": 14.144792235268644,
+        "disc_diameter_at_1000_unity_units": 0.06857588794797578
+      },
+      "earth_mars_separation_deg": 179.99999879258172,
+      "earth_one_way_seconds": 329.7414106242342,
+      "earth_minimum_frozen_round_trip_seconds": 659.4828212484684,
+      "existing_c04_one_way_seconds": 659.482821248,
+      "compatible_with_current_c04_range": false
+    },
+    {
+      "sample_index": 0,
+      "epoch_utc": "2026-11-14T08:00:00Z",
+      "scenario": "earth_departure_20000km_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -16302.842291026105,
+        10349.14727492033,
+        5206.964942837598
+      ],
+      "Earth": {
+        "distance_km": 20000.0,
+        "direction_icrf": [
+          0.8151421145513053,
+          -0.5174573637460165,
+          -0.2603482471418799
+        ],
+        "direction_unity_celestial": [
+          -0.5174573637460165,
+          -0.2603482471418799,
+          0.8151421145513053
+        ],
+        "ra_deg": 327.5923617216029,
+        "dec_deg": -15.090726895033205,
+        "angular_diameter_deg": 37.15056612762121,
+        "angular_diameter_arcsec": 133742.03805943637,
+        "disc_diameter_at_1000_unity_units": 672.1140017285165
+      },
+      "Mars": {
+        "distance_km": 197687975.99085295,
+        "direction_icrf": [
+          -0.8151421145513054,
+          0.5174573637460165,
+          0.26034824714187993
+        ],
+        "direction_unity_celestial": [
+          0.5174573637460165,
+          0.26034824714187993,
+          -0.8151421145513054
+        ],
+        "ra_deg": 147.5923617216029,
+        "dec_deg": 15.090726895033205,
+        "angular_diameter_deg": 0.0019647532298888385,
+        "angular_diameter_arcsec": 7.073111627599818,
+        "disc_diameter_at_1000_unity_units": 0.034291412854113565
+      },
+      "earth_mars_separation_deg": 180.0,
+      "earth_one_way_seconds": 0.06671281903963042,
+      "earth_minimum_frozen_round_trip_seconds": 0.13342563807926083,
+      "existing_c04_one_way_seconds": 659.482821248,
+      "compatible_with_current_c04_range": false
+    },
+    {
+      "sample_index": 30,
+      "epoch_utc": "2026-12-14T08:00:00Z",
+      "scenario": "near_mars_same_earth_range_50000km",
+      "observer_earth_relative_icrf_km": [
+        -144786948.22580916,
+        56379875.10049436,
+        32631695.16998966
+      ],
+      "Earth": {
+        "distance_km": 158766426.62275174,
+        "direction_icrf": [
+          0.9119494045793477,
+          -0.35511207438370945,
+          -0.2055327178681581
+        ],
+        "direction_unity_celestial": [
+          -0.35511207438370945,
+          -0.2055327178681581,
+          0.9119494045793477
+        ],
+        "ra_deg": 338.72411725452434,
+        "dec_deg": -11.860685616824787,
+        "angular_diameter_deg": 0.004598351180728179,
+        "angular_diameter_arcsec": 16.554064250621444,
+        "disc_diameter_at_1000_unity_units": 0.0802563683097537
+      },
+      "Mars": {
+        "distance_km": 50000.00000000124,
+        "direction_icrf": [
+          -0.19138083796262267,
+          0.07452348345741446,
+          -0.9786825967973973
+        ],
+        "direction_unity_celestial": [
+          0.07452348345741446,
+          -0.9786825967973973,
+          -0.19138083796262267
+        ],
+        "ra_deg": 158.72411725453335,
+        "dec_deg": -78.14833640705602,
+        "angular_diameter_deg": 7.774123868020441,
+        "angular_diameter_arcsec": 27986.845924873585,
+        "disc_diameter_at_1000_unity_units": 135.8926057116292
+      },
+      "earth_mars_separation_deg": 89.9909779761192,
+      "earth_one_way_seconds": 529.5877944426198,
+      "earth_minimum_frozen_round_trip_seconds": 1059.1755888852397,
+      "existing_c04_one_way_seconds": 529.587794443,
+      "compatible_with_current_c04_range": true
+    },
+    {
+      "sample_index": 30,
+      "epoch_utc": "2026-12-14T08:00:00Z",
+      "scenario": "geometric_midpoint_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -72398258.63385364,
+        28191800.637333617,
+        16291380.520074895
+      ],
+      "Earth": {
+        "distance_km": 79383213.31137587,
+        "direction_icrf": [
+          0.9120096757720784,
+          -0.35513554391849794,
+          -0.20522450327341799
+        ],
+        "direction_unity_celestial": [
+          -0.35513554391849794,
+          -0.20522450327341799,
+          0.9120096757720784
+        ],
+        "ra_deg": 338.72411725452434,
+        "dec_deg": -11.842641569046977,
+        "angular_diameter_deg": 0.00919670236886095,
+        "angular_diameter_arcsec": 33.10812852789942,
+        "disc_diameter_at_1000_unity_units": 0.16051273700721094
+      },
+      "Mars": {
+        "distance_km": 79383213.31137587,
+        "direction_icrf": [
+          -0.9120096757720784,
+          0.35513554391849794,
+          0.20522450327341799
+        ],
+        "direction_unity_celestial": [
+          0.35513554391849794,
+          0.20522450327341799,
+          -0.9120096757720784
+        ],
+        "ra_deg": 158.72411725452437,
+        "dec_deg": 11.842641569046977,
+        "angular_diameter_deg": 0.004892823976697649,
+        "angular_diameter_arcsec": 17.614166316111536,
+        "disc_diameter_at_1000_unity_units": 0.08539588816579177
+      },
+      "earth_mars_separation_deg": 180.0,
+      "earth_one_way_seconds": 264.7938972213099,
+      "earth_minimum_frozen_round_trip_seconds": 529.5877944426198,
+      "existing_c04_one_way_seconds": 529.587794443,
+      "compatible_with_current_c04_range": false
+    },
+    {
+      "sample_index": 30,
+      "epoch_utc": "2026-12-14T08:00:00Z",
+      "scenario": "earth_departure_20000km_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -18240.193515441566,
+        7102.710878369959,
+        4104.49006546836
+      ],
+      "Earth": {
+        "distance_km": 20000.0,
+        "direction_icrf": [
+          0.9120096757720783,
+          -0.35513554391849794,
+          -0.20522450327341799
+        ],
+        "direction_unity_celestial": [
+          -0.35513554391849794,
+          -0.20522450327341799,
+          0.9120096757720783
+        ],
+        "ra_deg": 338.72411725452434,
+        "dec_deg": -11.842641569046979,
+        "angular_diameter_deg": 37.15056612762121,
+        "angular_diameter_arcsec": 133742.03805943637,
+        "disc_diameter_at_1000_unity_units": 672.1140017285165
+      },
+      "Mars": {
+        "distance_km": 158746426.62275174,
+        "direction_icrf": [
+          -0.9120096757720784,
+          0.35513554391849794,
+          0.20522450327341799
+        ],
+        "direction_unity_celestial": [
+          0.35513554391849794,
+          0.20522450327341799,
+          -0.9120096757720784
+        ],
+        "ra_deg": 158.72411725452437,
+        "dec_deg": 11.842641569046977,
+        "angular_diameter_deg": 0.0024467202041134326,
+        "angular_diameter_arcsec": 8.808192734808358,
+        "disc_diameter_at_1000_unity_units": 0.042703323443336494
+      },
+      "earth_mars_separation_deg": 179.99999914622634,
+      "earth_one_way_seconds": 0.06671281903963042,
+      "earth_minimum_frozen_round_trip_seconds": 0.13342563807926083,
+      "existing_c04_one_way_seconds": 529.587794443,
+      "compatible_with_current_c04_range": false
+    },
+    {
+      "sample_index": 31,
+      "epoch_utc": "2026-12-15T08:00:00Z",
+      "scenario": "near_mars_same_earth_range_50000km",
+      "observer_earth_relative_icrf_km": [
+        -143912790.40726322,
+        55251598.81935338,
+        32168182.758855216
+      ],
+      "Earth": {
+        "distance_km": 157475148.50574598,
+        "direction_icrf": [
+          0.9138762006121373,
+          -0.35085916313542864,
+          -0.20427466215522547
+        ],
+        "direction_unity_celestial": [
+          -0.35085916313542864,
+          -0.20427466215522547,
+          0.9138762006121373
+        ],
+        "ra_deg": 338.99699700256986,
+        "dec_deg": -11.787041763506599,
+        "angular_diameter_deg": 0.004636057131880158,
+        "angular_diameter_arcsec": 16.689805674768568,
+        "disc_diameter_at_1000_unity_units": 0.08091446130602033
+      },
+      "Mars": {
+        "distance_km": 49999.99999999954,
+        "direction_icrf": [
+          -0.19055790408551868,
+          0.07315978544101186,
+          -0.9789460306803227
+        ],
+        "direction_unity_celestial": [
+          0.07315978544101186,
+          -0.9789460306803227,
+          -0.19055790408551868
+        ],
+        "ra_deg": 158.99699700252836,
+        "dec_deg": -78.22205423993347,
+        "angular_diameter_deg": 7.7741238680207045,
+        "angular_diameter_arcsec": 27986.845924874535,
+        "disc_diameter_at_1000_unity_units": 135.89260571163382
+      },
+      "earth_mars_separation_deg": 89.99090399655994,
+      "earth_one_way_seconds": 525.2805542751379,
+      "earth_minimum_frozen_round_trip_seconds": 1050.5611085502758,
+      "existing_c04_one_way_seconds": 525.280554275,
+      "compatible_with_current_c04_range": true
+    },
+    {
+      "sample_index": 31,
+      "epoch_utc": "2026-12-15T08:00:00Z",
+      "scenario": "geometric_midpoint_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -71961159.15123375,
+        27627628.404312715,
+        16059617.7286606
+      ],
+      "Earth": {
+        "distance_km": 78737574.252873,
+        "direction_icrf": [
+          0.9139367047316422,
+          -0.35088239212937944,
+          -0.20396383659323378
+        ],
+        "direction_unity_celestial": [
+          -0.35088239212937944,
+          -0.20396383659323378,
+          0.9139367047316422
+        ],
+        "ra_deg": 338.99699700256986,
+        "dec_deg": -11.76884975660982,
+        "angular_diameter_deg": 0.009272114271348554,
+        "angular_diameter_arcsec": 33.3796113768548,
+        "disc_diameter_at_1000_unity_units": 0.16182892300935994
+      },
+      "Mars": {
+        "distance_km": 78737574.252873,
+        "direction_icrf": [
+          -0.9139367047316422,
+          0.35088239212937944,
+          0.20396383659323378
+        ],
+        "direction_unity_celestial": [
+          0.35088239212937944,
+          0.20396383659323378,
+          -0.9139367047316422
+        ],
+        "ra_deg": 158.99699700256986,
+        "dec_deg": 11.76884975660982,
+        "angular_diameter_deg": 0.004932944570933043,
+        "angular_diameter_arcsec": 17.758600455358955,
+        "disc_diameter_at_1000_unity_units": 0.08609612463434317
+      },
+      "earth_mars_separation_deg": 179.99999914622634,
+      "earth_one_way_seconds": 262.640277137569,
+      "earth_minimum_frozen_round_trip_seconds": 525.280554275138,
+      "existing_c04_one_way_seconds": 525.280554275,
+      "compatible_with_current_c04_range": false
+    },
+    {
+      "sample_index": 31,
+      "epoch_utc": "2026-12-15T08:00:00Z",
+      "scenario": "earth_departure_20000km_comparison_only",
+      "observer_earth_relative_icrf_km": [
+        -18278.734094632844,
+        7017.6478425875885,
+        4079.2767318646756
+      ],
+      "Earth": {
+        "distance_km": 20000.0,
+        "direction_icrf": [
+          0.9139367047316422,
+          -0.35088239212937944,
+          -0.20396383659323378
+        ],
+        "direction_unity_celestial": [
+          -0.35088239212937944,
+          -0.20396383659323378,
+          0.9139367047316422
+        ],
+        "ra_deg": 338.99699700256986,
+        "dec_deg": -11.76884975660982,
+        "angular_diameter_deg": 37.15056612762121,
+        "angular_diameter_arcsec": 133742.03805943637,
+        "disc_diameter_at_1000_unity_units": 672.1140017285165
+      },
+      "Mars": {
+        "distance_km": 157455148.505746,
+        "direction_icrf": [
+          -0.9139367047316422,
+          0.35088239212937944,
+          0.20396383659323378
+        ],
+        "direction_unity_celestial": [
+          0.35088239212937944,
+          0.20396383659323378,
+          -0.9139367047316422
+        ],
+        "ra_deg": 158.99699700256986,
+        "dec_deg": 11.76884975660982,
+        "angular_diameter_deg": 0.0024667855769416715,
+        "angular_diameter_arcsec": 8.880428076990018,
+        "disc_diameter_at_1000_unity_units": 0.04305353026499044
+      },
+      "earth_mars_separation_deg": 179.99999914622634,
+      "earth_one_way_seconds": 0.06671281903963042,
+      "earth_minimum_frozen_round_trip_seconds": 0.13342563807926083,
+      "existing_c04_one_way_seconds": 525.280554275,
+      "compatible_with_current_c04_range": false
+    }
+  ]
+}

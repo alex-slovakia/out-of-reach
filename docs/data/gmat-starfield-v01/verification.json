@@ -1,0 +1,68 @@
+{
+  "executed_at_utc": "2026-11-14T13:04:44.290900+00:00",
+  "python": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+  "executed_entrypoint": "verify_package.verify_payload() (in-process, offline, no source or product writes)",
+  "command_to_reproduce": "python -B verify_package.py",
+  "report": {
+    "result": "PASS",
+    "package_id": "nasa-gmat-starfield-v01-standalone",
+    "manifest_sha256": "3ada9d090bf0d2fb97fa93ba3509007498667cbd0187a48226ce9482209d2cea",
+    "payload_files_verified": 22,
+    "gmat": {
+      "result": "PASS",
+      "source_rows": 42100,
+      "selected_rows": 2797,
+      "duplicate_exact_positions": 12,
+      "checks": [
+        "pinned raw/license/parser SHA-256",
+        "all unit vectors",
+        "source flux mapping",
+        "six source anchors",
+        "byte-identical regeneration"
+      ],
+      "limitations": [
+        "J2000 frame inferred, not explicit source epoch metadata",
+        "coarse magnitudes",
+        "no color data",
+        "12 exact duplicate positions retained; do not sum duplicate brightness",
+        "Polaris magnitude 6.0 source visualization value, not physical V"
+      ],
+      "Unity": "NOT RUN",
+      "additional_checks": [
+        "cardinal axes and poles",
+        "RA seam",
+        "all inverse RA/Dec",
+        "five magnitudes = 100x flux",
+        "selection threshold and absent color"
+      ]
+    },
+    "horizons": {
+      "result": "PASS",
+      "sample_count": 32,
+      "checks": [
+        "raw/CSV hashes",
+        "exact CSV regeneration",
+        "target/origin/frame/units",
+        "32 exact daily UTC epochs",
+        "vector norm versus source RG",
+        "range/c versus source LT",
+        "truncated response, wrong target and wrong unit rejected"
+      ]
+    },
+    "planet_geometry": {
+      "result": "PASS",
+      "sample_count": 9,
+      "checks": [
+        "unit vectors",
+        "spherical angular diameters",
+        "same-range C04 compatibility",
+        "50,000 km Mars separation",
+        "midpoint antipodes",
+        "invalid inside-body observer",
+        "inverse ship yaw"
+      ]
+    },
+    "BSC_data_included": false,
+    "Unity_compile_render_build_playtest": "NOT RUN"
+  }
+}

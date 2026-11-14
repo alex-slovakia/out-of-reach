@@ -1,0 +1,100 @@
+{
+  "package_id": "nasa-gmat-starfield-v01-standalone",
+  "created_at_utc": "2026-11-14T13:04:44.140742+00:00",
+  "status": "Prepared research payload; Unity integration and rendering not verified",
+  "source_dataset_id": "nasa-gmat-stars-v01",
+  "source_commit": "b8aec552a8f34a9212063adc3f249bd2315397a3",
+  "BSC_data_included": false,
+  "unity_target": "6000.3.28f1 URP Windows x64 (not compiled/run)",
+  "inventory_scope": "Payload only; SHA256SUMS.txt additionally protects this manifest and verification.json. SHA256SUMS.txt does not hash itself.",
+  "files": {
+    ".gitattributes": {
+      "bytes": 75,
+      "sha256": "3c9aeb82708a664fc95ebc513d36e4b06d3b95eab06d7ffd6bc9d74e8bbf3d69"
+    },
+    "CelestialDirectionsExample.cs": {
+      "bytes": 2631,
+      "sha256": "c45810c45b2e2c6b0f2fb0e44c135f82437a6d8d06f6fc2d537edc6d72ed56a2"
+    },
+    "README.md": {
+      "bytes": 7335,
+      "sha256": "f7ffa4c211a972a34d72b5f6982ccf8bf4d128d6464562564c414070c0a9e00b"
+    },
+    "THIRD-PARTY-NOTICE.md": {
+      "bytes": 3524,
+      "sha256": "cbfa57f5e12a407bfc81cbd33f62facb9db7d0730e36a06292ab5c2adbf322d6"
+    },
+    "challenge-resources.evidence.json": {
+      "bytes": 12030,
+      "sha256": "cff256f544bfdc6faff799eba75a4d5535f8ee0a543a7bf51794bd82c4f2f7fb"
+    },
+    "earth-mars.reference.csv": {
+      "bytes": 4811,
+      "sha256": "694f3606e7abc1d94941b428dc1f7a9364bb07d1810327b6343a77986a79e5af"
+    },
+    "earth-mars.reference.manifest.json": {
+      "bytes": 2594,
+      "sha256": "394fb5d206a170d64779fe10c2e012a913a3d95f9304ecbbee17a62a95c3ff56"
+    },
+    "earth-mars.reference.raw.json": {
+      "bytes": 18747,
+      "sha256": "d1040527e6d57e66705c6ba7938da0ddb792705e0793e40ecb284b91300bf974"
+    },
+    "geometry.py": {
+      "bytes": 5610,
+      "sha256": "0de9ef19ecf19ad886bddc9be9ac9f68696322fa0076286c143208edbcef0dcf"
+    },
+    "gmat-GLStars.cpp": {
+      "bytes": 16901,
+      "sha256": "fe9941a046facbbd6c8dc587326ac940a3ce7a9088a2817c72f58e16aff69212"
+    },
+    "gmat-LICENSE.txt": {
+      "bytes": 10201,
+      "sha256": "b9ea20f6e648554b46334d2322b9c237657febc746d862f52e47ea1bfacb87be"
+    },
+    "gmat-README.txt": {
+      "bytes": 9605,
+      "sha256": "e3e498dbb5d23560a6ac8c6ead8563056e9b9b1f932fa4ff29ee3742ff8bd655"
+    },
+    "gmat-retrieval.json": {
+      "bytes": 1745,
+      "sha256": "47732e9b0ac916ff60eaf22c9a67cb242104adf0c778753e234f89536d12d2d5"
+    },
+    "gmat-stars.csv": {
+      "bytes": 254254,
+      "sha256": "df666db0ca779bc23ac151df6540a139d0b479578daa9916aa80c6f52df24922"
+    },
+    "gmat-stars.json": {
+      "bytes": 271504,
+      "sha256": "7077c2df92e8b5e53772ceef200dce3f6b9a5e0c3665ff83c4ea44d7bae5ce20"
+    },
+    "gmat-stars.raw.txt": {
+      "bytes": 1094631,
+      "sha256": "d6b66913176142dd12610fa5c2220f6c0f85e1ed2bd817230cf5619ab8f569f5"
+    },
+    "gmat_catalogue.py": {
+      "bytes": 5554,
+      "sha256": "27ff7e04c58f6addd1a35967cd1f0a46cce4fd74aff5a7f12a6283c2ebc90a05"
+    },
+    "horizons_reference.py": {
+      "bytes": 6148,
+      "sha256": "81455d95c90ed93bfc0f715fbc0e80d995e560671852a06f2cf8238cc8f1dac0"
+    },
+    "planet-radii-source.html": {
+      "bytes": 58244,
+      "sha256": "e49a487947295c389ba6e5833dd8fb04b63e826d39f70c123881882096e5e68b"
+    },
+    "planet-samples.json": {
+      "bytes": 15910,
+      "sha256": "f7f2914f3f2ebf3eaa95c81a169cc222ad8c6eef17ebc7ba8e3472a3bcba54fe"
+    },
+    "source-audit.json": {
+      "bytes": 2524,
+      "sha256": "153a4efcdcfe668a29caf43b4c01dcc018bc339977fa0fa5a1867937061951af"
+    },
+    "verify_package.py": {
+      "bytes": 5794,
+      "sha256": "963ccb12184db8ffcad6d483ecf3b2bf3dd6f01f0e57da3f9f92d432c179689f"
+    }
+  }
+}

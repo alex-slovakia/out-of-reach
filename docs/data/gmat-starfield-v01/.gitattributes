@@ -1,0 +1,2 @@
+# Preserve every package checksum across Git storage and checkout.
+* -text

@@ -1,0 +1,48 @@
+{
+  "reviewed_at_utc": "2026-11-14",
+  "gmat_commit": "b8aec552a8f34a9212063adc3f249bd2315397a3",
+  "method": "Read pinned upstream root/application licence and README; inspect GitHub Contents API directory listings along star asset path; compare hashes.",
+  "gmat_licence_scope": "Repository Apache-2.0 and application licensing statement; no separate star-specific licence or notice found along inspected path. No claim about unrelated third-party assets.",
+  "checked_directories": [
+    "/",
+    "application",
+    "application/data",
+    "application/data/graphics",
+    "application/data/graphics/stars"
+  ],
+  "star_directory_entries": [
+    "inp_Border.txt",
+    "inp_Constellation.txt",
+    "inp_StarCatalog.txt"
+  ],
+  "application_license_url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/application/License.txt",
+  "application_license_sha256": "b9ea20f6e648554b46334d2322b9c237657febc746d862f52e47ea1bfacb87be",
+  "application_license_bytes": 10201,
+  "root_readme_url": "https://raw.githubusercontent.com/nasa/GMAT/b8aec552a8f34a9212063adc3f249bd2315397a3/README.txt",
+  "root_readme_sha256": "95a76e733282c353b01326a2cdda6cf2ccbe3dfb367bd16c1af1958a638c0305",
+  "root_readme_finding": "Points to application README for licence and references.",
+  "radii_retrieval": {
+    "filename": "planet-radii-source.html",
+    "request_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+    "final_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+    "retrieved_at_utc": "2026-11-14T12:39:34.903577+00:00",
+    "completed_at_utc": "2026-11-14T12:39:36.098945+00:00",
+    "http_status": 200,
+    "content_type": "text/html",
+    "bytes": 58244,
+    "sha256": "e49a487947295c389ba6e5833dd8fb04b63e826d39f70c123881882096e5e68b"
+  },
+  "excluded_source": {
+    "name": "HEASARC BSC5P",
+    "reason": "Commercial licence unresolved; all raw/derived catalogue data and comparison evidence excluded.",
+    "source_url": "https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/bsc5p.html"
+  },
+  "source_package": "NasaStarfieldV01; standalone publication subset",
+  "horizons_source": "Existing docs/data/horizons snapshot copied byte-for-byte; no new ephemeris request.",
+  "known_limits": [
+    "GMAT observation epoch unspecified; J2000 alignment inferred from renderer",
+    "GMAT magnitudes are coarse graphics values; B-V unavailable",
+    "12 duplicate exact source coordinates retained",
+    "Unity example uncompiled; no rendering or integration verification"
+  ]
+}
