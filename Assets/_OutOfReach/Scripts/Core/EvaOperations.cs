@@ -6,7 +6,8 @@ using OutOfReach.Simulation;
 namespace OutOfReach.Core
 {
     /// <summary>
-    /// Authoritative suit, airlock and outside state for the single constrained EVA.
+    /// Authoritative suit, airlock and outside state for the single constrained EVA (implements
+    /// <see cref="IEvaStatus"/> for the EVA HUD).
     /// <list type="bullet">
     /// <item>Airlock states follow the shared <see cref="AirlockState"/>: InnerOpen, Sealed, Depressurizing,
     /// OuterOpen, Repressurizing. The two hatches are distinct states, so they can never be open together.</item>
@@ -20,7 +21,7 @@ namespace OutOfReach.Core
     /// </list>
     /// Every rejected command changes nothing and publishes nothing.
     /// </summary>
-    public sealed class EvaOperations
+    public sealed class EvaOperations : IEvaStatus
     {
         private const double Tolerance = 1e-9;
 

@@ -5,8 +5,8 @@ integrator; root documentation stays integrator-owned. Status and requests live 
 
 **Done:** C01 (mission foundation), C02 (first playable repair loop), C03 (suit, airlock, constrained EVA,
 antenna repair) and C04 (NASA/JPL-driven reply delay, the one transmission, both outcomes, the ending sequence,
-report data, restart). The gameplay loop is complete from planning to report. **Not yet:** adoption of the
-shared `IMissionReport` / `IEvaStatus` contracts (waiting for the integrator's commit).
+report data, restart), including the shared `IMissionReport` and `IEvaStatus` contracts. The gameplay loop is
+complete from planning to report.
 
 ## Assemblies
 
@@ -32,14 +32,16 @@ shared `IMissionReport` / `IEvaStatus` contracts (waiting for the integrator's c
 | `IRepairable` | `OutOfReach.Simulation.ShipSystem` (Power, LifeSupport, Antenna) |
 | `IInteractable` | `OutOfReach.Core.CockpitConsoleInteraction`, `RepairInteraction`, `DelegatedInteraction` |
 | `AirlockState` / `AirlockStateChanged` | published by `OutOfReach.Core.EvaOperations` |
+| `IEvaStatus` | `OutOfReach.Core.EvaOperations` |
 | `ICommunicationSystem` | `OutOfReach.Simulation.CommunicationSystem` |
-| `IMissionReport` (accepted on #7, not committed yet) | `OutOfReach.Core.MissionReport` has the same members |
+| `IMissionReport` | `OutOfReach.Core.MissionReport` (sections use the contract's `MissionReportSection` / `MissionReportLine`) |
 | `ISimulationClock` | `OutOfReach.Core.SimulationClockView` |
 | `IPlanningDeadline` | `OutOfReach.Core.PlanningDeadline` |
 
-The two newest contracts come from the integrator's shared-only commit `39dfb92` on `feature/visuals-cinematics`,
-adopted here by cherry-pick as `50b2f8a` (the visuals branch itself was not merged; `TEAM-COMMANDS.md` was not
-taken, so it arrives once from the integrator's branch).
+Contracts added after the baseline come from the integrator's shared-only commits on
+`feature/visuals-cinematics`, adopted here by cherry-pick: `39dfb92` (clock, planning deadline) as `50b2f8a` and
+`84cbf64` (EVA status, mission report) as `3c4aa83`. The visuals branch itself was never merged;
+`TEAM-COMMANDS.md` was not taken, so it arrives once from the integrator's branch.
 
 ## Scene integration (I01: plan → accident → interior repair)
 
@@ -172,12 +174,12 @@ On the route the player has no gravity and no free flight: movement follows the 
 0.5 m around the waypoint line and cannot pass either end (tether length = line length, 1 m/s). These limits are
 serialized on `TetheredRoute`.
 
-### EVA HUD data (no contract yet)
+### EVA HUD data (`IEvaStatus`)
 
-`MissionRuntime.Eva` returns `OutOfReach.Core.EvaOperations`: `IsSuitOn`, `IsSuitSealed`, `SuitOxygenKg`,
+`MissionRuntime.EvaStatus` returns the shared `IEvaStatus`: `IsSuitOn`, `IsSuitSealed`, `SuitOxygenKg`,
 `SuitOxygenCapacityKg`, `SuitOxygenSecondsRemaining`, `IsOutside`, `Airlock`, `AirlockTransitionRemainingSeconds`
-and a `Changed` event. Proposal for the integrator: a read-only `IEvaStatus` contract with exactly these members.
-Until it exists, the integrator can adapt the properties. Airlock door visuals only need `AirlockStateChanged`.
+and a `Changed` event. `MissionRuntime.Eva` is the same object with its commands, for code that references
+Core. Airlock door visuals only need `AirlockStateChanged`.
 
 ### EVA assumptions (GAME ASSUMPTIONS for a fictional suit and airlock)
 
@@ -270,7 +272,8 @@ sequence is superseded and its late completion is ignored as stale.
 | `Communications` (`ICommunicationSystem`) | state, `ReferenceDistanceKm`, `OneWayLightSeconds`, `EarthProcessingSeconds`, `ReplyRemainingSimulationSeconds`, `AstronomicalReferenceId` |
 | `CommunicationDetails` (`CommunicationSystem`) | not in the contract: `ReferenceEpochUtc`, `ReplyDelaySimulationSeconds`, `TransmitEnergyKWh`, `IsReferenceAvailable`, `CheckTransmit()`, transmission and reply times |
 | `Calendar` (`MissionCalendar`) | `NowUtc`, `DayNumber` (1-based), `EpochAtStartUtc` for date and "mission day" labels |
-| `Report` (`MissionReport`) | null until an outcome exists; read it on `MissionEnded` or on `PhaseChanged(→ Report)` |
+| `Report` (`MissionReport`, implements `IMissionReport`) | null until an outcome exists; read it on `MissionEnded` or on `PhaseChanged(→ Report)` |
+| `EvaStatus` (`IEvaStatus`) | suit and airlock state for the EVA HUD |
 | `BuildReportPreview()` | the same report mid-mission (`IsFinal = false`) |
 | `SkipSimulatedTime(seconds)` | chapter cards and "skip the wait": advances reserves and the reply clock together |
 | `RestartMission()` | unchanged: a new session; nothing of the old mission survives |
@@ -279,9 +282,9 @@ No new scene anchor is needed: the transmission uses the existing `cockpit-conso
 
 ### Report (`MissionReport`)
 
-`Outcome`, `IsFinal`, `Headline`, `OutcomeReason`, `ElapsedSimulationSeconds` and `Sections` are the report
-contract accepted on #7; `Sections` is display-ready text (`Label`, `Value`) under stable IDs, so a UI can render
-it without knowing the fields. Section IDs, in order (`MissionReportSections`): `outcome`, `mission-design`,
+`MissionReport` implements the shared `IMissionReport`: `Outcome`, `IsFinal`, `Headline`, `OutcomeReason`,
+`ElapsedSimulationSeconds` and `Sections`. `Sections` is display-ready text (`Label`, `Value`) under stable IDs,
+so a UI can render it without knowing the fields. Section IDs, in order (`MissionReportSections`): `outcome`, `mission-design`,
 `resources`, `systems`, `science`, `communication`, `timeline`, `nasa-data`, `derived-physics`,
 `fictional-scenario`, `time-compression`. The last four keep NASA/JPL data, derived physics, the fictional
 scenario and gameplay time compression apart, as `NASA-DATA.md` requires. Runtime strings are plain ASCII.
@@ -377,9 +380,9 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 
 ## Open points
 
-1. **Shared contracts.** `IMissionReport` and `IEvaStatus` are accepted on #7 but not committed. Once the
-   integrator names the commit, `MissionReport` and `EvaOperations` implement them and the two Core structs
-   `MissionReportLine` / `MissionReportSection` are replaced by the contract ones.
+1. **Player feel.** The first desktop play of I01 reported unresponsive interaction and unnatural movement
+   (root cause not yet attributed). Walk speed, look sensitivity, reach and input bindings live in
+   `Scripts/Player` and `Scripts/Interaction`; a confirmed reproduction is needed before changing them.
 2. **Slow losses.** With life support repaired but power never repaired, the loss (battery, then CO₂) takes
    about 10 real minutes at ×300. `MissionRuntime.SkipSimulatedTime` or `MissionPacing` can shorten it.
 3. **End of the snapshot.** After 2026-12-15 08:00 UTC of mission time no call can be sent. A normal run is
@@ -395,13 +398,13 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
 
 ## Evidence (C04, 2026-11-14, Apoliak's machine, Unity 6000.3.28f1 batch mode)
 
-- **EditMode: 214 passed, 0 failed, 0 skipped.** 62 new: the packaged snapshot (identity, byte equality with the
+- **EditMode: 215 passed, 0 failed, 0 skipped.** 63 new: the packaged snapshot (identity, byte equality with the
   canonical CSV, manifest, known rows, units, selection, 11 damaged-table rejections), the link alone (timing,
   early-reply prevention, repeated and rejected sends, stray advance, unpowered link, dates), the whole finale
   (console steps, event order, exact reply time in a jump and frame by frame, pause, low battery, loss before /
   at / after the reply, ending cinematics with stale completions and timeouts, mission-day sampling, end of the
   snapshot, unrecoverable objective) and the report (both outcomes, expenditure sums, timeline, loadout names,
-  planning fallback, restart).
+  planning fallback, restart, the shared `IMissionReport` and `IEvaStatus` views).
 - **PlayMode: 15 passed, 0 failed.** New: the finale through the console interaction with the wait driven by
   runtime steps to the report and a clean restart, and `SkipSimulatedTime`.
 - The run machine uses a decimal-comma culture, so invariant parsing and formatting were exercised for real.

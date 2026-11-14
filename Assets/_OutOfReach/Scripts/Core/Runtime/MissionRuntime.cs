@@ -115,9 +115,12 @@ namespace OutOfReach.Core.Runtime
         public Transform EvaReentryPoint => evaReentryPoint;
 
         /// <summary>
-        /// Suit, airlock and outside state for an EVA HUD (suit oxygen, time left, airlock timer). There is no
-        /// shared contract for it yet; the integrator can adapt these read-only properties.
+        /// Read-only suit and airlock state for an EVA HUD (suit oxygen, time left, airlock timer, Changed event)
+        /// through the shared contract.
         /// </summary>
+        public IEvaStatus EvaStatus => Session != null ? Session.Eva : null;
+
+        /// <summary>The same object with its commands and counters, for code that references Core.</summary>
         public EvaOperations Eva => Session != null ? Session.Eva : null;
 
         /// <summary>
@@ -138,7 +141,8 @@ namespace OutOfReach.Core.Runtime
 
         /// <summary>
         /// The final mission report once an outcome is decided, otherwise null. Read it when MissionEnded arrives
-        /// or when the phase becomes Report. Sections are display-ready; typed members carry the same facts.
+        /// or when the phase becomes Report. It implements the shared IMissionReport (display-ready sections);
+        /// its typed members carry the same facts for code that references Core.
         /// </summary>
         public MissionReport Report => Session != null ? Session.Report : null;
 

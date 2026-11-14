@@ -100,6 +100,17 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(report.Holding.LimitedBy, Is.EqualTo("food"));
                 Assert.That(report.Holding.Days, Is.InRange(30d, 36d));
 
+                IMissionReport contract = report;
+                Assert.That(contract.Outcome, Is.EqualTo(MissionOutcome.RecoveryPossible));
+                Assert.That(contract.IsFinal, Is.True);
+                Assert.That(contract.Headline, Is.EqualTo("RECOVERY POSSIBLE"));
+                Assert.That(contract.Sections, Has.Count.EqualTo(MissionReportSections.Ordered.Count));
+                foreach (MissionReportSection section in contract.Sections)
+                {
+                    Assert.That(section.Title, Is.Not.Empty, section.Id);
+                    Assert.That(section.Lines, Is.Not.Empty, section.Id);
+                }
+
                 string text = report.ToPlainText();
                 Assert.That(text, Does.StartWith("RECOVERY POSSIBLE"));
                 Assert.That(text, Does.Contain(EarthMarsReferenceTests.ManifestSha256));

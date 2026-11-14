@@ -264,6 +264,33 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
+        public void SharedEvaStatusContract_ShowsTheSameSuitAndAirlockState()
+        {
+            using (var session = Fixtures.StabilizedSession())
+            {
+                IEvaStatus status = session.Eva;
+                int changes = 0;
+                status.Changed += () => changes++;
+                Assert.That(status.IsSuitOn, Is.False);
+                Assert.That(status.Airlock, Is.EqualTo(AirlockState.InnerOpen));
+
+                Fixtures.SuitUp(session);
+                Fixtures.OpenOuterHatch(session);
+                Fixtures.GoOutside(session);
+
+                Assert.That(status.IsSuitOn, Is.True);
+                Assert.That(status.IsSuitSealed, Is.True);
+                Assert.That(status.IsOutside, Is.True);
+                Assert.That(status.Airlock, Is.EqualTo(AirlockState.OuterOpen));
+                Assert.That(status.AirlockTransitionRemainingSeconds, Is.EqualTo(0d));
+                Assert.That(status.SuitOxygenCapacityKg, Is.EqualTo(0.30d));
+                Assert.That(status.SuitOxygenKg, Is.EqualTo(session.Eva.SuitOxygenKg).And.LessThan(0.30d));
+                Assert.That(status.SuitOxygenSecondsRemaining, Is.EqualTo(status.SuitOxygenKg / (0.10d / 3600d)).Within(1e-6));
+                Assert.That(changes, Is.GreaterThanOrEqualTo(4), "suit on, sealed, outer hatch open, outside");
+            }
+        }
+
+        [Test]
         public void InterruptedAntennaRepair_SpendsNothing_AndTheCrewCanStillReturn()
         {
             using (var session = Fixtures.StabilizedSession(AuroraMission.ScienceFocusPresetId))

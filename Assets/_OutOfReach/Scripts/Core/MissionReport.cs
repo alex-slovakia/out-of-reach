@@ -6,37 +6,6 @@ using OutOfReach.Simulation;
 
 namespace OutOfReach.Core
 {
-    /// <summary>One display-ready fact of the report. Units are part of <see cref="Value"/>.</summary>
-    public readonly struct MissionReportLine
-    {
-        public MissionReportLine(string label, string value)
-        {
-            Label = label ?? string.Empty;
-            Value = value ?? string.Empty;
-        }
-
-        public string Label { get; }
-
-        public string Value { get; }
-    }
-
-    /// <summary>A titled group of report facts. <see cref="Id"/> is stable (see <see cref="MissionReportSections"/>).</summary>
-    public readonly struct MissionReportSection
-    {
-        public MissionReportSection(string id, string title, IReadOnlyList<MissionReportLine> lines)
-        {
-            Id = id ?? string.Empty;
-            Title = title ?? string.Empty;
-            Lines = lines ?? new MissionReportLine[0];
-        }
-
-        public string Id { get; }
-
-        public string Title { get; }
-
-        public IReadOnlyList<MissionReportLine> Lines { get; }
-    }
-
     /// <summary>Stable section IDs, in report order. The four last ones keep data, physics, fiction and pacing apart.</summary>
     public static class MissionReportSections
     {
@@ -229,12 +198,12 @@ namespace OutOfReach.Core
     }
 
     /// <summary>
-    /// The mission debrief: an immutable snapshot Core builds from authoritative state. Presentation only displays
-    /// it. <see cref="Sections"/> is display-ready text grouped under stable IDs; the typed members carry the same
-    /// facts as numbers. Members named Outcome, IsFinal, Headline, OutcomeReason, ElapsedSimulationSeconds and
-    /// Sections are the proposed shared report contract.
+    /// The mission debrief (implements <see cref="IMissionReport"/>): an immutable snapshot Core builds from
+    /// authoritative state. Presentation only displays it. <see cref="Sections"/> is display-ready text grouped
+    /// under the stable IDs of <see cref="MissionReportSections"/>; the typed members carry the same facts as
+    /// numbers for views that reference Core.
     /// </summary>
-    public sealed class MissionReport
+    public sealed class MissionReport : IMissionReport
     {
         internal MissionReport()
         {
