@@ -1,0 +1,3757 @@
+{
+    "capture": "01b-survival-subtitle-960x540",
+    "viewport": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 720.0
+    },
+    "pixelWidth": 960,
+    "pixelHeight": 540,
+    "uiToPixelX": 0.75,
+    "uiToPixelY": 0.75,
+    "subtitleCue": "vo11_mc_reply_received",
+    "elements": [
+        {
+            "name": "",
+            "text": "Out of reach",
+            "css": "unity-text-element unity-label title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 48.0,
+            "pixelFontSize": 36.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "AURORA-7\nChoose what comes with you.",
+            "css": "unity-text-element unity-label intro",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Mission loadout",
+            "css": "unity-text-element unity-label payload-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 26.0,
+            "pixelFontSize": 19.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Untimed",
+            "css": "unity-text-element unity-label deadline-countdown",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Mass",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "546 / 600 kg",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Budget",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "720 / 800 cr",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Load / generation",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "1400 / 1900 W",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Oxygen reserve tank",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "30 kg · 40 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Water reserve tank",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "48 kg · 20 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Food locker",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "35 kg · 25 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Battery module",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "55 kg · 60 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Solar wing",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "70 kg · 120 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "1",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Spare parts kit",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "25 kg · 45 cr · 0 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Research spectrometer",
+            "css": "unity-text-element unity-label equipment-name",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "90 kg · 220 cr · 300 W load",
+            "css": "unity-text-element unity-label equipment-costs",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "1",
+            "css": "unity-text-element unity-label quantity-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Reserves & launch details",
+            "css": "unity-text-element unity-label unity-toggle__text unity-foldout__text",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Initial reserves",
+            "css": "unity-text-element unity-label details-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Oxygen reserve",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "34.0 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Water",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "100.0 L",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Food stores",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "64.0 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Battery",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "28.0 kWh",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Spare parts",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "7",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Cabin CO₂",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2635 ppm",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Oxygen is stored reserve; CO₂ is cabin concentration. Equipment is locked at launch.",
+            "css": "unity-text-element unity-label small-note",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Launch when your payload is ready. No automatic launch.",
+            "css": "unity-text-element unity-label deadline-rule",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Last valid loadout",
+            "css": "unity-text-element unity-label details-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label last-valid-counts",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "A fictional research mission. Credits, engineering limits and resource behaviour are simplified for gameplay.",
+            "css": "unity-text-element unity-label small-note",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Ready for launch.",
+            "css": "unity-text-element unity-label validation",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label command-feedback",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Stow your supplies aboard the transport",
+            "css": "unity-text-element unity-label preflight-objective",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 19.0,
+            "pixelFontSize": 14.25,
+            "visible": false
+        },
+        {
+            "name": "cargo-countdown",
+            "text": "Practice · no deadline",
+            "css": "unity-text-element unity-label preflight-countdown deadline-practice",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Active real time",
+            "css": "unity-text-element unity-label preflight-clock-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "carried-cargo-mass",
+            "text": "",
+            "css": "unity-text-element unity-label preflight-carried is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 22.0,
+            "pixelFontSize": 16.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Loaded mass",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "546 / 600 kg",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Credits",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "720 / 800 cr",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Load / generation",
+            "css": "unity-text-element unity-label constraint-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "1400 / 1900 W",
+            "css": "unity-text-element unity-label constraint-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Loadout ready · board the transport",
+            "css": "unity-text-element unity-label preflight-validation",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Aboard cargo",
+            "css": "unity-text-element unity-label details-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "preflight-loaded-counts",
+            "text": "Oxygen reserve tank  × 2\nWater reserve tank  × 2\nFood locker  × 2\nBattery module  × 2\nSolar wing  × 1\nSpare parts kit  × 2\nResearch spectrometer  × 1",
+            "css": "unity-text-element unity-label last-valid-counts",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Aboard reserves",
+            "css": "unity-text-element unity-label details-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Oxygen reserve",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "34.0 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Water",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "100.0 L",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Food stores",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "64.0 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Battery",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "28.0 kWh",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Spare parts",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "7",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Cabin CO₂",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2635 ppm",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Last valid loadout",
+            "css": "unity-text-element unity-label details-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label last-valid-counts",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Load cargo, then board the transport when ready. No automatic departure. Carried cargo is not aboard.",
+            "css": "unity-text-element unity-label deadline-rule",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label small-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Survive until rescue",
+            "css": "unity-text-element unity-label hud-phase",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 262.6666564941406,
+                "height": 25.33333396911621
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 197.0,
+                "height": 19.0
+            },
+            "fontSize": 19.0,
+            "pixelFontSize": 14.25,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Manage your food, water and ship systems.",
+            "css": "unity-text-element unity-label hud-objective",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 56.0,
+                "width": 262.6666564941406,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 42.0,
+                "width": 197.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label deadline-fallback",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label outcome-reason",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 76.0,
+                "width": 262.6666564941406,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 57.0,
+                "width": 197.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "survival-beacon-action",
+            "text": "Power the recovery beacon at the cockpit console.",
+            "css": "unity-text-element unity-label survival-beacon-action survival-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 76.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 57.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "survival-beacon-window",
+            "text": "",
+            "css": "unity-text-element unity-label survival-beacon-window survival-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 76.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 57.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 13.0,
+            "pixelFontSize": 9.75,
+            "visible": false
+        },
+        {
+            "name": "survival-rest-stop",
+            "text": "",
+            "css": "unity-text-element unity-label survival-rest-stop survival-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 76.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 57.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "300× simulation",
+            "css": "unity-text-element unity-label simulation-timing",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 1154.6666259765625,
+                "y": 30.66666603088379,
+                "width": 89.3333740234375,
+                "height": 18.66666603088379
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 866.0,
+                "y": 23.0,
+                "width": 67.00003051757813,
+                "height": 14.0
+            },
+            "fontSize": 13.0,
+            "pixelFontSize": 9.75,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 486.6666564941406,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 365.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "O₂ reserve",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 486.6666564941406,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 365.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "32.9 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-0",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 492.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 369.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 492.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 369.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 492.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 369.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Suit O₂",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "0.283 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "suit-oxygen-bar",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 514.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 386.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Water stores",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 514.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 386.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "99.7 L",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 510.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 383.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-1",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 520.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 390.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 520.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 390.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 520.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 390.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 510.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 383.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 542.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 407.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Food stores",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 542.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 407.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "63.8 kg",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 538.6666870117188,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 404.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-2",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 548.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 411.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 548.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 411.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 548.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 411.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 538.6666870117188,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 404.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 570.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 428.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Battery",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 570.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 428.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "27.7 kWh",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 566.6666870117188,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 425.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-3",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 576.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 432.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 576.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 432.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 576.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 432.0,
+                "width": 94.99999237060547,
+                "height": 6.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 566.6666870117188,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 425.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "survival-need-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 602.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 452.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Fed",
+            "css": "unity-text-element unity-label survival-need-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 602.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 452.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "survival-hunger-bar",
+            "text": "",
+            "css": "unity-progress-bar survival-need-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 609.3333129882813,
+                "width": 126.66665649414063,
+                "height": 5.3333740234375
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 457.0,
+                "width": 94.99999237060547,
+                "height": 4.000030517578125
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 609.3333129882813,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 457.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "survival-need-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 630.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 473.0,
+                "width": 15.0,
+                "height": 15.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Hydrated",
+            "css": "unity-text-element unity-label survival-need-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 630.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 48.0,
+                "y": 473.0,
+                "width": 69.0,
+                "height": 15.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": true
+        },
+        {
+            "name": "survival-hydration-bar",
+            "text": "",
+            "css": "unity-progress-bar survival-need-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 637.3333129882813,
+                "width": 126.66665649414063,
+                "height": 5.3333740234375
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 478.0,
+                "width": 94.99999237060547,
+                "height": 4.000030517578125
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 637.3333129882813,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 117.0,
+                "y": 478.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Full = needs met · not stored supplies",
+            "css": "unity-text-element unity-label survival-needs-key",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 598.6666870117188,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 449.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 11.0,
+            "pixelFontSize": 8.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Time remaining",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "170 min sim",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Sealed",
+            "css": "unity-text-element unity-label suit-seal",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Spare parts",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "0",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Recovery craft inbound",
+            "css": "unity-text-element unity-label survival-recovery-title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Rendezvous in 11d 23h 0m (simulated)",
+            "css": "unity-text-element unity-label survival-recovery-line",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 13.0,
+            "pixelFontSize": 9.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Nearby recovery craft · fictional scenario",
+            "css": "unity-text-element unity-label survival-recovery-note",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 12.0,
+            "pixelFontSize": 9.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Cabin CO₂",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "2635 ppm",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-5",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Mission 04:11:58",
+            "css": "unity-text-element unity-label elapsed-time",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 482.6666564941406,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 362.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "E",
+            "css": "unity-text-element unity-label interaction-key",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label interaction-text",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 18.0,
+            "pixelFontSize": 13.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label survival-rest-day",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 22.0,
+            "pixelFontSize": 16.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label survival-rest-time",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label survival-rest-feedback survival-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 27.0,
+                "y": 23.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 13.0,
+            "pixelFontSize": 9.75,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "MISSION CONTROL · EARTH · DELAYED REPLY",
+            "css": "unity-text-element unity-label subtitle-speaker",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 384.0,
+                "y": 610.6666870117188,
+                "width": 797.3333740234375,
+                "height": 16.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 288.0,
+                "y": 458.0,
+                "width": 598.0,
+                "height": 12.0
+            },
+            "fontSize": 12.0,
+            "pixelFontSize": 9.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.\n",
+            "css": "unity-text-element unity-label subtitle-text",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 384.0,
+                "y": 626.6666870117188,
+                "width": 797.3333740234375,
+                "height": 53.33331298828125
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 288.0,
+                "y": 470.0,
+                "width": 598.0,
+                "height": 39.99998474121094
+            },
+            "fontSize": 20.0,
+            "pixelFontSize": 15.0,
+            "visible": true
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "resource-icon",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Stamina",
+            "css": "unity-text-element unity-label resource-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "100%",
+            "css": "unity-text-element unity-label resource-value",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 17.0,
+            "pixelFontSize": 12.75,
+            "visible": false
+        },
+        {
+            "name": "resource-bar-6",
+            "text": "",
+            "css": "unity-progress-bar gauge-bar",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label unity-progress-bar__title",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "reserve-fill",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label gauge-note is-hidden",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 14.0,
+            "pixelFontSize": 10.5,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Paused",
+            "css": "unity-text-element unity-label session-menu-heading",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 77.14285278320313,
+                "y": 250.2856903076172,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 57.857139587402347,
+                "y": 187.71426391601563,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 28.0,
+            "pixelFontSize": 21.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label session-menu-detail",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 77.14285278320313,
+                "y": 250.2856903076172,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 57.857139587402347,
+                "y": 187.71426391601563,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "Reduced camera motion and light effects",
+            "css": "unity-text-element unity-label unity-base-field__label unity-toggle__label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 78.85713958740235,
+                "y": 479.9999694824219,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 59.142852783203128,
+                "y": 359.9999694824219,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "",
+            "css": "unity-text-element unity-label session-menu-feedback",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 77.14285278320313,
+                "y": 250.2856903076172,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 57.857139587402347,
+                "y": 187.71426391601563,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 16.0,
+            "pixelFontSize": 12.0,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "WASD move · Mouse look\nE interact · Tab systems · Esc resume",
+            "css": "unity-text-element unity-label session-menu-controls",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 77.14285278320313,
+                "y": 531.4285278320313,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 57.857139587402347,
+                "y": 398.5714111328125,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        },
+        {
+            "name": "",
+            "text": "EARTH LINK\n2026-11-14 10:40 UTC\n197,708,000 km · Mars-vicinity proxy\nLight time 11m 00s one way\nGround processing 10m 00s\nUse the cockpit console",
+            "css": "unity-text-element unity-label",
+            "rect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "pixelRect": {
+                "serializedVersion": "2",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 0.0,
+                "height": 0.0
+            },
+            "fontSize": 15.0,
+            "pixelFontSize": 11.25,
+            "visible": false
+        }
+    ]
+}

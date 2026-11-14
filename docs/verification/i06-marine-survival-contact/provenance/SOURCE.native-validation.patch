@@ -1,0 +1,11 @@
+--- a/Assets/_OutOfReach/Visuals/Models/MarinePrologue/SOURCE.json
++++ b/Assets/_OutOfReach/Visuals/Models/MarinePrologue/SOURCE.json
+@@ -74,7 +74,7 @@
+   ],
+   "transport_correction": {
+     "operation": "1296 reversed exterior faces corrected; 44-triangle orphan lamp island removed",
+-    "native_validation": "pending",
++    "native_validation": "Unity 6000.3.28f1 GPU saved-Bootstrap run marine-bootstrap-native-qa/20261114T211433082Z completed with 177 passing assertions and process exit 0. Its immutable Assets manifest includes corrected FBX e21cfd832ffb50a190eb317be848b2da53624987bb6bd9b1152c50eece060e2d. The actual exterior-ascent capture was inspected and shows a continuous visible exterior; the former floating pale lamp quad is absent from the retained dock view. This is view-specific native evidence, not an imported FBX triangle recount, all-angle watertightness certification, or dedicated FX lifecycle acceptance.",
+     "package": "docs/art-direction/marine-visual-corrections-v01",
+     "corrected_blend_sha256": "776bb498430ec9adcc15564787f901a163873be6ec2c2de366982f5a50813015",
+     "upstream_fbx_sha256": "142c2053cda0e639781eae8e8b7973e1514fd385abfc399b5b621962572fcb62"

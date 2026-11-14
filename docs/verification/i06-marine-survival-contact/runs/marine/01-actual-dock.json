@@ -1,0 +1,43 @@
+{
+    "name": "01-actual-dock",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-14T21:14:54.2518183Z",
+    "mean": 0.36738187074661257,
+    "deviation": 0.2680908441543579,
+    "state": {
+        "phase": "Planning",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": 10000.0,
+            "y": 100.01899719238281,
+            "z": -12.34000015258789
+        },
+        "camera": {
+            "x": 10000.0,
+            "y": 101.66899871826172,
+            "z": -12.34000015258789
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 100.0,
+            "z": 0.0
+        },
+        "progress": 0.0,
+        "stamina": 1.0,
+        "fade": 0.0,
+        "focus": true,
+        "control": true,
+        "grounded": true,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": false,
+        "suspended": false,
+        "drive": true,
+        "remaining": 58.21500190440565,
+        "mass": 546.0
+    }
+}

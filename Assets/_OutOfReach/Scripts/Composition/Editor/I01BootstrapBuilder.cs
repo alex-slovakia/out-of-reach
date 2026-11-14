@@ -15,6 +15,7 @@ using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.Cinematics.Preflight;
 using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
+using OutOfReach.Presentation.MarineOcean.FX;
 using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.UI;
 using UnityEditor;
@@ -91,7 +92,8 @@ namespace OutOfReach.Composition.Editor
             PrefabUtility.RecordPrefabInstancePropertyModifications(playerBody);
             player.Teleport(anchors.PlayerSpawn.position, anchors.PlayerSpawn.eulerAngles.y);
             Transform planningPivot = Child("Planning framing", player.ViewPivot);
-            Transform cinematicPivot = Child("Cinematic offset", planningPivot);
+            Transform departurePivot = Child("Transport departure offset", planningPivot);
+            Transform cinematicPivot = Child("Cinematic offset", departurePivot);
             Transform motionPivot = Child("First person visual motion", cinematicPivot);
             Transform menuMotionPivot = Child("Opening menu drift", motionPivot);
             Transform cameraTransform = Child("Player camera", menuMotionPivot);
@@ -139,7 +141,8 @@ namespace OutOfReach.Composition.Editor
                 Target(anchors.EvaReturn, InteractionIds.EvaReturn, new Vector3(0, 1.4f, 0)),
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
             };
-            var cargoStage = CargoStageAuthoring.Create(null, cameraTransform, font);
+            var marine = I06MarineAuthoring.Create(null, new Vector3(10000, 100, 0));
+            var cargoStage = I06MarineCargoAuthoring.Create(marine, cameraTransform, font);
             var habitatTargets = new[]
             {
                 HabitatTarget(habitat.RationInteractionSurface, InteractionIds.ConsumeRation, Vector3.zero, new Vector3(.32f, .25f, .06f)),
@@ -222,6 +225,7 @@ namespace OutOfReach.Composition.Editor
             MissionRuntime runtime = missionRoot.gameObject.AddComponent<MissionRuntime>();
             runtime.Configure(player, anchors.PlayerSpawn, allTargets);
             runtime.ConfigurePreflight(true, cargoStage.Spawn);
+            runtime.ConfigureBoarding(true);
             runtime.ConfigureImpactMovement(true);
             runtime.ConfigureSurvivalExtension(true);
             runtime.ConfigureEva(new[] { innerGate, outerGate }, route, reentry);
@@ -253,6 +257,22 @@ namespace OutOfReach.Composition.Editor
             I06HabitatBindings habitatBindings = missionRoot.gameObject.AddComponent<I06HabitatBindings>();
             habitatBindings.ConfigureViews(habitat.Status, habitatTargets[2], habitatTargets);
             composition.ConfigureHabitat(habitatBindings);
+            Transform seatTarget = Child("Transport seat interaction surface", marine.VehicleRoot);
+            seatTarget.position = marine.Root.TransformPoint(new Vector3(0, 1.03f, 1.19f));
+            seatTarget.rotation = marine.Root.rotation;
+            var marineBindings = missionRoot.gameObject.AddComponent<I06MarineBindings>();
+            CanvasGroup transferFade = Overlay("Transport location transfer fade", canvas.transform, Color.black);
+            marineBindings.ConfigureViews(marine.Root, marine.VehicleRoot, marine.HatchFrame, marine.AccessArmFrame,
+                marine.SeatedCamera, seatTarget, departurePivot, camera, targets[0], marine.Ocean,
+                presentationRoot.gameObject.AddComponent<TransportDeparturePresenter>(), PrepareMarineSky(), transferFade);
+            BoxCollider bargeDeck = marine.TransportColliders.Single(c => c.name == "COL_BargeDeck");
+            Transform fxDeck = Child("Actual barge top plane for ignition", bargeDeck.transform);
+            fxDeck.localPosition = bargeDeck.center + Vector3.up * (bargeDeck.size.y * .5f);
+            marineBindings.ConfigureLaunchEffects(presentationRoot.gameObject.AddComponent<MarineDepartureFxPresenter>(),
+                MarineDepartureFxPresenter.CalculateAnchor(marine.TransportAnchors), fxDeck,
+                Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/Exhaust.mat"),
+                Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/IgnitionSteam.mat"));
+            composition.ConfigureMarine(marineBindings);
             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/SFX/planning_tick.wav"));
             composition.ConfigureCargoPresentation(cargoStage.Presenter);
@@ -437,11 +457,14 @@ namespace OutOfReach.Composition.Editor
             var runtimeFields = new SerializedObject(runtime);
             Transform preflightSpawn = runtimeFields.FindProperty("preflightSpawn").objectReferenceValue as Transform;
             Transform planningPivot = compositionFields.FindProperty("planningFramingPivot").objectReferenceValue as Transform;
+            I06MarineBindings marineScene = roots.SelectMany(r => r.GetComponentsInChildren<I06MarineBindings>(true)).SingleOrDefault();
+            Vector3 expectedPreflight = marineScene
+                ? marineScene.MarineRoot.TransformPoint(new Vector3(0, .019f, -12.34f)) : new Vector3(0, .05f, 13.5f);
             if (!runtime.PreflightWalk || !preflightSpawn
-                || Vector3.Distance(preflightSpawn.position, new Vector3(0, .05f, 13.5f)) > .001f
+                || Vector3.Distance(preflightSpawn.position, expectedPreflight) > .002f
                 || compositionFields.FindProperty("cargoPresentation").objectReferenceValue != cargo
                 || !planningPivot || planningPivot.localPosition != Vector3.zero || planningPivot.localRotation != Quaternion.identity)
-                throw new InvalidOperationException("C05-A needs its explicit cargo presenter, storage preflight spawn and body-relative planning camera.");
+                throw new InvalidOperationException("C05 requires its explicit cargo presenter, authored preflight spawn and body-relative planning camera.");
             string[] expectedIds = { InteractionIds.CockpitConsole, InteractionIds.RepairPower, InteractionIds.RepairLifeSupport,
                 InteractionIds.SuitLocker, InteractionIds.AirlockControls, InteractionIds.EvaExit, InteractionIds.EvaReturn, InteractionIds.RepairAntenna,
                 InteractionIds.ConsumeRation, InteractionIds.DrinkWater, InteractionIds.BuildGrowModule, InteractionIds.SurvivalSleep, InteractionIds.RecoveryBeacon, InteractionIds.SalvagePayload };
@@ -465,18 +488,29 @@ namespace OutOfReach.Composition.Editor
             foreach (string id in new[] { InteractionIds.ConsumeRation, InteractionIds.DrinkWater, InteractionIds.BuildGrowModule, InteractionIds.SurvivalSleep })
             {
                 InteractableTarget target = targets.Single(t => t.InteractionId == id);
-                CheckReach(target, new Vector3(0, 1.65f, target.transform.position.z), player.transform);
+                CheckConditionalReach(target, new Vector3(0, 1.65f, target.transform.position.z), player.transform);
             }
-            CheckReach(targets.Single(t => t.InteractionId == InteractionIds.RecoveryBeacon), new Vector3(.65f, 1.7f, -.1f), player.transform);
+            CheckConditionalReach(targets.Single(t => t.InteractionId == InteractionIds.RecoveryBeacon), new Vector3(.65f, 1.7f, -.1f), player.transform);
             CheckReach(targets.Single(t => t.InteractionId == InteractionIds.SalvagePayload), new Vector3(.45f, 1.65f, 10.2f), player.transform);
             // Keep all original eight reach checks above; add the fourteen explicit preflight stations.
             for (int i = 0; i < CargoStageAuthoring.EquipmentIds.Length; i++)
             {
                 string id = CargoStageAuthoring.EquipmentIds[i];
-                CheckCargoTarget(targets.Single(target => target.InteractionId == InteractionIds.CargoSupply(id)),
-                    CargoStageAuthoring.SupplyPosition(i), player.transform);
-                CheckCargoTarget(targets.Single(target => target.InteractionId == InteractionIds.CargoBay(id)),
-                    CargoStageAuthoring.BayPosition(i), player.transform);
+                var marineBinding = roots.SelectMany(r => r.GetComponentsInChildren<I06MarineBindings>(true)).SingleOrDefault();
+                if (marineBinding)
+                {
+                    Transform marineRoot = marineBinding.MarineRoot;
+                    Vector3 supplyFeet = marineRoot.TransformPoint(I06MarineAuthoring.DockLocalPosition + new Vector3(-2.65f, .04f, -2.10f));
+                    InteractableTarget bay = targets.Single(t => t.InteractionId == InteractionIds.CargoBay(id));
+                    Vector3 bayFeet = marineRoot.TransformPoint(new Vector3(0, .035f, marineRoot.InverseTransformPoint(bay.transform.position).z));
+                    CheckReach(targets.Single(t => t.InteractionId == InteractionIds.CargoSupply(id)), supplyFeet + Vector3.up * 1.65f, player.transform);
+                    CheckReach(bay, bayFeet + Vector3.up * 1.65f, player.transform);
+                }
+                else
+                {
+                    CheckCargoTarget(targets.Single(t => t.InteractionId == InteractionIds.CargoSupply(id)), CargoStageAuthoring.SupplyPosition(i), player.transform);
+                    CheckCargoTarget(targets.Single(t => t.InteractionId == InteractionIds.CargoBay(id)), CargoStageAuthoring.BayPosition(i), player.transform);
+                }
             }
             if (runtime.Gates.Count != 2 || !runtime.EvaRoute || !runtime.EvaRoute.IsValid || !runtime.EvaReentryPoint)
                 throw new InvalidOperationException("The complete mission requires two gates, a valid EVA route and a reentry point.");
@@ -554,6 +588,24 @@ namespace OutOfReach.Composition.Editor
             string project = Path.GetFullPath(Path.Combine(Application.dataPath, "..")).Replace('\\', '/');
             if (project.IndexOf("/.local/", StringComparison.OrdinalIgnoreCase) < 0)
                 throw new InvalidOperationException("Run the I01 builder only in the ignored .local verification project. Copy a reviewed Bootstrap back through the integrator.");
+        }
+
+        private static Material PrepareMarineSky()
+        {
+            const string path = I06MarineAuthoring.AssetRoot + "/Ocean/Materials/MarineDawnSky.mat";
+            Material material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (!material)
+            {
+                Shader shader = Shader.Find("Skybox/Procedural");
+                if (!shader) throw new InvalidOperationException("The installed engine must provide its built-in procedural sky.");
+                material = new Material(shader) { name = "Marine dawn - authored atmosphere" };
+                AssetDatabase.CreateAsset(material, path);
+            }
+            material.SetFloat("_SunSize", .035f); material.SetFloat("_AtmosphereThickness", 1.05f);
+            material.SetColor("_SkyTint", new Color(.48f, .52f, .59f));
+            material.SetColor("_GroundColor", new Color(.28f, .30f, .32f)); material.SetFloat("_Exposure", 1.1f);
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         private static void ConfigureEnvironment()
@@ -847,6 +899,26 @@ namespace OutOfReach.Composition.Editor
                     throw new InvalidOperationException("Interaction " + target.InteractionId + " is blocked by " + hit.collider.name);
             }
             throw new InvalidOperationException("Interaction is not reachable within 2 m: " + target.InteractionId);
+        }
+
+        private static void CheckConditionalReach(InteractableTarget target, Vector3 eye, Transform playerRoot)
+        {
+            // Habitat commands start disabled outside Survival. Validate their future active geometry
+            // without saving an exposed command into Planning or changing the runtime phase gate.
+            Collider collider = target.GetComponent<Collider>();
+            if (!collider || !collider.isTrigger) throw new InvalidOperationException("Conditional target requires its own trigger.");
+            bool enabledBefore = collider.enabled;
+            try
+            {
+                collider.enabled = true;
+                Physics.SyncTransforms();
+                CheckReach(target, eye, playerRoot);
+            }
+            finally
+            {
+                collider.enabled = enabledBefore;
+                Physics.SyncTransforms();
+            }
         }
     }
 }

@@ -1,0 +1,82 @@
+{
+  "transport_commit": "855efbc328cb0c703bf7a92e92767f5eab25eabc",
+  "files": [
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/TransportLaunch.fbx",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx",
+      "sha256": "e21cfd832ffb50a190eb317be848b2da53624987bb6bd9b1152c50eece060e2d",
+      "bytes": 835068
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Exterior_BaseColor.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Exterior_BaseColor.png",
+      "sha256": "d5b352a0fe0827f84d2342db011e77de5c8adea0a54cf1a1f6a5fec9f7aac896",
+      "bytes": 2785455
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Exterior_MetallicSmoothness.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Exterior_MetallicSmoothness.png",
+      "sha256": "8c21749e479c84b1e0fdbfc2cb75bdf0007fb0f7cc2d85ac9323b65e0e82bda0",
+      "bytes": 2972872
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Exterior_Occlusion.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Exterior_Occlusion.png",
+      "sha256": "9049be543de209a06bd9a3849c8f5b083048ebe547cd4932aa4b35672bab47f6",
+      "bytes": 1716272
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Interior_BaseColor.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Interior_BaseColor.png",
+      "sha256": "c542364239523034f6703753463df0c4215bafcfb32590bbf2b08e1749f346ca",
+      "bytes": 2531701
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Interior_MetallicSmoothness.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Interior_MetallicSmoothness.png",
+      "sha256": "60fb75c13cbd9f2a39318bbcd80822d58a0e0b50e8ad71aaf2ff6fceb13f0eb0",
+      "bytes": 3038050
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Interior_Occlusion.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Interior_Occlusion.png",
+      "sha256": "8e562f970e6f1dfbc5c77c5e74e2bee3a4e2d3cc4e8f68859c2f160df846e775",
+      "bytes": 1807273
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Site_BaseColor.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Site_BaseColor.png",
+      "sha256": "e5f4029be53a01c54b7b2291935cd732e352d2a0afd022f59a253cdedda80de5",
+      "bytes": 3135030
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Site_MetallicSmoothness.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Site_MetallicSmoothness.png",
+      "sha256": "269c814d94e41f11642b021cba614ee62af653053e6eeb2f770c2790307a7fc8",
+      "bytes": 2982308
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Site_Occlusion.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Site_Occlusion.png",
+      "sha256": "02ad1eb9e0a4de30ab15c2515b8b59d09b7fec38e88b4fc63aab2706ed91c5a4",
+      "bytes": 1321769
+    },
+    {
+      "source": "docs/art-direction/transport-launch-v01/integration/textures/TransportLaunch_Labels.png",
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Textures/TransportLaunch_Labels.png",
+      "sha256": "bb3da209cb0b0dd55be9734bce71b729003739e327f8791183d4035d7278e3ec",
+      "bytes": 2023866
+    }
+  ],
+  "source_packages": [
+    "MarineLoadingDockV02",
+    "MarineOceanV01"
+  ],
+  "transport_correction": {
+    "operation": "1296 reversed exterior faces corrected; 44-triangle orphan lamp island removed",
+    "native_validation": "pending",
+    "package": "docs/art-direction/marine-visual-corrections-v01",
+    "corrected_blend_sha256": "776bb498430ec9adcc15564787f901a163873be6ec2c2de366982f5a50813015",
+    "upstream_fbx_sha256": "142c2053cda0e639781eae8e8b7973e1514fd385abfc399b5b621962572fcb62"
+  }
+}

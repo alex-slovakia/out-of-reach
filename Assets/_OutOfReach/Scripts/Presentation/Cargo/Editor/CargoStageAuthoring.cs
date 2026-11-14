@@ -18,6 +18,9 @@ namespace OutOfReach.Presentation.Cargo.Editor
 
         public sealed class Result
         {
+            // Authoring references only; expose the existing instances, never a second inventory.
+            public Transform Root, SupplyRoot, AboardRoot;
+            public CargoVisualPresenter.Slot[] Slots;
             public CargoVisualPresenter Presenter;
             public PreflightCargoHandsPresenter Hands;
             public Transform Spawn;
@@ -74,7 +77,8 @@ namespace OutOfReach.Presentation.Cargo.Editor
             spawn.SetPositionAndRotation(new Vector3(0, .05f, 13.5f), Quaternion.Euler(0, 180, 0));
             CargoVisualPresenter presenter = root.gameObject.AddComponent<CargoVisualPresenter>();
             presenter.ConfigureScene(supply.gameObject, held.gameObject, heldLabel, slots, colliders.ToArray());
-            return new Result { Presenter = presenter, Hands = cargoHands, Spawn = spawn, Targets = targets.ToArray() };
+            return new Result { Root = root, SupplyRoot = supply, AboardRoot = aboard, Slots = slots,
+                Presenter = presenter, Hands = cargoHands, Spawn = spawn, Targets = targets.ToArray() };
         }
 
         public static Vector3 SupplyPosition(int index) => new Vector3(-1.44f, .5f + .5f * (index % 4), 11.55f + .6f * (index / 4));

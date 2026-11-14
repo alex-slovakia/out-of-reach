@@ -1,0 +1,350 @@
+{
+  "units": "metres",
+  "proxies": [
+    {
+      "name": "COL_Deck",
+      "centerUnity": [
+        0,
+        -0.19,
+        0
+      ],
+      "sizeUnity": [
+        8,
+        0.42,
+        6
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Port rail",
+      "centerUnity": [
+        -3.9,
+        0.58,
+        0.0
+      ],
+      "sizeUnity": [
+        0.1,
+        1.12,
+        5.859999999999999
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Starboard rail",
+      "centerUnity": [
+        3.9,
+        0.58,
+        0.0
+      ],
+      "sizeUnity": [
+        0.1,
+        1.12,
+        5.859999999999999
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Arrival west",
+      "centerUnity": [
+        -2.54,
+        0.58,
+        -2.9
+      ],
+      "sizeUnity": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Arrival east",
+      "centerUnity": [
+        2.54,
+        0.58,
+        -2.9
+      ],
+      "sizeUnity": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Boarding west",
+      "centerUnity": [
+        -2.54,
+        0.58,
+        2.9
+      ],
+      "sizeUnity": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Boarding east",
+      "centerUnity": [
+        2.54,
+        0.58,
+        2.9
+      ],
+      "sizeUnity": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_ArrivalSafetyGate",
+      "centerUnity": [
+        0,
+        0.6,
+        -2.9
+      ],
+      "sizeUnity": [
+        2.3,
+        1.2,
+        0.12
+      ],
+      "optionalGate": true,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cabin wall -1.3",
+      "centerUnity": [
+        -1.3,
+        1.23,
+        1.65
+      ],
+      "sizeUnity": [
+        0.16,
+        2.44,
+        2.55
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cabin wall 1.3",
+      "centerUnity": [
+        1.3,
+        1.23,
+        1.65
+      ],
+      "sizeUnity": [
+        0.16,
+        2.44,
+        2.55
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cabin roof",
+      "centerUnity": [
+        0,
+        2.52,
+        1.61
+      ],
+      "sizeUnity": [
+        3.02,
+        0.19,
+        2.98
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_BoardingSafetyGate",
+      "centerUnity": [
+        0,
+        1.15,
+        2.86
+      ],
+      "sizeUnity": [
+        2.3,
+        2.3,
+        0.12
+      ],
+      "optionalGate": true,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cargo rack plinth",
+      "centerUnity": [
+        -2.65,
+        0.1,
+        -0.4
+      ],
+      "sizeUnity": [
+        1.5,
+        0.2,
+        2.05
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cargo rack side -3.34",
+      "centerUnity": [
+        -3.34,
+        0.69,
+        -0.4
+      ],
+      "sizeUnity": [
+        0.08,
+        1.22,
+        2.05
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cargo rack side -1.96",
+      "centerUnity": [
+        -1.96,
+        0.69,
+        -0.4
+      ],
+      "sizeUnity": [
+        0.08,
+        1.22,
+        2.05
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Cargo rack rear",
+      "centerUnity": [
+        -2.65,
+        0.69,
+        0.56
+      ],
+      "sizeUnity": [
+        1.5,
+        1.22,
+        0.08
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Service enclosure",
+      "centerUnity": [
+        2.85,
+        0.65,
+        0.88
+      ],
+      "sizeUnity": [
+        0.8,
+        1.3,
+        0.5
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Mooring -3.43 -2.32 hardware",
+      "centerUnity": [
+        -3.43,
+        0.18,
+        -2.32
+      ],
+      "sizeUnity": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Mooring -3.43 2.32 hardware",
+      "centerUnity": [
+        -3.43,
+        0.18,
+        2.32
+      ],
+      "sizeUnity": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Mooring 3.43 -2.32 hardware",
+      "centerUnity": [
+        3.43,
+        0.18,
+        -2.32
+      ],
+      "sizeUnity": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Mooring 3.43 2.32 hardware",
+      "centerUnity": [
+        3.43,
+        0.18,
+        2.32
+      ],
+      "sizeUnity": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Lamp -3.6",
+      "centerUnity": [
+        -3.6,
+        1.35,
+        -1.89
+      ],
+      "sizeUnity": [
+        0.13,
+        2.7,
+        0.13
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    },
+    {
+      "name": "COL_Lamp 3.6",
+      "centerUnity": [
+        3.6,
+        1.35,
+        -1.89
+      ],
+      "sizeUnity": [
+        0.13,
+        2.7,
+        0.13
+      ],
+      "optionalGate": false,
+      "suggestedUnityCollider": "BoxCollider"
+    }
+  ]
+}

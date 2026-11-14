@@ -1,0 +1,369 @@
+{
+  "files": [
+    {
+      "path": "checkpoint-summary.json",
+      "sha256": "05234f8ca46fcef0df3793f1d23ee04541b63e9ca7edf3c9e95929aca98f7476",
+      "bytes": 1328
+    },
+    {
+      "path": "copied-evidence-manifest.json",
+      "sha256": "4b3238299bb9fa2367e7e9b25691619277e65acd8a00190feed076b6b659e7b0",
+      "bytes": 21149
+    },
+    {
+      "path": "original-checkout-observation.json",
+      "sha256": "0751c418300bbded9a909505f06226562bd34743939deafa1a413ac8df98af3a",
+      "bytes": 607
+    },
+    {
+      "path": "provenance/proposal.json",
+      "sha256": "e730831ddfd9afd2c8c3bd7a6d29eb943fd850c468c1ea75265ebab5bd91295e",
+      "bytes": 858
+    },
+    {
+      "path": "provenance/SOURCE.before.json",
+      "sha256": "4934e95f3be37712f97049a254959001f1280087a5496347de7c0e33ee4bc581",
+      "bytes": 4621
+    },
+    {
+      "path": "provenance/SOURCE.native-validation.patch",
+      "sha256": "598c249ceac733c9c657a6732dd08a5600d011e48f2b98842bf4c0c004c6a652",
+      "bytes": 1211
+    },
+    {
+      "path": "README.md",
+      "sha256": "a8d5fc53c75ff60bb6927a993095c3d23b9bb50c7a1383c373b90c62ec3aea75",
+      "bytes": 7940
+    },
+    {
+      "path": "run-receipts.json",
+      "sha256": "a50920283d78a30ce14c1118949c2fe79e92eac9db5b7906343f0a750c3105f6",
+      "bytes": 2797
+    },
+    {
+      "path": "runs/fx/01-nozzle-ignition-9_8-diagnostic.json",
+      "sha256": "49edd9fcec42f77e3561ad37b4d27f6835ca6b8bfe2d2682e4c479127e462ba9",
+      "bytes": 1159
+    },
+    {
+      "path": "runs/fx/01-nozzle-ignition-9_8-diagnostic.png",
+      "sha256": "920686778c93b4fa7a849e4d2e96d8ffbd969e3cd90e9b76839bef87a9a7c602",
+      "bytes": 575258
+    },
+    {
+      "path": "runs/fx/03-actual-exterior-18_5.json",
+      "sha256": "7ea070b166446f0aebc6373570737032784d32e8712c857d1349b4dfbc42e8b6",
+      "bytes": 1125
+    },
+    {
+      "path": "runs/fx/03-actual-exterior-18_5.png",
+      "sha256": "c07163401d54e5ca93122337b7c1690b585c3438ad2cdc1485998dc322e9361b",
+      "bytes": 536072
+    },
+    {
+      "path": "runs/fx/04-paused-actual-exterior.json",
+      "sha256": "4d42951db06912835a8f744415946285d60022e935145b26fc8827b996afa29e",
+      "bytes": 1126
+    },
+    {
+      "path": "runs/fx/05-paused-actual-exterior-repeat.json",
+      "sha256": "248090493f28616436dd8e8d111bdfed25a456352dd25d58ed332a431c666e65",
+      "bytes": 1133
+    },
+    {
+      "path": "runs/fx/07-reduced-actual-exterior-18_5.json",
+      "sha256": "361b0615ac083e182efc802093e191f523faa4f0e8a4299f4c1940c1f34c2024",
+      "bytes": 1162
+    },
+    {
+      "path": "runs/fx/assets-before.json",
+      "sha256": "baec6b43f3bbe1c34525975d0f885ced87970fd6c60f61ee9f5a44e7c1d21810",
+      "bytes": 357305
+    },
+    {
+      "path": "runs/fx/checks.jsonl",
+      "sha256": "6a4f72a15f3af7733bf0d706260239aa2397f1ec675ea6018528fe59b81a179a",
+      "bytes": 24921
+    },
+    {
+      "path": "runs/fx/editor-environment-errors.txt",
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85",
+      "bytes": 965
+    },
+    {
+      "path": "runs/fx/native-process.exitcode",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "bytes": 3
+    },
+    {
+      "path": "runs/fx/PASS.txt",
+      "sha256": "cf17c8f11a3674d3d012b12ae7331fcf867dad8bf7a18b866ede987fc9b5a4e5",
+      "bytes": 149
+    },
+    {
+      "path": "runs/fx/result.json",
+      "sha256": "0e482c32b7d11815b0eff536eec95aa958b321f20fd79f0b8d9dd9949d137654",
+      "bytes": 331
+    },
+    {
+      "path": "runs/fx/scope.txt",
+      "sha256": "cb3cad584e3b64a263253dca5f4dd200e81f661631e1ab0037fae03ebd59df07",
+      "bytes": 935
+    },
+    {
+      "path": "runs/fx/shader-messages.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "runs/marine/01-actual-dock.json",
+      "sha256": "7b128ac479e9f08cf4705ce7a0e22ab87c1121946d0d951752705afe79c118eb",
+      "bytes": 1312
+    },
+    {
+      "path": "runs/marine/01-actual-dock.png",
+      "sha256": "60a607055710f159482f92dc018b29e6dfb1d5c9099d2f1589b54dc3253e1761",
+      "bytes": 826686
+    },
+    {
+      "path": "runs/marine/04-cabin-launch-loaded-cases.json",
+      "sha256": "3a1889f29ca51d13b414f1120ee693f4e839b3a65e2e6370f71e5b3d6b5d034b",
+      "bytes": 1340
+    },
+    {
+      "path": "runs/marine/04-cabin-launch-loaded-cases.png",
+      "sha256": "3cbac7a7c0ab6b55d2fd93eb43b09dd18dd2b80a2e65af4d3f7d7d1831a218de",
+      "bytes": 758959
+    },
+    {
+      "path": "runs/marine/06-actual-exterior-ascent.json",
+      "sha256": "7c1cdd557617aa9a34191059747efd532965a21a46e02f666776dc8558a74e63",
+      "bytes": 1317
+    },
+    {
+      "path": "runs/marine/06-actual-exterior-ascent.png",
+      "sha256": "1d4c38275b80bc864b4a4d7649f92b43b62cd2eef519552d67a6fdb5b95be9b0",
+      "bytes": 642181
+    },
+    {
+      "path": "runs/marine/assets-before.json",
+      "sha256": "8ca845bbfdcbb2eb1b967febe1e4571871c3243c4abc356bc52f762c24a9dc3f",
+      "bytes": 354877
+    },
+    {
+      "path": "runs/marine/captured-aurora-environment.json",
+      "sha256": "b17c03159d1c4f0d0b0904a9a6721677027eafb8866cdc536cf5be46b97e5a21",
+      "bytes": 1089
+    },
+    {
+      "path": "runs/marine/checks.json",
+      "sha256": "b2a238a9f1586aa2bd61f9d2b330ede23d4b960c816bdf8addd69c6cfdd7b41f",
+      "bytes": 45814
+    },
+    {
+      "path": "runs/marine/checks.txt",
+      "sha256": "dbfd6d58537eded6f218180f60d59b1c358189fb5198964fce02b046caa7153a",
+      "bytes": 21010
+    },
+    {
+      "path": "runs/marine/editor-environment-errors.txt",
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85",
+      "bytes": 965
+    },
+    {
+      "path": "runs/marine/native-process.exitcode",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "bytes": 3
+    },
+    {
+      "path": "runs/marine/observations.txt",
+      "sha256": "01e0e1448427a5e2b5b4813f42c6661d203651e95742acebd1048319a9ce62b1",
+      "bytes": 1044
+    },
+    {
+      "path": "runs/marine/PASS.txt",
+      "sha256": "3643afff1a0a00fb10c142cb86b385546427e73803e917c424b6e83ce863de4f",
+      "bytes": 209
+    },
+    {
+      "path": "runs/marine/result.json",
+      "sha256": "b6c88c7b90118eff3c21d9f57d65085ec3bdc73482a9559ee6b75469580627c9",
+      "bytes": 442
+    },
+    {
+      "path": "runs/marine/saved-console-baseline.json",
+      "sha256": "2091d7bdb48e3855b6fef45b65b7c77f312f3f7efe04f88440dbfb8ff3833355",
+      "bytes": 509
+    },
+    {
+      "path": "runs/marine/scope.txt",
+      "sha256": "65c9ba1933804580be7f1b51ba1d943bf4b90fd4a562598ff2d9bda4a2f976c8",
+      "bytes": 1122
+    },
+    {
+      "path": "runs/micro/checks.json",
+      "sha256": "ad74fdb12e5c3c4d919d3bf68111e94f41fd383df3a34db531f36faf5b32b5f2",
+      "bytes": 83883
+    },
+    {
+      "path": "runs/micro/checks.txt",
+      "sha256": "1f8482feba292914a03908f14f7a451110c0905234803ab386d418b15d8c9bee",
+      "bytes": 37936
+    },
+    {
+      "path": "runs/micro/editor-environment-errors.txt",
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85",
+      "bytes": 965
+    },
+    {
+      "path": "runs/micro/eva-Left-Grip-session1-axis.txt",
+      "sha256": "e4ed36c0bd57188dfde0480b0ddfc42dc80f107f754d104c1441caa0b3dcd0db",
+      "bytes": 107
+    },
+    {
+      "path": "runs/micro/eva-Left-Grip-session1.json",
+      "sha256": "38499a002e99f6f8fcc122c1fbf95d717eb6ef223b4c0d75cce03a90b9f9db0f",
+      "bytes": 971
+    },
+    {
+      "path": "runs/micro/eva-Left-Grip-session1.png",
+      "sha256": "0831f65a09c75e9b3492b1793d2677246101643372b23cc4dab54d2f28e2eeba",
+      "bytes": 113128
+    },
+    {
+      "path": "runs/micro/native-process.exitcode",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "bytes": 3
+    },
+    {
+      "path": "runs/micro/PASS.txt",
+      "sha256": "e23979bb745e5eae843482c7d54dd6e89955ab2ed78c53019da88b88a09b2a2e",
+      "bytes": 149
+    },
+    {
+      "path": "runs/micro/result.json",
+      "sha256": "2ba46c55717478aedec1dbba6680383330ce36bd8b2be92fdf82570cbd333c07",
+      "bytes": 231
+    },
+    {
+      "path": "runs/micro/scope.txt",
+      "sha256": "edb542c8b9dc49d5f195dfacaaa27b833bcb3473e0a507553673e5d4edeb244f",
+      "bytes": 930
+    },
+    {
+      "path": "runs/micro/skin-summary.json",
+      "sha256": "6f2cb11ae12a732ad556aeafe072f7c090d674863e8837570d3619bf00bf8319",
+      "bytes": 100
+    },
+    {
+      "path": "runs/micro/source-sha256.txt",
+      "sha256": "f372b6c2c116f1d9785cacce416744cf19463ecbd9f0584c782c1299ebd88d11",
+      "bytes": 57865
+    },
+    {
+      "path": "runs/micro/whole-skin-frames.jsonl",
+      "sha256": "c08b282d7fd8b65fc4f45d2e139c1370d4af269bfada84d434c5edebb56df375",
+      "bytes": 199992
+    },
+    {
+      "path": "runs/micro/work-Left-Push-session1.json",
+      "sha256": "7ca196006b56fe2440954c77b985a55931cb150736516a34011ac8ce53cb0ab0",
+      "bytes": 1063
+    },
+    {
+      "path": "runs/micro/work-Left-Push-session1.png",
+      "sha256": "895513d9a116096c63fc1f830a384dc8cf25f5dc4e4e06b2c953cdb73f4ade11",
+      "bytes": 371768
+    },
+    {
+      "path": "runs/survival/01-survival-primary-water-needs-geometry.json",
+      "sha256": "8089e5034b5dd4e4d4b838d029bc9198e59052f0fd320cd8abf32213ae479ffd",
+      "bytes": 108626
+    },
+    {
+      "path": "runs/survival/01-survival-primary-water-needs-state.txt",
+      "sha256": "d44130810a42e2d07bec65f98774712725f7f8d4b0aa67b93b9e58b182bd54c0",
+      "bytes": 445
+    },
+    {
+      "path": "runs/survival/01-survival-primary-water-needs.png",
+      "sha256": "039cba30aa4526830ac49954dc7c25915a47cb66517a7aacd1e842a48a771f0f",
+      "bytes": 1068091
+    },
+    {
+      "path": "runs/survival/01b-survival-subtitle-960x540-geometry.json",
+      "sha256": "9247752a648ae4319d1824ae7c89f2c98c5c471146afade580a82f408069e75d",
+      "bytes": 109809
+    },
+    {
+      "path": "runs/survival/01b-survival-subtitle-960x540-state.txt",
+      "sha256": "d44130810a42e2d07bec65f98774712725f7f8d4b0aa67b93b9e58b182bd54c0",
+      "bytes": 445
+    },
+    {
+      "path": "runs/survival/01b-survival-subtitle-960x540.png",
+      "sha256": "cf0671e5010b14861c6d4811777886ba3ef09b9d080fa22efbf34959a4d216a3",
+      "bytes": 624175
+    },
+    {
+      "path": "runs/survival/01c-tab-exact-water-geometry.json",
+      "sha256": "941aa0e0b52a25121448bc3aa5256a00de34e17513e3dd2665f0887872f329e3",
+      "bytes": 108654
+    },
+    {
+      "path": "runs/survival/01c-tab-exact-water-state.txt",
+      "sha256": "6c7b8eaf601885f72300009a0d0c7b61f162cdd14c2a38c869d001663f456ba3",
+      "bytes": 673
+    },
+    {
+      "path": "runs/survival/capture-manifest.txt",
+      "sha256": "d15c5001d5308ea26b25a325bf59debcd3d440a743151c4fc0bc2ae3084c3cd0",
+      "bytes": 1531
+    },
+    {
+      "path": "runs/survival/capture-sha256.txt",
+      "sha256": "48b826251c9a9cfba5a09d135fbd5cd52c28771187c8cc881fd5c07b49260794",
+      "bytes": 1078
+    },
+    {
+      "path": "runs/survival/checks.json",
+      "sha256": "a8d3f0f2903839e0edccf180f882ab6eceb27a4cb785c12006344be470e9f74d",
+      "bytes": 513912
+    },
+    {
+      "path": "runs/survival/checks.txt",
+      "sha256": "378ee7cc446afe57f3a444a138f4ad43b63555612f3b901021777cb2e3d26b43",
+      "bytes": 180250
+    },
+    {
+      "path": "runs/survival/editor-environment-errors.txt",
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85",
+      "bytes": 965
+    },
+    {
+      "path": "runs/survival/native-process.exitcode",
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+      "bytes": 3
+    },
+    {
+      "path": "runs/survival/PASS.txt",
+      "sha256": "ee34577c3ded18b0dc81e83919f38504e47128841a648f3082b430af0844be10",
+      "bytes": 135
+    },
+    {
+      "path": "runs/survival/result.json",
+      "sha256": "a9eed71a3dcce58b2cc852842447e26e036f61411c619aa09f7a35a9f483007d",
+      "bytes": 217
+    },
+    {
+      "path": "runs/survival/scope.txt",
+      "sha256": "d43e9e8ef4a61a1ab82e0e21f54b876cf28adf7ae11302e545fe8533a2d1d95b",
+      "bytes": 1686
+    },
+    {
+      "path": "runs/survival/source-sha256.txt",
+      "sha256": "a8e8b5d65aa121cabee21bbd1c5063df8084183b901c0bb911b6e9bb160346f6",
+      "bytes": 34779
+    }
+  ]
+}

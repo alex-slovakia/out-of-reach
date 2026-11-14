@@ -1,0 +1,47 @@
+{
+    "name": "eva-Left-Grip-session1",
+    "hand": "Left",
+    "kind": "Grip",
+    "stage": "PushContact",
+    "source": "actual-Player-event",
+    "requestFrame": 904,
+    "actionFrame": 951,
+    "renderFrame": 951,
+    "actions": 1,
+    "pushes": 0,
+    "grabs": 1,
+    "releases": 0,
+    "skinCount": 0,
+    "patchCount": 0,
+    "seconds": 0.19546890258789063,
+    "residual": 0.0,
+    "minimumSkinClearance": 0.0,
+    "patchDistance": 0.0,
+    "correction": 0.0,
+    "upperLength": 0.0,
+    "lowerLength": 0.0,
+    "actualFloat": true,
+    "actualSuit": true,
+    "actualHeld": true,
+    "visible": true,
+    "point": {
+        "x": -0.1800001561641693,
+        "y": 1.649999976158142,
+        "z": 0.6000003814697266
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    }
+}

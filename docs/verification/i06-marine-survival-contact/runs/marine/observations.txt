@@ -1,0 +1,15 @@
+BATCH SETUP: delivered normal OnApplicationFocus(true) to actual player; no private state, control-gate or gravity assignment.
+SETUP TELEPORT | cargo-bay:oxygen-tank | marine local feet=(0.0000, 0.0350, -1.0250)
+SETUP TELEPORT | cargo-supply:oxygen-tank | marine local feet=(-2.6504, 0.0190, -12.0000)
+Waiting for normal Runtime.Update to exhaust the real60-second timer; no Step/Tick/clock modification.
+ACTUAL DEPARTURE CUE Boarding @ 66.369
+ACTUAL DEPARTURE CUE HatchClosing @ 69.366
+ACTUAL DEPARTURE CUE ArmRetracting @ 72.351
+ACTUAL DEPARTURE CUE Acceleration @ 75.935
+ACTUAL DEPARTURE CUE Ascent @ 77.434
+ACTUAL DEPARTURE CUE Exterior @ 84.934
+ACTUAL DEPARTURE CUE LaterAboard @ 87.934
+ACTUAL DEPARTURE END Completed
+SETUP TELEPORT for restored Aurora cockpit interaction only; no claim this is a manual walk from spawn.
+BATCH SETUP: delivered normal OnApplicationFocus(true) to actual player; no private state, control-gate or gravity assignment.
+SETUP TELEPORT | cargo-supply:oxygen-tank | marine local feet=(-2.6504, 0.0190, -12.0000)

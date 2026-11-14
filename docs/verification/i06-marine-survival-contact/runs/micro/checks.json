@@ -1,0 +1,2392 @@
+{
+    "rows": [
+        {
+            "stage": "startup",
+            "message": "One actual Player and capsule.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "One camera and existing visual owners plus one production bridge.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Actual cockpit command requested Impact.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "New actual unsuited Repair session permits controls.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Original glove session binds without rig copy.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "startup",
+            "message": "Configure starts inactive, no authority or implicit float entry.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 2
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 9
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 10
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 2.751676E-07",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual Player velocity points away from the verified wall.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 36
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 37
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Real push creates actual collision-aware travel after touch.",
+            "pass": true,
+            "frame": 60
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 95
+        },
+        {
+            "stage": "work-Left-Push-session1",
+            "message": "Return never repeats a push.",
+            "pass": true,
+            "frame": 96
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 97
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 97
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 97
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 104
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 105
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 105
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 4.9623327E-07",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual Player velocity points away from the verified wall.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 123
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 124
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Real push creates actual collision-aware travel after touch.",
+            "pass": true,
+            "frame": 148
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 180
+        },
+        {
+            "stage": "work-Right-Push-session1",
+            "message": "Return never repeats a push.",
+            "pass": true,
+            "frame": 181
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 182
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 182
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 182
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 189
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 190
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 190
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Old binding still has anticipation only.",
+            "pass": true,
+            "frame": 191
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Latest binding cancels old pending pose and starts inactive.",
+            "pass": true,
+            "frame": 191
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 191
+        },
+        {
+            "stage": "same-session-reconfigure-pending",
+            "message": "Old pending callback cannot fire after reconfigure.",
+            "pass": true,
+            "frame": 297
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 297
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 297
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 297
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 304
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 305
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 305
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 314
+        },
+        {
+            "stage": "work-release-before",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 314
+        },
+        {
+            "stage": "work-release-before",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 348
+        },
+        {
+            "stage": "work-pause",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 348
+        },
+        {
+            "stage": "work-pause",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 348
+        },
+        {
+            "stage": "work-pause",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 348
+        },
+        {
+            "stage": "work-pause",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 355
+        },
+        {
+            "stage": "work-pause",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 356
+        },
+        {
+            "stage": "work-pause",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 356
+        },
+        {
+            "stage": "work-pause",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "work-pause",
+            "message": "Real domain command: Simulation paused.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "work-pause",
+            "message": "Body reset synchronously ends borrowed arm pose before resampling.",
+            "pass": true,
+            "frame": 357
+        },
+        {
+            "stage": "work-pause",
+            "message": "Actual pause denies control and cancels pending action/owned grip.",
+            "pass": true,
+            "frame": 360
+        },
+        {
+            "stage": "work-pause",
+            "message": "Real domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 410
+        },
+        {
+            "stage": "work-pause",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 443
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 450
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 451
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 451
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 452
+        },
+        {
+            "stage": "work-occluded",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 453
+        },
+        {
+            "stage": "work-occluded",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 499
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 499
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 499
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 499
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 506
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 506
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 506
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Actual invalid/unsupported surface refuses: far; No unobstructed solid surface within reach.",
+            "pass": true,
+            "frame": 506
+        },
+        {
+            "stage": "work-refuse-far",
+            "message": "Refusal changes no position/velocity/grip and emits no action.",
+            "pass": true,
+            "frame": 509
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 509
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 509
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 509
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 516
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 516
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 516
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Actual invalid/unsupported surface refuses: bare-grip; Bare-hand grip has no authored pose.",
+            "pass": true,
+            "frame": 516
+        },
+        {
+            "stage": "work-refuse-bare-grip",
+            "message": "Refusal changes no position/velocity/grip and emits no action.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "real suit preparation",
+            "message": "Real domain command: EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "real suit preparation",
+            "message": "Paid actual suit preparation; no fixture suit substitute.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 519
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 526
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 526
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 526
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 527
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 527
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 1.1920929E-07",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual Player velocity points away from the verified wall.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 584
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 585
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Real push creates actual collision-aware travel after touch.",
+            "pass": true,
+            "frame": 633
+        },
+        {
+            "stage": "eva-Left-Push-session1",
+            "message": "Return never repeats a push.",
+            "pass": true,
+            "frame": 706
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 707
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 707
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 707
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 714
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 714
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 714
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 715
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 715
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 1.1920929E-07",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual Player velocity points away from the verified wall.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 782
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 783
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Real push creates actual collision-aware travel after touch.",
+            "pass": true,
+            "frame": 831
+        },
+        {
+            "stage": "eva-Right-Push-session1",
+            "message": "Return never repeats a push.",
+            "pass": true,
+            "frame": 896
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 897
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 897
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 897
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 904
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 904
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 904
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 905
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 905
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 951
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 952
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual registered rail remains physically and visually held after readback.",
+            "pass": true,
+            "frame": 1028
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1028
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Actual Player consumed look input while holding; camera transform was not assigned.",
+            "pass": true,
+            "frame": 1032
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1032
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.",
+            "pass": true,
+            "frame": 1032
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Bridge Release returns actual held grip.",
+            "pass": true,
+            "frame": 1032
+        },
+        {
+            "stage": "eva-Left-Grip-session1",
+            "message": "Release/removal clears exactly the owned physical anchor and visual lease.",
+            "pass": true,
+            "frame": 1034
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1035
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1035
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1035
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1042
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1042
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1042
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1043
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1043
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1110
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 1111
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual registered rail remains physically and visually held after readback.",
+            "pass": true,
+            "frame": 1190
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1190
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Actual Player consumed look input while holding; camera transform was not assigned.",
+            "pass": true,
+            "frame": 1194
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1194
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.",
+            "pass": true,
+            "frame": 1194
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Bridge Release returns actual held grip.",
+            "pass": true,
+            "frame": 1194
+        },
+        {
+            "stage": "eva-Right-Grip-session1",
+            "message": "Release/removal clears exactly the owned physical anchor and visual lease.",
+            "pass": true,
+            "frame": 1196
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1197
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1197
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1197
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1204
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1204
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1204
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1205
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1205
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1267
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 1268
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual registered rail remains physically and visually held after readback.",
+            "pass": true,
+            "frame": 1334
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1334
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Actual Player consumed look input while holding; camera transform was not assigned.",
+            "pass": true,
+            "frame": 1338
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1338
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.",
+            "pass": true,
+            "frame": 1338
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Bridge Release returns actual held grip.",
+            "pass": true,
+            "frame": 1338
+        },
+        {
+            "stage": "eva-Left-Grip-reversed-axis-session1",
+            "message": "Release/removal clears exactly the owned physical anchor and visual lease.",
+            "pass": true,
+            "frame": 1340
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1341
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1341
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1341
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1348
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1348
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1348
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1349
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1349
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1407
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 1408
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual registered rail remains physically and visually held after readback.",
+            "pass": true,
+            "frame": 1459
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1459
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Actual Player consumed look input while holding; camera transform was not assigned.",
+            "pass": true,
+            "frame": 1463
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1463
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.",
+            "pass": true,
+            "frame": 1463
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Bridge Release returns actual held grip.",
+            "pass": true,
+            "frame": 1463
+        },
+        {
+            "stage": "eva-Right-Grip-reversed-axis-session1",
+            "message": "Release/removal clears exactly the owned physical anchor and visual lease.",
+            "pass": true,
+            "frame": 1465
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1466
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1466
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1466
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1473
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1473
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1473
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1474
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1474
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1513
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 1514
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual registered rail remains physically and visually held after readback.",
+            "pass": true,
+            "frame": 1555
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1555
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Actual Player consumed look input while holding; camera transform was not assigned.",
+            "pass": true,
+            "frame": 1559
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1559
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.",
+            "pass": true,
+            "frame": 1559
+        },
+        {
+            "stage": "eva-Right-Grip-remove-held-session1",
+            "message": "Release/removal clears exactly the owned physical anchor and visual lease.",
+            "pass": true,
+            "frame": 1562
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1563
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1563
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1563
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1570
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1570
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1570
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1571
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1571
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 1576
+        },
+        {
+            "stage": "eva-release-before",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 1613
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1613
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1613
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1613
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1620
+        },
+        {
+            "stage": "eva-pause",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1620
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1620
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1621
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1621
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 1629
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Real domain command: Simulation paused.",
+            "pass": true,
+            "frame": 1629
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Actual pause denies control and cancels pending action/owned grip.",
+            "pass": true,
+            "frame": 1632
+        },
+        {
+            "stage": "eva-pause",
+            "message": "Real domain command: Simulation resumed.",
+            "pass": true,
+            "frame": 1684
+        },
+        {
+            "stage": "eva-pause",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1722
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1729
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1729
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1729
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1730
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1730
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "Interrupt before real contact, after visible anticipation began.",
+            "pass": true,
+            "frame": 1735
+        },
+        {
+            "stage": "eva-removed-rail",
+            "message": "No delayed action survives release/pause/changed real geometry.",
+            "pass": true,
+            "frame": 1835
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1835
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1835
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1835
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1842
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1842
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1842
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Actual invalid/unsupported surface refuses: unknown-rail; Grip needs a registered 12–17mm straight capsule rail.",
+            "pass": true,
+            "frame": 1842
+        },
+        {
+            "stage": "eva-refuse-unknown-rail",
+            "message": "Refusal changes no position/velocity/grip and emits no action.",
+            "pass": true,
+            "frame": 1845
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1845
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1845
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1845
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1852
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1852
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1852
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Actual invalid/unsupported surface refuses: wall-is-not-rail; Grip needs a registered 12–17mm straight capsule rail.",
+            "pass": true,
+            "frame": 1852
+        },
+        {
+            "stage": "eva-refuse-wall-is-not-rail",
+            "message": "Refusal changes no position/velocity/grip and emits no action.",
+            "pass": true,
+            "frame": 1855
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1855
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1855
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1855
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1862
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1862
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1862
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.",
+            "pass": true,
+            "frame": 1863
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1863
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 0",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real Player stored the actual registered collider and grip anchor.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Production grip frame retains the real registered rail.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Both cylinder-axis polarities select the same actual right-facing contact frame.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1912
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Old session owns one real rail grip.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Clear restores/relinquishes owned hands and real grip before old session disposal.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real domain command: AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real domain command: Cockpit check complete. Impact detected.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual cockpit command requested Impact.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real domain command: power distribution repaired (2 spare parts).",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Real domain command: life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "New actual unsuited Repair session permits controls.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Original glove session binds without rig copy.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Configure starts inactive, no authority or implicit float entry.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Actual second MissionSession; no substituted state/clock.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "Rebind cannot retain old armed state or pending action.",
+            "pass": true,
+            "frame": 1913
+        },
+        {
+            "stage": "restart-held-grip",
+            "message": "No stale old-session callback after replacement.",
+            "pass": true,
+            "frame": 1916
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual rendered rail uses its real CapsuleCollider.",
+            "pass": true,
+            "frame": 1916
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Real control gate allows entry before calling Player.EnterFloat.",
+            "pass": true,
+            "frame": 1916
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Real nearby source-proven surface permits EnterFloat.",
+            "pass": true,
+            "frame": 1916
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual Player float mode and real V04 body pose agree.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "V04 floating fit keeps its approved centered visual root.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Exactly one visible hand owner matches actual suit state.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Existing WORK skin is readable and visible.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual V04 neutral matches source141mm clearance.",
+            "pass": true,
+            "frame": 1923
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Production bridge accepts anticipation; refusal=; bare=",
+            "pass": true,
+            "frame": 1924
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Accepted bridge request has no early physical command, velocity or held state.",
+            "pass": true,
+            "frame": 1924
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "One actual Player event during its valid dispatched request.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual physical action occurs only after visible anticipation; no prior travel.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual contact point is inside the existing camera frustum.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Independent actual skin/pad contact residual is within its original tolerance: 2.751676E-07",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual Player velocity points away from the verified wall.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Actual camera capture is on the physical action's frame.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Same-frame bridge result confirms actual Player command completed.",
+            "pass": true,
+            "frame": 1943
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Bridge reports actual Player success exactly once.",
+            "pass": true,
+            "frame": 1944
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Real push creates actual collision-aware travel after touch.",
+            "pass": true,
+            "frame": 1967
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Bridge cancellation/return restores all authored arm/finger rotations.",
+            "pass": true,
+            "frame": 2002
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Return never repeats a push.",
+            "pass": true,
+            "frame": 2003
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Eleven actual event-frame captures include both hands on both physically identical rail-axis polarities.",
+            "pass": true,
+            "frame": 2004
+        },
+        {
+            "stage": "work-Left-Push-session2",
+            "message": "Real rendered bare skin measured throughout bridge-owned contacts and restoration.",
+            "pass": true,
+            "frame": 2004
+        }
+    ]
+}

@@ -1,5 +1,13 @@
 # Execution plan and status
 
+## Current checkpoint — 14 November 2026, 22:35 CET
+
+The isolated `codex/i01-integration` candidate now contains the physical marine loading/boarding scene, actual loaded transport cargo, a bounded departure presentation, C06 habitat/survival UI and contact adapters. [Native evidence and genuine images](docs/verification/i06-marine-survival-contact/README.md): marine flow 177 assertions, revised survival UI 1740, direct hand bridge 398, departure FX lifecycle 157; each exited 0 in Unity 6000.3.28f1. These counts are assertions, not fixed bugs or complete human playthroughs. Exact source manifests and setup limitations accompany each run.
+
+**Not promoted:** Alex's original open project remains `33f474f`. Physical microgravity input and whole-ship traversal are still being verified; the new input/bridge components are not enabled in saved Bootstrap. Whole-arm art, antenna tool/galley animation integration and the rescue/Mars visual sequence remain unfinished. Current complete candidate tests, Windows build and end-to-end playability are required before promotion. Claude's foot-supported entry and fullscreen-launch fixes are imported; localization is delivered but not imported/UI-enabled.
+
+Ownership: root integrates; Codex agents stage disjoint contact routing, source provenance and native visual verification; Claude authors EVA shoulder corrections and a measured standing-body pose. Finishing/testing takes priority over new optional scope. Agreed overnight feature freeze is 04:00 CET, followed by verification for the 05:00 checkpoint; no completion percentage or public release is promised.
+
 ## Current checkpoint — 14 November, 19:46 CET
 
 I06 presentation/audio sources are verified in the isolated integration checkout: **270 presentation assertions + 209 audio/control assertions passed**, including native listener PCM, actual report navigation and restart. [Evidence and exact limits](docs/verification/i06-presentation-audio/README.md). Original open project remains **33f474f**. C06 saved-scene activation, physical habitat/boarding, body and microgravity integration remain in progress; no complete new-game or AAA claim follows from these checks. Claude delivered corrected default-off microgravity **b7abd2c** (owner reports290Edit/47Play); root review/import pending. Habitat **5b0f1ca** and transport **855efbc** are delivered and author-import-checked, not yet root-playtested. New disjoint art tasks: antenna repair kit and galley consumable props. Older dated status below is historical.

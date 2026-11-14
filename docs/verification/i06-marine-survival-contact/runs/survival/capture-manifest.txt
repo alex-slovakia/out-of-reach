@@ -1,0 +1,11 @@
+00a-actual-departure-caption-only.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Intro outcome=None paused=False
+00b-actual-departure-pause-menu.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Intro outcome=None paused=True
+01-survival-primary-water-needs.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+01b-survival-subtitle-960x540.png | 960x540 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+01c-tab-exact-water.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+02-request-window-and-auto-wake.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+03-paused-survival.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=True
+04-resumed-request-and-notice.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+05-request-stays-after-notice.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+06-beacon-completed.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+07-restart-no-stale-survival.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Planning outcome=None paused=False

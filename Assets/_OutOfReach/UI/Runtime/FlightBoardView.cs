@@ -22,7 +22,7 @@ namespace OutOfReach.Presentation.UI
         private readonly Label deadlineCountdown, deadlineRule, lastValidCounts;
         private readonly VisualElement preflight, preflightDetails, preflightLastValidDetail;
         private readonly Label preflightMass, preflightBudget, preflightPower, preflightValidation;
-        private readonly Label preflightCountdown, preflightClockNote, preflightCarried, preflightCarryPace;
+        private readonly Label preflightObjective, preflightCountdown, preflightClockNote, preflightCarried, preflightCarryPace;
         private readonly Label preflightDeadlineRule, preflightLastValidCounts, preflightLoadedCounts;
         private readonly Label[] preflightResources;
         private bool physicalPlanning, planningDetailsHeld;
@@ -34,7 +34,7 @@ namespace OutOfReach.Presentation.UI
         private readonly VisualElement interactionPrompt, subtitleOverlay;
         private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
         private readonly Label[] planningResources, hudResources;
-        private readonly ResourceGauge oxygenGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
+        private readonly ResourceGauge oxygenGauge, waterGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
         private readonly ResourceGauge exertionGauge;
         private readonly VisualElement exertionReadout;
         private ResourceSnapshot resourceReference, latestResources;
@@ -119,7 +119,8 @@ namespace OutOfReach.Presentation.UI
             preflight = Element("preflight");
             preflight.name = "physical-preflight";
             root.Add(preflight);
-            preflight.Add(Text("Load cargo, then launch from the cockpit", "preflight-objective"));
+            preflightObjective = Text("Load cargo, then board the transport", "preflight-objective");
+            preflight.Add(preflightObjective);
             var preflightTiming = Element("preflight-timing");
             preflight.Add(preflightTiming);
             preflightCountdown = Text(string.Empty, "preflight-countdown");
@@ -218,7 +219,8 @@ namespace OutOfReach.Presentation.UI
             suitSeal = Text(string.Empty, "suit-seal");
             duration.Add(suitSeal);
             evaTelemetry.Add(duration);
-            hudResources[1] = AddResource(expandedTelemetry, "Water", 1);
+            waterGauge = new ResourceGauge(expandedTelemetry, "Water stores", 1);
+            hudResources[1] = waterGauge.Value;
             hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
             systems = new Button(() => { systemsPinned = !systemsPinned; RefreshTelemetry(); })
             {
@@ -314,6 +316,8 @@ namespace OutOfReach.Presentation.UI
 
         public void SetMenuOverlayVisible(bool visible) => root.EnableInClassList("menu-overlay-hidden", visible);
 
+        public void SetDeparturePresentation(bool active) => root.EnableInClassList("departure-presentation", active);
+
         public void SetPlanningDetailsHeld(bool held)
         {
             bool next = held && showingPlanning && physicalPlanning;
@@ -332,9 +336,21 @@ namespace OutOfReach.Presentation.UI
             SetVisible(hud, !showingPlanning || physical);
         }
 
+        public void SetPhysicalPlanningInstruction(string text)
+        {
+            preflightObjective.text = text ?? string.Empty;
+        }
+
         public void SetPhase(GamePhase current, MissionOutcome outcome)
         {
             root.EnableInClassList("report-visible", current == GamePhase.Report);
+            root.EnableInClassList("survival-active", current == GamePhase.Survival);
+            // Move the existing authoritative Water readout; keep its value/binding and other phase layouts.
+            VisualElement water = hudResources[1].parent;
+            VisualElement waterHost = current == GamePhase.Survival && outcome == MissionOutcome.None
+                ? primaryTelemetry : expandedTelemetry;
+            if (water.parent != waterHost)
+                waterHost.Insert(waterHost == primaryTelemetry ? 2 : 0, water);
             switch (current)
             {
                 case GamePhase.Planning: phase.text = "Mission preparation"; objective.text = string.Empty; break;
@@ -400,8 +416,9 @@ namespace OutOfReach.Presentation.UI
                 deadlineCountdown.RemoveFromClassList("deadline-urgent");
                 deadlineRule.text = "Launch when your payload is ready. No automatic launch.";
                 preflightCountdown.text = "Practice · no deadline";
+                preflightCountdown.tooltip = "Untimed loading. Board the transport when ready.";
                 preflightCountdown.RemoveFromClassList("deadline-urgent");
-                preflightDeadlineRule.text = "Use the cockpit console when ready. No automatic launch. Carried cargo is not aboard.";
+                preflightDeadlineRule.text = "Load cargo, then board the transport when ready. No automatic departure. Carried cargo is not aboard.";
                 return;
             }
             bool validRemaining = !double.IsNaN(remainingRealSeconds) && !double.IsInfinity(remainingRealSeconds);
@@ -413,11 +430,13 @@ namespace OutOfReach.Presentation.UI
             double wholeSeconds = validRemaining ? Math.Ceiling(Math.Max(0, remainingRealSeconds)) : 0;
             preflightCountdown.text = Number(Math.Floor(wholeSeconds / 60), "00") + ":"
                 + Number(wholeSeconds % 60, "00");
-            preflightCountdown.tooltip = "Automatic launch in " + Number(wholeSeconds, "0") + " active real seconds.";
-            preflightClockNote.text = paused ? "Paused" : "Until launch · active real time";
+            preflightCountdown.tooltip = "Loading window: " + Number(wholeSeconds, "0") + " active real seconds remaining.";
+            preflightClockNote.text = validRemaining && remainingRealSeconds <= 0
+                ? "Loading closed · board the transport"
+                : paused ? "Loading paused" : "Loading window · active real time";
             preflightCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 10);
             deadlineRule.text = "At zero, this payload launches automatically if valid. Otherwise, the last valid loadout below launches. The deadline uses unpaused real time.";
-            preflightDeadlineRule.text = deadlineRule.text + " Carried cargo is not aboard.";
+            preflightDeadlineRule.text = "At zero, loading closes. Board the transport to depart. The loading window uses unpaused real time. Carried cargo is not aboard.";
             if (lastValid == null)
             {
                 displayedLastValid = null;
@@ -497,12 +516,12 @@ namespace OutOfReach.Presentation.UI
             interactionText.text = hasKey ? text.Substring(4) : text;
             SetVisible(interactionKey, available);
             interactionText.EnableInClassList("constraint-exceeded", !available);
-            interactionPrompt.style.display = DisplayStyle.Flex;
+            SetVisible(interactionPrompt, true);
         }
 
         public void ClearInteractionPrompt()
         {
-            interactionPrompt.style.display = DisplayStyle.None;
+            SetVisible(interactionPrompt, false);
             interactionText.text = string.Empty;
         }
 
@@ -649,6 +668,7 @@ namespace OutOfReach.Presentation.UI
         private void UpdateGauges()
         {
             SetReserveGauge(oxygenGauge, latestResources.OxygenKg, resourceReference.OxygenKg, "Stored oxygen reserve");
+            SetReserveGauge(waterGauge, latestResources.WaterLitres, resourceReference.WaterLitres, "Stored water, not personal hydration");
             SetReserveGauge(foodGauge, latestResources.FoodKg, resourceReference.FoodKg, "Stored food mass, not hunger or stamina");
             SetReserveGauge(batteryGauge, latestResources.BatteryKWh, resourceReference.BatteryKWh, "Available energy");
             double scale = hasCo2Thresholds ? co2EmergencyPpm : 10000d;
@@ -687,7 +707,7 @@ namespace OutOfReach.Presentation.UI
             validation.text = succeeded ? "Ready for launch."
                 : string.IsNullOrWhiteSpace(explanation) ? "Review your payload before launch." : explanation;
             validation.EnableInClassList("constraint-exceeded", !succeeded);
-            preflightValidation.text = succeeded ? "Ready · launch from the cockpit"
+            preflightValidation.text = succeeded ? "Loadout ready · board the transport"
                 : string.IsNullOrWhiteSpace(explanation) ? "Loadout invalid. Review the limits." : explanation;
             preflightValidation.EnableInClassList("constraint-exceeded", !succeeded);
             commandFeedback.text = rejectedCommand ?? string.Empty;
@@ -702,6 +722,7 @@ namespace OutOfReach.Presentation.UI
                 || elapsedRealSeconds <= 0) return;
             float step = Math.Min(elapsedRealSeconds, 0.1f);
             oxygenGauge.Advance(step);
+            waterGauge.Advance(step);
             foodGauge.Advance(step);
             batteryGauge.Advance(step);
             suitGauge.Advance(step);
@@ -929,6 +950,12 @@ namespace OutOfReach.Presentation.UI
                     Stroke(p, new Vector2(4, 9), new Vector2(7, 6), new Vector2(11, 7), new Vector2(15, 10), new Vector2(18, 10));
                     Stroke(p, new Vector2(11, 7), new Vector2(8, 12), new Vector2(4, 17));
                     Stroke(p, new Vector2(8, 12), new Vector2(13, 13), new Vector2(15, 18));
+                }
+                else if (resource == 1)
+                {
+                    Stroke(p, new Vector2(10, 2), new Vector2(5, 9), new Vector2(4, 13), new Vector2(6, 17),
+                        new Vector2(10, 19), new Vector2(14, 17), new Vector2(16, 13), new Vector2(15, 9), new Vector2(10, 2));
+                    Stroke(p, new Vector2(7, 12), new Vector2(7, 14), new Vector2(9, 16));
                 }
                 else if (resource == 3)
                 {

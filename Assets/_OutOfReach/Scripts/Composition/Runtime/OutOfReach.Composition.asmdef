@@ -16,6 +16,7 @@
     "OutOfReach.Presentation.Motion",
     "OutOfReach.Presentation.Hands",
     "OutOfReach.Presentation.Habitat",
+    "OutOfReach.MarineOcean",
     "OutOfReach.Presentation.Cargo",
     "OutOfReach.AirlockPanel",
     "OutOfReach.Audio",

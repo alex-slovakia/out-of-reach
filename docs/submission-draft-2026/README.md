@@ -16,9 +16,11 @@
 | [demo-storyboard.md](demo-storyboard.md) | 30-second video plan (shot list, on-screen text, English SRT) and a 7-slide alternative | Whoever records/edits the demo |
 | [playthrough-checklist.md](playthrough-checklist.md) | Manual Windows-build test script with pass/fail boxes, loss paths, performance capture and known issues | Human tester on a Windows PC |
 
-## Confirmed rules (from the official guide)
+## Reported rules — direct source check pending
 
 Source: **Official Project Submission Guide**, https://www.spaceappschallenge.org/resources/project-submission-guide/ , dated **13 Nov 2026**, read **14 Nov 2026**. The rules below were relayed to this draft by the team coordinator; the guide was not re-fetched while writing (no network was used).
+
+Integrator verification on 14 November: the direct official-page fetch returned HTTP 502. The claims below remain coordinator-reported, not independently confirmed by this draft. Recheck the live official guide before using its deadline, eligibility, length, labelling or form requirements for submission.
 
 1. **Deadline (Universal Event):** Sunday **15 Nov 2026, 23:59 in the Team Owner's local time of residence**. The team owner clicks **"Submit for Judging"** and ticks **"Terms and Conditions"** and **"Confirm All Work is Original"**. Edits and resubmissions are allowed until the deadline.
 2. **Form fields:** Project Name; High-Level Project Summary; Link to Project Demo; Link to Final Project; Detailed Project Description (what it does, how it works, benefits, what you hope to achieve, tools/coding languages/hardware/software); Use of Super Intelligence (SI) (data collection only, not shown to judges; judges do see SI indicators in the project); NASA Data (at least one NASA data/resource for Global Award eligibility); Space Agency Partner Data and Other References (all data, resources and tools including code, text and images, even if open source; permission for copyrighted material).

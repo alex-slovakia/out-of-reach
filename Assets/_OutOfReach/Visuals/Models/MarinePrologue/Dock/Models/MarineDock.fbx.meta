@@ -1,0 +1,90 @@
+fileFormatVersion: 2
+guid: 8f7f6a24f9645262b5552fbbda5e3c15
+ModelImporter:
+  serializedVersion: 24300
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Deck
+    second: {fileID: 2100000, guid: ef9b6b3e5cfa49f692b494843fbcce1e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Enamel
+    second: {fileID: 2100000, guid: 67633ef1158c4462aad6a2ee41368518, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Graphite
+    second: {fileID: 2100000, guid: 2cf58064675f4f64a272616b08a02a90, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Steel
+    second: {fileID: 2100000, guid: ec0e8277bfa144278e1eabd1af6e6a43, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Rubber
+    second: {fileID: 2100000, guid: db3cb384836b4229be07bd401a9e2c40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Amber
+    second: {fileID: 2100000, guid: 5c44da02a58845bcbf64352efee14849, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Cyan
+    second: {fileID: 2100000, guid: de18d7ca6fbc42a9a77876fcc5b7594c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Marking
+    second: {fileID: 2100000, guid: 7a4d8b45a8b34fa8900b37d4fed55f79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_LampWarm
+    second: {fileID: 2100000, guid: 57be6e897b73498fbffe1b8d8c3d3103, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_LampCool
+    second: {fileID: 2100000, guid: 4d5a5162336840e9bd1579fe5cdbdea8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Glass
+    second: {fileID: 2100000, guid: 9428ba172e2b494fbb24584ab5eb43aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Concrete
+    second: {fileID: 2100000, guid: 36b4a78620554ea487fb5b99370bce77, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Paint
+    second: {fileID: 2100000, guid: 87cdca87850d4757b6356d13e6bf2b73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MD_Rope
+    second: {fileID: 2100000, guid: e12eaf1baccd4bc0bfee84b48ff10ea2, type: 2}
+  materials:
+    materialImportMode: 2
+  meshes:
+    globalScale: 1
+    addColliders: 0
+    importCameras: 0
+    importLights: 0
+    preserveHierarchy: 1
+    useFileScale: 1
+    bakeAxisConversion: 0
+  importAnimation: 0
+  animationType: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

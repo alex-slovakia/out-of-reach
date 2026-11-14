@@ -1,0 +1,6 @@
+Actual saved Bootstrap only; no new environment, targets, runtime, input authority, cargo ledger or presentation substitute. No authoring helpers or source/scene save.
+Actual Timed/Practice/Restart UI submissions; Input System E/W/Escape. Normal runtime Update drives the complete real60-second deadline and real22-second departure; no manual clock step or shortened sequence.
+QA teleports only set original bay/source probes and a later Aurora cockpit approach. One continuous loaded W trip crosses dock/arm/hatch into the real bay, then actual W approaches the real seat.
+Captures use actual1280x720 camera and active UIDocuments. Screen-space-overlay UGUI fade is excluded from camera PNGs; its real alpha is recorded and checked. No fabricated composite or human-playthrough claim.
+Console baseline is recorded from saved scene before Play; restore checks actual captured environment and same camera parent. Paused departure must hold real world transforms/playhead.
+Read-only all-Assets hashes; any change fails. 180-second watchdog includes GPU startup, full deadline/departure, pause and real saved-policy restart.

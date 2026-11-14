@@ -1,0 +1,20 @@
+{
+    "parentPath": "AURORA-7 interior/IntegrationAnchors/CockpitConsole",
+    "cameraParentPath": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+    "position": {
+        "x": 0.0,
+        "y": 0.3499999940395355,
+        "z": 0.30000001192092898
+    },
+    "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+    }
+}

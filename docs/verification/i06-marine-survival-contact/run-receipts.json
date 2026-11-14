@@ -1,0 +1,42 @@
+[
+  {
+    "run": "marine",
+    "source_run": "marine-bootstrap-native-qa/20261114T211433082Z",
+    "assertions": 177,
+    "failed_assertions": 0,
+    "log_path": ".local/i01-integration/TestResults/i06-marine-bootstrap-native-4.log",
+    "log_sha256": "373e8bcd1eaf6207202d27b287295b3ac8032d3d1e7d5a6c5b1a3b1405d8eda8",
+    "exitcode": 0,
+    "pass_marker": "MARINE_BOOTSTRAP_NATIVE_QA_PASS Actual saved Bootstrap marine/cargo/departure/transfer/restart checks passed with real60-second timed mode and22-second sequence. Setup teleports and batch-focus delivery disclosed; PNGs require visual review. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\\.local/marine-bootstrap-native-qa\\20261114T211433082Z"
+  },
+  {
+    "run": "survival",
+    "source_run": "survival-ux-native-qa/20261114T212340632Z",
+    "assertions": 1740,
+    "failed_assertions": 0,
+    "log_path": ".local/i01-integration/TestResults/i06-survival-ux-native-2.log",
+    "log_sha256": "3d6228f32fc11c207cd907dafb139a6397333ba98d49137cc62b3c1a760ed08a",
+    "exitcode": 0,
+    "pass_marker": "SURVIVAL_UX_NATIVE_QA_PASS 1740 assertions passed. Actual saved-scene C06 HUD, geometry and GPU captures; see scope.txt for disclosed time inputs and setup skips. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\\.local/survival-ux-native-qa\\20261114T212340632Z"
+  },
+  {
+    "run": "micro",
+    "source_run": "micro-bridge-native-qa/20261114T210359557Z",
+    "assertions": 398,
+    "failed_assertions": 0,
+    "log_path": ".local/i01-integration/TestResults/i06-micro-bridge-native-3.log",
+    "log_sha256": "914637f3551255d7953f432c59bbdf474fac74e0999be8b6d175c532ae5f30df",
+    "exitcode": 0,
+    "pass_marker": "MICRO_BRIDGE_NATIVE_QA_PASS 398 checks; 11 actual event-frame PNGs; 264 independently skinned rendered frames. Direct bridge fixture only; no input-binding/full-game acceptance. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\\.local/micro-bridge-native-qa\\20261114T210359557Z"
+  },
+  {
+    "run": "fx",
+    "source_run": "marine-fx-native-qa/20261114T212656683Z",
+    "assertions": 157,
+    "failed_assertions": 0,
+    "log_path": ".local/i01-integration/TestResults/i06-marine-fx-native-2.log",
+    "log_sha256": "23708c6249ce21496b46335ab42de951bbbce8c2bde523afb571a995a8c30819",
+    "exitcode": 0,
+    "pass_marker": "MARINE_FX_NATIVE_QA_PASS Two actual production departures completed. FX anchors, pause, reduced restart, cleanup and native captures checked; inspect PNGs for art acceptance. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\\.local/marine-fx-native-qa\\20261114T212656683Z"
+  }
+]

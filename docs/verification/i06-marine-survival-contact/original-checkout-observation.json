@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-11-14T21:25:25.320002+00:00",
+  "read_only": true,
+  "files": [
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "exists": true,
+      "sha256": "c0579a652eed1eade998b9eb93f2a2c5fc4fc633ea64ab50079897bce796107b"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx",
+      "exists": false,
+      "sha256": null
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Marine/FX/MarineDepartureFxPresenter.cs",
+      "exists": false,
+      "sha256": null
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+    "scope": "TEMPORARY DIAGNOSTIC CAMERA: actual nozzle/deck, not shipping view. Native GPU, UI excluded.",
+    "name": "01-nozzle-ignition-9_8-diagnostic",
+    "utc": "2026-11-14T21:27:19.4553511Z",
+    "timelineSeconds": 9.80024242401123,
+    "fxSeconds": 9.80024242401123,
+    "plumeLength": 0.8500000238418579,
+    "mean": 0.3301506042480469,
+    "deviation": 0.2609686553478241,
+    "steamLobes": 3,
+    "paused": false,
+    "reduced": false,
+    "cameraPosition": {
+        "x": 10009.0,
+        "y": 71.17499542236328,
+        "z": 10.0
+    },
+    "nozzlePosition": {
+        "x": 10000.0,
+        "y": 68.5999984741211,
+        "z": 0.0
+    },
+    "nozzleForward": {
+        "x": 0.0,
+        "y": -1.0000001192092896,
+        "z": -1.1920928955078126e-7
+    },
+    "deckPosition": {
+        "x": 10000.0,
+        "y": 67.40000915527344,
+        "z": -2.0
+    },
+    "cameraRotation": {
+        "x": -0.03922254219651222,
+        "y": 0.928008496761322,
+        "z": -0.10221230983734131,
+        "w": -0.35611024498939516
+    },
+    "exhaustParameters": {
+        "x": 9.80024242401123,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 0.0
+    }
+}

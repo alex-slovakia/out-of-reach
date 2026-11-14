@@ -1,0 +1,1742 @@
+saved Bootstrap | PASS Saved Survival presenter, real document and single active camera exist.
+saved Bootstrap | PASS Actual saved Bootstrap loaded.
+saved Bootstrap | PASS Saved C06 opt-in exists without runner enabling it.
+saved Bootstrap | PASS Actual opening mode selection.
+saved Bootstrap | PASS Actual habitat interaction triggers disabled in Planning: survival-ration
+saved Bootstrap | PASS Habitat target binds current session's actual action: survival-ration
+saved Bootstrap | PASS Actual habitat interaction triggers disabled in Planning: survival-water
+saved Bootstrap | PASS Habitat target binds current session's actual action: survival-water
+saved Bootstrap | PASS Actual habitat interaction triggers disabled in Planning: survival-sleep
+saved Bootstrap | PASS Habitat target binds current session's actual action: survival-sleep
+saved Bootstrap | PASS Actual habitat interaction triggers disabled in Planning: grow-build
+saved Bootstrap | PASS Habitat target binds current session's actual action: grow-build
+saved Bootstrap | PASS Actual habitat interaction triggers disabled in Planning: recovery-beacon
+saved Bootstrap | PASS Habitat target binds current session's actual action: recovery-beacon
+saved Bootstrap | PASS Actual Practice UI selected, no fabricated mode state.
+disclosed real domain journey | PASS Actual saved loadout validates; runner grants no cargo.
+disclosed real domain journey | PASS Actual valid loadout launch | AURORA-7 launched with 7 equipment line(s).
+disclosed real domain journey | PASS Actual root Begin uses public departure presentation gate.
+disclosed real domain journey | PASS Populated prompt would normally be shown; gate must suppress its geometry.
+disclosed real domain journey | PASS Actual departure gate hides ordinary hud-header
+disclosed real domain journey | PASS Actual departure gate hides ordinary hud-timing
+disclosed real domain journey | PASS Actual departure gate hides ordinary primary-telemetry
+disclosed real domain journey | PASS Actual departure gate hides ordinary hud-instruments
+disclosed real domain journey | PASS Actual departure gate hides ordinary interaction-prompt
+disclosed real domain journey | PASS Actual departure gate hides ordinary exertion-readout
+disclosed real domain journey | PASS Actual departure caption remains visible with ordinary HUD suppressed.
+disclosed real domain journey | PASS Capture uses the actual camera/document at 1280x720: 00a-actual-departure-caption-only.
+disclosed real domain journey | PASS Actual GPU capture has non-uniform rendered signal: 00a-actual-departure-caption-only
+disclosed real domain journey | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+disclosed real domain journey | PASS Departure caption or actual Resume has usable on-screen geometry.
+disclosed real domain journey | PASS Actual Pause menu and enabled Resume remain available during departure.
+disclosed real domain journey | PASS Capture uses the actual camera/document at 1280x720: 00b-actual-departure-pause-menu.
+disclosed real domain journey | PASS Actual GPU capture has non-uniform rendered signal: 00b-actual-departure-pause-menu
+disclosed real domain journey | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+disclosed real domain journey | PASS Departure caption or actual Resume has usable on-screen geometry.
+disclosed real domain journey | PASS Actual paused departure playhead remains frozen.
+disclosed real domain journey | PASS Actual Resume restores caption-only departure without releasing the HUD gate.
+disclosed real domain journey | PASS Disclosed real transport presentation skip
+disclosed real domain journey | PASS Root transfer clears departure gate and restores actual Intro objective/resources.
+disclosed real domain journey | PASS Actual cockpit check | Cockpit check complete. Impact detected.
+disclosed real domain journey | PASS Actual Impact presentation received.
+disclosed real domain journey | PASS Disclosed actual presenter skip: Impact
+disclosed real domain journey | PASS Actual power repair cost | power distribution repaired (2 spare parts).
+disclosed real domain journey | PASS Actual life-support repair cost | life support repaired (2 spare parts, 1 kWh).
+disclosed real domain journey | PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+disclosed real domain journey | PASS Actual airlock cycle | Inner hatch sealed. Depressurizing.
+disclosed real domain journey | PASS TIME INPUT: actual depressurization seconds 600 | Simulation advanced.
+disclosed real domain journey | PASS Actual exterior domain command, no movement claim | Outside on the tether.
+disclosed real domain journey | PASS Actual antenna repair cost | high-gain antenna repaired (3 spare parts, 0.5 kWh).
+disclosed real domain journey | PASS Actual return-inside command | Inside the airlock.
+disclosed real domain journey | PASS Actual repressurization command | Outer hatch closed. Repressurizing.
+disclosed real domain journey | PASS TIME INPUT: actual repressurization seconds 600 | Simulation advanced.
+disclosed real domain journey | PASS Actual link diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+disclosed real domain journey | PASS Actual FalseSignal presentation received.
+disclosed real domain journey | PASS Disclosed actual presenter skip: FalseSignal
+disclosed real domain journey | PASS Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+disclosed real domain journey | PASS No instant reply.
+disclosed real domain journey | PASS TIME INPUT: actual round-trip wait 1918.9656424969362 | Simulation advanced.
+disclosed real domain journey | PASS Real reply received after required simulated interval.
+disclosed real domain journey | PASS Real contact enters active Survival, not a fabricated outcome.
+disclosed real domain journey | PASS Actual recovery starts inbound.
+disclosed real domain journey | PASS Actual habitat interaction triggers enabled in Survival: survival-ration
+disclosed real domain journey | PASS Habitat target binds current session's actual action: survival-ration
+disclosed real domain journey | PASS Actual habitat interaction triggers enabled in Survival: survival-water
+disclosed real domain journey | PASS Habitat target binds current session's actual action: survival-water
+disclosed real domain journey | PASS Actual habitat interaction triggers enabled in Survival: survival-sleep
+disclosed real domain journey | PASS Habitat target binds current session's actual action: survival-sleep
+disclosed real domain journey | PASS Actual habitat interaction triggers enabled in Survival: grow-build
+disclosed real domain journey | PASS Habitat target binds current session's actual action: grow-build
+disclosed real domain journey | PASS Actual habitat interaction triggers enabled in Survival: recovery-beacon
+disclosed real domain journey | PASS Habitat target binds current session's actual action: recovery-beacon
+disclosed real domain journey | QA-only habitat camera framing teleport: feet (0,.05,11.6), target (0,1.35,15); no route/interaction claim.
+disclosed real domain journey | PASS TIME INPUT: 3600 simulated awake seconds, all actual services | Simulation advanced.
+disclosed real domain journey | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+disclosed real domain journey | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+disclosed real domain journey | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+disclosed real domain journey | PASS Tab detail visibility agrees with actual key state.
+disclosed real domain journey | PASS Both visible bars equal actual satisfied fractions.
+disclosed real domain journey | PASS Fed and Hydrated remain visible beside their actual need bars.
+disclosed real domain journey | PASS Good-full explanation is available in Tab details without filling the default HUD.
+disclosed real domain journey | PASS Capture uses the actual camera/document at 1280x720: 01-survival-primary-water-needs.
+disclosed real domain journey | PASS Actual GPU capture has non-uniform rendered signal: 01-survival-primary-water-needs
+disclosed real domain journey | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+disclosed real domain journey | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+disclosed real domain journey | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+disclosed real domain journey | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+disclosed real domain journey | PASS Tab detail visibility agrees with actual key state.
+disclosed real domain journey | PASS Both visible bars equal actual satisfied fractions.
+disclosed real domain journey | PASS Fed and Hydrated remain visible beside their actual need bars.
+disclosed real domain journey | PASS Good-full explanation is available in Tab details without filling the default HUD.
+disclosed real domain journey | PASS Geometry/capture uses the actual received-reply subtitle, never an injected placeholder.
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-0 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-1 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-2 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-3 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: survival-hunger-bar / unity-progress-bar survival-need-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: survival-hydration-bar / unity-progress-bar survival-need-bar
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.00, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.00, width:126.00, height:6.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.00, width:126.00, height:6.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.00, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.00, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.00, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.00, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.00, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.00, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.00, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:626.00, width:797.00, height:54.00)
+disclosed real domain journey | PASS Full visible label fits allocated height without vertical truncation: 
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:610.00, width:797.00, height:16.00)
+disclosed real domain journey | PASS Full visible label fits allocated height without vertical truncation: 
+disclosed real domain journey | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Capture uses the actual camera/document at 960x540: 01b-survival-subtitle-960x540.
+disclosed real domain journey | PASS Actual GPU capture has non-uniform rendered signal: 01b-survival-subtitle-960x540
+disclosed real domain journey | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 960x540; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+disclosed real domain journey | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+disclosed real domain journey | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+disclosed real domain journey | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+disclosed real domain journey | PASS Tab detail visibility agrees with actual key state.
+disclosed real domain journey | PASS Both visible bars equal actual satisfied fractions.
+disclosed real domain journey | PASS Fed and Hydrated remain visible beside their actual need bars.
+disclosed real domain journey | PASS Good-full explanation is available in Tab details without filling the default HUD.
+disclosed real domain journey | PASS Geometry/capture uses the actual received-reply subtitle, never an injected placeholder.
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-0 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-1 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-2 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: resource-bar-3 / unity-progress-bar gauge-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: survival-hunger-bar / unity-progress-bar survival-need-bar
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+disclosed real domain journey | PASS Actual subtitle box does not overlap visible supply/need element: survival-hydration-bar / unity-progress-bar survival-need-bar
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.67, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.33, width:126.67, height:5.33)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.33, width:126.67, height:5.33)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.67, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.67, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.67, height:8.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.67, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.67, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.67, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.67, width:20.00, height:20.00)
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:626.67, width:797.33, height:53.33)
+disclosed real domain journey | PASS Full visible label fits allocated height without vertical truncation: 
+disclosed real domain journey | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:610.67, width:797.33, height:16.00)
+disclosed real domain journey | PASS Full visible label fits allocated height without vertical truncation: 
+disclosed real domain journey | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+disclosed real domain journey | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Actual InputSystem Tab key is held.
+actual Tab quantity disclosure | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+actual Tab quantity disclosure | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+actual Tab quantity disclosure | PASS Actual Tab reveals the precise water quantity.
+actual Tab quantity disclosure | PASS Tab detail visibility agrees with actual key state.
+actual Tab quantity disclosure | PASS Both visible bars equal actual satisfied fractions.
+actual Tab quantity disclosure | PASS Fed and Hydrated remain visible beside their actual need bars.
+actual Tab quantity disclosure | PASS Good-full explanation is available in Tab details without filling the default HUD.
+actual Tab quantity disclosure | PASS Capture uses the actual camera/document at 1280x720: 01c-tab-exact-water.
+actual Tab quantity disclosure | PASS Actual GPU capture has non-uniform rendered signal: 01c-tab-exact-water
+actual Tab quantity disclosure | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+actual Tab quantity disclosure | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+actual Tab quantity disclosure | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+actual Tab quantity disclosure | PASS Actual Tab reveals the precise water quantity.
+actual Tab quantity disclosure | PASS Tab detail visibility agrees with actual key state.
+actual Tab quantity disclosure | PASS Both visible bars equal actual satisfied fractions.
+actual Tab quantity disclosure | PASS Fed and Hydrated remain visible beside their actual need bars.
+actual Tab quantity disclosure | PASS Good-full explanation is available in Tab details without filling the default HUD.
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-value
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-value
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-value
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / resource-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label resource-value
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element: survival-hunger-bar / unity-progress-bar survival-need-bar
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / survival-need-icon
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-need-label
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element: survival-hydration-bar / unity-progress-bar survival-need-bar
+actual Tab quantity disclosure | PASS Actual subtitle box does not overlap visible supply/need element:  / unity-text-element unity-label survival-needs-key
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:208.00, y:155.00, width:108.00, height:23.00)
+actual Tab quantity disclosure | PASS Full visible label fits allocated height without vertical truncation: 
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:170.00, y:251.00, width:126.00, height:6.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:170.00, y:279.00, width:126.00, height:6.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:50.00, y:128.00, width:20.00, height:20.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:50.00, y:156.00, width:20.00, height:20.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:50.00, y:184.00, width:20.00, height:20.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:50.00, y:212.00, width:20.00, height:20.00)
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:626.00, width:797.00, height:54.00)
+actual Tab quantity disclosure | PASS Full visible label fits allocated height without vertical truncation: 
+actual Tab quantity disclosure | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:384.00, y:610.00, width:797.00, height:16.00)
+actual Tab quantity disclosure | PASS Full visible label fits allocated height without vertical truncation: 
+actual Tab quantity disclosure | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / survival-hunger-bar
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / survival-hydration-bar
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Essential HUD elements do not overlap:  / 
+actual Tab quantity disclosure | PASS Actual InputSystem Tab release was consumed.
+actual Tab quantity disclosure | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+actual Tab quantity disclosure | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+actual Tab quantity disclosure | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+actual Tab quantity disclosure | PASS Tab detail visibility agrees with actual key state.
+actual Tab quantity disclosure | PASS Both visible bars equal actual satisfied fractions.
+actual Tab quantity disclosure | PASS Fed and Hydrated remain visible beside their actual need bars.
+actual Tab quantity disclosure | PASS Good-full explanation is available in Tab details without filling the default HUD.
+actual Tab quantity disclosure | PASS Opening/releasing Tab changes no resources or simulation time.
+real paid rest to beacon boundary | PASS Bounded real rest count 0
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 0 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 1
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 1 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 2
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 2 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 3
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 3 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 4
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 4 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 5
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 5 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 6
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 6 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 7
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 7 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 8
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 8 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 9
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 9 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 10
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 10 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 11
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 11 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 12
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 12 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 13
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 13 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 14
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 14 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 15
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 15 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 14
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 15
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 16
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Bounded real rest count 16
+real paid rest to beacon boundary | PASS Actual <=8.5-hour rest request 16 | Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+real paid rest to beacon boundary | PASS Actual resting panel is visible.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 0
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 1
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 2
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 3
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 4
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 5
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 6
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 7
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 8
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 9
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 10
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 11
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 12
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS Bounded actual rest chunks 13
+real paid rest to beacon boundary | PASS Positive accounted time input before request boundary.
+real paid rest to beacon boundary | PASS TIME INPUT: paid rest simulation seconds 1800 | Simulation advanced.
+real paid rest to beacon boundary | PASS No survival terminal condition was bypassed.
+real paid rest to beacon boundary | PASS Actual six-day recovery boundary requests beacon exactly.
+real paid rest to beacon boundary | PASS Multi-day rest used real shared time and depleted real supplies; no free skip/grant.
+real paid rest to beacon boundary | Actual rest elapsed simulation seconds=514800
+beacon default HUD and automatic wake | PASS Actual recovery boundary automatically stops real rest with RecoveryMilestone.
+beacon default HUD and automatic wake | PASS Rest panel hides while actual auto-wake reason remains visible.
+beacon default HUD and automatic wake | PASS Readable reason comes from actual LastRestStop.
+beacon default HUD and automatic wake | PASS Authoritative beacon request remains active.
+beacon default HUD and automatic wake | PASS Actual request/action/window are visible without Tab.
+beacon default HUD and automatic wake | PASS Request is in ordinary HUD header, outside expanded telemetry.
+beacon default HUD and automatic wake | PASS Displayed request corresponds to actual open time window.
+beacon default HUD and automatic wake | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+beacon default HUD and automatic wake | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+beacon default HUD and automatic wake | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+beacon default HUD and automatic wake | PASS Tab detail visibility agrees with actual key state.
+beacon default HUD and automatic wake | PASS Both visible bars equal actual satisfied fractions.
+beacon default HUD and automatic wake | PASS Fed and Hydrated remain visible beside their actual need bars.
+beacon default HUD and automatic wake | PASS Good-full explanation is available in Tab details without filling the default HUD.
+beacon default HUD and automatic wake | PASS Capture uses the actual camera/document at 1280x720: 02-request-window-and-auto-wake.
+beacon default HUD and automatic wake | PASS Actual GPU capture has non-uniform rendered signal: 02-request-window-and-auto-wake
+beacon default HUD and automatic wake | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+beacon default HUD and automatic wake | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+beacon default HUD and automatic wake | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+beacon default HUD and automatic wake | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+beacon default HUD and automatic wake | PASS Tab detail visibility agrees with actual key state.
+beacon default HUD and automatic wake | PASS Both visible bars equal actual satisfied fractions.
+beacon default HUD and automatic wake | PASS Fed and Hydrated remain visible beside their actual need bars.
+beacon default HUD and automatic wake | PASS Good-full explanation is available in Tab details without filling the default HUD.
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-action (x:36.00, y:75.00, width:412.00, height:20.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-action
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-window (x:36.00, y:95.00, width:412.00, height:18.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-window
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-rest-stop (x:36.00, y:113.00, width:412.00, height:19.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-rest-stop
+beacon default HUD and automatic wake | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-action / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-action / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-window / survival-rest-stop
+beacon default HUD and automatic wake | PASS Actual pause hides survival cues.
+beacon default HUD and automatic wake | PASS Capture uses the actual camera/document at 1280x720: 03-paused-survival.
+beacon default HUD and automatic wake | PASS Actual GPU capture has non-uniform rendered signal: 03-paused-survival
+beacon default HUD and automatic wake | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+beacon default HUD and automatic wake | PASS Actual paused Update freezes simulation and resources for nine real seconds.
+beacon default HUD and automatic wake | PASS Notice retains its real reason after a pause longer than its visible lifetime.
+beacon default HUD and automatic wake | PASS Authoritative beacon request remains active.
+beacon default HUD and automatic wake | PASS Actual request/action/window are visible without Tab.
+beacon default HUD and automatic wake | PASS Request is in ordinary HUD header, outside expanded telemetry.
+beacon default HUD and automatic wake | PASS Displayed request corresponds to actual open time window.
+beacon default HUD and automatic wake | PASS Capture uses the actual camera/document at 1280x720: 04-resumed-request-and-notice.
+beacon default HUD and automatic wake | PASS Actual GPU capture has non-uniform rendered signal: 04-resumed-request-and-notice
+beacon default HUD and automatic wake | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+beacon default HUD and automatic wake | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+beacon default HUD and automatic wake | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+beacon default HUD and automatic wake | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+beacon default HUD and automatic wake | PASS Tab detail visibility agrees with actual key state.
+beacon default HUD and automatic wake | PASS Both visible bars equal actual satisfied fractions.
+beacon default HUD and automatic wake | PASS Fed and Hydrated remain visible beside their actual need bars.
+beacon default HUD and automatic wake | PASS Good-full explanation is available in Tab details without filling the default HUD.
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-action (x:36.00, y:75.00, width:412.00, height:20.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-action
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-window (x:36.00, y:95.00, width:412.00, height:18.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-window
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-rest-stop (x:36.00, y:113.00, width:412.00, height:19.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-rest-stop
+beacon default HUD and automatic wake | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-action / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-action / survival-rest-stop
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-window / survival-rest-stop
+beacon default HUD and automatic wake | PASS Notice expires during real visible time without new simulation input.
+beacon default HUD and automatic wake | PASS Authoritative beacon request remains active.
+beacon default HUD and automatic wake | PASS Actual request/action/window are visible without Tab.
+beacon default HUD and automatic wake | PASS Request is in ordinary HUD header, outside expanded telemetry.
+beacon default HUD and automatic wake | PASS Displayed request corresponds to actual open time window.
+beacon default HUD and automatic wake | PASS Capture uses the actual camera/document at 1280x720: 05-request-stays-after-notice.
+beacon default HUD and automatic wake | PASS Actual GPU capture has non-uniform rendered signal: 05-request-stays-after-notice
+beacon default HUD and automatic wake | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+beacon default HUD and automatic wake | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+beacon default HUD and automatic wake | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+beacon default HUD and automatic wake | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+beacon default HUD and automatic wake | PASS Tab detail visibility agrees with actual key state.
+beacon default HUD and automatic wake | PASS Both visible bars equal actual satisfied fractions.
+beacon default HUD and automatic wake | PASS Fed and Hydrated remain visible beside their actual need bars.
+beacon default HUD and automatic wake | PASS Good-full explanation is available in Tab details without filling the default HUD.
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-action (x:36.00, y:75.00, width:313.00, height:20.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-action
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-beacon-window (x:36.00, y:95.00, width:313.00, height:18.00)
+beacon default HUD and automatic wake | PASS Full visible label fits allocated height without vertical truncation: survival-beacon-window
+beacon default HUD and automatic wake | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-action
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / survival-beacon-window
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-beacon-action / survival-beacon-window
+beacon default HUD and automatic wake | PASS Actual beacon action is registered.
+beacon default HUD and automatic wake | PASS Existing cockpit beacon target binds current authoritative action.
+beacon default HUD and automatic wake | PASS Actual bound beacon action; no fake E/range claim | Recovery beacon powered: the rendezvous stays on schedule.
+beacon default HUD and automatic wake | PASS Real beacon succeeds inside window and charges exact energy.
+beacon default HUD and automatic wake | PASS Actual beacon completion removes default-HUD request.
+beacon default HUD and automatic wake | PASS Capture uses the actual camera/document at 1280x720: 06-beacon-completed.
+beacon default HUD and automatic wake | PASS Actual GPU capture has non-uniform rendered signal: 06-beacon-completed
+beacon default HUD and automatic wake | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)
+beacon default HUD and automatic wake | PASS Water bar retains actual remaining stores relative to the committed launch reserve.
+beacon default HUD and automatic wake | PASS Water pictogram and retained exact quantity use the current authoritative stored-water value.
+beacon default HUD and automatic wake | PASS Default HUD shows the water bar/pictogram and hides the numeric quantity.
+beacon default HUD and automatic wake | PASS Tab detail visibility agrees with actual key state.
+beacon default HUD and automatic wake | PASS Both visible bars equal actual satisfied fractions.
+beacon default HUD and automatic wake | PASS Fed and Hydrated remain visible beside their actual need bars.
+beacon default HUD and automatic wake | PASS Good-full explanation is available in Tab details without filling the default HUD.
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-1 (x:156.00, y:520.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hunger-bar (x:156.00, y:609.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: survival-hydration-bar (x:156.00, y:637.00, width:126.00, height:6.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-0 (x:156.00, y:492.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-2 (x:156.00, y:548.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry: resource-bar-3 (x:156.00, y:576.00, width:126.00, height:8.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:486.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:514.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:542.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS Actual rendered element has finite, nonzero, on-screen geometry:  (x:36.00, y:570.00, width:20.00, height:20.00)
+beacon default HUD and automatic wake | PASS HUD objective/beacon/notice geometry does not overlap primary supplies/needs.
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hunger-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-1 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / survival-hydration-bar
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hunger-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-0
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: survival-hydration-bar / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-2
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-0 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / resource-bar-3
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-2 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap: resource-bar-3 / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+beacon default HUD and automatic wake | PASS Essential HUD elements do not overlap:  / 
+actual restart | PASS Saved Survival presenter, real document and single active camera exist.
+actual restart | PASS Public restart disposes old authority and creates actual Planning session.
+actual restart | PASS Restart resets real recovery/rest and mode choice.
+actual restart | PASS Restart shows no stale survival notice/request/needs.
+actual restart | PASS Actual habitat interaction triggers disabled in Planning: survival-ration
+actual restart | PASS Habitat target binds current session's actual action: survival-ration
+actual restart | PASS Actual habitat interaction triggers disabled in Planning: survival-water
+actual restart | PASS Habitat target binds current session's actual action: survival-water
+actual restart | PASS Actual habitat interaction triggers disabled in Planning: survival-sleep
+actual restart | PASS Habitat target binds current session's actual action: survival-sleep
+actual restart | PASS Actual habitat interaction triggers disabled in Planning: grow-build
+actual restart | PASS Habitat target binds current session's actual action: grow-build
+actual restart | PASS Actual habitat interaction triggers disabled in Planning: recovery-beacon
+actual restart | PASS Habitat target binds current session's actual action: recovery-beacon
+actual restart | PASS Capture uses the actual camera/document at 1280x720: 07-restart-no-stale-survival.
+actual restart | PASS Actual GPU capture has non-uniform rendered signal: 07-restart-no-stale-survival
+actual restart | PASS Actual panel has finite aspect-preserving UI-to-pixel geometry at 1280x720; logical viewport=(x:0.00, y:0.00, width:1280.00, height:720.00)

@@ -1,0 +1,6 @@
+{
+    "pass": true,
+    "message": "Two actual production departures completed. FX anchors, pause, reduced restart, cleanup and native captures checked; inspect PNGs for art acceptance.",
+    "scope": "Actual saved Bootstrap FX lifecycle/GPU probe; setup shortcuts disclosed; human visual review required.",
+    "assertions": 157
+}

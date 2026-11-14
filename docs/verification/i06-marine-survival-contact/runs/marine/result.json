@@ -1,0 +1,7 @@
+{
+    "pass": true,
+    "message": "Actual saved Bootstrap marine/cargo/departure/transfer/restart checks passed with real60-second timed mode and22-second sequence. Setup teleports and batch-focus delivery disclosed; PNGs require visual review.",
+    "utc": "2026-11-14T21:16:25.2130400Z",
+    "scope": "Actual saved Bootstrap integration probe; GPU images require visual review; scripted setup teleports are disclosed.",
+    "checks": 177
+}

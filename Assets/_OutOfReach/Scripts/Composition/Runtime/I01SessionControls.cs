@@ -115,7 +115,9 @@ namespace OutOfReach.Composition
 
             heading.text = showingMode ? "Choose planning mode" : showingOutcome ? "Mission ended" : "Paused";
             detail.text = showingMode
-                ? "60 active real seconds. At zero, launch the valid loadout or the last valid loadout. Carried cargo is not aboard. Practice has no deadline."
+                ? composition.Runtime.BoardAfterLoadingDeadline
+                    ? "60 seconds to secure supplies. Then loading closes: board the transport and secure your seat. Carried cargo stays behind. Practice has no deadline."
+                    : "60 active real seconds. At zero, launch the valid loadout or the last valid loadout. Carried cargo is not aboard. Practice has no deadline."
                 : showingOutcome
                     ? "Review your mission record."
                     : string.Empty;

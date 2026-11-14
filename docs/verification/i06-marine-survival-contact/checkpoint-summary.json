@@ -1,0 +1,41 @@
+{
+  "task": "I06-CHECKPOINT-EVIDENCE-01",
+  "created_utc": "2026-11-14T21:29:44.484964+00:00",
+  "runs": [
+    {
+      "run": "marine",
+      "assertions": 177,
+      "failed_assertions": 0,
+      "result_utc": "2026-11-14T21:16:25.2130400Z",
+      "selected_native_pngs": 3,
+      "scope_file": "runs/marine/scope.txt"
+    },
+    {
+      "run": "survival",
+      "assertions": 1740,
+      "failed_assertions": 0,
+      "result_utc": "2026-11-14T21:24:27.4760519Z",
+      "selected_native_pngs": 2,
+      "scope_file": "runs/survival/scope.txt"
+    },
+    {
+      "run": "micro",
+      "assertions": 398,
+      "failed_assertions": 0,
+      "result_utc": "2026-11-14T21:04:16.4716909Z",
+      "selected_native_pngs": 2,
+      "scope_file": "runs/micro/scope.txt"
+    },
+    {
+      "run": "fx",
+      "assertions": 157,
+      "failed_assertions": 0,
+      "selected_native_pngs": 2,
+      "scope_file": "runs/fx/scope.txt"
+    }
+  ],
+  "total_selected_native_pngs": 9,
+  "bug_count": null,
+  "bug_count_note": "Assertions are not bug counts. No candidate total is inferred.",
+  "new_tests": "Physical micro-input acceptance remains outside this package. Marine4 shows daylight-waterV01; FX native2 images contain waterV02. Refreshed SurvivalV02 and FX lifecycle native2 now included."
+}

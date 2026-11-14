@@ -1,0 +1,1 @@
+Actual saved Bootstrap marine/cargo/departure/transfer/restart checks passed with real60-second timed mode and22-second sequence. Setup teleports and batch-focus delivery disclosed; PNGs require visual review.

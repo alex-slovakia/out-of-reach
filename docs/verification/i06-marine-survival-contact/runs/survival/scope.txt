@@ -1,0 +1,9 @@
+Actual saved Bootstrap and its enabled C06 services; no replacement services or outcome/state/resource assignments.
+Actual Practice menu NavigationSubmit. Current real valid cargo loadout launches through Planner.TryLaunch; transport/Impact/FalseSignal are explicitly skipped through their real presenters.
+Repair/EVA/transmission use actual domain commands and costs. SkipSimulatedTime supplies the real depressurization, repressurization, communication reply and bounded rest intervals; every time input is logged.
+DriveFromUpdate=false isolates deterministic supplied simulation time; paused freeze additionally runs the real runtime Update. Notice display time still advances through normal UI LateUpdate.
+Recovery is reached by real repeated <=8.5-hour rests and <=1800-second accounted chunks, ending exactly at the actual six-day request boundary. No beacon/stage assignment or reserve grants.
+One disclosed QA teleport frames the actual habitat for HUD captures, not an E-key walking claim. Beacon uses its real bound domain action, not a substituted resolver.
+Actual departure gate is checked before the real presenter skip. One QA-only public UI prompt is populated to prove the gate suppresses a normally visible prompt; it issues no action and is cleared. Actual Pause/Resume UI is exercised.
+1280x720 and960x540 actual camera + existing scaled UIDocument GPU render targets; real InputSystem Tab disclosure and actual received-reply subtitle geometry; source hashes, UI geometry, values and PNG hashes saved. Overlay UGUI excluded. Actual public restart command tested.
+150-second wall watchdog. No scene or asset save; no Unity run claimed until this fixture is executed.

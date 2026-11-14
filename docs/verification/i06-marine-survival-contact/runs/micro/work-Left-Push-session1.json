@@ -1,0 +1,47 @@
+{
+    "name": "work-Left-Push-session1",
+    "hand": "Left",
+    "kind": "Push",
+    "stage": "PushContact",
+    "source": "actual-Player-event",
+    "requestFrame": 9,
+    "actionFrame": 36,
+    "renderFrame": 36,
+    "actions": 1,
+    "pushes": 1,
+    "grabs": 0,
+    "releases": 0,
+    "skinCount": 7322,
+    "patchCount": 100,
+    "seconds": 0.21292972564697267,
+    "residual": 2.7516759359969e-7,
+    "minimumSkinClearance": 2.9802322387695315e-8,
+    "patchDistance": 0.0029809772968292238,
+    "correction": 0.0,
+    "upperLength": 0.24243444204330445,
+    "lowerLength": 0.24105066061019898,
+    "actualFloat": true,
+    "actualSuit": false,
+    "actualHeld": false,
+    "visible": true,
+    "point": {
+        "x": -0.17999999225139619,
+        "y": 1.5,
+        "z": 0.30000001192092898
+    },
+    "playerBefore": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "playerAfter": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -0.10000000149011612
+    }
+}

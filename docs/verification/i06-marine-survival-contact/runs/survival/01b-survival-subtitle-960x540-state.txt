@@ -1,0 +1,19 @@
+phase=Survival
+outcome=None
+simulationSeconds=15118.965642496936
+resting=False
+controlAllowed=True
+cursor=None
+visibleLabels=
+Survive until rescue
+Manage your food, water and ship systems.
+
+300× simulation
+O₂ reserve
+Water stores
+Food stores
+Battery
+Fed
+Hydrated
+MISSION CONTROL · EARTH · DELAYED REPLY
+Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.

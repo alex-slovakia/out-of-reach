@@ -1,0 +1,1916 @@
+{
+  "transportAnchors": [
+    {
+      "name": "BoardingThreshold",
+      "point": [
+        -0.0,
+        0.0,
+        -2.5
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "SeatEntry",
+      "point": [
+        -0.0,
+        0.0,
+        0.8
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "name": "SeatedCamera",
+      "point": [
+        -0.0,
+        1.16,
+        1.88
+      ],
+      "forward": [
+        0.0,
+        -0.17,
+        -0.985
+      ]
+    },
+    {
+      "name": "HatchPivot",
+      "point": [
+        -0.72,
+        0.0,
+        -2.4
+      ],
+      "forward": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "HatchLatch",
+      "point": [
+        0.58,
+        1.05,
+        -2.33
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "name": "DockingPort",
+      "point": [
+        -0.0,
+        4.95,
+        -0.0
+      ],
+      "forward": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "EngineEmitter",
+      "point": [
+        -0.0,
+        -31.4,
+        -0.0
+      ],
+      "forward": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "AccessArmPivot",
+      "point": [
+        -0.9,
+        0.0,
+        -6.9
+      ],
+      "forward": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_oxygen",
+      "point": [
+        -0.985,
+        0.1,
+        -1.025
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_water",
+      "point": [
+        -0.985,
+        0.1,
+        -0.475
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_food",
+      "point": [
+        -0.985,
+        0.1,
+        0.075
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_battery",
+      "point": [
+        -0.985,
+        0.1,
+        0.625
+      ],
+      "forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_solar",
+      "point": [
+        0.985,
+        0.1,
+        -1.025
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_spares",
+      "point": [
+        0.985,
+        0.1,
+        -0.475
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CargoBay_science",
+      "point": [
+        0.985,
+        0.1,
+        0.075
+      ],
+      "forward": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "StagingModuleRoot",
+      "point": [
+        -0.0,
+        -0.021,
+        -9.9
+      ],
+      "forward": [
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "dockAnchors": [
+    {
+      "name": "CargoCaseReference_A",
+      "point": [
+        -2.950000047683716,
+        0.19499999284744263,
+        -0.7300000190734863
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CargoCaseReference_B",
+      "point": [
+        -2.359999895095825,
+        0.19499999284744263,
+        -0.7300000190734863
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CargoCaseReference_C",
+      "point": [
+        -2.950000047683716,
+        0.19499999284744263,
+        -0.07000000029802322
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CargoCaseReference_D",
+      "point": [
+        -2.359999895095825,
+        0.19499999284744263,
+        -0.07000000029802322
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "LampPort",
+      "point": [
+        -3.369999885559082,
+        2.2100000381469727,
+        -1.8899999856948853
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "LampStarboard",
+      "point": [
+        3.369999885559082,
+        2.2100000381469727,
+        -1.8899999856948853
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "LampCabin_0.76",
+      "point": [
+        0.0,
+        2.359999895095825,
+        0.7599999904632568
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "LampCabin_2.22",
+      "point": [
+        0.0,
+        2.359999895095825,
+        2.2200000286102295
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "GroundEntry",
+      "point": [
+        0.0,
+        0.03999999910593033,
+        -2.440000057220459
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "ArrivalMate",
+      "point": [
+        0.0,
+        0.03999999910593033,
+        -3.0199999809265137
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CargoSetDown",
+      "point": [
+        -2.6500000953674316,
+        0.19499999284744263,
+        -0.7300000190734863
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CrewEntry",
+      "point": [
+        0.0,
+        0.03999999910593033,
+        0.11999999731779099
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CarrierMate",
+      "point": [
+        0.0,
+        1.2000000476837158,
+        3.0199999809265137
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "CarrierThreshold",
+      "point": [
+        0.0,
+        0.03999999910593033,
+        2.700000047683716
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "TransferExit",
+      "point": [
+        0.0,
+        0.03999999910593033,
+        2.700000047683716
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "Waterline",
+      "point": [
+        0.0,
+        -1.0499999523162842,
+        0.0
+      ],
+      "forward": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "transportBoxes": [
+    {
+      "name": "CabinFloor",
+      "parent": "CapsuleInterior",
+      "center": [
+        0.0,
+        -0.05,
+        0.0
+      ],
+      "size": [
+        4.6,
+        0.1,
+        4.6
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "CabinWall_000",
+      "parent": "CapsuleShell",
+      "center": [
+        0.0,
+        1.3,
+        2.44
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 0
+    },
+    {
+      "name": "CabinWall_020",
+      "parent": "CapsuleShell",
+      "center": [
+        0.8345,
+        1.3,
+        2.2928
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 20
+    },
+    {
+      "name": "CabinWall_040",
+      "parent": "CapsuleShell",
+      "center": [
+        1.5684,
+        1.3,
+        1.8691
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 40
+    },
+    {
+      "name": "CabinWall_060",
+      "parent": "CapsuleShell",
+      "center": [
+        2.1131,
+        1.3,
+        1.22
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 60
+    },
+    {
+      "name": "CabinWall_080",
+      "parent": "CapsuleShell",
+      "center": [
+        2.4029,
+        1.3,
+        0.4237
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 80
+    },
+    {
+      "name": "CabinWall_100",
+      "parent": "CapsuleShell",
+      "center": [
+        2.4029,
+        1.3,
+        -0.4237
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 100
+    },
+    {
+      "name": "CabinWall_120",
+      "parent": "CapsuleShell",
+      "center": [
+        2.1131,
+        1.3,
+        -1.22
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 120
+    },
+    {
+      "name": "CabinWall_140",
+      "parent": "CapsuleShell",
+      "center": [
+        1.5684,
+        1.3,
+        -1.8691
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 140
+    },
+    {
+      "name": "CabinWall_220",
+      "parent": "CapsuleShell",
+      "center": [
+        -1.5684,
+        1.3,
+        -1.8691
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 220
+    },
+    {
+      "name": "CabinWall_240",
+      "parent": "CapsuleShell",
+      "center": [
+        -2.1131,
+        1.3,
+        -1.22
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 240
+    },
+    {
+      "name": "CabinWall_260",
+      "parent": "CapsuleShell",
+      "center": [
+        -2.4029,
+        1.3,
+        -0.4237
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 260
+    },
+    {
+      "name": "CabinWall_280",
+      "parent": "CapsuleShell",
+      "center": [
+        -2.4029,
+        1.3,
+        0.4237
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 280
+    },
+    {
+      "name": "CabinWall_300",
+      "parent": "CapsuleShell",
+      "center": [
+        -2.1131,
+        1.3,
+        1.22
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 300
+    },
+    {
+      "name": "CabinWall_320",
+      "parent": "CapsuleShell",
+      "center": [
+        -1.5684,
+        1.3,
+        1.8691
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 320
+    },
+    {
+      "name": "CabinWall_340",
+      "parent": "CapsuleShell",
+      "center": [
+        -0.8345,
+        1.3,
+        2.2928
+      ],
+      "size": [
+        0.86,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 340
+    },
+    {
+      "name": "CabinWall_156.5",
+      "parent": "CapsuleShell",
+      "center": [
+        0.9729,
+        1.3,
+        -2.2376
+      ],
+      "size": [
+        0.55,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 156.5
+    },
+    {
+      "name": "CabinWall_203.5",
+      "parent": "CapsuleShell",
+      "center": [
+        -0.9729,
+        1.3,
+        -2.2376
+      ],
+      "size": [
+        0.55,
+        2.6,
+        0.12
+      ],
+      "yaw_deg": 203.5
+    },
+    {
+      "name": "HatchJambL",
+      "parent": "CapsuleShell",
+      "center": [
+        -0.95,
+        1.3,
+        -2.44
+      ],
+      "size": [
+        0.5,
+        2.6,
+        0.14
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "HatchJambR",
+      "parent": "CapsuleShell",
+      "center": [
+        0.95,
+        1.3,
+        -2.44
+      ],
+      "size": [
+        0.5,
+        2.6,
+        0.14
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "HatchHeader",
+      "parent": "CapsuleShell",
+      "center": [
+        0.0,
+        2.35,
+        -2.44
+      ],
+      "size": [
+        1.4,
+        0.4,
+        0.14
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "CabinCeiling",
+      "parent": "CapsuleShell",
+      "center": [
+        0.0,
+        2.55,
+        0.0
+      ],
+      "size": [
+        4.6,
+        0.1,
+        4.6
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "RackLeft",
+      "parent": "CapsuleInterior",
+      "center": [
+        -1.385,
+        0.78,
+        -0.2
+      ],
+      "size": [
+        1.33,
+        1.56,
+        2.2
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "RackRight",
+      "parent": "CapsuleInterior",
+      "center": [
+        1.385,
+        0.78,
+        -0.475
+      ],
+      "size": [
+        1.33,
+        1.56,
+        1.65
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "Seat",
+      "parent": "CapsuleInterior",
+      "center": [
+        0.0,
+        0.6,
+        1.65
+      ],
+      "size": [
+        0.64,
+        1.2,
+        0.7
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "HatchDoor",
+      "parent": "Hatch",
+      "center": [
+        0.0,
+        1.075,
+        -2.44
+      ],
+      "size": [
+        1.36,
+        2.11,
+        0.16
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ArmFloor",
+      "parent": "AccessArm",
+      "center": [
+        0.0,
+        -0.03,
+        -4.725
+      ],
+      "size": [
+        1.8,
+        0.06,
+        4.35
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ArmRailL",
+      "parent": "AccessArm",
+      "center": [
+        -0.9,
+        0.6,
+        -5.0
+      ],
+      "size": [
+        0.08,
+        1.2,
+        3.8
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ArmRailR",
+      "parent": "AccessArm",
+      "center": [
+        0.9,
+        0.6,
+        -5.0
+      ],
+      "size": [
+        0.08,
+        1.2,
+        3.8
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "MastLanding",
+      "parent": "AccessMastLanding",
+      "center": [
+        0.0,
+        -0.15,
+        -9.05
+      ],
+      "size": [
+        4.4,
+        0.3,
+        4.3
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "MastTower",
+      "parent": "AccessMastTower",
+      "center": [
+        0.0,
+        -16.595,
+        -8.5
+      ],
+      "size": [
+        3.5,
+        32.01,
+        3.5
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "Booster",
+      "parent": "BoosterStack",
+      "center": [
+        0.0,
+        -15.575,
+        0.0
+      ],
+      "size": [
+        4.7,
+        30.05,
+        4.7
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "BargeDeck",
+      "parent": "LaunchBarge",
+      "center": [
+        0.0,
+        -33.1,
+        -2.0
+      ],
+      "size": [
+        36.0,
+        1.0,
+        24.0
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "HatchSillFiller",
+      "parent": "CapsuleShell",
+      "center": [
+        0.0,
+        -0.05,
+        -2.425
+      ],
+      "size": [
+        1.4,
+        0.1,
+        0.35
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ThroatGuardL",
+      "parent": "AccessArm",
+      "center": [
+        -0.8,
+        0.6,
+        -2.825
+      ],
+      "size": [
+        0.06,
+        1.2,
+        0.55
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ModuleEdgeGuardL",
+      "parent": "AccessMastTower",
+      "center": [
+        -1.02,
+        0.6,
+        -6.88
+      ],
+      "size": [
+        0.24,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ThroatGuardR",
+      "parent": "AccessArm",
+      "center": [
+        0.8,
+        0.6,
+        -2.825
+      ],
+      "size": [
+        0.06,
+        1.2,
+        0.55
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "ModuleEdgeGuardR",
+      "parent": "AccessMastTower",
+      "center": [
+        1.02,
+        0.6,
+        -6.88
+      ],
+      "size": [
+        0.24,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailL",
+      "parent": "AccessMastLanding",
+      "center": [
+        -2.2,
+        0.6,
+        -9.05
+      ],
+      "size": [
+        0.06,
+        1.2,
+        4.3
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailR",
+      "parent": "AccessMastLanding",
+      "center": [
+        2.2,
+        0.6,
+        -9.05
+      ],
+      "size": [
+        0.06,
+        1.2,
+        4.3
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailBackL",
+      "parent": "AccessMastLanding",
+      "center": [
+        -1.65,
+        0.6,
+        -11.2
+      ],
+      "size": [
+        1.1,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailBackR",
+      "parent": "AccessMastLanding",
+      "center": [
+        1.65,
+        0.6,
+        -11.2
+      ],
+      "size": [
+        1.1,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailFrontL",
+      "parent": "AccessMastLanding",
+      "center": [
+        -1.6,
+        0.6,
+        -6.9
+      ],
+      "size": [
+        1.2,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    },
+    {
+      "name": "LandingRailFrontR",
+      "parent": "AccessMastLanding",
+      "center": [
+        1.6,
+        0.6,
+        -6.9
+      ],
+      "size": [
+        1.2,
+        1.2,
+        0.06
+      ],
+      "yaw_deg": 0.0
+    }
+  ],
+  "dockBoxes": [
+    {
+      "name": "COL_Deck",
+      "center": [
+        0,
+        -0.19,
+        0
+      ],
+      "size": [
+        8,
+        0.42,
+        6
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Port rail",
+      "center": [
+        -3.9,
+        0.58,
+        0.0
+      ],
+      "size": [
+        0.1,
+        1.12,
+        5.859999999999999
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Starboard rail",
+      "center": [
+        3.9,
+        0.58,
+        0.0
+      ],
+      "size": [
+        0.1,
+        1.12,
+        5.859999999999999
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Arrival west",
+      "center": [
+        -2.54,
+        0.58,
+        -2.9
+      ],
+      "size": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Arrival east",
+      "center": [
+        2.54,
+        0.58,
+        -2.9
+      ],
+      "size": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Boarding west",
+      "center": [
+        -2.54,
+        0.58,
+        2.9
+      ],
+      "size": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Boarding east",
+      "center": [
+        2.54,
+        0.58,
+        2.9
+      ],
+      "size": [
+        2.78,
+        1.12,
+        0.1
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_ArrivalSafetyGate",
+      "center": [
+        0,
+        0.6,
+        -2.9
+      ],
+      "size": [
+        2.3,
+        1.2,
+        0.12
+      ],
+      "yaw_deg": 0,
+      "parent": "ArrivalSafetyGateAssembly"
+    },
+    {
+      "name": "COL_Cabin wall -1.3",
+      "center": [
+        -1.3,
+        1.23,
+        1.65
+      ],
+      "size": [
+        0.16,
+        2.44,
+        2.55
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Cabin wall 1.3",
+      "center": [
+        1.3,
+        1.23,
+        1.65
+      ],
+      "size": [
+        0.16,
+        2.44,
+        2.55
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Cabin roof",
+      "center": [
+        0,
+        2.52,
+        1.61
+      ],
+      "size": [
+        3.02,
+        0.19,
+        2.98
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_BoardingSafetyGate",
+      "center": [
+        0,
+        1.15,
+        2.86
+      ],
+      "size": [
+        2.3,
+        2.3,
+        0.12
+      ],
+      "yaw_deg": 0,
+      "parent": "BoardingSafetyGateAssembly"
+    },
+    {
+      "name": "COL_Cargo rack plinth",
+      "center": [
+        -2.65,
+        0.1,
+        -0.4
+      ],
+      "size": [
+        1.5,
+        0.2,
+        2.05
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Cargo rack side -3.34",
+      "center": [
+        -3.34,
+        0.69,
+        -0.4
+      ],
+      "size": [
+        0.08,
+        1.22,
+        2.05
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Cargo rack side -1.96",
+      "center": [
+        -1.96,
+        0.69,
+        -0.4
+      ],
+      "size": [
+        0.08,
+        1.22,
+        2.05
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Cargo rack rear",
+      "center": [
+        -2.65,
+        0.69,
+        0.56
+      ],
+      "size": [
+        1.5,
+        1.22,
+        0.08
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Service enclosure",
+      "center": [
+        2.85,
+        0.65,
+        0.88
+      ],
+      "size": [
+        0.8,
+        1.3,
+        0.5
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Mooring -3.43 -2.32 hardware",
+      "center": [
+        -3.43,
+        0.18,
+        -2.32
+      ],
+      "size": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Mooring -3.43 2.32 hardware",
+      "center": [
+        -3.43,
+        0.18,
+        2.32
+      ],
+      "size": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Mooring 3.43 -2.32 hardware",
+      "center": [
+        3.43,
+        0.18,
+        -2.32
+      ],
+      "size": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Mooring 3.43 2.32 hardware",
+      "center": [
+        3.43,
+        0.18,
+        2.32
+      ],
+      "size": [
+        0.63,
+        0.34,
+        0.27
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Lamp -3.6",
+      "center": [
+        -3.6,
+        1.35,
+        -1.89
+      ],
+      "size": [
+        0.13,
+        2.7,
+        0.13
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    },
+    {
+      "name": "COL_Lamp 3.6",
+      "center": [
+        3.6,
+        1.35,
+        -1.89
+      ],
+      "size": [
+        0.13,
+        2.7,
+        0.13
+      ],
+      "yaw_deg": 0,
+      "parent": ""
+    }
+  ],
+  "materials": [
+    {
+      "name": "MD_Deck",
+      "group": "Dock",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "metallic": 1,
+      "smoothness": 1,
+      "baseMap": "Textures/MD_Deck_BaseColor.png",
+      "normalMap": "Textures/MD_Deck_Normal.png",
+      "normalStrength": 0.38,
+      "metallicMap": "Textures/MD_Deck_MetallicSmoothness.png",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Enamel",
+      "group": "Dock",
+      "color": [
+        0.5199999809265137,
+        0.5299999713897705,
+        0.47999998927116394,
+        1.0
+      ],
+      "metallic": 0.05000000074505806,
+      "smoothness": 0.5699999928474426,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Graphite",
+      "group": "Dock",
+      "color": [
+        0.02500000037252903,
+        0.04399999976158142,
+        0.052000001072883606,
+        1.0
+      ],
+      "metallic": 0.30000001192092896,
+      "smoothness": 0.5200000107288361,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Steel",
+      "group": "Dock",
+      "color": [
+        0.3199999928474426,
+        0.3799999952316284,
+        0.4099999964237213,
+        1.0
+      ],
+      "metallic": 0.8500000238418579,
+      "smoothness": 0.699999988079071,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Rubber",
+      "group": "Dock",
+      "color": [
+        0.013000000268220901,
+        0.02199999988079071,
+        0.02500000037252903,
+        1.0
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.2200000286102295,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Amber",
+      "group": "Dock",
+      "color": [
+        0.7300000190734863,
+        0.30000001192092896,
+        0.04500000178813934,
+        1.0
+      ],
+      "metallic": 0.15000000596046448,
+      "smoothness": 0.5699999928474426,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Cyan",
+      "group": "Dock",
+      "color": [
+        0.7200000286102295,
+        0.7400000095367432,
+        0.6700000166893005,
+        1.0
+      ],
+      "metallic": 0.05000000074505806,
+      "smoothness": 0.44999998807907104,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Marking",
+      "group": "Dock",
+      "color": [
+        0.7200000286102295,
+        0.7900000214576721,
+        0.7799999713897705,
+        1.0
+      ],
+      "metallic": 0.05000000074505806,
+      "smoothness": 0.3799999952316284,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_LampWarm",
+      "group": "Dock",
+      "color": [
+        1.0,
+        0.6600000262260437,
+        0.30000001192092896,
+        1.0
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7199999988079071,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        1.0,
+        0.6600000262260437,
+        0.30000001192092896
+      ],
+      "emissionStrength": 4.0
+    },
+    {
+      "name": "MD_LampCool",
+      "group": "Dock",
+      "color": [
+        0.23999999463558197,
+        0.6499999761581421,
+        0.7699999809265137,
+        1.0
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7199999988079071,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0.23999999463558197,
+        0.6499999761581421,
+        0.7699999809265137
+      ],
+      "emissionStrength": 2.0
+    },
+    {
+      "name": "MD_Glass",
+      "group": "Dock",
+      "color": [
+        0.054999999701976776,
+        0.1599999964237213,
+        0.1899999976158142,
+        0.2800000011920929
+      ],
+      "metallic": 0.07999999821186066,
+      "smoothness": 0.8199999928474426,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Concrete",
+      "group": "Dock",
+      "color": [
+        0.20000000298023224,
+        0.25,
+        0.25999999046325684,
+        1.0
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.10000002384185791,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Paint",
+      "group": "Dock",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "metallic": 1,
+      "smoothness": 1,
+      "baseMap": "Textures/MD_Paint_BaseColor.png",
+      "normalMap": "Textures/MD_Paint_Normal.png",
+      "normalStrength": 0.2,
+      "metallicMap": "Textures/MD_Paint_MetallicSmoothness.png",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "MD_Rope",
+      "group": "Dock",
+      "color": [
+        1,
+        1,
+        1,
+        1.0
+      ],
+      "metallic": 1,
+      "smoothness": 1,
+      "baseMap": "Textures/MD_Rope_BaseColor.png",
+      "normalMap": "Textures/MD_Rope_Normal.png",
+      "normalStrength": 0.65,
+      "metallicMap": "Textures/MD_Rope_MetallicSmoothness.png",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "TL_Exterior",
+      "group": "Transport",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 1.0,
+      "smoothness": 1.0,
+      "baseMap": "Textures/TransportLaunch_Exterior_BaseColor.png",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "Textures/TransportLaunch_Exterior_MetallicSmoothness.png",
+      "occlusionMap": "Textures/TransportLaunch_Exterior_Occlusion.png",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "TL_Interior",
+      "group": "Transport",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 1.0,
+      "smoothness": 1.0,
+      "baseMap": "Textures/TransportLaunch_Interior_BaseColor.png",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "Textures/TransportLaunch_Interior_MetallicSmoothness.png",
+      "occlusionMap": "Textures/TransportLaunch_Interior_Occlusion.png",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "TL_Site",
+      "group": "Transport",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 1.0,
+      "smoothness": 1.0,
+      "baseMap": "Textures/TransportLaunch_Site_BaseColor.png",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "Textures/TransportLaunch_Site_MetallicSmoothness.png",
+      "occlusionMap": "Textures/TransportLaunch_Site_Occlusion.png",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "TL_Labels",
+      "group": "Transport",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.45,
+      "baseMap": "Textures/TransportLaunch_Labels.png",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0,
+        0,
+        0
+      ],
+      "emissionStrength": 0
+    },
+    {
+      "name": "TL_LightPanel",
+      "group": "Transport",
+      "color": [
+        0.9,
+        0.85,
+        0.75,
+        1
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        1.0,
+        0.82,
+        0.62
+      ],
+      "emissionStrength": 3.0
+    },
+    {
+      "name": "TL_StatusGreen",
+      "group": "Transport",
+      "color": [
+        0.006,
+        0.033,
+        0.01,
+        1
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        0.04,
+        0.75,
+        0.14
+      ],
+      "emissionStrength": 2.5
+    },
+    {
+      "name": "TL_DeckLamp",
+      "group": "Transport",
+      "color": [
+        0.042,
+        0.017,
+        0.002,
+        1
+      ],
+      "metallic": 0.0,
+      "smoothness": 0.7,
+      "baseMap": "",
+      "normalMap": "",
+      "normalStrength": 0,
+      "metallicMap": "",
+      "occlusionMap": "",
+      "emission": [
+        1.0,
+        0.43,
+        0.1
+      ],
+      "emissionStrength": 5.0
+    }
+  ]
+}

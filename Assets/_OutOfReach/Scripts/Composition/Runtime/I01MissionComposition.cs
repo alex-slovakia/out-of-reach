@@ -40,6 +40,7 @@ namespace OutOfReach.Composition
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
         [SerializeField] private EmbodiedBodyPresenter embodiedBody;
         [SerializeField] private I06HabitatBindings habitat;
+        [SerializeField] private I06MarineBindings marine;
         [SerializeField] private Transform firstPersonMotionPivot;
         [SerializeField] private OpeningMenuMotionPresenter openingMenuMotion;
         [SerializeField] private Transform openingMenuMotionPivot;
@@ -94,6 +95,7 @@ namespace OutOfReach.Composition
         public MissionRuntime Runtime => runtime;
         public MissionCinematicPresenter Cinematics => cinematics;
         public bool ModeChosen => modeChosen;
+        public bool IsTransportDeparturePlaying => marine && marine.OwnsPresentation;
         public bool InteriorRepairsComplete => Condition(ShipSystemId.Power) >= 1d && Condition(ShipSystemId.LifeSupport) >= 1d;
 
         public void Configure(MissionRuntime missionRuntime, MissionFlightBoard board,
@@ -136,12 +138,13 @@ namespace OutOfReach.Composition
 
         public void ConfigureBody(EmbodiedBodyPresenter presenter) => embodiedBody = presenter;
         public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
+        public void ConfigureMarine(I06MarineBindings bindings) => marine = bindings;
 
         // A pause keeps the body in the actual scene behind the menu. Contact commands
         // use the stricter player-control gate; visibility alone never grants input.
         private bool CanPresentBody() => isActiveAndEnabled && attached && modeChosen && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
-            && runtime.Player && cinematics && !cinematics.IsPlaying
+            && runtime.Player && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
             && runtime.GameState.Phase != GamePhase.Outcome && runtime.GameState.Phase != GamePhase.Report;
 
@@ -168,6 +171,7 @@ namespace OutOfReach.Composition
         }
 
         private bool CanPresentOpeningMenuMotion() => isActiveAndEnabled && attached && boundSession != null
+            && !IsTransportDeparturePlaying
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && runtime.Player.isActiveAndEnabled && !runtime.Player.ControlAllowed
             && cinematics && !cinematics.IsPlaying;
@@ -273,6 +277,7 @@ namespace OutOfReach.Composition
 
         private bool CanUsePlanningControls() => isActiveAndEnabled && attached && boundSession != null
             && runtime && ReferenceEquals(boundSession, runtime.Session)
+            && !IsTransportDeparturePlaying
             && domainControlGate != null && domainControlGate()
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
@@ -382,9 +387,20 @@ namespace OutOfReach.Composition
             modeChosen = runtime.GameState.Phase != GamePhase.Planning || runtime.PlanningDeadline.IsEnabled;
             BindPlanningControlGate();
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
+            flightBoard.SetDeparturePresentation(false);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
             flightBoard.ConfigureExertion(() => runtime && runtime.Player ? runtime.Player.ExertionRemaining01 : float.NaN);
             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
+            flightBoard.ConfigurePlanningInstruction(marine ? (Func<string>)(() => runtime.AwaitingBoarding
+                ? "Loading closed. Board and secure your seat."
+                : "Stow your supplies aboard the transport") : null);
+            if (marine)
+            {
+                marine.CaptionChanged += OnCinematicCaption;
+                marine.CueRaised += OnDepartureCue;
+                marine.Transferred += OnTransportTransferred;
+                marine.Bind(runtime, cinematics.ReducedEffects);
+            }
             if (habitat) habitat.ConfigureSession(runtime);
             if (cargoPresentation)
                 cargoPresentation.Configure(runtime.Cargo, runtime.Planner, runtime.GameState);
@@ -456,6 +472,13 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (marine)
+            {
+                marine.Unbind();
+                marine.CaptionChanged -= OnCinematicCaption;
+                marine.CueRaised -= OnDepartureCue;
+                marine.Transferred -= OnTransportTransferred;
+            }
             if (habitat) habitat.ClearBinding();
             if (embodiedBody) embodiedBody.ClearBinding();
             if (footsteps) footsteps.ClearBinding();
@@ -489,9 +512,11 @@ namespace OutOfReach.Composition
             requestedDialogue.Clear();
             if (flightBoard)
             {
+                flightBoard.SetDeparturePresentation(false);
                 flightBoard.ClearInteractionPrompt();
                 flightBoard.ClearSubtitle();
                 flightBoard.ConfigureExertion(null);
+                flightBoard.ConfigurePlanningInstruction(null);
                 flightBoard.enabled = false;
                 flightBoard.ConfigurePhysicalPlanning(false, null);
             }
@@ -540,6 +565,7 @@ namespace OutOfReach.Composition
         public void Restart() { if (runtime) runtime.RestartMission(); }
         public void SetReducedEffects(bool reduced)
         {
+            if (marine) marine.SetReducedMotion(reduced);
             if (cinematics) cinematics.ReducedEffects = reduced;
             if (firstPersonMotion) firstPersonMotion.SetReducedMotion(reduced);
             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
@@ -558,6 +584,15 @@ namespace OutOfReach.Composition
 
         private void OnPhaseChanged(PhaseChanged message)
         {
+            if (marine && message.Previous == GamePhase.Planning && message.Current == GamePhase.Intro)
+            {
+                flightBoard.SetDeparturePresentation(true);
+                if (cargoPresentation) cargoPresentation.SetAboardDepartureVisible(true);
+                if (firstPersonMotion) firstPersonMotion.ResetToNeutral();
+                if (openingMenuMotion) openingMenuMotion.ResetToNeutral();
+                if (!marine.BeginDeparture() && !marine.OwnsPresentation)
+                    flightBoard.SetDeparturePresentation(false);
+            }
             if (preflightTension) preflightTension.RefreshPresentation();
             ApplyPhasePresentation(message.Current, true);
             controls.Refresh();
@@ -568,7 +603,7 @@ namespace OutOfReach.Composition
             if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             if (phase == GamePhase.Planning && !runtime.PreflightWalk && planningFramingPivot && planningViewAnchor)
                 planningFramingPivot.SetPositionAndRotation(planningViewAnchor.position, planningViewAnchor.rotation);
-            else RestorePlayerFraming();
+            else if (!IsTransportDeparturePlaying) RestorePlayerFraming();
 
             switch (phase)
             {
@@ -579,7 +614,7 @@ namespace OutOfReach.Composition
                     modeChosen = true;
                     flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
                     audioPresenter.SetMood(MusicMood.Isolation);
-                    if (playTransition)
+                    if (playTransition && !IsTransportDeparturePlaying)
                     {
                         audioPresenter.TryPlaySfx("ui_confirm");
                         PlayOptional(recordedBriefing, "MISSION CONTROL · EARTH · RECORDED");
@@ -612,6 +647,24 @@ namespace OutOfReach.Composition
         private void RestorePlayerFraming()
         {
             if (planningFramingPivot) planningFramingPivot.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
+
+        private void OnDepartureCue(TransportDepartureCue cue)
+        {
+            if (!audioPresenter) return;
+            if (cue == TransportDepartureCue.HatchClosing && airlockMotor) audioPresenter.PlaySfx(airlockMotor, .6f);
+            if (cue == TransportDepartureCue.Acceleration) audioPresenter.SetMood(MusicMood.Tension, .7f);
+            if (cue == TransportDepartureCue.LaterAboard) audioPresenter.SetMood(MusicMood.Isolation, 1f);
+        }
+
+        private void OnTransportTransferred()
+        {
+            if (flightBoard) flightBoard.SetDeparturePresentation(false);
+            if (cargoPresentation) cargoPresentation.SetAboardDepartureVisible(false);
+            if (boundSession == null || !runtime) return;
+            RestorePlayerFraming();
+            ApplyPhasePresentation(runtime.GameState.Phase, true);
+            controls.Refresh();
         }
 
         private void OnCinematicRequested(CinematicRequested request)

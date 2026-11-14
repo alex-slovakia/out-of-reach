@@ -1,5 +1,9 @@
 # NASA data and scientific assumptions
 
+## Marine prologue presentation boundary
+
+The fictional marine launch has an elevated boarding deck. Its 22-second, 90-metre authored ascent ends with a clearly separate “LATER · ABOARD AURORA-7” chapter. This is cinematic compression, not a calculated launch trajectory, orbital insertion or rendezvous. Orbit is not reached in 22 seconds; the intervening flight is omitted. The real-time loading deadline and loaded equipment remain authoritative before this presentation transition. The deep-space communications model below remains the separately documented Mars-vicinity reference approximation.
+
 ## Status
 
 The committed NASA/JPL Horizons dataset now drives C04 communications in the integrated I02 mission. At runtime revision `7e41699`, the 198-check scene harness exercised actual outbound/return delay, processing, reception and reporting. Original-project merge `4784913` contains the same runtime plus two unused optional C05 interfaces and passed Unity import/compilation. This is scripted scene evidence, not a completed manual standalone playthrough. Stars remain procedural in this checkpoint; the GMAT catalogue package is being prepared separately and must not be described as already rendered in game.

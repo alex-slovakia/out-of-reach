@@ -1,0 +1,177 @@
+{
+  "MD_Deck": {
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "alpha": 1.0,
+    "metallic": 1,
+    "roughness": 0,
+    "emissionStrengthBlender": 1.0,
+    "normalStrength": 0.38,
+    "textures": {
+      "baseColor": "Textures/MD_Deck_BaseColor.png",
+      "normal": "Textures/MD_Deck_Normal.png",
+      "metallicR_smoothnessA": "Textures/MD_Deck_MetallicSmoothness.png",
+      "roughnessForBlender": "Textures/MD_Deck_Roughness.png"
+    }
+  },
+  "MD_Enamel": {
+    "baseColorLinear": [
+      0.5199999809265137,
+      0.5299999713897705,
+      0.47999998927116394
+    ],
+    "alpha": 1.0,
+    "metallic": 0.05000000074505806,
+    "roughness": 0.4300000071525574,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Graphite": {
+    "baseColorLinear": [
+      0.02500000037252903,
+      0.04399999976158142,
+      0.052000001072883606
+    ],
+    "alpha": 1.0,
+    "metallic": 0.30000001192092896,
+    "roughness": 0.47999998927116394,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Steel": {
+    "baseColorLinear": [
+      0.3199999928474426,
+      0.3799999952316284,
+      0.4099999964237213
+    ],
+    "alpha": 1.0,
+    "metallic": 0.8500000238418579,
+    "roughness": 0.30000001192092896,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Rubber": {
+    "baseColorLinear": [
+      0.013000000268220901,
+      0.02199999988079071,
+      0.02500000037252903
+    ],
+    "alpha": 1.0,
+    "metallic": 0.0,
+    "roughness": 0.7799999713897705,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Amber": {
+    "baseColorLinear": [
+      0.7300000190734863,
+      0.30000001192092896,
+      0.04500000178813934
+    ],
+    "alpha": 1.0,
+    "metallic": 0.15000000596046448,
+    "roughness": 0.4300000071525574,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Cyan": {
+    "baseColorLinear": [
+      0.7200000286102295,
+      0.7400000095367432,
+      0.6700000166893005
+    ],
+    "alpha": 1.0,
+    "metallic": 0.05000000074505806,
+    "roughness": 0.550000011920929,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Marking": {
+    "baseColorLinear": [
+      0.7200000286102295,
+      0.7900000214576721,
+      0.7799999713897705
+    ],
+    "alpha": 1.0,
+    "metallic": 0.05000000074505806,
+    "roughness": 0.6200000047683716,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_LampWarm": {
+    "baseColorLinear": [
+      1.0,
+      0.6600000262260437,
+      0.30000001192092896
+    ],
+    "alpha": 1.0,
+    "metallic": 0.0,
+    "roughness": 0.2800000011920929,
+    "emissionStrengthBlender": 4.0
+  },
+  "MD_LampCool": {
+    "baseColorLinear": [
+      0.23999999463558197,
+      0.6499999761581421,
+      0.7699999809265137
+    ],
+    "alpha": 1.0,
+    "metallic": 0.0,
+    "roughness": 0.2800000011920929,
+    "emissionStrengthBlender": 2.0
+  },
+  "MD_Glass": {
+    "baseColorLinear": [
+      0.054999999701976776,
+      0.1599999964237213,
+      0.1899999976158142
+    ],
+    "alpha": 0.2800000011920929,
+    "metallic": 0.07999999821186066,
+    "roughness": 0.18000000715255737,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Concrete": {
+    "baseColorLinear": [
+      0.20000000298023224,
+      0.25,
+      0.25999999046325684
+    ],
+    "alpha": 1.0,
+    "metallic": 0.0,
+    "roughness": 0.8999999761581421,
+    "emissionStrengthBlender": 1.0
+  },
+  "MD_Paint": {
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "alpha": 1.0,
+    "metallic": 1,
+    "roughness": 0,
+    "emissionStrengthBlender": 1.0,
+    "normalStrength": 0.2,
+    "textures": {
+      "baseColor": "Textures/MD_Paint_BaseColor.png",
+      "normal": "Textures/MD_Paint_Normal.png",
+      "metallicR_smoothnessA": "Textures/MD_Paint_MetallicSmoothness.png",
+      "roughnessForBlender": "Textures/MD_Paint_Roughness.png"
+    }
+  },
+  "MD_Rope": {
+    "baseColorLinear": [
+      1,
+      1,
+      1
+    ],
+    "alpha": 1.0,
+    "metallic": 1,
+    "roughness": 0,
+    "emissionStrengthBlender": 1.0,
+    "normalStrength": 0.65,
+    "textures": {
+      "baseColor": "Textures/MD_Rope_BaseColor.png",
+      "normal": "Textures/MD_Rope_Normal.png",
+      "metallicR_smoothnessA": "Textures/MD_Rope_MetallicSmoothness.png",
+      "roughnessForBlender": "Textures/MD_Rope_Roughness.png"
+    }
+  }
+}

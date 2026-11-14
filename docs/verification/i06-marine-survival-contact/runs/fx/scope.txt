@@ -1,0 +1,5 @@
+Actual saved Bootstrap and actual production FX/Marine bindings. Real StartPractice and Planner.TryLaunch are explicit setup shortcuts; no cargo interaction/input acceptance claim.
+Normal Runtime/TransportDeparturePresenter Update drives both real 22-second launches. No time step, phase mutation, shortened timeline or private advance. Normal batch OnApplicationFocus(true) callback only.
+9.8/11.5s captures use one disabled temporary diagnostic nozzle camera; 18.5s uses the actual existing player camera without moving it. All PNGs are native camera-only GPU renders, excluding UI.
+Pauses use actual Runtime.SetPaused. Direct FX ClearBinding/disable/reconfigure are explicitly presentation lifecycle tests, not gameplay. Restart uses actual composition.Restart.
+All Assets hashes checked; no scene/source save or authorer. No new Light/AudioListener. Diagnostic camera/RT/texture disposed. GPU art acceptance remains visual review.

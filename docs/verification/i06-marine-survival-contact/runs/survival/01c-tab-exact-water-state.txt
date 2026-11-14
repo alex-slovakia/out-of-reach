@@ -1,0 +1,32 @@
+phase=Survival
+outcome=None
+simulationSeconds=15118.965642496936
+resting=False
+controlAllowed=True
+cursor=None
+visibleLabels=
+Survive until rescue
+Manage your food, water and ship systems.
+
+300× simulation
+O₂ reserve
+32.9 kg
+Water stores
+99.7 L
+Food stores
+63.8 kg
+Battery
+27.7 kWh
+Fed
+Hydrated
+Full = needs met · not stored supplies
+Spare parts
+0
+Recovery craft inbound
+Rendezvous in 11d 23h 0m (simulated)
+Nearby recovery craft · fictional scenario
+Cabin CO₂
+2635 ppm
+Mission 04:11:58
+MISSION CONTROL · EARTH · DELAYED REPLY
+Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.

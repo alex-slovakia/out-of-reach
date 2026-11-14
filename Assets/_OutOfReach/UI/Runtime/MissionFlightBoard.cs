@@ -31,14 +31,25 @@ namespace OutOfReach.Presentation.UI
         private bool disposed;
         private bool physicalPlanning;
         private bool menuOverlayVisible;
+        private bool departurePresentation;
         private string commandExplanation = string.Empty;
         private string subtitleText = string.Empty;
         private string subtitleSpeaker = string.Empty;
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
         private Func<float> readExertionRemaining;
+        private Func<string> readPlanningInstruction;
+        public void ConfigurePlanningInstruction(Func<string> readInstruction) => readPlanningInstruction = readInstruction;
 
         public StyleSheet SharedStyleSheet => styleSheet;
+
+        /// <summary>Root-owned transport shot visibility. Captions and the separate pause menu remain available.</summary>
+        public void SetDeparturePresentation(bool active)
+        {
+            if (disposed) return;
+            departurePresentation = active;
+            view?.SetDeparturePresentation(active);
+        }
 
         public void ConfigureExertion(Func<float> readRemaining)
         {
@@ -72,6 +83,7 @@ namespace OutOfReach.Presentation.UI
                 evaStatus = null;
                 cargoLoading = null;
                 physicalPlanning = false;
+                SetDeparturePresentation(false);
                 view?.SetPhysicalPlanning(false);
                 hasResourceReference = false;
                 view?.ClearResourceReference();
@@ -239,6 +251,7 @@ namespace OutOfReach.Presentation.UI
             cargoLoading = null;
             readExertionRemaining = null;
             physicalPlanning = false;
+            departurePresentation = false;
             hasResourceReference = false;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
@@ -253,6 +266,7 @@ namespace OutOfReach.Presentation.UI
             if (root == null) return;
             view = new FlightBoardView(root, styleSheet);
             view.SetMenuOverlayVisible(menuOverlayVisible);
+            view.SetDeparturePresentation(departurePresentation);
             view.SetPhysicalPlanning(physicalPlanning);
             view.QuantityChangeRequested += ChangeQuantity;
             view.LaunchRequested += Launch;
@@ -381,6 +395,8 @@ namespace OutOfReach.Presentation.UI
             view.SetPlanningTiming(hasDeadline, hasDeadline && deadline.IsEnabled,
                 hasDeadline ? deadline.RemainingRealSeconds : 0, hasClock && clock.IsPaused,
                 hasDeadline ? deadline.LastValidConfiguration : null, bound ? planner.Catalog : null);
+            if (physicalPlanning && bound && state.Phase == GamePhase.Planning && readPlanningInstruction != null)
+                view.SetPhysicalPlanningInstruction(readPlanningInstruction());
             view.SetDeadlineFallback(hasDeadline && state.Phase != GamePhase.Planning
                 && deadline.UsedLastValidLoadoutAtDeadline);
         }

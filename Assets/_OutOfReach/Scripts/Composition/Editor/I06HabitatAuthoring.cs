@@ -168,14 +168,18 @@ namespace OutOfReach.Composition.Editor
                 {
                     material.SetFloat("_AlphaClip", 1); material.SetFloat("_Cutoff", .5f); material.EnableKeyword("_ALPHATEST_ON");
                     material.SetOverrideTag("RenderType", "TransparentCutout"); material.renderQueue = (int)RenderQueue.AlphaTest;
-                    material.SetShaderPassEnabled("ShadowCaster", false);
+                    // URP Lit validates opaque cutouts with the shadow pass enabled.
+                    // Keep authoring consistent with that validator instead of dirtying on every import.
                 }
                 if (spec.surface == "transparent")
                 {
                     tint.a = spec.alpha; material.SetFloat("_Surface", 1); material.SetFloat("_Blend", 0);
-                    material.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha); material.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                    // Match installed URP Lit's specular-preserving alpha blend setup.
+                    material.SetFloat("_BlendModePreserveSpecular", 1);
+                    material.SetFloat("_SrcBlend", (float)BlendMode.One); material.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
                     material.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha); material.SetFloat("_ZWrite", 0);
                     material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT"); material.SetOverrideTag("RenderType", "Transparent");
+                    material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
                     material.renderQueue = (int)RenderQueue.Transparent; material.SetShaderPassEnabled("ShadowCaster", false);
                 }
                 material.SetColor("_BaseColor", tint); EditorUtility.SetDirty(material); AssetDatabase.SaveAssetIfDirty(material);

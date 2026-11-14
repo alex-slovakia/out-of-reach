@@ -1,0 +1,45 @@
+{
+    "scope": "ACTUAL PLAYER CAMERA unchanged: native production exterior view, UI excluded.",
+    "name": "03-actual-exterior-18_5",
+    "utc": "2026-11-14T21:27:27.8220389Z",
+    "timelineSeconds": 18.500864028930665,
+    "fxSeconds": 18.500864028930665,
+    "plumeLength": 8.0,
+    "mean": 0.3343599736690521,
+    "deviation": 0.23881018161773683,
+    "steamLobes": 0,
+    "paused": false,
+    "reduced": false,
+    "cameraPosition": {
+        "x": 10016.0,
+        "y": 150.5632781982422,
+        "z": -26.0
+    },
+    "nozzlePosition": {
+        "x": 10000.0,
+        "y": 112.16327667236328,
+        "z": 0.0
+    },
+    "nozzleForward": {
+        "x": 0.0,
+        "y": -1.0000001192092896,
+        "z": -1.1920928955078126e-7
+    },
+    "deckPosition": {
+        "x": 10000.0,
+        "y": 67.40000915527344,
+        "z": -2.0
+    },
+    "cameraRotation": {
+        "x": 0.24182118475437165,
+        "y": -0.263602077960968,
+        "z": 0.0684455931186676,
+        "w": 0.9313172101974487
+    },
+    "exhaustParameters": {
+        "x": 18.500864028930665,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 0.0
+    }
+}

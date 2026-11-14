@@ -1,0 +1,6 @@
+PASS: 66 artifacts byte-identical to their pinned original sources.
+PASS: 9 genuine unchanged native PNGs; original sidecars retained.
+PASS: exact assertion counts 177/1740/398/157; all passing with verified process exit0.
+PASS: source/check manifests unchanged; proposal changes one provenance string only.
+No Unity launch, git operation, or live/isolated Assets edits by packaging agent.
+Not a new runtime or visual acceptance claim.

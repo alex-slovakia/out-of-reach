@@ -1,0 +1,398 @@
+PASS startup | One actual Player and capsule.
+PASS startup | One camera and existing visual owners plus one production bridge.
+PASS startup | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS startup | Real domain command: Cockpit check complete. Impact detected.
+PASS startup | Actual cockpit command requested Impact.
+PASS startup | Real domain command: power distribution repaired (2 spare parts).
+PASS startup | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS startup | New actual unsuited Repair session permits controls.
+PASS startup | Original glove session binds without rig copy.
+PASS startup | Configure starts inactive, no authority or implicit float entry.
+PASS work-Left-Push-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS work-Left-Push-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-Left-Push-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS work-Left-Push-session1 | Actual Player float mode and real V04 body pose agree.
+PASS work-Left-Push-session1 | V04 floating fit keeps its approved centered visual root.
+PASS work-Left-Push-session1 | Exactly one visible hand owner matches actual suit state.
+PASS work-Left-Push-session1 | Existing WORK skin is readable and visible.
+PASS work-Left-Push-session1 | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-Left-Push-session1 | Actual V04 neutral matches source141mm clearance.
+PASS work-Left-Push-session1 | Production bridge accepts anticipation; refusal=; bare=
+PASS work-Left-Push-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-Left-Push-session1 | One actual Player event during its valid dispatched request.
+PASS work-Left-Push-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS work-Left-Push-session1 | Actual contact point is inside the existing camera frustum.
+PASS work-Left-Push-session1 | Independent actual skin/pad contact residual is within its original tolerance: 2.751676E-07
+PASS work-Left-Push-session1 | Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.
+PASS work-Left-Push-session1 | Actual Player velocity points away from the verified wall.
+PASS work-Left-Push-session1 | Actual camera capture is on the physical action's frame.
+PASS work-Left-Push-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS work-Left-Push-session1 | Bridge reports actual Player success exactly once.
+PASS work-Left-Push-session1 | Real push creates actual collision-aware travel after touch.
+PASS work-Left-Push-session1 | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS work-Left-Push-session1 | Return never repeats a push.
+PASS work-Right-Push-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS work-Right-Push-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-Right-Push-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS work-Right-Push-session1 | Actual Player float mode and real V04 body pose agree.
+PASS work-Right-Push-session1 | V04 floating fit keeps its approved centered visual root.
+PASS work-Right-Push-session1 | Exactly one visible hand owner matches actual suit state.
+PASS work-Right-Push-session1 | Existing WORK skin is readable and visible.
+PASS work-Right-Push-session1 | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-Right-Push-session1 | Actual V04 neutral matches source141mm clearance.
+PASS work-Right-Push-session1 | Production bridge accepts anticipation; refusal=; bare=
+PASS work-Right-Push-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-Right-Push-session1 | One actual Player event during its valid dispatched request.
+PASS work-Right-Push-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS work-Right-Push-session1 | Actual contact point is inside the existing camera frustum.
+PASS work-Right-Push-session1 | Independent actual skin/pad contact residual is within its original tolerance: 4.9623327E-07
+PASS work-Right-Push-session1 | Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.
+PASS work-Right-Push-session1 | Actual Player velocity points away from the verified wall.
+PASS work-Right-Push-session1 | Actual camera capture is on the physical action's frame.
+PASS work-Right-Push-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS work-Right-Push-session1 | Bridge reports actual Player success exactly once.
+PASS work-Right-Push-session1 | Real push creates actual collision-aware travel after touch.
+PASS work-Right-Push-session1 | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS work-Right-Push-session1 | Return never repeats a push.
+PASS same-session-reconfigure-pending | Actual rendered rail uses its real CapsuleCollider.
+PASS same-session-reconfigure-pending | Real control gate allows entry before calling Player.EnterFloat.
+PASS same-session-reconfigure-pending | Real nearby source-proven surface permits EnterFloat.
+PASS same-session-reconfigure-pending | Actual Player float mode and real V04 body pose agree.
+PASS same-session-reconfigure-pending | V04 floating fit keeps its approved centered visual root.
+PASS same-session-reconfigure-pending | Exactly one visible hand owner matches actual suit state.
+PASS same-session-reconfigure-pending | Existing WORK skin is readable and visible.
+PASS same-session-reconfigure-pending | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS same-session-reconfigure-pending | Actual V04 neutral matches source141mm clearance.
+PASS same-session-reconfigure-pending | Production bridge accepts anticipation; refusal=; bare=
+PASS same-session-reconfigure-pending | Accepted bridge request has no early physical command, velocity or held state.
+PASS same-session-reconfigure-pending | Old binding still has anticipation only.
+PASS same-session-reconfigure-pending | Latest binding cancels old pending pose and starts inactive.
+PASS same-session-reconfigure-pending | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS same-session-reconfigure-pending | Old pending callback cannot fire after reconfigure.
+PASS work-release-before | Actual rendered rail uses its real CapsuleCollider.
+PASS work-release-before | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-release-before | Real nearby source-proven surface permits EnterFloat.
+PASS work-release-before | Actual Player float mode and real V04 body pose agree.
+PASS work-release-before | V04 floating fit keeps its approved centered visual root.
+PASS work-release-before | Exactly one visible hand owner matches actual suit state.
+PASS work-release-before | Existing WORK skin is readable and visible.
+PASS work-release-before | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-release-before | Actual V04 neutral matches source141mm clearance.
+PASS work-release-before | Production bridge accepts anticipation; refusal=; bare=
+PASS work-release-before | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-release-before | Interrupt before real contact, after visible anticipation began.
+PASS work-release-before | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS work-release-before | No delayed action survives release/pause/changed real geometry.
+PASS work-pause | Actual rendered rail uses its real CapsuleCollider.
+PASS work-pause | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-pause | Real nearby source-proven surface permits EnterFloat.
+PASS work-pause | Actual Player float mode and real V04 body pose agree.
+PASS work-pause | V04 floating fit keeps its approved centered visual root.
+PASS work-pause | Exactly one visible hand owner matches actual suit state.
+PASS work-pause | Existing WORK skin is readable and visible.
+PASS work-pause | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-pause | Actual V04 neutral matches source141mm clearance.
+PASS work-pause | Production bridge accepts anticipation; refusal=; bare=
+PASS work-pause | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-pause | Interrupt before real contact, after visible anticipation began.
+PASS work-pause | Real domain command: Simulation paused.
+PASS work-pause | Body reset synchronously ends borrowed arm pose before resampling.
+PASS work-pause | Actual pause denies control and cancels pending action/owned grip.
+PASS work-pause | Real domain command: Simulation resumed.
+PASS work-pause | No delayed action survives release/pause/changed real geometry.
+PASS work-occluded | Actual rendered rail uses its real CapsuleCollider.
+PASS work-occluded | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-occluded | Real nearby source-proven surface permits EnterFloat.
+PASS work-occluded | Actual Player float mode and real V04 body pose agree.
+PASS work-occluded | V04 floating fit keeps its approved centered visual root.
+PASS work-occluded | Exactly one visible hand owner matches actual suit state.
+PASS work-occluded | Existing WORK skin is readable and visible.
+PASS work-occluded | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-occluded | Actual V04 neutral matches source141mm clearance.
+PASS work-occluded | Production bridge accepts anticipation; refusal=; bare=
+PASS work-occluded | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-occluded | Interrupt before real contact, after visible anticipation began.
+PASS work-occluded | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS work-occluded | No delayed action survives release/pause/changed real geometry.
+PASS work-refuse-far | Actual rendered rail uses its real CapsuleCollider.
+PASS work-refuse-far | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-refuse-far | Real nearby source-proven surface permits EnterFloat.
+PASS work-refuse-far | Actual Player float mode and real V04 body pose agree.
+PASS work-refuse-far | V04 floating fit keeps its approved centered visual root.
+PASS work-refuse-far | Exactly one visible hand owner matches actual suit state.
+PASS work-refuse-far | Actual invalid/unsupported surface refuses: far; No unobstructed solid surface within reach.
+PASS work-refuse-far | Refusal changes no position/velocity/grip and emits no action.
+PASS work-refuse-bare-grip | Actual rendered rail uses its real CapsuleCollider.
+PASS work-refuse-bare-grip | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-refuse-bare-grip | Real nearby source-proven surface permits EnterFloat.
+PASS work-refuse-bare-grip | Actual Player float mode and real V04 body pose agree.
+PASS work-refuse-bare-grip | V04 floating fit keeps its approved centered visual root.
+PASS work-refuse-bare-grip | Exactly one visible hand owner matches actual suit state.
+PASS work-refuse-bare-grip | Actual invalid/unsupported surface refuses: bare-grip; Bare-hand grip has no authored pose.
+PASS work-refuse-bare-grip | Refusal changes no position/velocity/grip and emits no action.
+PASS real suit preparation | Real domain command: EVA suit on. Tank: 0.3 kg oxygen.
+PASS real suit preparation | Paid actual suit preparation; no fixture suit substitute.
+PASS eva-Left-Push-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Left-Push-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Left-Push-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Left-Push-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Left-Push-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Left-Push-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Left-Push-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Left-Push-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Left-Push-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Left-Push-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Left-Push-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Left-Push-session1 | Independent actual skin/pad contact residual is within its original tolerance: 1.1920929E-07
+PASS eva-Left-Push-session1 | Actual Player velocity points away from the verified wall.
+PASS eva-Left-Push-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Left-Push-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Left-Push-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Left-Push-session1 | Real push creates actual collision-aware travel after touch.
+PASS eva-Left-Push-session1 | Return never repeats a push.
+PASS eva-Right-Push-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Right-Push-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Right-Push-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Right-Push-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Right-Push-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Right-Push-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Right-Push-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Right-Push-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Right-Push-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Right-Push-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Right-Push-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Right-Push-session1 | Independent actual skin/pad contact residual is within its original tolerance: 1.1920929E-07
+PASS eva-Right-Push-session1 | Actual Player velocity points away from the verified wall.
+PASS eva-Right-Push-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Right-Push-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Right-Push-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Right-Push-session1 | Real push creates actual collision-aware travel after touch.
+PASS eva-Right-Push-session1 | Return never repeats a push.
+PASS eva-Left-Grip-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Left-Grip-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Left-Grip-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Left-Grip-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Left-Grip-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Left-Grip-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Left-Grip-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Left-Grip-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Left-Grip-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Left-Grip-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Left-Grip-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Left-Grip-session1 | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS eva-Left-Grip-session1 | Real Player stored the actual registered collider and grip anchor.
+PASS eva-Left-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-session1 | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS eva-Left-Grip-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Left-Grip-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Left-Grip-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Left-Grip-session1 | Actual registered rail remains physically and visually held after readback.
+PASS eva-Left-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-session1 | Actual Player consumed look input while holding; camera transform was not assigned.
+PASS eva-Left-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-session1 | Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.
+PASS eva-Left-Grip-session1 | Bridge Release returns actual held grip.
+PASS eva-Left-Grip-session1 | Release/removal clears exactly the owned physical anchor and visual lease.
+PASS eva-Right-Grip-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Right-Grip-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Right-Grip-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Right-Grip-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Right-Grip-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Right-Grip-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Right-Grip-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Right-Grip-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Right-Grip-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Right-Grip-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Right-Grip-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Right-Grip-session1 | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS eva-Right-Grip-session1 | Real Player stored the actual registered collider and grip anchor.
+PASS eva-Right-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-session1 | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS eva-Right-Grip-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Right-Grip-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Right-Grip-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Right-Grip-session1 | Actual registered rail remains physically and visually held after readback.
+PASS eva-Right-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-session1 | Actual Player consumed look input while holding; camera transform was not assigned.
+PASS eva-Right-Grip-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-session1 | Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.
+PASS eva-Right-Grip-session1 | Bridge Release returns actual held grip.
+PASS eva-Right-Grip-session1 | Release/removal clears exactly the owned physical anchor and visual lease.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Left-Grip-reversed-axis-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Left-Grip-reversed-axis-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Left-Grip-reversed-axis-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Left-Grip-reversed-axis-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Left-Grip-reversed-axis-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Left-Grip-reversed-axis-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Left-Grip-reversed-axis-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Left-Grip-reversed-axis-session1 | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS eva-Left-Grip-reversed-axis-session1 | Real Player stored the actual registered collider and grip anchor.
+PASS eva-Left-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-reversed-axis-session1 | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Left-Grip-reversed-axis-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Left-Grip-reversed-axis-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual registered rail remains physically and visually held after readback.
+PASS eva-Left-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-reversed-axis-session1 | Actual Player consumed look input while holding; camera transform was not assigned.
+PASS eva-Left-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Left-Grip-reversed-axis-session1 | Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.
+PASS eva-Left-Grip-reversed-axis-session1 | Bridge Release returns actual held grip.
+PASS eva-Left-Grip-reversed-axis-session1 | Release/removal clears exactly the owned physical anchor and visual lease.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Right-Grip-reversed-axis-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Right-Grip-reversed-axis-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Right-Grip-reversed-axis-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Right-Grip-reversed-axis-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Right-Grip-reversed-axis-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Right-Grip-reversed-axis-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Right-Grip-reversed-axis-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Right-Grip-reversed-axis-session1 | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS eva-Right-Grip-reversed-axis-session1 | Real Player stored the actual registered collider and grip anchor.
+PASS eva-Right-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-reversed-axis-session1 | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Right-Grip-reversed-axis-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Right-Grip-reversed-axis-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual registered rail remains physically and visually held after readback.
+PASS eva-Right-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-reversed-axis-session1 | Actual Player consumed look input while holding; camera transform was not assigned.
+PASS eva-Right-Grip-reversed-axis-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-reversed-axis-session1 | Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.
+PASS eva-Right-Grip-reversed-axis-session1 | Bridge Release returns actual held grip.
+PASS eva-Right-Grip-reversed-axis-session1 | Release/removal clears exactly the owned physical anchor and visual lease.
+PASS eva-Right-Grip-remove-held-session1 | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-Right-Grip-remove-held-session1 | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-Right-Grip-remove-held-session1 | Real nearby source-proven surface permits EnterFloat.
+PASS eva-Right-Grip-remove-held-session1 | Actual Player float mode and real V04 body pose agree.
+PASS eva-Right-Grip-remove-held-session1 | V04 floating fit keeps its approved centered visual root.
+PASS eva-Right-Grip-remove-held-session1 | Exactly one visible hand owner matches actual suit state.
+PASS eva-Right-Grip-remove-held-session1 | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-Right-Grip-remove-held-session1 | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-Right-Grip-remove-held-session1 | One actual Player event during its valid dispatched request.
+PASS eva-Right-Grip-remove-held-session1 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS eva-Right-Grip-remove-held-session1 | Actual contact point is inside the existing camera frustum.
+PASS eva-Right-Grip-remove-held-session1 | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS eva-Right-Grip-remove-held-session1 | Real Player stored the actual registered collider and grip anchor.
+PASS eva-Right-Grip-remove-held-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-remove-held-session1 | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS eva-Right-Grip-remove-held-session1 | Actual camera capture is on the physical action's frame.
+PASS eva-Right-Grip-remove-held-session1 | Same-frame bridge result confirms actual Player command completed.
+PASS eva-Right-Grip-remove-held-session1 | Bridge reports actual Player success exactly once.
+PASS eva-Right-Grip-remove-held-session1 | Actual registered rail remains physically and visually held after readback.
+PASS eva-Right-Grip-remove-held-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-remove-held-session1 | Actual Player consumed look input while holding; camera transform was not assigned.
+PASS eva-Right-Grip-remove-held-session1 | Production grip frame retains the real registered rail.
+PASS eva-Right-Grip-remove-held-session1 | Look preserves the chosen grip polarity, original2mm contact, one command and unchanged Player position.
+PASS eva-Right-Grip-remove-held-session1 | Release/removal clears exactly the owned physical anchor and visual lease.
+PASS eva-release-before | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-release-before | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-release-before | Real nearby source-proven surface permits EnterFloat.
+PASS eva-release-before | Actual Player float mode and real V04 body pose agree.
+PASS eva-release-before | V04 floating fit keeps its approved centered visual root.
+PASS eva-release-before | Exactly one visible hand owner matches actual suit state.
+PASS eva-release-before | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-release-before | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-release-before | Interrupt before real contact, after visible anticipation began.
+PASS eva-release-before | No delayed action survives release/pause/changed real geometry.
+PASS eva-pause | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-pause | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-pause | Real nearby source-proven surface permits EnterFloat.
+PASS eva-pause | Actual Player float mode and real V04 body pose agree.
+PASS eva-pause | V04 floating fit keeps its approved centered visual root.
+PASS eva-pause | Exactly one visible hand owner matches actual suit state.
+PASS eva-pause | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-pause | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-pause | Interrupt before real contact, after visible anticipation began.
+PASS eva-pause | Real domain command: Simulation paused.
+PASS eva-pause | Actual pause denies control and cancels pending action/owned grip.
+PASS eva-pause | Real domain command: Simulation resumed.
+PASS eva-pause | No delayed action survives release/pause/changed real geometry.
+PASS eva-removed-rail | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-removed-rail | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-removed-rail | Real nearby source-proven surface permits EnterFloat.
+PASS eva-removed-rail | Actual Player float mode and real V04 body pose agree.
+PASS eva-removed-rail | V04 floating fit keeps its approved centered visual root.
+PASS eva-removed-rail | Exactly one visible hand owner matches actual suit state.
+PASS eva-removed-rail | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS eva-removed-rail | Accepted bridge request has no early physical command, velocity or held state.
+PASS eva-removed-rail | Interrupt before real contact, after visible anticipation began.
+PASS eva-removed-rail | No delayed action survives release/pause/changed real geometry.
+PASS eva-refuse-unknown-rail | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-refuse-unknown-rail | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-refuse-unknown-rail | Real nearby source-proven surface permits EnterFloat.
+PASS eva-refuse-unknown-rail | Actual Player float mode and real V04 body pose agree.
+PASS eva-refuse-unknown-rail | V04 floating fit keeps its approved centered visual root.
+PASS eva-refuse-unknown-rail | Exactly one visible hand owner matches actual suit state.
+PASS eva-refuse-unknown-rail | Actual invalid/unsupported surface refuses: unknown-rail; Grip needs a registered 12–17mm straight capsule rail.
+PASS eva-refuse-unknown-rail | Refusal changes no position/velocity/grip and emits no action.
+PASS eva-refuse-wall-is-not-rail | Actual rendered rail uses its real CapsuleCollider.
+PASS eva-refuse-wall-is-not-rail | Real control gate allows entry before calling Player.EnterFloat.
+PASS eva-refuse-wall-is-not-rail | Real nearby source-proven surface permits EnterFloat.
+PASS eva-refuse-wall-is-not-rail | Actual Player float mode and real V04 body pose agree.
+PASS eva-refuse-wall-is-not-rail | V04 floating fit keeps its approved centered visual root.
+PASS eva-refuse-wall-is-not-rail | Exactly one visible hand owner matches actual suit state.
+PASS eva-refuse-wall-is-not-rail | Actual invalid/unsupported surface refuses: wall-is-not-rail; Grip needs a registered 12–17mm straight capsule rail.
+PASS eva-refuse-wall-is-not-rail | Refusal changes no position/velocity/grip and emits no action.
+PASS restart-held-grip | Actual rendered rail uses its real CapsuleCollider.
+PASS restart-held-grip | Real control gate allows entry before calling Player.EnterFloat.
+PASS restart-held-grip | Real nearby source-proven surface permits EnterFloat.
+PASS restart-held-grip | Actual Player float mode and real V04 body pose agree.
+PASS restart-held-grip | V04 floating fit keeps its approved centered visual root.
+PASS restart-held-grip | Exactly one visible hand owner matches actual suit state.
+PASS restart-held-grip | Production bridge accepts anticipation; refusal=; bare=Measured waypoint is blocked or outside real arm reach.
+PASS restart-held-grip | Accepted bridge request has no early physical command, velocity or held state.
+PASS restart-held-grip | One actual Player event during its valid dispatched request.
+PASS restart-held-grip | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS restart-held-grip | Actual contact point is inside the existing camera frustum.
+PASS restart-held-grip | Independent actual skin/pad contact residual is within its original tolerance: 0
+PASS restart-held-grip | Real Player stored the actual registered collider and grip anchor.
+PASS restart-held-grip | Production grip frame retains the real registered rail.
+PASS restart-held-grip | Both cylinder-axis polarities select the same actual right-facing contact frame.
+PASS restart-held-grip | Actual camera capture is on the physical action's frame.
+PASS restart-held-grip | Same-frame bridge result confirms actual Player command completed.
+PASS restart-held-grip | Old session owns one real rail grip.
+PASS restart-held-grip | Clear restores/relinquishes owned hands and real grip before old session disposal.
+PASS restart-held-grip | Real domain command: AURORA-7 launched with 7 equipment line(s).
+PASS restart-held-grip | Real domain command: Cockpit check complete. Impact detected.
+PASS restart-held-grip | Actual cockpit command requested Impact.
+PASS restart-held-grip | Real domain command: power distribution repaired (2 spare parts).
+PASS restart-held-grip | Real domain command: life support repaired (2 spare parts, 1 kWh).
+PASS restart-held-grip | New actual unsuited Repair session permits controls.
+PASS restart-held-grip | Original glove session binds without rig copy.
+PASS restart-held-grip | Configure starts inactive, no authority or implicit float entry.
+PASS restart-held-grip | Actual second MissionSession; no substituted state/clock.
+PASS restart-held-grip | Rebind cannot retain old armed state or pending action.
+PASS restart-held-grip | No stale old-session callback after replacement.
+PASS work-Left-Push-session2 | Actual rendered rail uses its real CapsuleCollider.
+PASS work-Left-Push-session2 | Real control gate allows entry before calling Player.EnterFloat.
+PASS work-Left-Push-session2 | Real nearby source-proven surface permits EnterFloat.
+PASS work-Left-Push-session2 | Actual Player float mode and real V04 body pose agree.
+PASS work-Left-Push-session2 | V04 floating fit keeps its approved centered visual root.
+PASS work-Left-Push-session2 | Exactly one visible hand owner matches actual suit state.
+PASS work-Left-Push-session2 | Existing WORK skin is readable and visible.
+PASS work-Left-Push-session2 | Independent complete material skin set includes actual support/patch; no weight-filtered exclusions.
+PASS work-Left-Push-session2 | Actual V04 neutral matches source141mm clearance.
+PASS work-Left-Push-session2 | Production bridge accepts anticipation; refusal=; bare=
+PASS work-Left-Push-session2 | Accepted bridge request has no early physical command, velocity or held state.
+PASS work-Left-Push-session2 | One actual Player event during its valid dispatched request.
+PASS work-Left-Push-session2 | Actual physical action occurs only after visible anticipation; no prior travel.
+PASS work-Left-Push-session2 | Actual contact point is inside the existing camera frustum.
+PASS work-Left-Push-session2 | Independent actual skin/pad contact residual is within its original tolerance: 2.751676E-07
+PASS work-Left-Push-session2 | Every visible bare-skin vertex clears the actual plane and its palm patch touches within3mm.
+PASS work-Left-Push-session2 | Actual Player velocity points away from the verified wall.
+PASS work-Left-Push-session2 | Actual camera capture is on the physical action's frame.
+PASS work-Left-Push-session2 | Same-frame bridge result confirms actual Player command completed.
+PASS work-Left-Push-session2 | Bridge reports actual Player success exactly once.
+PASS work-Left-Push-session2 | Real push creates actual collision-aware travel after touch.
+PASS work-Left-Push-session2 | Bridge cancellation/return restores all authored arm/finger rotations.
+PASS work-Left-Push-session2 | Return never repeats a push.
+PASS work-Left-Push-session2 | Eleven actual event-frame captures include both hands on both physically identical rail-axis polarities.
+PASS work-Left-Push-session2 | Real rendered bare skin measured throughout bridge-owned contacts and restoration.

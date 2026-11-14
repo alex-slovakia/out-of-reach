@@ -1,0 +1,1 @@
+398 checks; 11 actual event-frame PNGs; 264 independently skinned rendered frames. Direct bridge fixture only; no input-binding/full-game acceptance.

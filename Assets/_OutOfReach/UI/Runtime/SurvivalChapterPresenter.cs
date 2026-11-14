@@ -19,9 +19,10 @@ namespace OutOfReach.Presentation.UI
         private ISimulationClock clock;
         private Func<bool> presentationAllowed;
         private bool subscribed;
-        private VisualElement needsHost, detailsHost, restHost, needs, details, rest;
+        private VisualElement needsHost, detailsHost, restHost, alertsHost, needs, details, rest, alerts;
+        private readonly SurvivalRestNotice restNotice = new SurvivalRestNotice();
         private NeedRow hunger, hydration;
-        private Label restDay, restTime, restFeedback, recoveryTitle, arrival, beacon;
+        private Label restDay, restTime, restFeedback, recoveryTitle, arrival, beacon, beaconAction, restStop;
         private Button wake;
 
         /// <param name="canPresent">Root-owned visibility gate, including menu, terminal and cinematic locks.
@@ -53,13 +54,18 @@ namespace OutOfReach.Presentation.UI
             state = null;
             clock = null;
             presentationAllowed = null;
+            restNotice.Reset();
         }
 
         private void OnEnable() { Subscribe(); RefreshPresentation(); }
-        private void OnDisable() { Unsubscribe(); ReleaseViews(); }
+        private void OnDisable() { Unsubscribe(); ReleaseViews(); restNotice.Reset(); }
         private void OnDestroy() => ClearBinding();
-        // Clock/state have no change event. Sample their values after Core; never integrate deltaTime.
-        private void LateUpdate() => RefreshPresentation();
+        // Only the notice's display lifetime uses real seconds. Mission/rest time is always read from Core.
+        private void LateUpdate()
+        {
+            restNotice.Advance(Time.unscaledDeltaTime, CanPresent());
+            RefreshPresentation();
+        }
 
         private void Subscribe()
         {
@@ -85,12 +91,18 @@ namespace OutOfReach.Presentation.UI
 
         public void RefreshPresentation()
         {
+            restNotice.Observe(survival != null && survival.Enabled && survival.IsActive
+                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None,
+                recovery != null && recovery.IsResting, recovery?.LastRestStop ?? RestStopReason.None);
             bool visible = CanPresent();
             if (!visible) { HideViews(); return; }
             if (!EnsureViews()) return;
             Show(needs, true);
-            hunger.Set(survival.Hunger01, false);
-            hydration.Set(survival.Thirst01, true);
+            hunger.Set(survival.Hunger01);
+            hydration.Set(survival.Thirst01);
+            Show(alerts, true);
+            restStop.text = restNotice.Text;
+            Show(restStop, restNotice.IsVisible);
 
             bool resting = recovery != null && recovery.IsResting;
             Show(rest, resting);
@@ -110,6 +122,9 @@ namespace OutOfReach.Presentation.UI
 
             // The existing expanded-telemetry parent owns Tab/pinned visibility. No second detail toggle/input.
             Show(details, recovery != null);
+            bool beaconRequested = recovery != null && recovery.Stage == RecoveryStage.BeaconRequested;
+            Show(beaconAction, beaconRequested);
+            Show(beacon, beaconRequested);
             if (recovery == null) return;
             recoveryTitle.text = SurvivalChapterReadout.StageLabel(recovery.Stage);
             arrival.text = recovery.ArrivalAtSimulationSeconds.HasValue
@@ -117,10 +132,10 @@ namespace OutOfReach.Presentation.UI
                 : "Arrival time unconfirmed";
             Show(arrival, recovery.Stage != RecoveryStage.Arrived);
             double? ends = recovery.BeaconWindowEndsAtSimulationSeconds;
-            bool window = recovery.Stage == RecoveryStage.BeaconRequested && ends.HasValue;
-            Show(beacon, window);
-            if (window)
-                beacon.text = SurvivalChapterReadout.BeaconWindow(ends.Value, clock.ElapsedSimulationSeconds);
+            if (beaconRequested)
+                beacon.text = ends.HasValue
+                    ? SurvivalChapterReadout.BeaconWindow(ends.Value, clock.ElapsedSimulationSeconds)
+                    : "Beacon window unavailable";
         }
 
         private bool EnsureViews()
@@ -129,22 +144,26 @@ namespace OutOfReach.Presentation.UI
             VisualElement nextNeeds = board?.Q(className: "primary-telemetry");
             VisualElement nextDetails = board?.Q(className: "expanded-telemetry");
             VisualElement nextRest = board?.Q(className: "hud");
-            if (nextNeeds == null || nextDetails == null || nextRest == null)
+            VisualElement nextAlerts = board?.Q(className: "hud-header");
+            if (nextNeeds == null || nextDetails == null || nextRest == null || nextAlerts == null)
             {
                 ReleaseViews();
                 return false;
             }
             if (needsHost == nextNeeds && detailsHost == nextDetails && restHost == nextRest
+                && alertsHost == nextAlerts && alerts?.parent == nextAlerts
                 && needs?.parent == nextNeeds && details?.parent == nextDetails && rest?.parent == nextRest)
                 return true;
             ReleaseViews();
             needsHost = nextNeeds;
             detailsHost = nextDetails;
             restHost = nextRest;
+            alertsHost = nextAlerts;
             needs = Container("survival-needs", "survival-needs");
             needs.styleSheets.Add(sheet);
-            hunger = new NeedRow(needs, "Hunger", "survival-hunger-bar", false);
-            hydration = new NeedRow(needs, "Hydration", "survival-hydration-bar", true);
+            hunger = new NeedRow(needs, "Fed", "survival-hunger-bar", false);
+            hydration = new NeedRow(needs, "Hydrated", "survival-hydration-bar", true);
+            needs.Add(Text("Full = needs met · not stored supplies", "survival-needs-key"));
             needsHost.Add(needs);
 
             rest = Container("survival-rest", "survival-rest");
@@ -165,12 +184,24 @@ namespace OutOfReach.Presentation.UI
             details.styleSheets.Add(sheet);
             recoveryTitle = Text(string.Empty, "survival-recovery-title");
             arrival = Text(string.Empty, "survival-recovery-line");
-            beacon = Text(string.Empty, "survival-recovery-line");
             details.Add(recoveryTitle);
             details.Add(arrival);
-            details.Add(beacon);
             details.Add(Text("Nearby recovery craft · fictional scenario", "survival-recovery-note"));
             detailsHost.Add(details);
+
+            // This host stays visible without Tab/Systems; do not overwrite the root's mission objective.
+            alerts = Container("survival-alerts", "survival-alerts");
+            alerts.styleSheets.Add(sheet);
+            beaconAction = Text("Power the recovery beacon at the cockpit console.", "survival-beacon-action");
+            beaconAction.name = "survival-beacon-action";
+            beacon = Text(string.Empty, "survival-beacon-window");
+            beacon.name = "survival-beacon-window";
+            restStop = Text(string.Empty, "survival-rest-stop");
+            restStop.name = "survival-rest-stop";
+            alerts.Add(beaconAction);
+            alerts.Add(beacon);
+            alerts.Add(restStop);
+            alertsHost.Add(alerts);
             return true;
         }
 
@@ -192,6 +223,7 @@ namespace OutOfReach.Presentation.UI
             Show(needs, false);
             Show(details, false);
             Show(rest, false);
+            Show(alerts, false);
             wake?.SetEnabled(false);
         }
 
@@ -201,9 +233,10 @@ namespace OutOfReach.Presentation.UI
             needs?.RemoveFromHierarchy();
             details?.RemoveFromHierarchy();
             rest?.RemoveFromHierarchy();
-            needsHost = detailsHost = restHost = needs = details = rest = null;
+            alerts?.RemoveFromHierarchy();
+            needsHost = detailsHost = restHost = alertsHost = needs = details = rest = alerts = null;
             hunger = hydration = null;
-            restDay = restTime = restFeedback = recoveryTitle = arrival = beacon = null;
+            restDay = restTime = restFeedback = recoveryTitle = arrival = beacon = beaconAction = restStop = null;
             wake = null;
         }
 
@@ -250,17 +283,16 @@ namespace OutOfReach.Presentation.UI
                 parent.Add(row);
             }
 
-            public void Set(double unmetNeed, bool invert)
+            public void Set(double unmetNeed)
             {
                 bool known = SurvivalChapterReadout.ValidNeed(unmetNeed);
-                bar.value = known ? (float)(invert ? 1d - unmetNeed : unmetNeed) : 0;
+                bar.value = (float)SurvivalChapterReadout.SatisfiedFraction(unmetNeed);
                 // Presentation attention colours only; these do not define medical or gameplay thresholds.
                 row.EnableInClassList("survival-attention", known && unmetNeed >= .5d && unmetNeed < .8d);
                 row.EnableInClassList("survival-critical", known && unmetNeed >= .8d);
                 row.EnableInClassList("survival-unknown", !known);
-                row.tooltip = !known ? label + " unavailable" : invert
-                    ? "Hydration: a full bar means thirst is satisfied. This is a crew need, not water stores."
-                    : "Hunger: an empty bar means hunger is satisfied; a rising bar means food is needed. This is not food stores.";
+                row.tooltip = !known ? label + " unavailable"
+                    : label + ": a full bar means this need is met. This is not stored supplies.";
                 icon.MarkDirtyRepaint();
             }
         }
@@ -301,6 +333,63 @@ namespace OutOfReach.Presentation.UI
         }
     }
 
+    internal sealed class SurvivalRestNotice
+    {
+        private bool observed, wasResting;
+        private RestStopReason lastReason;
+        private double remaining;
+        public string Text { get; private set; } = string.Empty;
+        public bool IsVisible => remaining > 0d;
+
+        public void Reset()
+        {
+            observed = wasResting = false;
+            lastReason = RestStopReason.None;
+            remaining = 0;
+            Text = string.Empty;
+        }
+
+        public void Observe(bool inChapter, bool resting, RestStopReason reason)
+        {
+            if (!inChapter) { Reset(); return; }
+            if (resting || reason == RestStopReason.None) { remaining = 0; Text = string.Empty; }
+            else if (observed && (wasResting || lastReason != reason))
+            {
+                Text = Message(reason);
+                remaining = string.IsNullOrEmpty(Text) ? 0d : 8d;
+            }
+            observed = true;
+            wasResting = resting;
+            lastReason = reason;
+        }
+
+        public void Advance(double visibleRealSeconds, bool visible)
+        {
+            if (visible && !double.IsNaN(visibleRealSeconds) && !double.IsInfinity(visibleRealSeconds)
+                && visibleRealSeconds > 0d)
+                remaining = Math.Max(0d, remaining - visibleRealSeconds);
+        }
+
+        public static string Message(RestStopReason reason)
+        {
+            switch (reason)
+            {
+                case RestStopReason.Completed: return "Planned rest complete.";
+                case RestStopReason.Woken: return "You woke from rest.";
+                case RestStopReason.FoodStoreEmpty: return "Rest stopped: food stores are empty.";
+                case RestStopReason.WaterStoreEmpty: return "Rest stopped: water stores are empty. Drinking and resting require stored water.";
+                case RestStopReason.OxygenStoreEmpty: return "Rest stopped: stored oxygen is depleted. Only cabin air remains.";
+                case RestStopReason.PowerLost: return "Rest stopped: power is lost. The battery is empty and generation is below demand.";
+                case RestStopReason.CarbonDioxideDanger: return "Rest stopped: cabin CO₂ is dangerously high.";
+                case RestStopReason.CropReady: return "Rest stopped: the crop is ready to harvest.";
+                case RestStopReason.CropFailed: return "Rest stopped: the grow module failed.";
+                case RestStopReason.RecoveryMilestone: return "Rest stopped: the recovery craft needs the crew. Check recovery status.";
+                case RestStopReason.MissionEnded: return "Rest stopped: the mission ended.";
+                default: return string.Empty;
+            }
+        }
+    }
+
     // Pure readout rules: testable without creating a Unity object or running another simulation.
     internal static class SurvivalChapterReadout
     {
@@ -312,6 +401,7 @@ namespace OutOfReach.Presentation.UI
             CanShow(needs, state, clock) && rest != null && rest.IsResting;
 
         public static bool ValidNeed(double value) => Finite(value) && value >= 0d && value <= 1d;
+        public static double SatisfiedFraction(double unmetNeed) => ValidNeed(unmetNeed) ? 1d - unmetNeed : 0d;
         private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 
         public static string Remaining(double seconds)

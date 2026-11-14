@@ -34,6 +34,17 @@ namespace OutOfReach.Presentation.Cargo
         private GamePhase displayedPhase;
         private bool dirty = true;
         private bool menuOverlayVisible;
+        private bool aboardDepartureVisible;
+
+        // Root leases only the already loaded visual cases during the transport departure.
+        // Quantities still come from Core's sealed draft; supplies and targets remain closed.
+        public void SetAboardDepartureVisible(bool visible)
+        {
+            if (aboardDepartureVisible == visible) return;
+            aboardDepartureVisible = visible;
+            dirty = true;
+            Refresh();
+        }
 
         public bool TryGetCarriedDestination(out Vector3 position)
         {
@@ -74,6 +85,7 @@ namespace OutOfReach.Presentation.Cargo
             cargo = cargoView;
             planner = missionPlanner;
             state = gameState;
+            aboardDepartureVisible = false;
             displayedDraft = null;
             dirty = true;
             if (isActiveAndEnabled) { Subscribe(); Refresh(); }
@@ -85,6 +97,7 @@ namespace OutOfReach.Presentation.Cargo
             cargo = null;
             planner = null;
             state = null;
+            aboardDepartureVisible = false;
             displayedDraft = null;
             dirty = true;
             Hide();
@@ -134,7 +147,8 @@ namespace OutOfReach.Presentation.Cargo
                     if (selection.EquipmentId == slot.EquipmentId) { loaded = selection.Quantity; break; }
                 int supply = planning ? cargo.GetSupplyRemaining(slot.EquipmentId) : 0;
                 SetActive(slot.SupplyCase, planning && supply > 0);
-                SetActive(slot.AboardCase, planning && loaded > 0);
+                SetActive(slot.AboardCase, loaded > 0 && (planning ||
+                    (aboardDepartureVisible && state.Phase == GamePhase.Intro)));
                 if (slot.SupplyLabel) slot.SupplyLabel.text = slot.DisplayName + "\nSUPPLY x" + supply;
                 if (slot.AboardLabel) slot.AboardLabel.text = slot.DisplayName + "\nABOARD x" + loaded;
                 if (slot.SupplyLabel) slot.SupplyLabel.gameObject.SetActive(planning && supply > 0 && showStationLabels);

@@ -1,0 +1,55 @@
+fileFormatVersion: 2
+guid: 2b697c9e944c4977af450e3f30b66e33
+ModelImporter:
+  serializedVersion: 24300
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_Exterior
+    second: {fileID: 2100000, guid: 7f8864d894d44914879a4cf18da57325, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_Interior
+    second: {fileID: 2100000, guid: ee70a08e6d664f658f1078c71b77c831, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_Site
+    second: {fileID: 2100000, guid: aa2b8be566fc43d59bea2e61199c8ebe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_Labels
+    second: {fileID: 2100000, guid: db5d1495ae2144a785bc67cd0fe5074a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_LightPanel
+    second: {fileID: 2100000, guid: a751728e834f42e68dfffc5e44b5327b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_StatusGreen
+    second: {fileID: 2100000, guid: 61582d548c1348c1b7f559d50f82affd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TL_DeckLamp
+    second: {fileID: 2100000, guid: 142b182702f24c9390c903b1a549e538, type: 2}
+  materials:
+    materialImportMode: 2
+  meshes:
+    globalScale: 1
+    addColliders: 0
+    importCameras: 0
+    importLights: 0
+    preserveHierarchy: 1
+    useFileScale: 1
+    bakeAxisConversion: 0
+  importAnimation: 0
+  animationType: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

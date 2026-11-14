@@ -1,0 +1,157 @@
+{"utc":"2026-11-14T21:27:02.6274469Z","stage":"opening saved Bootstrap","message":"Saved scene has actual marine bindings.","pass":true}
+{"utc":"2026-11-14T21:27:02.6325528Z","stage":"opening saved Bootstrap","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:08.3760133Z","stage":"actual Bootstrap FX","message":"Saved session startup","pass":true}
+{"utc":"2026-11-14T21:27:08.3806035Z","stage":"actual Bootstrap FX","message":"Saved production FX references are all present.","pass":true}
+{"utc":"2026-11-14T21:27:08.4907692Z","stage":"actual Bootstrap FX","message":"Actual saved Bootstrap is active.","pass":true}
+{"utc":"2026-11-14T21:27:08.4922819Z","stage":"actual Bootstrap FX","message":"Actual runtime clock drives Planning normally.","pass":true}
+{"utc":"2026-11-14T21:27:08.4942884Z","stage":"actual Bootstrap FX","message":"Nozzle follows actual vehicle; solid deck frame stays outside vehicle hierarchy.","pass":true}
+{"utc":"2026-11-14T21:27:08.4953197Z","stage":"actual Bootstrap FX","message":"Actual frames retain metre scale.","pass":true}
+{"utc":"2026-11-14T21:27:08.4953197Z","stage":"actual Bootstrap FX","message":"Actual EngineEmitter at marine-relative (0,-31.4,0), using corrected transport frame.","pass":true}
+{"utc":"2026-11-14T21:27:08.4963291Z","stage":"actual Bootstrap FX","message":"Actual nozzle axis points down toward solid deck.","pass":true}
+{"utc":"2026-11-14T21:27:08.4976217Z","stage":"actual Bootstrap FX","message":"Actual saved COL_BargeDeck collision proxy exists.","pass":true}
+{"utc":"2026-11-14T21:27:08.4991280Z","stage":"actual Bootstrap FX","message":"FX deck plane lies on actual solid barge collider top, not ocean plane.","pass":true}
+{"utc":"2026-11-14T21:27:08.5001384Z","stage":"actual Bootstrap FX","message":"Actual prelaunch nozzle clearance is 1.2 metres.","pass":true}
+{"utc":"2026-11-14T21:27:08.5647350Z","stage":"actual normal departure","message":"Actual Practice selected; timed loading bypass disclosed.","pass":true}
+{"utc":"2026-11-14T21:27:08.5780030Z","stage":"actual normal departure","message":"Real planner launch accepted: AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-14T21:27:08.5790035Z","stage":"actual normal departure","message":"Actual phase-event departure lease","pass":true}
+{"utc":"2026-11-14T21:27:08.5795105Z","stage":"actual normal departure","message":"Actual Intro owns correct production reduced-effects state.","pass":true}
+{"utc":"2026-11-14T21:27:08.5801310Z","stage":"actual normal departure","message":"No ignition before timeline 9 seconds.","pass":true}
+{"utc":"2026-11-14T21:27:18.3596435Z","stage":"actual normal departure","message":"Actual FX playhead reaches 9.8","pass":true}
+{"utc":"2026-11-14T21:27:18.3601503Z","stage":"actual normal departure","message":"Capture threshold reached without skipped timeline region: 9.8","pass":true}
+{"utc":"2026-11-14T21:27:18.3626049Z","stage":"actual normal departure","message":"Real running sample has bounded visible plume.","pass":true}
+{"utc":"2026-11-14T21:27:18.3636130Z","stage":"actual normal departure","message":"Exhaust originates at actual nozzle with exact local identity.","pass":true}
+{"utc":"2026-11-14T21:27:18.3636130Z","stage":"actual normal departure","message":"FX does not alter authored nozzle transform.","pass":true}
+{"utc":"2026-11-14T21:27:18.3651201Z","stage":"actual normal departure","message":"Deck FX frame stays stationary during ascent.","pass":true}
+{"utc":"2026-11-14T21:27:18.3656467Z","stage":"actual normal departure","message":"Visible plume terminates above actual solid deck safety clearance.","pass":true}
+{"utc":"2026-11-14T21:27:18.3666545Z","stage":"actual normal departure","message":"Steam stays at actual original nozzle/deck intersection.","pass":true}
+{"utc":"2026-11-14T21:27:18.3666545Z","stage":"actual normal departure","message":"Finite ignition steam count matches actual phase/reduced mode.","pass":true}
+{"utc":"2026-11-14T21:27:18.3676546Z","stage":"actual normal departure","message":"Material property block consumes actual FX playhead and reduced-motion state.","pass":true}
+{"utc":"2026-11-14T21:27:18.3696558Z","stage":"actual normal departure","message":"FX uses supplied shared materials without clones.","pass":true}
+{"utc":"2026-11-14T21:27:18.3701610Z","stage":"actual normal departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:18.3711686Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:18.5330715Z","stage":"actual normal departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:19.4553511Z","stage":"actual normal departure","message":"Native GPU capture has spatial variation: 01-nozzle-ignition-9_8-diagnostic; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:19.4593701Z","stage":"actual normal departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:19.4615111Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:20.0592312Z","stage":"actual normal departure","message":"Actual FX playhead reaches 11.5","pass":true}
+{"utc":"2026-11-14T21:27:20.0602318Z","stage":"actual normal departure","message":"Capture threshold reached without skipped timeline region: 11.5","pass":true}
+{"utc":"2026-11-14T21:27:20.0602318Z","stage":"actual normal departure","message":"Real running sample has bounded visible plume.","pass":true}
+{"utc":"2026-11-14T21:27:20.0617393Z","stage":"actual normal departure","message":"Exhaust originates at actual nozzle with exact local identity.","pass":true}
+{"utc":"2026-11-14T21:27:20.0617393Z","stage":"actual normal departure","message":"FX does not alter authored nozzle transform.","pass":true}
+{"utc":"2026-11-14T21:27:20.0632532Z","stage":"actual normal departure","message":"Deck FX frame stays stationary during ascent.","pass":true}
+{"utc":"2026-11-14T21:27:20.0637672Z","stage":"actual normal departure","message":"Visible plume terminates above actual solid deck safety clearance.","pass":true}
+{"utc":"2026-11-14T21:27:20.0637672Z","stage":"actual normal departure","message":"Steam stays at actual original nozzle/deck intersection.","pass":true}
+{"utc":"2026-11-14T21:27:20.0647731Z","stage":"actual normal departure","message":"Finite ignition steam count matches actual phase/reduced mode.","pass":true}
+{"utc":"2026-11-14T21:27:20.0652793Z","stage":"actual normal departure","message":"Material property block consumes actual FX playhead and reduced-motion state.","pass":true}
+{"utc":"2026-11-14T21:27:20.0662869Z","stage":"actual normal departure","message":"FX uses supplied shared materials without clones.","pass":true}
+{"utc":"2026-11-14T21:27:20.0662869Z","stage":"actual normal departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:20.0672867Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:20.0698010Z","stage":"actual normal departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:20.1495179Z","stage":"actual normal departure","message":"Native GPU capture has spatial variation: 02-nozzle-ascent-11_5-diagnostic; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:20.1511588Z","stage":"actual normal departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:20.1531575Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:27.0611802Z","stage":"actual normal departure","message":"Actual FX playhead reaches 18.5","pass":true}
+{"utc":"2026-11-14T21:27:27.0621799Z","stage":"actual normal departure","message":"Capture threshold reached without skipped timeline region: 18.5","pass":true}
+{"utc":"2026-11-14T21:27:27.0636876Z","stage":"actual normal departure","message":"Real running sample has bounded visible plume.","pass":true}
+{"utc":"2026-11-14T21:27:27.0647378Z","stage":"actual normal departure","message":"Exhaust originates at actual nozzle with exact local identity.","pass":true}
+{"utc":"2026-11-14T21:27:27.0657810Z","stage":"actual normal departure","message":"FX does not alter authored nozzle transform.","pass":true}
+{"utc":"2026-11-14T21:27:27.0663049Z","stage":"actual normal departure","message":"Deck FX frame stays stationary during ascent.","pass":true}
+{"utc":"2026-11-14T21:27:27.0678272Z","stage":"actual normal departure","message":"Visible plume terminates above actual solid deck safety clearance.","pass":true}
+{"utc":"2026-11-14T21:27:27.0698487Z","stage":"actual normal departure","message":"Steam stays at actual original nozzle/deck intersection.","pass":true}
+{"utc":"2026-11-14T21:27:27.0708581Z","stage":"actual normal departure","message":"Finite ignition steam count matches actual phase/reduced mode.","pass":true}
+{"utc":"2026-11-14T21:27:27.0718574Z","stage":"actual normal departure","message":"Material property block consumes actual FX playhead and reduced-motion state.","pass":true}
+{"utc":"2026-11-14T21:27:27.0718574Z","stage":"actual normal departure","message":"FX uses supplied shared materials without clones.","pass":true}
+{"utc":"2026-11-14T21:27:27.0738880Z","stage":"actual normal departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:27.0754476Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:27.0764565Z","stage":"actual normal departure","message":"Existing player camera reaches actual exterior shot.","pass":true}
+{"utc":"2026-11-14T21:27:27.0795254Z","stage":"actual normal departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:27.8220389Z","stage":"actual normal departure","message":"Native GPU capture has spatial variation: 03-actual-exterior-18_5; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:27.8235453Z","stage":"actual normal departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:27.8250633Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:27.8733713Z","stage":"actual normal departure","message":"Actual clock pauses actual departure.","pass":true}
+{"utc":"2026-11-14T21:27:27.8839837Z","stage":"actual normal departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:27.9536873Z","stage":"actual normal departure","message":"Native GPU capture has spatial variation: 04-paused-actual-exterior; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:27.9546974Z","stage":"actual normal departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:27.9568749Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:28.6071648Z","stage":"actual normal departure","message":"Real pause holds both timeline and shader time across actual frames.","pass":true}
+{"utc":"2026-11-14T21:27:28.6081727Z","stage":"actual normal departure","message":"Paused actual transform held: EngineEmitter","pass":true}
+{"utc":"2026-11-14T21:27:28.6081727Z","stage":"actual normal departure","message":"Paused actual transform held: Actual barge top plane for ignition","pass":true}
+{"utc":"2026-11-14T21:27:28.6096799Z","stage":"actual normal departure","message":"Paused actual transform held: Transport vehicle - root controls launch","pass":true}
+{"utc":"2026-11-14T21:27:28.6111943Z","stage":"actual normal departure","message":"Paused actual transform held: Hatch control +Y 0 closed to 160 open","pass":true}
+{"utc":"2026-11-14T21:27:28.6111943Z","stage":"actual normal departure","message":"Paused actual transform held: Access arm control +Y 0 connected to -90 retracted","pass":true}
+{"utc":"2026-11-14T21:27:28.6122023Z","stage":"actual normal departure","message":"Paused actual transform held: Player camera","pass":true}
+{"utc":"2026-11-14T21:27:28.6136274Z","stage":"actual normal departure","message":"Paused property block and FX world pose held: Departure exhaust - owned transient","pass":true}
+{"utc":"2026-11-14T21:27:28.6136274Z","stage":"actual normal departure","message":"Paused property block and FX world pose held: Ignition lobe 0","pass":true}
+{"utc":"2026-11-14T21:27:28.6146267Z","stage":"actual normal departure","message":"Paused property block and FX world pose held: Ignition lobe 1","pass":true}
+{"utc":"2026-11-14T21:27:28.6146267Z","stage":"actual normal departure","message":"Paused property block and FX world pose held: Ignition lobe 2","pass":true}
+{"utc":"2026-11-14T21:27:28.6146267Z","stage":"actual normal departure","message":"Paused property block and FX world pose held: Ignition lobe 3","pass":true}
+{"utc":"2026-11-14T21:27:28.6184868Z","stage":"actual normal departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:28.6885191Z","stage":"actual normal departure","message":"Native GPU capture has spatial variation: 05-paused-actual-exterior-repeat; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:28.6895573Z","stage":"actual normal departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:28.6916611Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:28.6916611Z","stage":"actual normal departure","message":"ClearBinding immediately resets FX state.","pass":true}
+{"utc":"2026-11-14T21:27:28.6931672Z","stage":"actual normal departure","message":"ClearBinding immediately hides all owned renderers before deferred destruction.","pass":true}
+{"utc":"2026-11-14T21:27:28.7002590Z","stage":"actual normal departure","message":"ClearBinding destroys owned transient renderers.","pass":true}
+{"utc":"2026-11-14T21:27:28.7050949Z","stage":"actual normal departure","message":"Explicit rebind during pause stays hidden without an accepted running sample.","pass":true}
+{"utc":"2026-11-14T21:27:28.7076060Z","stage":"actual normal departure","message":"Disable clears binding and owned geometry.","pass":true}
+{"utc":"2026-11-14T21:27:28.7101413Z","stage":"actual normal departure","message":"Enable alone does not silently bind.","pass":true}
+{"utc":"2026-11-14T21:27:28.7212817Z","stage":"actual normal departure","message":"Root samples FX again after explicit rebind/resume","pass":true}
+{"utc":"2026-11-14T21:27:33.0825181Z","stage":"actual normal departure","message":"Actual first departure completion","pass":true}
+{"utc":"2026-11-14T21:27:33.0941654Z","stage":"actual normal departure","message":"Actual completion hides FX and marine location.","pass":true}
+{"utc":"2026-11-14T21:27:33.0951658Z","stage":"actual normal departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:33.0951658Z","stage":"actual normal departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:33.4249367Z","stage":"actual normal departure","message":"Actual restart replaces mission session","pass":true}
+{"utc":"2026-11-14T21:27:33.4259443Z","stage":"actual normal departure","message":"Saved production FX references are all present.","pass":true}
+{"utc":"2026-11-14T21:27:33.4363665Z","stage":"actual normal departure","message":"Nozzle follows actual vehicle; solid deck frame stays outside vehicle hierarchy.","pass":true}
+{"utc":"2026-11-14T21:27:33.4363665Z","stage":"actual normal departure","message":"Actual frames retain metre scale.","pass":true}
+{"utc":"2026-11-14T21:27:33.4373713Z","stage":"actual normal departure","message":"Actual EngineEmitter at marine-relative (0,-31.4,0), using corrected transport frame.","pass":true}
+{"utc":"2026-11-14T21:27:33.4373713Z","stage":"actual normal departure","message":"Actual nozzle axis points down toward solid deck.","pass":true}
+{"utc":"2026-11-14T21:27:33.4373713Z","stage":"actual normal departure","message":"Actual saved COL_BargeDeck collision proxy exists.","pass":true}
+{"utc":"2026-11-14T21:27:33.4388758Z","stage":"actual normal departure","message":"FX deck plane lies on actual solid barge collider top, not ocean plane.","pass":true}
+{"utc":"2026-11-14T21:27:33.4388758Z","stage":"actual normal departure","message":"Actual prelaunch nozzle clearance is 1.2 metres.","pass":true}
+{"utc":"2026-11-14T21:27:33.4398806Z","stage":"actual normal departure","message":"Restart binds clean FX without residual exhaust/steam.","pass":true}
+{"utc":"2026-11-14T21:27:33.4459799Z","stage":"actual reduced departure","message":"Actual Practice selected; timed loading bypass disclosed.","pass":true}
+{"utc":"2026-11-14T21:27:33.4469851Z","stage":"actual reduced departure","message":"Real planner launch accepted: AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-14T21:27:33.4479857Z","stage":"actual reduced departure","message":"Actual phase-event departure lease","pass":true}
+{"utc":"2026-11-14T21:27:33.4479857Z","stage":"actual reduced departure","message":"Actual Intro owns correct production reduced-effects state.","pass":true}
+{"utc":"2026-11-14T21:27:43.2461890Z","stage":"actual reduced departure","message":"Actual FX playhead reaches 9.8","pass":true}
+{"utc":"2026-11-14T21:27:43.2467080Z","stage":"actual reduced departure","message":"Capture threshold reached without skipped timeline region: 9.8","pass":true}
+{"utc":"2026-11-14T21:27:43.2467080Z","stage":"actual reduced departure","message":"Real running sample has bounded visible plume.","pass":true}
+{"utc":"2026-11-14T21:27:43.2477152Z","stage":"actual reduced departure","message":"Exhaust originates at actual nozzle with exact local identity.","pass":true}
+{"utc":"2026-11-14T21:27:43.2488206Z","stage":"actual reduced departure","message":"FX does not alter authored nozzle transform.","pass":true}
+{"utc":"2026-11-14T21:27:43.2488206Z","stage":"actual reduced departure","message":"Deck FX frame stays stationary during ascent.","pass":true}
+{"utc":"2026-11-14T21:27:43.2498269Z","stage":"actual reduced departure","message":"Visible plume terminates above actual solid deck safety clearance.","pass":true}
+{"utc":"2026-11-14T21:27:43.2498269Z","stage":"actual reduced departure","message":"Steam stays at actual original nozzle/deck intersection.","pass":true}
+{"utc":"2026-11-14T21:27:43.2513034Z","stage":"actual reduced departure","message":"Finite ignition steam count matches actual phase/reduced mode.","pass":true}
+{"utc":"2026-11-14T21:27:43.2513034Z","stage":"actual reduced departure","message":"Material property block consumes actual FX playhead and reduced-motion state.","pass":true}
+{"utc":"2026-11-14T21:27:43.2523089Z","stage":"actual reduced departure","message":"FX uses supplied shared materials without clones.","pass":true}
+{"utc":"2026-11-14T21:27:43.2523089Z","stage":"actual reduced departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:43.2538149Z","stage":"actual reduced departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:43.2567955Z","stage":"actual reduced departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:43.3233507Z","stage":"actual reduced departure","message":"Native GPU capture has spatial variation: 06-reduced-nozzle-9_8-diagnostic; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:43.3233507Z","stage":"actual reduced departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:43.3253779Z","stage":"actual reduced departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:51.9475204Z","stage":"actual reduced departure","message":"Actual FX playhead reaches 18.5","pass":true}
+{"utc":"2026-11-14T21:27:51.9485298Z","stage":"actual reduced departure","message":"Capture threshold reached without skipped timeline region: 18.5","pass":true}
+{"utc":"2026-11-14T21:27:51.9495301Z","stage":"actual reduced departure","message":"Real running sample has bounded visible plume.","pass":true}
+{"utc":"2026-11-14T21:27:51.9500367Z","stage":"actual reduced departure","message":"Exhaust originates at actual nozzle with exact local identity.","pass":true}
+{"utc":"2026-11-14T21:27:51.9510441Z","stage":"actual reduced departure","message":"FX does not alter authored nozzle transform.","pass":true}
+{"utc":"2026-11-14T21:27:51.9510441Z","stage":"actual reduced departure","message":"Deck FX frame stays stationary during ascent.","pass":true}
+{"utc":"2026-11-14T21:27:51.9525709Z","stage":"actual reduced departure","message":"Visible plume terminates above actual solid deck safety clearance.","pass":true}
+{"utc":"2026-11-14T21:27:51.9525709Z","stage":"actual reduced departure","message":"Steam stays at actual original nozzle/deck intersection.","pass":true}
+{"utc":"2026-11-14T21:27:51.9535784Z","stage":"actual reduced departure","message":"Finite ignition steam count matches actual phase/reduced mode.","pass":true}
+{"utc":"2026-11-14T21:27:51.9546458Z","stage":"actual reduced departure","message":"Material property block consumes actual FX playhead and reduced-motion state.","pass":true}
+{"utc":"2026-11-14T21:27:51.9556547Z","stage":"actual reduced departure","message":"FX uses supplied shared materials without clones.","pass":true}
+{"utc":"2026-11-14T21:27:51.9561617Z","stage":"actual reduced departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:51.9571966Z","stage":"actual reduced departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:51.9602183Z","stage":"actual reduced departure","message":"Active URP supports native standard render request.","pass":true}
+{"utc":"2026-11-14T21:27:52.0384447Z","stage":"actual reduced departure","message":"Native GPU capture has spatial variation: 07-reduced-actual-exterior-18_5; not an art acceptance claim.","pass":true}
+{"utc":"2026-11-14T21:27:52.0399626Z","stage":"actual reduced departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:52.0414853Z","stage":"actual reduced departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:56.2508612Z","stage":"actual reduced departure","message":"Actual reduced departure completion","pass":true}
+{"utc":"2026-11-14T21:27:56.2630544Z","stage":"actual reduced departure","message":"Reduced departure completion leaves no visible effects.","pass":true}
+{"utc":"2026-11-14T21:27:56.2630544Z","stage":"actual reduced departure","message":"Production FX adds no camera, light or audio listener; temporary diagnostic camera removed.","pass":true}
+{"utc":"2026-11-14T21:27:56.2645618Z","stage":"actual reduced departure","message":"Shared material serialized values remain exact.","pass":true}
+{"utc":"2026-11-14T21:27:56.2657011Z","stage":"actual reduced departure","message":"Actual imported DepartureVolume shader supported with zero ShaderUtil errors.","pass":true}
+{"utc":"2026-11-14T21:27:56.2976379Z","stage":"actual reduced departure","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-14T21:28:00.3553328Z","stage":"actual reduced departure","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}

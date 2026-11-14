@@ -1,0 +1,39 @@
+{
+  "task": "MARINE-DOCK-V02",
+  "status": "Original staging-module art only; incomplete launch prologue. No spacecraft/rocket/cargo state implementation.",
+  "geometry": "Original project geometry, authored in Blender 3.6.1. Helpers adapted from the unmodified V01 source.",
+  "originalDeckRopePaintMaps": "Twelve deterministic original 1024-square PNG maps, no third-party images or generated concept textures.",
+  "priorHelperSource": "CoastalLoadingDockV01\\Source\\build_dock.py",
+  "priorHelperSha256": "a772cf9ebb5dc1c4cbdef8d53c853e256b11f7939a5396012c06dc303b8faa6e",
+  "cargoReference": {
+    "path": "PreflightCargoProp\\Source\\PreflightCargo.blend",
+    "sha256": "31e059397c76707ea595ae63b1025a2b6a2e9f6b77caa07363854423b9125a57",
+    "usage": "Four linked instances in Blender preview only; no cargo geometry exported. Integrator reuses existing handled case prefab and inventory authority."
+  },
+  "font": {
+    "name": "Source Sans 3 Semibold",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "OFL.txt",
+    "source": "Preserved from prior verified CoastalDock typography; fonts converted to original mesh lettering in exports."
+  },
+  "previewSky": {
+    "asset": "Industrial Sunset (Pure Sky)",
+    "authors": {
+      "Jarod Guest": "Sky Edits",
+      "Sergej Majboroda": "Original"
+    },
+    "asset_url": "https://polyhaven.com/a/industrial_sunset_puresky",
+    "license": "CC0-1.0",
+    "license_url": "https://polyhaven.com/license",
+    "download_url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_sunset_puresky_1k.hdr",
+    "api": "https://api.polyhaven.com/files/industrial_sunset_puresky",
+    "resolution": "1k",
+    "bytes": 1158432,
+    "sha256": "ce8235e4b1b10b620120ceeb32eb3e80af15ea29b09a8625a4bdae647dff328d",
+    "md5": "622cc98d705210e283318c306089bb2e",
+    "checked": "2026-11-14",
+    "usage": "Blender preview sky and illumination only; not exported in dock FBX."
+  },
+  "concept": "Root-provided generated reference used only for visual direction; not a mesh, texture or verification artifact.",
+  "scope": "No cliffs, city, rocks, whole rocket or spacecraft. Water plane/sky/lights/camera are preview only. No Unity/plugin/package dependency added."
+}

@@ -1,0 +1,1 @@
+Two actual production departures completed. FX anchors, pause, reduced restart, cleanup and native captures checked; inspect PNGs for art acceptance.

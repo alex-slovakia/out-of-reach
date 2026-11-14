@@ -3,6 +3,8 @@
   "rootNamespace": "OutOfReach.Composition.Editor",
   "references": [
     "OutOfReach.Composition",
+    "OutOfReach.MarineOcean",
+    "OutOfReach.MarineOcean.Editor",
     "OutOfReach.Contracts",
     "OutOfReach.Core",
     "OutOfReach.Core.Runtime",

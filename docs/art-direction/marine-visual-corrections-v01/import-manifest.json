@@ -1,0 +1,50 @@
+{
+  "task": "MARINE-VISUAL-CORRECTIONS-V01",
+  "status": "blender-and-exact-fbx-checks-passed-native-pending",
+  "replaceOnly": "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx",
+  "keepExistingMetaGuid": "2b697c9e944c4977af450e3f30b66e33",
+  "sourceCommit": "855efbc328cb0c703bf7a92e92767f5eab25eabc",
+  "originalFbxSha256": "142c2053cda0e639781eae8e8b7973e1514fd385abfc399b5b621962572fcb62",
+  "files": [
+    {
+      "path": "Export/TransportLaunch.fbx",
+      "bytes": 835068,
+      "sha256": "e21cfd832ffb50a190eb317be848b2da53624987bb6bd9b1152c50eece060e2d"
+    },
+    {
+      "path": "Source/TransportLaunch_Corrected.blend",
+      "bytes": 3517280,
+      "sha256": "776bb498430ec9adcc15564787f901a163873be6ec2c2de366982f5a50813015"
+    },
+    {
+      "path": "Source/OriginalTransportLaunch.blend",
+      "bytes": 3198322,
+      "sha256": "1d8bf140e2d6a1a0d159d31cacfb95d23f240494ef4c8417fb43206a02d1db58"
+    },
+    {
+      "path": "Source/correct_transport.py",
+      "bytes": 8841,
+      "sha256": "4a38c3ec819ab19a6eb25b74f2dde136a38a62ada2301542ffdb8d85de94094d"
+    },
+    {
+      "path": "Source/encode_exact_fbx.py",
+      "bytes": 7423,
+      "sha256": "983c0d79f0ad2914d1e711622ebdfac93393dc788374eaf420f33b947b7ee160"
+    },
+    {
+      "path": "Source/verify_roundtrip.py",
+      "bytes": 2705,
+      "sha256": "60f81903ee8d57fa0b7d2349ce2b7a5c718a6e51fe8e92a1c99186567fa3b031"
+    },
+    {
+      "path": "build_package.ps1",
+      "bytes": 647,
+      "sha256": "132e93f19debbcb2547674a48b49247c154583038c5f3af965dee5b8f269f28e"
+    }
+  ],
+  "nativeMeshes": 11,
+  "nativeAnchors": 16,
+  "sourceTriangles": 24570,
+  "nativeTrianglePrediction": 24522,
+  "nativePredictionNotMeasured": true
+}
