@@ -147,9 +147,10 @@ namespace OutOfReach.Tests.PlayMode
         /// Builds the layout. With scripted input the player is driven by tests; for authoring (the saved harness
         /// scene) the real Input System bindings and the debug overlay are used instead. With preflight the player
         /// starts on the pad and may walk and load crates during Planning. With survival the optional post-contact
-        /// chapter is enabled for every session of this runtime and its C06 interaction targets are placed.
+        /// chapter is enabled for every session of this runtime and its C06 interaction targets are placed. With
+        /// boarding (and preflight) an expiring loading deadline seals the cargo and waits for the console (the seat).
         /// </summary>
-        public static RepairLoopHarness Build(bool authoring = false, bool preflight = false, bool survival = false)
+        public static RepairLoopHarness Build(bool authoring = false, bool preflight = false, bool survival = false, bool boarding = false)
         {
             var harness = new RepairLoopHarness();
             harness.Root = new GameObject("RepairLoopHarness");
@@ -266,6 +267,7 @@ namespace OutOfReach.Tests.PlayMode
             harness.Runtime.ConfigurePreflight(preflight, harness.PreflightSpawn);
             harness.Runtime.RestartMode = MissionRestartMode.RebuildInPlace;
             harness.Runtime.ConfigureSurvivalExtension(survival);
+            harness.Runtime.ConfigureBoarding(boarding);
             harness.Listener = mission.AddComponent<MissionStatusListener>();
             harness.Listener.Configure(harness.Runtime, harness.Resolver, authoring);
 

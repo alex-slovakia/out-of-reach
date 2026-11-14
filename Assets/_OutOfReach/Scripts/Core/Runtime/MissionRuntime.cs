@@ -70,6 +70,9 @@ namespace OutOfReach.Core.Runtime
         [Tooltip("Off: planning is a list, the player has no control before launch. On: the player walks during Planning, carries crates between cargo-supply and cargo-bay targets and launches from the cockpit console.")]
         [SerializeField] private bool preflightWalk;
 
+        [Tooltip("With Preflight Walk and timed planning: at zero the loading is sealed (last valid loadout if the draft is invalid) and the mission launches only from the cockpit console, i.e. the transport seat. No teleport at expiry. Off: expiry launches at once, as before.")]
+        [SerializeField] private bool boardAfterLoadingDeadline;
+
         [Tooltip("Allow player control during the first Impact sequence. Pause and other sequences still lock control.")]
         [SerializeField] private bool allowMovementDuringImpact;
 
@@ -167,6 +170,15 @@ namespace OutOfReach.Core.Runtime
         /// <summary>True when this runtime runs the physical preflight (walking and crates during Planning).</summary>
         public bool PreflightWalk => preflightWalk;
 
+        /// <summary>True when an expiring loading deadline seals the cargo and waits for the seat (C05-BOARDING-01).</summary>
+        public bool BoardAfterLoadingDeadline => boardAfterLoadingDeadline;
+
+        /// <summary>
+        /// True during the boarding window: the loading deadline has sealed the cargo and the mission waits for the
+        /// seat (cockpit console). Show PlanningDeadline.LoadingClosedMessage meanwhile.
+        /// </summary>
+        public bool AwaitingBoarding => Session != null && Session.PlanningDeadline.IsAwaitingBoarding;
+
         public ISurvivalExtension Survival => Session != null ? Session.Survival : null;
 
         /// <summary>Rest and the fictional recovery timeline; null without a session or when survival is disabled.</summary>
@@ -231,6 +243,15 @@ namespace OutOfReach.Core.Runtime
         public void ConfigureImpactMovement(bool enabled)
         {
             allowMovementDuringImpact = enabled;
+        }
+
+        /// <summary>
+        /// Configures the boarding window after the loading deadline for the next session (StartSession or
+        /// RestartMission). Only effective with the physical preflight. Default false keeps the immediate launch.
+        /// </summary>
+        public void ConfigureBoarding(bool boardAfterDeadline)
+        {
+            boardAfterLoadingDeadline = boardAfterDeadline;
         }
 
         /// <summary>Configures post-contact survival for the next session. Default false preserves the original ending.</summary>
@@ -312,7 +333,8 @@ namespace OutOfReach.Core.Runtime
         {
             EndSession();
             string preset = string.IsNullOrWhiteSpace(startingPresetId) ? null : startingPresetId;
-            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact, survivalExtension);
+            Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact,
+                survivalExtension, null, boardAfterLoadingDeadline);
             BindScene();
             if (SessionStarted != null)
             {

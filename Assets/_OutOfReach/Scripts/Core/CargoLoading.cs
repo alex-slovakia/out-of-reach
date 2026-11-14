@@ -46,6 +46,7 @@ namespace OutOfReach.Core
             }
 
             events.PhaseChanged += OnPhaseChanged;
+            planner.Sealed += OnSealed;
         }
 
         /// <summary>Equipment ID of the crate in the player's hands, or null.</summary>
@@ -255,6 +256,11 @@ namespace OutOfReach.Core
                 return Fail(CommandFailure.WrongPhase, "The cargo bay is sealed after launch.");
             }
 
+            if (planner.IsSealed)
+            {
+                return Fail(CommandFailure.WrongPhase, PlanningDeadline.LoadingClosedMessage);
+            }
+
             if (equipmentId == null || !definition.Catalog.TryGet(equipmentId, out item))
             {
                 return Fail(CommandFailure.InvalidInput, $"Unknown equipment '{equipmentId}'.");
@@ -275,6 +281,22 @@ namespace OutOfReach.Core
             if (log != null)
             {
                 log("At launch a crate was still in hand (" + name + "). It was not counted: only the frozen loadout is aboard.");
+            }
+        }
+
+        /// <summary>The boarding-mode deadline sealed the manifest: a crate in hands stays behind, exactly as at launch.</summary>
+        private void OnSealed()
+        {
+            if (CarriedEquipmentId == null)
+            {
+                return;
+            }
+
+            string name = CarriedName();
+            SetCarried(null);
+            if (log != null)
+            {
+                log("Loading closed with a crate still in hand (" + name + "). It was not counted: only the sealed loadout is aboard.");
             }
         }
 

@@ -13,7 +13,8 @@ namespace OutOfReach.Core
     /// false signal: an old local recording, not a reply), the second sends the single distress call (the prompt
     /// gives its energy cost, Earth's distance and the earliest reply), and then the prompt shows the remaining wait.
     /// With the physical preflight on, the console also launches the mission during Planning: its prompt shows the
-    /// loadout totals, or the exact violation that blocks the launch. Once Earth's reply is in and the mission goes
+    /// loadout totals, or the exact violation that blocks the launch; after a boarding-mode deadline it is the
+    /// transport seat that launches the sealed manifest. Once Earth's reply is in and the mission goes
     /// on (the optional post-contact Survival chapter), it reports the restored contact and offers nothing to send,
     /// except the recovery beacon while the fictional recovery craft asks for it.
     /// </summary>
@@ -47,7 +48,7 @@ namespace OutOfReach.Core
                 switch (state.Phase)
                 {
                     case GamePhase.Planning:
-                        return launchesFromConsole ? DescribeLaunch() : "Console on standby until launch";
+                        return launchesFromConsole ? (planner.IsSealed ? DescribeSeatLaunch() : DescribeLaunch()) : "Console on standby until launch";
                     case GamePhase.Intro:
                         return director.AccidentTriggered ? "Impact detected" : "Run cockpit systems check";
                     case GamePhase.Outcome:
@@ -86,6 +87,13 @@ namespace OutOfReach.Core
                 ? string.Format(CultureInfo.InvariantCulture, "Begin mission: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
                     draft.TotalMassKg, draft.MassLimitKg, draft.TotalBudgetCredits, draft.BudgetLimitCredits)
                 : valid.Explanation;
+        }
+
+        private string DescribeSeatLaunch()
+        {
+            MissionConfiguration sealedDraft = planner.DraftConfiguration;
+            return string.Format(CultureInfo.InvariantCulture, "Secure your seat and launch: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
+                sealedDraft.TotalMassKg, sealedDraft.MassLimitKg, sealedDraft.TotalBudgetCredits, sealedDraft.BudgetLimitCredits);
         }
 
         /// <summary>True while the next console action in Transmission is the one-time link diagnostic.</summary>
@@ -130,7 +138,7 @@ namespace OutOfReach.Core
         {
             if (state.Phase == GamePhase.Planning && launchesFromConsole)
             {
-                return planner.TryLaunch();
+                return planner.IsSealed ? planner.TryLaunchSealed() : planner.TryLaunch();
             }
 
             if (state.Phase == GamePhase.Intro || state.Phase == GamePhase.Planning)

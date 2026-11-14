@@ -362,6 +362,23 @@ them to `MissionRuntime` → Interaction Targets. After launch every cargo targe
 - Timer: `IPlanningDeadline.RemainingRealSeconds` after `MissionRuntime.BeginTimedPlanning()`.
 - The runtime applies the carry speed to the player itself (`FirstPersonController.SpeedMultiplier`).
 
+### C05-BOARDING-01: boarding window after the loading deadline (off by default)
+`MissionRuntime` -> **Board After Loading Deadline** (serialized, default **off**; code: `ConfigureBoarding(bool)`,
+effective with the next session). Only with Preflight Walk and timed planning; without Preflight Walk it is ignored.
+- Off: nothing changes. At zero the deadline launches and the runtime moves the player to Player Spawn.
+- On: at zero the deadline **seals instead of launching**. The valid draft, or the restored last valid loadout
+  (`UsedLastValidLoadoutAtDeadline`), becomes the sealed manifest. `PlanningDeadline.IsAwaitingBoarding` and
+  `MissionRuntime.AwaitingBoarding` are true, the phase stays Planning, and the player keeps control where they
+  stand (no teleport). The window has no timer and no death rule; timed planning cannot be re-armed.
+- While sealed, every cargo target, `IMissionPlanner.TrySetEquipment` and the public `TryLaunch` answer
+  `PlanningDeadline.LoadingClosedMessage` (`Loading closed. Board and secure your seat.`). A crate in hands at the
+  seal stays behind: not counted, back on its pallet, one journal line.
+- `cockpit-console` (placed at the transport seat during Planning) reads
+  `Secure your seat and launch: 546 of 600 kg, 720 of 800 credits` and launches the sealed manifest once; then the
+  usual move to Player Spawn happens. Before the deadline it launches early exactly as before.
+- Pause changes nothing in the window. A restart builds a fresh, unsealed session with the same switch.
+- No Contracts change: presentation reads `MissionRuntime.AwaitingBoarding` (or `Session.PlanningDeadline`).
+
 ## C05-B: payload salvage and the CO₂ absorber cartridge
 
 Two field modifications. Both only convert what was carried; nothing is created. **Each is offered only where its
