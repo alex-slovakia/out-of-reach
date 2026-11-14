@@ -169,6 +169,9 @@ namespace OutOfReach.Core.Runtime
 
         public ISurvivalExtension Survival => Session != null ? Session.Survival : null;
 
+        /// <summary>Rest and the fictional recovery timeline; null without a session or when survival is disabled.</summary>
+        public ISurvivalRecovery SurvivalRecovery => Session != null ? Session.SurvivalRecovery : null;
+
         /// <summary>Mission date on the simulation clock (T0 + elapsed simulated time), for date and "mission day" labels.</summary>
         public MissionCalendar Calendar => Session != null ? Session.Calendar : null;
 

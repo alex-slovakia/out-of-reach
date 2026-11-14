@@ -86,6 +86,8 @@ namespace OutOfReach.Core
                 Interactions.Add(new DelegatedInteraction(InteractionIds.BuildGrowModule, survival.CheckBuildGrowModule, survival.TryBuildGrowModule));
                 Interactions.Add(new DelegatedInteraction(InteractionIds.PlantSeedlings, survival.CheckPlant, survival.TryPlant));
                 Interactions.Add(new DelegatedInteraction(InteractionIds.HarvestCrop, survival.CheckHarvest, survival.TryHarvest));
+                SurvivalRecovery recovery = Director.SurvivalRecovery;
+                Interactions.Add(new DelegatedInteraction(InteractionIds.SurvivalSleep, recovery.CheckSleepInteraction, recovery.TrySleepInteraction));
             }
 
             Cargo = new CargoLoading(Definition, Planner, State, Events, text => Director.Journal.Record(0d, text));
@@ -136,6 +138,12 @@ namespace OutOfReach.Core
         public FieldModifications FieldModifications => Director.FieldModifications;
 
         public SurvivalExtension Survival => Director.Survival;
+
+        /// <summary>
+        /// Rest and the fictional recovery timeline (implements ISurvivalRecovery). Null when the survival extension
+        /// is disabled, so callers must handle null.
+        /// </summary>
+        public SurvivalRecovery SurvivalRecovery => Director.SurvivalRecovery;
 
         /// <summary>Preflight crate handling: the crate in hands and the carry speed. The bay itself is the planner's draft.</summary>
         public CargoLoading Cargo { get; }

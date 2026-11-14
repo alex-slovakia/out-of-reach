@@ -100,6 +100,10 @@ namespace OutOfReach.Core
                 events.DeferDispatch);
             Survival = new SurvivalExtension(survivalExtension, survivalSpec, definition.CrewCount, events, state,
                 resources, clock, cinematics, HasGrowingConditions, RefreshRates, Journal.Record);
+            SurvivalRecovery = survivalExtension
+                ? new SurvivalRecovery(definition.CrewCount, events, state, resources, clock, cinematics, Survival, Calendar,
+                    () => IsBrownout, RefreshRates, Journal.Record)
+                : null;
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
             events.CommunicationChanged += OnCommunicationChanged;
@@ -115,6 +119,9 @@ namespace OutOfReach.Core
         public FieldModifications FieldModifications { get; }
 
         public SurvivalExtension Survival { get; }
+
+        /// <summary>Rest and the fictional recovery timeline; null when the survival extension is disabled.</summary>
+        public SurvivalRecovery SurvivalRecovery { get; }
 
         /// <summary>The link to Earth: reference distance, light time, the one transmission and the reply timer.</summary>
         public CommunicationSystem Communications { get; }
@@ -298,6 +305,11 @@ namespace OutOfReach.Core
             boundary = Math.Min(boundary, Eva.TimeToNextBoundary());
             boundary = Math.Min(boundary, FieldModifications.TimeToNextBoundary());
             boundary = Math.Min(boundary, Survival.TimeToNextBoundary());
+            if (SurvivalRecovery != null)
+            {
+                boundary = Math.Min(boundary, SurvivalRecovery.TimeToNextBoundary());
+            }
+
             return Math.Min(boundary, Communications.TimeToNextBoundary());
         }
 
@@ -309,8 +321,10 @@ namespace OutOfReach.Core
         {
             RefreshRates();
             Survival.AdvanceTime(stepSeconds);
+            SurvivalRecovery?.AdvanceTime(stepSeconds);
             TrackPeakCarbonDioxide();
             EvaluateSurvival();
+            SurvivalRecovery?.EvaluateRest();
             if (!state.IsSimulationRunning)
             {
                 return;
@@ -340,6 +354,7 @@ namespace OutOfReach.Core
 
             disposed = true;
             Survival.Dispose();
+            SurvivalRecovery?.Dispose();
             events.PhaseChanged -= OnPhaseChanged;
             events.CommunicationChanged -= OnCommunicationChanged;
             events.MissionEnded -= OnMissionEnded;
@@ -433,6 +448,7 @@ namespace OutOfReach.Core
 
         private void OnMissionEnded(MissionEnded message)
         {
+            SurvivalRecovery?.OnMissionEnded();
             double endedAt = state.EndedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
             Journal.Record(endedAt, message.Outcome == MissionOutcome.RecoveryPossible
                 ? "Mission outcome: recovery possible."
@@ -651,8 +667,14 @@ namespace OutOfReach.Core
             }
 
             if (Survival != null && Survival.IsActive)
-                rates = new ResourceRates(rates.OxygenUseKgPerSecond, Survival.GrowWaterLitresPerSecond, 0d,
+            {
+                // Awake, food and drinking water are spent only by crew commands; while the crew rests they are drawn
+                // continuously at the BVAD crew-day rates instead (SurvivalRecovery), never both.
+                double restFood = SurvivalRecovery != null ? SurvivalRecovery.RestFoodKgPerSecond : 0d;
+                double restWater = SurvivalRecovery != null ? SurvivalRecovery.RestWaterLitresPerSecond : 0d;
+                rates = new ResourceRates(rates.OxygenUseKgPerSecond, Survival.GrowWaterLitresPerSecond + restWater, restFood,
                     rates.NetLoadWatts, rates.CarbonDioxideChangePpmPerSecond);
+            }
             resources.TrySetRates(rates);
         }
 

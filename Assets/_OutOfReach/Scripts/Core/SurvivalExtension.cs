@@ -69,6 +69,12 @@ namespace OutOfReach.Core
                 ? SurvivalFailure.HungerLimit : SurvivalFailure.None;
         public event Action Changed;
 
+        /// <summary>
+        /// True while the crew rests (set by <see cref="SurvivalRecovery"/>): food and water are then drawn at the
+        /// BVAD crew-day rates instead, so hunger and thirst neither accrue nor reset, and the awake actions are refused.
+        /// </summary>
+        internal bool NeedsPaused { get; set; }
+
         internal void Begin()
         {
             if (!Enabled || disposed || state.Phase != GamePhase.Survival || ContactRestoredAtSimulationSeconds.HasValue) return;
@@ -81,7 +87,7 @@ namespace OutOfReach.Core
         internal double TimeToNextBoundary()
         {
             if (!IsActive) return double.PositiveInfinity;
-            double boundary = Math.Min(Spec.HungerLimitSeconds - hungerSeconds, Spec.ThirstLimitSeconds - thirstSeconds);
+            double boundary = NeedsPaused ? double.PositiveInfinity : Math.Min(Spec.HungerLimitSeconds - hungerSeconds, Spec.ThirstLimitSeconds - thirstSeconds);
             if (GrowStage == GrowModuleStage.Growing) boundary = Math.Min(boundary, Spec.GrowthSeconds - growingSeconds);
             return boundary > 0d ? boundary : double.PositiveInfinity;
         }
@@ -89,8 +95,11 @@ namespace OutOfReach.Core
         internal void AdvanceTime(double seconds)
         {
             if (!IsActive || seconds <= 0d) return;
-            hungerSeconds = Math.Min(Spec.HungerLimitSeconds, hungerSeconds + seconds);
-            thirstSeconds = Math.Min(Spec.ThirstLimitSeconds, thirstSeconds + seconds);
+            if (!NeedsPaused)
+            {
+                hungerSeconds = Math.Min(Spec.HungerLimitSeconds, hungerSeconds + seconds);
+                thirstSeconds = Math.Min(Spec.ThirstLimitSeconds, thirstSeconds + seconds);
+            }
             if (GrowStage == GrowModuleStage.Growing)
             {
                 growingSeconds = Math.Min(Spec.GrowthSeconds, growingSeconds + seconds);
@@ -226,6 +235,7 @@ namespace OutOfReach.Core
         {
             if (!IsActive) return Fail(CommandFailure.WrongPhase, "This action belongs to the enabled post-contact survival chapter.");
             if (clock.IsPaused || cinematics.IsWaiting) return Fail(CommandFailure.PreconditionsNotMet, "Resume crew control before acting.");
+            if (NeedsPaused) return Fail(CommandFailure.PreconditionsNotMet, "The crew is resting. Wake up first.");
             return Ok("Survival action available.");
         }
 
