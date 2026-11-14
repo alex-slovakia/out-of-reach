@@ -1,0 +1,6 @@
+{
+  "kit_wrench_import_euler": [270.0198, 0, 0],
+  "default_import": {"clip": "Scene", "length_s": 3, "frame_rate": 30, "samples_compared": 364, "max_position_error_mm": 1.02468, "worst_position": "ServiceWrench f20", "max_rotation_error_deg": 0.35388, "worst_rotation": "ServiceWrench f70", "max_wrench_tip_error_mm": 1.16055, "max_blend_weight_error": 0.23756, "within_tolerance": false},
+  "animation_compression_off": {"clip": "Scene", "length_s": 3, "frame_rate": 30, "samples_compared": 364, "max_position_error_mm": 0.00667, "worst_position": "ServiceWrench f12", "max_rotation_error_deg": 0, "worst_rotation": "", "max_wrench_tip_error_mm": 0.00667, "max_blend_weight_error": 0.00004, "within_tolerance": true},
+  "problems": []
+}

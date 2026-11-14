@@ -1,0 +1,3850 @@
+{
+ "blender": "5.3.0",
+ "stage": "full",
+ "cycles_device": "OPTIX: NVIDIA GeForce RTX 4070 Laptop GPU",
+ "kit_islands": 48,
+ "fps": 30,
+ "frames": 91,
+ "duration_s": 3.0,
+ "phases": [
+  {
+   "name": "inspect",
+   "frames": [
+    0,
+    9
+   ],
+   "seconds": [
+    0.0,
+    0.3
+   ],
+   "what": "damaged plug backed out 12 mm and turned 24 deg; wrench ready beside the cable, jaw axis already on the connector axis"
+  },
+  {
+   "name": "approach",
+   "frames": [
+    9,
+    18
+   ],
+   "seconds": [
+    0.3,
+    0.6
+   ],
+   "what": "jaw moves level with the stub jacket behind the melted boot, its 34 mm opening facing the 17 mm cable"
+  },
+  {
+   "name": "hook",
+   "frames": [
+    18,
+    24
+   ],
+   "seconds": [
+    0.6,
+    0.8
+   ],
+   "what": "jaw slides sideways onto the stub jacket at JawEntry"
+  },
+  {
+   "name": "slide",
+   "frames": [
+    24,
+    36
+   ],
+   "seconds": [
+    0.8,
+    1.2
+   ],
+   "what": "jaw slides along the axis over boot and backshell onto the coupling nut (concentric, 1.5 mm radial clearance)"
+  },
+  {
+   "name": "grip",
+   "frames": [
+    36,
+    40
+   ],
+   "seconds": [
+    1.2,
+    1.333
+   ],
+   "what": "jaw takes up the clearance; its rubber heel bears on the nut ridges (within 0.03 mm, measured on the meshes)"
+  },
+  {
+   "name": "seat",
+   "frames": [
+    40,
+    54
+   ],
+   "seconds": [
+    1.333,
+    1.8
+   ],
+   "what": "wrench, nut and plug body move +12 mm along +Z; the cable follows through the Seated blend shape"
+  },
+  {
+   "name": "lock",
+   "frames": [
+    54,
+    69
+   ],
+   "seconds": [
+    1.8,
+    2.3
+   ],
+   "what": "wrench and nut turn 24 deg clockwise as seen by the technician about the connector axis; marks line up"
+  },
+  {
+   "name": "release",
+   "frames": [
+    69,
+    72
+   ],
+   "seconds": [
+    2.3,
+    2.4
+   ],
+   "what": "jaw centres again, clear of the nut"
+  },
+  {
+   "name": "back_off",
+   "frames": [
+    72,
+    81
+   ],
+   "seconds": [
+    2.4,
+    2.7
+   ],
+   "what": "jaw slides back along the axis to JawExit on the seated stub jacket"
+  },
+  {
+   "name": "unhook",
+   "frames": [
+    81,
+    90
+   ],
+   "seconds": [
+    2.7,
+    3.0
+   ],
+   "what": "jaw slides off the cable through its opening along the handle direction; tool clear"
+  }
+ ],
+ "f0_parts_vs_ConnectorDamaged_max_mm": 7e-06,
+ "grip": {
+  "jaw_offset_used_mm": 1.44,
+  "first_jaw_nut_mesh_intersection_at_offset_mm": 1.47,
+  "vertex_to_surface_gap_at_used_offset_mm": 0.3323,
+  "meaning": "the faceted jaw and nut first intersect 0.03 mm further in; the used offset leaves the rubber heel touching the ridges within that tolerance"
+ },
+ "f69_locked_pose_match": {
+  "nut_and_mark_vertices_vs_ConnectorRepaired_vertices_max_mm": 8e-06,
+  "backshell_vertices_vs_ConnectorRepaired_surface_max_mm": 0.0953,
+  "backshell_vertices": 136,
+  "note": "the damaged backshell was tessellated 24 deg turned; the plug body does not turn (keyed), so it is compared surface to surface"
+ },
+ "cable": {
+  "rings": 61,
+  "centreline_length_m": 0.41083,
+  "seated_centreline_length_m": 0.41083,
+  "length_change_mm": -0.0,
+  "loop_bulge_mm": 7.99,
+  "linear_pull_only_length_change_mm": -8.651,
+  "start_ring_push_mm": 12.0,
+  "grommet_ring_push_mm": 0.0,
+  "straight_run_fraction": 0.12
+ },
+ "summary": {
+  "overlap_tris_total": {
+   "ConnectorReceptacle": 0,
+   "DamagedNut": 0,
+   "DamagedPlugBody": 0,
+   "DamagedCable": 0,
+   "DamagedScorch": 0
+  },
+  "min_clearance_mm": {
+   "ConnectorReceptacle": 7.748,
+   "DamagedNut": 0.332,
+   "DamagedPlugBody": 2.74,
+   "DamagedCable": 48.025,
+   "DamagedScorch": 31.7
+  },
+  "parts": {
+   "nut_vs_receptacle_overlap_frames": [
+    48,
+    90
+   ],
+   "body_vs_receptacle_overlap_tris_total": 0,
+   "cable_vs_receptacle_overlap_tris_total": 3356,
+   "cable_vs_plug_overlap_tris_max": 113,
+   "cable_vs_receptacle_overlap_tris_at_frame_0": 36,
+   "cable_vs_plug_overlap_tris_at_frame_0": 113,
+   "note": "all of these are joins inherited from the kit, hidden and unchanged by the motion: the cable end sits in the grommet hole and its start inside the torn jacket (both present at frame 0), and the kit models the coupling nut as a closed cylinder whose rear face sits inside the receptacle barrel once seated, exactly as in ConnectorRepaired. The wrench has no overlap with anything in any frame."
+  },
+  "phases": {
+   "inspect": {
+    "frames": [
+     0,
+     9
+    ],
+    "min_jaw_to_nut_mm": 131.796,
+    "min_jaw_to_cable_mm": 67.363,
+    "min_jaw_to_plug_body_mm": 61.229
+   },
+   "approach": {
+    "frames": [
+     9,
+     18
+    ],
+    "min_jaw_to_nut_mm": 75.449,
+    "min_jaw_to_cable_mm": 50.039,
+    "min_jaw_to_plug_body_mm": 23.809
+   },
+   "hook": {
+    "frames": [
+     18,
+     24
+    ],
+    "min_jaw_to_nut_mm": 75.0,
+    "min_jaw_to_cable_mm": 48.246,
+    "min_jaw_to_plug_body_mm": 6.151
+   },
+   "slide": {
+    "frames": [
+     24,
+     36
+    ],
+    "min_jaw_to_nut_mm": 0.609,
+    "min_jaw_to_cable_mm": 51.911,
+    "min_jaw_to_plug_body_mm": 2.74
+   },
+   "grip": {
+    "frames": [
+     36,
+     40
+    ],
+    "min_jaw_to_nut_mm": 0.332,
+    "min_jaw_to_cable_mm": 142.389,
+    "min_jaw_to_plug_body_mm": 6.143
+   },
+   "seat": {
+    "frames": [
+     40,
+     54
+    ],
+    "min_jaw_to_nut_mm": 0.332,
+    "min_jaw_to_cable_mm": 142.389,
+    "min_jaw_to_plug_body_mm": 6.143
+   },
+   "lock": {
+    "frames": [
+     54,
+     69
+    ],
+    "min_jaw_to_nut_mm": 0.332,
+    "min_jaw_to_cable_mm": 141.935,
+    "min_jaw_to_plug_body_mm": 6.14
+   },
+   "release": {
+    "frames": [
+     69,
+     72
+    ],
+    "min_jaw_to_nut_mm": 0.332,
+    "min_jaw_to_cable_mm": 141.935,
+    "min_jaw_to_plug_body_mm": 6.14
+   },
+   "back_off": {
+    "frames": [
+     72,
+     81
+    ],
+    "min_jaw_to_nut_mm": 0.609,
+    "min_jaw_to_cable_mm": 51.907,
+    "min_jaw_to_plug_body_mm": 2.74
+   },
+   "unhook": {
+    "frames": [
+     81,
+     90
+    ],
+    "min_jaw_to_nut_mm": 75.0,
+    "min_jaw_to_cable_mm": 48.025,
+    "min_jaw_to_plug_body_mm": 5.202
+   }
+  }
+ },
+ "per_frame": [
+  {
+   "f": 0,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 1,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 2,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 3,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 4,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 5,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 6,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 7,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 8,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 9,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 169.303,
+    "DamagedNut": 131.796,
+    "DamagedPlugBody": 61.229,
+    "DamagedCable": 67.363,
+    "DamagedScorch": 191.193
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.11,
+    -0.03,
+    -0.2
+   ],
+   "jaw_off_axis_mm": 114.018,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 10,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 167.099,
+    "DamagedNut": 129.654,
+    "DamagedPlugBody": 59.244,
+    "DamagedCable": 65.685,
+    "DamagedScorch": 189.207
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.10835,
+    -0.02897,
+    -0.19835
+   ],
+   "jaw_off_axis_mm": 112.16,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 11,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 161.24,
+    "DamagedNut": 123.989,
+    "DamagedPlugBody": 54.044,
+    "DamagedCable": 61.481,
+    "DamagedScorch": 183.938
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.10394,
+    -0.02621,
+    -0.19394
+   ],
+   "jaw_off_axis_mm": 107.197,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 12,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 152.898,
+    "DamagedNut": 115.993,
+    "DamagedPlugBody": 46.531,
+    "DamagedCable": 56.312,
+    "DamagedScorch": 176.458
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.09756,
+    -0.02222,
+    -0.18756
+   ],
+   "jaw_off_axis_mm": 100.055,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 13,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 143.262,
+    "DamagedNut": 106.596,
+    "DamagedPlugBody": 37.789,
+    "DamagedCable": 51.978,
+    "DamagedScorch": 167.899
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.08998,
+    -0.01749,
+    -0.17998
+   ],
+   "jaw_off_axis_mm": 91.667,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 14,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 133.482,
+    "DamagedNut": 97.25,
+    "DamagedPlugBody": 30.471,
+    "DamagedCable": 50.039,
+    "DamagedScorch": 159.307
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.08202,
+    -0.01251,
+    -0.17202
+   ],
+   "jaw_off_axis_mm": 82.965,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 15,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 124.601,
+    "DamagedNut": 88.684,
+    "DamagedPlugBody": 26.448,
+    "DamagedCable": 50.963,
+    "DamagedScorch": 151.431
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.07444,
+    -0.00778,
+    -0.16444
+   ],
+   "jaw_off_axis_mm": 74.85,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 16,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 117.454,
+    "DamagedNut": 81.879,
+    "DamagedPlugBody": 26.412,
+    "DamagedCable": 53.717,
+    "DamagedScorch": 144.96
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.06806,
+    -0.00379,
+    -0.15806
+   ],
+   "jaw_off_axis_mm": 68.163,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 17,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 112.759,
+    "DamagedNut": 77.144,
+    "DamagedPlugBody": 24.684,
+    "DamagedCable": 55.205,
+    "DamagedScorch": 140.521
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.06365,
+    -0.00103,
+    -0.15365
+   ],
+   "jaw_off_axis_mm": 63.654,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 18,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 110.917,
+    "DamagedNut": 75.449,
+    "DamagedPlugBody": 23.809,
+    "DamagedCable": 55.593,
+    "DamagedScorch": 138.863
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.062,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 62.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 19,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 110.106,
+    "DamagedNut": 75.193,
+    "DamagedPlugBody": 20.593,
+    "DamagedCable": 53.882,
+    "DamagedScorch": 138.75
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.05741,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 57.407,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 20,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 108.799,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 13.677,
+    "DamagedCable": 50.637,
+    "DamagedScorch": 138.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.04593,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 45.926,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 21,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 107.905,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 6.151,
+    "DamagedCable": 48.246,
+    "DamagedScorch": 138.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.031,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 31.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 22,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 107.952,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 6.91,
+    "DamagedCable": 48.453,
+    "DamagedScorch": 138.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.01607,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 16.074,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 23,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 108.846,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 13.714,
+    "DamagedCable": 50.962,
+    "DamagedScorch": 138.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.00459,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 4.593,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 24,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 109.407,
+    "DamagedNut": 75.014,
+    "DamagedPlugBody": 17.204,
+    "DamagedCable": 51.911,
+    "DamagedScorch": 138.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.152
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 25,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 107.571,
+    "DamagedNut": 73.145,
+    "DamagedPlugBody": 16.941,
+    "DamagedCable": 53.615,
+    "DamagedScorch": 136.831
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.15013
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 26,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 102.501,
+    "DamagedNut": 67.978,
+    "DamagedPlugBody": 16.05,
+    "DamagedCable": 58.38,
+    "DamagedScorch": 131.663
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.14496
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 27,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 94.863,
+    "DamagedNut": 60.173,
+    "DamagedPlugBody": 14.704,
+    "DamagedCable": 65.694,
+    "DamagedScorch": 123.856
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.13716
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 28,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 85.33,
+    "DamagedNut": 50.391,
+    "DamagedPlugBody": 11.793,
+    "DamagedCable": 75.003,
+    "DamagedScorch": 114.07
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.12737
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 29,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 74.592,
+    "DamagedNut": 39.291,
+    "DamagedPlugBody": 7.054,
+    "DamagedCable": 85.696,
+    "DamagedScorch": 102.965
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.11627
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 30,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 63.354,
+    "DamagedNut": 27.538,
+    "DamagedPlugBody": 6.94,
+    "DamagedCable": 97.125,
+    "DamagedScorch": 91.2
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.1045
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 31,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 51.735,
+    "DamagedNut": 15.801,
+    "DamagedPlugBody": 7.0,
+    "DamagedCable": 108.626,
+    "DamagedScorch": 79.435
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.09273
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 32,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 40.766,
+    "DamagedNut": 4.848,
+    "DamagedPlugBody": 5.284,
+    "DamagedCable": 119.278,
+    "DamagedScorch": 68.33
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.08163
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 33,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 31.18,
+    "DamagedNut": 1.44,
+    "DamagedPlugBody": 2.74,
+    "DamagedCable": 128.568,
+    "DamagedScorch": 58.544
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.07184
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 34,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 23.651,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 2.74,
+    "DamagedCable": 136.029,
+    "DamagedScorch": 50.737
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.06404
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 35,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 18.792,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 4.957,
+    "DamagedCable": 140.988,
+    "DamagedScorch": 45.569
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.05887
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 36,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 17.079,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 6.596,
+    "DamagedCable": 142.785,
+    "DamagedScorch": 43.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 37,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 17.074,
+    "DamagedNut": 0.695,
+    "DamagedPlugBody": 6.507,
+    "DamagedCable": 142.723,
+    "DamagedScorch": 43.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00022,
+    0.0,
+    -0.057
+   ],
+   "jaw_off_axis_mm": 0.225,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 38,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 17.042,
+    "DamagedNut": 0.883,
+    "DamagedPlugBody": 6.335,
+    "DamagedCable": 142.587,
+    "DamagedScorch": 43.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00072,
+    0.0,
+    -0.057
+   ],
+   "jaw_off_axis_mm": 0.72,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 39,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 16.993,
+    "DamagedNut": 0.55,
+    "DamagedPlugBody": 6.195,
+    "DamagedCable": 142.451,
+    "DamagedScorch": 43.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00121,
+    0.0,
+    -0.057
+   ],
+   "jaw_off_axis_mm": 1.215,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 40,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 16.971,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 43.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.057
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.057
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.0
+  },
+  {
+   "f": 41,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 16.812,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 43.525
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.05683
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.05683
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.01458
+  },
+  {
+   "f": 42,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 16.366,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 43.035
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 112
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.05634
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.05634
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.05539
+  },
+  {
+   "f": 43,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 15.688,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 42.283
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.05558
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.05558
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.11808
+  },
+  {
+   "f": 44,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 14.83,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 41.321
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.05462
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.05462
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.19825
+  },
+  {
+   "f": 45,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 13.85,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 40.201
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.0535
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.0535
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.29155
+  },
+  {
+   "f": 46,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 12.803,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 38.977
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 112
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.05228
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.05228
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.39359
+  },
+  {
+   "f": 47,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 11.748,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 37.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 0,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.051
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.051
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.5
+  },
+  {
+   "f": 48,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 10.742,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 36.423
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.04972
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.04972
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.60641
+  },
+  {
+   "f": 49,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 9.836,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 35.199
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 112
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.0485
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.0485
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.70845
+  },
+  {
+   "f": 50,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 9.074,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 34.079
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 52,
+    "body": 0,
+    "cable": 36
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 112
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.04738
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.04738
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.80175
+  },
+  {
+   "f": 51,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.482,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 33.117
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 38,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.04642
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.04642
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.88192
+  },
+  {
+   "f": 52,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.07,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 32.365
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 40,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.04566
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.04566
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.94461
+  },
+  {
+   "f": 53,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.828,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 31.875
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 40,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.04517
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.04517
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 0.98542
+  },
+  {
+   "f": 54,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.748,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.143,
+    "DamagedCable": 142.389,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.0,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": 0.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 55,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.757,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.144,
+    "DamagedCable": 142.381,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    1e-05,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -0.301,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 56,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.788,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.147,
+    "DamagedCable": 142.358,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    3e-05,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -1.166,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 57,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.829,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.146,
+    "DamagedCable": 142.323,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    6e-05,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -2.496,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 58,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.841,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.141,
+    "DamagedCable": 142.279,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00144,
+    0.00011,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -4.21,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 59,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.879,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.141,
+    "DamagedCable": 142.231,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00143,
+    0.00016,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -6.222,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 60,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.95,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.145,
+    "DamagedCable": 142.181,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00142,
+    0.00021,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -8.448,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 61,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.998,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.14,
+    "DamagedCable": 142.132,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00141,
+    0.00027,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -10.802,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 62,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.036,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.144,
+    "DamagedCable": 142.086,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0014,
+    0.00033,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -13.198,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 63,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.108,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.146,
+    "DamagedCable": 142.045,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00139,
+    0.00039,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -15.552,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 64,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.159,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.14,
+    "DamagedCable": 142.01,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00137,
+    0.00044,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -17.778,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 65,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.185,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.142,
+    "DamagedCable": 141.983,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00135,
+    0.00049,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -19.79,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 66,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.228,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.145,
+    "DamagedCable": 141.961,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00134,
+    0.00053,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -21.504,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 67,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.273,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.141,
+    "DamagedCable": 141.947,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 46,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00133,
+    0.00056,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -22.834,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 68,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.308,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.14,
+    "DamagedCable": 141.938,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00132,
+    0.00058,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -23.694,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 69,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.317,
+    "DamagedNut": 0.332,
+    "DamagedPlugBody": 6.14,
+    "DamagedCable": 141.935,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00132,
+    0.00059,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.44,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 70,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.229,
+    "DamagedNut": 0.694,
+    "DamagedPlugBody": 6.23,
+    "DamagedCable": 142.037,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00097,
+    0.00043,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 1.067,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 71,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 8.066,
+    "DamagedNut": 0.751,
+    "DamagedPlugBody": 6.45,
+    "DamagedCable": 142.228,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.00034,
+    0.00015,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 0.373,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 72,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 7.978,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 6.596,
+    "DamagedCable": 142.33,
+    "DamagedScorch": 31.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 73,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 9.852,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 3.876,
+    "DamagedCable": 139.198,
+    "DamagedScorch": 34.958
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.04826
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 74,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 17.068,
+    "DamagedNut": 0.609,
+    "DamagedPlugBody": 2.74,
+    "DamagedCable": 130.811,
+    "DamagedScorch": 43.689
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.05699
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 75,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 29.029,
+    "DamagedNut": 4.848,
+    "DamagedPlugBody": 5.284,
+    "DamagedCable": 118.749,
+    "DamagedScorch": 56.33
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.06963
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 76,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 43.708,
+    "DamagedNut": 19.669,
+    "DamagedPlugBody": 7.0,
+    "DamagedCable": 104.626,
+    "DamagedScorch": 71.316
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.08462
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 77,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 59.319,
+    "DamagedNut": 35.413,
+    "DamagedPlugBody": 6.94,
+    "DamagedCable": 89.454,
+    "DamagedScorch": 87.084
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.10038
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 78,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 73.732,
+    "DamagedNut": 50.391,
+    "DamagedPlugBody": 11.793,
+    "DamagedCable": 75.001,
+    "DamagedScorch": 102.07
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.11537
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 79,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 85.953,
+    "DamagedNut": 63.027,
+    "DamagedPlugBody": 15.196,
+    "DamagedCable": 63.003,
+    "DamagedScorch": 114.711
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.12801
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 80,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 94.459,
+    "DamagedNut": 71.757,
+    "DamagedPlugBody": 16.701,
+    "DamagedCable": 54.885,
+    "DamagedScorch": 123.442
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.13674
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 81,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 97.643,
+    "DamagedNut": 75.014,
+    "DamagedPlugBody": 17.204,
+    "DamagedCable": 51.907,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    -0.0,
+    0.0,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 0.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 82,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 97.432,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 15.593,
+    "DamagedCable": 51.88,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.00194,
+    -0.00086,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 2.126,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 83,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 96.707,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 11.436,
+    "DamagedCable": 50.462,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.00715,
+    -0.00318,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 7.824,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 84,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 95.982,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 6.884,
+    "DamagedCable": 48.904,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.01468,
+    -0.00654,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 16.074,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 85,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 95.86,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 5.202,
+    "DamagedCable": 48.025,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.02362,
+    -0.01052,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 25.855,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 86,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 96.198,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 8.301,
+    "DamagedCable": 48.832,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.03302,
+    -0.0147,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 36.145,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 87,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 97.0,
+    "DamagedNut": 75.0,
+    "DamagedPlugBody": 13.683,
+    "DamagedCable": 50.538,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.04196,
+    -0.01868,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 45.926,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 88,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 97.943,
+    "DamagedNut": 75.048,
+    "DamagedPlugBody": 18.433,
+    "DamagedCable": 52.436,
+    "DamagedScorch": 126.7
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.04949,
+    -0.02204,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 54.176,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 89,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 98.853,
+    "DamagedNut": 75.321,
+    "DamagedPlugBody": 22.251,
+    "DamagedCable": 54.254,
+    "DamagedScorch": 126.701
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.0547,
+    -0.02435,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 59.874,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  },
+  {
+   "f": 90,
+   "overlap_tris": {
+    "ConnectorReceptacle": 0,
+    "DamagedNut": 0,
+    "DamagedPlugBody": 0,
+    "DamagedCable": 0,
+    "DamagedScorch": 0
+   },
+   "clearance_mm": {
+    "ConnectorReceptacle": 99.266,
+    "DamagedNut": 75.449,
+    "DamagedPlugBody": 23.797,
+    "DamagedCable": 55.068,
+    "DamagedScorch": 126.712
+   },
+   "parts_vs_receptacle_overlap_tris": {
+    "nut": 48,
+    "body": 0,
+    "cable": 38
+   },
+   "cable_vs_plug_overlap_tris": {
+    "nut": 0,
+    "body": 113
+   },
+   "jaw_centre": [
+    0.05664,
+    -0.02522,
+    -0.14
+   ],
+   "jaw_off_axis_mm": 62.0,
+   "nut_centre": [
+    -0.0,
+    0.0,
+    -0.045
+   ],
+   "nut_lock_deg": -24.0,
+   "cable_weight": 1.0
+  }
+ ],
+ "stills": [
+  "f00-inspect.png",
+  "f18-approach-end.png",
+  "f24-hooked.png",
+  "f36-on-nut.png",
+  "f40-gripped.png",
+  "f54-seated.png",
+  "f62-locking.png",
+  "f69-locked.png",
+  "f81-backed-off.png",
+  "f90-clear.png",
+  "close-f40-gripped.png",
+  "close-f54-seated.png",
+  "close-f69-locked.png",
+  "after-swap-f90.png"
+ ],
+ "triangles": {
+  "ServiceWrench": 1208,
+  "DamagedNut": 200,
+  "DamagedPlugBody": 1494,
+  "DamagedCable": 1216,
+  "DamagedScorch": 96
+ },
+ "blend_path_scrubbed": 9
+}

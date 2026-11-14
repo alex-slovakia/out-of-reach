@@ -1,0 +1,48 @@
+{
+ "file": "AntennaRepairMotion.fbx",
+ "objects": [
+  "CableGrommet",
+  "ConnectorMount",
+  "DamagedCable",
+  "DamagedNut",
+  "DamagedPlugBody",
+  "DamagedScorch",
+  "JawEntry",
+  "JawExit",
+  "PlugGrip",
+  "PlugGripBackedOut",
+  "ServiceWrench"
+ ],
+ "cable_shape_keys": [
+  "Basis",
+  "Seated"
+ ],
+ "animated_objects": [
+  "CableGrommet",
+  "ConnectorMount",
+  "DamagedCable",
+  "DamagedNut",
+  "DamagedPlugBody",
+  "DamagedScorch",
+  "JawEntry",
+  "JawExit",
+  "PlugGrip",
+  "PlugGripBackedOut",
+  "ServiceWrench"
+ ],
+ "moving_objects": [
+  "DamagedNut",
+  "DamagedPlugBody",
+  "ServiceWrench"
+ ],
+ "cable_key_animated": true,
+ "triangles": 4214,
+ "frames_compared": 91,
+ "worst": {
+  "position_mm": 0.0067,
+  "where": "ServiceWrench f12",
+  "cable_weight": 0.0
+ },
+ "cameras_lights": [],
+ "drive_letter_paths": []
+}
