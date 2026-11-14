@@ -27,6 +27,7 @@ Consolidated from Alex's playtest messages and accepted design requests. Updated
 | B20 | E interactions are instant and visually weak | Larger readable cue, one clear action, physical hand/tool/switch response, real progress where action timing exists. No fake progress after an instant repair. |
 | B21 | Reference HUD bars do not correspond to real quantities | Bind separate exertion, ship battery, food/hydration, cabin/suit oxygen states. Show only relevant bars; precise units remain available in systems detail. Never copy reference meter values. |
 | B22 | Terminal model looks generic and too smooth | Claude-assigned hardware revision: industrial proportions, recesses, seals, fasteners, tactile controls, mounting and plausible material variation, preserving integration anchors. Awaiting Claude ACK. |
+| B23 | Visible gap beside an interior wall/hatch; player fears falling outside | Priority P1 containment report. Inspect both hull mesh continuity and colliders; screenshot establishes visible gap, not yet a reproduced escape. Close the real seam and verify the player/camera cannot cross the pressure hull during cockpit-check phase. Independent read-only diagnosis assigned. |
 
 ## Additions and accepted direction
 
