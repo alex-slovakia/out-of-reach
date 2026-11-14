@@ -127,11 +127,15 @@ tower, pad markings, a crawlerway and a distant assembly building. It carries on
 - **Unity 6000.3.28f1 import check** (`unity_check/`, run in an isolated empty project on this exact FBX):
   - **Bake Axis Conversion on:** all 11 renderers' world bounds and all 16 anchors equal this manifest. The maximum deviation is 0.0000 m at 0.1 mm output precision. Rotation is 0 and scale is 1 on every node.
   - **Bake Axis Conversion off:** the same data maps exactly to (−x, y, −z).
-  - **Triangles:** Unity imports 6,458 of the FBX's 6,562 triangles. It drops 48 in LS_Umbilicals (2,840 → 2,792) and 56 in LS_WaterTower (1,208 → 1,152).
-    - These are exactly the near-zero-area slivers at the sphere and tank poles, where the shared kit's lathe closes the profile on a 1 µm ring.
+  - **Triangles:** Unity keeps 6,458 of the FBX's 6,562 triangles.
+    - **Welding on (the ship setting):** it drops 48 in LS_Umbilicals (2,840 → 2,792) and 56 in LS_WaterTower (1,208 → 1,152).
+    - **Welding off:** it keeps all 2,840 and 1,208.
+    - **The dropped faces are exactly the lathe's pole slivers.** The shared kit closes the sphere and the tank's roof-dome profiles on a 1 µm ring, so each pole segment leaves a sliver whose shortest edge is at most 0.26 µm (area at most 0.22 mm²). Welding merges those sub-micron edges, and Unity removes the faces that become degenerate.
+    - **One-to-one match:** `ls_tri_match.py` matches all 3,944 imported triangles of these two modules with the source minus the 104 slivers. The maximum deviation is 6 µm, and nothing is unmatched on either side.
     - Every other module matches, no zero-area triangle is left in Unity, and bounds and anchors are unaffected.
     - `ls_manifest.json` lists both counts per object: `triangles` (the FBX's) and `triangles_unity`.
   - `LSAxisCheck.cs` does the import and the logging; `ls_axis_compare.py` finds the best axis map.
+  - `LSTriangleDetail.cs` logs the counts with welding on and off, plus every imported triangle of the two modules (`ls_tri_detail.tsv`). `ls_tri_match.py` compares those with the source and writes `ls_tri_match.json`.
 - **Not verified:**
   - the URP look of the materials;
   - lighting and collision;
