@@ -689,6 +689,7 @@ def build_decals():
     add("brk_row_b", 0.45, 0.034, breaker_tags(["CB-%02d" % i for i in range(9, 18)],
                                                 ["C10", "C10", "B6", "B6", "C16", "C16", "B10", "B10", "C6"]))
     add("isolator_face", 0.19, 0.19, isolator_face())
+    add("ant_drive", 0.20, 0.03, plate(YELLOW, INK, "ANTENNA MANUAL DRIVE", "SemiBold"))
     for bed, serial in (("A", "0417"), ("B", "0418"), ("C", "0422")):
         add("can_label_" + bed.lower(), 0.115, 0.16, canister_label(bed, serial))
 

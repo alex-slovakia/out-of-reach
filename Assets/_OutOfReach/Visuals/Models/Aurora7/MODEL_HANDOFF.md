@@ -6,7 +6,8 @@ Scope written: only `Assets/_OutOfReach/Visuals/Models.meta` and `Assets/_OutOfR
 **State: engineering bay pass against review-01 R02 (CODEX-008).** The first functional deliverable
 (`9878304`) is followed by one focused model and material pass. Only the engineering bay was compared with
 the reference; palette, ribs, deck, overhead services and handrails are shared kit parts, so the other
-compartments received them without separate work and were not compared with their views yet.
+compartments received them without separate work and were not compared with their views yet. The high-gain
+antenna (asset A07) follows as a second step, because the EVA repair had nothing to repair before it.
 
 ## What is delivered
 
@@ -18,6 +19,8 @@ practice. Everything is function first:
 - **Flight deck:** five-pane framed observation window, overhead circuit-breaker panels, a three-display console
   with keyboards, two crew seats with harness and hand controllers.
 - **Engineering (assets A01, A02, A03):**
+  - **ARS-1 air revitalisation unit** (prop from the prop author's chat) on the wall forward of the scrubber
+    rack: status lamps, gauge, two canister sockets, inlet fan, filter drawer and valve manifold.
   - **Power distribution rack** at PowerRepair: an open, recessed breaker cabinet with two rails of breakers,
     feeder trunk, wiring loom, main isolator, amber work light, stencilled fascia, emergency lamp and a
     latched drawer.
@@ -30,6 +33,9 @@ practice. Everything is function first:
   pressure doors with viewports.
 - **Exterior:** pressure hull with frames and seams, forward window face, aft EVA hatch and porch, gold EVA
   handrails to the antenna work site, two solar wings, body radiators, eight reaction-control quads.
+- **Antenna (asset A07):** 1.24 m dish with feed and backing tubes on a two-axis gimbal, standing on the hull
+  pad at AntennaRepair. The base housing carries an amber-edged service deck with the manual drive socket,
+  an access cover, a tether point and two test connectors.
 
 All geometry and textures are original and generated from the scripts in `Source/`. See `LICENSES.md`.
 
@@ -54,13 +60,14 @@ view, looking aft from just inside the forward hatch.
 | Path | Content |
 |---|---|
 | `Prefabs/Aurora7_Models.prefab` | **Use this.** Visual meshes, door leaves, engineering parts, props, collision proxies. No camera, light, listener or script. |
-| `Meshes/A7_*.fbx` | Static modules: Cockpit, Engineering, Storage, Airlock, Exterior. Groups with their own pivots: Doors (four leaves), Parts (engineering parts and helper points). Collision. |
+| `Meshes/A7_*.fbx` | Static modules: Cockpit, Engineering, Storage, Airlock, Exterior. Groups with their own pivots: Doors (four leaves), Parts (engineering parts and helper points), ExteriorParts (antenna gimbal and its helper point). Collision. |
 | `Meshes/a7_model_report.json` | Blender-side counts, bounds, part origins and helper points (Unity axes). |
 | `Meshes/a7_unity_import_report.json` | Unity-side counts, bounds and validation result. |
 | `Materials/*.mat` | 39 URP Lit materials created from `Source/a7_materials.json`. |
 | `Textures/` | 11 tiling PBR sets (BaseColor, Normal, MODS), the label atlas and the display atlas, with their JSON maps. |
-| `Props/ServicePanel/` | EPS-2 panel from the panel author's chat, imported unchanged (its own README, licences and previews). |
-| `Previews/` | Genuine renders: `A7_unity_urp_*` from Unity URP (the delivered prefab), `A7_blender_cycles_*` from Blender Cycles (generated meshes only, so without the EPS-2 panel prop). `..._engineering_r02_cover_fitted` shows the cabinet with its cover; `..._exterior_finale` dates from `9878304`, the exterior is unchanged. |
+| `Props/ServicePanel/` | EPS-2 panel from the prop author's chat, imported unchanged (its own README, licences and previews). |
+| `Props/LifeSupportRack/` | ARS-1 unit from the same chat, imported unchanged; identical to branch `feature/prop-life-support-rack` at `8c28054`. Its README still describes the rack-face mount it was built for. |
+| `Previews/` | Genuine renders: `A7_unity_urp_*` from Unity URP (the delivered prefab), `A7_blender_cycles_*` from Blender Cycles (generated meshes only, so without the EPS-2 and ARS-1 props; their wall plinths show instead). `..._engineering_r02_cover_fitted` shows the cabinet with its cover. |
 | `Editor/Aurora7ModelTools.cs` | Editor-only: importer settings, materials, prefab, validation, preview stills. |
 | `Source/` | `a7kit.py`, `a7_ship.py`, `a7_textures.py`, `build_aurora7.py`, `a7_materials.json` — the editable source. |
 
@@ -77,13 +84,13 @@ Instantiate the prefab at the ship origin with identity rotation and unit scale.
 | LifeSupportRepair (1.65, 1.15, 8.1), yaw −90 | Centre of the scrubber bay. The opening is 1.08 × 1.32 m (y 0.52 to 1.84), 0.26 m deep; the canister axes are at z = 8.24, 7.99 and 7.74. |
 | AirlockInner (0, 0, 17) / AirlockOuter (0, 0, 21) | Hatchways with machined sealing lands; door leaves on these planes. |
 | EvaStart (0, 0, 22) / EvaReturn (0, 0, 21.7) | On the EVA porch, a grated platform at deck level outside the aft hatch. |
-| AntennaRepair (3.2, 2.4, 13), yaw −90 | Antenna mounting pad on the hull's upper starboard quarter; the anchor is 0.31 m off the skin. |
-| FinaleCameraAnchor (9, 5, 27), yaw 205 | Sees the aft bulkhead, starboard flank, solar wing and antenna pad (`A7_unity_urp_exterior_finale.png`). |
+| AntennaRepair (3.2, 2.4, 13), yaw −90 | The antenna's manual drive socket, on the aft service deck of the base housing. The socket is on the anchor to within 1 mm and faces outboard along the hull normal, as agreed; the dish hangs about 0.65 m above the deck. |
+| FinaleCameraAnchor (9, 5, 27), yaw 205 | Sees the aft bulkhead, starboard flank, solar wing and the antenna (`A7_unity_urp_exterior_finale.png`). |
 
 ### Hierarchy
 
-`Visual/` (five static module meshes), `DoorLeaves/`, `EngineeringParts/`, `Props/`, `CollisionProxies/`
-(46 `COL_*` box colliders).
+`Visual/` (five static module meshes), `DoorLeaves/`, `EngineeringParts/`, `ExteriorParts/`, `Props/`,
+`CollisionProxies/` (46 `COL_*` box colliders).
 
 - **Door leaves:** `DoorLeaf_Inner_L/R` and `DoorLeaf_Outer_L/R`. Each object's pivot is the V01 leaf position
   (inner ±1.4 open, outer ±0.45 closed) and each leaf is 0.88 × 2.46 × 0.12 m. Parent them under your leaf
@@ -101,6 +108,21 @@ Instantiate the prefab at the ship origin with identity rotation and unit scale.
   | `LightAnchor_PowerCabinetWork` | (−1.758, 1.72, 6.35) | Empty. Place for the amber work light; the emissive strip beside it is `A7_WorkLight`. |
   | `LightAnchor_PowerCabinetAlarm` | (−1.64, 2.165, 6.71) | Empty. Place for the red emergency light, in front of the lens. |
 
+- **Antenna gimbal** (`ExteriorParts/`, no colliders, no behaviour). The meshes keep ship axes; two empty
+  pivots carry the usable axes:
+
+  | Object | Position (ship metres) | Use |
+  |---|---|---|
+  | `Antenna_AzimuthPivot` | (3.501, 2.479, 12.72) | Local **Y** is the hull normal at the pad. Rotate about local Y to slew in azimuth. Holds `Antenna_Azimuth` (turntable and yoke) and the elevation pivot. |
+  | `Antenna_ElevationPivot` | (3.830, 2.565, 12.72), child of the azimuth pivot | Local **X** is the trunnion. Rotate about local X to change elevation. Holds `Antenna_Elevation` (trunnion, boom, dish, feed). Delivered with the boresight leaning 30° aft of the hull normal. |
+  | `Antenna_ServiceSocket` | (3.2, 2.4, 13.0) | Empty on the manual drive socket, on the AntennaRepair anchor. |
+
+  The base housing, mast and service deck are part of the static `A7_Exterior` mesh. Deck labels read from
+  aft, where the handrail path arrives. Nothing limits the gimbal's travel: a large elevation change will put
+  the dish through the yoke or the hull.
+- **Props:** `LifeSupportRack_Ars1`, the ARS-1 unit, on the wall plinth forward of the scrubber rack: pivot at
+  (2.236, 0.45, 6.67), yaw −90. `CanisterA`, `CanisterB` and `FanRotor` are separate objects, see
+  `Props/LifeSupportRack/README.md`. Its `CollisionProxy` child is inactive, like the panel's.
 - **Props:** `ServicePanel_EpsControl`, the EPS-2 panel, on the wall plinth aft of the power rack: pivot at
   (−2.256, 0.55, 7.36), yaw 90. It was `ServicePanel_PowerRepair` on the rack face in `9878304`. Its
   `CollisionProxy` child is inactive here, see Collision. Cover hinge and lamp materials are described in
@@ -112,16 +134,17 @@ Instantiate the prefab at the ship origin with identity rotation and unit scale.
   ("SEE HUD", "SCHEMATIC ONLY"). Replace or overlay them with bound UI; the rectangles are in `a7_screens.json`.
 - **Collision:** the proxies repeat the V01 solid envelope box for box (same centres and sizes as the collision
   boxes in `ShipVisualBuilder.cs`), so walkable space is unchanged. Visible meshes have no colliders. Both
-  service bays are recesses inside the rack proxies, so the player cannot step into them. The EPS-2 panel's own
-  collider is switched off because the panel now stands in walkable space beside the rack; it protrudes 0.21 m
-  from the wall, about as much as the utility bay's duct. The exterior has no proxies yet because the EVA route is not
+  service bays are recesses inside the rack proxies, so the player cannot step into them. The EPS-2 panel's and
+  the ARS-1 unit's own colliders are switched off because both stand in walkable space beside the racks; they
+  protrude 0.21 m and 0.25 m from the wall, about as much as the utility bay's duct. The exterior has no proxies yet because the EVA route is not
   decided.
 
 ### Differences from the blockout to be aware of
 
 - Wall bays divide each compartment evenly, so the cosmetic ring frames are not at the blockout rib stations.
 - The observation window keeps the same opening band but is five framed panes, not one sheet.
-- `AntennaRepair` has yaw −90, which faces inboard; the mounting pad faces outboard. Nothing was changed.
+- `AntennaRepair` has yaw −90, which faces inboard. The service face is oriented outboard and the crew works
+  facing the hull, as the integrator decided; the anchor itself is unchanged.
 - One mesh per compartment with one sub-mesh per material (21 to 29 each), as agreed for the first integration.
 
 ## Counts and bounds
@@ -130,15 +153,17 @@ Measured in Unity 6000.3.28f1 by the import check (`Meshes/a7_unity_import_repor
 
 | Object | Triangles | Materials | Bounds min → max (m) |
 |---|---:|---:|---|
-| `A7_Cockpit` | 75,568 | 28 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
-| `A7_Engineering` | 76,958 | 29 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
-| `A7_Storage` | 52,862 | 21 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
-| `A7_Airlock` | 31,084 | 25 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
-| `A7_Exterior` | 27,120 | 10 | (−12.37, −2.02, −3.59) → (12.37, 5.14, 23.4) |
+| `A7_Cockpit` | 75,268 | 28 | (−3, −0.05, −3.06) → (3, 3.20, 3) |
+| `A7_Engineering` | 75,958 | 29 | (−2.4, −0.16, 2.84) → (2.4, 3.20, 11) |
+| `A7_Storage` | 52,860 | 21 | (−2.4, −0.16, 10.84) → (2.4, 3.20, 17) |
+| `A7_Airlock` | 31,690 | 25 | (−2.4, −0.16, 16.84) → (2.4, 3.20, 21.16) |
+| `A7_Exterior` | 29,556 | 16 | (−12.37, −2.02, −3.59) → (12.37, 5.14, 23.4) |
 | Door leaves (4) | 9,808 | 6–7 | at the two hatch planes |
-| Engineering parts (8 meshes) | 5,248 | 1–4 | inside the two service racks |
+| Engineering parts (7 meshes) | 5,248 | 1–4 | inside the two service racks |
+| Antenna gimbal (2 meshes) | 2,892 | 2–4 | on the hull pad at AntennaRepair |
 | EPS-2 panel (3 meshes) | 6,734 | 5 | on the wall beside the power rack |
-| **Total** | **285,382** | **42 distinct** | 39 textures, 19 renderers, 47 colliders of which 46 active |
+| ARS-1 unit (5 meshes) | 7,300 | 5 | on the wall forward of the scrubber rack |
+| **Total** | **297,314** | **47 distinct** | 43 textures, 26 renderers, 48 colliders of which 46 active |
 
 Scale is 1 unit = 1 metre; every model root is at identity rotation and unit scale. Hull: 7.1 m diameter
 around the flight deck, 6.0 m aft, 24.2 m long; solar wings span 24.7 m.
@@ -170,9 +195,13 @@ without rewriting the FBX files.
   - every renderer uses the external URP Lit materials, none missing;
   - three collision proxies at known asymmetric positions confirm axes, handedness and scale;
   - one part pivot from each rack and one helper point are checked against the generator's numbers to 1 cm;
+  - the antenna's drive socket is checked against the AntennaRepair anchor to 1 cm;
   - the prefab contains no camera, light, audio listener or script;
-  - eleven stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
+  - twelve stills captured with `ShaderUtil.allowAsyncCompilation = false` and three warm-up frames each.
 - `python tools/verify_repository.py` passes on the branch.
+- The FBX files are now exported without texture records and hold no local path (checked by searching the
+  files). The exports in `9878304` and `18339a3` embedded the absolute texture paths of the build machine;
+  nothing depends on those paths.
 
 The preview lighting (warm spot lights at the luminaires, one amber point light at the work-light anchor, a
 flat ambient term, a warm reflection box, ACES and a little bloom) exists only inside the capture method. It
@@ -183,6 +212,6 @@ is not delivered lighting.
 - Placement and lighting inside the integrated Bootstrap scene; a Windows build of this branch; performance.
 - The 405-sample clearance validator from V01 was not run by me. Clearance is argued from identical proxies.
 - Cockpit, stowage, airlock and exterior were not compared with R01, R03 to R06 and R08 yet.
-- No antenna assembly (A07), no remodelled cargo bags (A04), no gloves and tether (A08).
+- No remodelled cargo bags (A04), no gloves and tether (A08). The antenna has no damaged state and no collider.
 - No wear and dirt pass, no damage-state decals, no baked ambient occlusion, simple seat backs, a flat
   forward hull face.

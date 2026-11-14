@@ -366,6 +366,30 @@ namespace OutOfReach.ModelTools
             // The fitted cover is delivered switched off, so the breaker cabinet reads as open (review-01 R02).
             cover.gameObject.SetActive(false);
 
+            // Antenna gimbal. The meshes keep ship axes; the two pivots give the integrator usable axes:
+            // local Y is the hull normal at the pad (azimuth), local X is the trunnion (elevation).
+            GameObject exteriorParts = Instantiate(Root + "/Meshes/A7_ExteriorParts.fbx", root.transform);
+            exteriorParts.name = "ExteriorParts";
+            // The gimbal objects are re-parented under pivots, which a connected model instance does not allow.
+            PrefabUtility.UnpackPrefabInstance(exteriorParts, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
+            Transform azimuth = exteriorParts.transform.Find("Antenna_Azimuth");
+            Transform elevation = exteriorParts.transform.Find("Antenna_Elevation");
+            if (azimuth == null || elevation == null)
+            {
+                throw new InvalidOperationException("A7_ExteriorParts.fbx lacks the antenna gimbal objects");
+            }
+
+            Vector3 padNormal = new Vector3(3.2f, 2.4f - 1.56f, 0f).normalized;
+            Quaternion padRotation = Quaternion.LookRotation(Vector3.forward, padNormal);
+            Transform azimuthPivot = new GameObject("Antenna_AzimuthPivot").transform;
+            azimuthPivot.SetParent(exteriorParts.transform, false);
+            azimuthPivot.SetPositionAndRotation(azimuth.position, padRotation);
+            Transform elevationPivot = new GameObject("Antenna_ElevationPivot").transform;
+            elevationPivot.SetParent(azimuthPivot, false);
+            elevationPivot.SetPositionAndRotation(elevation.position, padRotation);
+            azimuth.SetParent(azimuthPivot, true);
+            elevation.SetParent(elevationPivot, true);
+
             var props = new GameObject("Props");
             props.transform.SetParent(root.transform, false);
             string panelPath = Root + "/Props/ServicePanel/ServicePanel.prefab";
@@ -381,6 +405,21 @@ namespace OutOfReach.ModelTools
                 {
                     // Walkable space stays exactly the V01 envelope: only the COL_* proxies collide.
                     panelCollider.gameObject.SetActive(false);
+                }
+            }
+
+            string arsPath = Root + "/Props/LifeSupportRack/LifeSupportRack.prefab";
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(arsPath) != null)
+            {
+                // ARS-1 air revitalisation unit on the wall plinth forward of the scrubber rack:
+                // pivot 0.45 m up, back plane on the plinth, front (+Z) into the room (-X).
+                GameObject ars = Instantiate(arsPath, props.transform);
+                ars.name = "LifeSupportRack_Ars1";
+                ars.transform.SetPositionAndRotation(new Vector3(2.236f, 0.45f, 6.67f), Quaternion.Euler(0f, -90f, 0f));
+                Transform arsCollider = ars.transform.Find("CollisionProxy");
+                if (arsCollider != null)
+                {
+                    arsCollider.gameObject.SetActive(false);
                 }
             }
 
@@ -499,6 +538,8 @@ namespace OutOfReach.ModelTools
             CheckProxy(instance, "PowerCabinet_IsolatorHandle", new Vector3(-1.83f, 0.8036f, 5.85f), problems);
             CheckProxy(instance, "ScrubberCanister_A", new Vector3(1.855f, 0.8f, 8.24f), problems);
             CheckProxy(instance, "LightAnchor_PowerCabinetWork", new Vector3(-1.758f, 1.72f, 6.35f), problems);
+            // The antenna's manual drive socket must sit on the AntennaRepair anchor.
+            CheckProxy(instance, "Antenna_ServiceSocket", new Vector3(3.2f, 2.4f, 13f), problems);
             int colliders = instance.GetComponentsInChildren<Collider>(true).Length;
             int activeColliders = instance.GetComponentsInChildren<Collider>(false).Length;
             if (instance.GetComponentsInChildren<Camera>(true).Length + instance.GetComponentsInChildren<AudioListener>(true).Length +
@@ -572,6 +613,8 @@ namespace OutOfReach.ModelTools
             ("exterior_finale", new Vector3(9f, 5f, 27f), new Vector3(0.5f, 1.6f, 12f), 58f),
             ("exterior_forward", new Vector3(-9.5f, 4.5f, -11f), new Vector3(0f, 1.6f, 4f), 55f),
             ("exterior_eva", new Vector3(2.2f, 1.6f, 24.6f), new Vector3(1.2f, 2.2f, 14f), 72f),
+            // towards review-01 R06: the antenna work site from 0.6 m off the skin, aft of the pad, head away from the hull
+            ("exterior_antenna", new Vector3(3.514f, 2.431f, 14.25f), new Vector3(3.434f, 2.462f, 12.9f), 90f),
         };
 
         private static readonly float[] FixtureZ = { -1.6f, 1.4f, 4.4f, 7.4f, 10.4f, 12.4f, 15.4f, 18.4f };
@@ -670,7 +713,9 @@ namespace OutOfReach.ModelTools
             {
                 sun.enabled = view.name.StartsWith("exterior", StringComparison.Ordinal);
                 camera.transform.position = view.eye;
-                camera.transform.LookAt(view.target, Vector3.up);
+                // Outside, "up" for a crew member at the antenna is the hull normal there, not the ship's deck normal.
+                Vector3 up = view.name == "exterior_antenna" ? new Vector3(3.2f, 2.4f - 1.56f, 0f).normalized : Vector3.up;
+                camera.transform.LookAt(view.target, up);
                 camera.fieldOfView = 2f * Mathf.Atan(Mathf.Tan(view.horizontalFov * Mathf.Deg2Rad / 2f) * height / width) * Mathf.Rad2Deg;
                 for (int warm = 0; warm < 3; warm++)
                 {

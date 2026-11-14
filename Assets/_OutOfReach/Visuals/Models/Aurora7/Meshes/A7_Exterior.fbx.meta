@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_AnodizedClear
+    second: {fileID: 2100000, guid: 70650c8ad63fe9e4d96e4732ccdbf217, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_AnodizedGold
     second: {fileID: 2100000, guid: 03847c896a3e42d48a8d4c1335ecac3b, type: 2}
   - first:
@@ -47,8 +52,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7_PaintAmber
+    second: {fileID: 2100000, guid: 28506ed5728b54b4cba5d44687df6925, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PaintGraphite
+    second: {fileID: 2100000, guid: 529b8a0350dac33478fefee425e59f2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PaintGray
+    second: {fileID: 2100000, guid: 1018bb18028e3ed4984eb7e1109a330c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7_PaintWhite
     second: {fileID: 2100000, guid: 441fc26bdada8604786001a249435b33, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_PaintYellow
+    second: {fileID: 2100000, guid: f8654620899c8e148b74f99d22f6944d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7_Rubber
+    second: {fileID: 2100000, guid: 6c66ff296ec1a2a488a74e3f5215db20, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
