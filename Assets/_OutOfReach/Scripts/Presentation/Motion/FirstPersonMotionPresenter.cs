@@ -22,6 +22,15 @@ namespace OutOfReach.Presentation.Motion
         [SerializeField, Range(0f, .005f)] private float cameraLateralMetres = .0015f;
         [SerializeField, Range(0f, .15f)] private float cameraRollDegrees = .06f;
 
+        [Header("Gentle directional response; visual only")]
+        [SerializeField] private bool strafeLeanEnabled = true;
+        [SerializeField] private bool turnResponseEnabled = true;
+        [SerializeField, Range(0f, .85f)] private float strafeLeanDegrees = .65f;
+        [SerializeField, Range(0f, .4f)] private float turnResponseDegrees = .3f;
+        [Tooltip("Actual parent yaw speed for full visual turn lag; never changes look sensitivity.")]
+        [SerializeField, Range(30f, 360f)] private float fullTurnResponseAtDegreesPerSecond = 150f;
+        [SerializeField, Range(5f, 24f)] private float directionalResponsePerSecond = 10f;
+
         [Header("Optional existing hand visuals; no hands are created")]
         [SerializeField, Range(0f, .015f)] private float handsVerticalMetres = .004f;
         [SerializeField, Range(0f, .015f)] private float handsLateralMetres = .003f;
@@ -47,15 +56,23 @@ namespace OutOfReach.Presentation.Motion
         private bool suppressed = true;
         private bool hasPreviousPosition;
         private Vector3 previousPosition;
+        private Vector3 previousHeading;
+        private bool hasPreviousHeading;
         private Vector3 cameraNeutralPosition, handsNeutralPosition;
         private Quaternion cameraNeutralRotation, handsNeutralRotation;
         private Vector3 cameraOffset, handsOffset;
         private float cameraRoll, handsRoll, phaseRadians;
+        private float strafeRoll, turnYaw;
 
         public bool IsBound => bound;
         public bool IsSuppressed => suppressed;
         public bool MotionEnabled => motionEnabled;
         public bool ReducedMotion => reducedMotion;
+        public bool StrafeLeanEnabled => strafeLeanEnabled;
+        public bool TurnResponseEnabled => turnResponseEnabled;
+
+        public void SetStrafeLeanEnabled(bool value) { strafeLeanEnabled = value; ResetToNeutral(); }
+        public void SetTurnResponseEnabled(bool value) { turnResponseEnabled = value; ResetToNeutral(); }
 
         /// <summary>
         /// Integrator supplies dedicated offsets below the existing look/planning/cinematic pivots. Neither
@@ -133,7 +150,7 @@ namespace OutOfReach.Presentation.Motion
         public void ResetToNeutral()
         {
             cameraOffset = handsOffset = Vector3.zero;
-            cameraRoll = handsRoll = phaseRadians = 0f;
+            cameraRoll = handsRoll = phaseRadians = strafeRoll = turnYaw = 0f;
             if (bound)
             {
                 if (cameraPivot) cameraPivot.SetLocalPositionAndRotation(cameraNeutralPosition, cameraNeutralRotation);
@@ -155,7 +172,7 @@ namespace OutOfReach.Presentation.Motion
             gameState = null;
             clock = null;
             eva = null;
-            hasPreviousPosition = false;
+            hasPreviousPosition = hasPreviousHeading = false;
         }
 
         private void OnEnable()
@@ -183,6 +200,12 @@ namespace OutOfReach.Presentation.Motion
             Vector3 displacement = hasPreviousPosition ? position - previousPosition : Vector3.zero;
             previousPosition = position;
             hasPreviousPosition = true;
+            // Sample the existing parent, never this owned offset: visual turn lag cannot feed itself.
+            Vector3 heading = ViewHeading();
+            float yawDelta = hasPreviousHeading && heading.sqrMagnitude > .001f
+                ? Vector3.SignedAngle(previousHeading, heading, Vector3.up) : 0f;
+            previousHeading = heading;
+            hasPreviousHeading = heading.sqrMagnitude > .001f;
 
             // No idle breathing, footstep bob in a suit/EVA, paused animation, or motion over menu/cinematics.
             if (!motionEnabled || reducedMotion || suppressed || clock.IsPaused || !body.enabled
@@ -205,9 +228,10 @@ namespace OutOfReach.Presentation.Motion
             float frameSeconds = Time.deltaTime; // Same time basis used by the actual CharacterController adapter.
             float visualSeconds = Time.unscaledDeltaTime;
             if (!IsFinite(frameSeconds) || !IsFinite(visualSeconds)
-                || frameSeconds <= 0f || visualSeconds <= 0f || visualSeconds > .15f)
+                || frameSeconds <= 0f || visualSeconds <= 0f || visualSeconds > .15f
+                || !IsFinite(yawDelta) || Mathf.Abs(yawDelta) > 35f)
             {
-                // A hitch or suspended frame must not produce a visible catch-up step.
+                // A hitch, suspended frame or large single-frame heading snap must not produce catch-up motion.
                 ResetToNeutral();
                 return;
             }
@@ -242,14 +266,32 @@ namespace OutOfReach.Presentation.Motion
             handsOffset = Vector3.Lerp(handsOffset, handsTarget, blend);
             cameraRoll = Mathf.Lerp(cameraRoll, -side * Mathf.Clamp(cameraRollDegrees, 0f, .15f) * strength, blend);
             handsRoll = Mathf.Lerp(handsRoll, side * Mathf.Clamp(handsRollDegrees, 0f, .75f) * strength, blend);
-            if (!walking && cameraOffset.sqrMagnitude < 1e-10f && handsOffset.sqrMagnitude < 1e-10f
-                && Mathf.Abs(cameraRoll) < .001f && Mathf.Abs(handsRoll) < .001f)
+
+            // Lean follows confirmed sideways travel, not held keys. Turning can respond while standing,
+            // but never while airborne. Both stop at the same authoritative presentation gates above.
+            float lateralSpeed = Vector3.Dot(planarVelocity, body.transform.right);
+            float strafeTarget = strafeLeanEnabled && walking
+                ? -Mathf.Clamp(lateralSpeed / Mathf.Max(.1f, fullAmplitudeAtMetresPerSecond), -1f, 1f)
+                    * Mathf.Clamp(strafeLeanDegrees, 0f, .85f) : 0f;
+            float yawSpeed = yawDelta / visualSeconds;
+            bool turning = turnResponseEnabled && body.isGrounded && Mathf.Abs(yawSpeed) > .5f;
+            float turnTarget = turning
+                ? -Mathf.Clamp(yawSpeed / Mathf.Clamp(fullTurnResponseAtDegreesPerSecond, 30f, 360f), -1f, 1f)
+                    * Mathf.Clamp(turnResponseDegrees, 0f, .4f) : 0f;
+            float directionalBlend = 1f - Mathf.Exp(-Mathf.Clamp(directionalResponsePerSecond, 5f, 24f) * visualSeconds);
+            strafeRoll = Mathf.Lerp(strafeRoll, strafeTarget, directionalBlend);
+            turnYaw = Mathf.Lerp(turnYaw, turnTarget, directionalBlend);
+            if (!walking && !turning && cameraOffset.sqrMagnitude < 1e-10f && handsOffset.sqrMagnitude < 1e-10f
+                && Mathf.Abs(cameraRoll) < .001f && Mathf.Abs(handsRoll) < .001f
+                && Mathf.Abs(strafeRoll) < .001f && Mathf.Abs(turnYaw) < .001f)
             {
                 ResetToNeutral();
                 return;
             }
+            // Combined yaw/roll stays within one degree, including gait roll, even with maximum tunings.
+            Vector2 cameraAngles = Vector2.ClampMagnitude(new Vector2(turnYaw, cameraRoll + strafeRoll), 1f);
             cameraPivot.SetLocalPositionAndRotation(cameraNeutralPosition + cameraOffset,
-                cameraNeutralRotation * Quaternion.AngleAxis(cameraRoll, Vector3.forward));
+                cameraNeutralRotation * Quaternion.Euler(0f, cameraAngles.x, cameraAngles.y));
             if (handsPivot)
                 handsPivot.SetLocalPositionAndRotation(handsNeutralPosition + handsOffset,
                     handsNeutralRotation * Quaternion.AngleAxis(handsRoll, Vector3.forward));
@@ -259,7 +301,12 @@ namespace OutOfReach.Presentation.Motion
         {
             hasPreviousPosition = body;
             if (body) previousPosition = body.transform.position;
+            previousHeading = ViewHeading();
+            hasPreviousHeading = previousHeading.sqrMagnitude > .001f;
         }
+
+        private Vector3 ViewHeading() => cameraPivot && cameraPivot.parent
+            ? Vector3.ProjectOnPlane(cameraPivot.parent.forward, Vector3.up) : Vector3.zero;
 
         private static bool IsWalkingPhase(GamePhase phase) => phase == GamePhase.Intro
             || phase == GamePhase.Emergency || phase == GamePhase.Repair || phase == GamePhase.Transmission;

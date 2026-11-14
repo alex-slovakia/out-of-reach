@@ -8,6 +8,9 @@ using OutOfReach.Interaction;
 using OutOfReach.Player;
 using OutOfReach.Presentation;
 using OutOfReach.Presentation.Audio;
+using OutOfReach.Presentation.Cargo;
+using OutOfReach.Presentation.Cargo.Editor;
+using OutOfReach.Presentation.AirlockPanel.Editor;
 using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
@@ -83,7 +86,8 @@ namespace OutOfReach.Composition.Editor
             Transform planningPivot = Child("Planning framing", player.ViewPivot);
             Transform cinematicPivot = Child("Cinematic offset", planningPivot);
             Transform motionPivot = Child("First person visual motion", cinematicPivot);
-            Transform cameraTransform = Child("Player camera", motionPivot);
+            Transform menuMotionPivot = Child("Opening menu drift", motionPivot);
+            Transform cameraTransform = Child("Player camera", menuMotionPivot);
             Camera camera = cameraTransform.gameObject.AddComponent<Camera>();
             camera.tag = "MainCamera";
             camera.fieldOfView = 68;
@@ -127,6 +131,8 @@ namespace OutOfReach.Composition.Editor
                 Target(anchors.EvaReturn, InteractionIds.EvaReturn, new Vector3(0, 1.4f, 0)),
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
             };
+            var cargoStage = CargoStageAuthoring.Create(null, cameraTransform, font);
+            var allTargets = targets.Concat(cargoStage.Targets).ToArray();
             GameplayGate innerGate = Gate(anchors.AirlockInner, GateIds.AirlockInner);
             GameplayGate outerGate = Gate(anchors.AirlockOuter, GateIds.AirlockOuter);
             innerGate.SetOpen(true); // Nominal editor pose; MissionRuntime reads actual authority at Awake and every frame.
@@ -149,6 +155,7 @@ namespace OutOfReach.Composition.Editor
 
             Transform presentationRoot = Child("I01 presentation", null);
             FirstPersonMotionPresenter walkMotion = presentationRoot.gameObject.AddComponent<FirstPersonMotionPresenter>();
+            OpeningMenuMotionPresenter menuMotion = presentationRoot.gameObject.AddComponent<OpeningMenuMotionPresenter>();
             AstronautHandsPresenter hands = presentationRoot.gameObject.AddComponent<AstronautHandsPresenter>();
             hands.ConfigureModel(handsObject.transform, handsMount, handsRig);
             CreateShipLighting(ship, presentationRoot, out Light[] workingLights, out Light[] emergencyLights);
@@ -182,7 +189,8 @@ namespace OutOfReach.Composition.Editor
 
             Transform missionRoot = Child("I01 mission composition", null);
             MissionRuntime runtime = missionRoot.gameObject.AddComponent<MissionRuntime>();
-            runtime.Configure(player, anchors.PlayerSpawn, targets);
+            runtime.Configure(player, anchors.PlayerSpawn, allTargets);
+            runtime.ConfigurePreflight(true, cargoStage.Spawn);
             runtime.ConfigureEva(new[] { innerGate, outerGate }, route, reentry);
             var runtimeFields = new SerializedObject(runtime);
             runtimeFields.FindProperty("startingPresetId").stringValue = AuroraMission.ScienceFocusPresetId;
@@ -198,11 +206,25 @@ namespace OutOfReach.Composition.Editor
                 planningPivot, overview, powerLight, lifeLight);
             composition.ConfigureShipPresentation(doors, shipLighting, workingLights, emergencyLights);
             composition.ConfigureWalkMotion(walkMotion, motionPivot);
+            composition.ConfigureOpeningMenuMotion(menuMotion, menuMotionPivot);
+            composition.ConfigurePauseBackdrop(presentationRoot.gameObject.AddComponent<I01PauseBackdrop>(), camera);
+            Transform airlockScreenMount = Child("Airlock digital display mount", presentationRoot);
+            airlockScreenMount.position = new Vector3(1.45f, 1.375f, 20.829f);
+            composition.ConfigureAirlockPanel(AirlockPanelBuilder.Create(airlockScreenMount,
+                Required<Font>("Assets/_OutOfReach/UI/Typography/SourceSans3-Semibold.otf")),
+                Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-latch-motor.wav"),
+                Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-safe-chirp.wav"));
             composition.ConfigureHands(hands);
+            composition.ConfigureCargoPresentation(cargoStage.Presenter);
             BindApprovedDialogue(composition, cinematics);
 
-            // Preview the actual Planning framing in the Editor too, with one camera. Runtime resets it on Intro.
-            planningPivot.SetPositionAndRotation(overview.position, overview.rotation);
+            // Physical preflight uses the actual body and aim pivot; list-mode retains its authored overview.
+            if (runtime.PreflightWalk)
+            {
+                player.Teleport(cargoStage.Spawn.position, cargoStage.Spawn.eulerAngles.y);
+                planningPivot.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            }
+            else planningPivot.SetPositionAndRotation(overview.position, overview.rotation);
             Physics.SyncTransforms();
             ValidateScene(scene);
             if (!EditorSceneManager.SaveScene(scene, ScenePath)) throw new InvalidOperationException("Could not save Bootstrap.");
@@ -321,10 +343,12 @@ namespace OutOfReach.Composition.Editor
             FirstPersonController player = ExactlyOne<FirstPersonController>(roots);
             I01MissionComposition composition = ExactlyOne<I01MissionComposition>(roots);
             FirstPersonMotionPresenter walkMotion = ExactlyOne<FirstPersonMotionPresenter>(roots);
+            OpeningMenuMotionPresenter menuMotion = ExactlyOne<OpeningMenuMotionPresenter>(roots);
             ExactlyOne<MissionFlightBoard>(roots);
             MissionCinematicPresenter cinematic = ExactlyOne<MissionCinematicPresenter>(roots);
             ExactlyOne<MissionAudioPresenter>(roots);
             AstronautHandsPresenter hands = ExactlyOne<AstronautHandsPresenter>(roots);
+            CargoVisualPresenter cargo = ExactlyOne<CargoVisualPresenter>(roots);
             if (!hands.ModelRoot || !hands.MotionMount || !hands.RigDefinition
                 || hands.ModelRoot.parent != hands.MotionMount || hands.MotionMount.parent != camera.transform
                 || hands.ModelRoot.localPosition != Vector3.zero || hands.ModelRoot.localRotation != Quaternion.identity
@@ -336,23 +360,39 @@ namespace OutOfReach.Composition.Editor
             var cinematicFields = new SerializedObject(cinematic);
             var resolverFields = new SerializedObject(player.Interaction);
             Transform motionPivot = compositionFields.FindProperty("firstPersonMotionPivot").objectReferenceValue as Transform;
+            Transform menuMotionPivot = compositionFields.FindProperty("openingMenuMotionPivot").objectReferenceValue as Transform;
             Transform cinematicPivot = cinematicFields.FindProperty("cameraOffsetPivot").objectReferenceValue as Transform;
             if (compositionFields.FindProperty("firstPersonMotion").objectReferenceValue != walkMotion
+                || compositionFields.FindProperty("openingMenuMotion").objectReferenceValue != menuMotion
                 || !motionPivot || !cinematicPivot || motionPivot == cinematicPivot
-                || motionPivot.parent != cinematicPivot || camera.transform.parent != motionPivot
+                || !menuMotionPivot || menuMotionPivot.parent != motionPivot || camera.transform.parent != menuMotionPivot
+                || motionPivot.parent != cinematicPivot
                 || resolverFields.FindProperty("viewOrigin").objectReferenceValue != cinematicPivot
                 || motionPivot.localPosition != Vector3.zero || motionPivot.localRotation != Quaternion.identity
+                || menuMotionPivot.localPosition != Vector3.zero || menuMotionPivot.localRotation != Quaternion.identity
                 || camera.transform.localPosition != Vector3.zero || camera.transform.localRotation != Quaternion.identity)
-                throw new InvalidOperationException("Walk motion requires its own neutral child pivot and an unbobbed interaction origin.");
+                throw new InvalidOperationException("Walk and menu motion require separate neutral camera pivots and an unaffected interaction origin.");
             if (!runtime.DriveFromUpdate || runtime.Player != player)
                 throw new InvalidOperationException("The sole MissionRuntime must drive and bind the player.");
             ShipVisualAnchors anchors = ExactlyOne<ShipVisualAnchors>(roots);
             ValidateAnchors(anchors);
             var targets = roots.SelectMany(root => root.GetComponentsInChildren<InteractableTarget>(true)).ToArray();
-            if (targets.Length != 8 || runtime.InteractionTargets.Count != 8)
-                throw new InvalidOperationException("The complete mission requires exactly eight explicit interaction targets.");
+            if (targets.Length != 22 || runtime.InteractionTargets.Count != 22
+                || runtime.InteractionTargets.Distinct().Count() != 22
+                || runtime.InteractionTargets.Any(target => !target || !targets.Contains(target)))
+                throw new InvalidOperationException("C05-A requires the eight mission targets and fourteen distinct, explicitly bound cargo targets.");
+            var runtimeFields = new SerializedObject(runtime);
+            Transform preflightSpawn = runtimeFields.FindProperty("preflightSpawn").objectReferenceValue as Transform;
+            Transform planningPivot = compositionFields.FindProperty("planningFramingPivot").objectReferenceValue as Transform;
+            if (!runtime.PreflightWalk || !preflightSpawn
+                || Vector3.Distance(preflightSpawn.position, new Vector3(0, .05f, 13.5f)) > .001f
+                || compositionFields.FindProperty("cargoPresentation").objectReferenceValue != cargo
+                || !planningPivot || planningPivot.localPosition != Vector3.zero || planningPivot.localRotation != Quaternion.identity)
+                throw new InvalidOperationException("C05-A needs its explicit cargo presenter, storage preflight spawn and body-relative planning camera.");
             string[] expectedIds = { InteractionIds.CockpitConsole, InteractionIds.RepairPower, InteractionIds.RepairLifeSupport,
                 InteractionIds.SuitLocker, InteractionIds.AirlockControls, InteractionIds.EvaExit, InteractionIds.EvaReturn, InteractionIds.RepairAntenna };
+            expectedIds = expectedIds.Concat(CargoStageAuthoring.EquipmentIds.SelectMany(id =>
+                new[] { InteractionIds.CargoSupply(id), InteractionIds.CargoBay(id) })).ToArray();
             foreach (string id in expectedIds)
                 if (targets.Count(target => target.InteractionId == id) != 1)
                     throw new InvalidOperationException("Missing or duplicated interaction ID: " + id);
@@ -365,6 +405,15 @@ namespace OutOfReach.Composition.Editor
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaExit), new Vector3(0, 1.7f, 19.8f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.EvaReturn), runtime.EvaRoute.StartPosition + Vector3.up * 1.65f, player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairAntenna), runtime.EvaRoute.EndPosition + Vector3.up * 1.65f, player.transform);
+            // Keep all original eight reach checks above; add the fourteen explicit preflight stations.
+            for (int i = 0; i < CargoStageAuthoring.EquipmentIds.Length; i++)
+            {
+                string id = CargoStageAuthoring.EquipmentIds[i];
+                CheckCargoTarget(targets.Single(target => target.InteractionId == InteractionIds.CargoSupply(id)),
+                    CargoStageAuthoring.SupplyPosition(i), player.transform);
+                CheckCargoTarget(targets.Single(target => target.InteractionId == InteractionIds.CargoBay(id)),
+                    CargoStageAuthoring.BayPosition(i), player.transform);
+            }
             if (runtime.Gates.Count != 2 || !runtime.EvaRoute || !runtime.EvaRoute.IsValid || !runtime.EvaReentryPoint)
                 throw new InvalidOperationException("The complete mission requires two gates, a valid EVA route and a reentry point.");
             if (runtime.Gates.Count(gate => gate.GateId == GateIds.AirlockInner) != 1
@@ -379,7 +428,7 @@ namespace OutOfReach.Composition.Editor
                     if (renderer.sharedMaterials.Any(material => !material))
                         throw new InvalidOperationException("Missing material on " + renderer.name);
             }
-            Debug.Log("I01_SCENE_VALIDATION_PASS cameras=1 listeners=1 runtimes=1 players=1 targets=8 unobstructedWithin2m=8 gates=2 | edit-time structure and physics queries only");
+            Debug.Log("I01_SCENE_VALIDATION_PASS cameras=1 listeners=1 runtimes=1 players=1 targets=22 unobstructedWithin2m=22 gates=2 | edit-time structure and physics queries only");
         }
 
         private static void AttachDeliveredModels(Scene scene, GameObject fallback, ShipVisualAnchors anchors)
@@ -543,11 +592,11 @@ namespace OutOfReach.Composition.Editor
             emergency = new Light[stations.Length];
             for (int i = 0; i < stations.Length; i++)
             {
-                Light light = PointLight("Working practical " + i, parent, new Vector3(0, 2.93f, stations[i]), 7.5f, 13f);
+                Light light = PointLight("Working practical " + i, parent, new Vector3(0, 2.93f, stations[i]), 6.5f, 7.5f);
                 light.type = LightType.Spot;
                 light.transform.rotation = Quaternion.Euler(90, 0, 0);
-                light.spotAngle = 150;
-                light.innerSpotAngle = 110;
+                light.spotAngle = 130;
+                light.innerSpotAngle = 88;
                 light.color = new Color(1, .93f, .84f);
                 light.shadows = i % 2 == 0 ? LightShadows.Soft : LightShadows.None;
                 light.shadowStrength = .75f;
@@ -652,6 +701,16 @@ namespace OutOfReach.Composition.Editor
                 anchors.AirlockInner, anchors.AirlockOuter, anchors.EvaStart, anchors.AntennaRepair, anchors.EvaReturn, anchors.FinaleCameraAnchor };
             if (values.Any(value => !value) || values.Distinct().Count() != 10)
                 throw new InvalidOperationException("Ship must supply ten distinct stable anchors.");
+        }
+
+        private static void CheckCargoTarget(InteractableTarget target, Vector3 expectedPosition, Transform playerRoot)
+        {
+            BoxCollider trigger = target.GetComponent<BoxCollider>();
+            if (!target.gameObject.activeInHierarchy || !trigger || !trigger.enabled || !trigger.isTrigger
+                || Vector3.Distance(trigger.size, new Vector3(.12f, .36f, .42f)) > .001f
+                || Vector3.Distance(target.transform.position, expectedPosition) > .001f)
+                throw new InvalidOperationException("Invalid preflight trigger or placement: " + target.InteractionId);
+            CheckReach(target, new Vector3(0, 1.7f, expectedPosition.z), playerRoot);
         }
 
         private static void CheckReach(InteractableTarget target, Vector3 eye, Transform playerRoot)

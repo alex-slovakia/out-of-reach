@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.AirlockPanel",
+  "rootNamespace": "OutOfReach.Presentation.AirlockPanel",
+  "references": ["OutOfReach.Contracts", "UnityEngine.UI"],
+  "autoReferenced": true
+}

@@ -4,6 +4,9 @@ using OutOfReach.Contracts;
 using OutOfReach.Core;
 using OutOfReach.Core.Runtime;
 using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.Cargo;
+using OutOfReach.Presentation.AirlockPanel;
 using OutOfReach.Presentation.Audio;
 using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.Lighting;
@@ -30,7 +33,15 @@ namespace OutOfReach.Composition
         [SerializeField] private ShipLightingPresenter shipLighting;
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
         [SerializeField] private Transform firstPersonMotionPivot;
+        [SerializeField] private OpeningMenuMotionPresenter openingMenuMotion;
+        [SerializeField] private Transform openingMenuMotionPivot;
+        [SerializeField] private I01PauseBackdrop pauseBackdrop;
+        [SerializeField] private Camera presentationCamera;
+        [SerializeField] private AirlockStatusPanel airlockPanel;
+        [SerializeField] private AudioClip airlockMotor;
+        [SerializeField] private AudioClip airlockReady;
         [SerializeField] private AstronautHandsPresenter astronautHands;
+        [SerializeField] private CargoVisualPresenter cargoPresentation;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
         [Tooltip("Parent of the cinematic offset. This transform is used only to frame Planning.")]
@@ -57,6 +68,9 @@ namespace OutOfReach.Composition
         private bool started;
         private bool attached;
         private bool modeChosen;
+        private FirstPersonController planningControlPlayer;
+        private Func<bool> domainControlGate;
+        private Func<bool> composedControlGate;
         private string cinematicCaption = string.Empty;
         private string dialogueSpeaker = "SHIP";
         private string latestPrompt = string.Empty;
@@ -111,6 +125,19 @@ namespace OutOfReach.Composition
             && runtime.Player && runtime.Player.ControlAllowed && !runtime.Player.IsOnRoute
             && cinematics && !cinematics.IsPlaying;
 
+        public void ConfigureOpeningMenuMotion(OpeningMenuMotionPresenter presenter, Transform visualOffset)
+        {
+            if (Application.isPlaying && attached)
+                throw new InvalidOperationException("Configure opening menu motion before enabling composition.");
+            openingMenuMotion = presenter;
+            openingMenuMotionPivot = visualOffset;
+        }
+
+        private bool CanPresentOpeningMenuMotion() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+            && runtime.Player && runtime.Player.isActiveAndEnabled && !runtime.Player.ControlAllowed
+            && cinematics && !cinematics.IsPlaying;
+
         public void ConfigureHands(AstronautHandsPresenter presenter)
         {
             if (Application.isPlaying && attached)
@@ -118,10 +145,56 @@ namespace OutOfReach.Composition
             astronautHands = presenter;
         }
 
+        public void ConfigurePauseBackdrop(I01PauseBackdrop backdrop, Camera camera)
+        {
+            pauseBackdrop = backdrop;
+            presentationCamera = camera;
+        }
+
+        public void ConfigureAirlockPanel(AirlockStatusPanel panel, AudioClip motor, AudioClip ready)
+        {
+            airlockPanel = panel;
+            airlockMotor = motor;
+            airlockReady = ready;
+        }
+
         // EVA is allowed here: these gloves depict an actually worn suit, including its exterior phase.
         private bool CanPresentHands() => isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && runtime.Player.ControlAllowed && cinematics && !cinematics.IsPlaying;
+
+        public void ConfigureCargoPresentation(CargoVisualPresenter presenter)
+        {
+            if (Application.isPlaying && attached)
+                throw new InvalidOperationException("Configure cargo presentation before enabling composition.");
+            cargoPresentation = presenter;
+        }
+
+        // Add only the planning-mode UI lock to Core's existing gate. Speed stays entirely with MissionRuntime.
+        private void BindPlanningControlGate()
+        {
+            if (!runtime.PreflightWalk || !runtime.Player) return;
+            planningControlPlayer = runtime.Player;
+            domainControlGate = planningControlPlayer.ControlGate;
+            composedControlGate = CanUsePlanningControls;
+            planningControlPlayer.ControlGate = composedControlGate;
+        }
+
+        private bool CanUsePlanningControls() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && ReferenceEquals(boundSession, runtime.Session)
+            && domainControlGate != null && domainControlGate()
+            && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
+
+        private void ReleasePlanningControlGate()
+        {
+            // A new Core session may already have installed its own gate before SessionStarted fires.
+            // Restore only a delegate this composition still owns; never overwrite that new binding.
+            if (planningControlPlayer && ReferenceEquals(planningControlPlayer.ControlGate, composedControlGate))
+                planningControlPlayer.ControlGate = domainControlGate;
+            planningControlPlayer = null;
+            domainControlGate = null;
+            composedControlGate = null;
+        }
 
         private void Start()
         {
@@ -203,8 +276,12 @@ namespace OutOfReach.Composition
             boundSession = session;
             boundEvents = runtime.Events;
             modeChosen = runtime.GameState.Phase != GamePhase.Planning || runtime.PlanningDeadline.IsEnabled;
+            BindPlanningControlGate();
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
+            flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
+            if (cargoPresentation)
+                cargoPresentation.Configure(runtime.Cargo, runtime.Planner, runtime.GameState);
             flightBoard.ConfigureEva(runtime.EvaStatus);
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
@@ -222,13 +299,20 @@ namespace OutOfReach.Composition
                 firstPersonMotion.SetReducedMotion(cinematics.ReducedEffects);
                 firstPersonMotion.SetSuppressed(false);
             }
+            if (openingMenuMotion && openingMenuMotionPivot)
+            {
+                openingMenuMotion.Configure(openingMenuMotionPivot, runtime.GameState, runtime.Clock, CanPresentOpeningMenuMotion);
+                openingMenuMotion.SetReducedMotion(cinematics.ReducedEffects);
+            }
             boundEvents.PhaseChanged += OnPhaseChanged;
+            if (pauseBackdrop) pauseBackdrop.Configure(presentationCamera, runtime.Clock, runtime.GameState);
             boundEvents.SystemConditionChanged += OnSystemConditionChanged;
             boundEvents.CinematicRequested += OnCinematicRequested;
             boundEvents.MissionEnded += OnMissionEnded;
             boundEvents.CommunicationChanged += OnCommunicationChanged;
             boundEvents.AirlockStateChanged += OnAirlockStateChanged;
             if (airlockDoors) airlockDoors.Configure(runtime.EvaStatus, runtime.Clock);
+            if (airlockPanel) airlockPanel.Configure(runtime.EvaStatus, runtime.Clock);
             if (shipLighting)
                 shipLighting.Configure(boundEvents, runtime.GameState, Repairable(ShipSystemId.Power), workingLights, emergencyLights, runtime.Clock);
             audioPresenter.SetPresentationPaused(runtime.IsPaused);
@@ -239,6 +323,11 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (airlockPanel) airlockPanel.ClearBinding();
+            if (pauseBackdrop) pauseBackdrop.ClearBinding();
+            if (openingMenuMotion) openingMenuMotion.ClearBinding();
+            ReleasePlanningControlGate();
+            if (cargoPresentation) cargoPresentation.ClearBinding();
             if (firstPersonMotion) firstPersonMotion.ClearBinding();
             if (astronautHands) astronautHands.ClearBinding();
             if (boundEvents != null)
@@ -263,6 +352,7 @@ namespace OutOfReach.Composition
                 flightBoard.ClearInteractionPrompt();
                 flightBoard.ClearSubtitle();
                 flightBoard.enabled = false;
+                flightBoard.ConfigurePhysicalPlanning(false, null);
             }
             // Disabling the presenter restores all offsets and acknowledges a pending request once.
             if (cinematics) cinematics.enabled = false;
@@ -283,6 +373,7 @@ namespace OutOfReach.Composition
                 return;
             }
             modeChosen = true;
+            if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
@@ -297,6 +388,7 @@ namespace OutOfReach.Composition
                 return;
             }
             modeChosen = true;
+            if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             audioPresenter.TryPlaySfx("ui_confirm");
             controls.Refresh();
         }
@@ -309,10 +401,13 @@ namespace OutOfReach.Composition
         {
             if (cinematics) cinematics.ReducedEffects = reduced;
             if (firstPersonMotion) firstPersonMotion.SetReducedMotion(reduced);
+            if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
         }
 
         private void OnPauseChanged(bool paused)
         {
+            if (openingMenuMotion) openingMenuMotion.ResetToNeutral();
+            if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
             if (audioPresenter) audioPresenter.SetPresentationPaused(paused);
             if (controls) controls.Refresh();
         }
@@ -325,7 +420,8 @@ namespace OutOfReach.Composition
 
         private void ApplyPhasePresentation(GamePhase phase, bool playTransition)
         {
-            if (phase == GamePhase.Planning && planningFramingPivot && planningViewAnchor)
+            if (openingMenuMotion) openingMenuMotion.RefreshEligibility();
+            if (phase == GamePhase.Planning && !runtime.PreflightWalk && planningFramingPivot && planningViewAnchor)
                 planningFramingPivot.SetPositionAndRotation(planningViewAnchor.position, planningViewAnchor.rotation);
             else RestorePlayerFraming();
 
@@ -367,6 +463,8 @@ namespace OutOfReach.Composition
 
         private void OnCinematicRequested(CinematicRequested request)
         {
+            if (astronautHands) astronautHands.ResetToNeutral();
+            if (openingMenuMotion) openingMenuMotion.ResetToNeutral();
             if (request.Cinematic == CinematicId.FalseSignal) { PlayOptional(falseSignal, "SHIP · BUFFER DIAGNOSTIC", true); return; }
             if (request.Cinematic == CinematicId.CommunicationRestored) { PlayOptional(earthReply, "MISSION CONTROL · DELAYED REPLY", true); return; }
             if (request.Cinematic != CinematicId.Impact) return;
@@ -411,6 +509,12 @@ namespace OutOfReach.Composition
 
         private void OnAirlockStateChanged(AirlockStateChanged change)
         {
+            // Cabin intercom / suit contact feedback, never airborne sound in exterior vacuum.
+            // Typed state edges only: no retrigger on initial binding, polling or pause/resume.
+            if (change.State == AirlockState.Depressurizing || change.State == AirlockState.Repressurizing
+                || change.State == AirlockState.InnerOpen || change.State == AirlockState.OuterOpen)
+                if (airlockMotor) audioPresenter.PlaySfx(airlockMotor, .32f);
+            if (change.State == AirlockState.OuterOpen && airlockReady) audioPresenter.PlaySfx(airlockReady, .22f);
             if (change.State == AirlockState.OuterOpen) PlayOptional(outerHatchOpen, "SHIP");
         }
 
@@ -460,11 +564,32 @@ namespace OutOfReach.Composition
                 rejectionUntil = 0f;
                 RefreshInteractionPrompt();
                 audioPresenter.TryPlaySfx("ui_confirm");
+                PresentSuccessfulHandAction();
             }
             else if (!string.IsNullOrWhiteSpace(explanation))
             {
                 flightBoard.ShowInteractionPrompt(explanation, false);
                 rejectionUntil = Time.unscaledTime + 4f;
+            }
+        }
+
+        // Called only after InteractionResolver reports the real command succeeded.
+        // These are local glove acknowledgements; no target placement, command delay or implied contact.
+        private void PresentSuccessfulHandAction()
+        {
+            if (!astronautHands || !interaction || !interaction.CurrentTarget) return;
+            switch (interaction.CurrentTarget.InteractionId)
+            {
+                case InteractionIds.SuitLocker:
+                    astronautHands.TryPlayGrip();
+                    break;
+                case InteractionIds.RepairPower:
+                case InteractionIds.RepairLifeSupport:
+                case InteractionIds.RepairAntenna:
+                case InteractionIds.AirlockControls:
+                case InteractionIds.CockpitConsole:
+                    astronautHands.TryPlayPress();
+                    break;
             }
         }
 

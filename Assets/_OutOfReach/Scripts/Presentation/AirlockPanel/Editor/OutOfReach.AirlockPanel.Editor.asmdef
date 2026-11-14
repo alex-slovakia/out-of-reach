@@ -1,0 +1,7 @@
+{
+  "name": "OutOfReach.AirlockPanel.Editor",
+  "rootNamespace": "OutOfReach.Presentation.AirlockPanel.Editor",
+  "references": ["OutOfReach.AirlockPanel", "UnityEngine.UI"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

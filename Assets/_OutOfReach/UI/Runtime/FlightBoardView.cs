@@ -19,6 +19,12 @@ namespace OutOfReach.Presentation.UI
         private readonly Label phase, objective, outcomeReason, simulationTiming, elapsedTime, deadlineFallback;
         private readonly VisualElement planningTiming, lastValidDetail;
         private readonly Label deadlineCountdown, deadlineRule, lastValidCounts;
+        private readonly VisualElement preflight, preflightDetails, preflightLastValidDetail;
+        private readonly Label preflightMass, preflightBudget, preflightPower, preflightValidation;
+        private readonly Label preflightCountdown, preflightClockNote, preflightCarried, preflightCarryPace;
+        private readonly Label preflightDeadlineRule, preflightLastValidCounts;
+        private readonly Label[] preflightResources;
+        private bool physicalPlanning, planningDetailsHeld;
         private IMissionConfiguration displayedLastValid;
         private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry;
         private readonly Label suitDuration, suitSeal;
@@ -106,6 +112,50 @@ namespace OutOfReach.Presentation.UI
             launch.AddToClassList("launch-button");
             launch.tooltip = "Validate this payload and begin the mission. Equipment choices lock at launch.";
             actions.Add(launch);
+
+            preflight = Element("preflight");
+            preflight.name = "physical-preflight";
+            root.Add(preflight);
+            preflight.Add(Text("Load cargo, then launch from the cockpit", "preflight-objective"));
+            var preflightTiming = Element("preflight-timing");
+            preflight.Add(preflightTiming);
+            preflightCountdown = Text(string.Empty, "preflight-countdown");
+            preflightTiming.Add(preflightCountdown);
+            preflightClockNote = Text("Active real time", "preflight-clock-note");
+            preflightTiming.Add(preflightClockNote);
+            var preflightLoadout = Element("preflight-loadout");
+            preflight.Add(preflightLoadout);
+            preflightCarried = Text("Hands free", "preflight-carried");
+            preflightLoadout.Add(preflightCarried);
+            var preflightConstraints = Element("preflight-constraints");
+            preflightLoadout.Add(preflightConstraints);
+            preflightMass = AddConstraint(preflightConstraints, "Loaded mass");
+            preflightBudget = AddConstraint(preflightConstraints, "Credits");
+            preflightPower = AddConstraint(preflightConstraints, "Load / generation");
+            preflightValidation = Text(string.Empty, "preflight-validation");
+            preflightLoadout.Add(preflightValidation);
+            preflightLoadout.Add(Text("Hold Tab · reserves & launch details", "preflight-details-hint"));
+            preflightDetails = Element("preflight-details");
+            preflight.Add(preflightDetails);
+            var preflightDetailColumns = Element("preflight-detail-columns");
+            preflightDetails.Add(preflightDetailColumns);
+            var preflightReserveColumn = Element("preflight-detail-column");
+            preflightDetailColumns.Add(preflightReserveColumn);
+            preflightReserveColumn.Add(Text("Aboard reserves", "details-title"));
+            var preflightReserves = Element("preflight-reserves");
+            preflightReserveColumn.Add(preflightReserves);
+            preflightResources = AddResources(preflightReserves);
+            preflightLastValidDetail = Element("last-valid-detail");
+            preflightLastValidDetail.AddToClassList("preflight-detail-column");
+            preflightDetailColumns.Add(preflightLastValidDetail);
+            preflightLastValidDetail.Add(Text("Last valid loadout", "details-title"));
+            preflightLastValidCounts = Text(string.Empty, "last-valid-counts");
+            preflightLastValidDetail.Add(preflightLastValidCounts);
+            preflightDeadlineRule = Text(string.Empty, "deadline-rule");
+            preflightDetails.Add(preflightDeadlineRule);
+            preflightCarryPace = Text(string.Empty, "small-note");
+            preflightDetails.Add(preflightCarryPace);
+            IgnorePicking(preflight);
 
             hud = Element("hud");
             root.Add(hud);
@@ -212,16 +262,44 @@ namespace OutOfReach.Presentation.UI
 
         public void ShowPlanning(bool show)
         {
+            bool enteringPlanning = show && !showingPlanning;
             showingPlanning = show;
-            SetVisible(planner, show);
-            SetVisible(hud, !show);
-            if (show)
+            if (!show) planningDetailsHeld = false;
+            RefreshPlanningVisibility();
+            if (enteringPlanning || (show && !physicalPlanning))
             {
                 systemsHeld = false;
                 systemsPinned = false;
                 RefreshTelemetry();
                 ClearInteractionPrompt();
             }
+        }
+
+        public void SetPhysicalPlanning(bool enabled)
+        {
+            physicalPlanning = enabled;
+            if (!enabled) planningDetailsHeld = false;
+            RefreshPlanningVisibility();
+        }
+
+        public void SetMenuOverlayVisible(bool visible) => root.EnableInClassList("menu-overlay-hidden", visible);
+
+        public void SetPlanningDetailsHeld(bool held)
+        {
+            bool next = held && showingPlanning && physicalPlanning;
+            if (planningDetailsHeld == next) return;
+            planningDetailsHeld = next;
+            RefreshPlanningVisibility();
+        }
+
+        private void RefreshPlanningVisibility()
+        {
+            bool physical = showingPlanning && physicalPlanning;
+            root.EnableInClassList("physical-planning", physical);
+            SetVisible(planner, showingPlanning && !physical);
+            SetVisible(preflight, physical);
+            SetVisible(preflightDetails, physical && planningDetailsHeld);
+            SetVisible(hud, !showingPlanning || physical);
         }
 
         public void SetPhase(GamePhase current, MissionOutcome outcome)
@@ -274,6 +352,10 @@ namespace OutOfReach.Presentation.UI
         public void SetPlanningTiming(bool available, bool enabled, double remainingRealSeconds, bool paused,
             IMissionConfiguration lastValid, IReadOnlyList<EquipmentSelection> catalog)
         {
+            SetVisible(preflightCountdown, available);
+            SetVisible(preflightClockNote, available && enabled);
+            SetVisible(preflightDeadlineRule, available);
+            SetVisible(preflightLastValidDetail, available && enabled);
             planningTiming.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
             deadlineRule.style.display = available ? DisplayStyle.Flex : DisplayStyle.None;
             lastValidDetail.style.display = available && enabled ? DisplayStyle.Flex : DisplayStyle.None;
@@ -284,6 +366,9 @@ namespace OutOfReach.Presentation.UI
                 deadlineCountdown.style.display = DisplayStyle.Flex;
                 deadlineCountdown.RemoveFromClassList("deadline-urgent");
                 deadlineRule.text = "Launch when your payload is ready. No automatic launch.";
+                preflightCountdown.text = "Practice · no deadline";
+                preflightCountdown.RemoveFromClassList("deadline-urgent");
+                preflightDeadlineRule.text = "Use the cockpit console when ready. No automatic launch. Carried cargo is not aboard.";
                 return;
             }
             bool validRemaining = !double.IsNaN(remainingRealSeconds) && !double.IsInfinity(remainingRealSeconds);
@@ -291,7 +376,11 @@ namespace OutOfReach.Presentation.UI
             deadlineCountdown.text = (paused ? "Paused · " : "Launch in ")
                 + Number(Math.Ceiling(Math.Max(0, remainingRealSeconds)), "0") + " s";
             deadlineCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 15);
+            SetVisible(preflightCountdown, validRemaining);
+            preflightCountdown.text = deadlineCountdown.text;
+            preflightCountdown.EnableInClassList("deadline-urgent", validRemaining && remainingRealSeconds <= 15);
             deadlineRule.text = "At zero, this payload launches automatically if valid. Otherwise, the last valid loadout below launches. The deadline uses unpaused real time.";
+            preflightDeadlineRule.text = deadlineRule.text + " Carried cargo is not aboard.";
             if (lastValid == null)
             {
                 displayedLastValid = null;
@@ -302,6 +391,28 @@ namespace OutOfReach.Presentation.UI
                 displayedLastValid = lastValid;
                 lastValidCounts.text = FormatLoadoutCounts(lastValid.Equipment, catalog);
             }
+            preflightLastValidCounts.text = lastValidCounts.text;
+        }
+
+        public void SetCarriedEquipment(ICargoLoading cargo, IReadOnlyList<EquipmentSelection> catalog)
+        {
+            string id = cargo?.CarriedEquipmentId;
+            if (string.IsNullOrEmpty(id))
+            {
+                preflightCarried.text = "Hands free";
+                preflightCarryPace.text = string.Empty;
+                SetVisible(preflightCarryPace, false);
+                return;
+            }
+            double unitMassKg = double.NaN;
+            if (catalog != null)
+                foreach (var item in catalog)
+                    if (item.EquipmentId == id) { unitMassKg = item.UnitMassKg; break; }
+            preflightCarried.text = "Carrying " + EquipmentCopy.Name(id) + " · "
+                + Number(unitMassKg, "0.#") + " kg · not aboard";
+            preflightCarryPace.text = "Carry pace: " + Number(cargo.CarrySpeedFactor * 100d, "0")
+                + "% of unladen speed.";
+            SetVisible(preflightCarryPace, true);
         }
 
         public void SetDeadlineFallback(bool usedLastValidLoadout)
@@ -429,9 +540,16 @@ namespace OutOfReach.Presentation.UI
             SetConstraint(mass, massKg, massLimitKg, "kg");
             SetConstraint(budget, credits, creditLimit, "cr");
             SetConstraint(power, loadWatts, generationWatts, "W");
+            SetConstraint(preflightMass, massKg, massLimitKg, "kg");
+            SetConstraint(preflightBudget, credits, creditLimit, "cr");
+            SetConstraint(preflightPower, loadWatts, generationWatts, "W");
         }
 
-        public void SetPlanningResources(ResourceSnapshot snapshot) => SetResources(planningResources, snapshot);
+        public void SetPlanningResources(ResourceSnapshot snapshot)
+        {
+            SetResources(planningResources, snapshot);
+            SetResources(preflightResources, snapshot);
+        }
         public void SetHudResources(ResourceSnapshot snapshot)
         {
             latestResources = snapshot;
@@ -522,9 +640,12 @@ namespace OutOfReach.Presentation.UI
             validation.text = succeeded ? "Ready for launch."
                 : string.IsNullOrWhiteSpace(explanation) ? "Review your payload before launch." : explanation;
             validation.EnableInClassList("constraint-exceeded", !succeeded);
+            preflightValidation.text = succeeded ? "Ready · launch from the cockpit"
+                : string.IsNullOrWhiteSpace(explanation) ? "Loadout invalid. Review the limits." : explanation;
+            preflightValidation.EnableInClassList("constraint-exceeded", !succeeded);
             commandFeedback.text = rejectedCommand ?? string.Empty;
             commandFeedback.style.display = string.IsNullOrWhiteSpace(rejectedCommand) ? DisplayStyle.None : DisplayStyle.Flex;
-            launch.SetEnabled(succeeded && commandsEnabled);
+            launch.SetEnabled(succeeded && commandsEnabled && !physicalPlanning);
         }
 
         public void Dispose()

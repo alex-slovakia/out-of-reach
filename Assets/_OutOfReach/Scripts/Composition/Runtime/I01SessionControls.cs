@@ -1,4 +1,5 @@
 using OutOfReach.Contracts;
+using OutOfReach.Presentation.UI;
 using OutOfReach.Presentation.UI.Report;
 using System.Globalization;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace OutOfReach.Composition
         [SerializeField] private StyleSheet reportStyleSheet;
 
         private I01MissionComposition composition;
+        private MissionFlightBoard flightBoard;
         private VisualElement root;
         private VisualElement modal;
         private VisualElement panel;
@@ -100,23 +102,24 @@ namespace OutOfReach.Composition
                 displayedReport = null;
             }
             bool visible = showingMode || paused || showingOutcome;
+            if (flightBoard) flightBoard.SetMenuOverlayVisible(showingMode || paused);
             modal.style.display = visible && !showRecord ? DisplayStyle.Flex : DisplayStyle.None;
-            // Controls remain in the pause panel; keep the flight view unobstructed.
-            controlsHint.style.display = DisplayStyle.None;
+            controlsHint.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
+            if (!visible) feedback.style.display = DisplayStyle.None;
             RefreshCommunications();
             if (!visible) return;
 
-            heading.text = showingMode ? "Choose your planning mode" : showingOutcome ? "Mission ended" : "Paused";
+            heading.text = showingMode ? "Choose planning mode" : showingOutcome ? "Mission ended" : "Paused";
             detail.text = showingMode
-                ? "Timed planning gives you 60 active seconds. If your draft is invalid at expiry, the mission launches with the last valid loadout shown in launch details. Practice has no deadline."
+                ? "60 active real seconds. At zero, launch the valid loadout or the last valid loadout. Carried cargo is not aboard. Practice has no deadline."
                 : showingOutcome
-                    ? "Review the mission record for the outcome, your equipment choices and the sources behind the simulation."
-                    : "Mission time, the planning deadline and audio are paused.\nWASD to move · Mouse to look · E to interact · Tab for systems";
+                    ? "Review your mission record."
+                    : string.Empty;
+            detail.style.display = string.IsNullOrEmpty(detail.text) ? DisplayStyle.None : DisplayStyle.Flex;
             primary.text = showingMode ? "Start timed · 60 s" : showingOutcome ? "Restart mission" : "Resume";
             secondary.text = showingMode ? "Practice · no deadline" : "Restart mission";
             secondary.style.display = showingOutcome ? DisplayStyle.None : DisplayStyle.Flex;
             reduced.SetValueWithoutNotify(composition.Cinematics && composition.Cinematics.ReducedEffects);
-            panel.style.maxWidth = showingMode ? 430 : 480;
         }
 
         public void ShowFeedback(string text, float seconds = 4f)
@@ -133,7 +136,10 @@ namespace OutOfReach.Composition
             if (root != null || !document || !isActiveAndEnabled) return;
             VisualElement host = document.rootVisualElement;
             if (host == null) return;
+            flightBoard = document.GetComponent<MissionFlightBoard>();
             root = new VisualElement { name = "i01-session-controls", pickingMode = PickingMode.Ignore };
+            root.AddToClassList("session-controls");
+            if (flightBoard && flightBoard.SharedStyleSheet) root.styleSheets.Add(flightBoard.SharedStyleSheet);
             Fill(root);
             root.style.color = new Color(.92f, .93f, .93f);
             root.style.fontSize = 16;
@@ -142,66 +148,32 @@ namespace OutOfReach.Composition
 
             modal = new VisualElement { name = "i01-mode-pause-overlay", pickingMode = PickingMode.Position };
             Fill(modal);
-            modal.style.backgroundColor = new Color(.025f, .035f, .045f, .55f);
-            modal.style.justifyContent = Justify.Center;
-            modal.style.alignItems = Align.FlexStart;
-            modal.style.paddingLeft = Length.Percent(6);
-            modal.style.paddingRight = 24;
+            modal.AddToClassList("session-menu");
             root.Add(modal);
             panel = new VisualElement();
-            panel.style.backgroundColor = new Color(.045f, .06f, .075f, .97f);
-            panel.style.width = Length.Percent(90);
-            panel.style.maxWidth = 430;
-            panel.style.paddingLeft = panel.style.paddingRight = 26;
-            panel.style.paddingTop = panel.style.paddingBottom = 26;
+            panel.AddToClassList("session-menu-panel");
             modal.Add(panel);
             heading = new Label();
-            heading.style.fontSize = 26;
-            heading.style.whiteSpace = WhiteSpace.Normal;
-            heading.style.marginBottom = 14;
+            heading.AddToClassList("session-menu-heading");
             panel.Add(heading);
             detail = new Label();
-            detail.style.fontSize = 16;
-            detail.style.whiteSpace = WhiteSpace.Normal;
-            detail.style.color = new Color(.72f, .77f, .79f);
-            detail.style.marginBottom = 20;
-            panel.Add(detail);
+            detail.AddToClassList("session-menu-detail");
             primary = ActionButton(OnPrimary, true);
             secondary = ActionButton(OnSecondary, false);
             panel.Add(primary);
             panel.Add(secondary);
+            panel.Add(detail);
             reduced = new Toggle("Reduced camera motion and light effects");
-            reduced.style.marginTop = 16;
-            reduced.style.whiteSpace = WhiteSpace.Normal;
+            reduced.AddToClassList("session-reduced");
             reduced.RegisterValueChangedCallback(OnReducedChanged);
             panel.Add(reduced);
-            var scope = new Label("Simplified mission simulation · Sources and assumptions appear in the mission record.");
-            scope.style.fontSize = 13;
-            scope.style.color = new Color(.62f, .68f, .7f);
-            scope.style.whiteSpace = WhiteSpace.Normal;
-            scope.style.marginTop = 18;
-            panel.Add(scope);
-
             feedback = new Label { pickingMode = PickingMode.Ignore };
-            feedback.style.position = Position.Absolute;
-            feedback.style.left = Length.Percent(32);
-            feedback.style.right = Length.Percent(32);
-            feedback.style.bottom = 112;
-            feedback.style.fontSize = 14;
-            feedback.style.whiteSpace = WhiteSpace.Normal;
-            feedback.style.unityTextAlign = TextAnchor.MiddleCenter;
-            feedback.style.backgroundColor = new Color(.03f, .04f, .05f, .91f);
-            feedback.style.paddingLeft = feedback.style.paddingRight = 14;
-            feedback.style.paddingTop = feedback.style.paddingBottom = 10;
+            feedback.AddToClassList("session-menu-feedback");
             feedback.style.display = DisplayStyle.None;
-            root.Add(feedback);
-            controlsHint = new Label("WASD move · Mouse look · E interact · Esc pause") { pickingMode = PickingMode.Ignore };
-            controlsHint.style.position = Position.Absolute;
-            controlsHint.style.left = 28;
-            controlsHint.style.bottom = 20;
-            controlsHint.style.fontSize = 13;
-            controlsHint.style.color = new Color(.7f, .76f, .79f);
-            root.Add(controlsHint);
+            panel.Add(feedback);
+            controlsHint = new Label("WASD move · Mouse look\nE interact · Tab systems · Esc resume") { pickingMode = PickingMode.Ignore };
+            controlsHint.AddToClassList("session-menu-controls");
+            panel.Add(controlsHint);
             communications = new Label { pickingMode = PickingMode.Ignore };
             communications.style.position = Position.Absolute;
             communications.style.right = 28;
@@ -222,7 +194,8 @@ namespace OutOfReach.Composition
         private void RefreshCommunications()
         {
             if (communications == null || !composition || !composition.Runtime || composition.Runtime.GameState == null) return;
-            bool visible = composition.Runtime.GameState.Phase == GamePhase.Transmission;
+            bool visible = composition.Runtime.GameState.Phase == GamePhase.Transmission
+                && !composition.Runtime.IsPaused && !showingMode;
             communications.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
             if (!visible || composition.Runtime.Communications == null) return;
             var link = composition.Runtime.Communications;
@@ -255,12 +228,8 @@ namespace OutOfReach.Composition
         private static Button ActionButton(System.Action handler, bool highlighted)
         {
             var button = new Button(handler);
-            button.style.height = 46;
-            button.style.marginTop = 6;
-            button.style.marginLeft = button.style.marginRight = 0;
-            button.style.fontSize = 17;
-            button.style.backgroundColor = highlighted ? new Color(.87f, .65f, .29f) : new Color(.12f, .16f, .18f);
-            button.style.color = highlighted ? new Color(.06f, .07f, .08f) : new Color(.9f, .92f, .92f);
+            button.AddToClassList("session-menu-action");
+            button.EnableInClassList("session-menu-primary", highlighted);
             return button;
         }
 
@@ -286,6 +255,8 @@ namespace OutOfReach.Composition
 
         private void ReleaseView()
         {
+            if (flightBoard) flightBoard.SetMenuOverlayVisible(false);
+            flightBoard = null;
             if (recorder != null)
             {
                 recorder.RestartRequested -= OnReportRestart;

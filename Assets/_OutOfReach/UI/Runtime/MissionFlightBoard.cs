@@ -29,11 +29,23 @@ namespace OutOfReach.Presentation.UI
         private FlightBoardView view;
         private bool subscribed;
         private bool disposed;
+        private bool physicalPlanning;
+        private bool menuOverlayVisible;
         private string commandExplanation = string.Empty;
         private string subtitleText = string.Empty;
         private string subtitleSpeaker = string.Empty;
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
+
+        public StyleSheet SharedStyleSheet => styleSheet;
+
+        /// <summary>Composition-owned mode/pause overlay; hides presentation without changing mission state.</summary>
+        public void SetMenuOverlayVisible(bool visible)
+        {
+            if (disposed) return;
+            menuOverlayVisible = visible;
+            view?.SetMenuOverlayVisible(visible);
+        }
 
         public void Configure(IMissionPlanner missionPlanner, IResourceSystem resourceSystem,
             IGameState gameState, IMissionEventBus eventBus)
@@ -52,6 +64,8 @@ namespace OutOfReach.Presentation.UI
                 deadline = null;
                 evaStatus = null;
                 cargoLoading = null;
+                physicalPlanning = false;
+                view?.SetPhysicalPlanning(false);
                 hasResourceReference = false;
                 view?.ClearResourceReference();
             }
@@ -119,6 +133,15 @@ namespace OutOfReach.Presentation.UI
             SubscribeCargo();
         }
 
+        /// <summary>Choose the physical preflight view; all loading and launch commands remain in Core.</summary>
+        public void ConfigurePhysicalPlanning(bool enabled, ICargoLoading cargo)
+        {
+            if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
+            physicalPlanning = enabled;
+            view?.SetPhysicalPlanning(enabled);
+            ConfigureCargoLoading(cargo);
+        }
+
         /// <summary>The audio presenter owns when this cue begins and ends. No local timer is started.</summary>
         public void ShowSubtitle(string text, string speakerLabel)
         {
@@ -159,6 +182,8 @@ namespace OutOfReach.Presentation.UI
             RefreshTiming();
             // Tab reveals telemetry only. It never changes player, camera, cursor or mission authority.
             view?.SetSystemsHeld(state != null && state.Phase != GamePhase.Planning
+                && Keyboard.current != null && Keyboard.current.tabKey.isPressed);
+            view?.SetPlanningDetailsHeld(physicalPlanning && state != null && state.Phase == GamePhase.Planning
                 && Keyboard.current != null && Keyboard.current.tabKey.isPressed);
         }
 
@@ -202,6 +227,7 @@ namespace OutOfReach.Presentation.UI
             deadline = null;
             evaStatus = null;
             cargoLoading = null;
+            physicalPlanning = false;
             hasResourceReference = false;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
@@ -215,6 +241,8 @@ namespace OutOfReach.Presentation.UI
             var root = document.rootVisualElement;
             if (root == null) return;
             view = new FlightBoardView(root, styleSheet);
+            view.SetMenuOverlayVisible(menuOverlayVisible);
+            view.SetPhysicalPlanning(physicalPlanning);
             view.QuantityChangeRequested += ChangeQuantity;
             view.LaunchRequested += Launch;
             view.ShowSubtitle(subtitleText, subtitleSpeaker);
@@ -307,6 +335,7 @@ namespace OutOfReach.Presentation.UI
             }
 
             bool planning = state.Phase == GamePhase.Planning;
+            view.SetPhysicalPlanning(physicalPlanning);
             view.ShowPlanning(planning);
             view.SetPhase(state.Phase, state.Outcome);
             if (planning)
@@ -314,12 +343,13 @@ namespace OutOfReach.Presentation.UI
                 // Draft is a fresh authoritative snapshot after each command. Do not retain it as state.
                 var draft = planner.Draft;
                 var validation = draft.Validate();
-                view.SetEquipment(planner.Catalog, draft.Equipment, true);
+                view.SetEquipment(planner.Catalog, draft.Equipment, !physicalPlanning);
                 view.SetConstraints(draft.TotalMassKg, draft.MassLimitKg,
                     draft.TotalBudgetCredits, draft.BudgetLimitCredits,
                     draft.RequiredPowerWatts, draft.AvailablePowerWatts);
                 view.SetPlanningResources(draft.InitialResources);
                 view.SetValidation(validation.Succeeded, validation.Explanation, commandExplanation);
+                view.SetCarriedEquipment(cargoLoading, planner.Catalog);
             }
             else
             {
@@ -346,7 +376,7 @@ namespace OutOfReach.Presentation.UI
 
         private void ChangeQuantity(string equipmentId, int delta)
         {
-            if (planner == null || state == null || state.Phase != GamePhase.Planning) return;
+            if (physicalPlanning || planner == null || state == null || state.Phase != GamePhase.Planning) return;
             int quantity = 0;
             var draft = planner.Draft;
             foreach (var selection in draft.Equipment)
@@ -360,7 +390,7 @@ namespace OutOfReach.Presentation.UI
 
         private void Launch()
         {
-            if (planner == null || state == null || state.Phase != GamePhase.Planning) return;
+            if (physicalPlanning || planner == null || state == null || state.Phase != GamePhase.Planning) return;
             var validation = planner.Draft.Validate();
             if (!validation.Succeeded)
             {

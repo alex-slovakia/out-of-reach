@@ -8,7 +8,7 @@ namespace OutOfReach.Presentation.Hands
     /// <summary>
     /// Poses the delivered rigid glove rig from its JSON and shows it only while Core says the suit is worn.
     /// Owns model visibility and the 34 rig joints, never the camera, motion mount, player or an interaction.
-    /// This checkpoint supplies a neutral first-person stance, not contact animation, full-body IK or skinning.
+    /// Short local glove gestures acknowledge real actions; they do not assert contact, full-body IK or skinning.
     /// </summary>
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(140)]
@@ -18,6 +18,21 @@ namespace OutOfReach.Presentation.Hands
         [Tooltip("Dedicated parent below the first-person camera. Only an explicitly bound motion presenter may animate it.")]
         [SerializeField] private Transform motionMount;
         [SerializeField] private TextAsset rigDefinition;
+
+        [Header("Local gesture timing")]
+        [SerializeField, Range(.35f, 1.15f)] private float pressSeconds = .72f;
+        [SerializeField, Range(.35f, 1.15f)] private float gripSeconds = .88f;
+
+        private enum Gesture { None, Press, Grip }
+        private Gesture gesture;
+        private float gestureElapsed;
+        private float gestureDuration;
+        private float gestureBlend;
+        private bool gestureLeft;
+        private Func<float> routeProgress;
+        private float previousRouteDistance = float.NaN;
+        private float travelSinceGrip;
+        private bool nextGripLeft;
 
         private IEvaStatus suit;
         private IEvaStatus subscribedSuit;
@@ -32,6 +47,9 @@ namespace OutOfReach.Presentation.Hands
         public Transform MotionMount => motionMount;
         public TextAsset RigDefinition => rigDefinition;
         public bool IsBound => bound;
+        public bool IsGesturePlaying => gesture != Gesture.None;
+        public float GestureBlend => gestureBlend;
+        public float GestureElapsedSeconds => gestureElapsed;
         public bool IsVisible => visible && modelRoot && modelRoot.gameObject.activeInHierarchy;
 
         [Serializable] private sealed class RigFile
@@ -69,6 +87,13 @@ namespace OutOfReach.Presentation.Hands
             public Quaternion AuthoredRotation;
             public Vector3 NeutralPosition;
             public Quaternion NeutralRotation;
+            public Vector3 PressPosition;
+            public Quaternion PressRotation;
+            public Vector3 GripPosition;
+            public Quaternion GripRotation;
+            public bool Left;
+            public Vector3 GestureStartPosition;
+            public Quaternion GestureStartRotation;
         }
 
         /// <summary>Editor/composition wiring only. Supply a scene instance of the prefab, never its FBX root.</summary>
@@ -117,17 +142,110 @@ namespace OutOfReach.Presentation.Hands
             return true;
         }
 
-        /// <summary>Restores only the delivered neutral joint pose. Does not move the model root or its mount.</summary>
+        /// <summary>Local confirmation only. Caller must first receive a successful real action.</summary>
+        public bool TryPlayPress() => TryStartGesture(Gesture.Press, false);
+
+        /// <summary>A short glove-flex check; it does not imply attachment to an object or rail.</summary>
+        public bool TryPlayGrip(bool leftHand = false) => TryStartGesture(Gesture.Grip, leftHand);
+
+        /// <summary>
+        /// Optional actual EVA arc-distance query; return NaN when not on the route. No input/Player dependency.
+        /// Each 0.65 m of real travel may start one alternating glove flex, never a claimed contact grip.
+        /// </summary>
+        public void ConfigureRouteProgress(Func<float> readRouteDistanceMetres)
+        {
+            routeProgress = readRouteDistanceMetres;
+            ResetTravelSample();
+        }
+
+        /// <summary>Cancels the gesture and restores neutral joints, without moving the model root or mount.</summary>
         public void ResetToNeutral()
         {
+            gesture = Gesture.None;
+            gestureElapsed = gestureBlend = 0f;
+            ResetTravelSample();
+            ApplyGesturePose();
+        }
+
+        private bool TryStartGesture(Gesture requested, bool left)
+        {
+            RefreshPresentation();
+            if (!IsVisible || (IsGesturePlaying && !(requested == Gesture.Press && gesture == Gesture.Grip)))
+                return false; // Press may smoothly replace a glove flex; no queue or delayed feedback.
             foreach (JointBinding binding in bindings)
-                if (binding.Joint)
-                    binding.Joint.SetLocalPositionAndRotation(binding.NeutralPosition, binding.NeutralRotation);
+            {
+                if (!binding.Joint) { ClearBinding(); return false; }
+                binding.GestureStartPosition = binding.Joint.localPosition;
+                binding.GestureStartRotation = binding.Joint.localRotation;
+            }
+            gesture = requested;
+            gestureLeft = left;
+            gestureElapsed = gestureBlend = 0f;
+            gestureDuration = Mathf.Clamp(requested == Gesture.Press ? pressSeconds : gripSeconds, .35f, 1.15f);
+            return true;
+        }
+
+        private void AdvanceGesture(float deltaSeconds)
+        {
+            if (!IsGesturePlaying) return;
+            gestureElapsed = Mathf.Min(gestureDuration, gestureElapsed + Mathf.Max(0f, deltaSeconds));
+            float t = gestureElapsed / gestureDuration;
+            // Smooth approach (32%), brief apex (12%), smooth return (56%). No overshoot or residual pose.
+            float ramp = t < .32f ? t / .32f : t < .44f ? 1f : (1f - t) / .56f;
+            gestureBlend = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(ramp));
+            if (gestureElapsed >= gestureDuration) { gesture = Gesture.None; gestureBlend = 0f; }
+            ApplyGesturePose();
+        }
+
+        private void ApplyGesturePose()
+        {
+            foreach (JointBinding binding in bindings)
+            {
+                if (!binding.Joint) { ClearBinding(); return; }
+                bool activeHand = IsGesturePlaying && binding.Left == gestureLeft;
+                Vector3 position = activeHand
+                    ? (gesture == Gesture.Press ? binding.PressPosition : binding.GripPosition) : binding.NeutralPosition;
+                Quaternion rotation = activeHand
+                    ? (gesture == Gesture.Press ? binding.PressRotation : binding.GripRotation) : binding.NeutralRotation;
+                bool approaching = IsGesturePlaying && gestureElapsed < gestureDuration * .32f;
+                binding.Joint.SetLocalPositionAndRotation(
+                    Vector3.Lerp(approaching ? binding.GestureStartPosition : binding.NeutralPosition, position, gestureBlend),
+                    Quaternion.Slerp(approaching ? binding.GestureStartRotation : binding.NeutralRotation, rotation, gestureBlend));
+            }
+        }
+
+        private void SampleRouteTravel()
+        {
+            if (routeProgress == null || !suit.IsOutside) { ResetTravelSample(); return; }
+            float distance = routeProgress();
+            if (!Finite(distance)) { ResetTravelSample(); return; }
+            float delta = Finite(previousRouteDistance) ? Mathf.Abs(distance - previousRouteDistance) : 0f;
+            previousRouteDistance = distance;
+            if (delta > .5f) { travelSinceGrip = 0f; return; } // Reposition/re-entry is not a hand stroke.
+            if (delta <= .0001f) return;
+            travelSinceGrip = Mathf.Min(.65f, travelSinceGrip + delta);
+            if (travelSinceGrip < .65f || IsGesturePlaying) return;
+            if (TryPlayGrip(nextGripLeft))
+            {
+                nextGripLeft = !nextGripLeft;
+                travelSinceGrip = 0f;
+            }
+        }
+
+        private void ResetTravelSample()
+        {
+            previousRouteDistance = float.NaN;
+            travelSinceGrip = 0f;
+            nextGripLeft = false;
         }
 
         public void ClearBinding()
         {
             Unsubscribe();
+            gesture = Gesture.None;
+            gestureElapsed = gestureBlend = 0f;
+            routeProgress = null;
+            ResetTravelSample();
             HideModel();
             RestoreAuthoredPose();
             bindings = Array.Empty<JointBinding>();
@@ -140,9 +258,15 @@ namespace OutOfReach.Presentation.Hands
 
         private void Awake() => HideModel();
         private void OnEnable() { Subscribe(); RefreshPresentation(); }
-        private void OnDisable() { Unsubscribe(); HideModel(); RestoreAuthoredPose(); }
+        private void OnDisable() { Unsubscribe(); ResetToNeutral(); HideModel(); RestoreAuthoredPose(); }
         private void OnDestroy() => ClearBinding();
-        private void LateUpdate() => RefreshPresentation();
+        private void LateUpdate()
+        {
+            RefreshPresentation();
+            if (!IsVisible) return; // Pause hides and freezes elapsed time; no wall-clock catch-up on resume.
+            SampleRouteTravel();
+            AdvanceGesture(Time.unscaledDeltaTime);
+        }
 
         private void Subscribe()
         {
@@ -160,18 +284,25 @@ namespace OutOfReach.Presentation.Hands
 
         private void RefreshPresentation()
         {
-            bool show = bound && isActiveAndEnabled && modelRoot && motionMount && suit.IsSuitOn
-                && !clock.IsPaused && IsFirstPersonPhase(state.Phase)
-                && firstPersonViewAllowed != null && firstPersonViewAllowed();
-            if (!show)
+            bool validSession = bound && isActiveAndEnabled && modelRoot && motionMount
+                && suit.IsSuitOn && IsFirstPersonPhase(state.Phase);
+            if (!validSession)
             {
+                ResetToNeutral();
+                HideModel();
+                return;
+            }
+            if (clock.IsPaused) { HideModel(); return; }
+            if (firstPersonViewAllowed == null || !firstPersonViewAllowed())
+            {
+                ResetToNeutral(); // Cinematic/menu/control lock cancels rather than queues a hidden gesture.
                 HideModel();
                 return;
             }
             if (visible && modelRoot.gameObject.activeSelf) return;
             foreach (JointBinding binding in bindings)
                 if (!binding.Joint) { ClearBinding(); return; }
-            ResetToNeutral(); // Apply the JSON pose before any renderer becomes visible.
+            ApplyGesturePose(); // On pause resume, preserve the exact frozen pose before showing the model.
             modelRoot.gameObject.SetActive(true);
             visible = true;
         }
@@ -232,43 +363,53 @@ namespace OutOfReach.Presentation.Hands
                     || Quaternion.Angle(node.localRotation, Quaternion.identity) > .01f || node.localScale != Vector3.one)
                     throw new InvalidOperationException("Rig rest pose or parent differs from the delivered JSON at " + joint.name);
                 var binding = new JointBinding { Joint = node, AuthoredPosition = node.localPosition,
-                    AuthoredRotation = node.localRotation, NeutralPosition = rest, NeutralRotation = Quaternion.identity };
+                    AuthoredRotation = node.localRotation, NeutralPosition = rest, NeutralRotation = Quaternion.identity,
+                    Left = joint.name.StartsWith("L_", StringComparison.Ordinal) };
                 if (!byName.TryAdd(joint.name, binding)) throw new InvalidOperationException("Duplicate JSON joint: " + joint.name);
                 if (parent == modelRoot) arms.Add(joint.name);
             }
             if (!arms.SetEquals(new[] { "R_Arm", "L_Arm" }))
                 throw new InvalidOperationException("Expected the two documented top-level arms.");
 
-            RigPose neutral = null;
-            foreach (RigPose pose in rig.poses)
-                if (pose != null && pose.name == "Neutral")
-                {
-                    if (neutral != null) throw new InvalidOperationException("Duplicate Neutral pose.");
-                    neutral = pose;
-                }
-            if (neutral == null || neutral.rotations == null || neutral.placements == null
-                || neutral.rotations.Length != 32 || neutral.placements.Length != 2)
-                throw new InvalidOperationException("Neutral must define all 32 wrist/finger rotations and both arm placements.");
-            var assigned = new HashSet<string>(StringComparer.Ordinal);
-            foreach (JointRotation rotation in neutral.rotations)
-            {
-                if (rotation == null || !byName.TryGetValue(rotation.name ?? string.Empty, out JointBinding binding)
-                    || arms.Contains(rotation.name) || !assigned.Add(rotation.name))
-                    throw new InvalidOperationException("Invalid or duplicate Neutral joint rotation.");
-                binding.NeutralRotation = Rotation(rotation.rotation);
-            }
-            foreach (ArmPlacement placement in neutral.placements)
-            {
-                if (placement == null || !arms.Contains(placement.name ?? string.Empty) || !assigned.Add(placement.name))
-                    throw new InvalidOperationException("Invalid or duplicate Neutral arm placement.");
-                JointBinding binding = byName[placement.name];
-                binding.NeutralPosition = Vector(placement.position);
-                binding.NeutralRotation = Rotation(placement.rotation);
-            }
-            if (assigned.Count != 34) throw new InvalidOperationException("Neutral pose does not cover every documented joint.");
+            ReadPose(rig, byName, arms, "Neutral", (binding, position, rotation) =>
+                { binding.NeutralPosition = position; binding.NeutralRotation = rotation; });
+            ReadPose(rig, byName, arms, "Press", (binding, position, rotation) =>
+                { binding.PressPosition = position; binding.PressRotation = rotation; });
+            ReadPose(rig, byName, arms, "Grip", (binding, position, rotation) =>
+                { binding.GripPosition = position; binding.GripRotation = rotation; });
             var result = new JointBinding[34];
             for (int i = 0; i < rig.joints.Length; i++) result[i] = byName[rig.joints[i].name];
             return result;
+        }
+
+        private static void ReadPose(RigFile rig, Dictionary<string, JointBinding> byName,
+            HashSet<string> arms, string poseName, Action<JointBinding, Vector3, Quaternion> assign)
+        {
+            RigPose selected = null;
+            foreach (RigPose pose in rig.poses)
+                if (pose != null && pose.name == poseName)
+                {
+                    if (selected != null) throw new InvalidOperationException("Duplicate " + poseName + " pose.");
+                    selected = pose;
+                }
+            if (selected == null || selected.rotations == null || selected.placements == null
+                || selected.rotations.Length != 32 || selected.placements.Length != 2)
+                throw new InvalidOperationException(poseName + " must define 32 rotations and both arm placements.");
+            var assigned = new HashSet<string>(StringComparer.Ordinal);
+            foreach (JointRotation rotation in selected.rotations)
+            {
+                if (rotation == null || !byName.TryGetValue(rotation.name ?? string.Empty, out JointBinding binding)
+                    || arms.Contains(rotation.name) || !assigned.Add(rotation.name))
+                    throw new InvalidOperationException("Invalid or duplicate " + poseName + " joint rotation.");
+                assign(binding, binding.AuthoredPosition, Rotation(rotation.rotation));
+            }
+            foreach (ArmPlacement placement in selected.placements)
+            {
+                if (placement == null || !arms.Contains(placement.name ?? string.Empty) || !assigned.Add(placement.name))
+                    throw new InvalidOperationException("Invalid or duplicate " + poseName + " arm placement.");
+                assign(byName[placement.name], Vector(placement.position), Rotation(placement.rotation));
+            }
+            if (assigned.Count != 34) throw new InvalidOperationException(poseName + " does not cover every joint.");
         }
 
         private static Vector3 Vector(float[] values)

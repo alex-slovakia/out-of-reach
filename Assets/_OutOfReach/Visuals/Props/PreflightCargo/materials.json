@@ -1,0 +1,32 @@
+{
+  "materials": [
+    {
+      "name": "MAT_Cargo_OffWhite",
+      "srgb": "#CCCFC7",
+      "metallic": 0.05,
+      "roughness": 0.48,
+      "unitySmoothness": 0.52
+    },
+    {
+      "name": "MAT_Cargo_Graphite",
+      "srgb": "#262B2F",
+      "metallic": 0.05,
+      "roughness": 0.58,
+      "unitySmoothness": 0.42000000000000004
+    },
+    {
+      "name": "MAT_Cargo_Aluminium",
+      "srgb": "#A6AEB5",
+      "metallic": 0.82,
+      "roughness": 0.28,
+      "unitySmoothness": 0.72
+    },
+    {
+      "name": "MAT_Cargo_Amber",
+      "srgb": "#CF8E23",
+      "metallic": 0.05,
+      "roughness": 0.46,
+      "unitySmoothness": 0.54
+    }
+  ]
+}

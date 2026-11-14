@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "creator": "OUT OF REACH, original mathematical synthesis, 2026-11-14",
+  "source": "No recordings, voice model, sample library or external assets used.",
+  "synthesis": "Sines, deterministic low-pass noise and smooth envelopes; seed 740317; normalized to -10 dBFS peak.",
+  "use_limit": "Cabin mechanism/contact-transmitted sound or explicit suit/intercom feedback. Never exterior airborne space sound.",
+  "listening_and_Unity_playback": "NOT VERIFIED",
+  "files": [
+    {
+      "filename": "Audio/airlock-latch-motor.wav",
+      "duration_seconds": 1.05,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -24.58254485244144,
+      "sha256": "5f06a1bd0eefe7db52e38da9c4b1d0a90b219818397eccc6e9d6f9c0153e637f"
+    },
+    {
+      "filename": "Audio/airlock-safe-chirp.wav",
+      "duration_seconds": 0.26,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -18.554846846437293,
+      "sha256": "5f9494ffcaf64495c9b731bcb039180d33a5173e64f5070e89482ae4e0be4bae"
+    }
+  ]
+}

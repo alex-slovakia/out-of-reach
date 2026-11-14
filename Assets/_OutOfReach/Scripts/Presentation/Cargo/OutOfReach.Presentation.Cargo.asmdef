@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.Presentation.Cargo",
+  "rootNamespace": "OutOfReach.Presentation.Cargo",
+  "references": ["OutOfReach.Contracts"],
+  "autoReferenced": true
+}

@@ -13,6 +13,10 @@
     "OutOfReach.Presentation.Lighting",
     "OutOfReach.Presentation.Motion",
     "OutOfReach.Presentation.Hands",
+    "OutOfReach.Presentation.Cargo",
+    "OutOfReach.AirlockPanel",
+    "OutOfReach.AirlockPanel.Editor",
+    "OutOfReach.Presentation.Cargo.Editor",
     "OutOfReach.Audio",
     "OutOfReach.UI",
     "UnityEngine.UI"
