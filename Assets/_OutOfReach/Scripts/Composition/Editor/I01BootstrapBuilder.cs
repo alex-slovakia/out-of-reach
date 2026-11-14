@@ -67,6 +67,12 @@ namespace OutOfReach.Composition.Editor
             FirstPersonController player = playerObject.GetComponent<FirstPersonController>();
             if (!player || !player.ViewPivot || !player.Interaction)
                 throw new InvalidOperationException("PlayerRig is missing its controller, ViewPivot or InteractionResolver.");
+            // A positive cutoff discards valid movement at very high frame rates. This scene
+            // override preserves the authored speed and source prefab, including its GUID.
+            CharacterController playerBody = playerObject.GetComponent<CharacterController>();
+            if (!playerBody) throw new InvalidOperationException("PlayerRig is missing its CharacterController.");
+            playerBody.minMoveDistance = 0f;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(playerBody);
             player.Teleport(anchors.PlayerSpawn.position, anchors.PlayerSpawn.eulerAngles.y);
             Transform planningPivot = Child("Planning framing", player.ViewPivot);
             Transform cinematicPivot = Child("Cinematic offset", planningPivot);
@@ -359,6 +365,20 @@ namespace OutOfReach.Composition.Editor
             model.name = "AURORA-7 delivered Blender models";
             model.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             model.transform.localScale = Vector3.one;
+            // Paired play-mode captures show malformed geometry when these imported modules
+            // are statically batched. Keep the source prefab intact and disable only this
+            // optimization on the integrated scene instances; other static flags remain.
+            int clearedBatchingFlags = 0;
+            foreach (Transform node in model.GetComponentsInChildren<Transform>(true))
+            {
+                StaticEditorFlags flags = GameObjectUtility.GetStaticEditorFlags(node.gameObject);
+                if ((flags & StaticEditorFlags.BatchingStatic) == 0) continue;
+                GameObjectUtility.SetStaticEditorFlags(node.gameObject, flags & ~StaticEditorFlags.BatchingStatic);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(node.gameObject);
+                clearedBatchingFlags++;
+            }
+            Debug.Log("I02_STATIC_BATCHING_WORKAROUND sceneInstances=" + clearedBatchingFlags
+                + " | paired play-mode renderer comparison; model source unchanged");
             Transform Leaf(string name) => model.GetComponentsInChildren<Transform>(true).Single(t => t.name == name);
             anchors.InnerDoorLeft = Leaf("DoorLeaf_Inner_L");
             anchors.InnerDoorRight = Leaf("DoorLeaf_Inner_R");
@@ -428,7 +448,8 @@ namespace OutOfReach.Composition.Editor
             Transform root = Child("Tethered EVA route - outside hull", null);
             var route = root.gameObject.AddComponent<TetheredRoute>();
             Vector3[] positions = { anchors.EvaStart.position, new Vector3(0, 1.2f, 22.8f),
-                new Vector3(3.8f, 1.2f, 22.8f), new Vector3(4.35f, .9f, 21.7f), new Vector3(4.35f, .9f, 13f) };
+                new Vector3(3.8f, 1.2f, 22.8f), new Vector3(4.35f, .9f, 21.7f),
+                new Vector3(4.35f, .9f, 14.35f), new Vector3(3.9f, .9f, 14.1f) };
             var points = new Transform[positions.Length];
             for (int i = 0; i < positions.Length; i++)
             {
