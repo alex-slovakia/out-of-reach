@@ -1,8 +1,22 @@
 # Compact open-sea direction — proposed 2026-11-14
 
+## Latest correction: the transport must be visible and boardable
+
+![Actual transport and direct cargo-loading route, proposed reference](02-boardable-transport-direction.png)
+
+The user rejected the standalone platform/cabin as an incomplete depiction of the opening. The essential subject is the actual spacecraft: carry supplies through its open hatch, secure cargo inside it, board before departure, secure the hatch, then experience ignition/ascent and later rendezvous with AURORA-7. AURORA-7 is already in orbit; the loading vehicle is the smaller Earth-to-orbit transport.
+
+Keep the existing deck kit as a reusable staging module. Connect its transfer gate to the transport via a protected boarding walkway. The proposal depicts an elevated crew-access deck next to a capsule on a rocket, with a marine launch-support barge below. Exact dimensions, launch safety clearances and flight performance are not validated by the generated picture; authoring must keep the interior and external hull geometrically consistent. No ignition with the access bridge connected or the cabin unsecured. Avoid building an unrelated hut and calling it the spacecraft.
+
+Gameplay intention: a 60-second loading window, an explicit boarding/hatch transition, launch cinematic, and orbital arrival. Cargo becomes aboard only when physically stowed inside the transport; supplies carry forward to the mission ledger. Expiry and failure-to-board behavior still need explicit implementation/verification.
+
+This new image is a proposed generated reference, not an implemented scene or an approved engineering design. Its exact prompt is `02-transport-prompt.txt`.
+
+## Earlier platform-only image — superseded as a complete opening
+
 ![Two views of the proposed compact offshore platform](01-open-sea-compact-direction.png)
 
-This is a generated visual target, not an in-game capture or a completed model. It replaces the rejected large cliff-base concept. User requested an achievable open-sea location, detailed ropes, wet surfaces and water effects. The generated hands are pose/material references only; existing functional cargo grips remain authoritative.
+This earlier generated visual target is retained for material/deck detail only. It is not a complete prologue and not an in-game capture. User requested an achievable open-sea location, detailed ropes, wet surfaces and water effects. The generated hands are pose/material references only; existing functional cargo grips remain authoritative.
 
 ## Build boundary
 
