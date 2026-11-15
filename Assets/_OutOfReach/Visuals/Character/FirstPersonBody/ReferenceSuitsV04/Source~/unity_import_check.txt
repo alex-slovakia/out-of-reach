@@ -1,0 +1,9 @@
+rig A7_ContinuousBody_Rig lossyScale (1.0000, 1.0000, 1.0000) bone transforms under rig 164
+OK   A7_WORK_TorsoLegs verts 4764 tris 8500 bones 164 mats MAT_Cabin_BareHands,MAT_V04_Suit,MAT_V04_TrouserTrim,MAT_V04_Zip,MAT_V04_ShirtRib,MAT_V04_Shoes bakedBoundsMin (-0.296, -0.023, -0.112) max (0.296, 1.602, 0.211)
+OK   A7_WORK_Arm_L verts 2496 tris 4376 bones 164 mats MAT_Cabin_BareHands,MAT_V04_Suit,MAT_V04_ShirtRib bakedBoundsMin (-0.529, 1.005, -0.042) max (-0.096, 1.485, 0.342)
+OK   A7_WORK_Arm_R verts 2496 tris 4376 bones 164 mats MAT_Cabin_BareHands,MAT_V04_Suit,MAT_V04_ShirtRib bakedBoundsMin (0.096, 1.005, -0.042) max (0.529, 1.485, 0.342)
+OK   A7_WORK_Head verts 7168 tris 13580 bones 164 mats MAT_Cabin_BareHands,MAT_V04_Hair,MAT_V04_Eyes bakedBoundsMin (-0.094, 1.521, -0.078) max (0.097, 1.792, 0.172)
+OK   clip BODY_StandRelaxed length 1,000
+OK   clip BODY_FloatNeutral length 1,000
+OK   clip BODY_SeatedFit length 1,000
+SUITV04 IMPORT CHECK PASS
