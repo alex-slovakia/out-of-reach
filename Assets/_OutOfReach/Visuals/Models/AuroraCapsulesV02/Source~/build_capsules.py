@@ -40,7 +40,7 @@ CN_R, CN_Z = (Z_TOP - Z_SHO) / CONE_LEN, (R_CYL - R_TOP) / CONE_LEN
 TH_U0 = D(67.5)                       # a gore seam; the hatch gore is centred on the hatch
 HATCH = D(90.0)
 TH_DH = math.asin(0.70 / R_CYL)       # half angle of the door opening
-TH_DOOR = math.asin(0.68 / R_CYL)     # half angle of the door leaf
+TH_DOOR = TH_DH - 0.003 / R_CYL       # half angle of the door leaf: 3 mm reveal, so no light slot beside it
 DOOR_Z1 = 2.15
 R_JAMB = 2.365
 DOOR_T = R_CYL - R_JAMB               # leaf thickness
@@ -436,6 +436,19 @@ def build(variant, L):
                      Vector((R_JAMB * math.cos(b), R_JAMB * math.sin(b), z)), Vector((R_JAMB * math.cos(a), R_JAMB * math.sin(a), z))],
                     m, None, toward=centre)
 
+    # ---- inner cabin skin. The delivered CapsuleShell also carried the cabin wall, sub-floor and ceiling
+    # (r 2.38, z 0..2.52); without them the cabin is see-through wherever CapsuleInterior has no panel.
+    R_IN = 2.38
+    lin = K('liner')
+    lathe(sh, [(R_IN, 2.52), (R_IN, DOOR_Z1), (R_IN, 0.0)], KIT, lin, thetas=ths, skip=lambda j, i: j == 1 and in_door(i))
+    lathe(sh, [(0.0, 2.52), (R_IN, 2.52)], KIT, lin, thetas=ths)
+    lathe(sh, [(R_IN, 0.0), (0.0, 0.0)], KIT, lin, thetas=ths)
+    ipf = cylpf(R_IN)
+    ca = 0.07 / R_IN
+    for (t0, t1, s0, s1) in ((HATCH - TH_DH - ca, HATCH - TH_DH, 0.0, DOOR_Z1 + 0.07), (HATCH + TH_DH, HATCH + TH_DH + ca, 0.0, DOOR_Z1 + 0.07),
+                             (HATCH - TH_DH, HATCH + TH_DH, DOOR_Z1, DOOR_Z1 + 0.07)):
+        patch(sh, ipf, t0, t1, s0, s1, 0.0, -0.014, METAL, inward=True)
+
     # ---- 4 hatch surround: casing, step plate, closeout ring at the cylinder/cone break
     fw = 0.09 / R_CYL
     patch(sh, hpf, HATCH - TH_DH - fw, HATCH - TH_DH, 0.0, DOOR_Z1 + 0.09, 0.0, 0.035, GRAPH)
@@ -651,7 +664,7 @@ def build(variant, L):
 
     # ---- hatch leaf (own object, origin on the hinge)
     d0, d1 = HATCH - TH_DOOR, HATCH + TH_DOOR
-    z0, z1 = 0.02, 2.13
+    z0, z1 = 0.006, 2.144
     dth = D(2.9) if L == 0 else D(6.5)
     patch(dr, hpf, d0, d1, z0, z1, -DOOR_T, 0.0, HULL, huv, dth=dth, wall_mat=GRAPH, back_mat=METAL)
     if L == 0:
@@ -967,7 +980,7 @@ def main():
         jets = built[0][3]
         images = {}
         if notex:
-            for n in (variant + '_Hull', variant + '_HeatShield', 'CAP_Metal', 'CAP_Graphite', 'CAP_Kit'):
+            for n in (variant + '_Hull', variant + '_HeatShield', 'CAP_Metal', 'CAP_Graphite'):
                 load_set(tex_dir, n, images)
         else:
             if rc:
@@ -979,9 +992,9 @@ def main():
             write_set(tex_dir, variant + '_HeatShield', ac_tex.paint_heatshield(int((2048 if rc else 1024) * ts), variant, R_SHIELD), images)
             write_set(tex_dir, 'CAP_Metal', ac_tex.paint_metal(int(1024 * ts)), images)
             write_set(tex_dir, 'CAP_Graphite', ac_tex.paint_graphite(int(1024 * ts)), images)
-            kb, km, ke = ac_tex.paint_kit(256)
-            write_set(tex_dir, 'CAP_Kit', (kb, None, km), images)
-            ac_tex.save(os.path.join(tex_dir, 'CAP_Kit_Emission.png'), ke, True)
+        kb, km, ke = ac_tex.paint_kit(256)
+        write_set(tex_dir, 'CAP_Kit', (kb, None, km), images)
+        ac_tex.save(os.path.join(tex_dir, 'CAP_Kit_Emission.png'), ke, True)
         kit_emi = bpy.data.images.load(os.path.join(tex_dir, 'CAP_Kit_Emission.png'), check_existing=True)
         mats = [bl_material(variant + '_Hull', *images[variant + '_Hull']),
                 bl_material(variant + '_HeatShield', *images[variant + '_HeatShield']),
