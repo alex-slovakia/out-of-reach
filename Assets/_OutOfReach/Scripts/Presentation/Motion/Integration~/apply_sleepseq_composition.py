@@ -1,7 +1,7 @@
-"""SLEEP-SEQ composition change for I01MissionComposition.cs (anchor-based, idempotent check).
+"""SLEEP-SEQ composition change for I01MissionComposition.cs (anchor-based; refuses to run twice).
 
 Usage: python -I apply_sleepseq_composition.py <path to I01MissionComposition.cs>
-Applies four edits by exact anchors; fails loudly if an anchor is missing. Run once.
+Exact anchors; fails loudly if one is missing.
 """
 import io
 import sys
@@ -41,12 +41,18 @@ src = replace_once(src,
     "            flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);",
     "rest presentation owner (no chapter UI)")
 
-# 2b. The chapter routine montage owns its nightly rests: no walk-in into the berth for those.
+# 2b. The berth rest holds through the chapter routine (one entry, one release) and ends at the authored berth exit
+#     (root's SleepEntry, the berth's own interaction anchor).
 src = replace_once(src,
     "                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop);",
+    "                {\n"
+    "                    // SLEEP-SEQ: hold the berth through the chapter routine and wake at the berth exit (SleepEntry).\n"
+    "                    MissionSession restSession = boundSession;\n"
     "                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop,\n"
-    "                        () => chapterUi && chapterUi.RoutineOwnsRestPresentation);",
-    "ConfigureRest (routine owner)")
+    "                        () => restSession.ChapterFlow != null && restSession.ChapterFlow.IsRoutineRunning,\n"
+    "                        habitat ? habitat.GetPresentationAnchor(InteractionIds.SurvivalSleep) : null);\n"
+    "                }",
+    "ConfigureRest (routine hold + berth exit)")
 
 # 3. The lease follows the presenter's berth path instead of cutting to SleepCamera, and holds through Releasing.
 old_wanted = (
@@ -66,6 +72,18 @@ start = src.index("        private void UpdateRestCamera()\n")
 end = src.index("        private void ReleaseRestCamera()\n")
 new_update = '''        private void UpdateRestCamera()
         {
+            // SLEEP-SEQ wake destination: once the view has floated to the berth exit, the real controller moves there
+            // (Teleport + SyncTransforms) before the lease hands the view back, so the player wakes upright in front of
+            // the berth, never back where the rest began. Microgravity: the feet are on the deck, so the float restarts
+            // from that support at zero velocity (no gravity).
+            if (embodiedBody && embodiedBody.RestExitPending && attached && runtime && runtime.Player && boundSession != null
+                && ReferenceEquals(boundSession, runtime.Session) && embodiedBody.TryGetRestExit(out Vector3 exitFeet, out float exitYaw))
+            {
+                runtime.Player.Teleport(exitFeet, exitYaw);
+                Physics.SyncTransforms();
+                embodiedBody.ConfirmRestExit();
+                if (runtime.Player.ControlAllowed) runtime.Player.EnterFloatFromFootSupport();
+            }
             if (!RestCameraWanted()) { ReleaseRestCamera(); return; }
             // Keep every offset below the pivot (departure, cinematic, motion). The live gameplay eye is where the
             // camera would be without the lease; the presenter turns it into this frame's view on the berth path

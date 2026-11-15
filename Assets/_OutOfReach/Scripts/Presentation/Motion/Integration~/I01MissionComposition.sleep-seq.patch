@@ -1,5 +1,5 @@
 diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
-index 27c5004..f14a2a5 100644
+index 8673efa..fd6a5a6 100644
 --- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 +++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 @@ -243,6 +243,7 @@ namespace OutOfReach.Composition
@@ -18,33 +18,35 @@ index 27c5004..f14a2a5 100644
              && !(chapterUi && chapterUi.BlocksPlayerControl)
              && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
  
-@@ -694,11 +696,14 @@ namespace OutOfReach.Composition
+@@ -694,8 +696,11 @@ namespace OutOfReach.Composition
                      runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
                      () => cinematics && cinematics.ReducedEffects);
                  if (survivalUi)
 -                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation);
 +                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation
 +                        || RestBodyEntering());
-                 // CHAPTER-UI-02: the HUD objective names the chapter loop's real next step (only after the repairs and in Survival).
-                 flightBoard.ConfigureObjectiveOverride(() => chapterUi ? chapterUi.ObjectiveTitle : null,
-                     () => chapterUi ? chapterUi.ObjectiveDetail : null);
              }
 +            // SLEEP-SEQ: the eyelids wait until the body is in the berth and strapped in, so the approach is seen.
 +            if (!chapterUi && survivalUi) survivalUi.ConfigureRestPresentationOwner(RestBodyEntering);
              flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
              if (runtime.GameState.Phase != GamePhase.Planning)
                  flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
-@@ -725,7 +730,8 @@ namespace OutOfReach.Composition
+@@ -722,7 +727,13 @@ namespace OutOfReach.Composition
                      () => runtime && runtime.GameState.Phase == GamePhase.Planning && !orbitalLocationReached);
                  ISurvivalRecovery recovery = boundSession.SurvivalRecovery;
                  if (recovery != null && sleepBodyFrame)
 -                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop);
++                {
++                    // SLEEP-SEQ: hold the berth through the chapter routine and wake at the berth exit (SleepEntry).
++                    MissionSession restSession = boundSession;
 +                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop,
-+                        () => chapterUi && chapterUi.RoutineOwnsRestPresentation);
++                        () => restSession.ChapterFlow != null && restSession.ChapterFlow.IsRoutineRunning,
++                        habitat ? habitat.GetPresentationAnchor(InteractionIds.SurvivalSleep) : null);
++                }
              }
              if (microgravityBridge && microgravityInput && bareArmContacts)
              {
-@@ -1292,40 +1298,40 @@ namespace OutOfReach.Composition
+@@ -1296,40 +1307,52 @@ namespace OutOfReach.Composition
                  return false;
              GamePhase phase = runtime.GameState.Phase;
              if (phase == GamePhase.Outcome || phase == GamePhase.Report || runtime.GameState.Outcome == MissionOutcome.Lost) return false;
@@ -61,6 +63,18 @@ index 27c5004..f14a2a5 100644
  
          private void UpdateRestCamera()
          {
++            // SLEEP-SEQ wake destination: once the view has floated to the berth exit, the real controller moves there
++            // (Teleport + SyncTransforms) before the lease hands the view back, so the player wakes upright in front of
++            // the berth, never back where the rest began. Microgravity: the feet are on the deck, so the float restarts
++            // from that support at zero velocity (no gravity).
++            if (embodiedBody && embodiedBody.RestExitPending && attached && runtime && runtime.Player && boundSession != null
++                && ReferenceEquals(boundSession, runtime.Session) && embodiedBody.TryGetRestExit(out Vector3 exitFeet, out float exitYaw))
++            {
++                runtime.Player.Teleport(exitFeet, exitYaw);
++                Physics.SyncTransforms();
++                embodiedBody.ConfirmRestExit();
++                if (runtime.Player.ControlAllowed) runtime.Player.EnterFloatFromFootSupport();
++            }
              if (!RestCameraWanted()) { ReleaseRestCamera(); return; }
 +            // Keep every offset below the pivot (departure, cinematic, motion). The live gameplay eye is where the
 +            // camera would be without the lease; the presenter turns it into this frame's view on the berth path

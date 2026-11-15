@@ -752,6 +752,69 @@ namespace OutOfReach.Tests.BodyAnim
             Assert.Less(Vector3.Distance(s.Eye.transform.position, s.Player.TransformPoint(new Vector3(0f, 1.62f, 0f))), 1e-3f, "back on the live eye");
         }
 
+        [Test]
+        public void RoutineHoldsOneBerthEntryAndWakesUprightAtTheBerthExit()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            // Root's SleepEntry anchor (feet on the deck, forward towards the berth) is the authored exit.
+            var entry = new GameObject("SleepEntry").transform;
+            entry.SetPositionAndRotation(b.EntryPoint, Quaternion.LookRotation(b.EntryForward, Vector3.up));
+            bool routine = false;
+            s.Body.ConfigureRest(() => s.Resting, b.Frame, () => s.LastStop, () => routine, entry);
+            Assert.IsTrue(s.Body.TryGetRestExit(out Vector3 exitFeet, out float exitYaw));
+            Assert.Greater(Vector3.Dot(exitFeet - b.EntryPoint, -b.EntryForward), .25f, "the exit stands clear in front of the berth");
+            Assert.AreEqual(0f, Mathf.DeltaAngle(exitYaw, Quaternion.LookRotation(-b.EntryForward, Vector3.up).eulerAngles.y), .01f, "facing into the cabin");
+            Assert.Less(Mathf.Abs(exitFeet.y - b.EntryPoint.y), .05f, "feet on the deck");
+
+            // R pressed far from the berth: the routine's first night starts there.
+            s.Player.SetPositionAndRotation(b.EntryPoint + new Vector3(2.6f, 0f, -1.5f), Quaternion.Euler(0f, 30f, 0f));
+            for (int i = 0; i < 6; i++) LeaseStep(s);
+            Vector3 exitEye = exitFeet + new Vector3(0f, 1.62f, 0f);
+            routine = true; s.Resting = true;
+            LeaseStep(s); LeaseStep(s);
+            Assert.AreEqual(RestPhase.Entering, s.Body.RestPhase);
+            Assert.Less(Vector3.Distance(s.Eye.transform.position, exitEye), .05f, "a far start begins at the berth exit (a cut the montage covers)");
+            for (int i = 0; i < 600 && s.Body.RestPhase != RestPhase.Held; i++) LeaseStep(s);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase);
+            // Nights and waking hours alternate inside the routine: the body stays in the berth, no second entry.
+            for (int night = 0; night < 3; night++)
+            {
+                s.Resting = false; for (int i = 0; i < 40; i++) LeaseStep(s);
+                Assert.AreEqual(RestPhase.Held, s.Body.RestPhase, "waking hours inside the routine keep the body held");
+                s.Resting = true; for (int i = 0; i < 40; i++) LeaseStep(s);
+                Assert.AreEqual(RestPhase.Held, s.Body.RestPhase);
+            }
+            // The routine stops: one release, ending at the berth exit.
+            routine = false; s.Resting = false; s.LastStop = RestStopReason.Woken;
+            Vector3 lastEye = s.Eye.transform.position; float maxStep = 0f;
+            int frames = 0;
+            while (!s.Body.RestExitPending && frames < 400)
+            {
+                LeaseStep(s); frames++;
+                maxStep = Mathf.Max(maxStep, Vector3.Distance(lastEye, s.Eye.transform.position)); lastEye = s.Eye.transform.position;
+                Assert.IsTrue(s.Body.RestBlocksControl);
+            }
+            Assert.IsTrue(s.Body.RestExitPending, "the exit waits at the berth exit for the controller move");
+            LeaseStep(s);
+            Assert.Less(Vector3.Distance(s.Eye.transform.position, exitEye), .02f, "the view ends on the berth-exit eye");
+            Assert.Less(maxStep, .06f, "no cut on the way out");
+            // The composition moves the real controller there (Teleport) and confirms: nothing pops back to the R spot.
+            Vector3 viewBefore = s.Eye.transform.position;
+            s.Player.SetPositionAndRotation(exitFeet, Quaternion.Euler(0f, exitYaw, 0f));
+            s.Body.ConfirmRestExit();
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.IsFalse(s.Body.RestBlocksControl);
+            LeaseStep(s);
+            Debug.Log("[SLEEPSEQ] routine release to the berth exit: " + frames / 60f + " s, hand-over jump " + Vector3.Distance(viewBefore, s.Eye.transform.position) + " m");
+            Assert.Less(Vector3.Distance(viewBefore, s.Eye.transform.position), .02f, "the live eye after the move is where the view already was");
+            CollectionAssert.AreEqual(new[] { RestPhase.Entering, RestPhase.Held, RestPhase.Releasing, RestPhase.None }, b.Phases, "one entry, one release");
+            Vector3 expected = s.Player.position + s.Player.rotation * s.Body.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating);
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, expected), .01f, "body upright at the berth exit");
+            Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"), "props must be gone");
+            Object.DestroyImmediate(entry.gameObject);
+        }
+
         private const string TransportPath = "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx";
 
         // Root's lean toward the buckle (I06MarineBindings.PresentSeat), replayed on the harness camera.
