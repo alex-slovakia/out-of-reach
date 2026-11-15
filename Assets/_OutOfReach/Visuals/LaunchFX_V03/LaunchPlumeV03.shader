@@ -58,10 +58,13 @@ Shader "OutOfReach/LaunchV03/Plume"
                 float rim=smoothstep(.02,.65,facing);
                 float intensity=axial*lerp(.24,1,breakup)*lerp(.3,1,rim)*_Sample.y;
                 float3 amber=lerp(float3(1.45,.22,.018),float3(2.7,1.45,.38),saturate((1-z)*.65+n*.3+band));
-                float3 hot=lerp(float3(2.0,.77,.13),float3(3.1,2.75,2.0),saturate((1-z)*1.6+band));
+                float3 hot=lerp(float3(2.4,1.25,.30),float3(4.2,3.8,2.9),saturate((1-z)*1.7+band));
                 float3 emission=lerp(amber,hot,_Core)*intensity*(.40+band);
-                // Fog attenuates additive light instead of adding fog colour a second time.
+                // Fog attenuates additive light instead of adding fog colour a second time. URP returns 0 from
+                // ComputeFogIntensity when fog is off (upper-atmosphere shot), so only apply it with fog keywords.
+                #if defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2)
                 emission*=ComputeFogIntensity(i.fog);
+                #endif
                 return half4(emission,0);
             }
             ENDHLSL

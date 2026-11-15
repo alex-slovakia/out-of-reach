@@ -1,0 +1,28 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs b/Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs
+index 9c8d8b2..ea85e92 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs
+@@ -318,6 +318,11 @@ namespace OutOfReach.Composition.Editor
+                 MarineDepartureFxPresenter.CalculateAnchor(marine.TransportAnchors), land.DeflectorContactPlane,
+                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/Exhaust.mat"),
+                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/IgnitionSteam.mat"));
++            // LAUNCH-FX-V03 (Claude, #7): V03 replaces the old flame/steam rendering; the old presenter stays bound, not presented.
++            var launchFxV03 = (GameObject)PrefabUtility.InstantiatePrefab(
++                Required<GameObject>("Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab"), presentationRoot);
++            marineBindings.ConfigureLaunchFxV03(launchFxV03.GetComponent<OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter>(),
++                land.DeflectorContactPlane, land.PadPlane, land.TrenchExit);
+             composition.ConfigureMarine(marineBindings);
+             composition.ConfigureDepartureScore(Required<AudioClip>("Assets/_OutOfReach/Audio/Music/titan-departure.wav"));
+             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef b/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
+index 6281653..cafdc1e 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
++++ b/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
+@@ -3,6 +3,7 @@
+   "rootNamespace": "OutOfReach.Composition.Editor",
+   "references": [
+     "OutOfReach.Composition",
++    "OutOfReach.LaunchFXV03",
+     "OutOfReach.MarineOcean",
+     "OutOfReach.MarineOcean.Editor",
+     "OutOfReach.Contracts",

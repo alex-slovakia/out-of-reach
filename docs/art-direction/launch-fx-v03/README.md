@@ -1,5 +1,9 @@
 # Launch FX V03 — integration handoff
 
+> **Update 15 Nov (Claude native pass):** the current steam schedule, the plume fog fix, the sun-lit cloud shading, the native
+> captures and the exact integration patches are in [CLAUDE-NATIVE-PASS.md](CLAUDE-NATIVE-PASS.md); numbers below that
+> differ (billow sizes, light) are superseded there.
+
 Owner: delegated Codex launch FX writer. New files only in `Scripts/Presentation/LaunchFXV03/` and `Visuals/LaunchFX_V03/`. Existing transport, tower, scenes, audio and gameplay are untouched. This is a proposed replacement for the old departure FX rendering, not a second concurrent launch system.
 
 ## Delivered behavior

@@ -1,0 +1,10 @@
+PASS play | Actual Bootstrap marine bindings, departure presenter and camera exist.
+PASS bind V03 through ConfigureLaunchFxV03 | Anchors found: nozzle=I06 isolated marine prologue/Transport vehicle - root controls launch/EngineEmitter deflector=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane pad=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Land pad top plane exit=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/LS_TrenchExit_Ground
+PASS bind V03 through ConfigureLaunchFxV03 | LaunchFX_V03.prefab exists.
+PASS bind V03 through ConfigureLaunchFxV03 | Patched I06MarineBindings bound V03 to the actual anchors.
+PASS bind V03 through ConfigureLaunchFxV03 | V03 owned views exist.
+PASS practice and walk to the seat | Interaction ray resolves cockpit-console
+PASS practice and walk to the seat | E succeeds: AURORA-7 launched with 7 equipment line(s).
+PASS reduced effects + skip | Reduced effects: 18 steam particles (<= 40), no light.
+PASS reduced effects + skip | Skip accepted.
+PASS reduced effects + skip | Skip at 12.2 s leaves zero particles, no plume and no light.

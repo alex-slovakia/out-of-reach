@@ -1,0 +1,17 @@
+GPU Intel(R) UHD Graphics | Direct3D12 | mode full
+3.815 | bind V03 through ConfigureLaunchFxV03
+3.819 | pad plane local y -32,600 (expect -32.6); deflector world y 63,447; nozzle world (10000.000, 68.600, 0.000) fwd (0.000, -1.000, 0.000); exit (10000.00, 63.40, 72.00)
+3.831 | practice and walk to the seat
+9.467 | departure captures
+18.857 | CAPTURE t08.8 at playhead 8.902 plume 5.03 m steam 0 light 0.00 paused False
+20.142 | CAPTURE t09.9 at playhead 10.002 plume 5.03 m steam 38 light 49.67 paused False
+20.779 | CAPTURE t10.6 at playhead 10.618 plume 5.08 m steam 50 light 54.46 paused False
+21.063 | pause hold
+22.432 | CAPTURE paused-11.0 at playhead 11.001 plume 5.93 m steam 57 light 50.82 paused True
+22.443 | departure captures 2
+23.064 | CAPTURE t11.6 at playhead 11.616 plume 9.28 m steam 69 light 53.72 paused False
+24.063 | CAPTURE t12.6 at playhead 12.625 plume 19.41 m steam 89 light 47.64 paused False
+25.505 | CAPTURE t14.0 at playhead 14.039 plume 29.69 m steam 102 light 0.00 paused False
+27.487 | CAPTURE t16.0 at playhead 16.018 plume 30.00 m steam 102 light 0.00 paused False
+30.978 | CAPTURE t19.5 at playhead 19.533 plume 30.00 m steam 54 light 0.00 paused False
+33.138 | CAPTURE t21.7 at playhead 21.712 plume 30.00 m steam 11 light 0.00 paused False
