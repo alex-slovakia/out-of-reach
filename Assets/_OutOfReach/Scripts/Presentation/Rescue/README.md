@@ -41,6 +41,31 @@ says a day number, so the open Core day-30 vs VO23 day-31 question does not touc
 - **Fail-open:** if the presenter is missing, unconfigured or has invalid views, the request passes through the filter
   and the existing tableau plays.
 
+## Stars in the ending (backlog R20)
+
+Bootstrap's saved space skybox is already the NASA sky: `Visuals/Environment/NasaDeepSkyV01/NasaDeepSky.mat`
+(NASA SVS Deep Star Maps 2020, `starmap_2020_4k.exr`; Gaia DR2: ESA/Gaia/DPAC). It is saved at the bright-ship
+exposure 0.15, and at that exposure the stars are effectively invisible (`CELESTIAL_FRAME.md` section 6), so the
+ending played against a black sky.
+
+`RescueEndingSky` shows a **runtime copy of that same saved material** at the existing deep-view exposure **0.45**
+(the value of `NasaDeepSky_DeepView.mat` / `I06NasaDeepSkyAuthoring.DeepViewExposure`):
+
+- It goes up on the first frame of the ending and eases from 0.15 to 0.45 over the first 1.5 s of the playhead. With
+  reduced effects it is at 0.45 at once. The ramp follows the playhead, so pause holds it.
+- It stays up while Core is in the recovered `Outcome`, which covers the `MarsDeparture` shot that Core requests next
+  (a skip also leaves the full deep view for it). It comes down when the phase changes (the report), on any other
+  cinematic request, a lost or changed mission, `Configure()`, `Release()`, disabling or destruction. A per-frame
+  guard lowers it if none of those events arrived.
+- Only `RenderSettings.skybox` is swapped. No asset, scene, light or ambient probe is changed, and nothing is added to
+  Bootstrap: **the installer does not need to be re-run for this.**
+- Texture, mapping, tint and rotation are the saved ones. This adds no claim about the sky's orientation beyond
+  `CELESTIAL_FRAME.md`; the exposure is artistic, as `NasaDeepSkyV01/NOTICE.txt` already states.
+- Fail-open: if the active skybox is not a material using `starmap_2020_4k` with an `_Exposure` property (or there
+  is no skybox), nothing is touched and the ending plays as before.
+
+The airlock shot is an interior with no opening to space, so no sky is in frame there.
+
 ## Assembler steps (sole integrator)
 
 1. Merge `feature/rescue-ending-01` (new files only).

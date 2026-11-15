@@ -18,6 +18,9 @@ namespace OutOfReach.Presentation.Rescue
     /// <see cref="SkipActive"/> skips; reduced effects remove shake, glide and push; a lost or changed mission ends it
     /// at once and acknowledges it as skipped exactly once. Hand the existing cinematic presenter
     /// <see cref="FilterFor"/>'s bus so that only one presenter answers the request.
+    ///
+    /// R20: from the first frame until Core leaves the recovered Outcome (so through the following MarsDeparture as
+    /// well) the saved NASA sky is shown at its existing deep-view exposure; see <see cref="RescueEndingSky"/>.
     /// </summary>
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(101)]
@@ -80,6 +83,7 @@ namespace OutOfReach.Presentation.Rescue
         private Vector3[] leafLocalPositions = Array.Empty<Vector3>();
         private Vector3[] leafWorldPositions = Array.Empty<Vector3>();
         private AudioClip squelch, contactClunk, hardClunk, latch, hiss;
+        private readonly RescueEndingSky deepSky = new RescueEndingSky();
 
         public event Action<string> CaptionChanged;
         /// <summary>Start, end and every caption change: refresh HUD hiding and subtitles.</summary>
@@ -93,6 +97,9 @@ namespace OutOfReach.Presentation.Rescue
         public string CurrentCaption { get; private set; } = string.Empty;
         public string CurrentSpeaker { get; private set; } = string.Empty;
         public bool IsConfigured => eventBus != null && gameState != null;
+        /// <summary>R20: the saved NASA sky is currently shown at the deep-view exposure by this presenter.</summary>
+        public bool DeepSkyRaised => deepSky.IsRaised;
+        public float DeepSkyExposure => deepSky.Exposure;
 
         public bool ReducedEffects
         {
@@ -107,6 +114,7 @@ namespace OutOfReach.Presentation.Rescue
             if (events == null) throw new ArgumentNullException(nameof(events));
             if (state == null) throw new ArgumentNullException(nameof(state));
             Complete(true);
+            deepSky.Lower();
             Unsubscribe();
             eventBus = events; gameState = state; simulationClock = clock;
             Subscribe();
@@ -116,6 +124,7 @@ namespace OutOfReach.Presentation.Rescue
         public void Release()
         {
             Complete(true);
+            deepSky.Lower();
             Unsubscribe();
             eventBus = null; gameState = null; simulationClock = null;
         }
@@ -152,12 +161,14 @@ namespace OutOfReach.Presentation.Rescue
         private void OnDisable()
         {
             Complete(true);
+            deepSky.Lower();
             Unsubscribe();
         }
 
         private void OnDestroy()
         {
             Complete(true);
+            deepSky.Dispose();
             Unsubscribe();
         }
 
@@ -192,19 +203,27 @@ namespace OutOfReach.Presentation.Rescue
             if (request.Cinematic == CinematicId.RecoveryArrival) { TryBegin(request); return; }
             // Any newer request supersedes an active rescue sequence (it cannot normally happen before our ack).
             if (active) Complete(true);
+            // R20: the deep sky stays up for the MarsDeparture that Core requests next, and for nothing else.
+            if (request.Cinematic != CinematicId.MarsDeparture) deepSky.Lower();
         }
 
         private void OnPhaseChanged(PhaseChanged phase)
         {
-            if (active && !(phase.Current == GamePhase.Outcome && gameState != null && gameState.Outcome == MissionOutcome.Recovered))
-                Complete(true);
+            if (phase.Current == GamePhase.Outcome && gameState != null && gameState.Outcome == MissionOutcome.Recovered) return;
+            if (active) Complete(true);
+            deepSky.Lower();   // Report, a restart or any other phase: the saved sky is back
         }
 
         private void OnMissionEnded(MissionEnded ended)
         {
             // Core confirms the outcome before it requests RecoveryArrival; another end during the sequence is new.
             if (active) Complete(true);
+            if (!EndingHolds) deepSky.Lower();
         }
+
+        /// <summary>The recovered ending is still Core's current state (RecoveryArrival and MarsDeparture both run in it).</summary>
+        private bool EndingHolds => isActiveAndEnabled && IsConfigured
+            && gameState.Phase == GamePhase.Outcome && gameState.Outcome == MissionOutcome.Recovered;
 
         private bool CanPresentNow() => isActiveAndEnabled && subscribed && IsConfigured && HasValidViews
             && gameState.Phase == GamePhase.Outcome && gameState.Outcome == MissionOutcome.Recovered;
@@ -218,6 +237,7 @@ namespace OutOfReach.Presentation.Rescue
             activeRequest = request;
             activeBus = eventBus;
             Capture();
+            deepSky.Raise();
             active = true;
             elapsed = previousElapsed = 0f;
             skipHeld = 0f;
@@ -264,8 +284,8 @@ namespace OutOfReach.Presentation.Rescue
 
         private void LateUpdate()
         {
-            if (!active) return;
-            if (!CanPresentNow()) { Complete(true); return; }
+            if (!active) { deepSky.Keep(EndingHolds); return; }
+            if (!CanPresentNow()) { Complete(true); deepSky.Keep(EndingHolds); return; }
             if (IsPaused)
             {
                 if (!audioPaused) { PauseAudio(true); audioPaused = true; }
@@ -451,6 +471,9 @@ namespace OutOfReach.Presentation.Rescue
 
             if (blackout) blackout.alpha = Mathf.Max(blackoutAlpha, RescueEndingTimeline.Blackout(t, !glide));
 
+            // R20: the saved NASA sky eases up to its deep-view exposure (at once with reduced effects).
+            deepSky.SetBlend(RescueEndingSky.Blend(t, reduced));
+
             int line = RescueEndingTimeline.LineAt(t);
             if (line < 0) SetCaption(string.Empty, string.Empty);
             else SetCaption(RescueEndingTimeline.Lines[line].Text, RescueEndingTimeline.Lines[line].Speaker);
@@ -488,6 +511,7 @@ namespace OutOfReach.Presentation.Rescue
             IMissionEventBus bus = activeBus;
             activeBus = null;
             Restore();
+            deepSky.SetBlend(1f);   // a skipped ramp still hands MarsDeparture the full deep view
             SetCaption(string.Empty, string.Empty);
             NotifyPresentation();
             try { SequenceEnded?.Invoke(finished); }
