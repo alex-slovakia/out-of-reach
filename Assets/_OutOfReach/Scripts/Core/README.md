@@ -643,7 +643,10 @@ accounting, needs paused). Stops (synchronously, actual time kept in `RoutineSto
 `DispatchReceived`, `DecisionRequired` (pending decision or beacon request), `CropReady`/`CropFailed`,
 `ReachedChapter`, `PlayerCancelled` (also when the runtime is disabled), `PrerequisiteMissing` (a scheduled command was
 refused, or Earth's message is due with no powered link). A danger wins every tie. Each stop restores the scale the
-clock had before (and wakes a resting crew). Pause suspends a routine; restart/dispose drops it. During a routine
+clock had before (and wakes a resting crew), and ends the current frame or `AdvanceSimulation` jump at that exact time:
+the rest of the budget is discarded, so a long frame can never spend a beacon window or reach a loss before the UI sees
+the stop (root review A). The CO2 danger margin (loss limit minus 2 h) is a step boundary while awake as well as asleep
+(root review B). Pause suspends a routine; restart/dispose drops it. During a routine
 `IsPlayerControlAllowed` is false and the 32-split fallback yields instead of skipping. Montage tally:
 `RoutineRations`, `RoutineDrinks`, `RoutineRests` (current/last segment).
 

@@ -422,7 +422,10 @@ namespace OutOfReach.Core
             return check;
         }
 
-        /// <summary>Simulated seconds to the next routine boundary (a due portion, bedtime, the target) or a dispatch.</summary>
+        /// <summary>
+        /// Simulated seconds to the next routine boundary (a due portion, bedtime, the target, the CO2 danger margin) or
+        /// a dispatch. The ledger supplies the store-depletion and battery (power loss) boundaries itself.
+        /// </summary>
         internal double TimeToNextBoundary()
         {
             double boundary = double.PositiveInfinity;
@@ -443,6 +446,11 @@ namespace OutOfReach.Core
             }
 
             boundary = Earlier(boundary, routineTarget - now);
+
+            // The CO2 warning is a stop of its own, awake as well as asleep: never step from outside the danger margin
+            // straight to a later meal, bedtime or the loss limit.
+            boundary = Earlier(boundary, resources.TimeUntilCarbonDioxideReaches(SurvivalRules.CarbonDioxideLossLimitPpm)
+                - SurvivalRecovery.CarbonDioxideDangerMarginSeconds);
             if (!recovery.IsResting)
             {
                 boundary = Earlier(boundary, survival.TimeUntilPortionDue(true));

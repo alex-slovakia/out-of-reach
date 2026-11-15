@@ -478,8 +478,7 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Accident), "no beat is skipped past a failed boundary");
                 double stoppedAt = flow.RoutineStoppedAtSimulationSeconds.Value;
                 Assert.That(stoppedAt, Is.LessThan(MissionChapterFlow.BeatStart(MissionChapter.Consequences)));
-                Assert.That(session.State.ElapsedSimulationSeconds - stoppedAt, Is.InRange(0d, Frame * session.Definition.Scenario.Pacing.InteriorTimeScale),
-                    "only the rest of the frame at the chapter's own speed follows the stop");
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(stoppedAt), "the frame ends at the stop: nothing runs on at normal speed");
                 Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None), "the crew is alive when the routine stops");
                 Assert.That(flow.TryContinueRoutine().Succeeded, Is.False, "no routine on an empty store");
 
@@ -538,37 +537,165 @@ namespace OutOfReach.Tests.EditMode
             }
         }
 
-        [Test]
-        public void OneHugeFrame_StopsAtTheSameTimeAndLedgerAsSmallFrames()
+        /// <summary>
+        /// The complete observable state two runs must share: clock, every reserve (oxygen, water, food, battery, CO2,
+        /// parts), the needs, rest and portion counters, the routine record and the chapter.
+        /// </summary>
+        private static void AssertSameState(MissionSession expected, MissionSession actual, string what)
         {
-            ResourceSnapshot small;
-            double smallStop;
-            int[] smallTally;
-            using (MissionSession session = Accident())
-            {
-                CompleteAccidentBeat(session);
-                RunRoutine(session);
-                small = session.Resources.Snapshot;
-                smallStop = session.ChapterFlow.RoutineStoppedAtSimulationSeconds.Value;
-                smallTally = new[] { session.ChapterFlow.RoutineRations, session.ChapterFlow.RoutineDrinks, session.ChapterFlow.RoutineRests };
-            }
+            Assert.That(actual.State.ElapsedSimulationSeconds, Is.EqualTo(expected.State.ElapsedSimulationSeconds).Within(1e-6), what + ": clock");
+            Assert.That(actual.Clock.TimeScale, Is.EqualTo(expected.Clock.TimeScale), what + ": time scale");
+            Assert.That(actual.Clock.IsPaused, Is.EqualTo(expected.Clock.IsPaused), what + ": pause");
+            Assert.That(actual.State.Phase, Is.EqualTo(expected.State.Phase), what + ": phase");
+            Assert.That(actual.State.Outcome, Is.EqualTo(expected.State.Outcome), what + ": outcome");
+            ResourceSnapshot a = expected.Resources.Snapshot;
+            ResourceSnapshot b = actual.Resources.Snapshot;
+            Assert.That(b.OxygenKg, Is.EqualTo(a.OxygenKg).Within(1e-6), what + ": oxygen");
+            Assert.That(b.WaterLitres, Is.EqualTo(a.WaterLitres).Within(1e-6), what + ": water");
+            Assert.That(b.FoodKg, Is.EqualTo(a.FoodKg).Within(1e-6), what + ": food");
+            Assert.That(b.BatteryKWh, Is.EqualTo(a.BatteryKWh).Within(1e-6), what + ": battery");
+            Assert.That(b.CarbonDioxidePpm, Is.EqualTo(a.CarbonDioxidePpm).Within(1e-3), what + ": CO2");
+            Assert.That(b.SparePartsCount, Is.EqualTo(a.SparePartsCount), what + ": parts");
+            Assert.That(actual.Survival.Hunger01, Is.EqualTo(expected.Survival.Hunger01).Within(1e-9), what + ": hunger");
+            Assert.That(actual.Survival.Thirst01, Is.EqualTo(expected.Survival.Thirst01).Within(1e-9), what + ": thirst");
+            Assert.That(actual.Survival.RationsEaten, Is.EqualTo(expected.Survival.RationsEaten), what + ": rations");
+            Assert.That(actual.Survival.DrinksTaken, Is.EqualTo(expected.Survival.DrinksTaken), what + ": drinks");
+            Assert.That(actual.SurvivalRecovery.IsResting, Is.EqualTo(expected.SurvivalRecovery.IsResting), what + ": resting");
+            Assert.That(actual.SurvivalRecovery.RestCount, Is.EqualTo(expected.SurvivalRecovery.RestCount), what + ": rests");
+            Assert.That(actual.SurvivalRecovery.RestedSimulationSeconds, Is.EqualTo(expected.SurvivalRecovery.RestedSimulationSeconds).Within(1e-6), what + ": rested");
+            Assert.That(actual.SurvivalRecovery.Stage, Is.EqualTo(expected.SurvivalRecovery.Stage), what + ": recovery stage");
+            MissionChapterFlow x = expected.ChapterFlow;
+            MissionChapterFlow y = actual.ChapterFlow;
+            Assert.That(y.Chapter, Is.EqualTo(x.Chapter), what + ": chapter");
+            Assert.That(y.IsRoutineRunning, Is.EqualTo(x.IsRoutineRunning), what + ": routine running");
+            Assert.That(y.LastRoutineStop, Is.EqualTo(x.LastRoutineStop), what + ": stop reason");
+            Assert.That(y.RoutineStoppedAtSimulationSeconds.Value, Is.EqualTo(x.RoutineStoppedAtSimulationSeconds.Value).Within(1e-6), what + ": stop time");
+            Assert.That(new[] { y.RoutineRations, y.RoutineDrinks, y.RoutineRests }, Is.EqualTo(new[] { x.RoutineRations, x.RoutineDrinks, x.RoutineRests }), what + ": tally");
+            Assert.That(y.PendingDecision, Is.EqualTo(x.PendingDecision), what + ": decision");
+        }
 
-            using (MissionSession session = Accident())
+        /// <summary>Starts the routine and drives it with one frame of <paramref name="realSeconds"/> (the frame is not clamped).</summary>
+        private static void OneFrameRoutine(MissionSession session, double realSeconds)
+        {
+            Require(session.ChapterFlow.TryContinueRoutine());
+            Require(session.Tick(realSeconds));
+            Assert.That(session.ChapterFlow.IsRoutineRunning, Is.False, "one frame is enough");
+        }
+
+        [Test]
+        public void OneHugeFrame_EndsAtTheRoutineStop_WithTheSameFullStateAsSmallFrames()
+        {
+            using (MissionSession small = Accident())
+            using (MissionSession huge = Accident())
             {
-                CompleteAccidentBeat(session);
-                Require(session.ChapterFlow.TryContinueRoutine());
-                for (int frame = 0; session.ChapterFlow.IsRoutineRunning; frame++)
+                CompleteAccidentBeat(small);
+                RunRoutine(small);
+                CompleteAccidentBeat(huge);
+                OneFrameRoutine(huge, 1000d);
+
+                Assert.That(huge.ChapterFlow.LastRoutineStop, Is.EqualTo(RoutineStopReason.ReachedChapter));
+                foreach (MissionSession session in new[] { small, huge })
                 {
-                    Assert.That(frame, Is.LessThan(200));
-                    Require(session.Tick(30d));
+                    Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(session.ChapterFlow.RoutineStoppedAtSimulationSeconds.Value),
+                        "the rest of the frame is discarded at the stop");
                 }
 
+                AssertSameState(small, huge, "small frames vs one 1000 s frame");
+            }
+        }
+
+        [Test]
+        public void AHugeFrameCannotSpendTheBeaconWindow_TheRequestStopsTheFrameWithTheWholeWindowOpen()
+        {
+            using (MissionSession session = Accident())
+            {
                 MissionChapterFlow flow = session.ChapterFlow;
-                Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.ReachedChapter));
-                Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value, Is.EqualTo(smallStop).Within(Tolerance), "same stop time");
-                Assert.That(new[] { flow.RoutineRations, flow.RoutineDrinks, flow.RoutineRests }, Is.EqualTo(smallTally), "same commands");
-                Assert.That(session.Resources.Snapshot.FoodKg, Is.EqualTo(small.FoodKg).Within(1e-6), "same food: awake food moves only by commands");
-                Assert.That(session.Resources.Snapshot.WaterLitres, Is.EqualTo(small.WaterLitres).Within(1e-6), "same water");
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                CompleteAccidentBeat(session);
+                RunRoutine(session);
+                Require(flow.TryChoose(ChapterChoice.PreserveScience));
+                RunRoutine(session);
+                ReachContact(session);
+                RunRoutine(session);
+                Require(flow.TryChoose(ChapterChoice.AcknowledgeRescueFailure));
+                RunRoutine(session);
+                Require(flow.TryChoose(ChapterChoice.KeepGrowRunning));
+                double requestAt = recovery.ArrivalAtSimulationSeconds.Value - (MissionChapterFlow.BeaconRequestBeforeArrivalHours * Hour);
+
+                OneFrameRoutine(session, 1000d);
+                Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested));
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(requestAt).Within(Tolerance), "the frame ends at the request");
+                Assert.That(recovery.BeaconWindowEndsAtSimulationSeconds.Value - session.State.ElapsedSimulationSeconds,
+                    Is.EqualTo(SurvivalRecovery.BeaconWindowHours * Hour).Within(Tolerance), "the whole window is still open");
+                Assert.That(recovery.BeaconMissed, Is.False);
+                Require(recovery.TryPowerBeacon());
+            }
+        }
+
+        [Test]
+        public void AJumpDuringARoutine_EndsAtTheRoutineStop_NotAtTheEndOfTheJump()
+        {
+            using (MissionSession session = Accident())
+            {
+                CompleteAccidentBeat(session);
+                MissionChapterFlow flow = session.ChapterFlow;
+                Require(flow.TryContinueRoutine());
+                double jumped = session.JumpedSimulationSeconds;
+                double before = session.State.ElapsedSimulationSeconds;
+                Require(session.AdvanceSimulation(20d * Day));
+                Assert.That(flow.IsRoutineRunning, Is.False);
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Consequences));
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(flow.RoutineStoppedAtSimulationSeconds.Value), "the jump ends at the beat");
+                Assert.That(session.JumpedSimulationSeconds - jumped, Is.EqualTo(session.State.ElapsedSimulationSeconds - before).Within(1e-6));
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None));
+            }
+        }
+
+        /// <summary>
+        /// Day 5, decision taken, then life support fails completely (an explicit test fault through the public damage
+        /// command): cabin CO2 rises while the crew is awake and the power is fine.
+        /// </summary>
+        private static MissionSession RisingCarbonDioxideAtDayFive()
+        {
+            MissionSession session = Accident();
+            CompleteAccidentBeat(session);
+            RunRoutine(session);
+            Require(session.ChapterFlow.TryChoose(ChapterChoice.PreserveScience));
+            Require(session.Systems.LifeSupport.TryDamage(0d));
+            Require(session.AdvanceSimulation(1d));
+            Assert.That(session.Resources.Rates.CarbonDioxideChangePpmPerSecond, Is.GreaterThan(0d), "CO2 rises");
+            Assert.That(session.Director.IsBrownout, Is.False, "the power is fine");
+            return session;
+        }
+
+        [Test]
+        public void RisingCarbonDioxideWhileAwake_StopsTheRoutineAtTheDangerMargin_NeverAtTheLossLimit()
+        {
+            using (MissionSession small = RisingCarbonDioxideAtDayFive())
+            using (MissionSession huge = RisingCarbonDioxideAtDayFive())
+            {
+                double untilLimit = small.Resources.TimeUntilCarbonDioxideReaches(SurvivalRules.CarbonDioxideLossLimitPpm);
+                double margin = SurvivalRecovery.CarbonDioxideDangerMarginSeconds;
+                double expectedStop = small.State.ElapsedSimulationSeconds + untilLimit - margin;
+                Assert.That(untilLimit, Is.GreaterThan(margin + Hour), "the crew starts outside the danger margin");
+                Assert.That(expectedStop, Is.LessThan(MissionChapterFlow.BeatStart(MissionChapter.Contact)), "the danger comes before the next beat");
+                Assert.That(small.ChapterFlow.CheckContinueRoutine().Succeeded, Is.True, small.ChapterFlow.CheckContinueRoutine().Explanation);
+
+                RunRoutine(small);
+                OneFrameRoutine(huge, 1000d);
+                foreach (MissionSession session in new[] { small, huge })
+                {
+                    MissionChapterFlow flow = session.ChapterFlow;
+                    Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.Danger), flow.LastRoutineStopText);
+                    Assert.That(flow.LastRoutineStopText, Does.Contain("CO2"));
+                    Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value, Is.EqualTo(expectedStop).Within(1e-3), "exactly at the margin");
+                    Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(flow.RoutineStoppedAtSimulationSeconds.Value));
+                    Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.None), "the crew is alive and warned");
+                    Assert.That(session.Resources.TimeUntilCarbonDioxideReaches(SurvivalRules.CarbonDioxideLossLimitPpm), Is.EqualTo(margin).Within(1e-3));
+                    Assert.That(flow.TryContinueRoutine().Succeeded, Is.False, "no routine inside the danger margin");
+                }
+
+                AssertSameState(small, huge, "small frames vs one 1000 s frame at the CO2 warning");
             }
         }
 

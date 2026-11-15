@@ -318,7 +318,8 @@ namespace OutOfReach.Core
         /// mission at its exact time; the rest of the jump is discarded. Events are delivered after the whole
         /// advance has been committed. Rejected outside running phases, while paused, and when time would overflow.
         /// This public entry is the chapter jump (suit preparation, a chapter card skip); the time that actually
-        /// passed is added to <see cref="JumpedSimulationSeconds"/> for the report.
+        /// passed is added to <see cref="JumpedSimulationSeconds"/> for the report. A chapter routine that stops inside
+        /// the jump ends it at that exact time; the rest of the jump is discarded.
         /// </summary>
         public CommandResult AdvanceSimulation(double simulationSeconds)
         {
@@ -334,17 +335,20 @@ namespace OutOfReach.Core
 
         private CommandResult Advance(double simulationSeconds)
         {
-            return Advance(simulationSeconds, double.NaN, out double unused);
+            return Advance(simulationSeconds, double.NaN, out double unused, out bool routineStopped);
         }
 
         /// <summary>
         /// The step loop. With a finite <paramref name="stopWhenScaleLeaves"/> it also stops right after a step that
         /// moved the clock's time scale away from that value; <paramref name="spentSimulationSeconds"/> is the part of
-        /// the budget actually used.
+        /// the budget actually used. A chapter routine that was running when the advance began and stops inside it
+        /// always ends the advance right there (<paramref name="routineStopped"/>): its stop is a point where the player
+        /// must see the reason first, so no remaining budget may be spent at the restored speed.
         /// </summary>
-        private CommandResult Advance(double simulationSeconds, double stopWhenScaleLeaves, out double spentSimulationSeconds)
+        private CommandResult Advance(double simulationSeconds, double stopWhenScaleLeaves, out double spentSimulationSeconds, out bool routineStopped)
         {
             spentSimulationSeconds = 0d;
+            routineStopped = false;
             if (!IsFiniteNonNegative(simulationSeconds))
             {
                 return new CommandResult(false, CommandFailure.InvalidInput, "Simulation time must be finite and non-negative.");
@@ -372,6 +376,7 @@ namespace OutOfReach.Core
 
             using (Events.DeferDispatch())
             {
+                MissionChapterFlow routine = Director.ChapterFlow != null && Director.ChapterFlow.IsRoutineRunning ? Director.ChapterFlow : null;
                 double remaining = simulationSeconds;
                 int splits = 0;
                 while (remaining > 0d && State.IsSimulationRunning)
@@ -399,6 +404,12 @@ namespace OutOfReach.Core
                     Director.FieldModifications.AdvanceTime(step);
                     remaining -= step;
                     Director.AfterSimulationStep(step);
+                    if (routine != null && !routine.IsRoutineRunning)
+                    {
+                        routineStopped = true;
+                        break;
+                    }
+
                     if (!double.IsNaN(stopWhenScaleLeaves) && Clock.TimeScale != stopWhenScaleLeaves)
                     {
                         break;
@@ -414,7 +425,9 @@ namespace OutOfReach.Core
         /// <summary>
         /// Spends a frame's real-time budget at the clock's current scale and converts what is left again whenever a
         /// step changes the scale (a rest beginning or ending, contact moving the mission into Survival), so one long
-        /// frame advances exactly as far as many short ones. Events are delivered after the whole frame.
+        /// frame advances exactly as far as many short ones. When a chapter routine stops inside the frame, the rest of
+        /// the frame is discarded: the mission waits at the routine's actual stop time for the player (and the UI,
+        /// which receives the events after the frame). Events are delivered after the whole frame.
         /// </summary>
         private CommandResult AdvanceRealTime(double realSeconds)
         {
@@ -425,13 +438,13 @@ namespace OutOfReach.Core
                 {
                     double scale = Clock.TimeScale;
                     double budget = remainingReal * scale;
-                    CommandResult result = Advance(budget, scale, out double spent);
+                    CommandResult result = Advance(budget, scale, out double spent, out bool routineStopped);
                     if (!result.Succeeded)
                     {
                         return result;
                     }
 
-                    remainingReal = spent >= budget ? 0d : Math.Max(0d, remainingReal - (spent / scale));
+                    remainingReal = routineStopped || spent >= budget ? 0d : Math.Max(0d, remainingReal - (spent / scale));
                 }
             }
 
