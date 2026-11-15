@@ -61,25 +61,106 @@ namespace OutOfReach.Tests.StartupUi
         }
 
         [Test]
-        public void PictogramIsAClosedSlovakiaShapeWithPencilStrokes()
+        public void SketchThenFillThenTeamName()
         {
-            var outline = SlovakiaPictogram.Outline();
-            Assert.GreaterOrEqual(outline.Length, 30);
-            foreach (var point in outline)
+            var sequence = new StartupSequence(false);
+            var t = sequence.Timing;
+            Run(sequence, t.DrawStart + t.DrawSeconds * .5f);
+            var mid = sequence.Evaluate();
+            Assert.That(mid.Draw01, Is.InRange(.3f, .7f));
+            Assert.AreEqual(0f, mid.Fill01, "fill waits for the last stroke");
+            Run(sequence, t.DrawSeconds * .5f + t.FillSeconds + .1f);
+            var done = sequence.Evaluate();
+            Assert.AreEqual(1f, done.Draw01, .001f);
+            Assert.AreEqual(1f, done.Fill01, .001f);
+        }
+
+        [Test]
+        public void ShippedPlaceholderArtLoadsAsOrderedStrokes()
+        {
+            var art = StartupCardPresenter.LoadArt();
+            Assert.IsFalse(art.IsEmpty, "Resources/StartupCards/startup-art.txt must hold valid SVG");
+            Assert.GreaterOrEqual(art.Shapes.Count, 10);
+            Assert.That(art.Aspect, Is.InRange(.5f, 2f));
+            float previousEnd = -1f;
+            foreach (var shape in art.Shapes)
             {
-                Assert.That(point.x, Is.InRange(0f, SlovakiaPictogram.Aspect + .001f));
-                Assert.That(point.y, Is.InRange(0f, 1.001f));
+                Assert.Greater(shape.RevealStart, previousEnd - .0001f, "document order = stroke order");
+                Assert.Greater(shape.RevealEnd, shape.RevealStart);
+                previousEnd = shape.RevealEnd;
             }
-            Assert.That(SlovakiaPictogram.Aspect, Is.InRange(1.8f, 2.2f));
-            var strokes = SlovakiaPictogram.Build();
-            Assert.Greater(strokes.Count, 20, "outline passes plus hatching");
-            Assert.AreEqual(strokes.Count, SlovakiaPictogram.Build().Count, "deterministic");
-            var buffer = new List<Vector2>();
-            Assert.AreEqual(0, SlovakiaPictogram.VisiblePoints(strokes[0], -.1f, buffer));
-            Assert.GreaterOrEqual(SlovakiaPictogram.VisiblePoints(strokes[0], .25f, buffer), 2);
-            int partial = buffer.Count;
-            SlovakiaPictogram.VisiblePoints(strokes[0], 1f, buffer);
-            Assert.Greater(buffer.Count, partial, "draw-on reveals the stroke progressively");
+            Assert.LessOrEqual(previousEnd, 1.0001f);
+        }
+
+        [Test]
+        public void SvgImportHandlesPrimitivesTransformsArcsAndFillOnlyShapes()
+        {
+            const string svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'>" +
+                "<rect x='10' y='10' width='40' height='30' fill='#ff0000'/>" +
+                "<g transform='translate(100 50)'><circle r='20' fill='none' stroke='#00ff00' stroke-width='4'/></g>" +
+                "<path d='M10 90 a20 20 0 0 1 40 0' fill='none' stroke='gold'/>" +
+                "<path d='m 120,10 l 30,0 0,30 z' fill='rgb(0,0,255)' fill-opacity='.5'/>" +
+                "<path d='M0 0 L5 5' fill='none' stroke='none'/>" +
+                "</svg>";
+            var art = VectorArt.Parse(svg);
+            Assert.AreEqual(2f, art.Aspect, .0001f);
+            Assert.AreEqual(4, art.Shapes.Count, "the stroke-less, fill-less path is dropped");
+            Assert.IsTrue(art.Shapes[0].SketchedFromFill, "fill-only shapes are traced in pencil gold first");
+            Assert.AreEqual(1f, art.Shapes[0].Fill.r, .001f);
+            Assert.IsFalse(art.Shapes[1].HasFill);
+            // circle centred at (100,50) with r 20: unit x range (80..120)/100
+            float minX = float.MaxValue, maxX = float.MinValue;
+            foreach (var p in art.Shapes[1].Subpaths[0]) { minX = Mathf.Min(minX, p.x); maxX = Mathf.Max(maxX, p.x); }
+            Assert.AreEqual(.8f, minX, .01f);
+            Assert.AreEqual(1.2f, maxX, .01f);
+            Assert.AreEqual(.04f, art.Shapes[1].StrokeWidth, .0001f);
+            Assert.AreEqual(.5f, art.Shapes[3].Fill.a, .001f);
+            Assert.IsTrue(art.Shapes[3].Closed[0]);
+            Assert.IsTrue(VectorArt.Parse("not xml").IsEmpty);
+            Assert.IsTrue(VectorArt.Parse("<svg xmlns='http://www.w3.org/2000/svg'/>").IsEmpty);
+        }
+
+        [Test]
+        public void VisibleSubpathsRevealProgressively()
+        {
+            var art = StartupCardPresenter.LoadArt();
+            var shape = art.Shapes[0];
+            var output = new List<List<Vector2>>();
+            var pool = new Stack<List<Vector2>>();
+            VectorArt.VisibleSubpaths(shape, false, shape.RevealStart - .01f, output, pool);
+            Assert.AreEqual(0, output.Count);
+            VectorArt.VisibleSubpaths(shape, false, Mathf.Lerp(shape.RevealStart, shape.RevealEnd, .4f), output, pool);
+            Assert.AreEqual(1, output.Count);
+            int partial = output[0].Count;
+            VectorArt.VisibleSubpaths(shape, false, shape.RevealEnd, output, pool);
+            Assert.Greater(output[0].Count, partial);
+        }
+
+        [Test]
+        public void PencilSoundIsProceduralDeterministicAndFollowsThePen()
+        {
+            var art = StartupCardPresenter.LoadArt();
+            var timing = StartupTiming.Normal;
+            var samples = PencilScratchSynth.Render(art, timing);
+            Assert.AreEqual((timing.DrawSeconds + timing.FillSeconds) * PencilScratchSynth.SampleRate, samples.Length, PencilScratchSynth.SampleRate * .2f);
+            float peak = 0f;
+            foreach (var v in samples) { Assert.That(v, Is.InRange(-1f, 1f)); peak = Mathf.Max(peak, Mathf.Abs(v)); }
+            Assert.Greater(peak, .5f);
+            var again = PencilScratchSynth.Render(art, timing);
+            CollectionAssert.AreEqual(samples, again, "same art, timing and seed give identical audio");
+            // The first stroke is audible, the last 40 ms of the clip are faded out.
+            Assert.Greater(Rms(samples, (int)(.2f * PencilScratchSynth.SampleRate), 4000), .02f);
+            Assert.Less(Rms(samples, samples.Length - 400, 400), .02f);
+            Assert.IsEmpty(PencilScratchSynth.Render(art, StartupTiming.ReducedEffects), "reduced effects: no sketch, no scratch");
+            Assert.IsEmpty(PencilScratchSynth.Render(new VectorArt(), timing));
+        }
+
+        private static float Rms(float[] samples, int start, int count)
+        {
+            double energy = 0;
+            int n = Mathf.Min(count, samples.Length - start);
+            for (int i = 0; i < n; i++) energy += samples[start + i] * samples[start + i];
+            return n > 0 ? (float)System.Math.Sqrt(energy / n) : 0f;
         }
 
         [Test]
@@ -87,7 +168,7 @@ namespace OutOfReach.Tests.StartupUi
         {
             Assert.AreEqual("NASA Space Apps Challenge · Nov 14–15 2026", StartupCardPresenter.EventLine);
             Assert.AreEqual("Polish Alex Goats", StartupCardPresenter.TeamName);
-            var presenter = new StartupCardPresenter(false);
+            var presenter = new StartupCardPresenter(false) { PlayAudio = false };
             Assert.AreEqual(StartupCardPresenter.EventLine, presenter.Q<Label>("startup-event-line").text);
             Assert.AreEqual(StartupCardPresenter.TeamName, presenter.Q<Label>("startup-team-name").text);
         }
@@ -97,7 +178,7 @@ namespace OutOfReach.Tests.StartupUi
         {
             int finished = 0;
             var host = new VisualElement();
-            var presenter = new StartupCardPresenter(true, null, null, () => finished++);
+            var presenter = new StartupCardPresenter(true, null, null, () => finished++) { PlayAudio = false };
             host.Add(presenter);
             presenter.RequestSkip();                       // inside the grace window: ignored
             Assert.IsFalse(presenter.Sequence.IsSkipped);

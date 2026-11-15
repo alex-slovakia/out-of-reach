@@ -1,0 +1,9 @@
+/* R01 startup cards: font definitions only (sizes, colours and spacing are set in StartupCardPresenter).
+   Barlow Condensed Bold and Source Sans 3 from UI/Typography (SIL OFL 1.1, see FONT-PROVENANCE.json).
+   Path is relative to this file: Resources/StartupCards -> UI/Typography. */
+.startup-event {
+    -unity-font-definition: url("../../../Typography/BarlowCondensed-Bold.ttf");
+}
+.startup-team {
+    -unity-font-definition: url("../../../Typography/SourceSans3-Semibold.otf");
+}

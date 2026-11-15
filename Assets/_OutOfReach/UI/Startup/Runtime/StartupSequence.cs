@@ -2,47 +2,58 @@ using UnityEngine;
 
 namespace OutOfReach.Presentation.UI.Startup
 {
-    /// <summary>Durations (real seconds) of the two startup cards. Reduced effects: shorter, fade only, no pencil draw-on.</summary>
+    /// <summary>
+    /// Durations (real seconds) of the two startup cards. Card 1 timeline, from the card's own start:
+    /// fade in, <see cref="DrawDelay"/>, pencil sketch for <see cref="DrawSeconds"/>, colour fill for
+    /// <see cref="FillSeconds"/>, hold for <see cref="FillHold"/>, fade out. Reduced effects: no sketch, no fill animation.
+    /// </summary>
     public readonly struct StartupTiming
     {
-        public readonly float Lead, PictogramIn, PictogramHold, PictogramOut, Gap, EventIn, EventHold, EventOut, Reveal;
-        public readonly float DrawDelay, DrawSeconds, SkipFade;
+        public readonly float Lead, PictogramIn, DrawDelay, DrawSeconds, FillSeconds, FillHold, PictogramOut, Gap;
+        public readonly float EventIn, EventHold, EventOut, Reveal, SkipFade;
 
-        public StartupTiming(float lead, float pictogramIn, float pictogramHold, float pictogramOut, float gap,
-            float eventIn, float eventHold, float eventOut, float reveal, float drawDelay, float drawSeconds, float skipFade)
+        public StartupTiming(float lead, float pictogramIn, float drawDelay, float drawSeconds, float fillSeconds, float fillHold,
+            float pictogramOut, float gap, float eventIn, float eventHold, float eventOut, float reveal, float skipFade)
         {
-            Lead = lead; PictogramIn = pictogramIn; PictogramHold = pictogramHold; PictogramOut = pictogramOut; Gap = gap;
-            EventIn = eventIn; EventHold = eventHold; EventOut = eventOut; Reveal = reveal;
-            DrawDelay = drawDelay; DrawSeconds = drawSeconds; SkipFade = skipFade;
+            Lead = lead; PictogramIn = pictogramIn; DrawDelay = drawDelay; DrawSeconds = drawSeconds; FillSeconds = fillSeconds;
+            FillHold = fillHold; PictogramOut = pictogramOut; Gap = gap; EventIn = eventIn; EventHold = eventHold;
+            EventOut = eventOut; Reveal = reveal; SkipFade = skipFade;
         }
 
-        public static readonly StartupTiming Normal = new StartupTiming(.3f, .9f, 3f, .8f, .25f, .8f, 3.2f, .9f, .6f, .35f, 2.6f, .3f);
-        public static readonly StartupTiming ReducedEffects = new StartupTiming(.15f, .4f, 1.8f, .4f, .1f, .4f, 2.4f, .4f, .3f, 0f, 0f, .15f);
+        public static readonly StartupTiming Normal = new StartupTiming(.3f, .5f, .3f, 4f, 1.3f, 1.2f, .8f, .25f, .8f, 3f, .9f, .6f, .3f);
+        public static readonly StartupTiming ReducedEffects = new StartupTiming(.15f, .4f, 0f, 0f, 0f, 2.2f, .4f, .1f, .4f, 2.4f, .4f, .3f, .15f);
 
         public float PictogramStart => Lead;
-        public float PictogramEnd => Lead + PictogramIn + PictogramHold + PictogramOut;
+        /// <summary>Time (from sequence start) the first stroke begins; the pencil sound starts here.</summary>
+        public float DrawStart => PictogramStart + DrawDelay;
+        public float FillStart => DrawStart + DrawSeconds;
+        public float PictogramHold => Mathf.Max(0f, DrawDelay + DrawSeconds + FillSeconds + FillHold - PictogramIn);
+        public float PictogramEnd => PictogramStart + PictogramIn + PictogramHold + PictogramOut;
         public float EventStart => PictogramEnd + Gap;
         public float EventEnd => EventStart + EventIn + EventHold + EventOut;
         public float Total => EventEnd + Reveal;
     }
 
-    /// <summary>What is visible at one instant: card opacities, pictogram draw-on progress and the black overlay opacity.</summary>
+    /// <summary>What is visible at one instant.</summary>
     public readonly struct StartupFrame
     {
-        public readonly float PictogramAlpha, Draw01, EventAlpha, OverlayAlpha;
-        public StartupFrame(float pictogramAlpha, float draw01, float eventAlpha, float overlayAlpha)
+        public readonly float PictogramAlpha, Draw01, Fill01, EventAlpha, OverlayAlpha, AudioGain;
+        public StartupFrame(float pictogramAlpha, float draw01, float fill01, float eventAlpha, float overlayAlpha, float audioGain)
         {
-            PictogramAlpha = pictogramAlpha; Draw01 = draw01; EventAlpha = eventAlpha; OverlayAlpha = overlayAlpha;
+            PictogramAlpha = pictogramAlpha; Draw01 = draw01; Fill01 = fill01; EventAlpha = eventAlpha;
+            OverlayAlpha = overlayAlpha; AudioGain = audioGain;
         }
     }
 
     /// <summary>
-    /// Pure, clock-agnostic timeline of the startup cards. The presenter feeds it real (unscaled) seconds; it holds
-    /// no Unity state, so it is testable without a panel. Any skip fades what is on screen to the menu in
-    /// <see cref="StartupTiming.SkipFade"/> seconds instead of cutting.
+    /// Pure, clock-agnostic timeline of the startup cards. The presenter feeds it real (unscaled) seconds. Any skip fades
+    /// what is on screen (and the pencil sound) to the menu in <see cref="StartupTiming.SkipFade"/> seconds instead of cutting.
     /// </summary>
     public sealed class StartupSequence
     {
+        /// <summary>Easing of the pencil sketch progress. Shared with <see cref="PencilScratchSynth"/> so sound follows the pen.</summary>
+        public static float EaseDraw(float linear01) => Smooth01(linear01, .3f);
+
         private readonly StartupTiming timing;
         private float elapsed;
         private float skipClock;
@@ -79,19 +90,20 @@ namespace OutOfReach.Presentation.UI.Startup
 
         public StartupFrame Evaluate()
         {
-            if (IsFinished) return new StartupFrame(0f, 1f, 0f, 0f);
+            if (IsFinished) return new StartupFrame(0f, 1f, 1f, 0f, 0f, 0f);
             float t = IsSkipped ? skippedAt : elapsed;
             float pic = Envelope(t, timing.PictogramStart, timing.PictogramIn, timing.PictogramHold, timing.PictogramOut);
             float ev = Envelope(t, timing.EventStart, timing.EventIn, timing.EventHold, timing.EventOut);
-            float draw = timing.DrawSeconds <= 0f ? 1f
-                : Smooth01((t - (timing.PictogramStart + timing.DrawDelay)) / timing.DrawSeconds, .35f);
+            float draw = timing.DrawSeconds <= 0f ? 1f : EaseDraw((t - timing.DrawStart) / timing.DrawSeconds);
+            float fill = timing.FillSeconds <= 0f ? 1f : Smooth01((t - timing.FillStart) / timing.FillSeconds, 1f);
             float overlay = t < timing.EventEnd ? 1f : 1f - Smooth01((t - timing.EventEnd) / timing.Reveal, 1f);
+            float gain = 1f;
             if (IsSkipped)
             {
                 float keep = 1f - Mathf.Clamp01(skipClock / timing.SkipFade);
-                pic *= keep; ev *= keep; overlay *= keep;
+                pic *= keep; ev *= keep; overlay *= keep; gain = keep;
             }
-            return new StartupFrame(pic, draw, ev, overlay);
+            return new StartupFrame(pic, draw, fill, ev, overlay, gain);
         }
 
         private static float Envelope(float t, float start, float fadeIn, float hold, float fadeOut)
