@@ -1,169 +1,105 @@
 {
  "hash": "459a989457d9af1e",
  "bones": 164,
+ "suit": "EVA",
  "meshes": {
-  "A7_SuitV03_EVA_TorsoLegs": {
-   "verts": 42432,
-   "tris": 90324,
-   "materials": [
-    "MAT_V03_EvaSuit",
-    "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
-    "MAT_V03_EvaStrap",
-    "MAT_V03_EvaMetal",
-    "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
-   ],
-   "weights": {
-    "verts": 42432,
-    "bad_weight_sum": 0,
-    "max_influences": 4,
-    "groups": 59
-   },
-   "bbox": [
-    [
-     -0.326,
-     -0.311,
-     -0.002
-    ],
-    [
-     0.326,
-     0.148,
-     1.558
-    ]
-   ]
-  },
   "A7_SuitV03_EVA_Arm_L": {
-   "verts": 9969,
-   "tris": 20792,
+   "verts": 4033,
+   "tris": 8525,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
+    "MAT_V03_EvaBoot",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin",
+    "MAT_V03_EvaGlove",
+    "MAT_V03_EvaGloveGrip"
    ],
    "weights": {
-    "verts": 9969,
-    "bad_weight_sum": 0,
+    "verts": 4033,
+    "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
    },
    "bbox": [
     [
-     0.148,
-     -0.324,
-     1.005
+     0.107,
+     -0.331,
+     0.998
     ],
     [
-     0.54,
-     0.096,
-     1.537
+     0.548,
+     0.085,
+     1.523
     ]
    ]
   },
   "A7_SuitV03_EVA_Arm_R": {
-   "verts": 9969,
-   "tris": 20792,
+   "verts": 4033,
+   "tris": 8525,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
+    "MAT_V03_EvaBoot",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin",
+    "MAT_V03_EvaGlove",
+    "MAT_V03_EvaGloveGrip"
    ],
    "weights": {
-    "verts": 9969,
-    "bad_weight_sum": 0,
+    "verts": 4033,
+    "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
    },
    "bbox": [
     [
-     -0.54,
-     -0.324,
-     1.005
+     -0.548,
+     -0.331,
+     0.998
     ],
     [
-     -0.148,
-     0.096,
-     1.537
+     -0.107,
+     0.085,
+     1.523
     ]
    ]
   },
   "A7_SuitV03_EVA_Head": {
-   "verts": 7720,
-   "tris": 15320,
+   "verts": 8688,
+   "tris": 14758,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
+    "MAT_V03_EvaBoot",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin",
+    "MAT_V03_EvaGlove",
+    "MAT_V03_EvaGloveGrip"
    ],
    "weights": {
-    "verts": 7720,
-    "bad_weight_sum": 0,
+    "verts": 8688,
+    "bad_weight_sum": 637,
     "max_influences": 4,
-    "groups": 34
+    "groups": 28
    },
    "bbox": [
     [
@@ -173,8 +109,45 @@
     ],
     [
      0.092,
-     0.092,
-     1.798
+     0.099,
+     1.796
+    ]
+   ]
+  },
+  "A7_SuitV03_EVA_TorsoLegs": {
+   "verts": 9772,
+   "tris": 20277,
+   "materials": [
+    "MAT_V03_EvaSuit",
+    "MAT_V03_EvaPanel",
+    "MAT_V03_EvaStrap",
+    "MAT_V03_EvaMetal",
+    "MAT_V03_EvaRed",
+    "MAT_V03_EvaBoot",
+    "MAT_V03_Hair",
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin",
+    "MAT_V03_EvaGlove",
+    "MAT_V03_EvaGloveGrip"
+   ],
+   "weights": {
+    "verts": 9772,
+    "bad_weight_sum": 727,
+    "max_influences": 4,
+    "groups": 37
+   },
+   "bbox": [
+    [
+     -0.325,
+     -0.291,
+     -0.025
+    ],
+    [
+     0.324,
+     0.145,
+     1.527
     ]
    ]
   },
@@ -182,26 +155,14 @@
    "verts": 1080,
    "tris": 2038,
    "materials": [
-    "MAT_V03_EvaSuit",
-    "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
+    "MAT_V03_EvaHardware",
+    "MAT_V03_EvaDisplay",
     "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
     "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_EvaYellow"
    ],
    "weights": {
     "verts": 1080,
@@ -212,12 +173,12 @@
    "bbox": [
     [
      -0.122,
-     -0.329,
+     -0.31,
      1.189
     ],
     [
      0.122,
-     -0.26,
+     -0.24,
      1.47
     ]
    ]
@@ -226,26 +187,11 @@
    "verts": 1420,
    "tris": 2676,
    "materials": [
-    "MAT_V03_EvaSuit",
-    "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
+    "MAT_V03_EvaHardware",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_EvaDark"
    ],
    "weights": {
     "verts": 1420,
@@ -256,43 +202,29 @@
    "bbox": [
     [
      -0.187,
-     0.137,
+     0.12,
      0.868
     ],
     [
      0.211,
-     0.366,
+     0.349,
      1.7
     ]
    ]
   },
   "A7_SuitV03_EVA_Helmet": {
-   "verts": 2014,
-   "tris": 3816,
+   "verts": 2018,
+   "tris": 3824,
    "materials": [
-    "MAT_V03_EvaSuit",
-    "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
+    "MAT_V03_EvaHardware",
     "MAT_V03_EvaStrap",
     "MAT_V03_EvaMetal",
     "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
-    "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
     "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_EvaLight"
    ],
    "weights": {
-    "verts": 2014,
+    "verts": 2018,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
@@ -300,43 +232,25 @@
    "bbox": [
     [
      -0.228,
-     -0.199,
-     1.51
+     -0.189,
+     1.509
     ],
     [
      0.228,
-     0.166,
-     1.91
+     0.161,
+     1.909
     ]
    ]
   },
   "A7_SuitV03_EVA_Visor": {
-   "verts": 1159,
-   "tris": 2222,
+   "verts": 1153,
+   "tris": 2210,
    "materials": [
-    "MAT_V03_EvaSuit",
-    "MAT_V03_EvaPanel",
-    "MAT_V03_EvaBoot",
-    "MAT_V03_EvaBootGrey",
-    "MAT_V03_EvaSole",
-    "MAT_V03_EvaGlove",
-    "MAT_V03_EvaGloveGrip",
-    "MAT_V03_EvaStrap",
-    "MAT_V03_EvaMetal",
-    "MAT_V03_EvaRed",
-    "MAT_V03_EvaDisplay",
     "MAT_V03_EvaVisorGold",
-    "MAT_V03_EvaLight",
-    "MAT_V03_EvaYellow",
-    "MAT_V03_EvaDark",
-    "MAT_V03_EvaVisorClear",
-    "MAT_V03_Skin",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris"
+    "MAT_V03_EvaVisorClear"
    ],
    "weights": {
-    "verts": 1159,
+    "verts": 1153,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
@@ -344,16 +258,16 @@
    "bbox": [
     [
      -0.172,
-     -0.266,
-     1.547
+     -0.254,
+     1.546
     ],
     [
      0.172,
-     -0.017,
-     1.905
+     -0.013,
+     1.904
     ]
    ]
   }
  },
- "tris_total": 157980
+ "tris_total": 62833
 }

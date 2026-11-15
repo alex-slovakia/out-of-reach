@@ -1,0 +1,294 @@
+{
+ "MAT_V03_Skin": {
+  "base": "#FFFFFF",
+  "rough": 0.55,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\skins\\middleage_caucasian_male\\middleage_lightskinned_male_diffuse.png",
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Hair": {
+  "base": "#8C7A6E",
+  "rough": 0.7,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\hair\\short01\\short01_diffuse.png",
+  "normal": null,
+  "alpha_clip": true,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Brows": {
+  "base": "#7A6A60",
+  "rough": 0.8,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\eyebrows\\eyebrow001\\eyebrow001.png",
+  "normal": null,
+  "alpha_clip": true,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Lashes": {
+  "base": "#FFFFFF",
+  "rough": 0.8,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\eyelashes\\eyelashes01\\eyelashes01.png",
+  "normal": null,
+  "alpha_clip": true,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Eyes": {
+  "base": "#FFFFFF",
+  "rough": 0.15,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\eyes\\materials\\brown_eye.png",
+  "normal": null,
+  "alpha_clip": true,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Shirt": {
+  "base": "#30406A",
+  "rough": 0.92,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\cs02_gray.png",
+  "normal": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\clothes\\male_casualsuit02\\male_casualsuit02_normal.png",
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Trousers": {
+  "base": "#4C4E52",
+  "rough": 0.92,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\cs02_gray.png",
+  "normal": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\clothes\\male_casualsuit02\\male_casualsuit02_normal.png",
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_TrousersPanel": {
+  "base": "#43454A",
+  "rough": 0.94,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\cs02_gray.png",
+  "normal": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\clothes\\male_casualsuit02\\male_casualsuit02_normal.png",
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Trim": {
+  "base": "#1B1C1E",
+  "rough": 0.6,
+  "metal": 0.2,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_Shoe": {
+  "base": "#4A4E53",
+  "rough": 0.85,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\shoes06_gray.png",
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaSuit": {
+  "base": "#DCD5C7",
+  "rough": 0.9,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\cs02_gray_eva.png",
+  "normal": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\clothes\\male_casualsuit02\\male_casualsuit02_normal.png",
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.3
+ },
+ "MAT_V03_EvaPanel": {
+  "base": "#D6D0C3",
+  "rough": 0.9,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\cs02_gray_eva.png",
+  "normal": "C:\\Users\\alexp\\NASA\\blender\\mh_system_assets\\x\\clothes\\male_casualsuit02\\male_casualsuit02_normal.png",
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaBoot": {
+  "base": "#F2EEE6",
+  "rough": 0.85,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\tex\\shoes03_gray.png",
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaStrap": {
+  "base": "#4A4D51",
+  "rough": 0.88,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaMetal": {
+  "base": "#A6ACB0",
+  "rough": 0.5,
+  "metal": 0.55,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaRed": {
+  "base": "#A63A30",
+  "rough": 0.85,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaGlove": {
+  "base": "#D4CFC4",
+  "rough": 0.85,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaGloveGrip": {
+  "base": "#4B4F53",
+  "rough": 0.9,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaDark": {
+  "base": "#1B1C1E",
+  "rough": 0.6,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaYellow": {
+  "base": "#E0B020",
+  "rough": 0.5,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaLight": {
+  "base": "#FFF2D0",
+  "rough": 0.3,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": [
+   "#FFE9B0",
+   6.0
+  ],
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaVisorGold": {
+  "base": "#C9A24A",
+  "rough": 0.15,
+  "metal": 1.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaVisorClear": {
+  "base": "#C8D6DE",
+  "rough": 0.05,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": 0.1,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaDisplay": {
+  "base": "#FFFFFF",
+  "rough": 0.3,
+  "metal": 0.0,
+  "diffuse": "C:\\Users\\alexp\\NASA\\blender\\reference-suits-v03\\out\\T_V03_EvaDisplay.png",
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": [
+   "#FFFFFF",
+   1.5
+  ],
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaHardware": {
+  "base": "#CEC8BC",
+  "rough": 0.75,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ },
+ "MAT_V03_EvaBootGrey": {
+  "base": "#5A5E62",
+  "rough": 0.8,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
+ }
+}

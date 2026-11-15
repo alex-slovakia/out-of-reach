@@ -45,8 +45,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _Blend: 0
-
-    - _BumpScale: 1
+    - _BumpScale: 1.0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 0
@@ -54,7 +53,7 @@ Material:
     - _Metallic: 1.0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.88
+    - _Smoothness: 0.85
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -62,8 +61,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.584078, g: 0.361307, b: 0.068478, a: 1}
-    - _Color: {r: 0.584078, g: 0.361307, b: 0.068478, a: 1}
+    - _BaseColor: {r: 0.584078, g: 0.361307, b: 0.068478, a: 1.0}
+    - _Color: {r: 0.584078, g: 0.361307, b: 0.068478, a: 1.0}
     - _EmissionColor: {r: 0.000000, g: 0.000000, b: 0.000000, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

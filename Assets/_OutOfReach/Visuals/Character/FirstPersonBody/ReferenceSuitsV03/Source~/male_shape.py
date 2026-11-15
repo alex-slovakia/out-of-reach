@@ -12,7 +12,7 @@ S = 0.1065109505563943
 TZ = 0.875583749
 MH, OUT = sys.argv[1], sys.argv[2]
 REP = sys.argv[3] if len(sys.argv) > 3 else None
-WEIGHTS = {"caucasian-male-young": 0.6, "african-male-young": 0.2, "asian-male-young": 0.2,
+WEIGHTS = {"caucasian-male-young": 0.48, "caucasian-male-old": 0.12, "african-male-young": 0.2, "asian-male-young": 0.2,
            "universal-male-young-maxmuscle-averageweight": 0.25, "universal-male-young-maxmuscle-minweight": 0.20}
 
 

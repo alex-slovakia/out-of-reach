@@ -1,103 +1,144 @@
 {
  "hash": "459a989457d9af1e",
  "bones": 164,
+ "suit": "WORK",
  "meshes": {
-  "A7_SuitV03_WORK_TorsoLegs": {
-   "verts": 22667,
-   "tris": 46394,
-   "materials": [
-    "MAT_V03_Shirt",
-    "MAT_V03_Trousers",
-    "MAT_V03_TrousersPanel",
-    "MAT_V03_Shoe",
-    "MAT_V03_Sole",
-    "MAT_V03_Skin",
-    "MAT_V03_Trim",
-    "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris",
-    "MAT_V03_ShirtSeam",
-    "MAT_V03_ShoeMid"
-   ],
-   "weights": {
-    "verts": 22667,
-    "bad_weight_sum": 0,
-    "max_influences": 4,
-    "groups": 59
-   }
-  },
   "A7_SuitV03_WORK_Arm_L": {
-   "verts": 8050,
-   "tris": 16047,
+   "verts": 2150,
+   "tris": 4205,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
     "MAT_V03_TrousersPanel",
-    "MAT_V03_Shoe",
-    "MAT_V03_Sole",
-    "MAT_V03_Skin",
     "MAT_V03_Trim",
+    "MAT_V03_Shoe",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris",
-    "MAT_V03_ShirtSeam",
-    "MAT_V03_ShoeMid"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 8050,
-    "bad_weight_sum": 0,
+    "verts": 2150,
+    "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
-   }
+   },
+   "bbox": [
+    [
+     0.107,
+     -0.325,
+     1.005
+    ],
+    [
+     0.525,
+     0.058,
+     1.504
+    ]
+   ]
   },
   "A7_SuitV03_WORK_Arm_R": {
-   "verts": 8050,
-   "tris": 16047,
+   "verts": 2150,
+   "tris": 4205,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
     "MAT_V03_TrousersPanel",
-    "MAT_V03_Shoe",
-    "MAT_V03_Sole",
-    "MAT_V03_Skin",
     "MAT_V03_Trim",
+    "MAT_V03_Shoe",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris",
-    "MAT_V03_ShirtSeam",
-    "MAT_V03_ShoeMid"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 8050,
-    "bad_weight_sum": 0,
+    "verts": 2150,
+    "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
-   }
+   },
+   "bbox": [
+    [
+     -0.525,
+     -0.325,
+     1.005
+    ],
+    [
+     -0.107,
+     0.058,
+     1.504
+    ]
+   ]
   },
   "A7_SuitV03_WORK_Head": {
-   "verts": 7720,
-   "tris": 15320,
+   "verts": 8688,
+   "tris": 14758,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
     "MAT_V03_TrousersPanel",
-    "MAT_V03_Shoe",
-    "MAT_V03_Sole",
-    "MAT_V03_Skin",
     "MAT_V03_Trim",
+    "MAT_V03_Shoe",
     "MAT_V03_Hair",
-    "MAT_V03_EyeWhite",
-    "MAT_V03_EyeIris",
-    "MAT_V03_ShirtSeam",
-    "MAT_V03_ShoeMid"
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 7720,
-    "bad_weight_sum": 0,
+    "verts": 8688,
+    "bad_weight_sum": 637,
     "max_influences": 4,
-    "groups": 34
-   }
+    "groups": 28
+   },
+   "bbox": [
+    [
+     -0.092,
+     -0.149,
+     1.495
+    ],
+    [
+     0.092,
+     0.099,
+     1.796
+    ]
+   ]
+  },
+  "A7_SuitV03_WORK_TorsoLegs": {
+   "verts": 4554,
+   "tris": 8790,
+   "materials": [
+    "MAT_V03_Shirt",
+    "MAT_V03_Trousers",
+    "MAT_V03_TrousersPanel",
+    "MAT_V03_Trim",
+    "MAT_V03_Shoe",
+    "MAT_V03_Hair",
+    "MAT_V03_Brows",
+    "MAT_V03_Lashes",
+    "MAT_V03_Eyes",
+    "MAT_V03_Skin"
+   ],
+   "weights": {
+    "verts": 4554,
+    "bad_weight_sum": 421,
+    "max_influences": 4,
+    "groups": 37
+   },
+   "bbox": [
+    [
+     -0.323,
+     -0.213,
+     -0.011
+    ],
+    [
+     0.321,
+     0.111,
+     1.52
+    ]
+   ]
   }
  },
- "tris_total": 93808
+ "tris_total": 31958
 }

@@ -1,18 +1,19 @@
 {
  "weights": {
-  "caucasian-male-young": 0.6,
+  "caucasian-male-young": 0.48,
+  "caucasian-male-old": 0.12,
   "african-male-young": 0.2,
   "asian-male-young": 0.2,
   "universal-male-young-maxmuscle-averageweight": 0.25,
   "universal-male-young-maxmuscle-minweight": 0.2
  },
  "joint_drift_mm": {
-  "root": 29.4,
+  "root": 29.6,
   "spine03": 0.0,
   "spine01": 0.0,
   "neck01": 0.0,
-  "head": 42.0,
-  "clavicle.L": 43.0,
+  "head": 42.3,
+  "clavicle.L": 41.7,
   "upperarm01.L": 0.0,
   "lowerarm01.L": 0.0,
   "wrist.L": 0.0,
@@ -27,8 +28,8 @@
     0.182
    ],
    "male_comp_w_d": [
-    0.527,
-    0.232
+    0.525,
+    0.231
    ]
   },
   "chest": {
@@ -37,8 +38,8 @@
     0.216
    ],
    "male_comp_w_d": [
-    0.331,
-    0.234
+    0.332,
+    0.237
    ]
   },
   "waist": {
@@ -47,8 +48,8 @@
     0.209
    ],
    "male_comp_w_d": [
-    0.29,
-    0.208
+    0.291,
+    0.21
    ]
   },
   "hips": {
@@ -57,7 +58,7 @@
     0.245
    ],
    "male_comp_w_d": [
-    0.38,
+    0.381,
     0.215
    ]
   },
@@ -67,10 +68,10 @@
     0.175
    ],
    "male_comp_w_d": [
-    0.434,
-    0.18
+    0.433,
+    0.179
    ]
   }
  },
- "max_delta_mm": 72.2
+ "max_delta_mm": 75.2
 }
