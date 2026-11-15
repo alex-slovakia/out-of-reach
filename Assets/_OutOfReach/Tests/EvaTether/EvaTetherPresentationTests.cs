@@ -232,8 +232,12 @@ namespace OutOfReach.Tests.EvaTether
                             Assert.That(Vector3.Distance(pose.Elbow, pose.Wrist), Is.EqualTo(AstronautHandsPresenter.ToolForearmMetres).Within(0.003f));
                             Assert.That(pose.WristBendDegrees, Is.LessThanOrEqualTo(62f), hand + " wrist at d=" + d + " station " + station);
                             Assert.That(pose.RopeObliquityDegrees, Is.LessThanOrEqualTo(AstronautHandsPresenter.TetherMaxObliquityDegrees + 0.01f));
+                            // In front on straight runs. Round an inside corner the mitred rope cuts the corner, so a glove
+                            // may hold it beside the shoulder for a moment, never far behind the eye.
                             Vector3 ahead = pose.Wrist - eye;
-                            Assert.That(Vector3.Dot(ahead, forward), Is.GreaterThan(0f), "the glove is in front of the body");
+                            bool straight = Vector3.Angle(rope.TangentAt(d), rope.TangentAt(station)) < 20f;
+                            Assert.That(Vector3.Dot(ahead, forward), Is.GreaterThan(straight ? 0f : -0.3f),
+                                "the glove is in front of the body at d=" + d + " station " + station);
                             samples++;
                         }
                     }

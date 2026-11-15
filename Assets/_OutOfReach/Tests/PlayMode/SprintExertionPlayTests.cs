@@ -250,6 +250,14 @@ namespace OutOfReach.Tests.PlayMode
             float remaining = player.ExertionRemaining01;
             Assert.That(remaining, Is.LessThan(1f));
             input.Move = Vector2.zero;
+            // EVA-TETHER-01: the holding glove first brakes the body to rest; look-only frames start from rest.
+            for (int i = 0; i < 20 && player.RouteMotionSense != 0; i++)
+            {
+                yield return null;
+            }
+
+            Assert.That(player.RouteMotionSense, Is.EqualTo(0), "the glove brakes the body to rest");
+            remaining = player.ExertionRemaining01;
             input.LookDegrees = new Vector2(50f, 80f);
             Vector3 stopped = player.transform.position;
             yield return Frames(10);
