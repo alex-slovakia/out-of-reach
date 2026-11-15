@@ -1,0 +1,19 @@
+{
+  "name": "OutOfReach.Presentation.Rescue.Editor",
+  "rootNamespace": "OutOfReach.Presentation.Rescue.Editor",
+  "references": [
+    "OutOfReach.Presentation.Rescue",
+    "OutOfReach.Contracts"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

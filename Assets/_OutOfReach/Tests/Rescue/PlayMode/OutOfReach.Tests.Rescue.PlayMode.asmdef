@@ -1,0 +1,23 @@
+{
+  "name": "OutOfReach.Tests.Rescue.PlayMode",
+  "rootNamespace": "OutOfReach.Tests.Rescue.PlayMode",
+  "references": [
+    "UnityEngine.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Presentation.Rescue"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
