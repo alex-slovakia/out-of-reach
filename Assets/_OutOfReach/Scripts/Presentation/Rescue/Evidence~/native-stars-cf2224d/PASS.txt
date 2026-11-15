@@ -1,0 +1,2 @@
+RESCUE-ENDING-01 native ending completed; see checks, observations and captures.
+soft failures: 0

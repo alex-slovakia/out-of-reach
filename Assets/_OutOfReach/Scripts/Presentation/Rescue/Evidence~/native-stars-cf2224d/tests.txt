@@ -1,0 +1,73 @@
+=== HEAD: edac5fab28443bf8d2254499760c22f9d1d497cf
+=== status (must be clean apart from Unity side effects):
+=== EditMode exit code: 0  duration: 00:01:39
+run: {'result': 'Passed', 'total': '470', 'passed': '470', 'failed': '0', 'skipped': '0', 'inconclusive': '0', 'duration': '25,0268603', 'engine-version': '3.5.0.0', 'clr-version': '4.0.30319.42000'}
+  AccidentTests                    Passed   5
+  BoardingWindowTests              Passed   7
+  BodyFrameCaptureTests            Passed   18
+  C06AcceptanceTests               Passed   6
+  CargoLoadingTests                Passed   21
+  CelestialSkyFrameTests           Passed   8
+  ChapterCopyAndCueTests           Passed   11
+  ChapterLoopTests                 Passed   23
+  CinematicCoordinatorTests        Passed   10
+  CommunicationSystemTests         Passed   11
+  EarthMarsReferenceTests          Passed   20
+  EmergencyModelTests              Passed   9
+  EvaTests                         Passed   20
+  EvaTetherPresentationTests       Passed   8
+  EventBusTests                    Passed   7
+  ExertionTests                    Passed   13
+  FieldModificationTests           Passed   14
+  GaitQualityCaptureTests          Passed   5
+  GameStateTests                   Passed   19
+  HarnessFixtureTests              Passed   2
+  ImpactMovementTests              Passed   3
+  InteractionDomainTests           Passed   4
+  MealSequenceTests                Passed   17
+  MissionReportTests               Passed   11
+  ModelGaitTests                   Passed   9
+  PauseControlsModelTests          Passed   8
+  PlannerTests                     Passed   11
+  PlanningDeadlineTests            Passed   8
+  RepairTests                      Passed   7
+  RescueEndingTimelineTests        Passed   8
+  ResourceLedgerTests              Passed   26
+  RouteMathTests                   Passed   8
+  SessionClockTests                Passed   14
+  SleepSpamGuardTests              Passed   6
+  StartupCardTests                 Passed   14
+  SurvivalExtensionTests           Passed   17
+  SurvivalInteractionReviewTests   Passed   4
+  SurvivalRecoveryTests            Passed   20
+  SurvivalTests                    Passed   7
+=== PlayMode exit code: 0  duration: 00:01:23
+run: {'result': 'Passed', 'total': '154', 'passed': '154', 'failed': '0', 'skipped': '0', 'inconclusive': '0', 'duration': '50,5790559', 'engine-version': '3.5.0.0', 'clr-version': '4.0.30319.42000'}
+  BoardingWindowPlayTests          Passed   2
+  BodyLookDownRealSceneTests       Passed   1
+  C06EndToEndPlayTests             Passed   3
+  ChapterLoopPlayTests             Passed   2
+  ChapterPresenterPlayTests        Passed   11
+  ChapterUiRuntimePlayTests        Passed   2
+  EvaPlayTests                     Passed   5
+  EvaTetherClimbPlayTests          Passed   5
+  EvaTraversalPlayTests            Passed   5
+  FieldModificationPlayTests       Passed   2
+  FinalePlayTests                  Passed   2
+  FullscreenOnLaunchTests          Passed   5
+  HabitatChapterExposurePlayTests  Passed   2
+  MealPresentationPlayTests        Passed   7
+  MicrogravityLocomotionPlayTests  Passed   20
+  MoveMech01PlayTests              Passed   7
+  OpeningMusicPlayTests            Passed   11
+  PauseControlsHintTests           Passed   4
+  PreflightPlayTests               Passed   3
+  QuitToDesktopUiTests             Passed   10
+  RepairLoopPlayTests              Passed   8
+  RescueEndingPresenterPlayTests   Passed   12
+  SessionQuitConfirmationTests     Passed   5
+  SprintCargoExertionPlayTests     Passed   2
+  SprintExertionPlayTests          Passed   7
+  SurvivalRecoveryLifecyclePlayTests Passed   2
+  TimedInteractionGateTests        Passed   9
+=== status after restoring Unity side effects:

@@ -1,0 +1,29 @@
+star-like dots (isolated local maxima) | >=24/255 | >=48/255 | >=96/255 | brightest dot
+00-cabin-before-the-ending.png                             |     47 |     29 |     24 | 242
+01-window-approach-far.png                                 |     93 |     36 |      7 | 237
+02-window-braking-burn.png                                 |    105 |     36 |      9 | 239
+03-window-floodlight-near.png                              |     64 |     23 |      4 | 225
+04-window-coming-alongside.png                             |     82 |     24 |      0 |  86
+05-docking-camera-closing.png                              |    494 |    153 |      7 | 242
+06-docking-camera-contact.png                              |    332 |    105 |      7 | 242
+07-docking-camera-capture.png                              |    338 |    119 |      4 | 214
+08-docking-camera-hard-dock.png                            |    325 |    104 |      6 | 214
+09-airlock-latched-pressure.png                            |     21 |     18 |     16 | 242
+10-hatch-opening-light.png                                 |     65 |     39 |     31 | 220
+11-hatch-open-light-floods.png                             |    150 |     79 |     44 | 222
+12-fade.png                                                |    143 |     63 |     28 | 222
+13-mars-departure-existing.png                             |    325 |     95 |      1 | 227
+13b-mars-departure-saved-exposure-0.15-for-comparison.png  |      1 |      1 |      1 | 227
+14-report.png                                              |      1 |      1 |      1 | 197
+sweep-docking-camera-exposure-0.15.png                     |     10 |     10 |      7 | 242
+sweep-docking-camera-exposure-0.30.png                     |    207 |     33 |      8 | 242
+sweep-docking-camera-exposure-0.45.png                     |    459 |    142 |      8 | 242
+sweep-docking-camera-exposure-0.60.png                     |    744 |    256 |     69 | 242
+sweep-docking-camera-exposure-0.80.png                     |    931 |    406 |    167 | 242
+--- baseline: the same shots from the R42 evidence on ae6380f (saved exposure 0.15, feature/rescue-ending-01@7e28228)
+01-window-approach-far.png                                 |      9 |      9 |      9 | 237
+03-window-floodlight-near.png                              |      7 |      4 |      4 | 225
+05-docking-camera-closing.png                              |      9 |      9 |      7 | 242
+09-airlock-latched-pressure.png                            |     20 |     18 |     15 | 242
+13-mars-departure-existing.png                             |      1 |      1 |      1 | 227
+14-report.png                                              |      1 |      1 |      1 | 197

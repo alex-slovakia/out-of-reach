@@ -1,0 +1,2 @@
+R20 finale stars on the R42 ending. Actual saved Bootstrap exactly as committed by the integrator (rescue ending already installed; the installer is NOT re-run and nothing is patched).
+Real Practice UI, marine W boarding, seat E, real departure/arrival. SHORTCUTS: domain impact + repairs, then Core's own Director.TryEndMission(Recovered). After that only the real Core ending chain runs: RecoveryArrival -> MarsDeparture -> Report.

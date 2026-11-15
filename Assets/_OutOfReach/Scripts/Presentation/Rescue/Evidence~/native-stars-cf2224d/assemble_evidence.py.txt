@@ -1,0 +1,111 @@
+"""Builds the committed evidence folder from one native run. Usage:
+python -I assemble_evidence.py <run dir> <evidence dir> <base sha7> <code sha7> <old captures dir>
+"""
+import io
+import os
+import shutil
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import star_dots  # noqa: E402
+
+run, evidence, base, code, old = sys.argv[1:6]
+qa = os.path.dirname(os.path.abspath(__file__))
+os.makedirs(evidence, exist_ok=True)
+for name in sorted(os.listdir(run)):
+    if name.lower().endswith(('.png', '.txt')):
+        shutil.copyfile(os.path.join(run, name), os.path.join(evidence, name))
+for source, target in (
+    (os.path.join(qa, 'qa_tools', 'RescueNativeQa.cs'), 'RescueNativeQa.cs.txt'),
+    (os.path.join(qa, 'qa_tools', 'OutOfReach.RescueNativeQa.Editor.asmdef'), 'OutOfReach.RescueNativeQa.Editor.asmdef.txt'),
+    (os.path.join(qa, 'qa_tools', 'run_rescue_qa.ps1'), 'run_rescue_qa.ps1.txt'),
+    (os.path.join(qa, 'run_tests.ps1'), 'run_tests.ps1.txt'),
+    (os.path.join(qa, 'star_dots.py'), 'star_dots.py.txt'),
+    (os.path.join(qa, 'assemble_evidence.py'), 'assemble_evidence.py.txt'),
+):
+    shutil.copyfile(source, os.path.join(evidence, target))
+
+checks = io.open(os.path.join(run, 'checks.txt'), encoding='utf-8').read().splitlines()
+passed = sum(1 for line in checks if line.startswith('PASS '))
+other = len(checks) - passed
+verdict = 'PASS' if os.path.exists(os.path.join(run, 'PASS.txt')) else 'FAIL'
+runtime_errors = os.path.exists(os.path.join(run, 'runtime-errors.txt'))
+
+pngs = sorted(name for name in os.listdir(run) if name.lower().endswith('.png'))
+dots = {name: star_dots.count(os.path.join(run, name)) for name in pngs}
+lines = ['star-like dots (isolated local maxima) | ' + ' | '.join('>=%d/255' % t for t in star_dots.THRESHOLDS) + ' | brightest dot']
+for name in pngs:
+    counts, brightest = dots[name]
+    lines.append('%-58s | %s | %3.0f' % (name, ' | '.join('%6d' % c for c in counts), brightest))
+lines.append('--- baseline: the same shots from the R42 evidence on ae6380f (saved exposure 0.15, feature/rescue-ending-01@7e28228)')
+baseline = {}
+for name in sorted(os.listdir(old)):
+    path = os.path.join(old, name)
+    if name.lower().endswith('.png') and os.path.getsize(path) >= 1024:
+        counts, brightest = star_dots.count(path)
+        baseline[name] = counts[0]
+        lines.append('%-58s | %s | %3.0f' % (name, ' | '.join('%6d' % c for c in counts), brightest))
+io.open(os.path.join(evidence, 'star-dots.txt'), 'w', encoding='utf-8', newline='\n').write('\n'.join(lines) + '\n')
+
+
+def first(prefix):
+    return [dots[name][0][0] for name in pngs if name.startswith(prefix)]
+
+
+window = [first(p)[0] for p in ('01', '02', '03', '04')]
+docking = [first(p)[0] for p in ('05', '06', '07', '08')]
+mars = first('13-')[0]
+mars_saved = first('13b')[0]
+sweep = {name[len('sweep-docking-camera-exposure-'):-4]: dots[name][0][0] for name in pngs if name.startswith('sweep-')}
+readme = """# R20 finale stars on the R42 ending: native evidence
+
+Base: `codex/nasa-2330-staging@%(base)s`; code under test: `%(code)s` (one commit on top). The saved Bootstrap is used
+exactly as committed in the base: the rescue ending is already installed, the installer was **not** re-run and nothing
+was patched. Unity 6000.3.28f1, `-batchmode -force-device-index 1`, real GPU, 1280x720 captures.
+
+Run `%(run)s`: **%(passed)d/%(total)d checks PASS, %(other)d not passed, runtime errors: %(errors)s, verdict %(verdict)s.**
+`editor-environment-errors.txt`, when present, holds `UnityEditor.Search` indexing exceptions from editor start-up;
+they have no OutOfReach frame and are not part of the game. `tests.txt` has the EditMode and PlayMode summaries.
+
+Shortcuts, as in the R42 evidence: real Practice UI, marine W boarding, seat E, real departure and arrival; then the
+domain impact and repairs, then Core's own `Director.TryEndMission(Recovered)`. After that only the real Core chain
+runs: `RecoveryArrival` (rescue presenter) -> `MarsDeparture` (existing presenter) -> Report.
+
+## What the captures show
+
+| Capture | Sky in frame | Star-like dots >= 24/255 |
+|---|---|---|
+| `01`..`04` cabin window | yes, through the porthole | %(window)s (R42 evidence at 0.15: %(old01)s and %(old03)s on `01` and `03`) |
+| `05`..`08` aft docking camera | yes, most of the frame | %(docking)s (R42 evidence at 0.15: %(old05)s on `05`) |
+| `09`..`12` airlock | **no**: an interior with no opening to space | not applicable (the counts there are lit interior detail) |
+| `13` MarsDeparture | yes | %(mars)d, against %(mars_saved)d in `13b` (same moment, saved exposure 0.15) |
+| `14` report | no (cabin behind the report) | the saved material is back at 0.15 |
+
+`sweep-docking-camera-exposure-*.png` is the docking-camera framing rendered with a QA-only probe copy of the saved
+material: %(sweep)s. 0.15 is what the build showed before; 0.45 is the existing `NasaDeepSky_DeepView.mat` preset that
+the presenter uses.
+
+`star-dots.txt` has every count; `star_dots.py.txt` is the counter. It counts isolated 1-3 px local maxima on a dark
+surround. It is a comparison between captures of the same framing, not photometry: the few dots it finds at 0.15 are
+lamps and interface specks, not stars.
+
+## What was checked about the sky itself
+
+- Before the ending: `RenderSettings.skybox` is the saved `NasaDeepSky.mat` at exposure 0.15, and the camera clears to
+  the skybox.
+- First frame of the ending: a runtime copy with the same shader and the same `starmap_2020_4k` texture is up.
+- Every shot from 3.0 s on: exposure 0.45, including after a real pause and resume.
+- MarsDeparture: still 0.45.
+- Report: the saved material asset is the skybox again and still reads 0.15.
+""" % {
+    'base': base, 'code': code, 'run': os.path.basename(run.rstrip('/\\')), 'passed': passed, 'total': len(checks), 'other': other,
+    'errors': 'YES, see runtime-errors.txt' if runtime_errors else 'none', 'verdict': verdict,
+    'window': ', '.join(str(v) for v in window), 'docking': ', '.join(str(v) for v in docking),
+    'old01': baseline.get('01-window-approach-far.png', 'n/a'), 'old03': baseline.get('03-window-floodlight-near.png', 'n/a'),
+    'old05': baseline.get('05-docking-camera-closing.png', 'n/a'), 'mars': mars, 'mars_saved': mars_saved,
+    'sweep': ', '.join('%s -> %d' % (k, sweep[k]) for k in sorted(sweep)),
+}
+io.open(os.path.join(evidence, 'README.md'), 'w', encoding='utf-8', newline='\n').write(readme)
+print('checks %d/%d PASS, other %d, runtime errors %s, verdict %s' % (passed, len(checks), other, runtime_errors, verdict))
+print('window', window, 'docking', docking, 'mars', mars, 'mars at 0.15', mars_saved, 'sweep', sweep)
+print('baseline', baseline)

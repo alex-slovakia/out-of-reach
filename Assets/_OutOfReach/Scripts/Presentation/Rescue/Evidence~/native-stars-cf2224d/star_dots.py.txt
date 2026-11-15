@@ -1,0 +1,67 @@
+"""Counts star-like dots in 1280x720 captures: an isolated 1-3 px local maximum on a dark surround.
+
+A pixel counts when its luminance (Rec.709, 0..255) is >= the threshold, it is the 3x3 local maximum, and every
+pixel on the 7x7 ring around it (Chebyshev distance 3) is below max(10, 35 % of it). Glyph strokes, reticle lines,
+lamps and hull edges are connected shapes and fail the ring test; this is a comparison metric between captures of the
+same framing, not photometry. Usage: python -I star_dots.py <folder or png> [...]
+"""
+import os
+import sys
+
+import numpy as np
+from PIL import Image
+
+THRESHOLDS = (24, 48, 96)
+
+
+def shifted(a, dy, dx):
+    out = np.zeros_like(a)
+    h, w = a.shape
+    ys, yd = (slice(dy, h), slice(0, h - dy)) if dy >= 0 else (slice(0, h + dy), slice(-dy, h))
+    xs, xd = (slice(dx, w), slice(0, w - dx)) if dx >= 0 else (slice(0, w + dx), slice(-dx, w))
+    out[yd, xd] = a[ys, xs]
+    return out
+
+
+def count(path):
+    rgb = np.asarray(Image.open(path).convert('RGB'), dtype=np.float32)
+    lum = rgb[..., 0] * .2126 + rgb[..., 1] * .7152 + rgb[..., 2] * .0722
+    local_max = np.ones(lum.shape, dtype=bool)
+    for dy in (-1, 0, 1):
+        for dx in (-1, 0, 1):
+            if dy == 0 and dx == 0:
+                continue
+            other = shifted(lum, dy, dx)
+            local_max &= (lum > other) if (dy, dx) < (0, 0) else (lum >= other)
+    ring = np.zeros_like(lum)
+    for dy in range(-3, 4):
+        for dx in range(-3, 4):
+            if max(abs(dy), abs(dx)) == 3:
+                ring = np.maximum(ring, shifted(lum, dy, dx))
+    isolated = local_max & (ring < np.maximum(10.0, lum * .35))
+    isolated[:3, :] = False
+    isolated[-3:, :] = False
+    isolated[:, :3] = False
+    isolated[:, -3:] = False
+    dots = lum[isolated]
+    brightest = float(dots.max()) if dots.size else 0.0
+    return [int((dots >= t).sum()) for t in THRESHOLDS], brightest
+
+
+def main(arguments):
+    files = []
+    for argument in arguments:
+        if os.path.isdir(argument):
+            files += sorted(os.path.join(argument, name) for name in os.listdir(argument) if name.lower().endswith('.png'))
+        else:
+            files.append(argument)
+    print('star-like dots (isolated local maxima) | ' + ' | '.join('>=%d/255' % t for t in THRESHOLDS) + ' | brightest dot')
+    for path in files:
+        if os.path.getsize(path) < 1024:
+            continue  # a Git LFS pointer, not an image
+        counts, brightest = count(path)
+        print('%-58s | %s | %3.0f' % (os.path.basename(path), ' | '.join('%6d' % c for c in counts), brightest))
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

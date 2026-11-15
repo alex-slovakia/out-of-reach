@@ -1,0 +1,21 @@
+param([string[]]$Platforms = @('EditMode', 'PlayMode'))
+$unity = 'C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Unity.exe'
+$project = 'C:\Users\alexp\NASA\out-of-reach-rescue'
+$summary = 'C:\Users\alexp\NASA\_claude_tools\summarize_nunit.py'
+"=== HEAD: $(git -C $project rev-parse HEAD)"
+"=== status (must be clean apart from Unity side effects):"; git -C $project status --short | Select-Object -First 10
+$results = Join-Path $project 'TestResults'
+New-Item -ItemType Directory -Force $results | Out-Null
+foreach ($platform in $Platforms) {
+    $name = $platform.ToLower()
+    Remove-Item "$results\$name.xml" -ErrorAction SilentlyContinue
+    $start = Get-Date
+    $p = Start-Process -FilePath $unity -ArgumentList @('-batchmode', '-nographics', '-projectPath', $project, '-runTests', '-testPlatform', $platform, '-testResults', "$results\$name.xml", '-logFile', "$results\$name.log") -PassThru
+    $p.WaitForExit()
+    "=== $platform exit code: $($p.ExitCode)  duration: $(((Get-Date) - $start).ToString('hh\:mm\:ss'))"
+    if (Test-Path "$results\$name.xml") { python -I $summary "$results\$name.xml" | Select-Object -First 40 }
+    else { "no result XML; compiler errors:"; Select-String -Path "$results\$name.log" -Pattern 'error CS' | Select-Object -First 15 | ForEach-Object { $_.Line } }
+}
+git -C $project checkout -q -- 'Assets/Settings' 'Assets/_OutOfReach/Visuals/ThirdParty' 2>$null
+if (-not (git -C $project ls-files ProjectSettings/SceneTemplateSettings.json)) { Remove-Item -Force "$project\ProjectSettings\SceneTemplateSettings.json" -ErrorAction SilentlyContinue }
+"=== status after restoring Unity side effects:"; git -C $project status --short | Select-Object -First 10

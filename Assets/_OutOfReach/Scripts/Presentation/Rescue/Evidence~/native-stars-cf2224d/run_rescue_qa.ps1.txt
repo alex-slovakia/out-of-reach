@@ -1,0 +1,26 @@
+param([string]$Tag = 'stars')
+$project = 'C:\Users\alexp\NASA\out-of-reach-rescue'
+$unity = 'C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Unity.exe'
+$qa = $PSScriptRoot
+$out = Join-Path $qa 'out'
+New-Item -ItemType Directory -Force $out | Out-Null
+"HEAD: $(git -C $project rev-parse --short HEAD)"
+New-Item -ItemType Directory -Force "$project\Assets\_VerifyBuild\Editor" | Out-Null
+Copy-Item "$qa\RescueNativeQa.cs", "$qa\OutOfReach.RescueNativeQa.Editor.asmdef" "$project\Assets\_VerifyBuild\Editor\"
+$env:QA_TAG = $Tag
+$env:QA_OUT = $out.Replace('\', '/')
+$start = Get-Date
+$arguments = @('-projectPath', $project, '-force-device-index', '1', '-batchmode', '-executeMethod', 'RescueNativeQa.Run', '-logFile', "$out\unity-$Tag.log")
+"Unity args: $($arguments -join ' ')"
+$p = Start-Process -FilePath $unity -ArgumentList $arguments -PassThru
+$p.WaitForExit()
+"exit: $($p.ExitCode) duration: $(((Get-Date) - $start).ToString('mm\:ss'))"
+Remove-Item -Recurse -Force "$project\Assets\_VerifyBuild" -ErrorAction SilentlyContinue
+Remove-Item -Force "$project\Assets\_VerifyBuild.meta" -ErrorAction SilentlyContinue
+git -C $project checkout -q -- 'Assets/_OutOfReach/Scenes/Bootstrap.unity' 'Assets/_OutOfReach/Visuals/ThirdParty' 'Assets/Settings' 2>$null
+if (-not (git -C $project ls-files ProjectSettings/SceneTemplateSettings.json)) { Remove-Item -Force "$project\ProjectSettings\SceneTemplateSettings.json" -ErrorAction SilentlyContinue }
+"status after cleanup:"; git -C $project status --short | Select-Object -First 20
+$last = Get-ChildItem $out -Directory | Sort-Object LastWriteTime | Select-Object -Last 1
+"RUN DIR: $($last.FullName)"
+if ($last) { Get-ChildItem $last.FullName | Select-Object Name, Length | Format-Table -AutoSize | Out-String; if (Test-Path "$($last.FullName)\checks.txt") { Get-Content "$($last.FullName)\checks.txt" }; if (Test-Path "$($last.FullName)\FAIL.txt") { "FAIL.txt:"; Get-Content "$($last.FullName)\FAIL.txt" | Select-Object -First 40 } }
+Select-String -Path "$out\unity-$Tag.log" -Pattern 'error CS|RESCUE_NATIVE_QA|RESCUE_ENDING_INSTALL' | Select-Object -First 15 | ForEach-Object { $_.Line }
