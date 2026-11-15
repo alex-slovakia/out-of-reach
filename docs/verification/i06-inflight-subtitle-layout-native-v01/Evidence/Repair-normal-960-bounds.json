@@ -1,0 +1,215 @@
+{
+    "phase": "Repair",
+    "context": "normal",
+    "caption": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+    "width": 960,
+    "height": 540,
+    "viewport": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 720.0
+    },
+    "overlay": {
+        "serializedVersion": "2",
+        "x": 320.0,
+        "y": 633.3333129882813,
+        "width": 924.0,
+        "height": 50.66668701171875
+    },
+    "painted": [
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label hud-phase",
+            "text": "Restore power and life support",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.66666603088379,
+                "width": 246.66665649414063,
+                "height": 25.33333396911621
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label simulation-timing",
+            "text": "60× simulation",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 1161.3333740234375,
+                "y": 30.66666603088379,
+                "width": 82.6666259765625,
+                "height": 18.66666603088379
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 574.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "O₂ reserve",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 574.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "resource-bar-0",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 580.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 602.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "Food stores",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 602.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "resource-bar-2",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 608.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 630.6666870117188,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "Battery",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 630.6666870117188,
+                "width": 92.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "resource-bar-3",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 636.0,
+                "width": 126.66665649414063,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-button systems-button",
+            "text": "Tab  Systems",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 60.0,
+                "y": 662.6666870117188,
+                "width": 90.66667175292969,
+                "height": 28.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label interaction-key",
+            "text": "E",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 658.6666870117188,
+                "y": 386.6666564941406,
+                "width": 28.0,
+                "height": 28.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label interaction-text",
+            "text": "Close outer hatch and repressurize.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 697.3333129882813,
+                "y": 388.0,
+                "width": 282.66668701171877,
+                "height": 25.333343505859376
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-text",
+            "text": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 400.0,
+                "y": 653.3333129882813,
+                "width": 765.3333740234375,
+                "height": 26.66668701171875
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-speaker",
+            "text": "SHIP COMPUTER",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 400.0,
+                "y": 637.3333129882813,
+                "width": 765.3333740234375,
+                "height": 16.0
+            }
+        }
+    ]
+}

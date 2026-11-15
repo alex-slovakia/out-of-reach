@@ -1,0 +1,10 @@
+Batch-only normal focus callback, temporary input settings and virtual keyboard/mouse. No control authority assigned.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 17.70000) selected=(1.20000, 0.03500, 17.70000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 19.20000) selected=(1.20000, 0.03500, 19.20000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 20.35000) selected=(1.20000, 0.03500, 20.35000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 17.70000) selected=(1.20000, 0.03500, 17.70000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 19.20000) selected=(1.20000, 0.03500, 19.20000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 20.35000) selected=(1.20000, 0.03500, 20.35000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 17.70000) selected=(1.20000, 0.03500, 17.70000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 19.20000) selected=(1.20000, 0.03500, 19.20000); <=.30m backwards legal-position search.
+SETUP ONLY Player.Teleport requested=(1.20000, 0.03500, 20.35000) selected=(1.20000, 0.03500, 20.35000); <=.30m backwards legal-position search.

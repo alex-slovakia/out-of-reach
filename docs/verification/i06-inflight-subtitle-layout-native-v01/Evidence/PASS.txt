@@ -1,0 +1,1 @@
+Component-only actual FlightBoardView/USS: six in-flight phases x1280/960 caption/HUD bounds, departure/terminal override order and menu restoration passed. Two actual UI GPU EVA-input samples; no gameplay or real airlock transition claim.

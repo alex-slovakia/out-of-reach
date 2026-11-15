@@ -1,0 +1,263 @@
+{
+    "phase": "Survival",
+    "context": "normal",
+    "caption": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+    "width": 1280,
+    "height": 720,
+    "viewport": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 720.0
+    },
+    "overlay": {
+        "serializedVersion": "2",
+        "x": 320.0,
+        "y": 633.0,
+        "width": 924.0,
+        "height": 51.0
+    },
+    "painted": [
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label hud-phase",
+            "text": "Survive until rescue",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 30.0,
+                "width": 251.0,
+                "height": 26.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label hud-objective",
+            "text": "Manage your food, water and ship systems.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 56.0,
+                "width": 251.0,
+                "height": 19.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label simulation-timing",
+            "text": "60× simulation",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 1163.0,
+                "y": 30.0,
+                "width": 81.0,
+                "height": 18.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 546.0,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "O₂ reserve",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 547.0,
+                "width": 92.0,
+                "height": 19.0
+            }
+        },
+        {
+            "name": "resource-bar-0",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 552.0,
+                "width": 126.0,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 574.0,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "Water stores",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 575.0,
+                "width": 92.0,
+                "height": 19.0
+            }
+        },
+        {
+            "name": "resource-bar-1",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 580.0,
+                "width": 126.0,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 602.0,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "Food stores",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 603.0,
+                "width": 92.0,
+                "height": 19.0
+            }
+        },
+        {
+            "name": "resource-bar-2",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 608.0,
+                "width": 126.0,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "resource-icon",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 36.0,
+                "y": 630.0,
+                "width": 20.0,
+                "height": 20.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label resource-label",
+            "text": "Battery",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 64.0,
+                "y": 631.0,
+                "width": 92.0,
+                "height": 19.0
+            }
+        },
+        {
+            "name": "resource-bar-3",
+            "classes": "unity-progress-bar gauge-bar",
+            "text": "",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 156.0,
+                "y": 636.0,
+                "width": 126.0,
+                "height": 8.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-button systems-button",
+            "text": "Tab  Systems",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 60.0,
+                "y": 662.0,
+                "width": 87.0,
+                "height": 28.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label interaction-key",
+            "text": "E",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 658.0,
+                "y": 386.0,
+                "width": 28.0,
+                "height": 28.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label interaction-text",
+            "text": "Close outer hatch and repressurize.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 696.0,
+                "y": 388.0,
+                "width": 274.0,
+                "height": 24.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-text",
+            "text": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 399.0,
+                "y": 653.0,
+                "width": 767.0,
+                "height": 27.0
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-speaker",
+            "text": "SHIP COMPUTER",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 399.0,
+                "y": 637.0,
+                "width": 767.0,
+                "height": 16.0
+            }
+        }
+    ]
+}

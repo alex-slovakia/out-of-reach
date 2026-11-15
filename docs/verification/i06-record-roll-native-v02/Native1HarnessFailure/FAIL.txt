@@ -1,0 +1,3 @@
+System.TimeoutException: Actual Plan again replaces session
+  at FlightRecorderRollNativeDriver+<Wait>d__43.MoveNext () [0x00038] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\FlightRecorderRollNative\FlightRecorderRollNative.cs:375 
+  at FlightRecorderRollNativeDriver+<Start>d__26.MoveNext () [0x0006a] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\FlightRecorderRollNative\FlightRecorderRollNative.cs:167 

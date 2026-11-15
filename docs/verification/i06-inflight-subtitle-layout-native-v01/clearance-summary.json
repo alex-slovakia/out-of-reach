@@ -1,0 +1,100 @@
+[
+  {
+    "phase": "Emergency",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Emergency",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Eva",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Eva",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Intro",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Intro",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Intro",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Intro",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Repair",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Repair",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Survival",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Survival",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  },
+  {
+    "phase": "Transmission",
+    "width": 1280,
+    "minHorizontalClearancePanelUnits": 117.0,
+    "minHorizontalClearanceRenderedPixels": 117.0,
+    "captionRenderedHeight": 27.0
+  },
+  {
+    "phase": "Transmission",
+    "width": 960,
+    "minHorizontalClearancePanelUnits": 117.33334350585938,
+    "minHorizontalClearanceRenderedPixels": 88.00000762939453,
+    "captionRenderedHeight": 20.000015258789062
+  }
+]

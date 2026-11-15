@@ -1,0 +1,47 @@
+{
+    "phase": "Intro",
+    "context": "departure",
+    "caption": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+    "width": 960,
+    "height": 540,
+    "viewport": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 720.0
+    },
+    "overlay": {
+        "serializedVersion": "2",
+        "x": 230.6666717529297,
+        "y": 604.0,
+        "width": 818.6666870117188,
+        "height": 50.66668701171875
+    },
+    "painted": [
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-text",
+            "text": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 257.3333435058594,
+                "y": 624.0,
+                "width": 765.3333740234375,
+                "height": 26.66668701171875
+            }
+        },
+        {
+            "name": "",
+            "classes": "unity-text-element unity-label subtitle-speaker",
+            "text": "SHIP COMPUTER",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 257.3333435058594,
+                "y": 608.0,
+                "width": 765.3333740234375,
+                "height": 16.0
+            }
+        }
+    ]
+}

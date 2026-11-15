@@ -15,7 +15,7 @@ namespace OutOfReach.Presentation.UI.Report
             return label;
         }
 
-        public static VisualElement Section(MissionReportSection section, int ordinal)
+        public static VisualElement Section(MissionReportSection section, int ordinal, Action<string> sourceRequested = null)
         {
             var element = new VisualElement
             {
@@ -46,7 +46,21 @@ namespace OutOfReach.Presentation.UI.Report
                 row.Add(Text(line.Label, "recorder-label"));
                 var value = Text(line.Value, "recorder-value");
                 value.selection.isSelectable = true;
-                row.Add(value);
+                if (sourceRequested != null && TrySourceUrl(line.Value, out string sourceUrl))
+                {
+                    var valueGroup = new VisualElement();
+                    valueGroup.AddToClassList("recorder-linked-value");
+                    valueGroup.Add(value);
+                    var source = new Button(() => sourceRequested(sourceUrl))
+                    {
+                        text = "Open NASA source (browser)", tooltip = sourceUrl,
+                        name = "reportSourceLink"
+                    };
+                    source.AddToClassList("recorder-source-link");
+                    valueGroup.Add(source);
+                    row.Add(valueGroup);
+                }
+                else row.Add(value);
                 element.Add(row);
             }
 
@@ -65,6 +79,23 @@ namespace OutOfReach.Presentation.UI.Report
                 case "time-compression": return "GAMEPLAY TIME COMPRESSION";
                 default: return null;
             }
+        }
+
+        public static bool TrySourceUrl(string text, out string url)
+        {
+            url = null;
+            if (string.IsNullOrWhiteSpace(text)) return false;
+            int start = text.IndexOf("https://", StringComparison.OrdinalIgnoreCase);
+            if (start < 0) return false;
+            int end = start;
+            while (end < text.Length && !char.IsWhiteSpace(text[end])) end++;
+            string candidate = text.Substring(start, end - start).TrimEnd('.', ',', ';', ')', ']');
+            if (!Uri.TryCreate(candidate, UriKind.Absolute, out Uri uri)
+                || uri.Scheme != Uri.UriSchemeHttps || uri.UserInfo.Length != 0
+                || !(uri.Host.Equals("nasa.gov", StringComparison.OrdinalIgnoreCase)
+                    || uri.Host.EndsWith(".nasa.gov", StringComparison.OrdinalIgnoreCase))) return false;
+            url = uri.AbsoluteUri;
+            return true;
         }
 
         public static string ElapsedTime(double seconds)

@@ -347,6 +347,8 @@ namespace OutOfReach.Presentation.UI
         {
             root.EnableInClassList("report-visible", current == GamePhase.Report);
             root.EnableInClassList("intro-active", current == GamePhase.Intro);
+            root.EnableInClassList("in-flight-active", current != GamePhase.Planning
+                && current != GamePhase.Outcome && current != GamePhase.Report);
             root.EnableInClassList("survival-active", current == GamePhase.Survival);
             // Move the existing authoritative Water readout; keep its value/binding and other phase layouts.
             VisualElement water = hudResources[1].parent;

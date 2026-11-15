@@ -1,0 +1,2 @@
+AIRLOCK_CYAN_NATIVE_QA_PASS B24 NOT REPRODUCED in three genuine pressure states and legal near-panel actual-input sweeps; samples=81, max cyan ROI fraction=0.0016217912946428572. Review retained PNGs; never a fixed claim. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\.local/airlock-cyan-native-qa\20261115T012535763Z
+Exit code: 0

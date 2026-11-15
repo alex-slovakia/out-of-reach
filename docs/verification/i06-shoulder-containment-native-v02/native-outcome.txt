@@ -1,0 +1,2 @@
+SHOULDER_CONTAINMENT_NATIVE_QA_PASS Actual saved-scene eight shoulder pushes and central portal passed; no escape reproduced. See exact traces/captures. Intro layout coverage1280=True,960=True; not whole-hull, full-route or B24 acceptance. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\.local/shoulder-containment-native-qa\20261115T011356369Z
+Exit code: 0

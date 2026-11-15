@@ -1,0 +1,38 @@
+{
+  "run": "20261115T014513009Z",
+  "authority": "Native pre-run Assets snapshot, exact unchanged Assets verified at finish",
+  "files": [
+    {
+      "path": "Assets/Editor/FlightRecorderRollNative/FlightRecorderRollNative.cs",
+      "sha256": "e6104fa04d8e47264f4c2d31a53f541e816291dc73b40eb458ef4b9b507f5bb6"
+    },
+    {
+      "path": "Assets/Editor/FlightRecorderRollNative/OutOfReach.FlightRecorderRollNative.Editor.asmdef",
+      "sha256": "175ebf68931fd789dea3ec0fd5f23b0f80e755db1552f2034922c3f3a7a1e3d7"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "sha256": "b4d1cde9eef3b9c9039de7a4fab2804d863a69db7ce756f201b6bb0a6f30ec8f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs",
+      "sha256": "69a2bf19de5969410a9adc378c04cd789fed1be879362fa793f2e8c7b58b0039"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Core/Runtime/MissionRuntime.cs",
+      "sha256": "afda6b5ce5c166cefbe68f6f7f330b6d59c5a2586b648c124df654d5cc13cfa1"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorder.uss",
+      "sha256": "f3fa463e1f9d9a5e88a8f6c82eac84141b7ee347965ed5749dab3171db7d7708"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderElements.cs",
+      "sha256": "7560cbe971a420942050a1d6ab4cbfd4e8737562e1972a56f2514fe94f8bf8a1"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs",
+      "sha256": "dad9f64b058e036c381f7da5bb06dc39f409f6cbd0934847908943cc7800438b"
+    }
+  ]
+}

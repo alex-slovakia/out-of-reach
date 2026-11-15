@@ -1,0 +1,5 @@
+{
+    "tested1280": true,
+    "tested960": true,
+    "limitation": "Only actual naturally active recorded Intro cue; any missing resolution needs a separate fixture. No cue publication, replay, paused dialogue clock or timing change."
+}

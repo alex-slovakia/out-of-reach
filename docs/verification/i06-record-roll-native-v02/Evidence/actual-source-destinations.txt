@@ -1,0 +1,3 @@
+https://ssd-api.jpl.nasa.gov/doc/horizons.html
+https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/
+https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf

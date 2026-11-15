@@ -1,0 +1,173 @@
+{
+  "run": "20261115T014429621Z",
+  "assertions": 696,
+  "exitCode": 0,
+  "scope": "component layout only",
+  "files": [
+    {
+      "path": "clearance-summary.json",
+      "bytes": 2941,
+      "sha256": "96cbe3bf6d90d01dca2dcb3b25436ddfd8c51a1b95006a1ae3a29261ae501bd4"
+    },
+    {
+      "path": "Evidence/assets-before.json",
+      "bytes": 432355,
+      "sha256": "504adabb9b7ac979df70a3ec278b05dcb3f8989242a92282bb2be156e94def54"
+    },
+    {
+      "path": "Evidence/checks.jsonl",
+      "bytes": 123984,
+      "sha256": "ce72040c21609dc50a6c08ad00290396934169f2d6db81be7ffffe0a28588e2f"
+    },
+    {
+      "path": "Evidence/editor-environment-errors.txt",
+      "bytes": 965,
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85"
+    },
+    {
+      "path": "Evidence/Emergency-normal-1280-bounds.json",
+      "bytes": 6058,
+      "sha256": "9abf8ed5e6185e4913e3765930be47b2937dad6808fabd2dd3d1793b04afbea6"
+    },
+    {
+      "path": "Evidence/Emergency-normal-960-bounds.json",
+      "bytes": 6418,
+      "sha256": "1b80b5305edf335103d90249ebfd88df95fe2fc43130d564ae9691d06e46f1d2"
+    },
+    {
+      "path": "Evidence/eva-component-1280.png",
+      "bytes": 72820,
+      "sha256": "91b188062a8e93ea9478f2d4fc3bb1dcd22651f5e2c3dc2de3dcab833240014d"
+    },
+    {
+      "path": "Evidence/eva-component-960.png",
+      "bytes": 48942,
+      "sha256": "35265a4823459712babae7943f86891611d8d2b17f61d8891ccd7df5d0560a45"
+    },
+    {
+      "path": "Evidence/Eva-normal-1280-bounds.json",
+      "bytes": 6426,
+      "sha256": "8e93d8576aaba677bbd9728d4c33d19ab8007b6a6a4a58a19e954e14c649ad4b"
+    },
+    {
+      "path": "Evidence/Eva-normal-960-bounds.json",
+      "bytes": 6810,
+      "sha256": "11c7a0cb40b8ee5e500b332a9c214d5ca5f50a8f1c9d77895d180595c352c358"
+    },
+    {
+      "path": "Evidence/i06-inflight-subtitle-layout-1.log",
+      "bytes": 35814,
+      "sha256": "290a85f117b7aa41bf02265db0410f3918576f950ad63a99348a43803043aeb9"
+    },
+    {
+      "path": "Evidence/i06-inflight-subtitle-layout-1.log.exitcode",
+      "bytes": 3,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "path": "Evidence/Intro-departure-1280-bounds.json",
+      "bytes": 1295,
+      "sha256": "af75eb6862f03a206092bf566fc9207370103052536571cd6e5cdcaaf1b75854"
+    },
+    {
+      "path": "Evidence/Intro-departure-960-bounds.json",
+      "bytes": 1392,
+      "sha256": "b04ea21d820a255cb4f65f45216b62c4ce7a602025fcd1a7976c5056cf6b9790"
+    },
+    {
+      "path": "Evidence/Intro-menu-restored-1280-bounds.json",
+      "bytes": 6424,
+      "sha256": "d9061059d26373700ae1cb3541ca4f616b3cd48899fc58c5ffceea59d221af71"
+    },
+    {
+      "path": "Evidence/Intro-menu-restored-960-bounds.json",
+      "bytes": 6810,
+      "sha256": "d39ca5d175301dfcbdce62e3d0425d3e4fb585c42070ca77634a4145454841b2"
+    },
+    {
+      "path": "Evidence/Intro-normal-1280-bounds.json",
+      "bytes": 6417,
+      "sha256": "6114edc1ae566748c2ded32cf2103b51bb3905de69cf2525537f2a3168cba29f"
+    },
+    {
+      "path": "Evidence/Intro-normal-960-bounds.json",
+      "bytes": 6803,
+      "sha256": "632bd5dc84d6e2fd878a096f1b9bd3554c610541e177d993696b1b2643e8499e"
+    },
+    {
+      "path": "Evidence/Intro-physical-terminal-plus-departure-1280-bounds.json",
+      "bytes": 1318,
+      "sha256": "c90a77c9af695d56a6fbd67bc4834e718589e78c8afb55914b8135d011ed0cd6"
+    },
+    {
+      "path": "Evidence/Intro-physical-terminal-plus-departure-960-bounds.json",
+      "bytes": 1425,
+      "sha256": "68cb488a70e03e83d59111df10c946fb48387ff7fa01fb7b7062d02e8eb4f10b"
+    },
+    {
+      "path": "Evidence/Intro-restored-normal-1280-bounds.json",
+      "bytes": 6426,
+      "sha256": "33910df94ad9976b0256306410d73fe8115804fa285ceb657cb39a94cfb6e2cd"
+    },
+    {
+      "path": "Evidence/Intro-restored-normal-960-bounds.json",
+      "bytes": 6812,
+      "sha256": "adc8638fb4c6594d06fab9a386687df64d76350a7c7a507c9ff4128f817af19b"
+    },
+    {
+      "path": "Evidence/PASS.txt",
+      "bytes": 239,
+      "sha256": "99286b9d542e6aacf3dcb2b42bb8f5fe13558da0b00dc0d087fb8b26877036ae"
+    },
+    {
+      "path": "Evidence/Repair-normal-1280-bounds.json",
+      "bytes": 6052,
+      "sha256": "ebe12f2be061230387a857a53c3c998a75f6ac6c1f3382e8f44c4d61d0b23ab4"
+    },
+    {
+      "path": "Evidence/Repair-normal-960-bounds.json",
+      "bytes": 6425,
+      "sha256": "b6eafd3d1d41adc287e58131c9fb0f1b4a8def907f52f54488b2101865d303db"
+    },
+    {
+      "path": "Evidence/result.json",
+      "bytes": 435,
+      "sha256": "282a83b2815819302e0e7f481f496d187f53058459e03a10039df7f0a62ad5da"
+    },
+    {
+      "path": "Evidence/scope.txt",
+      "bytes": 587,
+      "sha256": "197c7167a41af04e72ad44051b0e94799ccaf2187a4ef3a05df55df8d97b8f01"
+    },
+    {
+      "path": "Evidence/Survival-normal-1280-bounds.json",
+      "bytes": 7414,
+      "sha256": "d0ebf3ea00567205cecadd65ea475e843459d189d07b5a8fe1b5b759ab4a43b0"
+    },
+    {
+      "path": "Evidence/Survival-normal-960-bounds.json",
+      "bytes": 7835,
+      "sha256": "8d7fb6d4e711fd470a9dd6ed52558664c379e94a375d8b03a4cedd311b0351d1"
+    },
+    {
+      "path": "Evidence/Transmission-normal-1280-bounds.json",
+      "bytes": 6054,
+      "sha256": "ae55157187b8907ef78a34f0cee0698e0c83ca446c496670d8c3019747c1cb4f"
+    },
+    {
+      "path": "Evidence/Transmission-normal-960-bounds.json",
+      "bytes": 6414,
+      "sha256": "f666ea07140fb8532038a7e4cb4b855be795b76623b76d6df6cdbc16e8a07aee"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2286,
+      "sha256": "789eb35d59811986c91a9f69251e44f37aedefe9af055474400a4d21a09df10b"
+    },
+    {
+      "path": "source-pins.json",
+      "bytes": 972,
+      "sha256": "83398ebcb42f0fd2dd7a84a55fb53f7bae86229bd5c80f880b55cefed11e19fa"
+    }
+  ]
+}

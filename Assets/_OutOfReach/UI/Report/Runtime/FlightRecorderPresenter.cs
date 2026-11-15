@@ -9,14 +9,17 @@ namespace OutOfReach.Presentation.UI.Report
     public sealed class FlightRecorderPresenter : IDisposable
     {
         private const string MarsSourceUrl = "https://science.nasa.gov/3d-resources/mars/";
-        private readonly VisualElement endCard, detail, summary, marsCredits;
+        private readonly VisualElement endCard, detail, summary, marsCredits, rollControls;
         private readonly Label endHeadline, endSummary, endEyebrow, endElapsed, detailTitle, headline, reason, elapsed;
         private readonly ScrollView record, sources;
-        private readonly Button recordButton, sourcesButton, restartButton, backButton, marsSourceButton;
+        private readonly Button recordButton, sourcesButton, restartButton, backButton, marsSourceButton, rollPauseButton, rollSkipButton;
         private bool hasReport, hasSources, showingSources, canRestart, restartPending, disposed;
         private bool reducedMotion;
         private float lastMenuFeedback = -1f;
         private IVisualElementScheduledItem entrance;
+        private IVisualElementScheduledItem recordRoll;
+        private bool finalRecord, rollPaused;
+        private double rollLastTime, rollStartsAt;
 
         public FlightRecorderPresenter(VisualElement host, StyleSheet styleSheet)
         {
@@ -60,7 +63,16 @@ namespace OutOfReach.Presentation.UI.Report
             detailTitle = FlightRecorderElements.Text(string.Empty, "recorder-detail-title");
             navigation.Add(detailTitle);
             detail.Add(navigation);
+            rollControls = Element("recordRollControls", "recorder-roll-controls");
+            rollControls.Add(FlightRecorderElements.Text("YOUR DECISIONS / THE SCIENCE BEHIND THEM", "recorder-roll-caption"));
+            rollPauseButton = Button("Pause scroll", "recordRollPauseButton", ToggleRecordRoll);
+            rollSkipButton = Button("Skip recap", "recordRollSkipButton", OnBackRequested);
+            rollControls.Add(rollPauseButton);
+            rollControls.Add(rollSkipButton);
+            detail.Add(rollControls);
             record = Scroll("missionRecord");
+            record.RegisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
+            record.RegisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
             sources = Scroll("reportSources");
             marsCredits = Element("marsImageryCredits", "recorder-section");
             marsCredits.Add(FlightRecorderElements.Text("Mars surface imagery", "recorder-section-title"));
@@ -95,6 +107,8 @@ namespace OutOfReach.Presentation.UI.Report
             RegisterFeedback(sourcesButton);
             RegisterFeedback(restartButton);
             RegisterFeedback(backButton);
+            RegisterFeedback(rollPauseButton);
+            RegisterFeedback(rollSkipButton);
             Clear();
         }
 
@@ -104,9 +118,11 @@ namespace OutOfReach.Presentation.UI.Report
 
         public void SetReducedMotion(bool reduced)
         {
+            bool newlyReduced = reduced && !reducedMotion;
             reducedMotion = reduced;
             Root.EnableInClassList("recorder-reduced", reduced);
             if (reduced) { entrance?.Pause(); endCard.RemoveFromClassList("recorder-entering"); }
+            if (newlyReduced) PauseRecordRoll();
         }
 
         /// <summary>Copies snapshot text; Configure always starts on the end card, never the detailed record.</summary>
@@ -116,6 +132,7 @@ namespace OutOfReach.Presentation.UI.Report
             Clear();
             if (report == null) return;
             hasReport = true;
+            finalRecord = report.IsFinal;
             endHeadline.text = FlightRecorderEndCardCopy.Headline(report);
             endSummary.text = FlightRecorderEndCardCopy.Summary(report);
             endEyebrow.text = report.Outcome == MissionOutcome.Recovered ? "CREW RECOVERED"
@@ -135,9 +152,9 @@ namespace OutOfReach.Presentation.UI.Report
                 for (int i = 0; i < sections.Count; i++)
                 {
                     MissionReportSection section = sections[i];
-                    record.Add(FlightRecorderElements.Section(section, i + 1));
+                    record.Add(FlightRecorderElements.Section(section, i + 1, OnReportSourceRequested));
                     if (FlightRecorderElements.Classification(section.Id) == null) continue;
-                    sources.Add(FlightRecorderElements.Section(section, i + 1));
+                    sources.Add(FlightRecorderElements.Section(section, i + 1, OnReportSourceRequested));
                     hasSources = true;
                 }
             }
@@ -163,10 +180,12 @@ namespace OutOfReach.Presentation.UI.Report
         public void Clear()
         {
             if (disposed) return;
+            StopRecordRoll();
             entrance?.Pause();
             entrance = null;
             endCard.RemoveFromClassList("recorder-entering");
             hasReport = hasSources = showingSources = canRestart = restartPending = false;
+            finalRecord = false;
             record.Clear();
             sources.Clear();
             marsSourceButton.SetEnabled(false);
@@ -176,6 +195,7 @@ namespace OutOfReach.Presentation.UI.Report
             Root.RemoveFromClassList("recorder-lost");
             Show(Root, false);
             Show(detail, false);
+            Show(rollControls, false);
             Show(record, false);
             Show(sources, false);
             Show(endCard, true);
@@ -199,6 +219,8 @@ namespace OutOfReach.Presentation.UI.Report
             Clear();
             disposed = true;
             Root.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            record.UnregisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
+            record.UnregisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
             recordButton.clicked -= OnRecordRequested;
             sourcesButton.clicked -= OnSourcesRequested;
             restartButton.clicked -= OnRestartRequested;
@@ -239,23 +261,92 @@ namespace OutOfReach.Presentation.UI.Report
 
         private void OpenDetail(bool sourceView)
         {
+            StopRecordRoll();
             showingSources = sourceView;
             Show(endCard, false);
             Show(detail, true);
             Show(record, !sourceView);
             Show(sources, sourceView);
+            Show(rollControls, !sourceView && finalRecord);
             detailTitle.text = sourceView ? "Sources & assumptions" : "Mission record";
             (sourceView ? sources : record).scrollOffset = Vector2.zero;
             backButton.Focus();
+            if (!sourceView && finalRecord) StartRecordRoll();
         }
 
         private void ShowEndCard(bool restoreFocus)
         {
+            StopRecordRoll();
             Show(detail, false);
             Show(record, false);
             Show(sources, false);
+            Show(rollControls, false);
             Show(endCard, true);
             if (restoreFocus) (showingSources ? sourcesButton : recordButton).Focus();
+        }
+
+        private void StartRecordRoll()
+        {
+            rollPaused = reducedMotion;
+            rollLastTime = Time.realtimeSinceStartupAsDouble;
+            rollStartsAt = rollLastTime + 1.5d;
+            rollPauseButton.text = rollPaused ? "Start scroll" : "Pause scroll";
+            recordRoll = record.schedule.Execute(AdvanceRecordRoll).Every(16);
+        }
+
+        private void AdvanceRecordRoll()
+        {
+            double now = Time.realtimeSinceStartupAsDouble;
+            double delta = Math.Min(.1d, Math.Max(0d, now - rollLastTime));
+            rollLastTime = now;
+            if (disposed || rollPaused || now < rollStartsAt || !hasReport || showingSources
+                || Root.panel == null || Root.ClassListContains("recorder-hidden")
+                || detail.ClassListContains("recorder-hidden")) return;
+            float bottom = record.verticalScroller.highValue;
+            if (float.IsNaN(bottom) || float.IsInfinity(bottom) || bottom <= 0f) return;
+            float next = Mathf.Min(bottom, record.scrollOffset.y + (float)delta * 24f);
+            record.scrollOffset = new Vector2(0f, next);
+            if (next >= bottom - .5f)
+            {
+                PauseRecordRoll();
+                rollPauseButton.text = "Replay scroll";
+            }
+        }
+
+        private void ToggleRecordRoll()
+        {
+            if (disposed || !hasReport || showingSources || detail.ClassListContains("recorder-hidden")) return;
+            if (!rollPaused) { PauseRecordRoll(); return; }
+            if (record.scrollOffset.y >= record.verticalScroller.highValue - .5f)
+                record.scrollOffset = Vector2.zero;
+            rollPaused = false;
+            rollLastTime = Time.realtimeSinceStartupAsDouble;
+            rollStartsAt = rollLastTime + .3d;
+            rollPauseButton.text = "Pause scroll";
+        }
+
+        private void PauseRecordRoll()
+        {
+            rollPaused = true;
+            if (rollPauseButton != null) rollPauseButton.text = "Continue scroll";
+        }
+
+        private void StopRecordRoll()
+        {
+            recordRoll?.Pause();
+            recordRoll = null;
+            rollPaused = true;
+        }
+
+        private void OnRecordWheel(WheelEvent evt) => PauseRecordRoll();
+        private void OnRecordPointerDown(PointerDownEvent evt) => PauseRecordRoll();
+
+        private void OnReportSourceRequested(string url)
+        {
+            if (disposed || !hasReport || detail.ClassListContains("recorder-hidden")
+                || !FlightRecorderElements.TrySourceUrl(url, out string approvedUrl)) return;
+            PauseRecordRoll();
+            Application.OpenURL(approvedUrl);
         }
 
         private void OnRestartRequested()

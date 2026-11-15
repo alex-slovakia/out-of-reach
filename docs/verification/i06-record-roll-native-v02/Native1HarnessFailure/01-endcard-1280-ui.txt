@@ -1,0 +1,20 @@
+UIDocumentRootElement MissionFlightBoard-container (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement mission-flight-board (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement i01-session-controls (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement mission-record-host (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement flightRecorder (x:0.00, y:0.00, width:1280.00, height:720.00) 
+ReportShade reportReadabilityShade (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement reportEndCard (x:80.00, y:46.00, width:1120.00, height:638.00) 
+VisualElement reportMasthead (x:80.00, y:46.00, width:1120.00, height:33.00) 
+Label  (x:82.00, y:50.00, width:96.00, height:27.00) OUT OF REACH
+Label  (x:1041.00, y:52.00, width:155.00, height:23.00) AURORA-7  /  FLIGHT RECORDER
+VisualElement reportHero (x:80.00, y:79.00, width:520.00, height:563.00) 
+Label  (x:82.00, y:163.00, width:110.00, height:24.00) FLIGHT ENDED
+Label  (x:77.00, y:209.00, width:323.00, height:93.00) Out of time.
+Label  (x:82.00, y:318.00, width:418.00, height:32.00) Carbon dioxide: the cabin reached the emergency level.
+VisualElement reportEndActions (x:80.00, y:382.00, width:166.00, height:180.00) 
+Button missionRecordButton (x:65.00, y:382.00, width:181.00, height:42.00) Mission record
+Button reportSourcesButton (x:65.00, y:427.00, width:101.00, height:42.00) Sources
+Button reportRestartButton (x:65.00, y:472.00, width:123.00, height:42.00) Plan again
+Button reportQuitButton (x:65.00, y:517.00, width:166.00, height:42.00) Quit to desktop
+Label  (x:82.00, y:646.00, width:1114.00, height:36.00) ELAPSED SIMULATION TIME  0D 20H 29M 29S

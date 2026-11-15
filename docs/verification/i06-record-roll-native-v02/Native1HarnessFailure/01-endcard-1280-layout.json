@@ -1,0 +1,64 @@
+{
+    "width": 1280,
+    "height": 720,
+    "root": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1280.0,
+        "height": 720.0
+    },
+    "scrollViewport": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 0.0,
+        "height": 0.0
+    },
+    "controls": [
+        {
+            "name": "missionRecordButton",
+            "text": "Mission record",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 65.0,
+                "y": 382.0,
+                "width": 181.0,
+                "height": 42.0
+            }
+        },
+        {
+            "name": "reportSourcesButton",
+            "text": "Sources",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 65.0,
+                "y": 427.0,
+                "width": 101.0,
+                "height": 42.0
+            }
+        },
+        {
+            "name": "reportRestartButton",
+            "text": "Plan again",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 65.0,
+                "y": 472.0,
+                "width": 123.0,
+                "height": 42.0
+            }
+        },
+        {
+            "name": "reportQuitButton",
+            "text": "Quit to desktop",
+            "bounds": {
+                "serializedVersion": "2",
+                "x": 65.0,
+                "y": 517.0,
+                "width": 166.0,
+                "height": 42.0
+            }
+        }
+    ]
+}

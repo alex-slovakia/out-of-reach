@@ -1,0 +1,16 @@
+{"name":"normal24px-per-second","realSeconds":1.1007937999999982,"before":2.3050224781036379,"after":28.501903533935548,"rate":23.798171997070314,"bottom":5720.57080078125}
+{"name":"explicit-pause","realSeconds":0.45,"before":28.501903533935548,"after":28.501903533935548,"rate":0.0,"bottom":5720.57080078125}
+{"name":"continue","realSeconds":0.7505836000000059,"before":31.216978073120118,"after":49.26679992675781,"rate":24.047718048095704,"bottom":5720.57080078125}
+{"name":"wheel-pause","realSeconds":0.35,"before":49.26679992675781,"after":49.26679992675781,"rate":0.0,"bottom":5720.57080078125}
+{"name":"resume-after-wheel","realSeconds":0.6012097999999995,"before":51.571563720703128,"after":65.8523941040039,"rate":23.753488540649415,"bottom":5720.57080078125}
+{"name":"pointer-pause","realSeconds":0.35,"before":65.8523941040039,"after":65.8523941040039,"rate":0.0,"bottom":5720.57080078125}
+{"name":"natural-end","realSeconds":0.3,"before":5720.2216796875,"after":5720.2216796875,"rate":0.0,"bottom":5720.57080078125}
+{"name":"replay","realSeconds":0.600317099999998,"before":2.683734893798828,"after":16.889162063598634,"rate":23.663204193115236,"bottom":5720.57080078125}
+{"name":"skip-cancels-hidden-roll","realSeconds":0.35,"before":16.889162063598634,"after":16.889162063598634,"rate":0.0,"bottom":6311.99951171875}
+{"name":"source-view-does-not-scroll","realSeconds":0.5,"before":0.0,"after":0.0,"rate":0.0,"bottom":2648.5712890625}
+{"name":"reduced-no-auto-start","realSeconds":1.7,"before":0.0,"after":0.0,"rate":0.0,"bottom":5720.57080078125}
+{"name":"reduced-explicit-start","realSeconds":0.6008219999999938,"before":2.3036446571350099,"after":16.5451717376709,"rate":23.703405380249025,"bottom":5720.57080078125}
+{"name":"repeated-reduced-setting-preserves-opt-in","realSeconds":0.6003519999999938,"before":16.5451717376709,"after":31.224912643432618,"rate":24.45189094543457,"bottom":5720.57080078125}
+{"name":"clear-stops-scheduler","realSeconds":0.35,"before":0.0,"after":0.0,"rate":0.0,"bottom":0.0}
+{"name":"dispose-stops-detached-scheduler","realSeconds":0.35,"before":4.613270282745361,"after":4.613270282745361,"rate":0.0,"bottom":5720.57080078125}
+{"name":"rebind-single-scheduler","realSeconds":0.700375600000001,"before":4.9794793128967289,"after":21.570158004760743,"rate":23.68825912475586,"bottom":5720.57080078125}

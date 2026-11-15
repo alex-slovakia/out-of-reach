@@ -141,7 +141,7 @@ namespace OutOfReach.Composition.Editor
                 Target(anchors.LifeSupportRepair, InteractionIds.RepairLifeSupport, new Vector3(0, .3f, .18f)),
                 Target(suitStation, InteractionIds.SuitLocker, new Vector3(0, 0, .12f)),
                 Target(airlockPanel, InteractionIds.AirlockControls, new Vector3(0, 0, -.10f)),
-                Target(anchors.AirlockOuter, InteractionIds.EvaExit, new Vector3(0, 1.4f, -.35f)),
+                Target(anchors.AirlockOuter, InteractionIds.EvaExit, new Vector3(0, 1.4f, -.15f)),
                 Target(anchors.EvaReturn, InteractionIds.EvaReturn, new Vector3(0, 1.4f, 0)),
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
             };

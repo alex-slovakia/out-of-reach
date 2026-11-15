@@ -1,0 +1,162 @@
+{"utc":"2026-11-15T01:45:20.1777390Z","stage":"opening saved Bootstrap","message":"Saved scene has the actual cinematic owner.","pass":true}
+{"utc":"2026-11-15T01:45:25.9718798Z","stage":"actual Bootstrap recovery","message":"Actual saved session menu, UIDocument and camera available","pass":true}
+{"utc":"2026-11-15T01:45:25.9750155Z","stage":"actual Bootstrap recovery","message":"Normal runtime Update retained throughout real loss setup","pass":true}
+{"utc":"2026-11-15T01:45:25.9791157Z","stage":"disclosed real report setup","message":"Actual visible enabled UI action exists: ","pass":true}
+{"utc":"2026-11-15T01:45:26.1918775Z","stage":"disclosed real report setup","message":"Real valid planner launch: AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-15T01:45:26.2348199Z","stage":"disclosed real report setup","message":"Disclosed actual transport Skip","pass":true}
+{"utc":"2026-11-15T01:45:27.1283009Z","stage":"disclosed real report setup","message":"Actual incident without repair: Cockpit check complete. Impact detected.","pass":true}
+{"utc":"2026-11-15T01:45:27.1437279Z","stage":"disclosed real report setup","message":"Disclosed actual Impact Skip","pass":true}
+{"utc":"2026-11-15T01:45:27.2106329Z","stage":"disclosed real report setup","message":"Real accounted resource depletion: Simulation advanced.","pass":true}
+{"utc":"2026-11-15T01:45:27.2111372Z","stage":"disclosed real report setup","message":"Real depleted resources produce Lost","pass":true}
+{"utc":"2026-11-15T01:45:27.2476117Z","stage":"disclosed real report setup","message":"Disclosed actual loss ending Skip","pass":true}
+{"utc":"2026-11-15T01:45:27.3154908Z","stage":"disclosed real report setup","message":"Actual final Lost report and existing presenter; no fabricated outcome/report","pass":true}
+{"utc":"2026-11-15T01:45:27.3170117Z","stage":"disclosed real report setup","message":"Exactly one actual report presenter subtree","pass":true}
+{"utc":"2026-11-15T01:45:27.3180188Z","stage":"disclosed real report setup","message":"First view remains restrained end card","pass":true}
+{"utc":"2026-11-15T01:45:28.1564949Z","stage":"disclosed real report setup","message":"Visible report navigation fits actual viewport 1280: missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1575043Z","stage":"disclosed real report setup","message":"Visible report control has usable rendered height missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1580125Z","stage":"disclosed real report setup","message":"Visible report navigation fits actual viewport 1280: reportSourcesButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1595295Z","stage":"disclosed real report setup","message":"Visible report control has usable rendered height reportSourcesButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1600570Z","stage":"disclosed real report setup","message":"Visible report navigation fits actual viewport 1280: reportRestartButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1610977Z","stage":"disclosed real report setup","message":"Visible report control has usable rendered height reportRestartButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1621084Z","stage":"disclosed real report setup","message":"Visible report navigation fits actual viewport 1280: reportQuitButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1621084Z","stage":"disclosed real report setup","message":"Visible report control has usable rendered height reportQuitButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1636174Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: missionRecordButton/reportSourcesButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1646285Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: missionRecordButton/reportRestartButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1656303Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: missionRecordButton/reportQuitButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1666582Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: reportSourcesButton/reportRestartButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1671846Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: reportSourcesButton/reportQuitButton","pass":true}
+{"utc":"2026-11-15T01:45:28.1681923Z","stage":"disclosed real report setup","message":"Visible report action bounds do not overlap: reportRestartButton/reportQuitButton","pass":true}
+{"utc":"2026-11-15T01:45:28.2622418Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:28.3753236Z","stage":"explicit final record roll","message":"Explicit Mission record opens real scroll and two controls","pass":true}
+{"utc":"2026-11-15T01:45:28.3768300Z","stage":"explicit final record roll","message":"Actual report has enough overflow to measure roll","pass":true}
+{"utc":"2026-11-15T01:45:29.2652526Z","stage":"explicit final record roll","message":"No automatic movement during initial1second of1.5second hold","pass":true}
+{"utc":"2026-11-15T01:45:29.8564382Z","stage":"explicit final record roll","message":"Actual roll begins after1.5second hold within bounded scheduler margin","pass":true}
+{"utc":"2026-11-15T01:45:30.9602643Z","stage":"explicit final record roll","message":"normal24px-per-second real scrolling rate=23.736px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:30.9607803Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:30.9655635Z","stage":"explicit final record roll","message":"Pause button changes to Continue","pass":true}
+{"utc":"2026-11-15T01:45:31.4177865Z","stage":"explicit final record roll","message":"explicit-pause retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:31.4768353Z","stage":"explicit final record roll","message":"Visible report navigation fits actual viewport 1280: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4773554Z","stage":"explicit final record roll","message":"Visible report control has usable rendered height reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4783926Z","stage":"explicit final record roll","message":"Visible report navigation fits actual viewport 1280: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4783926Z","stage":"explicit final record roll","message":"Visible report control has usable rendered height recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4793615Z","stage":"explicit final record roll","message":"Visible report navigation fits actual viewport 1280: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4793615Z","stage":"explicit final record roll","message":"Visible report control has usable rendered height recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4793615Z","stage":"explicit final record roll","message":"Visible report action bounds do not overlap: reportBackButton/recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4812723Z","stage":"explicit final record roll","message":"Visible report action bounds do not overlap: reportBackButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4822797Z","stage":"explicit final record roll","message":"Visible report action bounds do not overlap: recordRollPauseButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4827857Z","stage":"explicit final record roll","message":"Actual scroll viewport retains at least120 rendered pixels at1280","pass":true}
+{"utc":"2026-11-15T01:45:31.4827857Z","stage":"explicit final record roll","message":"Actual scroll viewport fits screen at1280","pass":true}
+{"utc":"2026-11-15T01:45:31.4842942Z","stage":"explicit final record roll","message":"Fixed navigation does not overlap scroll viewport: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4842942Z","stage":"explicit final record roll","message":"Fixed navigation does not overlap scroll viewport: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:31.4858099Z","stage":"explicit final record roll","message":"Fixed navigation does not overlap scroll viewport: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:31.5753909Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:32.7268651Z","stage":"explicit final record roll","message":"continue real scrolling rate=24.057px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:32.7476821Z","stage":"explicit final record roll","message":"Actual wheel event pauses auto roll","pass":true}
+{"utc":"2026-11-15T01:45:33.0997739Z","stage":"explicit final record roll","message":"wheel-pause retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:33.1007816Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:34.1037342Z","stage":"explicit final record roll","message":"resume-after-wheel real scrolling rate=23.662px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:34.1259268Z","stage":"explicit final record roll","message":"Actual pointer-down event pauses auto roll","pass":true}
+{"utc":"2026-11-15T01:45:34.4779823Z","stage":"explicit final record roll","message":"pointer-pause retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:34.4827793Z","stage":"explicit final record roll","message":"Actual wheel navigation reaches report end","pass":true}
+{"utc":"2026-11-15T01:45:34.4858107Z","stage":"explicit final record roll","message":"Actual upward wheel creates a finite final section to roll","pass":true}
+{"utc":"2026-11-15T01:45:34.4873257Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:35.5283258Z","stage":"explicit final record roll","message":"Auto roll stops at true report bottom","pass":true}
+{"utc":"2026-11-15T01:45:35.8306874Z","stage":"explicit final record roll","message":"natural-end retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:35.8316949Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:35.8357540Z","stage":"explicit final record roll","message":"Replay resets to top only on explicit button action","pass":true}
+{"utc":"2026-11-15T01:45:36.8381443Z","stage":"explicit final record roll","message":"replay real scrolling rate=24.296px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:36.8386490Z","stage":"explicit final record roll","message":"Actual visible enabled UI action exists: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:36.8478364Z","stage":"explicit final record roll","message":"Skip recap returns to same actual end card","pass":true}
+{"utc":"2026-11-15T01:45:36.8493631Z","stage":"explicit final record roll","message":"Skip retains actual outcome/summary without rewriting facts","pass":true}
+{"utc":"2026-11-15T01:45:37.2005704Z","stage":"explicit final record roll","message":"skip-cancels-hidden-roll retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:37.2010889Z","stage":"actual NASA source view","message":"Actual visible enabled UI action exists: reportSourcesButton","pass":true}
+{"utc":"2026-11-15T01:45:37.2239662Z","stage":"actual NASA source view","message":"Sources view is manual and does not show record-roll controls","pass":true}
+{"utc":"2026-11-15T01:45:37.2290905Z","stage":"actual NASA source view","message":"Actual report exposes its three NASA reference links","pass":true}
+{"utc":"2026-11-15T01:45:37.2300958Z","stage":"actual NASA source view","message":"Actual source button has allowed HTTPS NASA destination","pass":true}
+{"utc":"2026-11-15T01:45:37.2305999Z","stage":"actual NASA source view","message":"Actual source button destination comes verbatim from real report text","pass":true}
+{"utc":"2026-11-15T01:45:37.2316362Z","stage":"actual NASA source view","message":"Actual source button has allowed HTTPS NASA destination","pass":true}
+{"utc":"2026-11-15T01:45:37.2316362Z","stage":"actual NASA source view","message":"Actual source button destination comes verbatim from real report text","pass":true}
+{"utc":"2026-11-15T01:45:37.2326457Z","stage":"actual NASA source view","message":"Actual source button has allowed HTTPS NASA destination","pass":true}
+{"utc":"2026-11-15T01:45:37.2331527Z","stage":"actual NASA source view","message":"Actual source button destination comes verbatim from real report text","pass":true}
+{"utc":"2026-11-15T01:45:37.2331527Z","stage":"actual NASA source view","message":"Sources view preserves actual report NASA links without duplicate entries","pass":true}
+{"utc":"2026-11-15T01:45:37.2341627Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: http://nasa.gov/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2346726Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: https://nasa.gov.evil.example/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2356808Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: https://evilnasa.gov/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2356808Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: https://nasa.gov@evil.example/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2356808Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: https://user@nasa.gov/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2378036Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: javascript:alert(1)","pass":true}
+{"utc":"2026-11-15T01:45:37.2378036Z","stage":"actual NASA source view","message":"URL filter rejects unapproved scheme/host/credentials: https://example.com/?next=https://nasa.gov/x","pass":true}
+{"utc":"2026-11-15T01:45:37.2388120Z","stage":"actual NASA source view","message":"URL filter accepts explicit allowed NASA reference: https://nasa.gov/","pass":true}
+{"utc":"2026-11-15T01:45:37.2388120Z","stage":"actual NASA source view","message":"URL filter accepts explicit allowed NASA reference: NASA/JPL: https://ssd-api.jpl.nasa.gov/doc/horizons.html","pass":true}
+{"utc":"2026-11-15T01:45:37.2398128Z","stage":"actual NASA source view","message":"URL filter accepts explicit allowed NASA reference: https://science.nasa.gov/3d-resources/mars/","pass":true}
+{"utc":"2026-11-15T01:45:37.7429323Z","stage":"actual NASA source view","message":"source-view-does-not-scroll retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:37.7890098Z","stage":"actual NASA source view","message":"Visible report navigation fits actual viewport 1280: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.7890098Z","stage":"actual NASA source view","message":"Visible report control has usable rendered height reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.7905479Z","stage":"actual NASA source view","message":"Actual scroll viewport retains at least120 rendered pixels at1280","pass":true}
+{"utc":"2026-11-15T01:45:37.7915863Z","stage":"actual NASA source view","message":"Actual scroll viewport fits screen at1280","pass":true}
+{"utc":"2026-11-15T01:45:37.7925545Z","stage":"actual NASA source view","message":"Fixed navigation does not overlap scroll viewport: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9139911Z","stage":"actual NASA source view","message":"Visible report navigation fits actual viewport 960: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9145000Z","stage":"actual NASA source view","message":"Visible report control has usable rendered height reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9161154Z","stage":"actual NASA source view","message":"Actual scroll viewport retains at least120 rendered pixels at960","pass":true}
+{"utc":"2026-11-15T01:45:37.9161154Z","stage":"actual NASA source view","message":"Actual scroll viewport fits screen at960","pass":true}
+{"utc":"2026-11-15T01:45:37.9176584Z","stage":"actual NASA source view","message":"Fixed navigation does not overlap scroll viewport: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9692063Z","stage":"actual NASA source view","message":"Actual visible enabled UI action exists: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9766924Z","stage":"actual NASA source view","message":"Source Back restores end card","pass":true}
+{"utc":"2026-11-15T01:45:37.9776935Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Actual visible enabled UI action exists: missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:37.9972753Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Reduced effects starts record in manual mode","pass":true}
+{"utc":"2026-11-15T01:45:39.6994162Z","stage":"reduced motion explicit opt-in and repeat setting","message":"reduced-no-auto-start retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:39.6999468Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:40.7021087Z","stage":"reduced motion explicit opt-in and repeat setting","message":"reduced-explicit-start real scrolling rate=23.674px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:41.3038345Z","stage":"reduced motion explicit opt-in and repeat setting","message":"repeated-reduced-setting-preserves-opt-in real scrolling rate=24.353px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:41.3053409Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3636406Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report navigation fits actual viewport 960: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3651519Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report control has usable rendered height reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3651519Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report navigation fits actual viewport 960: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3664840Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report control has usable rendered height recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3664840Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report navigation fits actual viewport 960: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3674833Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report control has usable rendered height recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3679863Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report action bounds do not overlap: reportBackButton/recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3684975Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report action bounds do not overlap: reportBackButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3684975Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Visible report action bounds do not overlap: recordRollPauseButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3695014Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Actual scroll viewport retains at least120 rendered pixels at960","pass":true}
+{"utc":"2026-11-15T01:45:41.3695014Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Actual scroll viewport fits screen at960","pass":true}
+{"utc":"2026-11-15T01:45:41.3705017Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Fixed navigation does not overlap scroll viewport: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3715021Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Fixed navigation does not overlap scroll viewport: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:41.3715021Z","stage":"reduced motion explicit opt-in and repeat setting","message":"Fixed navigation does not overlap scroll viewport: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:41.4400229Z","stage":"actual presenter clear and report rebind","message":"Clear hides actual report and removes report contents","pass":true}
+{"utc":"2026-11-15T01:45:41.7927784Z","stage":"actual presenter clear and report rebind","message":"clear-stops-scheduler retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:41.8079206Z","stage":"actual presenter clear and report rebind","message":"Configure same real report starts on end card","pass":true}
+{"utc":"2026-11-15T01:45:41.8205521Z","stage":"actual presenter clear and report rebind","message":"Repeated Configure does not duplicate sections or root","pass":true}
+{"utc":"2026-11-15T01:45:41.8230720Z","stage":"component dispose and re-enable","message":"Actual visible enabled UI action exists: missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:43.5320105Z","stage":"component dispose and re-enable","message":"Actual controls disable disposes and detaches report subtree","pass":true}
+{"utc":"2026-11-15T01:45:43.8831593Z","stage":"component dispose and re-enable","message":"dispose-stops-detached-scheduler retains scroll offset without scheduler movement","pass":true}
+{"utc":"2026-11-15T01:45:43.8852050Z","stage":"component dispose and re-enable","message":"Detached old control cannot reattach disposed presenter","pass":true}
+{"utc":"2026-11-15T01:45:43.8862150Z","stage":"component dispose and re-enable","message":"Disposed presenter rejects reconfiguration","pass":true}
+{"utc":"2026-11-15T01:45:43.9023105Z","stage":"component dispose and re-enable","message":"Real re-enable creates exactly one fresh bound report presenter","pass":true}
+{"utc":"2026-11-15T01:45:43.9033208Z","stage":"component dispose and re-enable","message":"Actual visible enabled UI action exists: missionRecordButton","pass":true}
+{"utc":"2026-11-15T01:45:46.3053072Z","stage":"component dispose and re-enable","message":"rebind-single-scheduler real scrolling rate=23.561px/s, nominal24 with20% scheduler allowance; duplicate48px/s would fail","pass":true}
+{"utc":"2026-11-15T01:45:46.3078310Z","stage":"component dispose and re-enable","message":"Actual visible enabled UI action exists: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4256268Z","stage":"component dispose and re-enable","message":"Visible report navigation fits actual viewport 1280: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4266333Z","stage":"component dispose and re-enable","message":"Visible report control has usable rendered height reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4266333Z","stage":"component dispose and re-enable","message":"Visible report navigation fits actual viewport 1280: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4281399Z","stage":"component dispose and re-enable","message":"Visible report control has usable rendered height recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4286606Z","stage":"component dispose and re-enable","message":"Visible report navigation fits actual viewport 1280: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4296687Z","stage":"component dispose and re-enable","message":"Visible report control has usable rendered height recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4301744Z","stage":"component dispose and re-enable","message":"Visible report action bounds do not overlap: reportBackButton/recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4311801Z","stage":"component dispose and re-enable","message":"Visible report action bounds do not overlap: reportBackButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4321896Z","stage":"component dispose and re-enable","message":"Visible report action bounds do not overlap: recordRollPauseButton/recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4337060Z","stage":"component dispose and re-enable","message":"Actual scroll viewport retains at least120 rendered pixels at1280","pass":true}
+{"utc":"2026-11-15T01:45:46.4347201Z","stage":"component dispose and re-enable","message":"Actual scroll viewport fits screen at1280","pass":true}
+{"utc":"2026-11-15T01:45:46.4357266Z","stage":"component dispose and re-enable","message":"Fixed navigation does not overlap scroll viewport: reportBackButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4362329Z","stage":"component dispose and re-enable","message":"Fixed navigation does not overlap scroll viewport: recordRollPauseButton","pass":true}
+{"utc":"2026-11-15T01:45:46.4362329Z","stage":"component dispose and re-enable","message":"Fixed navigation does not overlap scroll viewport: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.5795316Z","stage":"component dispose and re-enable","message":"Actual visible enabled UI action exists: recordRollSkipButton","pass":true}
+{"utc":"2026-11-15T01:45:46.5886492Z","stage":"component dispose and re-enable","message":"Actual visible enabled UI action exists: reportRestartButton","pass":true}
+{"utc":"2026-11-15T01:45:47.0060311Z","stage":"component dispose and re-enable","message":"Actual restarted scene owns a live rebound menu/document/camera","pass":true}
+{"utc":"2026-11-15T01:45:47.0065360Z","stage":"component dispose and re-enable","message":"Rebound runtime exposes a genuinely different session","pass":true}
+{"utc":"2026-11-15T01:45:47.0075451Z","stage":"component dispose and re-enable","message":"Configured scene reload destroys old runtime and creates a fresh scene owner","pass":true}
+{"utc":"2026-11-15T01:45:47.0085419Z","stage":"component dispose and re-enable","message":"Restart leaves exactly one runtime and one composition owner","pass":true}
+{"utc":"2026-11-15T01:45:47.0095588Z","stage":"component dispose and re-enable","message":"Actual restart restores initial Planning mode choice","pass":true}
+{"utc":"2026-11-15T01:45:47.0110704Z","stage":"component dispose and re-enable","message":"Actual restart clears final report/scroll presentation","pass":true}
+{"utc":"2026-11-15T01:45:47.0564391Z","stage":"component dispose and re-enable","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-15T01:45:51.3905036Z","stage":"component dispose and re-enable","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}

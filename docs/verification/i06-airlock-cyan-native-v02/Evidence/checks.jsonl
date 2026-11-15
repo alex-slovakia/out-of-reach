@@ -1,0 +1,702 @@
+{"utc":"2026-11-15T01:25:42.2735138Z","stage":"opening actual saved Bootstrap","message":"Saved Bootstrap contains actual I06MarineBindings.","pass":true}
+{"utc":"2026-11-15T01:25:42.2761318Z","stage":"opening actual saved Bootstrap","message":"Saved marine bindings reference their actual console and player camera.","pass":true}
+{"utc":"2026-11-15T01:25:46.6730026Z","stage":"opening actual saved Bootstrap","message":"Saved Bootstrap and every pre-existing Assets file retain exact source hashes.","pass":true}
+{"utc":"2026-11-15T01:25:52.4484012Z","stage":"native actual Bootstrap","message":"Actual saved owners and pressure panel available.","pass":true}
+{"utc":"2026-11-15T01:25:52.4524466Z","stage":"native actual Bootstrap","message":"Normal clock/controller/input retained.","pass":true}
+{"utc":"2026-11-15T01:25:52.4529543Z","stage":"native actual Bootstrap","message":"Actual pressure panel remains active WorldSpace UI.","pass":true}
+{"utc":"2026-11-15T01:25:52.4882901Z","stage":"native actual Bootstrap","message":"Disclosed valid planner launch setup: AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-15T01:25:52.4918274Z","stage":"native actual Bootstrap","message":"Disclosed actual transport Skip","pass":true}
+{"utc":"2026-11-15T01:25:52.6554332Z","stage":"native actual Bootstrap","message":"Actual cockpit check setup: Cockpit check complete. Impact detected.","pass":true}
+{"utc":"2026-11-15T01:25:52.7288855Z","stage":"native actual Bootstrap","message":"Actual Impact requested","pass":true}
+{"utc":"2026-11-15T01:25:52.7330394Z","stage":"native actual Bootstrap","message":"Disclosed actual Impact acknowledgement","pass":true}
+{"utc":"2026-11-15T01:25:52.8383058Z","stage":"native actual Bootstrap","message":"Actual power repair cost: power distribution repaired (2 spare parts).","pass":true}
+{"utc":"2026-11-15T01:25:52.8393116Z","stage":"native actual Bootstrap","message":"Actual life-support repair cost: life support repaired (2 spare parts, 1 kWh).","pass":true}
+{"utc":"2026-11-15T01:25:52.8431522Z","stage":"native actual Bootstrap","message":"Actual suit preparation and accounting: EVA suit on. Tank: 0.3 kg oxygen.","pass":true}
+{"utc":"2026-11-15T01:25:52.8431522Z","stage":"native actual Bootstrap","message":"Real suited interior, no cinematic/pause/outcome fixture substitute","pass":true}
+{"utc":"2026-11-15T01:25:53.5400546Z","stage":"native actual Bootstrap","message":"Actual start-depressurization command: Inner hatch sealed. Depressurizing.","pass":true}
+{"utc":"2026-11-15T01:25:53.5914362Z","stage":"01-depressurizing","message":"Genuine authoritative pressure state Depressurizing","pass":true}
+{"utc":"2026-11-15T01:25:53.5941485Z","stage":"01-depressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); ","pass":true}
+{"utc":"2026-11-15T01:25:53.6315699Z","stage":"01-depressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:53.6335733Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:53.6781754Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:53.6791829Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:53.6801849Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:53.6815598Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:53.7949036Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:53.7949036Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:53.7964227Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:53.7984314Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:53.8288746Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:53.8303800Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:53.8313880Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:53.8328941Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:53.8461930Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:53.8472003Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:53.8487068Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch1 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:53.8502334Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:53.8831971Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:53.8841976Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:53.8851989Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:53.8861983Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:53.8993004Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:53.9008099Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:53.9018349Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch2 (fraction=9.6881200396825391E-06); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:53.9018349Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:53.9308874Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:53.9318953Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:53.9328958Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:53.9339052Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.0049803Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.0064859Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.0080116Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch3 (fraction=1.743861607142857E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.0085183Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.0356258Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.0366256Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.0388900Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.0393949Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.0519363Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.0534405Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.0534405Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch4 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.0549580Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.0862289Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.0877656Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.0887702Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.0908095Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.1035150Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.1055250Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.1065720Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch5 (fraction=7.5567336309523812E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.1090917Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.1423429Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.1439880Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.1455015Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.1455015Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.1610232Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.1610232Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.1635514Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch6 (fraction=0.00011044456845238095); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.1646888Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.1929888Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.1945140Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.1960483Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.1970456Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.2102687Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.2112752Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.2122783Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.2141350Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.2502324Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.2514493Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.2539738Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.2559772Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.3196412Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.3211813Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.3227107Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.3247099Z","stage":"01-depressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:54.3262181Z","stage":"01-depressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); ","pass":true}
+{"utc":"2026-11-15T01:25:54.3858988Z","stage":"01-depressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:54.3874061Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.4160560Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:54.4175751Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:54.4180841Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.4190899Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.4942679Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:54.4952740Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:54.4967795Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch0 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.4987875Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.5295164Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:54.5305231Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:54.5321076Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.5336247Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.5480034Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:54.5490104Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:54.5510407Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch1 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.5530781Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.5841136Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:54.5851237Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:54.5864934Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.5880069Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.6005697Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:54.6015771Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:54.6025764Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch2 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.6036265Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.6343669Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.6358785Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.6368852Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.6379014Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.7052193Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.7065057Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:54.7075226Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch3 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.7080293Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.7398035Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.7413449Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.7418511Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.7433667Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.7579609Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.7579609Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:54.7601035Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch4 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.7616253Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.7921275Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.7926317Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.7946377Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.7956654Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.8096589Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.8106902Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:54.8116967Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch5 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.8127446Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.8617388Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.8642513Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.8667588Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.8689403Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.8840440Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.8864107Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:54.8874230Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch6 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.8894192Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.9240297Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.9260591Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.9285798Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.9316001Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:54.9475238Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.9475238Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:54.9505428Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:54.9515510Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:54.9810930Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.9821033Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:54.9846171Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:54.9846171Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.0545361Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.0555340Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.0565335Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.0590482Z","stage":"01-depressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:55.0605539Z","stage":"01-depressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); ","pass":true}
+{"utc":"2026-11-15T01:25:55.0931742Z","stage":"01-depressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:55.0946920Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.1391580Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.1401653Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.1429149Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.1449145Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.2311988Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.2332399Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.2357569Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch0 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.2372634Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.2748109Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:55.2758149Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:55.2778204Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.2788303Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.2952227Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:55.2967613Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:55.2982708Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch1 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.3003100Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.3358206Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:55.3373276Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:55.3383600Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.3403693Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.3555551Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:55.3570689Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:55.3585798Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch2 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.3595864Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.3959065Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:55.3959065Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:55.3979365Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.3989435Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.4823683Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:55.4870221Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:55.4885368Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch3 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.4905766Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.5279651Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:55.5330145Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:55.5355306Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.5368729Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.5878024Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:55.5893196Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:55.5918441Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch4 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.5928444Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.6326733Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:55.6353030Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:55.6363045Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.6383688Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.6543239Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:55.6558321Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:55.6573477Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch5 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.6598711Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.6948607Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:55.6953671Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:55.6973820Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.6988901Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.7150768Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:55.7165862Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:55.7191012Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch6 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.7213415Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.7561835Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:55.7582998Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:55.7603495Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.7618750Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.7792188Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:55.7802260Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:55.7818003Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.7823092Z","stage":"01-depressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.8119975Z","stage":"01-depressurizing","message":"Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.8135108Z","stage":"01-depressurizing","message":"Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.8145099Z","stage":"01-depressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.8160158Z","stage":"01-depressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:55.8787767Z","stage":"01-depressurizing","message":"Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.8802816Z","stage":"01-depressurizing","message":"Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:55.8812889Z","stage":"01-depressurizing","message":"No broad cyan scene fill at 01-depressurizing-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:55.8827953Z","stage":"01-depressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:55.8838060Z","stage":"01-depressurizing","message":"Actual depressurization still pending before legitimate time advance","pass":true}
+{"utc":"2026-11-15T01:25:55.8873722Z","stage":"01-depressurizing","message":"Disclosed real remaining depressurization advance with resource accounting: Simulation advanced.","pass":true}
+{"utc":"2026-11-15T01:25:55.9175859Z","stage":"01-depressurizing","message":"Authoritative simulation clock accounts for long pressure wait","pass":true}
+{"utc":"2026-11-15T01:25:55.9190905Z","stage":"02-safe-to-exit","message":"Genuine authoritative pressure state OuterOpen","pass":true}
+{"utc":"2026-11-15T01:25:55.9206070Z","stage":"02-safe-to-exit","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); ","pass":true}
+{"utc":"2026-11-15T01:25:55.9461065Z","stage":"02-safe-to-exit","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:55.9471094Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:55.9804457Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.9814515Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:55.9827169Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:55.9832358Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.0766576Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.0776868Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.0793014Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.0803116Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.1124885Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.1130092Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.1145264Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.1160519Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.1311582Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.1326748Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.1336838Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch1 (fraction=5.8128720238095235E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.1347267Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.1628453Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.1643706Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.1653717Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.1653717Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.1812532Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.1812532Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.1829574Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch2 (fraction=0.00012982080853174603); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.1844806Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.2168092Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.2168092Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.2187293Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.2202451Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.2996770Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.3012232Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.3022320Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch3 (fraction=8.7193080357142859E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.3037832Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.3378034Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:56.3398074Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:56.3408338Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.3418429Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.3575633Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:56.3596010Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:56.3611176Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch4 (fraction=0.00011044456845238095); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.3621230Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.3963317Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:56.3988891Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:56.3994096Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.4009306Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.4188902Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:56.4204152Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:56.4219444Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch5 (fraction=0.00010850694444444444); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.4244876Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.4567802Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:56.4587921Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:56.4597912Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.4603000Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.4766818Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:56.4777501Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:56.4799066Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch6 (fraction=0.00015694754464285715); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.4814495Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.5181277Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:56.5202938Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:56.5215724Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.5236177Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.5401439Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:56.5416896Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:56.5437396Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.5447477Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.5780401Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:56.5795471Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:56.5811580Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.5831929Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.6496997Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:56.6512269Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:56.6527356Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.6537470Z","stage":"02-safe-to-exit","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:56.6552558Z","stage":"02-safe-to-exit","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); ","pass":true}
+{"utc":"2026-11-15T01:25:56.6838432Z","stage":"02-safe-to-exit","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:56.6848692Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.7151676Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.7171793Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.7176931Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.7187019Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.7975302Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.7985496Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:56.7995984Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch0 (fraction=7.16920882936508E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.8001362Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.8335032Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.8350108Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.8365269Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.8375602Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.8556429Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.8571562Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:56.8586816Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch1 (fraction=0.00028095548115079363); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.8601954Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.8932354Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.8942462Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.8958196Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.8963458Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:56.9132971Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.9148055Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:56.9158132Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch2 (fraction=0.00020926339285714285); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:56.9169402Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:56.9454139Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.9464184Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:56.9474202Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:56.9489284Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.0140757Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.0150772Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.0160947Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch3 (fraction=0.000248015873015873); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.0171031Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.0470942Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.0480974Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.0496046Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.0506463Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.0673061Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.0703858Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.0724052Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch4 (fraction=0.00021120101686507937); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.0739313Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.1143959Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:57.1169322Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:57.1184472Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.1204606Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.1377866Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:57.1418400Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:57.1443569Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch5 (fraction=0.0002499534970238095); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.1458718Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.1837789Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:57.1857909Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:57.1878202Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.1893855Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.2100719Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:57.2133792Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:57.2179327Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch6 (fraction=0.00011819506448412698); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.2229733Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.2626165Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:57.2646155Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:57.2656412Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.2671534Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.2863203Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:57.2868386Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:57.2888839Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.2914118Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.3346358Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:57.3361873Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:57.3382017Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.3405207Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.4223489Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:57.4233580Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:57.4248665Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.4274019Z","stage":"02-safe-to-exit","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:57.4294149Z","stage":"02-safe-to-exit","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); ","pass":true}
+{"utc":"2026-11-15T01:25:57.4632518Z","stage":"02-safe-to-exit","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:57.4642528Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.5089127Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:57.5104412Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:57.5129634Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.5144708Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.6065572Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:57.6080789Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:57.6095960Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch0 (fraction=0.00026157924107142856); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.6111541Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.6498431Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:57.6503634Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:57.6525820Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.6546050Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.6723185Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:57.6748534Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:57.6758507Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch1 (fraction=0.0016217912946428572); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.6773575Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.7139785Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:57.7155093Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:57.7175530Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.7185604Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.7378046Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:57.7398413Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:57.7420235Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch2 (fraction=0.001468718998015873); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.7425515Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.7797805Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.7823264Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.7838419Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.7858519Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.8732564Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.8747654Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:57.8778063Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch3 (fraction=0.0014357793898809525); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.8793251Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.9241696Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.9267059Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.9287586Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:57.9308197Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:57.9522522Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.9537671Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:57.9562784Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch4 (fraction=0.001457093253968254); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:57.9578069Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:57.9973413Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:57.9993406Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.0008498Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.0048894Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.0254732Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.0270049Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.0290255Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch5 (fraction=0.0015210348462301587); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.0315625Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.0736861Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:58.0752133Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:58.0767231Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.0792403Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.1024482Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:58.1070337Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:58.1086892Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch6 (fraction=0.000964936755952381); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.1122745Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.1749209Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:58.1764580Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:58.1774604Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.1784598Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.1966329Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:58.1996471Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:58.2011815Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.2026937Z","stage":"02-safe-to-exit","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.2375466Z","stage":"02-safe-to-exit","message":"Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:58.2396050Z","stage":"02-safe-to-exit","message":"Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:58.2406371Z","stage":"02-safe-to-exit","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.2431523Z","stage":"02-safe-to-exit","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.3205304Z","stage":"02-safe-to-exit","message":"Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:58.3227263Z","stage":"02-safe-to-exit","message":"Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:58.3242333Z","stage":"02-safe-to-exit","message":"No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.3267507Z","stage":"02-safe-to-exit","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:58.3282692Z","stage":"02-safe-to-exit","message":"Actual repressurization command while suited inside: Outer hatch closed. Repressurizing.","pass":true}
+{"utc":"2026-11-15T01:25:58.3607645Z","stage":"03-repressurizing","message":"Genuine authoritative pressure state Repressurizing","pass":true}
+{"utc":"2026-11-15T01:25:58.3612880Z","stage":"03-repressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); ","pass":true}
+{"utc":"2026-11-15T01:25:58.3987176Z","stage":"03-repressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:58.4017540Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.4493243Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:58.4508371Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:58.4518455Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.4538805Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.5605245Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:58.5627940Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:58.5638031Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.5668259Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.6145614Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:58.6176296Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:58.6196692Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.6212010Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.6429222Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:58.6439211Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:58.6464280Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch1 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.6484732Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.6913809Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:58.6923820Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:58.6943793Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.6954076Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.7144300Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:58.7154370Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:58.7179459Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch2 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.7194750Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.7574941Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:58.7585167Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:58.7610702Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.7630898Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.8597825Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:58.8612935Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:58.8627983Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch3 (fraction=1.743861607142857E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.8648338Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.9019072Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:58.9034150Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:58.9044230Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.9069395Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.9262701Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:58.9283086Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:58.9304415Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch4 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.9316743Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:58.9661061Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.9681271Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.9691379Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:58.9716532Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:58.9918410Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.9943828Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:58.9948919Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch5 (fraction=7.5567336309523812E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:58.9979135Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.0321742Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.0331807Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.0351825Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.0356894Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.0569045Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.0584174Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.0604329Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch6 (fraction=0.00011044456845238095); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.0630881Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.0962989Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.0978051Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.0993210Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.1013702Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.1233941Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.1249073Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.1269181Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.1293351Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.1631631Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:59.1646700Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:59.1651760Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.1666888Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.2448081Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:59.2468242Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch8","pass":true}
+{"utc":"2026-11-15T01:25:59.2488435Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.2503662Z","stage":"03-repressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:25:59.2528937Z","stage":"03-repressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); ","pass":true}
+{"utc":"2026-11-15T01:25:59.2818671Z","stage":"03-repressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:25:59.2823722Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.3154839Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:59.3159999Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:59.3185368Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.3200513Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.4256880Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:59.4272046Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch0","pass":true}
+{"utc":"2026-11-15T01:25:59.4287298Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch0 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.4306116Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.4674935Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:59.4684937Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:59.4700026Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.4715372Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.4927075Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:59.4948859Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch1","pass":true}
+{"utc":"2026-11-15T01:25:59.4963991Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch1 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.4989067Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.5435798Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:59.5447474Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:59.5467493Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.5492697Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.5725711Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:59.5745796Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch2","pass":true}
+{"utc":"2026-11-15T01:25:59.5770880Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch2 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.5786211Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.6208975Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:59.6225953Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:59.6235955Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.6255974Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.7214412Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:59.7236279Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch3","pass":true}
+{"utc":"2026-11-15T01:25:59.7261433Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch3 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.7281791Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.7713793Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:59.7738871Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:59.7743931Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.7764015Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.7955989Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:59.7975991Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch4","pass":true}
+{"utc":"2026-11-15T01:25:59.7991069Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch4 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.8001463Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.8384539Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:59.8394554Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:59.8414847Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.8435165Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.8656074Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:59.8666153Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch5","pass":true}
+{"utc":"2026-11-15T01:25:59.8676149Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch5 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.8700982Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.9065933Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.9075928Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.9096178Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.9111328Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.9319332Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.9339524Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch6","pass":true}
+{"utc":"2026-11-15T01:25:59.9349601Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch6 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:25:59.9374664Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:25:59.9757504Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.9772576Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:25:59.9782640Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:25:59.9797689Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:25:59.9991286Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.0001346Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.0017897Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.0037973Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.0416276Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.0431334Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.0452711Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.0473099Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.1152168Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.1162175Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.1177250Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.1187367Z","stage":"03-repressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:26:00.1211248Z","stage":"03-repressurizing","message":"Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); ","pass":true}
+{"utc":"2026-11-15T01:26:00.1536685Z","stage":"03-repressurizing","message":"Actual capsule remains nonpenetrating after setup: ","pass":true}
+{"utc":"2026-11-15T01:26:00.1546797Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.2027367Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:26:00.2037451Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:26:00.2057846Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.2067935Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.2984574Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:26:00.2994697Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch0","pass":true}
+{"utc":"2026-11-15T01:26:00.3009850Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch0 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.3025293Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.3445066Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:26:00.3460260Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:26:00.3470352Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.3485444Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.3727319Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:26:00.3737382Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch1","pass":true}
+{"utc":"2026-11-15T01:26:00.3762515Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch1 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.3772771Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.4127438Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:26:00.4152627Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:26:00.4165084Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.4174960Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.4397740Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:26:00.4402938Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch2","pass":true}
+{"utc":"2026-11-15T01:26:00.4413006Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch2 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.4433138Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.4762136Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:26:00.4772514Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:26:00.4782575Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.4792577Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.5553708Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:26:00.5563713Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch3","pass":true}
+{"utc":"2026-11-15T01:26:00.5586415Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch3 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.5586415Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.5909183Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:26:00.5919203Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:26:00.5934256Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.5949397Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.6114269Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:26:00.6134589Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch4","pass":true}
+{"utc":"2026-11-15T01:26:00.6139766Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch4 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.6159826Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.6449295Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:26:00.6459247Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:26:00.6479259Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.6489332Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.6691747Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:26:00.6701737Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch5","pass":true}
+{"utc":"2026-11-15T01:26:00.6712826Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch5 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.6732928Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.7046037Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:26:00.7061181Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:26:00.7071261Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.7081263Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.7256716Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:26:00.7276826Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch6","pass":true}
+{"utc":"2026-11-15T01:26:00.7286803Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch6 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.7297144Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.7626834Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.7641904Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.7657219Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.7667212Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.7860542Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.7871753Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch7","pass":true}
+{"utc":"2026-11-15T01:26:00.7881829Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.7900077Z","stage":"03-repressurizing","message":"Actual mouse sensitivity available","pass":true}
+{"utc":"2026-11-15T01:26:00.8489487Z","stage":"03-repressurizing","message":"Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.8520273Z","stage":"03-repressurizing","message":"Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.8535465Z","stage":"03-repressurizing","message":"Existing camera near and field of view retained","pass":true}
+{"utc":"2026-11-15T01:26:00.8555551Z","stage":"03-repressurizing","message":"Actual capsule not injected into an obstacle during sweep: ","pass":true}
+{"utc":"2026-11-15T01:26:00.9184927Z","stage":"03-repressurizing","message":"Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.9225336Z","stage":"03-repressurizing","message":"Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch8","pass":true}
+{"utc":"2026-11-15T01:26:00.9255756Z","stage":"03-repressurizing","message":"No broad cyan scene fill at 03-repressurizing-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only","pass":true}
+{"utc":"2026-11-15T01:26:00.9260832Z","stage":"03-repressurizing","message":"Actual mouse input changed player view pitch substantially","pass":true}
+{"utc":"2026-11-15T01:26:00.9286182Z","stage":"03-repressurizing","message":"All81 planned actual-input angle/position/state GPU samples completed","pass":true}
+{"utc":"2026-11-15T01:26:00.9306766Z","stage":"03-repressurizing","message":"All sweeps retain genuine running interior EVA and no terminal outcome","pass":true}
+{"utc":"2026-11-15T01:26:06.2880209Z","stage":"03-repressurizing","message":"Saved Bootstrap and every pre-existing Assets file retain exact source hashes.","pass":true}
+{"utc":"2026-11-15T01:26:10.8194464Z","stage":"03-repressurizing","message":"Saved Bootstrap and every pre-existing Assets file retain exact source hashes.","pass":true}

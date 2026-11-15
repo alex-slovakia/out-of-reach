@@ -1,0 +1,696 @@
+{"utc":"2026-11-15T01:44:42.2093143Z","stage":"actual shipped view in component fixture","message":"Actual shipped view stylesheet and PanelSettings are loaded","pass":true}
+{"utc":"2026-11-15T01:44:43.9273189Z","stage":"component Intro 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:43.9273189Z","stage":"component Intro 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:43.9311783Z","stage":"component Intro 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:43.9321847Z","stage":"component Intro 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:43.9321847Z","stage":"component Intro 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:43.9336919Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:43.9336919Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:43.9336919Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:43.9357495Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9362691Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9362691Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9372753Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9372753Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9372753Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9389969Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9389969Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9389969Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9405260Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:43.9410460Z","stage":"component Intro 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:43.9420527Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:43.9420527Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:43.9420527Z","stage":"component Intro 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:43.9435608Z","stage":"component Intro 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:43.9441883Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:43.9451964Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:43.9457029Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:43.9457029Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9472248Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9472248Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9487524Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9487524Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9497602Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9502648Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:43.9502648Z","stage":"component Intro 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:43.9512711Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:43.9512711Z","stage":"component Intro 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:43.9522715Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:43.9522715Z","stage":"component Intro 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:43.9522715Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:43.9537773Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:43.9547838Z","stage":"component Intro 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:43.9955196Z","stage":"component Emergency 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:43.9978770Z","stage":"component Emergency 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:43.9983951Z","stage":"component Emergency 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:43.9983951Z","stage":"component Emergency 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:43.9999343Z","stage":"component Emergency 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:43.9999343Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase constraint-exceeded","pass":true}
+{"utc":"2026-11-15T01:44:44.0009408Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.0009408Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0019407Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0024460Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0029640Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0029640Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0039715Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0039715Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0055705Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0055705Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0070831Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.0070831Z","stage":"component Emergency 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0080935Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.0080935Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.0090929Z","stage":"component Emergency 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.0090929Z","stage":"component Emergency 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.0105849Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase constraint-exceeded","pass":true}
+{"utc":"2026-11-15T01:44:44.0105849Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.0115915Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0120972Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0131043Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0141053Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0141053Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0141053Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0157664Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0162974Z","stage":"component Emergency 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0168141Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0168141Z","stage":"component Emergency 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0178218Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0178218Z","stage":"component Emergency 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0188220Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.0188220Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.0203286Z","stage":"component Emergency 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.0363380Z","stage":"component Repair 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.0373432Z","stage":"component Repair 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.0383448Z","stage":"component Repair 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.0383448Z","stage":"component Repair 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.0393444Z","stage":"component Repair 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.0398499Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.0408547Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.0408547Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0418614Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0418614Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0428615Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0433666Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0438720Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0448811Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0448811Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0460790Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0460790Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.0470871Z","stage":"component Repair 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0470871Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.0470871Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.0485940Z","stage":"component Repair 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.0485940Z","stage":"component Repair 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.0496015Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.0496015Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.0511075Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0511075Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0521158Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0521158Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0521158Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0541472Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0546635Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.0546635Z","stage":"component Repair 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0561747Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.0561747Z","stage":"component Repair 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0571802Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.0571802Z","stage":"component Repair 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.0581849Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.0591912Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.0591912Z","stage":"component Repair 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.1024971Z","stage":"component Eva 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.1030098Z","stage":"component Eva 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.1040161Z","stage":"component Eva 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.1051710Z","stage":"component Eva 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.1061973Z","stage":"component Eva 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.1067076Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.1067076Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.1077159Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.1077159Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1087249Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1087249Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1087249Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1102497Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1112573Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1112573Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1127675Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1132932Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1138098Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.1148178Z","stage":"component Eva 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.1160346Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.1160346Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.1175448Z","stage":"component Eva 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.1180510Z","stage":"component Eva 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.1180510Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.1180510Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.1195680Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.1205756Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1205756Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1205756Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1220813Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1226120Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1226120Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1236200Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1241260Z","stage":"component Eva 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.1241260Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1251337Z","stage":"component Eva 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.1261360Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1261360Z","stage":"component Eva 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.1261360Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.1276442Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.1276442Z","stage":"component Eva 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.1311825Z","stage":"component Eva 1280x720","message":"Native URP camera actually rendered component fixture before PNG","pass":true}
+{"utc":"2026-11-15T01:44:44.1860280Z","stage":"component Transmission 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.1870358Z","stage":"component Transmission 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.1880333Z","stage":"component Transmission 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.1880333Z","stage":"component Transmission 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.1890389Z","stage":"component Transmission 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.1895457Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.1901478Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.1901478Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1916728Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1916728Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1926813Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1926813Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1936802Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1947037Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.1947037Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.1957157Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.1967158Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.1967158Z","stage":"component Transmission 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.1977153Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.1987141Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.1992241Z","stage":"component Transmission 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.1997440Z","stage":"component Transmission 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.2012709Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.2012709Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.2022772Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2022772Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2032789Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2037860Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2047931Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2047931Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2057957Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2057957Z","stage":"component Transmission 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.2068891Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2078892Z","stage":"component Transmission 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.2083964Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2083964Z","stage":"component Transmission 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.2094033Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.2099089Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.2109148Z","stage":"component Transmission 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.2851130Z","stage":"component Survival 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.2851130Z","stage":"component Survival 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.2866193Z","stage":"component Survival 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.2876248Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.2881321Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.2886526Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.2886526Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.2896599Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.2896599Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2906627Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2906627Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2906627Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2921676Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2921676Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2936858Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2936858Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2952195Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2952195Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.2962306Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.2967512Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.2977584Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.2988577Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.2988577Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.3003780Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.3003780Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3013850Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3013850Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.3013850Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.3033234Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.3038425Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3038425Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3058895Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3064075Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3064075Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3074169Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3079244Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3079244Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3089310Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3089310Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3099310Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3109322Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3114401Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3114401Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3129494Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3139581Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.3139581Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.3139581Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.3279854Z","stage":"component Survival 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.3279854Z","stage":"component Survival 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.3294921Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3311192Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3316271Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3316271Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3341428Z","stage":"component Survival 1280x720","message":"Departure centers caption and retains letterbox margin; actual=(x:230.00, y:604.00, width:820.00, height:51.00)","pass":true}
+{"utc":"2026-11-15T01:44:44.3351496Z","stage":"component Survival 1280x720","message":"Actual departure rule hides instruments","pass":true}
+{"utc":"2026-11-15T01:44:44.3464257Z","stage":"component Survival 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.3469309Z","stage":"component Survival 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.3479381Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3484447Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3484447Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3499656Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3514940Z","stage":"component Survival 1280x720","message":"Three-class terminal override wins against in-flight/departure; actual=(x:192.00, y:662.00, width:896.00, height:51.00)","pass":true}
+{"utc":"2026-11-15T01:44:44.3596355Z","stage":"component Survival 1280x720","message":"Removing terminal context restores departure layout; actual=(x:230.00, y:604.00, width:820.00, height:51.00)","pass":true}
+{"utc":"2026-11-15T01:44:44.3723669Z","stage":"component Survival 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.3733726Z","stage":"component Survival 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.3738792Z","stage":"component Survival 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.3738792Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3754048Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3754048Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.3754048Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.3769250Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.3769250Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3779327Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3784403Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3784403Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3794478Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3804563Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3804563Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3804563Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3824832Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3824832Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.3834935Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3839982Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.3839982Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.3850046Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.3850046Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.3850046Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.3864531Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.3869573Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.3874736Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3874736Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3884824Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3884824Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3894804Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3904799Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3904799Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.3914832Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3914832Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.3927441Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3933783Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.3938966Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.3938966Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.3949081Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.3949081Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.4057535Z","stage":"component Survival 1280x720","message":"Menu hides whole flight-board caption/HUD","pass":true}
+{"utc":"2026-11-15T01:44:44.4163751Z","stage":"component Survival 1280x720","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.4178898Z","stage":"component Survival 1280x720","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.4178898Z","stage":"component Survival 1280x720","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.4194129Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.4194129Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.4209374Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.4209374Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.4209374Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.4224607Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4224607Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4224607Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4239828Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4239828Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4256019Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4266099Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4276108Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4276108Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4291196Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.4291196Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.4291196Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.4306404Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.4306404Z","stage":"component Survival 1280x720","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.4321642Z","stage":"component Survival 1280x720","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.4321642Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.4321642Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.4336866Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.4336866Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4352062Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4352062Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4362166Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4362166Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4372169Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4372169Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4387262Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.4392521Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4398545Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.4408608Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4418629Z","stage":"component Survival 1280x720","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.4423683Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.4423683Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.4435894Z","stage":"component Survival 1280x720","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.4875787Z","stage":"component Intro 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.4885867Z","stage":"component Intro 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.4885867Z","stage":"component Intro 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.4885867Z","stage":"component Intro 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.4900939Z","stage":"component Intro 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.4911030Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.4911030Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.4921635Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.4921635Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4921635Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4937064Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4942297Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4942297Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4957543Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4957543Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.4972748Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.4972748Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.4987911Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.4993111Z","stage":"component Intro 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.4998301Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5003506Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.5013575Z","stage":"component Intro 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.5013575Z","stage":"component Intro 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.5024454Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.5024454Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.5024454Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.5040909Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5040909Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5051015Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5051015Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5063023Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5063023Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5078183Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5078183Z","stage":"component Intro 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5088275Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5098255Z","stage":"component Intro 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5103345Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5108394Z","stage":"component Intro 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5118483Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.5128469Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5133590Z","stage":"component Intro 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.5280229Z","stage":"component Emergency 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.5295367Z","stage":"component Emergency 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.5295367Z","stage":"component Emergency 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.5305438Z","stage":"component Emergency 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.5315428Z","stage":"component Emergency 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.5315428Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase constraint-exceeded","pass":true}
+{"utc":"2026-11-15T01:44:44.5315428Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.5330496Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5330496Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5345611Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5345611Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5355713Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5355713Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5365702Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5365702Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5365702Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5380777Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.5386039Z","stage":"component Emergency 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5391248Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5391248Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.5401315Z","stage":"component Emergency 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.5411340Z","stage":"component Emergency 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.5411340Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase constraint-exceeded","pass":true}
+{"utc":"2026-11-15T01:44:44.5421342Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.5421342Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5431341Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5436395Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5436395Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5446455Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5456476Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5456476Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5466468Z","stage":"component Emergency 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5466468Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5481570Z","stage":"component Emergency 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5487860Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5487860Z","stage":"component Emergency 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5497937Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.5497937Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5507924Z","stage":"component Emergency 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.5692167Z","stage":"component Repair 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.5702237Z","stage":"component Repair 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.5702237Z","stage":"component Repair 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.5712250Z","stage":"component Repair 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.5722227Z","stage":"component Repair 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.5727267Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.5732343Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.5737542Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5737542Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5737542Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5753962Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5753962Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5764029Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5764029Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5774059Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5779111Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5779111Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.5794348Z","stage":"component Repair 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5804440Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5804440Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.5819492Z","stage":"component Repair 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.5824726Z","stage":"component Repair 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.5824726Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.5824726Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.5839904Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5839904Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5855696Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5855696Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5870734Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5870734Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5880828Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.5880828Z","stage":"component Repair 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5880828Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.5895913Z","stage":"component Repair 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5895913Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.5906006Z","stage":"component Repair 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.5916010Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.5921071Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.5921071Z","stage":"component Repair 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.6075394Z","stage":"component Eva 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.6087092Z","stage":"component Eva 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.6087092Z","stage":"component Eva 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.6097097Z","stage":"component Eva 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.6102148Z","stage":"component Eva 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.6112186Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.6122265Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.6122265Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.6137340Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6137340Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6147429Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6147429Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6147429Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6165846Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6171054Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6171054Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6186177Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6186177Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.6186177Z","stage":"component Eva 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6201233Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.6201233Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.6211300Z","stage":"component Eva 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.6216349Z","stage":"component Eva 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.6216349Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.6226427Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.6236432Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.6241534Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6241534Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6241534Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6256603Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6261656Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6271733Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6281728Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6281728Z","stage":"component Eva 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6291741Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6301737Z","stage":"component Eva 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6306797Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6311993Z","stage":"component Eva 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6311993Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.6322099Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.6322099Z","stage":"component Eva 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.6352570Z","stage":"component Eva 960x540","message":"Native URP camera actually rendered component fixture before PNG","pass":true}
+{"utc":"2026-11-15T01:44:44.6684362Z","stage":"component Transmission 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.6694353Z","stage":"component Transmission 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.6699439Z","stage":"component Transmission 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.6709515Z","stage":"component Transmission 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.6709515Z","stage":"component Transmission 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.6719590Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.6729595Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.6729595Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6744661Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6744661Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6754743Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6754743Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6764753Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6764753Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6777585Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6777585Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6777585Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.6792698Z","stage":"component Transmission 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6802794Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.6802794Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.6812799Z","stage":"component Transmission 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.6817866Z","stage":"component Transmission 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.6827944Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.6827944Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.6837963Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6843046Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6843046Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6853127Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6853127Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6853127Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6868169Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.6878228Z","stage":"component Transmission 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6888234Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.6893299Z","stage":"component Transmission 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6903361Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.6903361Z","stage":"component Transmission 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.6913397Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.6913397Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.6925373Z","stage":"component Transmission 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.7083173Z","stage":"component Survival 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.7083173Z","stage":"component Survival 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.7093236Z","stage":"component Survival 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.7103232Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7103232Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7118322Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.7123535Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.7128730Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.7133897Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7139077Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7144275Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7144275Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7159426Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7159426Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7159426Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7174607Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7179789Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7184940Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7190891Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7200953Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7200953Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.7216000Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.7221241Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.7221241Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.7231315Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7236372Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7236372Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.7246438Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.7256436Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.7256436Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7256436Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7271499Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7276679Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7286777Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7286777Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7296764Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7296764Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7306776Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7306776Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7316748Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.7321808Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7327014Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.7327014Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7337087Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.7337087Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.7348975Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.7359001Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.7492494Z","stage":"component Survival 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.7502490Z","stage":"component Survival 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.7502490Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7513694Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7513694Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7523743Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7539778Z","stage":"component Survival 960x540","message":"Departure centers caption and retains letterbox margin; actual=(x:230.67, y:604.00, width:818.67, height:50.67)","pass":true}
+{"utc":"2026-11-15T01:44:44.7539778Z","stage":"component Survival 960x540","message":"Actual departure rule hides instruments","pass":true}
+{"utc":"2026-11-15T01:44:44.7656249Z","stage":"component Survival 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.7656249Z","stage":"component Survival 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.7671393Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7671393Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7671393Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7671393Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7703040Z","stage":"component Survival 960x540","message":"Three-class terminal override wins against in-flight/departure; actual=(x:192.00, y:662.67, width:896.00, height:50.67)","pass":true}
+{"utc":"2026-11-15T01:44:44.7816226Z","stage":"component Survival 960x540","message":"Removing terminal context restores departure layout; actual=(x:230.67, y:604.00, width:818.67, height:50.67)","pass":true}
+{"utc":"2026-11-15T01:44:44.7928918Z","stage":"component Survival 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.7944423Z","stage":"component Survival 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.7954525Z","stage":"component Survival 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.7959616Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.7959616Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.7974868Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.7974868Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.7974868Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.7974868Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.7997612Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.7997612Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.7997612Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8012778Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8022841Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8027906Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8027906Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8037965Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8043025Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.8048076Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8048076Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.8058144Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.8063199Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.8068269Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.8068269Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.8078356Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.8078356Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.8078356Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8096548Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8096548Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8096548Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8117016Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8117016Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8132223Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8138522Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8143762Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8153824Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8153824Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8167214Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8177294Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.8177294Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.8192350Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.8304930Z","stage":"component Survival 960x540","message":"Menu hides whole flight-board caption/HUD","pass":true}
+{"utc":"2026-11-15T01:44:44.8514321Z","stage":"component Survival 960x540","message":"Exact observed B24 caption and speaker retained in component input","pass":true}
+{"utc":"2026-11-15T01:44:44.8514321Z","stage":"component Survival 960x540","message":"Actual panel viewport has requested render aspect","pass":true}
+{"utc":"2026-11-15T01:44:44.8529383Z","stage":"component Survival 960x540","message":"Real primary reserve labels/icons/bars visible; no hidden-HUD false pass","pass":true}
+{"utc":"2026-11-15T01:44:44.8534544Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.8539954Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.8545181Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.8550386Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.8560446Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.8560446Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8560446Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8575496Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8575496Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8585562Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8585562Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8600668Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8600668Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8758150Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8773186Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.8773186Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8788265Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.8793474Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.8804330Z","stage":"component Survival 960x540","message":"Subtitle leaf remains within actual viewport","pass":true}
+{"utc":"2026-11-15T01:44:44.8804330Z","stage":"component Survival 960x540","message":"Full caption/speaker text wraps without vertical truncation","pass":true}
+{"utc":"2026-11-15T01:44:44.8814347Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-phase","pass":true}
+{"utc":"2026-11-15T01:44:44.8827429Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label hud-objective","pass":true}
+{"utc":"2026-11-15T01:44:44.8827429Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label simulation-timing","pass":true}
+{"utc":"2026-11-15T01:44:44.8837425Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8850933Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8850933Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8860935Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8860935Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8875608Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8885603Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: resource-icon","pass":true}
+{"utc":"2026-11-15T01:44:44.8890656Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8900734Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label resource-label","pass":true}
+{"utc":"2026-11-15T01:44:44.8915794Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8925862Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-progress-bar gauge-bar","pass":true}
+{"utc":"2026-11-15T01:44:44.8925862Z","stage":"component Survival 960x540","message":"At least12 panel units separate horizontally adjacent painted HUD/caption leaves","pass":true}
+{"utc":"2026-11-15T01:44:44.8935862Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-button systems-button","pass":true}
+{"utc":"2026-11-15T01:44:44.8947560Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-key","pass":true}
+{"utc":"2026-11-15T01:44:44.8962703Z","stage":"component Survival 960x540","message":"Caption leaf does not overlap painted HUD leaf: unity-text-element unity-label interaction-text","pass":true}
+{"utc":"2026-11-15T01:44:44.9109635Z","stage":"component Survival 960x540","message":"Actual view Dispose removes its owned UI subtree","pass":true}
+{"utc":"2026-11-15T01:44:44.9556491Z","stage":"component Survival 960x540","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-15T01:44:49.1229233Z","stage":"component Survival 960x540","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}

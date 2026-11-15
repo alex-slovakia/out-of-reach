@@ -1,0 +1,1 @@
+No source-button navigation was invoked. Actual NASA-link rendering, URL filter and manual Source view are verified; OS browser opening/returned page is UNPROVEN. No automatic external navigation requested by fixture.

@@ -1,0 +1,2 @@
+IN_FLIGHT_SUBTITLE_LAYOUT_NATIVE_PASS Component-only actual FlightBoardView/USS: six in-flight phases x1280/960 caption/HUD bounds, departure/terminal override order and menu restoration passed. Two actual UI GPU EVA-input samples; no gameplay or real airlock transition claim. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\.local/in-flight-subtitle-layout-native\20261115T014429621Z
+Exit code: 0

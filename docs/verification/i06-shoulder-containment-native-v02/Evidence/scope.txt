@@ -1,0 +1,6 @@
+Actual saved Bootstrap shoulder containment only. No authored fixture surfaces, altered colliders, control gates, player tuning, direct impulses or velocity writes.
+Actual Practice UI, public planner launch and public transport Skip are disclosed setup; no cockpit completion or fake phase. Normal Runtime.Update remains enabled.
+Setup-only Player.Teleport resets legal floor starts. Root alone re-enters float from genuine foot support. Existing W/Space input and real foot-contact impulse drive every attempted crossing.
+Eight mirrored straight/diagonal shoulder approaches plus central-portal positive control. Camera/near-plane and actual capsule/physics contact traces. This is not full hull or full mission acceptance.
+Optional Intro subtitle geometry/captures only if the naturally active actual cue remains available. No fabricated cue, timer change or replay. Both resolutions are separately recorded.
+90-second watchdog; all Assets hashes protected; GPU images include actual camera and UI but exclude overlay UGUI fade. Batch input/focus delivery disclosed.

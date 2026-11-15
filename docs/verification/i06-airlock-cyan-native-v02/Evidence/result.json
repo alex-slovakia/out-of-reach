@@ -1,0 +1,7 @@
+{
+    "pass": true,
+    "message": "B24 NOT REPRODUCED in three genuine pressure states and legal near-panel actual-input sweeps; samples=81, max cyan ROI fraction=0.0016217912946428572. Review retained PNGs; never a fixed claim.",
+    "utc": "2026-11-15T01:26:10.8418483Z",
+    "scope": "Actual saved Bootstrap B24 reproduction probe; genuine pressure states and actual input; setup commands/teleports disclosed; clean means NOT REPRODUCED, never fixed.",
+    "checks": 702
+}

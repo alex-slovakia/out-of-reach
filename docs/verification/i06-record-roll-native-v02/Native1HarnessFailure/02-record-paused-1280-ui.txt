@@ -1,0 +1,297 @@
+UIDocumentRootElement MissionFlightBoard-container (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement mission-flight-board (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement i01-session-controls (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement mission-record-host (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement flightRecorder (x:0.00, y:0.00, width:1280.00, height:720.00) 
+ReportShade reportReadabilityShade (x:0.00, y:0.00, width:1280.00, height:720.00) 
+VisualElement reportDetail (x:80.00, y:46.00, width:1120.00, height:638.00) 
+VisualElement reportDetailNavigation (x:103.00, y:63.00, width:1074.00, height:58.00) 
+Button reportBackButton (x:103.00, y:65.00, width:63.00, height:44.00) Back
+Label  (x:186.00, y:71.00, width:124.00, height:35.00) Mission record
+VisualElement recordRollControls (x:103.00, y:121.00, width:1074.00, height:53.00) 
+Label  (x:105.00, y:131.00, width:833.00, height:23.00) YOUR DECISIONS / THE SCIENCE BEHIND THEM
+Button recordRollPauseButton (x:954.00, y:123.00, width:119.00, height:36.00) Continue scroll
+Button recordRollSkipButton (x:1081.00, y:123.00, width:88.00, height:36.00) Skip recap
+ScrollView missionRecord (x:103.00, y:174.00, width:1074.00, height:493.00) 
+VisualElement unity-content-and-vertical-scroll-container (x:103.00, y:174.00, width:1074.00, height:493.00) 
+VisualElement unity-content-viewport (x:103.00, y:174.00, width:1050.00, height:493.00) 
+VisualElement unity-content-container (x:103.00, y:146.00, width:1050.00, height:5933.00) 
+VisualElement reportFullSummary (x:103.00, y:146.00, width:1038.00, height:232.00) 
+Label  (x:105.00, y:172.00, width:1032.00, height:51.00) MISSION LOST
+Label  (x:105.00, y:235.00, width:1032.00, height:62.00) Cabin CO2 reached the 26,351 ppm emergency level 20.5 h after launch. Life support was not repaired, so nothing removed the crew's CO2.
+Label  (x:105.00, y:321.00, width:1032.00, height:31.00) Elapsed simulation time  0d 20h 29m 29s
+VisualElement outcome (x:103.00, y:378.00, width:1038.00, height:323.00) 
+VisualElement  (x:103.00, y:395.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:399.00, width:34.00, height:39.00) 01
+Label  (x:145.00, y:399.00, width:992.00, height:39.00) Outcome
+VisualElement  (x:103.00, y:450.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:459.00, width:332.00, height:35.00) Result
+Label  (x:459.00, y:459.00, width:678.00, height:35.00) MISSION LOST
+VisualElement  (x:103.00, y:501.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:510.00, width:332.00, height:62.00) Why
+Label  (x:459.00, y:510.00, width:678.00, height:62.00) Cabin CO2 reached the 26,351 ppm emergency level 20.5 h after launch. Life support was not repaired, so nothing removed the crew's CO2.
+VisualElement  (x:103.00, y:579.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:588.00, width:332.00, height:35.00) Mission time
+Label  (x:459.00, y:588.00, width:678.00, height:35.00) T+20 h 29 min, mission day 1 (2026-11-15 04:29 UTC)
+VisualElement  (x:103.00, y:630.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:639.00, width:332.00, height:35.00) Cause
+Label  (x:459.00, y:639.00, width:678.00, height:35.00) Carbon dioxide: the cabin reached the emergency level.
+VisualElement mission-design (x:103.00, y:701.00, width:1038.00, height:755.00) 
+VisualElement  (x:103.00, y:718.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:722.00, width:34.00, height:39.00) 02
+Label  (x:145.00, y:722.00, width:992.00, height:39.00) Mission design
+VisualElement  (x:103.00, y:773.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:782.00, width:332.00, height:35.00) Loadout
+Label  (x:459.00, y:782.00, width:678.00, height:35.00) Preset 'science-focus'
+VisualElement  (x:103.00, y:824.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:833.00, width:332.00, height:35.00) 2 x Oxygen tank
+Label  (x:459.00, y:833.00, width:678.00, height:35.00) 60 kg, 80 credits
+VisualElement  (x:103.00, y:875.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:884.00, width:332.00, height:35.00) 2 x Water tank
+Label  (x:459.00, y:884.00, width:678.00, height:35.00) 96 kg, 40 credits
+VisualElement  (x:103.00, y:926.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:935.00, width:332.00, height:35.00) 2 x Food locker
+Label  (x:459.00, y:935.00, width:678.00, height:35.00) 70 kg, 50 credits
+VisualElement  (x:103.00, y:977.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:986.00, width:332.00, height:35.00) 2 x Battery module
+Label  (x:459.00, y:986.00, width:678.00, height:35.00) 110 kg, 120 credits
+VisualElement  (x:103.00, y:1028.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1037.00, width:332.00, height:35.00) 1 x Deployable solar wing
+Label  (x:459.00, y:1037.00, width:678.00, height:35.00) 70 kg, 120 credits
+VisualElement  (x:103.00, y:1079.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1088.00, width:332.00, height:35.00) 2 x Spare parts kit
+Label  (x:459.00, y:1088.00, width:678.00, height:35.00) 50 kg, 90 credits
+VisualElement  (x:103.00, y:1130.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1139.00, width:332.00, height:35.00) 1 x Atmospheric spectrometer
+Label  (x:459.00, y:1139.00, width:678.00, height:35.00) 90 kg, 220 credits, 300 W load
+VisualElement  (x:103.00, y:1181.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1190.00, width:332.00, height:35.00) Payload mass
+Label  (x:459.00, y:1190.00, width:678.00, height:35.00) 546 of 600 kg
+VisualElement  (x:103.00, y:1232.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1241.00, width:332.00, height:35.00) Budget
+Label  (x:459.00, y:1241.00, width:678.00, height:35.00) 720 of 800 credits (fictional)
+VisualElement  (x:103.00, y:1283.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1292.00, width:332.00, height:35.00) Power
+Label  (x:459.00, y:1292.00, width:678.00, height:35.00) 1,400 W load on 1,900 W generation
+VisualElement  (x:103.00, y:1334.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1343.00, width:332.00, height:35.00) Spare parts at launch
+Label  (x:459.00, y:1343.00, width:678.00, height:35.00) 7; the three repairs need 7
+VisualElement  (x:103.00, y:1385.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1394.00, width:332.00, height:35.00) Planning
+Label  (x:459.00, y:1394.00, width:678.00, height:35.00) Launched by the crew; planning was not timed.
+VisualElement resources (x:103.00, y:1456.00, width:1038.00, height:629.00) 
+VisualElement  (x:103.00, y:1473.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:1477.00, width:34.00, height:39.00) 03
+Label  (x:145.00, y:1477.00, width:992.00, height:39.00) Resources
+VisualElement  (x:103.00, y:1528.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1537.00, width:332.00, height:35.00) Oxygen
+Label  (x:459.00, y:1537.00, width:678.00, height:35.00) 34.00 kg at launch, 31.58 kg left
+VisualElement  (x:103.00, y:1579.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1588.00, width:332.00, height:35.00) Water
+Label  (x:459.00, y:1588.00, width:678.00, height:35.00) 100.0 L at launch, 97.9 L left
+VisualElement  (x:103.00, y:1630.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1639.00, width:332.00, height:35.00) Food
+Label  (x:459.00, y:1639.00, width:678.00, height:35.00) 64.0 kg at launch, 62.4 kg left
+VisualElement  (x:103.00, y:1681.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1690.00, width:332.00, height:35.00) Battery
+Label  (x:459.00, y:1690.00, width:678.00, height:35.00) 28.00 kWh at launch, 13.25 kWh left
+VisualElement  (x:103.00, y:1732.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1741.00, width:332.00, height:35.00) Spare parts
+Label  (x:459.00, y:1741.00, width:678.00, height:35.00) 7 at launch, 7 left
+VisualElement  (x:103.00, y:1783.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:1792.00, width:332.00, height:62.00) Cabin CO2
+Label  (x:459.00, y:1792.00, width:678.00, height:62.00) 2,635 ppm at launch, 26,351 ppm at the end, peak 26,351 ppm (action level 9,968, loss limit 26,351)
+VisualElement  (x:103.00, y:1861.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1870.00, width:332.00, height:35.00) Spent on repairs
+Label  (x:459.00, y:1870.00, width:678.00, height:35.00) nothing
+VisualElement  (x:103.00, y:1912.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1921.00, width:332.00, height:35.00) Spent on the EVA
+Label  (x:459.00, y:1921.00, width:678.00, height:35.00) nothing
+VisualElement  (x:103.00, y:1963.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:1972.00, width:332.00, height:35.00) Spent on the transmission
+Label  (x:459.00, y:1972.00, width:678.00, height:35.00) nothing
+VisualElement  (x:103.00, y:2014.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2023.00, width:332.00, height:35.00) Used over time
+Label  (x:459.00, y:2023.00, width:678.00, height:35.00) 2.42 kg oxygen, 2.1 L water, 1.6 kg food; battery net 14.75 kWh drawn
+VisualElement systems (x:103.00, y:2085.00, width:1038.00, height:296.00) 
+VisualElement  (x:103.00, y:2102.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:2106.00, width:34.00, height:39.00) 04
+Label  (x:145.00, y:2106.00, width:992.00, height:39.00) Systems and repairs
+VisualElement  (x:103.00, y:2157.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2166.00, width:332.00, height:35.00) Power distribution
+Label  (x:459.00, y:2166.00, width:678.00, height:35.00) 20 % after the impact; never repaired (needs 2 spare parts).
+VisualElement  (x:103.00, y:2208.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2217.00, width:332.00, height:35.00) Life support
+Label  (x:459.00, y:2217.00, width:678.00, height:35.00) 0 % after the impact; never repaired (needs 2 spare parts, 1 kWh).
+VisualElement  (x:103.00, y:2259.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2268.00, width:332.00, height:35.00) High-gain antenna
+Label  (x:459.00, y:2268.00, width:678.00, height:35.00) 0 % after the impact; never repaired (needs 3 spare parts, 0.5 kWh and an EVA).
+VisualElement  (x:103.00, y:2310.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2319.00, width:332.00, height:35.00) EVA
+Label  (x:459.00, y:2319.00, width:678.00, height:35.00) No EVA was attempted.
+VisualElement science (x:103.00, y:2381.00, width:1038.00, height:221.00) 
+VisualElement  (x:103.00, y:2398.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:2402.00, width:34.00, height:39.00) 05
+Label  (x:145.00, y:2402.00, width:992.00, height:39.00) Science
+VisualElement  (x:103.00, y:2453.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2462.00, width:332.00, height:35.00) Objective
+Label  (x:459.00, y:2462.00, width:678.00, height:35.00) Measure Martian upper-atmosphere composition
+VisualElement  (x:103.00, y:2504.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:2513.00, width:332.00, height:62.00) Science return
+Label  (x:459.00, y:2513.00, width:678.00, height:62.00) Not returned: the mission was lost without contact, so the data never reached Earth.
+VisualElement communication (x:103.00, y:2602.00, width:1038.00, height:500.00) 
+VisualElement  (x:103.00, y:2619.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:2623.00, width:34.00, height:39.00) 06
+Label  (x:145.00, y:2623.00, width:992.00, height:39.00) Communication
+VisualElement  (x:103.00, y:2674.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2683.00, width:332.00, height:35.00) Reference
+Label  (x:459.00, y:2683.00, width:678.00, height:35.00) NASA/JPL Horizons, dataset jpl-horizons-earth-mars-2026-v1
+VisualElement  (x:103.00, y:2725.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2734.00, width:332.00, height:35.00) Mission date
+Label  (x:459.00, y:2734.00, width:678.00, height:35.00) 2026-11-15 04:29 UTC (mission day 1)
+VisualElement  (x:103.00, y:2776.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2785.00, width:332.00, height:35.00) Reference sample
+Label  (x:459.00, y:2785.00, width:678.00, height:35.00) 2026-11-14 08:00 UTC (row 1 of 32; last sample at or before the mission date)
+VisualElement  (x:103.00, y:2827.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2836.00, width:332.00, height:35.00) Earth distance
+Label  (x:459.00, y:2836.00, width:678.00, height:35.00) 197,708,000 km (Earth-Mars range, used as a Mars-vicinity proxy)
+VisualElement  (x:103.00, y:2878.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2887.00, width:332.00, height:35.00) One-way light time
+Label  (x:459.00, y:2887.00, width:678.00, height:35.00) 10 min 59 s (659.483 s)
+VisualElement  (x:103.00, y:2929.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2938.00, width:332.00, height:35.00) Earth processing
+Label  (x:459.00, y:2938.00, width:678.00, height:35.00) 10 min 00 s (game assumption)
+VisualElement  (x:103.00, y:2980.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:2989.00, width:332.00, height:35.00) Earliest reply
+Label  (x:459.00, y:2989.00, width:678.00, height:35.00) 31 min 59 s = 2 x light time + processing
+VisualElement  (x:103.00, y:3031.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:3040.00, width:332.00, height:35.00) Transmission
+Label  (x:459.00, y:3040.00, width:678.00, height:35.00) No distress call was sent.
+VisualElement timeline (x:103.00, y:3102.00, width:1038.00, height:299.00) 
+VisualElement  (x:103.00, y:3119.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:3123.00, width:34.00, height:39.00) 07
+Label  (x:145.00, y:3123.00, width:992.00, height:39.00) Timeline
+VisualElement  (x:103.00, y:3174.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:3183.00, width:332.00, height:62.00) T+0 h 00 min
+Label  (x:459.00, y:3183.00, width:678.00, height:62.00) Launch on 2026-11-14 08:00 UTC: 546 kg payload, 720 credits, 1400 W load on 1900 W generation.
+VisualElement  (x:103.00, y:3252.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:3261.00, width:332.00, height:62.00) T+0 h 00 min
+Label  (x:459.00, y:3261.00, width:678.00, height:62.00) Debris impact. Condition after the strike: power distribution 20 %, life support 0 %, high-gain antenna 0 %.
+VisualElement  (x:103.00, y:3330.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:3339.00, width:332.00, height:35.00) T+20 h 29 min
+Label  (x:459.00, y:3339.00, width:678.00, height:35.00) Mission outcome: lost.
+VisualElement nasa-data (x:103.00, y:3401.00, width:1038.00, height:969.00) 
+Label  (x:105.00, y:3422.00, width:1032.00, height:28.00) NASA / JPL DATA
+VisualElement  (x:103.00, y:3456.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:3460.00, width:34.00, height:39.00) 08
+Label  (x:145.00, y:3460.00, width:992.00, height:39.00) NASA/JPL data
+VisualElement  (x:103.00, y:3511.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:3520.00, width:332.00, height:35.00) Dataset
+Label  (x:459.00, y:3520.00, width:678.00, height:35.00) jpl-horizons-earth-mars-2026-v1
+VisualElement  (x:103.00, y:3562.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:3571.00, width:332.00, height:35.00) Provider
+Label  (x:459.00, y:3571.00, width:678.00, height:35.00) NASA/JPL Solar System Dynamics, Horizons
+VisualElement  (x:103.00, y:3613.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:3622.00, width:332.00, height:88.00) Content
+Label  (x:459.00, y:3622.00, width:678.00, height:88.00) 32 daily samples, 2026-11-14 08:00 UTC to 2026-12-15 08:00 UTC: Mars centre relative to Earth centre, km, ICRF, REF_PLANE=FRAME; geometric state vectors without light-time correction.
+VisualElement  (x:103.00, y:3717.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:3726.00, width:332.00, height:35.00) SHA-256
+Label  (x:459.00, y:3726.00, width:678.00, height:35.00) 694f3606e7abc1d94941b428dc1f7a9364bb07d1810327b6343a77986a79e5af
+VisualElement  (x:103.00, y:3768.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:3777.00, width:332.00, height:88.00) Packaged copy
+Label  (x:459.00, y:3777.00, width:678.00, height:88.00) Compiled into the game from docs/data/horizons/earth-mars-2026-11-14--2026-12-15.csv and checked against this hash when the mission starts. The game makes no network request.
+VisualElement  (x:103.00, y:3872.00, width:1038.00, height:98.00) 
+Label  (x:105.00, y:3881.00, width:332.00, height:82.00) NASA-01
+VisualElement  (x:457.00, y:3877.00, width:684.00, height:88.00) 
+Label  (x:459.00, y:3881.00, width:678.00, height:35.00) NASA/JPL Horizons API: https://ssd-api.jpl.nasa.gov/doc/horizons.html
+Button reportSourceLink (x:457.00, y:3922.00, width:191.00, height:39.00) Open NASA source (browser)
+VisualElement  (x:103.00, y:3970.00, width:1038.00, height:151.00) 
+Label  (x:105.00, y:3979.00, width:332.00, height:135.00) NASA-02
+VisualElement  (x:457.00, y:3975.00, width:684.00, height:141.00) 
+Label  (x:459.00, y:3979.00, width:678.00, height:88.00) NASA Environmental Control and Life Support Systems: https://www.nasa.gov/reference/environmental-control-and-life-support-systems-eclss/
+Button reportSourceLink (x:457.00, y:4073.00, width:191.00, height:39.00) Open NASA source (browser)
+VisualElement  (x:103.00, y:4121.00, width:1038.00, height:125.00) 
+Label  (x:105.00, y:4130.00, width:332.00, height:109.00) NASA-03
+VisualElement  (x:457.00, y:4126.00, width:684.00, height:115.00) 
+Label  (x:459.00, y:4130.00, width:678.00, height:62.00) NASA Mars Communications Disruption and Delay: https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf
+Button reportSourceLink (x:457.00, y:4198.00, width:191.00, height:39.00) Open NASA source (browser)
+VisualElement  (x:103.00, y:4246.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:4255.00, width:332.00, height:88.00) Crew consumption
+Label  (x:459.00, y:4255.00, width:678.00, height:88.00) NASA Life Support Baseline Values and Assumptions Document (NASA/TP-2015-218570/REV2): oxygen 0.84 kg, water 2.5 L, food 1.83 kg and CO2 output 1.01 kg per crew-day.
+VisualElement derived-physics (x:103.00, y:4370.00, width:1038.00, height:388.00) 
+Label  (x:105.00, y:4391.00, width:1032.00, height:28.00) DERIVED PHYSICS
+VisualElement  (x:103.00, y:4425.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:4429.00, width:34.00, height:39.00) 09
+Label  (x:145.00, y:4429.00, width:992.00, height:39.00) Derived physics
+VisualElement  (x:103.00, y:4480.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:4489.00, width:332.00, height:35.00) Light time
+Label  (x:459.00, y:4489.00, width:678.00, height:35.00) one-way seconds = distance in km / 299,792.458 km/s
+VisualElement  (x:103.00, y:4531.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:4540.00, width:332.00, height:62.00) Reply
+Label  (x:459.00, y:4540.00, width:678.00, height:62.00) earliest reply = 2 x one-way light time + processing on Earth, with the distance frozen at the transmission
+VisualElement  (x:103.00, y:4609.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:4618.00, width:332.00, height:35.00) Energy
+Label  (x:459.00, y:4618.00, width:678.00, height:35.00) kWh = watts x seconds / 3,600,000
+VisualElement  (x:103.00, y:4660.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:4669.00, width:332.00, height:62.00) Cabin CO2
+Label  (x:459.00, y:4669.00, width:678.00, height:62.00) ppm from the ideal gas law for a 20 m3 cabin at 101.3 kPa and 295 K (cabin figures are game assumptions)
+VisualElement fictional-scenario (x:103.00, y:4758.00, width:1038.00, height:933.00) 
+Label  (x:105.00, y:4779.00, width:1032.00, height:28.00) FICTIONAL SCENARIO
+VisualElement  (x:103.00, y:4813.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:4817.00, width:34.00, height:39.00) 10
+Label  (x:145.00, y:4817.00, width:992.00, height:39.00) Fictional scenario and simplifications
+VisualElement  (x:103.00, y:4868.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:4877.00, width:332.00, height:62.00) Spacecraft
+Label  (x:459.00, y:4877.00, width:678.00, height:62.00) AURORA-7 and its mission are fictional. No trajectory is computed: the Earth-Mars range stands in for a ship in Mars vicinity.
+VisualElement  (x:103.00, y:4946.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:4955.00, width:332.00, height:35.00) Accident
+Label  (x:459.00, y:4955.00, width:678.00, height:35.00) The debris strike and the damage it does are authored events.
+VisualElement  (x:103.00, y:4997.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:5006.00, width:332.00, height:62.00) Solo EVA
+Label  (x:459.00, y:5006.00, width:678.00, height:62.00) A one-person EVA is a fictional emergency: the cited procedures require two crew members. Suit and airlock figures follow published references for other designs.
+VisualElement  (x:103.00, y:5075.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:5084.00, width:332.00, height:88.00) Life support
+Label  (x:459.00, y:5084.00, width:678.00, height:88.00) Simplified for education. Consumption follows the cited NASA document; damage, leak and scrubber rates and repair costs are gameplay tuning. Loss levels are game rules anchored to cited operational levels, not medical limits.
+VisualElement  (x:103.00, y:5179.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:5188.00, width:332.00, height:62.00) Communication
+Label  (x:459.00, y:5188.00, width:678.00, height:62.00) Link availability, occultation, acquisition and message length are not modelled. Processing time on Earth and transmit energy are game assumptions.
+VisualElement  (x:103.00, y:5257.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:5266.00, width:332.00, height:88.00) False signal
+Label  (x:459.00, y:5266.00, width:678.00, height:88.00) The signal heard before the transmission is a story beat: a damaged local buffer replaying an old recording. It is not an echo from space and not a model of a NASA link.
+VisualElement  (x:103.00, y:5361.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:5370.00, width:332.00, height:88.00) Field modifications
+Label  (x:459.00, y:5370.00, width:678.00, height:88.00) The salvage yield and the cartridge's cost and capacity are game assumptions. The capacity is stated in crew-hours of the cited metabolic CO2 output; it is not sized from or rated like a real lithium-hydroxide canister.
+VisualElement  (x:103.00, y:5465.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:5474.00, width:332.00, height:35.00) Outcome
+Label  (x:459.00, y:5474.00, width:678.00, height:35.00) A reply permits recovery planning. It does not show that a rescue is feasible.
+VisualElement  (x:103.00, y:5516.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:5525.00, width:332.00, height:35.00) Budget
+Label  (x:459.00, y:5525.00, width:678.00, height:35.00) Credits are fictional, not cost estimates.
+VisualElement  (x:103.00, y:5567.00, width:1038.00, height:104.00) 
+Label  (x:105.00, y:5576.00, width:332.00, height:88.00) Attribution
+Label  (x:459.00, y:5576.00, width:678.00, height:88.00) Earth-Mars reference ephemeris: NASA/JPL Horizons. AURORA-7 uses a fictional Mars-vicinity distance approximation. Life-support behavior is simplified for education. Mission timing may be compressed.
+VisualElement time-compression (x:103.00, y:5691.00, width:1038.00, height:388.00) 
+Label  (x:105.00, y:5712.00, width:1032.00, height:28.00) GAMEPLAY TIME COMPRESSION
+VisualElement  (x:103.00, y:5746.00, width:1038.00, height:45.00) 
+Label  (x:105.00, y:5750.00, width:34.00, height:39.00) 11
+Label  (x:145.00, y:5750.00, width:992.00, height:39.00) Time compression
+VisualElement  (x:103.00, y:5801.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:5810.00, width:332.00, height:35.00) Simulated mission time
+Label  (x:459.00, y:5810.00, width:678.00, height:35.00) 20 h 29 min 30 s
+VisualElement  (x:103.00, y:5852.00, width:1038.00, height:51.00) 
+Label  (x:105.00, y:5861.00, width:332.00, height:35.00) Real play time
+Label  (x:459.00, y:5861.00, width:678.00, height:35.00) About 1 s in flight phases (pauses and cinematics excluded).
+VisualElement  (x:103.00, y:5903.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:5912.00, width:332.00, height:62.00) Time scales
+Label  (x:459.00, y:5912.00, width:678.00, height:62.00) Cockpit check x1; emergency and repair x300; EVA x60; transmission x60 (simulated seconds per real second).
+VisualElement  (x:103.00, y:5981.00, width:1038.00, height:78.00) 
+Label  (x:105.00, y:5990.00, width:332.00, height:62.00) Chapter jumps
+Label  (x:459.00, y:5990.00, width:678.00, height:62.00) 20 h 29 min 09 s of simulated time passed in jumps. Reserves and the communication clock advanced through them.
+Scroller  (x:1153.00, y:174.00, width:24.00, height:493.00) 
+RepeatButton unity-low-button (x:1153.00, y:174.00, width:24.00, height:24.00) 
+RepeatButton unity-high-button (x:1153.00, y:643.00, width:24.00, height:24.00) 
+ScrollerSlider unity-slider (x:1153.00, y:198.00, width:24.00, height:445.00) 
+VisualElement  (x:1153.00, y:198.00, width:24.00, height:445.00) 
+VisualElement unity-drag-container (x:1153.00, y:198.00, width:24.00, height:445.00) 
+VisualElement unity-tracker (x:1153.00, y:198.00, width:24.00, height:445.00) 
+VisualElement unity-dragger (x:1156.00, y:200.38, width:18.00, height:37.00) 

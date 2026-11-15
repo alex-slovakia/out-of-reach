@@ -1,0 +1,6 @@
+{
+    "pass": false,
+    "message": "System.TimeoutException: Actual Plan again replaces session\r\n  at FlightRecorderRollNativeDriver+<Wait>d__43.MoveNext () [0x00038] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\FlightRecorderRollNative\\FlightRecorderRollNative.cs:375 \r\n  at FlightRecorderRollNativeDriver+<Start>d__26.MoveNext () [0x0006a] in C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\Assets\\Editor\\FlightRecorderRollNative\\FlightRecorderRollNative.cs:167 ",
+    "scope": "Actual final report roll, links and UI lifecycle; real resource-loss setup disclosed; source browser click excluded.",
+    "assertions": 156
+}

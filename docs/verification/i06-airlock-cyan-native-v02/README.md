@@ -1,0 +1,15 @@
+# B24 native probe — NOT REPRODUCED
+
+Root-owned Unity6000.3.28f1 GPU run `20261115T012535763Z`: **702 checks PASS, exit0 reported by root**,81 sampled views,27 genuine PNGs. **B24 remains NOT REPRODUCED, not fixed or closed.** Exact source pins and complete Assets snapshot are archived, with the native log and all evidence.
+
+Three genuinely commanded pressure states each contributed27 samples: Depressurizing, OuterOpen/SAFE TO EXIT, Repressurizing. Actual saved Bootstrap camera/controller/composition/HUD/panel/materials and normal runtime clock remained active. Legal requested feet x1.2,y.035,z17.7/19.2/20.35 were accepted without the optional backwards search. Setup teleports and public launch/transport/Impact/repairs/suit/remaining-cycle-time commands are explicitly logged; this is not a walking route or entire mission claim. Existing near plane.05m/FOV68° stayed unchanged. Actual mouse pitch spanned−54.845° to+49.360°, with nine planned angles/pose and two yaw offsets.
+
+Maximum cyan central-region fraction: **0.0016217913 =0.162179%**, below the fixed65% candidate broad-fill threshold. All27 PNGs were inspected on three labeled review sheets; the closest ready-state/panel and upward view were additionally inspected at original1280×720. Visible cyan is localized to the genuine SAFE TO EXIT display; no cyan field blankets the scene in these captures. Amber cycling displays, the dark interior, open/closed hatch transitions and upper wall/ceiling remain visible as appropriate. No material was disabled or replaced.
+
+Limits:81 stable samples do not cover every intermediate frame, every possible near-plane angle/position, every renderer configuration or hardware. The color classifier is a candidate reproduction aid, not an oracle. A smaller patch or transient could remain unobserved. This is not general art acceptance. Review also shows the existing long diagnostic subtitle touching/overlapping the reserve-bar area during this accelerated EVA setup (e.g `02-safe-to-exit-z20.35-pitch3.png`); the earlier Intro-only clearance proof does not extend to this phase. That separate UI observation does not constitute B24 reproduction.
+
+Native1 was a temporary harness compile failure before entry, caused by missing OutOfReach.Simulation in its asmdef. AssemblyReferencesV02 corrected only that declaration and preserved GUID/source; strict declared-reference compile evidence retains the original failure. No product shader change followed this result.
+
+Archive `Evidence/` (all27 originals, metrics/state JSONL,702 checks, all-source hashes, actual panel/material geometry, setup notes and full native log), source-pins.json, manifest.json and these three review sheets. Game errors fail; the separately retained known UnityEditor.Search startup exception is not described as a gameplay failure. No Unity launch or production edit by reviewer.
+
+Repository copy omits full Editor startup/licensing log. Full private log hash remains in original-private-archive-manifest.json. This is a NOT REPRODUCED result, not a proven fix.

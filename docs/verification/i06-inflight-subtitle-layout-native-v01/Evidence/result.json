@@ -1,0 +1,6 @@
+{
+    "pass": true,
+    "message": "Component-only actual FlightBoardView/USS: six in-flight phases x1280/960 caption/HUD bounds, departure/terminal override order and menu restoration passed. Two actual UI GPU EVA-input samples; no gameplay or real airlock transition claim.",
+    "scope": "Component UI layout only; real shipped view/style and explicit presentation inputs, not gameplay/phase/airlock proof.",
+    "assertions": 696
+}

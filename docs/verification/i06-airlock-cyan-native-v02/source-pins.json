@@ -1,0 +1,42 @@
+{
+  "run": "20261115T012535763Z",
+  "authority": "Exact pre-run Assets snapshot; native finish verifies unchanged Assets",
+  "files": [
+    {
+      "path": "Assets/Editor/AirlockCyanNativeQa/AirlockCyanNativeQa.cs",
+      "sha256": "00f9ee0907d6cd6f42ab8acee14ffa102759432411cd2f69c9a5243e9b628216"
+    },
+    {
+      "path": "Assets/Editor/AirlockCyanNativeQa/OutOfReach.AirlockCyanNativeQa.Editor.asmdef",
+      "sha256": "231f6add5ceb36ff8fc3fc74df5f5cc69f3d64ddfced3d51912b9bf92fa822d2"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "sha256": "b4d1cde9eef3b9c9039de7a4fab2804d863a69db7ce756f201b6bb0a6f30ec8f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs",
+      "sha256": "84706c89d9ea814bfb141833838a007c611c1b2061a7d1d36e7ad04c5d332500"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Core/Runtime/MissionRuntime.cs",
+      "sha256": "afda6b5ce5c166cefbe68f6f7f330b6d59c5a2586b648c124df654d5cc13cfa1"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Player/FirstPersonController.cs",
+      "sha256": "b6f441a11dada2804db62d010f58e94d4f88f530e0d7b4829155758c72ed1eef"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/AirlockPanel/Runtime/AirlockCountdownGraphic.cs",
+      "sha256": "91dfbf08f42144ad72c33aa3dcd37fefa3599412d6457695c42373081a443eb5"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/AirlockPanel/Runtime/AirlockPanelReadout.cs",
+      "sha256": "06c1c5e0112f7dd528e4d8d829c766591001e9ad398749a15a6c09c9304df4bf"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/AirlockPanel/Runtime/AirlockStatusPanel.cs",
+      "sha256": "415a2c18c74e2eab78e2e25463658a5270edc76d7a5a08433de30dc245152d56"
+    }
+  ]
+}

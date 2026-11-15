@@ -1,0 +1,2 @@
+FLIGHT_RECORDER_ROLL_NATIVE_PASS Actual final Lost report roll, delay/rate, Pause/Continue, wheel/pointer, Replay/Skip, NASA source view, lifecycle/restart and1280/960 layout passed. No browser source click, other-outcome narrative or full cinematic acceptance claimed. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\.local/flight-recorder-roll-native\20261115T014513009Z
+Exit code: 0

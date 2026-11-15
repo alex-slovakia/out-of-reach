@@ -1,0 +1,323 @@
+{
+  "acceptedRun": "20261115T014513009Z",
+  "assertions": 162,
+  "exitCode": 0,
+  "preservedFailedRun": "20261115T013855146Z",
+  "files": [
+    {
+      "path": "Evidence/01-endcard-1280-layout.json",
+      "bytes": 1536,
+      "sha256": "9a53ac1b5a6e5d5e3b54cd6945538e3f4c3ffc71c08f4001ccb44e1b6480e92e"
+    },
+    {
+      "path": "Evidence/01-endcard-1280-ui.txt",
+      "bytes": 1657,
+      "sha256": "9929d97bcc6f330bc44bbae95315450ae9e178f8f6054fdc276a4fcd376a9765"
+    },
+    {
+      "path": "Evidence/01-endcard-1280.png",
+      "bytes": 684822,
+      "sha256": "4471d2b1cb398aa5f846b22c8ff4f58e88bfc6e7c9486d2bc9c5700f1b5d4a3d"
+    },
+    {
+      "path": "Evidence/02-record-paused-1280-layout.json",
+      "bytes": 1246,
+      "sha256": "c49d4302f46e583ba8011a782c2d3a4f304ff00893db661ba2ad32044cc77948"
+    },
+    {
+      "path": "Evidence/02-record-paused-1280-ui.txt",
+      "bytes": 25108,
+      "sha256": "320adefa42f7ff89e4d47aa4d9c3296a0c4f57d921aa7c3f35a4d3863616e51b"
+    },
+    {
+      "path": "Evidence/02-record-paused-1280.png",
+      "bytes": 353454,
+      "sha256": "4ea95282eddbb845f5c69d54d8e05af5f473605c0677a10cc965384e529bae06"
+    },
+    {
+      "path": "Evidence/03-sources-1280-layout.json",
+      "bytes": 644,
+      "sha256": "189b078291e6433be70ca1975cc4eba55d06f0a257af7cf04b93dd1e2508ca6c"
+    },
+    {
+      "path": "Evidence/03-sources-1280-ui.txt",
+      "bytes": 12725,
+      "sha256": "b8ffcc8b26e5df2612543dd491924cbde0bc4365ced09b0dfdd3fa2bf2d55490"
+    },
+    {
+      "path": "Evidence/03-sources-1280.png",
+      "bytes": 378275,
+      "sha256": "785a7f714767bf9d09040ced206f9f715c265d99d6e932fa4a3eefa2a9fa2cd6"
+    },
+    {
+      "path": "Evidence/04-sources-960-layout.json",
+      "bytes": 682,
+      "sha256": "8f566cd29e0949eca83665aa821e55e4f35c361579da84eb7d2f9444390afea3"
+    },
+    {
+      "path": "Evidence/04-sources-960-ui.txt",
+      "bytes": 12726,
+      "sha256": "af2592b364809a2f97499654a7990952adce5426987cbcb9d85981d60ce86371"
+    },
+    {
+      "path": "Evidence/04-sources-960.png",
+      "bytes": 233624,
+      "sha256": "6604710fd80d44566ff1b537ab1621a0ccab81259a9be0cb76dfc2c3aa889b0d"
+    },
+    {
+      "path": "Evidence/05-record-reduced-paused-960-layout.json",
+      "bytes": 1371,
+      "sha256": "d17d6b6c911c058cc2ad4a25b75797a6e1a8cc8a07c895b24318e675c9eb99f6"
+    },
+    {
+      "path": "Evidence/05-record-reduced-paused-960-ui.txt",
+      "bytes": 25111,
+      "sha256": "b6e36d9bd52713184dace94bc2d72e6003aedca3188813d6ac4df87ca96a2933"
+    },
+    {
+      "path": "Evidence/05-record-reduced-paused-960.png",
+      "bytes": 215377,
+      "sha256": "86504617f53828eff85f12c1962090edacf72b861bc86e558104f9d9c24d597e"
+    },
+    {
+      "path": "Evidence/06-record-rebound-1280-layout.json",
+      "bytes": 1246,
+      "sha256": "c49d4302f46e583ba8011a782c2d3a4f304ff00893db661ba2ad32044cc77948"
+    },
+    {
+      "path": "Evidence/06-record-rebound-1280-ui.txt",
+      "bytes": 25108,
+      "sha256": "504893718fe3785c5c40e1ab9a4b1572172682721c2a23382977735223845a1a"
+    },
+    {
+      "path": "Evidence/06-record-rebound-1280.png",
+      "bytes": 351152,
+      "sha256": "32d29ac963a854a404196c8b70bd7fbd052f130bf4dfbfbe2f4cf9f3de843a6a"
+    },
+    {
+      "path": "Evidence/actual-source-destinations.txt",
+      "bytes": 228,
+      "sha256": "302bd30e42c19db887bb4c265ed8819f157a8a81728af00266ad9ae29229c8e1"
+    },
+    {
+      "path": "Evidence/assets-before.json",
+      "bytes": 432355,
+      "sha256": "504adabb9b7ac979df70a3ec278b05dcb3f8989242a92282bb2be156e94def54"
+    },
+    {
+      "path": "Evidence/checks.jsonl",
+      "bytes": 27751,
+      "sha256": "1a7058ffc8e3d97dd65f64c2d3bbbabca78ce1c1e14f34277c3c3b8ce95cb419"
+    },
+    {
+      "path": "Evidence/editor-environment-errors.txt",
+      "bytes": 965,
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85"
+    },
+    {
+      "path": "Evidence/external-browser-limits.txt",
+      "bytes": 218,
+      "sha256": "28fb307c71a8d65db492683f68594242ae389e0868cd2642c098b1b96a12a47e"
+    },
+    {
+      "path": "Evidence/i06-record-roll-native-2.log",
+      "bytes": 36654,
+      "sha256": "7c24e7d5a18762aabb447200ed326a5a0f814d5cfd2ebe02981e2fa0cff922ec"
+    },
+    {
+      "path": "Evidence/i06-record-roll-native-2.log.exitcode",
+      "bytes": 3,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "path": "Evidence/PASS.txt",
+      "bytes": 236,
+      "sha256": "1ad608782dea7329d0821aaa1752c9c801022fbee83102c87dfda728091c9c41"
+    },
+    {
+      "path": "Evidence/restart-observation.txt",
+      "bytes": 82,
+      "sha256": "a0ab5a4f0f2e8ea2a23c46df51ab451a6ae83dd3c5af9b02e6471022ee9108c1"
+    },
+    {
+      "path": "Evidence/result.json",
+      "bytes": 431,
+      "sha256": "55fdf43119bc7c420593b825a8e9a3007a86dc2f051e5fac34eba71c80afc43e"
+    },
+    {
+      "path": "Evidence/scope.txt",
+      "bytes": 614,
+      "sha256": "222144c7ca6ae3e3a07dd5e4b32d54ad833d00c1426d43afd99c91391490c615"
+    },
+    {
+      "path": "Evidence/scroll-motion.jsonl",
+      "bytes": 2353,
+      "sha256": "b46d92e8036d70ad013754e6cbba190f26a13062565398b74a984b0dc5b9c991"
+    },
+    {
+      "path": "Evidence/time-inputs.txt",
+      "bytes": 76,
+      "sha256": "bda860b2a214a4941cbf4a233933e10ba83bc7c0dfe3d4b06ce28cb57dcfc5da"
+    },
+    {
+      "path": "measured-summary.json",
+      "bytes": 169,
+      "sha256": "9f4a31f2e3d76235e98dde7600363da8f50b3808c7767e8a1c73b27437d01653"
+    },
+    {
+      "path": "Native1HarnessFailure/01-endcard-1280-layout.json",
+      "bytes": 1536,
+      "sha256": "9a53ac1b5a6e5d5e3b54cd6945538e3f4c3ffc71c08f4001ccb44e1b6480e92e"
+    },
+    {
+      "path": "Native1HarnessFailure/01-endcard-1280-ui.txt",
+      "bytes": 1657,
+      "sha256": "9929d97bcc6f330bc44bbae95315450ae9e178f8f6054fdc276a4fcd376a9765"
+    },
+    {
+      "path": "Native1HarnessFailure/01-endcard-1280.png",
+      "bytes": 681059,
+      "sha256": "bc9bd70152f4186f16f5165c506899c64708860e9d7ddb85090ab6683743f061"
+    },
+    {
+      "path": "Native1HarnessFailure/02-record-paused-1280-layout.json",
+      "bytes": 1246,
+      "sha256": "c49d4302f46e583ba8011a782c2d3a4f304ff00893db661ba2ad32044cc77948"
+    },
+    {
+      "path": "Native1HarnessFailure/02-record-paused-1280-ui.txt",
+      "bytes": 25108,
+      "sha256": "5e3a35cb201d9f7ccd16c7f9ff6e7ff76104adf4bb183d71000a55f68562be0f"
+    },
+    {
+      "path": "Native1HarnessFailure/02-record-paused-1280.png",
+      "bytes": 353719,
+      "sha256": "9a16ad17db08776c96d0f17c220fff7ccc9cd369443c9d098690ca3223f73f0b"
+    },
+    {
+      "path": "Native1HarnessFailure/03-sources-1280-layout.json",
+      "bytes": 644,
+      "sha256": "189b078291e6433be70ca1975cc4eba55d06f0a257af7cf04b93dd1e2508ca6c"
+    },
+    {
+      "path": "Native1HarnessFailure/03-sources-1280-ui.txt",
+      "bytes": 12725,
+      "sha256": "d718dc9685efbdf50f79c67215249b5b4e1b46f38e59ce31ddaab448027ecf63"
+    },
+    {
+      "path": "Native1HarnessFailure/03-sources-1280.png",
+      "bytes": 378340,
+      "sha256": "28a508cc39728cebb25e82975507330e82f3e1852c3e20049b0ce84e2b396d2f"
+    },
+    {
+      "path": "Native1HarnessFailure/04-sources-960-layout.json",
+      "bytes": 682,
+      "sha256": "8f566cd29e0949eca83665aa821e55e4f35c361579da84eb7d2f9444390afea3"
+    },
+    {
+      "path": "Native1HarnessFailure/04-sources-960-ui.txt",
+      "bytes": 12726,
+      "sha256": "8e6ab2f7391ca84b3e56c94b79ee17a72c100063b109d7c82f8d617ae806be0f"
+    },
+    {
+      "path": "Native1HarnessFailure/04-sources-960.png",
+      "bytes": 233469,
+      "sha256": "1239efe00973a214d2bb6d040975d238e86169096d1222fa1a0cd8bb57cc4735"
+    },
+    {
+      "path": "Native1HarnessFailure/05-record-reduced-paused-960-layout.json",
+      "bytes": 1371,
+      "sha256": "d17d6b6c911c058cc2ad4a25b75797a6e1a8cc8a07c895b24318e675c9eb99f6"
+    },
+    {
+      "path": "Native1HarnessFailure/05-record-reduced-paused-960-ui.txt",
+      "bytes": 25111,
+      "sha256": "fd9a078d600d0c2ecb5744436ad74278a0ce5c4de70a28aab549dc2354aa512b"
+    },
+    {
+      "path": "Native1HarnessFailure/05-record-reduced-paused-960.png",
+      "bytes": 215379,
+      "sha256": "02bb4ebcfef9931f2a5ed90f76a3dae4126167909da4f309a7c962080da4adb3"
+    },
+    {
+      "path": "Native1HarnessFailure/06-record-rebound-1280-layout.json",
+      "bytes": 1246,
+      "sha256": "c49d4302f46e583ba8011a782c2d3a4f304ff00893db661ba2ad32044cc77948"
+    },
+    {
+      "path": "Native1HarnessFailure/06-record-rebound-1280-ui.txt",
+      "bytes": 25108,
+      "sha256": "75a5f0ec587d2584360ab4a263a227e8330e79a81bd6526ac7a32264f2204414"
+    },
+    {
+      "path": "Native1HarnessFailure/06-record-rebound-1280.png",
+      "bytes": 350563,
+      "sha256": "be9419440b23ce0c6b937df5aa3e23738851b1c72be0122932723f9cf4cdb70a"
+    },
+    {
+      "path": "Native1HarnessFailure/actual-source-destinations.txt",
+      "bytes": 228,
+      "sha256": "302bd30e42c19db887bb4c265ed8819f157a8a81728af00266ad9ae29229c8e1"
+    },
+    {
+      "path": "Native1HarnessFailure/assets-before.json",
+      "bytes": 432355,
+      "sha256": "2c1235fe8aabb124de7b3939df01a861cbb21422efcf80ed84d803281255184b"
+    },
+    {
+      "path": "Native1HarnessFailure/checks.jsonl",
+      "bytes": 26757,
+      "sha256": "2d37908f211fe7238c1bba4e85d01ade81b88eac13e60fbfc99b22323ceb2d93"
+    },
+    {
+      "path": "Native1HarnessFailure/editor-environment-errors.txt",
+      "bytes": 965,
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85"
+    },
+    {
+      "path": "Native1HarnessFailure/FAIL.txt",
+      "bytes": 522,
+      "sha256": "0b817c77fdc13b0aa0fd0d15f2ffd92f0766d1716939e8a852fc50ac0b53cdec"
+    },
+    {
+      "path": "Native1HarnessFailure/i06-record-roll-native-1.log",
+      "bytes": 42448,
+      "sha256": "2bb4d68b6ae8c7d3e51567f5b8036c7efe4d5c865fb63154d9dc1c5563d1cb9e"
+    },
+    {
+      "path": "Native1HarnessFailure/i06-record-roll-native-1.log.exitcode",
+      "bytes": 3,
+      "sha256": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04"
+    },
+    {
+      "path": "Native1HarnessFailure/result.json",
+      "bytes": 744,
+      "sha256": "65a23318bb55e15016dde42cee24dfc5c884519b3cf85f4029bac85074532afc"
+    },
+    {
+      "path": "Native1HarnessFailure/scope.txt",
+      "bytes": 614,
+      "sha256": "222144c7ca6ae3e3a07dd5e4b32d54ad833d00c1426d43afd99c91391490c615"
+    },
+    {
+      "path": "Native1HarnessFailure/scroll-motion.jsonl",
+      "bytes": 2351,
+      "sha256": "2c482ba9bbe9954b7a2ba891e3bfb43418ca2156816fc56c22ded1c839c16d17"
+    },
+    {
+      "path": "Native1HarnessFailure/time-inputs.txt",
+      "bytes": 76,
+      "sha256": "bda860b2a214a4941cbf4a233933e10ba83bc7c0dfe3d4b06ce28cb57dcfc5da"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2654,
+      "sha256": "08827341d6a8b82fd401fe9fc8781a6169c21f8a67d478fee550e82d56c35a99"
+    },
+    {
+      "path": "source-pins.json",
+      "bytes": 1592,
+      "sha256": "657d2cc93159202ad76c77cc65aa37217f2aff283db0038e64e7a95916db40e6"
+    }
+  ]
+}

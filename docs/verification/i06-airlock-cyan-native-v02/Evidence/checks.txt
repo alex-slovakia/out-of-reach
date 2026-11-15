@@ -1,0 +1,702 @@
+PASS opening actual saved Bootstrap | Saved Bootstrap contains actual I06MarineBindings.
+PASS opening actual saved Bootstrap | Saved marine bindings reference their actual console and player camera.
+PASS opening actual saved Bootstrap | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.
+PASS native actual Bootstrap | Actual saved owners and pressure panel available.
+PASS native actual Bootstrap | Normal clock/controller/input retained.
+PASS native actual Bootstrap | Actual pressure panel remains active WorldSpace UI.
+PASS native actual Bootstrap | Disclosed valid planner launch setup: AURORA-7 launched with 7 equipment line(s).
+PASS native actual Bootstrap | Disclosed actual transport Skip
+PASS native actual Bootstrap | Actual cockpit check setup: Cockpit check complete. Impact detected.
+PASS native actual Bootstrap | Actual Impact requested
+PASS native actual Bootstrap | Disclosed actual Impact acknowledgement
+PASS native actual Bootstrap | Actual power repair cost: power distribution repaired (2 spare parts).
+PASS native actual Bootstrap | Actual life-support repair cost: life support repaired (2 spare parts, 1 kWh).
+PASS native actual Bootstrap | Actual suit preparation and accounting: EVA suit on. Tank: 0.3 kg oxygen.
+PASS native actual Bootstrap | Real suited interior, no cinematic/pause/outcome fixture substitute
+PASS native actual Bootstrap | Actual start-depressurization command: Inner hatch sealed. Depressurizing.
+PASS 01-depressurizing | Genuine authoritative pressure state Depressurizing
+PASS 01-depressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); 
+PASS 01-depressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch0
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch0
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch0
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch0
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch1
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch1
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch1
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch1
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch1 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch2
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch2
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch2
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch2
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch2 (fraction=9.6881200396825391E-06); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch3
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch3
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch3
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch3
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch3 (fraction=1.743861607142857E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch4
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch4
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch4
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch4
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch4 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch5
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch5
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch5
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch5
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch5 (fraction=7.5567336309523812E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch6
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch6
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch6
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch6
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch6 (fraction=0.00011044456845238095); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch7
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch7
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch7
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch7
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z17.70-pitch8
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z17.70-pitch8
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z17.70-pitch8
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z17.70-pitch8
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse input changed player view pitch substantially
+PASS 01-depressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); 
+PASS 01-depressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch0
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch0
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch0
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch0
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch0 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch1
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch1
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch1
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch1
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch1 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch2
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch2
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch2
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch2
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch2 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch3
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch3
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch3
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch3
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch3 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch4
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch4
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch4
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch4
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch4 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch5
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch5
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch5
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch5
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch5 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch6
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch6
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch6
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch6
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch6 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch7
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch7
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch7
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch7
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z19.20-pitch8
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z19.20-pitch8
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z19.20-pitch8
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z19.20-pitch8
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse input changed player view pitch substantially
+PASS 01-depressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); 
+PASS 01-depressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch0
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch0
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch0
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch0
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch0 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch1
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch1
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch1
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch1
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch1 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch2
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch2
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch2
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch2
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch2 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch3
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch3
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch3
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch3
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch3 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch4
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch4
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch4
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch4
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch4 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch5
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch5
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch5
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch5
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch5 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch6
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch6
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch6
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch6
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch6 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch7
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch7
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch7
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch7
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse sensitivity available
+PASS 01-depressurizing | Pressure state retained during actual-input sample 01-depressurizing-z20.35-pitch8
+PASS 01-depressurizing | Actual player/camera/HUD/pressure presentation active 01-depressurizing-z20.35-pitch8
+PASS 01-depressurizing | Existing camera near and field of view retained
+PASS 01-depressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 01-depressurizing | Actual URP camera rendered new frames before readback 01-depressurizing-z20.35-pitch8
+PASS 01-depressurizing | Actual rendered panel text matches real pressure service 01-depressurizing-z20.35-pitch8
+PASS 01-depressurizing | No broad cyan scene fill at 01-depressurizing-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only
+PASS 01-depressurizing | Actual mouse input changed player view pitch substantially
+PASS 01-depressurizing | Actual depressurization still pending before legitimate time advance
+PASS 01-depressurizing | Disclosed real remaining depressurization advance with resource accounting: Simulation advanced.
+PASS 01-depressurizing | Authoritative simulation clock accounts for long pressure wait
+PASS 02-safe-to-exit | Genuine authoritative pressure state OuterOpen
+PASS 02-safe-to-exit | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); 
+PASS 02-safe-to-exit | Actual capsule remains nonpenetrating after setup: 
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch0
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch0
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch0
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch0
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch1
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch1
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch1
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch1
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch1 (fraction=5.8128720238095235E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch2
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch2
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch2
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch2
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch2 (fraction=0.00012982080853174603); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch3
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch3
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch3
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch3
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch3 (fraction=8.7193080357142859E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch4
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch4
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch4
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch4
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch4 (fraction=0.00011044456845238095); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch5
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch5
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch5
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch5
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch5 (fraction=0.00010850694444444444); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch6
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch6
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch6
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch6
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch6 (fraction=0.00015694754464285715); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch7
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch7
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch7
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch7
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z17.70-pitch8
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z17.70-pitch8
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z17.70-pitch8
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z17.70-pitch8
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse input changed player view pitch substantially
+PASS 02-safe-to-exit | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); 
+PASS 02-safe-to-exit | Actual capsule remains nonpenetrating after setup: 
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch0
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch0
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch0
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch0
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch0 (fraction=7.16920882936508E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch1
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch1
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch1
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch1
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch1 (fraction=0.00028095548115079363); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch2
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch2
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch2
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch2
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch2 (fraction=0.00020926339285714285); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch3
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch3
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch3
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch3
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch3 (fraction=0.000248015873015873); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch4
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch4
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch4
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch4
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch4 (fraction=0.00021120101686507937); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch5
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch5
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch5
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch5
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch5 (fraction=0.0002499534970238095); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch6
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch6
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch6
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch6
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch6 (fraction=0.00011819506448412698); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch7
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch7
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch7
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch7
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z19.20-pitch8
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z19.20-pitch8
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z19.20-pitch8
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z19.20-pitch8
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse input changed player view pitch substantially
+PASS 02-safe-to-exit | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); 
+PASS 02-safe-to-exit | Actual capsule remains nonpenetrating after setup: 
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch0
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch0
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch0
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch0
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch0 (fraction=0.00026157924107142856); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch1
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch1
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch1
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch1
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch1 (fraction=0.0016217912946428572); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch2
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch2
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch2
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch2
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch2 (fraction=0.001468718998015873); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch3
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch3
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch3
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch3
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch3 (fraction=0.0014357793898809525); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch4
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch4
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch4
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch4
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch4 (fraction=0.001457093253968254); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch5
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch5
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch5
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch5
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch5 (fraction=0.0015210348462301587); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch6
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch6
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch6
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch6
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch6 (fraction=0.000964936755952381); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch7
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch7
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch7
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch7
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse sensitivity available
+PASS 02-safe-to-exit | Pressure state retained during actual-input sample 02-safe-to-exit-z20.35-pitch8
+PASS 02-safe-to-exit | Actual player/camera/HUD/pressure presentation active 02-safe-to-exit-z20.35-pitch8
+PASS 02-safe-to-exit | Existing camera near and field of view retained
+PASS 02-safe-to-exit | Actual capsule not injected into an obstacle during sweep: 
+PASS 02-safe-to-exit | Actual URP camera rendered new frames before readback 02-safe-to-exit-z20.35-pitch8
+PASS 02-safe-to-exit | Actual rendered panel text matches real pressure service 02-safe-to-exit-z20.35-pitch8
+PASS 02-safe-to-exit | No broad cyan scene fill at 02-safe-to-exit-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only
+PASS 02-safe-to-exit | Actual mouse input changed player view pitch substantially
+PASS 02-safe-to-exit | Actual repressurization command while suited inside: Outer hatch closed. Repressurizing.
+PASS 03-repressurizing | Genuine authoritative pressure state Repressurizing
+PASS 03-repressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 17.7000); 
+PASS 03-repressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch0
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch0
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch0
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch0
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch0 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch1
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch1
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch1
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch1
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch1 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch2
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch2
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch2
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch2
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch2 (fraction=1.5500992063492063E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch3
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch3
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch3
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch3
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch3 (fraction=1.743861607142857E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch4
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch4
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch4
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch4
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch4 (fraction=1.9376240079365078E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch5
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch5
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch5
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch5
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch5 (fraction=7.5567336309523812E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch6
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch6
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch6
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch6
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch6 (fraction=0.00011044456845238095); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch7
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch7
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch7
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch7
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch7 (fraction=4.456535218253968E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z17.70-pitch8
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z17.70-pitch8
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z17.70-pitch8
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z17.70-pitch8
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z17.70-pitch8 (fraction=7.36297123015873E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse input changed player view pitch substantially
+PASS 03-repressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 19.2000); 
+PASS 03-repressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch0
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch0
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch0
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch0
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch0 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch1
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch1
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch1
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch1
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch1 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch2
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch2
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch2
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch2
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch2 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch3
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch3
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch3
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch3
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch3 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch4
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch4
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch4
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch4
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch4 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch5
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch5
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch5
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch5
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch5 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch6
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch6
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch6
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch6
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch6 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch7
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch7
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch7
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch7
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z19.20-pitch8
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z19.20-pitch8
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z19.20-pitch8
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z19.20-pitch8
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z19.20-pitch8 (fraction=2.1313864087301586E-05); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse input changed player view pitch substantially
+PASS 03-repressurizing | Legal near-timer starting capsule (no collider edits): (1.2000, 0.0350, 20.3500); 
+PASS 03-repressurizing | Actual capsule remains nonpenetrating after setup: 
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch0
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch0
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch0
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch0
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch0 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch1
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch1
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch1
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch1
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch1 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch2
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch2
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch2
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch2
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch2 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch3
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch3
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch3
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch3
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch3 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch4
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch4
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch4
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch4
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch4 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch5
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch5
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch5
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch5
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch5 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch6
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch6
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch6
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch6
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch6 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch7
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch7
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch7
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch7
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch7 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse sensitivity available
+PASS 03-repressurizing | Pressure state retained during actual-input sample 03-repressurizing-z20.35-pitch8
+PASS 03-repressurizing | Actual player/camera/HUD/pressure presentation active 03-repressurizing-z20.35-pitch8
+PASS 03-repressurizing | Existing camera near and field of view retained
+PASS 03-repressurizing | Actual capsule not injected into an obstacle during sweep: 
+PASS 03-repressurizing | Actual URP camera rendered new frames before readback 03-repressurizing-z20.35-pitch8
+PASS 03-repressurizing | Actual rendered panel text matches real pressure service 03-repressurizing-z20.35-pitch8
+PASS 03-repressurizing | No broad cyan scene fill at 03-repressurizing-z20.35-pitch8 (fraction=0); threshold.65 is candidate detection only
+PASS 03-repressurizing | Actual mouse input changed player view pitch substantially
+PASS 03-repressurizing | All81 planned actual-input angle/position/state GPU samples completed
+PASS 03-repressurizing | All sweeps retain genuine running interior EVA and no terminal outcome
+PASS 03-repressurizing | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.
+PASS 03-repressurizing | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.

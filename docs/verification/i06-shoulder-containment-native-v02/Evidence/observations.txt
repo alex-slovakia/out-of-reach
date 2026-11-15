@@ -1,0 +1,33 @@
+Batch-only normal OnApplicationFocus(true), temporary input settings and virtual devices; no control-gate assignment.
+SETUP ONLY Player.Teleport | left-x2.50-straight feet=(-2.50000, 0.03500, 2.00000) yaw=0
+Actual Player.Pushed left-x2.50-straight (0.000000, 0.078750, 0.341026)
+Actual FloatContact left-x2.50-straight CockpitEngineeringShoulder_L speed=0.341025561 feet=(-2.500000, 0.164633, 2.560000)
+SETUP ONLY Player.Teleport | left-x2.50-diagonal feet=(-2.50000, 0.03500, 2.00000) yaw=-18
+Actual Player.Pushed left-x2.50-diagonal (-0.105383, 0.078750, 0.324335)
+Actual FloatContact left-x2.50-diagonal CockpitEngineeringShoulder_L speed=0.324334621 feet=(-2.682432, 0.171336, 2.561468)
+Actual FloatContact left-x2.50-diagonal COL_Cockpit_WallL speed=0.105382964 feet=(-2.682432, 0.171336, 2.561468)
+SETUP ONLY Player.Teleport | left-x2.65-straight feet=(-2.65000, 0.03500, 2.00000) yaw=0
+Actual Player.Pushed left-x2.65-straight (0.000000, 0.078750, 0.341026)
+Actual FloatContact left-x2.65-straight CockpitEngineeringShoulder_L speed=0.341025561 feet=(-2.650000, 0.164468, 2.560000)
+SETUP ONLY Player.Teleport | left-x2.65-diagonal feet=(-2.65000, 0.03500, 2.00000) yaw=-18
+Actual Player.Pushed left-x2.65-diagonal (-0.105383, 0.078750, 0.324335)
+Actual FloatContact left-x2.65-diagonal COL_Cockpit_WallL speed=0.105382666 feet=(-2.690730, 0.065460, 2.125449)
+Actual FloatContact left-x2.65-diagonal CockpitEngineeringShoulder_L speed=0.3243346 feet=(-2.690730, 0.171068, 2.560000)
+SETUP ONLY Player.Teleport | right-x2.30-straight feet=(2.30000, 0.03500, 2.00000) yaw=0
+Actual Player.Pushed right-x2.30-straight (0.000000, 0.078750, 0.341026)
+Actual FloatContact right-x2.30-straight CockpitEngineeringShoulder_R speed=0.328676581 feet=(2.299850, 0.166959, 2.570905)
+Actual FloatContact right-x2.30-straight COL_PortalEngineering_WingR speed=0.0242507346 feet=(2.187449, 0.267950, 2.602000)
+SETUP ONLY Player.Teleport | right-x2.30-diagonal feet=(2.30000, 0.03500, 2.00000) yaw=18
+Actual Player.Pushed right-x2.30-diagonal (0.105383, 0.078750, 0.324335)
+Actual FloatContact right-x2.30-diagonal MissionTerminal speed=0.105382726 feet=(2.352730, 0.074706, 2.163531)
+Actual FloatContact right-x2.30-diagonal CockpitEngineeringShoulder_R speed=0.322991818 feet=(2.352640, 0.171512, 2.561250)
+SETUP ONLY Player.Teleport | right-x2.32-straight feet=(2.32000, 0.03500, 2.00000) yaw=0
+Actual Player.Pushed right-x2.32-straight (0.000000, 0.078750, 0.341026)
+Actual FloatContact right-x2.32-straight CockpitEngineeringShoulder_R speed=0.3341354 feet=(2.319739, 0.166024, 2.566115)
+Actual FloatContact right-x2.32-straight COL_PortalEngineering_WingR speed=0.0136410845 feet=(2.134082, 0.384804, 2.604000)
+SETUP ONLY Player.Teleport | right-x2.32-diagonal feet=(2.32000, 0.03500, 2.00000) yaw=18
+Actual Player.Pushed right-x2.32-diagonal (0.105383, 0.078750, 0.324335)
+Actual FloatContact right-x2.32-diagonal MissionTerminal speed=0.105382688 feet=(2.352730, 0.059494, 2.100878)
+Actual FloatContact right-x2.32-diagonal CockpitEngineeringShoulder_R speed=0.322991878 feet=(2.352630, 0.171539, 2.561251)
+SETUP ONLY Player.Teleport | central-positive-control feet=(0.00000, 0.03500, 2.00000) yaw=0
+Actual Player.Pushed central-positive-control (0.000000, 0.078750, 0.341026)

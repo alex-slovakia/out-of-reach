@@ -1,0 +1,3975 @@
+{
+    "materials": [
+        {
+            "renderer": "Tethered EVA route - outside hull",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.174999952316284,
+                    "y": 1.350000023841858,
+                    "z": 17.974998474121095
+                },
+                "m_Extent": {
+                    "x": 2.185999870300293,
+                    "y": 0.6110000014305115,
+                    "z": 4.835999965667725
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Bulkhead wing",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.6500000953674317,
+                    "y": 1.5499999523162842,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.7500000596046448,
+                    "y": 1.5499999523162842,
+                    "z": 0.09000000357627869
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.6399999856948853,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Label | EVA / EQUIPMENT",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.6799999475479127,
+                    "y": 2.369999885559082,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 3.059148667716727e-8,
+                    "y": 0.032532498240470889,
+                    "z": 0.25662001967430117
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Walkway plate",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/deck.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.004999999888241291,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.7400000095367432,
+                    "y": 0.004999999888241291,
+                    "z": 0.4699999988079071
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.41999998688697817,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Suit stowage silhouette/Packed suit leg",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/padding.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.75,
+                    "y": 0.800000011920929,
+                    "z": 18.829999923706056
+                },
+                "m_Extent": {
+                    "x": 0.15000000596046449,
+                    "y": 0.32499998807907107,
+                    "z": 0.11999999731779099
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/LeftLeaf/Pressure seal",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.030000001192092897,
+                    "y": 1.2300000190734864,
+                    "z": 20.920000076293947
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 1.2000000476837159,
+                    "z": 0.009999999776482582
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 19.340999603271486
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.010499999858438969,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/RightLeaf/Leaf body",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.4399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 0.05999999865889549
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 18.85700035095215
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.027299998328089715,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/RightLeaf/Leaf body",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.4399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 0.05999999865889549
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/LeftLeaf/Door identification",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/cyan.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.399999976158142,
+                    "z": 16.899999618530275
+                },
+                "m_Extent": {
+                    "x": 0.25,
+                    "y": 0.017500000074505807,
+                    "z": 0.007499999832361937
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Glass.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Ceiling rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.059999942779541,
+                    "z": 18.6200008392334
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.07000000029802323,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Upper shoulder",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.180000066757202,
+                    "y": 2.9000000953674318,
+                    "z": 17.799999237060548
+                },
+                "m_Extent": {
+                    "x": 0.27223607897758486,
+                    "y": 0.2722361087799072,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 19.099000930786134
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.01889999955892563,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Guidance marker",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.0700000524520875,
+                    "y": 1.2999999523162842,
+                    "z": 16.895000457763673
+                },
+                "m_Extent": {
+                    "x": 0.027499999850988389,
+                    "y": 0.3499999940395355,
+                    "z": 0.007000000216066837
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Guidance marker",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.0700000524520875,
+                    "y": 1.2999999523162842,
+                    "z": 20.895000457763673
+                },
+                "m_Extent": {
+                    "x": 0.027499999850988389,
+                    "y": 0.3499999940395355,
+                    "z": 0.007000000216066837
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.013000000268220902,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/LeftLeaf/Door identification",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.399999976158142,
+                    "z": 20.899999618530275
+                },
+                "m_Extent": {
+                    "x": 0.25,
+                    "y": 0.017500000074505807,
+                    "z": 0.007499999832361937
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Recessed service lamp",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/warm.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6299998760223389,
+                    "y": 1.7599999904632569,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.030000047758221628,
+                    "y": 0.012500000186264515,
+                    "z": 0.3750000596046448
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.5299999713897705,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Ceiling utility run",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.8999999761581421,
+                    "y": 3.0,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.10000000149011612,
+                    "y": 0.05000000074505806,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Label | EXTERIOR / EVA",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.9100000858306886,
+                    "z": 21.114999771118165
+                },
+                "m_Extent": {
+                    "x": 0.34875747561454775,
+                    "y": 0.04879874736070633,
+                    "z": 3.0489346158901756e-8
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.09999997913837433,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Ceiling utility run",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.8999999761581421,
+                    "y": 3.0,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.10000000149011612,
+                    "y": 0.05000000074505806,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Pressure ceiling",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/ceiling.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.2200000286102297,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.10000000149011612,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Bulkhead wing",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6500000953674317,
+                    "y": 1.5499999523162842,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.7500000596046448,
+                    "y": 1.5499999523162842,
+                    "z": 0.09000000357627869
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Portal jamb",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.949999988079071,
+                    "y": 1.25,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 1.25,
+                    "z": 0.1599999964237213
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Wall panel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.365000009536743,
+                    "y": 1.5,
+                    "z": 19.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.03500000014901161,
+                    "y": 1.149999976158142,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Bulkhead wing",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.6500000953674317,
+                    "y": 1.5499999523162842,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.7500000596046448,
+                    "y": 1.5499999523162842,
+                    "z": 0.09000000357627869
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.699999988079071,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Walkway plate",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/deck.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.004999999888241291,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.7400000095367432,
+                    "y": 0.004999999888241291,
+                    "z": 0.4699999988079071
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.30000001192092898,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Portal jamb",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.949999988079071,
+                    "y": 1.25,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 1.25,
+                    "z": 0.1599999964237213
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Overhead lintel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.819999933242798,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.3199999928474426,
+                    "z": 0.10000000149011612
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.013000000268220902,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Suit stowage silhouette/Suit mount",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.9500000476837159,
+                    "y": 1.25,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.15000000596046449,
+                    "y": 1.2000000476837159,
+                    "z": 0.625
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Door",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7900068759918213,
+                    "y": 1.1699999570846558,
+                    "z": 19.191999435424806
+                },
+                "m_Extent": {
+                    "x": 0.04399311542510986,
+                    "y": 1.0099999904632569,
+                    "z": 0.40699997544288638
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Door",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedBlack.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7900068759918213,
+                    "y": 1.1699999570846558,
+                    "z": 19.191999435424806
+                },
+                "m_Extent": {
+                    "x": 0.04399311542510986,
+                    "y": 1.0099999904632569,
+                    "z": 0.40699997544288638
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Door",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Glass.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7900068759918213,
+                    "y": 1.1699999570846558,
+                    "z": 19.191999435424806
+                },
+                "m_Extent": {
+                    "x": 0.04399311542510986,
+                    "y": 1.0099999904632569,
+                    "z": 0.40699997544288638
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Door",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7900068759918213,
+                    "y": 1.1699999570846558,
+                    "z": 19.191999435424806
+                },
+                "m_Extent": {
+                    "x": 0.04399311542510986,
+                    "y": 1.0099999904632569,
+                    "z": 0.40699997544288638
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Door",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7900068759918213,
+                    "y": 1.1699999570846558,
+                    "z": 19.191999435424806
+                },
+                "m_Extent": {
+                    "x": 0.04399311542510986,
+                    "y": 1.0099999904632569,
+                    "z": 0.40699997544288638
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Frame rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.2800002098083498,
+                    "y": 1.4500000476837159,
+                    "z": 18.6200008392334
+                },
+                "m_Extent": {
+                    "x": 0.09000000357627869,
+                    "y": 1.4500000476837159,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Service handle",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6299999952316285,
+                    "y": 0.9800000190734863,
+                    "z": 19.549999237060548
+                },
+                "m_Extent": {
+                    "x": 0.03500000759959221,
+                    "y": 0.125,
+                    "z": 0.02250000648200512
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 18.614999771118165
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.010499999858438969,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Label | 04 / AIRLOCK",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.9100000858306886,
+                    "z": 16.885000228881837
+                },
+                "m_Extent": {
+                    "x": 0.27845999598503115,
+                    "y": 0.04879874736070633,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/LeftLeaf/Leaf recess",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 20.93000030517578
+                },
+                "m_Extent": {
+                    "x": 0.3400000035762787,
+                    "y": 1.0499999523162842,
+                    "z": 0.014999999664723874
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/RightLeaf/Leaf recess",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 20.93000030517578
+                },
+                "m_Extent": {
+                    "x": 0.3400000035762787,
+                    "y": 1.0499999523162842,
+                    "z": 0.014999999664723874
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/AirlockGauge_Needle",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedBlack.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.4799609184265137,
+                    "y": 1.7000000476837159,
+                    "z": 20.829500198364259
+                },
+                "m_Extent": {
+                    "x": 0.05006243288516998,
+                    "y": 0.009510565549135208,
+                    "z": 0.0024999999441206457
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/AirlockGauge_Needle",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintRed.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.4799609184265137,
+                    "y": 1.7000000476837159,
+                    "z": 20.829500198364259
+                },
+                "m_Extent": {
+                    "x": 0.05006243288516998,
+                    "y": 0.009510565549135208,
+                    "z": 0.0024999999441206457
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Label | DIAGNOSTICS",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.5634000301361085,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 1.8699859438697787e-8,
+                    "y": 0.025375347584486009,
+                    "z": 0.15686580538749696
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Portal jamb",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.949999988079071,
+                    "y": 1.25,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 1.25,
+                    "z": 0.1599999964237213
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Label | PRESSURE CONTROL",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6699999570846558,
+                    "y": 1.8200000524520875,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.6500226013581597e-8,
+                    "y": 0.023237500339746476,
+                    "z": 0.22230003774166108
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Ceiling rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.059999942779541,
+                    "z": 17.020000457763673
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.07000000029802323,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Label | CONNECT DOMAIN AT INTEGRATION",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.3240000009536744,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 1.9393700867453846e-8,
+                    "y": 0.010150140151381493,
+                    "z": 0.16268616914749146
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Screen bezel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.659999966621399,
+                    "y": 1.4500000476837159,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.022500071674585344,
+                    "y": 0.23999999463558198,
+                    "z": 0.5800000429153442
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/LeftLeaf/Leaf body",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.4399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 0.05999999865889549
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Label | PRESSURE BOUNDARY",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.6600000858306886,
+                    "z": 20.885000228881837
+                },
+                "m_Extent": {
+                    "x": 0.21946600079536439,
+                    "y": 0.021378500387072564,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Painted walkway edge",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/ivory.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.7699999809265137,
+                    "y": 0.012000000104308129,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 0.007000000216066837,
+                    "z": 1.9249999523162842
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Service handle",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6299998760223389,
+                    "y": 0.9800000190734863,
+                    "z": 18.450000762939454
+                },
+                "m_Extent": {
+                    "x": 0.03500000759959221,
+                    "y": 0.125,
+                    "z": 0.02250000648200512
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/RightLeaf/Leaf recess",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 16.93000030517578
+                },
+                "m_Extent": {
+                    "x": 0.3400000035762787,
+                    "y": 1.0499999523162842,
+                    "z": 0.014999999664723874
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Screen glass",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/screen.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6319999694824219,
+                    "y": 1.4500000476837159,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.005000066012144089,
+                    "y": 0.20999999344348908,
+                    "z": 0.5500000715255737
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Ceiling fixture",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.0299999713897707,
+                    "z": 18.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.6499999761581421,
+                    "y": 0.05999999865889549,
+                    "z": 0.20999999344348908
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.4749999940395355,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.5849999785423279,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Frame rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.2800002098083498,
+                    "y": 1.4500000476837159,
+                    "z": 18.6200008392334
+                },
+                "m_Extent": {
+                    "x": 0.09000000357627869,
+                    "y": 1.4500000476837159,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Cabinet body",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.0199999809265138,
+                    "y": 1.149999976158142,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.2900001108646393,
+                    "y": 1.149999976158142,
+                    "z": 0.8000001907348633
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Pressure wall",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.4600000381469728,
+                    "y": 1.5,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.05999999865889549,
+                    "y": 1.600000023841858,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 18.97800064086914
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.010499999858438969,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/RightLeaf/Door identification",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/cyan.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.399999976158142,
+                    "y": 1.399999976158142,
+                    "z": 16.899999618530275
+                },
+                "m_Extent": {
+                    "x": 0.25,
+                    "y": 0.017500000074505807,
+                    "z": 0.007499999832361937
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.29999998211860659,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Label | AIRLOCK",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6699999570846558,
+                    "y": 2.0299999713897707,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4036168611019094e-8,
+                    "y": 0.05112249776721001,
+                    "z": 0.20163002610206605
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Walkway plate",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/deck.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.004999999888241291,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.7400000095367432,
+                    "y": 0.004999999888241291,
+                    "z": 0.4699999988079071
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Frame rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.2800002098083498,
+                    "y": 1.4500000476837159,
+                    "z": 17.020000457763673
+                },
+                "m_Extent": {
+                    "x": 0.09000000357627869,
+                    "y": 1.4500000476837159,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Guidance marker",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.0700000524520875,
+                    "y": 1.2999999523162842,
+                    "z": 20.895000457763673
+                },
+                "m_Extent": {
+                    "x": 0.027499999850988389,
+                    "y": 0.3499999940395355,
+                    "z": 0.007000000216066837
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Overhead lintel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.819999933242798,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.3199999928474426,
+                    "z": 0.10000000149011612
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Identification stripe",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749998331069947,
+                    "y": 1.149999976158142,
+                    "z": 18.329999923706056
+                },
+                "m_Extent": {
+                    "x": 0.00750000262632966,
+                    "y": 1.024999976158142,
+                    "z": 0.017500001937150956
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Pressure wall",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.4600000381469728,
+                    "y": 1.5,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.05999999865889549,
+                    "y": 1.600000023841858,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Wall panel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.365000009536743,
+                    "y": 1.5,
+                    "z": 19.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.03500000014901161,
+                    "y": 1.149999976158142,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Skirting",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.3400001525878908,
+                    "y": 0.17000000178813935,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 0.15000000596046449,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Structure/Wall panel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.365000009536743,
+                    "y": 1.5,
+                    "z": 16.600000381469728
+                },
+                "m_Extent": {
+                    "x": 0.03500000014901161,
+                    "y": 1.149999976158142,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Bulkhead wing",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6500000953674317,
+                    "y": 1.5499999523162842,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.7500000596046448,
+                    "y": 1.5499999523162842,
+                    "z": 0.09000000357627869
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedBlue.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedClear.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedGold.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_CableBlue.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_FabricStrap.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_FabricWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_LedGreen.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintRed.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/AirlockParts/SuitLocker_Suit",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.116499900817871,
+                    "y": 1.1799999475479127,
+                    "z": 19.190000534057618
+                },
+                "m_Extent": {
+                    "x": 0.23849999904632569,
+                    "y": 1.024999976158142,
+                    "z": 0.36539897322654726
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Vent",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/space.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.6749999523162842,
+                    "y": 0.6949999928474426,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.007500057574361563,
+                    "y": 0.009999999776482582,
+                    "z": 0.4750000536441803
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Suit stowage silhouette/Packed suit leg",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/padding.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.75,
+                    "y": 0.800000011920929,
+                    "z": 19.170000076293947
+                },
+                "m_Extent": {
+                    "x": 0.15000000596046449,
+                    "y": 0.32499998807907107,
+                    "z": 0.11999999731779099
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Suit stowage silhouette/Stowed helmet",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/ivory.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.7699999809265137,
+                    "y": 1.9500000476837159,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.20000000298023225,
+                    "y": 0.20000000298023225,
+                    "z": 0.20000000298023225
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 18.736000061035158
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.01889999955892563,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.013000000268220902,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.7000000476837158,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/RightLeaf/Pressure seal",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.8700000047683716,
+                    "y": 1.2300000190734864,
+                    "z": 20.920000076293947
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 1.2000000476837159,
+                    "z": 0.009999999776482582
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Upper shoulder",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.180000066757202,
+                    "y": 2.9000000953674318,
+                    "z": 17.799999237060548
+                },
+                "m_Extent": {
+                    "x": 0.27223607897758486,
+                    "y": 0.2722361087799072,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Skirting",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.3400001525878908,
+                    "y": 0.17000000178813935,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 0.15000000596046449,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Label | 04 / AIRLOCK",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.9100000858306886,
+                    "z": 17.114999771118165
+                },
+                "m_Extent": {
+                    "x": 0.27845999598503115,
+                    "y": 0.04879874736070633,
+                    "z": 2.4343746574118087e-8
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Structure/Upper shoulder",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.180000066757202,
+                    "y": 2.9000000953674318,
+                    "z": 16.600000381469728
+                },
+                "m_Extent": {
+                    "x": 0.27223607897758486,
+                    "y": 0.2722361087799072,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/LeftLeaf/Leaf recess",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 16.93000030517578
+                },
+                "m_Extent": {
+                    "x": 0.3400000035762787,
+                    "y": 1.0499999523162842,
+                    "z": 0.014999999664723874
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/RightLeaf/Pressure seal",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.8199999332427979,
+                    "y": 1.2300000190734864,
+                    "z": 16.920000076293947
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 1.2000000476837159,
+                    "z": 0.009999999776482582
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Painted walkway edge",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/ivory.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.7699999809265137,
+                    "y": 0.012000000104308129,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 0.007000000216066837,
+                    "z": 1.9249999523162842
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Pressure floor",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": -0.11999999731779099,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.11999999731779099,
+                    "z": 2.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Suit stowage silhouette/Packed torso",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/padding.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.75,
+                    "y": 1.4299999475479127,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.17499999701976777,
+                    "y": 0.30000001192092898,
+                    "z": 0.25999999046325686
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Label | CHECK SUIT + TETHER",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.1700000762939455,
+                    "z": 20.850000381469728
+                },
+                "m_Extent": {
+                    "x": 0.37283995747566225,
+                    "y": 0.03717999532818794,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Guidance marker",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 1.0700000524520875,
+                    "y": 1.2999999523162842,
+                    "z": 16.895000457763673
+                },
+                "m_Extent": {
+                    "x": 0.027499999850988389,
+                    "y": 0.3499999940395355,
+                    "z": 0.007000000216066837
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Wall panel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.365000009536743,
+                    "y": 1.5,
+                    "z": 17.799999237060548
+                },
+                "m_Extent": {
+                    "x": 0.03500000014901161,
+                    "y": 1.149999976158142,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/LeftLeaf/Leaf body",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.4399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 0.05999999865889549
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Ceiling diffuser",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/warm.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.9600000381469728,
+                    "z": 18.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.5600000023841858,
+                    "y": 0.007499999832361937,
+                    "z": 0.14000000059604646
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 20.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/OuterDoorVisuals/RightLeaf/Door identification",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.399999976158142,
+                    "z": 20.899999618530275
+                },
+                "m_Extent": {
+                    "x": 0.25,
+                    "y": 0.017500000074505807,
+                    "z": 0.007499999832361937
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.013000000268220902,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Ceiling rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.059999942779541,
+                    "z": 17.020000457763673
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.07000000029802323,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedBlack.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedBlue.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedClear.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_AnodizedGold.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_CableBlue.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_CableRed.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_CableYellow.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Deck.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_FabricStrap.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_FabricWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Grate.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_LedAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_LedGreen.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_LightPanel.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintRed.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_QuiltWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/Visual/A7_Airlock",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Screens.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 1.5175995826721192,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 1.6775996685028077,
+                    "z": 2.1633148193359377
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Wall panel",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.365000009536743,
+                    "y": 1.5,
+                    "z": 17.799999237060548
+                },
+                "m_Extent": {
+                    "x": 0.03500000014901161,
+                    "y": 1.149999976158142,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame EXTERIOR / EVA/Label | EXTERIOR / EVA",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.9100000858306886,
+                    "z": 20.885000228881837
+                },
+                "m_Extent": {
+                    "x": 0.34875747561454775,
+                    "y": 0.04879874736070633,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Portal jamb",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.949999988079071,
+                    "y": 1.25,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.05000000074505806,
+                    "y": 1.25,
+                    "z": 0.1599999964237213
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/InnerDoorVisuals/LeftLeaf/Pressure seal",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/steel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.9800000190734863,
+                    "y": 1.2300000190734864,
+                    "z": 16.920000076293947
+                },
+                "m_Extent": {
+                    "x": 0.012500000186264515,
+                    "y": 1.2000000476837159,
+                    "z": 0.009999999776482582
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.013000000268220902,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Inner_L",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.399999976158142,
+                    "y": 1.2300000190734864,
+                    "z": 17.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Pressure frame 04 / AIRLOCK/Label | SUIT CHECK REQUIRED",
+            "shader": "OutOfReach/Ship Depth Label",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Shaders/ShipDepthLabel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 2.6600000858306886,
+                    "z": 16.885000228881837
+                },
+                "m_Extent": {
+                    "x": 0.22245600819587708,
+                    "y": 0.021378500387072564,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -0.5199999809265137,
+                    "y": 0.013000000268220902,
+                    "z": 17.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Unbound diagnostic display/Unbound diagram trace",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amber.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.619999885559082,
+                    "y": 1.4450000524520875,
+                    "z": 19.219999313354493
+                },
+                "m_Extent": {
+                    "x": 0.004000004380941391,
+                    "y": 0.027299998328089715,
+                    "z": 0.033000003546476367
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.10000002384185791,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Grip inset",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/hull.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.25999999046325686,
+                    "y": 0.013000000268220902,
+                    "z": 19.5
+                },
+                "m_Extent": {
+                    "x": 0.04500000178813934,
+                    "y": 0.004999999888241291,
+                    "z": 0.3499999940395355
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Upper shoulder",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 2.180000066757202,
+                    "y": 2.9000000953674318,
+                    "z": 19.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.27223607897758486,
+                    "y": 0.2722361087799072,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Upper shoulder",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -2.180000066757202,
+                    "y": 2.9000000953674318,
+                    "z": 19.399999618530275
+                },
+                "m_Extent": {
+                    "x": 0.27223607897758486,
+                    "y": 0.2722361087799072,
+                    "z": 0.75
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Decals.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Glass.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGray.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintWhite.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 delivered Blender models/DoorLeaves/DoorLeaf_Outer_R",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Rubber.mat",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.44999998807907107,
+                    "y": 1.2300000190734864,
+                    "z": 21.0
+                },
+                "m_Extent": {
+                    "x": 0.44200000166893008,
+                    "y": 1.2200000286102296,
+                    "z": 0.1299770474433899
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Walkway plate",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/deck.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.004999999888241291,
+                    "z": 18.5
+                },
+                "m_Extent": {
+                    "x": 0.7400000095367432,
+                    "y": 0.004999999888241291,
+                    "z": 0.4699999988079071
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Structure/Ceiling rib",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/edge.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 3.059999942779541,
+                    "z": 18.6200008392334
+                },
+                "m_Extent": {
+                    "x": 2.4000000953674318,
+                    "y": 0.07000000029802323,
+                    "z": 0.04500000178813934
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/03_Storage/Walkway plate",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/deck.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.004999999888241291,
+                    "z": 16.5
+                },
+                "m_Extent": {
+                    "x": 0.7400000095367432,
+                    "y": 0.004999999888241291,
+                    "z": 0.4699999988079071
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/Threshold caution marking",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/amberPaint.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.5,
+                    "y": 0.020999999716877939,
+                    "z": 20.479999542236329
+                },
+                "m_Extent": {
+                    "x": 0.09830127656459809,
+                    "y": 0.007499999832361937,
+                    "z": 0.12026280164718628
+                }
+            }
+        },
+        {
+            "renderer": "AURORA-7 interior/04_Airlock/PRESSURE CONTROL/Access face",
+            "shader": "Universal Render Pipeline/Lit",
+            "materialAsset": "Assets/_OutOfReach/Visuals/Ship/Materials/panel.mat",
+            "enabled": false,
+            "bounds": {
+                "m_Center": {
+                    "x": -1.709999918937683,
+                    "y": 1.149999976158142,
+                    "z": 19.0
+                },
+                "m_Extent": {
+                    "x": 0.025000089779496194,
+                    "y": 1.059999942779541,
+                    "z": 0.7250000834465027
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Screen glass",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Unit",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/State rule",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/State",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Countdown mm ss",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Time basis",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Seal separator",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Inner state lamp",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Outer state lamp",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Inner seal",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/Outer seal",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "renderer": "I01 presentation/Airlock digital display mount/Airlock digital screen/State detail",
+            "shader": "UI/Default",
+            "materialAsset": "",
+            "enabled": true,
+            "bounds": {
+                "m_Center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "m_Extent": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        }
+    ],
+    "panelCorners": [
+        {
+            "x": 1.3350000381469727,
+            "y": 1.2944999933242798,
+            "z": 20.82900047302246
+        },
+        {
+            "x": 1.3350000381469727,
+            "y": 1.4555000066757203,
+            "z": 20.82900047302246
+        },
+        {
+            "x": 1.565000057220459,
+            "y": 1.4555000066757203,
+            "z": 20.82900047302246
+        },
+        {
+            "x": 1.565000057220459,
+            "y": 1.2944999933242798,
+            "z": 20.82900047302246
+        }
+    ],
+    "panelScale": {
+        "x": 0.0002300000051036477,
+        "y": 0.0002300000051036477,
+        "z": 0.0002300000051036477
+    },
+    "panelPath": "I01 presentation/Airlock digital display mount/Airlock digital screen",
+    "renderMode": "WorldSpace"
+}

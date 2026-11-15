@@ -1,0 +1,4 @@
+COMPONENT-LAYOUT ONLY. Unsaved empty scene, actual FlightBoardView/MissionFlightBoard.uss and cloned actual MissionPanelSettings.
+Direct presentation SetPhase inputs, illustrative reserves, exact previously observed B24 caption text. No Core phase, airlock service or gameplay simulation claim.
+Six phases at1280x720/960x540; painted HUD/subtitle leaves and wrapping, rendered departure/terminal ordering, menu hide/restore. Two actual UI GPU PNGs on explicit neutral fixture background.
+60-second watchdog, exact source Assets snapshots; no saved source/style/font/panel modifications.

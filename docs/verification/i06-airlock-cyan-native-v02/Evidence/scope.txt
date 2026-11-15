@@ -1,0 +1,7 @@
+Actual saved Bootstrap B24 cyan-screen reproduction probe, no product fix claim. 180-second watchdog.
+Actual camera, Player, composition, lighting/shaders/HUD, pressure service and Runtime.Update retained.
+Actual Practice UI and public launch/transport Skip/Impact Skip + real repairs/suit setup are disclosed setup. No full journey or movement claim.
+Three genuine airlock states via real EVA commands; long depressurization completed through public SkipSimulatedTime with actual resource accounting.
+Legal near-panel setup teleports, real mouse pitch/yaw input, existing camera near/FOV and all surfaces retained. No forced timer/material/controller state.
+GPU camera + active UI rendering. Broad cyan classifier is a failure candidate needing visual review. Clean means not reproduced in tested poses/states, never fixed.
+Batch focus callback and temporary virtual input delivery; all Assets hashes protected. PNG capture excludes overlay UGUI fade, after cinematic setup has completed.
