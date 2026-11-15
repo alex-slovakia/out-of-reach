@@ -39,6 +39,12 @@ ROUTINE_MONTAGE_SHIPPED = True
 # Floors, not exact counts: 470/151 on 8665183 (#7 6900862397), 483/151 and more on the later lanes.
 # The slide says "more than"; raise the floors only if the final counts are far higher, lower them if they drop.
 TESTS_EDITMODE, TESTS_PLAYMODE = 460, 150
+# B-build extras (not in the release candidate 5479e87). Set True only if the feature is in the submitted
+# build; apply_b_variant.py flips them together with the texts.
+HORIZONS_LINE_SHIPPED = False   # Horizons range and one-way delay on the next-chapter strip (6b69313 + c158a10)
+RAD_SHIPPED = False             # radiation estimate from NASA MSL RAD (119a083)
+DSN_SHIPPED = False             # Deep Space Network complex in view, shown in the UI (8aea692 + a UI hook)
+PARTICLE_PACK_SHIPPED = False   # launch effects built with the Unity Particle Pack (1b733ac)
 
 _DECK = "docs/submission-draft-2026/deck/captures/"
 CAPTURES = {
@@ -319,8 +325,10 @@ def slide_data(prs):
     blocks = [
         ("31 min 59 s", "earliest reply from Earth on mission day 1",
          "NASA/JPL Horizons: Earth is 197,707,976 km away → 10 min 59 s of light time each way, "
-         "+10 min processing (game assumption). Call on day 9 and it is still over 30 minutes. "
-         "The day-14 message obeys the same delay."),
+         "+10 min processing (game assumption). "
+         + ("Still over 30 minutes on day 9. Range and delay stay on screen during play."
+            if HORIZONS_LINE_SHIPPED else
+            "Call on day 9 and it is still over 30 minutes. The day-14 message obeys the same delay.")),
         ("0.84 · 1.01 · 2.5 · 1.83 kg", "oxygen used · CO₂ produced · water · food per crew-day",
          "NASA Life Support Baseline Values (BVAD, NASA/TP-2015-218570/REV2) drive every reserve, "
          "the cabin CO₂ and the spacewalk costs."),
@@ -343,7 +351,12 @@ def slide_data(prs):
             "Slovakia inset: NASA GIBS, MODIS Terra")
     if COUNTDOWN_SHIPPED:
         also += "  ·  Launch radio: NASA audio, Apollo 11 commentary"
-    also += "  ·  Development: NASA GMAT star catalogue"
+    if RAD_SHIPPED:
+        also += "  ·  Radiation estimate: NASA MSL RAD cruise data"
+    if DSN_SHIPPED:
+        also += "  ·  DSN complex in view: NASA Deep Space Network sites"
+    if not (RAD_SHIPPED and DSN_SHIPPED):  # keep the panel to four lines
+        also += "  ·  Development: NASA GMAT star catalogue"
     text(s, 7.22, 5.89, 5.4, 0.9,
          [([R("ALSO FROM NASA  ", 9, AMBER, BODY_SEMI, spc=1.2)], None, 2),
           ([R(also, 10, TXT2)], None, 0, 1.04)])
@@ -436,12 +449,19 @@ def slide_next(prs):
                   "NASA/GSFC SVS Deep Star Maps (ESA/Gaia/DPAC) · NASA/JPL-Caltech Viking Mars map")
     if COUNTDOWN_SHIPPED:
         nasa_media += " · NASA audio (Apollo 11 launch commentary)"
+    if RAD_SHIPPED:
+        nasa_media += " · NASA/JPL MSL RAD"
+    if DSN_SHIPPED:
+        nasa_media += " · NASA DSN sites"
+    assets = ("Poly Haven, ambientCG and MakeHuman (CC0). Fonts: Barlow Condensed, Source Sans 3, Inter "
+              "(SIL OFL 1.1), DejaVu Sans Mono.")
+    if PARTICLE_PACK_SHIPPED:
+        assets += " Launch effects: Unity Particle Pack (Unity Technologies)."
     rows = [
         ("MUSIC", "“Titan” and “Cobalt” by Scott Buckley (scottbuckley.com.au), CC BY 4.0, adapted excerpts. "
                   "Ending themes and score cues: original."),
         ("NASA DATA AND MEDIA", nasa_media + ". No endorsement implied."),
-        ("ASSETS", "Poly Haven, ambientCG and MakeHuman (CC0). Fonts: Barlow Condensed, Source Sans 3, Inter "
-                   "(SIL OFL 1.1), DejaVu Sans Mono."),
+        ("ASSETS", assets),
         ("AI USE", "Idea, story and design decisions: the team. Code, procedural models and textures, original score "
                    "cues and sound effects: written with AI coding assistants (Claude Code, OpenAI Codex) under our "
                    "direction. All dialogue: AI-generated synthetic voices, Google Gemini text-to-speech. "
@@ -449,6 +469,8 @@ def slide_next(prs):
         ("FICTION", "AURORA-7, LC-7, the crew and the rescue are fictional. No NASA logos or insignia."),
     ]
     heights = {"MUSIC": 0.8, "NASA DATA AND MEDIA": 1.14, "ASSETS": 0.82, "AI USE": 1.36, "FICTION": 0.62}
+    if PARTICLE_PACK_SHIPPED:  # the ASSETS row needs a third line
+        heights.update({"ASSETS": 1.0, "AI USE": 1.3, "FICTION": 0.56})
     y = 2.02
     for head, body in rows:
         text(s, 6.78, y, 5.75, 0.26, [[R(head, 9, AMBER, BODY_SEMI, spc=1.5)]])
@@ -459,6 +481,12 @@ def slide_next(prs):
 
 
 def main():
+    global OUT, HORIZONS_LINE_SHIPPED, RAD_SHIPPED, DSN_SHIPPED, PARTICLE_PACK_SHIPPED
+    import os
+    if os.environ.get("OOR_DECK_PREVIEW_B") == "1":  # layout preview with every B-build extra switched on
+        HORIZONS_LINE_SHIPPED = RAD_SHIPPED = DSN_SHIPPED = PARTICLE_PACK_SHIPPED = True
+        TMP.mkdir(exist_ok=True)
+        OUT = TMP / "preview-b.pptx"
     prs = Presentation()
     prs.slide_width, prs.slide_height = W, H
     for build in (slide_title, slide_challenge, slide_loop, slide_data, slide_learn, slide_built, slide_next):
