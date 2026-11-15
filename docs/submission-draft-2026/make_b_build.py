@@ -194,7 +194,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp) / "pack"
-        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-*build", "D-build", ".build", "captures", "*.pptx", "*.pdf",
+        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-*build", "D-build", "F-build", ".build", "captures", "*.pptx", "*.pdf",
                                                                  "__pycache__"))
         run([sys.executable, str(HERE / "apply_b_variant.py"), "--root", str(work)] + ["--" + f for f in flags])
         recount(work / "form-fields.md")

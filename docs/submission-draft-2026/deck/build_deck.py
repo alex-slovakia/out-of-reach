@@ -48,8 +48,10 @@ PARTICLE_PACK_SHIPPED = False   # launch effects built with the Unity Particle P
 # D build (feature/claude-max-final-b@f0ec271): launch picture with the new AURORA 7 launch vehicle and pad,
 # a data-lines block on slide 4 (Horizons range and delay, DSN complex in view, MSL RAD dose), exact test counts,
 # the 16 new Gemini radio lines on slide 7. make_b_build.py --deck-d sets OOR_DECK_D=1.
+# The final candidate is F = feature/claude-max-final-b@b2f7a89 (D + the NASA star sky during the spacewalk and in
+# the Earth-orbit shot); the same switch builds its deck (make_f_build.py).
 D_BUILD = False
-TESTS_D = (542, 174)            # EditMode 542/542, PlayMode 174/174 on f0ec271 (#7 6902121785)
+TESTS_D = (544, 178)            # EditMode 544/544, PlayMode 178/178 on b2f7a89 (#7 6902220076)
 
 _DECK = "docs/submission-draft-2026/deck/captures/"
 CAPTURES = {
@@ -364,7 +366,11 @@ def slide_data(prs):
     if COUNTDOWN_SHIPPED:
         also += "  ·  Launch radio: NASA audio, Apollo 11 commentary"
     if D_BUILD:  # RAD and DSN have their own block on the left; the sleep fact moves here
-        also += "  ·  Meals and sleep (up to 8.5 h): NASA crew practice  ·  Development: NASA GMAT star catalogue"
+        # the final build shows the NASA star sky in three places (8519490); GMAT is left out to keep four lines
+        also = also.replace("Space sky: NASA SVS Deep Star Maps (ESA Gaia DR2)",
+                            "Star sky on the spacewalk, in orbit and in the ending: NASA SVS Deep Star Maps 2020 "
+                            "(ESA Gaia DR2)")
+        also += "  ·  Meals and sleep (up to 8.5 h): NASA crew practice"
     else:
         if RAD_SHIPPED:
             also += "  ·  Radiation estimate: NASA MSL RAD cruise data"

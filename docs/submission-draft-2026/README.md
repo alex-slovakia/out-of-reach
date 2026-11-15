@@ -88,6 +88,6 @@ Sources: [Project Submission Guide](https://www.spaceappschallenge.org/resources
 | Public final-project location and public demo link | Open — Team Owner |
 | Submit for Judging | Open — Team Owner only, around 23:30 CET |
 
-## Set D (build `feature/claude-max-final-b@f0ec271`)
+## Set F, final (build `feature/claude-max-final-b@b2f7a89`)
 
-Folder [D-build/](D-build/): deck PDF and PPTX, form texts, credits, AI statement and the public-folder files for build D. Start with the section "SET D" at the top of [D-build/form-fields.md](D-build/form-fields.md). Rebuild: `python make_d_build.py`.
+Folder [F-build/](F-build/): deck PDF and PPTX, form texts, credits, AI statement and the public-folder files for build F, the final candidate. Start with the section "SET F" at the top of [F-build/form-fields.md](F-build/form-fields.md). Rebuild: `python make_f_build.py`.

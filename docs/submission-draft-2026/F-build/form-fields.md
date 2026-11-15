@@ -2,29 +2,28 @@
 
 **DRAFT for the Team Owner.** Not submitted, not published. **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758; 15 Nov, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes, with the day-14 announcement as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202); its Windows build is running. If the RC ships, the paste blocks are final as they stand. If a B build ships instead, one short diff pass follows (last section). Field names and rules were checked on the official [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/) (dated 13 Nov 2026) and [Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/), both read on 15 Nov 2026.
 
-**THIS IS THE SET FOR THE D BUILD** (checked against `f0ec271`; extras: horizons, rad, dsn, particle, models, voices). Use it only if the D build is the one that ships. The A set for the release candidate `5479e87` is one folder up.
+**THIS IS THE SET FOR THE F BUILD** (checked against `b2f7a89`; extras: horizons, rad, dsn, particle, models, voices). Use it only if the F build is the one that ships. The A set for the release candidate `5479e87` is one folder up.
 
-## SET D: what differs from the B-visual set (read this first)
+## SET F (final): what differs from the B-visual set (read this first)
 
-Checked against `feature/claude-max-final-b@f0ec271` (announcement #7 6902121785; EditMode 542/542, PlayMode 174/174). The paste blocks below already hold everything of the B-visual set (Horizons range and signal delay on screen, radiation estimate from MSL RAD, Deep Space Network complex in view, Particle Pack launch effects, hull V2, voiced radio traffic). Set D adds:
+Checked against the final candidate `feature/claude-max-final-b@b2f7a89` (#7 6902220076; ZIP `OUT-OF-REACH_b2f7a89_Windows_x64.zip`, SHA-256 `e3f5c8d4b0f15f5e9f70d1e6f19574d08c2ea5c21911bf24cd1112cadb947bfc` as given in that post; EditMode 544/544, PlayMode 178/178). The paste blocks below already hold everything of the B-visual set (Horizons range and signal delay on screen, radiation estimate from MSL RAD, Deep Space Network complex in view, Particle Pack launch effects, hull V2, voiced radio traffic). Set F adds:
 
-| New in D | Evidence on `f0ec271` | In this set |
+| New against B-visual | Evidence on `b2f7a89` | In this set |
 |---|---|---|
-| Launch vehicle "AURORA 7" (LAUNCH-COMPLEX-V01) and the reworked launch terrain V04 | `Assets/_OutOfReach/Visuals/Models/LaunchComplexV01/Provenance/ATTRIBUTION.md` (original geometry and textures, Blender + Python, no third-party meshes); installs `1e4fdd5` and `e53bce5` | Deck slide 3 picture (native QA run on `f0ec271`). Original team work: nothing to add to References |
-| Spoken pre-launch briefing: five more Gemini takes (vo41 to vo45). 16 AI-generated radio clips in all (vo30 to vo45) | `Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/voices.json` (16 clips, voices Orus and Iapetus, model `gemini-3.8-flash-lite-tts`); bound in Bootstrap by `f0ec271` | Section 6 already names Gemini TTS and the voices Orus, Kore and Iapetus. Optional sentence D1 below. Deck slide 7 |
-| Launching over the 600 kg limit is allowed and ends in an explained crash | commit `bfb7daa` (R27) | Optional sentence D2 below |
-| Earth tablet on the wall, seated cockpit mounts, launch seat seen in first person only | commits `715bd0c`, `2066761`, `426a92d` | No text needed (the Poly Haven models are CC0 and already credited) |
-| Test counts: EditMode 542/542, PlayMode 174/174 | #7 6902121785 | Applied in section 5, the public README draft, README.txt and README.pdf; deck slide 6 |
+| Launch vehicle "AURORA 7" (LAUNCH-COMPLEX-V01) and the reworked launch terrain V04 | `Assets/_OutOfReach/Visuals/Models/LaunchComplexV01/Provenance/ATTRIBUTION.md` (original geometry and textures, Blender + Python, no third-party meshes); installs `1e4fdd5` and `e53bce5` | Deck slide 3 picture (native QA run on `f0ec271`; the launch looks the same in `b2f7a89`). Original team work: nothing to add to References |
+| Spoken pre-launch briefing: five more Gemini takes (vo41 to vo45). 16 AI-generated radio clips in all (vo30 to vo45) | `Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/voices.json` (16 clips: Orus 12, Iapetus 4, model `gemini-3.8-flash-lite-tts`) | Section 6 already names Gemini TTS and the voices Orus, Kore and Iapetus. Optional sentence F1 below. Deck slide 7 |
+| The real NASA star sky (SVS Deep Star Maps 2020) is also seen during the spacewalk and in the Earth-orbit shot, not only in the ending | commit `8519490` (SPACE-SKY); Sources page, `UI/Report/Runtime/FlightRecorderPresenter.cs` lines 420 to 421 | Applied in section 7 (Deep Star Maps item). Deck slide 4, panel "ALSO FROM NASA" |
+| The in-game Sources page names the voices Orus, Kore and Iapetus and the Unity Particle Pack | commit `cd14f4c`; same file, lines 428 to 431 | Matches sections 6 and 8 |
+| Launching over the 600 kg limit is allowed and ends in an explained crash | commit `bfb7daa` (R27) | Optional sentence F2 below |
+| Earth tablet on the wall, seated cockpit mounts, the seated body drawn in first person only, the radio prop is never shown | commits `715bd0c`, `2066761`, `cd84d67`, `c6ba6e0` | No text needed (the Poly Haven models are CC0 and already credited) |
+| Reach fix for the antenna repair | commits `c8542a4`, `0d7c5d0` | No text needed; not on the slides |
+| Test counts: EditMode 544/544, PlayMode 178/178 | #7 6902220076 | Applied in section 5, the public README draft, README.txt and README.pdf; deck slide 6 |
 | Demo | the video is the demo link, the deck is the second material | Section 3 below |
 
 Optional sentences (add only if the field has room):
 
-- **D1, section 6, after "no real person's voice was cloned.":** "This build adds 16 synthetic radio lines: the pre-launch briefing, the radio checks, the distress call, Mission Control's replies and the day-14 announcement."
-- **D2, section 5, in the planning step:** "If you launch above the 600 kg payload limit, the game lets you go, the launch ends in a crash and the mission record explains why."
-
-**Not in D, do not claim:** stars during the spacewalk; the antenna reach fix.
-
-**Known on `f0ec271`:** the in-game Sources page still reads "Voices Orus and Kore. AI-generated audio." (`UI/Report/Runtime/FlightRecorderPresenter.cs`, line 429); the voice Iapetus is named in our texts but not in the game.
+- **F1, section 6, after "no real person's voice was cloned.":** "This build adds 16 synthetic radio lines: the pre-launch briefing, the radio checks, the distress call, Mission Control's replies and the day-14 announcement."
+- **F2, section 5, in the planning step:** "If you launch above the 600 kg payload limit, the game lets you go, the launch ends in a crash and the mission record explains why."
 
 How to use:
 - Each field has a **paste block** in plain English (no Markdown, the form is plain text).
@@ -75,7 +74,7 @@ A first-person survival game where the mission you design is the mission you mus
 
 ## 3. Link to Project Demo
 
-The form takes **one** link. **Set D: the demo is the VIDEO** (30 seconds or less, recorded from the D build). The Team Owner pastes the public link after he has uploaded the video. No link is written here because nothing was uploaded from our side.
+The form takes **one** link. **Set F: the demo is the VIDEO** (30 seconds or less, recorded from the final build). The Team Owner pastes the public link after he has uploaded the video. No link is written here because nothing was uploaded from our side.
 
 ```text
 [PUBLIC LINK to the demo video of 30 seconds or less, added by the Team Owner after the upload. No login, permission or registration. Test it in a private browser window.]
@@ -130,7 +129,7 @@ Consumption uses NASA's Life Support Baseline Values (BVAD, NASA/TP-2015-218570/
 A radiation line on the next-chapter strip estimates the dose since day 1 from the 1.8 mSv per day that NASA's RAD instrument measured inside the Mars Science Laboratory spacecraft on its cruise to Mars; it is information only and changes no outcome.
 Time compression is always shown: x300 during the emergency, x60 during the spacewalk and the wait for Earth, one simulated hour per real second while sleeping and six hours per second in the routine montage. Pause freezes everything; the routine never skips a danger, a decision or a death.
 The fictional parts are labelled: AURORA-7, its location (the Mars-centre distance is a documented proxy, not a computed trajectory), the rescue story, the catalogue prices and the time compression. Space is silent outside: you hear only the radio and what the structure carries. No NASA logo or insignia appears anywhere.
-All 542 automated EditMode tests and 174 PlayMode scene tests pass on the submitted build (resource accounting, light-time timing, airlock safety, chapter routine stops, the rescue sequence, the radio beats, quit and pause), plus native Unity captures, scripted full-mission runs driven through the game's real input path, and repeated human playtests.
+All 544 automated EditMode tests and 178 PlayMode scene tests pass on the submitted build (resource accounting, light-time timing, airlock safety, chapter routine stops, the rescue sequence, the radio beats, quit and pause), plus native Unity captures, scripted full-mission runs driven through the game's real input path, and repeated human playtests.
 
 WHAT WE HOPE TO ACHIEVE
 A complete mission that a student or a curious player can finish in about half an hour, lose for an understandable reason, and replay with a better design. Next we want to add team play for up to four people with separate roles (flight, engineering, communications, life support), new destinations and scenarios, a launch-date picker that refreshes the Horizons data, a side-by-side comparison of mission designs, and teacher notes. Spanish and French text already exists on a development branch.
@@ -156,7 +155,7 @@ WHAT PLAYERS LEARN
 Mass, power, money and consumables compete. Communication is limited by light speed. Life support is several separate jobs: with scrubbers down, CO2 reaches the ISS emergency level in about 20.5 hours, long before the oxygen runs out. Spacewalks cost time, oxygen and risk. Time itself is a consumable.
 
 HOW IT WORKS
-A deterministic C# simulation owns one mission clock and one resource ledger in real units; spending is all-or-nothing. An offline NASA/JPL Horizons snapshot (32 daily Earth-Mars vectors, SHA-256 checked) gives distance / speed of light, both ways, plus 600 s of assumed processing; the range and the one-way delay stay on screen during play. NASA BVAD rates (0.84 kg O2, 1.01 kg CO2, 2.5 kg water, 1.83 kg food per crew-day) drive consumption; cabin CO2 uses the ideal gas law; spacewalk costs follow BVAD EVA values. A radiation line estimates the dose from NASA's MSL RAD cruise measurement (1.8 mSv per day), for information only. Time compression is always shown; the routine montage never skips a danger. AURORA-7, its position proxy, the rescue and the prices are labelled fiction. All 542 automated EditMode tests and 174 PlayMode scene tests pass on the submitted build, plus human playtests.
+A deterministic C# simulation owns one mission clock and one resource ledger in real units; spending is all-or-nothing. An offline NASA/JPL Horizons snapshot (32 daily Earth-Mars vectors, SHA-256 checked) gives distance / speed of light, both ways, plus 600 s of assumed processing; the range and the one-way delay stay on screen during play. NASA BVAD rates (0.84 kg O2, 1.01 kg CO2, 2.5 kg water, 1.83 kg food per crew-day) drive consumption; cabin CO2 uses the ideal gas law; spacewalk costs follow BVAD EVA values. A radiation line estimates the dose from NASA's MSL RAD cruise measurement (1.8 mSv per day), for information only. Time compression is always shown; the routine montage never skips a danger. AURORA-7, its position proxy, the rescue and the prices are labelled fiction. All 544 automated EditMode tests and 178 PlayMode scene tests pass on the submitted build, plus human playtests.
 
 WHAT WE HOPE TO ACHIEVE
 A complete half-hour mission that students can lose for an understandable reason and replay with a better design; next, team play for up to four roles, new destinations, a launch-date picker with fresh Horizons data and teacher notes.
@@ -204,7 +203,7 @@ Guide: *Provide specific details about what NASA data and resources you used. To
 
 6. NASA crew food and sleep practice: NASA Crew Systems (eight-hour sleep schedule, wall-attached sleeping bags), NASA Medical Operations (8.5-hour sleep opportunity = our maximum rest), OCHMO-TB-041 Sleep Accommodations (restraints, ventilation, CO2), NASA Food in Space and the Artemis II menu (ready-to-eat, rehydratable and thermostabilized foods), NASA Veggie (plants only supplement the packaged diet; nominal 33-day harvest age, about 70 W). These shape the meals, the berth with its restraints, the rest rules and the optional grow module.
 
-7. NASA Scientific Visualization Studio, Deep Star Maps 2020 (https://svs.gsfc.nasa.gov/4851/), with Gaia DR2 star data from ESA/Gaia/DPAC: the space sky. The source image is unmodified; the game shows it at an authored exposure, brighter in the rescue finale so that the Milky Way stands behind the docking.
+7. NASA Scientific Visualization Studio, Deep Star Maps 2020 (https://svs.gsfc.nasa.gov/4851/), with Gaia DR2 star data from ESA/Gaia/DPAC: the space sky, seen during the spacewalk, in the Earth-orbit shot and in the rescue finale. The source image is unmodified; the game shows it at an authored exposure, brighter in the rescue finale so that the Milky Way stands behind the docking.
 
 8. NASA/JPL-Caltech Mars colour map from Viking images processed by USGS (https://science.nasa.gov/3d-resources/mars/): Mars in the recovery cinematic.
 
@@ -303,6 +302,6 @@ git show <SHA>:Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs |
 
 Run on the RC `5479e87` at 22:15 CET: `chapterLoop: 1`; radio in Bootstrap; `RescueEndingSky.cs` and `RoutineStationMontage.cs` present; both Sources lines present; VO23 not bound (neither cut); no new attribution file since `5ea2c23`.
 
-Test counts in this set: EditMode 542/542 and PlayMode 174/174 on `f0ec271` (#7 6902121785).
+Test counts in this set: EditMode 544/544 and PlayMode 178/178 on `b2f7a89` (#7 6902220076).
 
 If `chapterLoop` is `0` (not expected): in §2 replace *"Across 30 compressed days you eat, sleep, decide and wait for a rescue that is never instant."* with *"After contact you ration food and water, rest and power a beacon for a rescue that is never instant."*; in §5 replace item 7 with *"7. Survive after contact. Contact is the midpoint, not the win: you eat and drink from the actual stores, can salvage the science instrument for spare parts, may build and harvest one small grow module, sleep up to 8.5 hours per rest, and power a recovery beacon when a fictional rescue craft that was already in transit asks for it."* and delete *"The same model times the day-14 message."* and the "six hours per second in the routine montage" clause.

@@ -1,6 +1,6 @@
-# Set for the D build — use ONLY if the D build ships
+# Set for the F build — use ONLY if the F build ships
 
-Built by `make_b_build.py` and checked against `f0ec271`.
+Built by `make_b_build.py` and checked against `b2f7a89`.
 The A set (release candidate `5479e87`) is one folder up and is unchanged.
 
 **What these texts add to the A texts:**
@@ -17,7 +17,7 @@ The A set (release candidate `5479e87`) is one folder up and is unchanged.
 | The build that ships | Use |
 |---|---|
 | A build = release candidate `5479e87` | the files one folder up: `../form-fields.md`, `../deck/…pdf`, `../final-project-folder/` |
-| D build | the files in this folder: `form-fields.md`, `OUT-OF-REACH_SpaceApps2026_deck.pdf`, `final-project-folder/` |
+| F build | the files in this folder: `form-fields.md`, `OUT-OF-REACH_SpaceApps2026_deck.pdf`, `final-project-folder/` |
 
 ## If one of the extras did NOT make it into the build (no script, two minutes by hand)
 
@@ -48,16 +48,16 @@ slide 7 name the radiation estimate, the DSN line and the Particle Pack only in 
 The A deck (`../deck/`) mentions none of them and is always safe.
 
 With the tools installed (python-pptx, Pillow, PyMuPDF, PowerPoint) the whole set can be rebuilt instead:
-`python make_b_build.py --out D-build --label "D build" --sha <final> <flags>`.
+`python make_b_build.py --out F-build --label "F build" --sha <final> <flags>`.
 
 Files here: `form-fields.md` (8 paste blocks), `OUT-OF-REACH_SpaceApps2026_deck.pdf` + `.pptx` (7 slides),
 `final-project-folder/` (`README.pdf`, `README.txt`, `CREDITS.txt`), and this build's versions of
 `credits-and-licenses.md`, `public-README-draft.md` and `playthrough-checklist.md`.
 The submission checklist, the AI disclosure and `UPLOAD-LIST.txt` are the same for every build (one folder up).
 
-## Set D additions (this folder)
+## Set F additions (this folder)
 
-- Differences against the B-visual set: the section "SET D" at the top of [form-fields.md](form-fields.md).
-- Deck: lift-off picture from the native QA run on `f0ec271` (slide 3), on-screen mission data block (slide 4), test counts 542/542 and 174/174 (slide 6), the 16 new radio lines (slide 7).
-- [credits-and-licenses.md](credits-and-licenses.md) and [ai-disclosure.md](ai-disclosure.md) start with their own Set D section.
-- Rebuild: `python make_d_build.py` in the folder above.
+- This is the set of the final candidate `b2f7a89` (ZIP `OUT-OF-REACH_b2f7a89_Windows_x64.zip`). Differences against the B-visual set: the section "SET F" at the top of [form-fields.md](form-fields.md).
+- Deck: lift-off picture with the AURORA 7 launch vehicle (slide 3), on-screen mission data block and the star sky line (slide 4), test counts 544/544 and 178/178 (slide 6), the 16 new radio lines (slide 7).
+- [credits-and-licenses.md](credits-and-licenses.md) and [ai-disclosure.md](ai-disclosure.md) start with their own Set F section.
+- Rebuild: `python make_f_build.py` in the folder above.
