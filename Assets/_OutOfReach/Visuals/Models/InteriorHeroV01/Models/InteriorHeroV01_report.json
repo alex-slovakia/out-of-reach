@@ -429,7 +429,298 @@
      "fov": 60
     }
    ]
+  },
+  {
+   "name": "IH_EclssRack",
+   "origin": [
+    2.02,
+    0.0,
+    8.1
+   ],
+   "module": "ih_systems",
+   "hide": [],
+   "carve": [
+    {
+     "target": "A7_Engineering",
+     "min": [
+      1.6,
+      -0.005,
+      7.29
+     ],
+     "max": [
+      2.312,
+      2.32,
+      8.91
+     ]
+    }
+   ],
+   "lods": [
+    {
+     "triangles": 11136,
+     "per_material": {
+      "IH_Aluminium": 5030,
+      "IH_AnodBlue": 192,
+      "IH_AnodGold": 16,
+      "IH_AnodRed": 12,
+      "IH_CableBlue": 220,
+      "IH_CableOrange": 220,
+      "IH_Chrome": 2408,
+      "IH_FabricWhite": 42,
+      "IH_Graphite": 1330,
+      "IH_GraphiteEdge": 96,
+      "IH_Labels": 44,
+      "IH_LampWarm": 12,
+      "IH_Paint": 472,
+      "IH_PaintAmber": 168,
+      "IH_PaintEdge": 128,
+      "IH_PaintRed": 168,
+      "IH_PlasticDark": 240,
+      "IH_Screens": 2,
+      "IH_Strap": 336
+     },
+     "bounds_min": [
+      1.656,
+      0.0,
+      7.3
+     ],
+     "bounds_max": [
+      2.31,
+      2.3,
+      8.9
+     ]
+    },
+    {
+     "triangles": 3615,
+     "per_material": {
+      "IH_Aluminium": 1263,
+      "IH_AnodBlue": 56,
+      "IH_AnodGold": 12,
+      "IH_AnodRed": 12,
+      "IH_CableBlue": 192,
+      "IH_CableOrange": 192,
+      "IH_Chrome": 424,
+      "IH_FabricWhite": 24,
+      "IH_Graphite": 600,
+      "IH_Labels": 44,
+      "IH_LampWarm": 12,
+      "IH_Paint": 368,
+      "IH_PaintAmber": 48,
+      "IH_PaintRed": 42,
+      "IH_PlasticDark": 132,
+      "IH_Screens": 2,
+      "IH_Strap": 192
+     },
+     "bounds_min": [
+      1.656,
+      0.0,
+      7.3
+     ],
+     "bounds_max": [
+      2.31,
+      2.3,
+      8.9
+     ]
+    },
+    {
+     "triangles": 1068,
+     "per_material": {
+      "IH_Aluminium": 108,
+      "IH_AnodBlue": 32,
+      "IH_Chrome": 160,
+      "IH_FabricWhite": 12,
+      "IH_Graphite": 384,
+      "IH_LampWarm": 12,
+      "IH_Paint": 240,
+      "IH_PaintAmber": 16,
+      "IH_PlasticDark": 102,
+      "IH_Screens": 2
+     },
+     "bounds_min": [
+      1.656,
+      0.0,
+      7.3
+     ],
+     "bounds_max": [
+      2.31,
+      2.3,
+      8.9
+     ]
+    }
+   ],
+   "views": [
+    {
+     "name": "eclss_rack",
+     "eye": [
+      0.75,
+      1.6,
+      8.1
+     ],
+     "target": [
+      1.9,
+      1.2,
+      8.1
+     ],
+     "fov": 80
+    },
+    {
+     "name": "eclss_rack_bay",
+     "eye": [
+      1.05,
+      1.6,
+      8.75
+     ],
+     "target": [
+      1.95,
+      1.05,
+      8.05
+     ],
+     "fov": 62
+    }
+   ]
+  },
+  {
+   "name": "IH_AirlockPanel",
+   "origin": [
+    1.45,
+    1.4425,
+    20.92
+   ],
+   "module": "ih_systems",
+   "hide": [],
+   "carve": [
+    {
+     "target": "A7_Airlock",
+     "min": [
+      1.26,
+      0.11,
+      20.8
+     ],
+     "max": [
+      1.64,
+      1.89,
+      20.925
+     ]
+    }
+   ],
+   "lods": [
+    {
+     "triangles": 5728,
+     "per_material": {
+      "IH_Aluminium": 2884,
+      "IH_AnodBlue": 112,
+      "IH_AnodRed": 336,
+      "IH_CableYellow": 24,
+      "IH_Chrome": 564,
+      "IH_Glass": 12,
+      "IH_Graphite": 580,
+      "IH_GraphiteEdge": 192,
+      "IH_Labels": 22,
+      "IH_Paint": 56,
+      "IH_PaintAmber": 44,
+      "IH_PaintEdge": 32,
+      "IH_PaintRed": 280,
+      "IH_PlasticDark": 108,
+      "IH_PlasticWhite": 12,
+      "IH_Rubber": 468,
+      "IH_Screens": 2
+     },
+     "bounds_min": [
+      1.2,
+      0.0,
+      20.7901
+     ],
+     "bounds_max": [
+      2.08,
+      2.47,
+      20.9312
+     ]
+    },
+    {
+     "triangles": 2082,
+     "per_material": {
+      "IH_Aluminium": 726,
+      "IH_AnodBlue": 30,
+      "IH_AnodRed": 336,
+      "IH_CableYellow": 24,
+      "IH_Chrome": 92,
+      "IH_Glass": 12,
+      "IH_Graphite": 261,
+      "IH_Labels": 22,
+      "IH_Paint": 88,
+      "IH_PaintAmber": 12,
+      "IH_PaintRed": 72,
+      "IH_PlasticDark": 48,
+      "IH_PlasticWhite": 12,
+      "IH_Rubber": 345,
+      "IH_Screens": 2
+     },
+     "bounds_min": [
+      1.2,
+      0.0,
+      20.7901
+     ],
+     "bounds_max": [
+      2.08,
+      2.4692,
+      20.9297
+     ]
+    },
+    {
+     "triangles": 342,
+     "per_material": {
+      "IH_Aluminium": 98,
+      "IH_AnodBlue": 15,
+      "IH_Graphite": 120,
+      "IH_Paint": 24,
+      "IH_PaintRed": 15,
+      "IH_PlasticDark": 48,
+      "IH_PlasticWhite": 12,
+      "IH_Rubber": 8,
+      "IH_Screens": 2
+     },
+     "bounds_min": [
+      1.2,
+      0.0,
+      20.812
+     ],
+     "bounds_max": [
+      2.08,
+      1.955,
+      20.92
+     ]
+    }
+   ],
+   "views": [
+    {
+     "name": "airlock_panel",
+     "eye": [
+      1.5,
+      1.6,
+      19.75
+     ],
+     "target": [
+      1.58,
+      1.4,
+      20.92
+     ],
+     "fov": 62
+    },
+    {
+     "name": "airlock_panel_side",
+     "eye": [
+      0.75,
+      1.6,
+      20.05
+     ],
+     "target": [
+      1.62,
+      1.35,
+      20.92
+     ],
+     "fov": 60
+    }
+   ]
   }
  ],
- "triangles_lod0": 39964
+ "triangles_lod0": 56828
 }

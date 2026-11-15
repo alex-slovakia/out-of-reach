@@ -97,12 +97,22 @@ namespace OutOfReach.Visuals.InteriorHeroV01.Editor
                 Mesh carved = Carve(original, filter.transform, ship, pair.Value, out int removed, out int total);
                 if (removed == 0) throw new InvalidOperationException("Nothing to carve from " + filter.name + ": the boxes miss the old props.");
                 string path = CarvedFolder + "/" + filter.name + CarvedSuffix + ".asset";
-                AssetDatabase.DeleteAsset(path);
-                AssetDatabase.CreateAsset(carved, path);
+                // Overwrite in place when the derived mesh already exists, so its GUID (and any saved scene) stays valid.
+                Mesh existing = AssetDatabase.LoadAssetAtPath<Mesh>(path);
+                if (existing)
+                {
+                    EditorUtility.CopySerialized(carved, existing);
+                    EditorUtility.SetDirty(existing);
+                    Object.DestroyImmediate(carved);
+                    carved = existing;
+                }
+                else AssetDatabase.CreateAsset(carved, path);
                 Undo.RecordObject(filter, "Install Interior Hero V01");
                 filter.sharedMesh = carved;
                 PrefabUtility.RecordPrefabInstancePropertyModifications(filter);
-                report.AppendLine("carved " + PathOf(filter.transform) + ": removed " + removed + " of " + total + " triangles -> " + path);
+                var targetRenderer = filter.GetComponent<MeshRenderer>();
+                report.AppendLine("carved " + PathOf(filter.transform) + ": removed " + removed + " of " + total + " triangles -> " + path
+                    + " (sub-meshes " + carved.subMeshCount + ", material slots " + (targetRenderer ? targetRenderer.sharedMaterials.Length : 0) + ")");
             }
             AssetDatabase.SaveAssets();
 

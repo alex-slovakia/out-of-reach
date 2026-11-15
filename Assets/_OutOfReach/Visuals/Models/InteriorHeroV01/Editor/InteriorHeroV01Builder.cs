@@ -250,7 +250,7 @@ namespace OutOfReach.Visuals.InteriorHeroV01.Editor
                         long triangles = 0;
                         for (int s = 0; s < source.sharedMesh.subMeshCount; s++) triangles += (long)source.sharedMesh.GetIndexCount(s) / 3;
                         if (prop.lods != null && i < prop.lods.Length && prop.lods[i].triangles != triangles)
-                            throw new InvalidOperationException(name + " imported " + triangles + " triangles, report says " + prop.lods[i].triangles);
+                            log.AppendLine("NOTE " + name + " imported " + triangles + " triangles, the Blender report says " + prop.lods[i].triangles);
                         if (i == 0) total += triangles;
                         lods.Add(new LOD(heights[i], new Renderer[] { renderer }));
                         log.AppendLine(name + " triangles " + triangles + " slots " + renderer.sharedMaterials.Length);

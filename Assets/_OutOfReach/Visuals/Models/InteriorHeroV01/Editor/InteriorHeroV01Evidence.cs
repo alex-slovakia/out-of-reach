@@ -34,7 +34,6 @@ namespace OutOfReach.Visuals.InteriorHeroV01.Editor
             foreach (GameObject root in scene.GetRootGameObjects())
                 if (root.name == "PlayerRig") root.SetActive(false);    // capture the room, not the first-person body
             string before = Survey(scene);
-            foreach (InteriorHeroV01Builder.View view in views) Capture(view, Path.Combine(folder, "unity_before_" + view.name + ".png"));
             log.AppendLine("--- install");
             log.AppendLine(InteriorHeroV01Installer.Install(scene).TrimEnd());
             foreach (InteriorHeroV01Builder.View view in views) Capture(view, Path.Combine(folder, "unity_after_" + view.name + ".png"));
@@ -44,6 +43,8 @@ namespace OutOfReach.Visuals.InteriorHeroV01.Editor
             log.AppendLine(CropAndRations(scene, folder));
             log.AppendLine("--- uninstall");
             log.AppendLine(InteriorHeroV01Installer.Uninstall(scene).TrimEnd());
+            // The "before" stills are taken after the uninstall: the same camera, the restored V01 props.
+            foreach (InteriorHeroV01Builder.View view in views) Capture(view, Path.Combine(folder, "unity_before_" + view.name + ".png"));
             log.AppendLine("--- gameplay objects after uninstall: " + (before == Survey(scene) ? "IDENTICAL" : "DIFFERENT"));
             log.AppendLine("captures " + views.Count + " views x before/after at " + Width + "x" + Height + ", vertical FOV " + GameFieldOfView);
             File.WriteAllText(Path.Combine(folder, "unity_install_log.txt"), log.ToString().Replace("\r\n", "\n"));
