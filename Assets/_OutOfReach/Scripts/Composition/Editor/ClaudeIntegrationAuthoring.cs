@@ -127,6 +127,32 @@ namespace OutOfReach.Composition.Editor
             return frameChanged || referencesChanged;
         }
 
+        // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplySet6
+        // Alex P1 (#7 6896392077): the BUFFER DIAGNOSTIC (FalseSignal) is a brief intentional shot, not an 11.5 s lock.
+        // Core's cinematic handshake blocks player control only while the presenter plays; the diagnostic voice line
+        // and its subtitle keep playing as ordinary dialogue after control returns.
+        public const float FalseSignalShotSeconds = 1.5f;
+        public static void ApplySet6()
+        {
+            if (Application.unityVersion != "6000.3.28f1" || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Run on Unity 6000.3.28f1 outside Play mode.");
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            GameObject[] roots = scene.GetRootGameObjects();
+            var presenter = ExactlyOne<OutOfReach.Presentation.Cinematics.MissionCinematicPresenter>(roots);
+            var serialized = new SerializedObject(presenter);
+            SerializedProperty seconds = serialized.FindProperty("falseSignalSeconds") ?? throw new InvalidOperationException("No falseSignalSeconds field.");
+            float before = seconds.floatValue;
+            bool changed = Mathf.Abs(before - FalseSignalShotSeconds) > .0001f;
+            if (changed)
+            {
+                seconds.floatValue = FalseSignalShotSeconds;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                EditorSceneManager.MarkSceneDirty(scene);
+                if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save Bootstrap.");
+            }
+            Debug.Log("CLAUDE_INTEGRATION_SET6 " + (changed ? "SAVED" : "VERIFIED") + " falseSignalSeconds " + before.ToString("F2") + " -> " + FalseSignalShotSeconds.ToString("F2"));
+        }
+
         public const string LaunchFxPrefabPath = "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab";
         private const string TrenchExitName = "LS_TrenchExit_Ground";
 
