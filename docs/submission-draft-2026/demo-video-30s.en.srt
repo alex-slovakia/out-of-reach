@@ -1,12 +1,12 @@
 1
 00:00:00,000 --> 00:00:02,000
+NASA SPACE APPS CHALLENGE 2026
 TEAM POLISH ALEX GOATS
-NASA Space Apps Challenge 2026
 
 2
 00:00:02,000 --> 00:00:05,000
-Challenge: Space Mission Design Game
-What if you had to survive your own mission design?
+SPACE MISSION DESIGN GAME
+Pack the ship. Then survive what you packed.
 
 3
 00:00:05,000 --> 00:00:10,000
@@ -15,26 +15,30 @@ The mission you design is the mission you must survive.
 
 4
 00:00:10,000 --> 00:00:13,000
-A debris strike. Power 20 %. Life support down.
+THE ACCIDENT
+A debris strike cripples the ship.
 
 5
-00:00:13,000 --> 00:00:16,000
-Every repair is paid from the cargo you packed.
+00:00:13,000 --> 00:00:17,000
+ZERO G
+Grip, push, pull. Fix it with your own hands.
 
 6
-00:00:16,000 --> 00:00:20,000
-Real NASA/JPL distance: Earth's reply can't beat light.
-Earth image: NASA EPIC / NOAA DSCOVR
+00:00:17,000 --> 00:00:20,000
+REAL NASA/JPL DISTANCE
+Every call to Earth waits for the speed of light.
 
 7
 00:00:20,000 --> 00:00:24,000
-30 days. NASA life-support rates drain every reserve.
+30 DAYS
+Every chapter forces a choice.
 
 8
 00:00:24,000 --> 00:00:27,000
-Survive — or learn exactly why you didn't.
+RESCUE
+Help is coming — just not in time for mistakes.
 
 9
 00:00:27,000 --> 00:00:29,500
-NEXT: team mode for four · new destinations · classrooms
-Music: "Titan" by Scott Buckley (CC BY 4.0) · NASA/JPL data
+OUT OF REACH
+Next: crews of four · new destinations · classrooms

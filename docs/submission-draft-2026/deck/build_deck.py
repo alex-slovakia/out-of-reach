@@ -368,8 +368,8 @@ def slide_built(prs):
         ("One authority.", "One mission clock and one ledger in real units (kg, L, kWh, W, ppm, parts); "
                            "spending is all-or-nothing and the visuals only show committed state."),
         ("Data you can check.", "The NASA/JPL snapshot ships offline and is verified by SHA-256 at mission start."),
-        ("Tested.", "Over 320 automated EditMode tests plus PlayMode scene tests, native Unity captures "
-                    "and human playtests throughout the hackathon."),
+        ("Tested.", "Over 370 automated EditMode and 100 PlayMode tests, scripted full-mission runs, "
+                    "native Unity captures and human playtests throughout the hackathon."),
         ("Honest fiction.", "AURORA-7, the rescue, prices and time compression are labelled. No NASA logos."),
     ]
     y = 1.86

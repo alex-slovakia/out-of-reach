@@ -25,7 +25,25 @@
 | Audio | Keep the game audio in every clip. The music bed is laid in the editor (see Audio) |
 | Editor | Clipchamp (built into Windows 11) or DaVinci Resolve; 1080p30 or 1080p60 MP4, H.264, AAC 48 kHz |
 
-## Shot list (29.5 s)
+## Shot list and captions — authoritative (from the `demo-video` session)
+
+Mirrored from #7 6895971794 (draft 1, 14:20 UTC) and `C:\Users\alexp\NASA\submission-video\shot-list.md`. If they differ, the `demo-video` file wins. 29.5 s, 1920×1080, 30 fps, H.264 + AAC 48 kHz, captions burned in; music only (no in-game voice).
+
+| # | Edit time | Beat (guide) | Footage | Kicker (amber) | Caption (white) | Fallback |
+|---|---|---|---|---|---|---|
+| S1 | 0.0–2.0 | Who we are | launch site, tower and vehicle | NASA SPACE APPS CHALLENGE 2026 | TEAM POLISH ALEX GOATS | any wide pad shot |
+| S2 | 2.0–5.0 | The challenge | first-person walk to the transport, crates aboard | SPACE MISSION DESIGN GAME | Pack the ship. Then survive what you packed. | cargo racks in the transport |
+| S3 | 5.0–10.0 | Title + tagline | ignition → liftoff (title on the music hit ≈ 7.3 s) | — | **OUT OF REACH** / The mission you design is the mission you must survive. | start at ignition |
+| S4 | 10.0–13.0 | The accident | cockpit check → debris strike, emergency light | THE ACCIDENT | A debris strike cripples the ship. | interior right after the impact |
+| S5 | 13.0–17.0 | Microgravity survival | rail grip and push-off; repair; the EVA route on the tether | ZERO G | Grip, push, pull. Fix it with your own hands. | float + repair only |
+| S6 | 17.0–20.0 | NASA data | console prompt with the distance and the earliest reply; the reply | REAL NASA/JPL DISTANCE | Every call to Earth waits for the speed of light. | prompt only |
+| S7 | 20.0–24.0 | Survival chapters | chapter UI: day card, a decision; HUD reserves | 30 DAYS | Every chapter forces a choice. | survival start + meal / sleep with the HUD (if the chapter loop is off in the frozen build) |
+| S8 | 24.0–27.0 | The delayed rescue | rescue arrival / outcome card | RESCUE | Help is coming — just not in time for mistakes. | outcome card |
+| S9 | 27.0–29.5 | The future + credits | end card over the last frame | — | **OUT OF REACH** / Next: crews of four · new destinations · classrooms | — |
+
+End card (small): `Music: "Titan" by Scott Buckley — scottbuckley.com.au — CC BY 4.0 · edited excerpt with added synthesized percussion` · `Data: NASA/JPL Horizons · NASA life-support baseline (BVAD) · NASA EPIC/NOAA DSCOVR` · `AURORA-7 is fictional. No NASA endorsement.`
+
+## Manual fallback shot list (only if the automated capture fails)
 
 Times are positions in the final edit. "Capture" says exactly where in the game to record. If a feature is not in the build, use the fallback in the last column; never fake a feature.
 
@@ -48,14 +66,14 @@ Safe area: keep all text inside the central 90 % of the frame; the bottom 12 % a
 
 ## Audio
 
-1. Mute the music in the clips (keep effects), then lay the approved opening master under the whole edit: `docs/art-direction/prologue-audio-20261115/v02/opening-titan-ascent-v02-master.wav` ("Titan" by Scott Buckley, CC BY 4.0, with the team's added percussion). Suggested in-point **0:45.0** of the master (measured drum pulse 42–60 s), 0.3 s fade-in, 1.0 s fade-out ending at 29.5 s. Choose the exact point by ear.
+1. The `demo-video` cut uses music only: the approved master `docs/art-direction/prologue-audio-20261115/v02/opening-titan-ascent-v02-master.wav` ("Titan" by Scott Buckley, CC BY 4.0, with percussion synthesized by AI-written code), window ≈ 54.5–84.0 s, 0.3 s fade-in, 1.0 s fade-out, −14 LUFS, −1 dBTP. A manual edit can follow the same window.
 2. Keep from the clips: the radio countdown and the ignition in S3 (duck the music by about 8 dB under the countdown), the impact in S4, one interface confirmation in S5.
 3. The in-game voices are synthetic (Google Gemini TTS). If any voice line is audible in the final cut, the description and the file metadata must say so (they already do below).
 4. Never use the rejected SFX (v02, shock v03–v06) or any film/game audio.
 
 ## Burned-in captions (also as a file)
 
-[demo-video-30s.en.srt](demo-video-30s.en.srt) holds the same text with the same timings. Upload it as English subtitles on YouTube too.
+[demo-video-30s.en.srt](demo-video-30s.en.srt) holds the authoritative captions above with the same timings (kicker and caption on two lines). The `demo-video` session also writes its own `.srt` next to the MP4; if they differ, use theirs. Upload it as English subtitles on YouTube.
 
 ## File metadata (SI acknowledgement in metadata)
 
