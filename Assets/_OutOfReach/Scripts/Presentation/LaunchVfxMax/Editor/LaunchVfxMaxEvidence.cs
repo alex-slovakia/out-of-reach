@@ -50,11 +50,13 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
             var sky = Ref<Material>(so, "marineSky");
             var playerCamera = Ref<Camera>(so, "playerCamera");
             var orbitalSet = Ref<GameObject>(so, "orbitalSet");
+            var booster = Ref<Transform>(so, "booster");
             if (!vehicle || !marineRoot || !playerCamera) throw new InvalidOperationException("Marine bindings are incomplete.");
 
             marineRoot.gameObject.SetActive(true);
             if (site) site.gameObject.SetActive(true);
             if (orbitalSet) orbitalSet.SetActive(false);
+            if (booster) booster.gameObject.SetActive(true);
             ApplyLaunchSiteEnvironment(sky);
 
             bool v03 = false;

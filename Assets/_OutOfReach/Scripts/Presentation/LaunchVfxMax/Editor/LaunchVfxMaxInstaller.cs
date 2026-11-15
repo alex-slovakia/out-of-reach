@@ -113,8 +113,9 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
         {
             string path = Pack + relative;
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            bool valid = prefab && prefab.GetComponentsInChildren<ParticleSystem>(true).Length > 0
-                && prefab.GetComponentsInChildren<ParticleSystemRenderer>(true).All(r => r.sharedMaterial && r.sharedMaterial.shader);
+            // Some pack prefabs carry helper systems with no material; only the system a layer uses has to render.
+            bool valid = prefab && prefab.GetComponentsInChildren<ParticleSystemRenderer>(true)
+                .Any(r => r.sharedMaterial && r.sharedMaterial.shader);
             if (valid) return prefab;
             if (required) throw new InvalidOperationException("Import the Unity Particle Pack (Assets/UnityTechnologies/ParticlePack): " + path);
             Debug.LogWarning("Launch VFX MAX: optional Particle Pack prefab missing, layer skipped: " + path);
