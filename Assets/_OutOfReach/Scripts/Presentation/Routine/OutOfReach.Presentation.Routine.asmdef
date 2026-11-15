@@ -1,0 +1,23 @@
+{
+  "name": "OutOfReach.Presentation.Routine",
+  "rootNamespace": "OutOfReach.Presentation.Routine",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Inventory",
+    "OutOfReach.Simulation",
+    "OutOfReach.Interaction",
+    "OutOfReach.Player",
+    "OutOfReach.Cinematics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
