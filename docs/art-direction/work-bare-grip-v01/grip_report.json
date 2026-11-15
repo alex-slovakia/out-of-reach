@@ -1,0 +1,248 @@
+{
+ "rail_radius_m": 0.015,
+ "penetration_tolerance_m": -5e-05,
+ "frames": 21,
+ "fps": 30,
+ "R": {
+  "palm": {
+   "min_gap_mm": 1.753,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 2
+  },
+  "thumb": {
+   "min_gap_mm": 0.05,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 71
+  },
+  "index": {
+   "min_gap_mm": 0.05,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 35
+  },
+  "middle": {
+   "min_gap_mm": 0.145,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 18
+  },
+  "ring": {
+   "min_gap_mm": 0.508,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 20
+  },
+  "little": {
+   "min_gap_mm": 0.435,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 19
+  },
+  "whole_arm_penetrating_vertices": 0,
+  "digit_digit_triangle_intersections": {
+   "index/palm": 1
+  },
+  "path_per_frame_rail_penetrating_vertices_and_thumb_intersections": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ]
+ },
+ "L": {
+  "palm": {
+   "min_gap_mm": 0.05,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 9
+  },
+  "thumb": {
+   "min_gap_mm": 0.371,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 55
+  },
+  "index": {
+   "min_gap_mm": 0.404,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 18
+  },
+  "middle": {
+   "min_gap_mm": 0.709,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 11
+  },
+  "ring": {
+   "min_gap_mm": 0.85,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 13
+  },
+  "little": {
+   "min_gap_mm": 0.488,
+   "penetrating_vertices": 0,
+   "within_2mm_vertices": 17
+  },
+  "whole_arm_penetrating_vertices": 0,
+  "digit_digit_triangle_intersections": {},
+  "path_per_frame_rail_penetrating_vertices_and_thumb_intersections": [
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ],
+   [
+    0,
+    0
+   ]
+  ]
+ }
+}
