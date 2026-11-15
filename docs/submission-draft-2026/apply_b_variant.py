@@ -10,7 +10,8 @@ Flags (each only if the feature is really in the submitted build):
     --rad        radiation estimate from NASA MSL RAD, 1.8 mSv/day (119a083, Sources entry eb890aa)
     --dsn        Deep Space Network complex in view, visible in the UI (8aea692 plus a UI hook)
     --particle   launch effects made with the Unity Particle Pack (1b733ac)
-    --models     AURORA-7 exterior V2 and capsules V02 (original team work; credits list only)
+    --models     AURORA-7 exterior V2, capsules V02, terrain V03, grass V04 (original; credits list only)
+    --voices     eleven new Gemini radio takes vo30-vo40: adds the voice Iapetus (the player) to the texts
 
 Every replacement must match exactly once, otherwise nothing is written (run again after fixing the anchor).
 Afterwards: python count_blocks.py form-fields.md (update the counts above the changed blocks),
@@ -167,7 +168,46 @@ EDITS = {
     "models": [
         (CR, "launch towers V02 and V03, transport,",
          "launch towers V02 and V03, AURORA-7 exterior V2 and capsules V02 (scripted Blender builds, \"nothing "
-         "is downloaded\", no agency logos), transport,"),
+         "is downloaded\", no agency logos; capsule lettering in Barlow Condensed Bold, SIL OFL 1.1), terrain V03 "
+         "and the pampas grass field V04 (original shaders and texture atlas), transport,"),
+    ],
+    # eleven new radio takes vo30-vo40 (Gemini TTS, gemini-3.8-flash-lite-tts): Orus, and Iapetus for the player
+    "voices": [
+        (FF, "stock voices Orus and Kore); no real person's voice was cloned.",
+         "stock voices Orus, Kore and Iapetus); no real person's voice was cloned."),
+        (FF, "including the Mission Control and rescue-crew radio lines, uses synthetic voices",
+         "including the Mission Control and rescue-crew radio lines and the player's own radio calls, uses "
+         "synthetic voices"),
+        (FF, "voices Orus, Kore), under the Gemini API Additional Terms: all dialogue.",
+         "voices Orus, Kore, Iapetus), under the Gemini API Additional Terms: all dialogue."),
+        (FF, "Radio traffic reaches you on a handheld radio that rises into view. On day 5",
+         "Voiced radio traffic reaches you on a handheld radio that rises into view. On day 5"),
+        (FF, "for Mission Control's announcement: the first rescue attempt has failed. It was sent from Earth and "
+             "is delayed by the real light time",
+         "for Mission Control's spoken announcement: the first rescue attempt has failed. It was sent from Earth "
+         "and is delayed by the real light time"),
+        (CR, "- All dialogue uses synthetic voices generated with Google Gemini text-to-speech (voices Orus and Kore).",
+         "- All dialogue uses synthetic voices generated with Google Gemini text-to-speech (voices Orus, Kore and\n"
+         "  Iapetus)."),
+        (CR, "| **VO23, day-neutral cut**",
+         "| **Radio takes vo30–vo40** (boarding and pad radio checks, the player's replies and mayday, Earth's "
+         "reply, the day-14 call and the day-14 announcement without a date) | Google Gemini TTS, "
+         "`gemini-3.8-flash-lite-tts`; voice **Orus** for Mission Control, Earth and Pad Control, voice "
+         "**Iapetus** for the player; no human recording | same | "
+         "`Scripts/Presentation/Radio/Voices/voices.json` (transcript, voice, model, style prompt, SHA-256, "
+         "duration, levels), `PROVENANCE.md`, `*.txt` transcripts | **Yes** (B-visual build: bound in Bootstrap, "
+         "commit `732b36a` and the scene install) |\n"
+         "| **VO23, day-neutral cut**"),
+        (RT, "(Google Gemini text-to-speech, voices Orus\n  and Kore).",
+         "(Google Gemini text-to-speech, voices Orus,\n  Kore and Iapetus)."),
+        (PR, "(Google Gemini text-to-speech, voices Orus and Kore); per-file records",
+         "(Google Gemini text-to-speech, voices Orus, Kore and Iapetus); per-file records"),
+        (PT, "| C17 | Runs from a fresh unzip",
+         "| C21 | **Voiced radio:** Mission Control, Earth and the player's own calls are spoken on the handheld "
+         "radio, incl. the day-14 announcement (description 7, SI field) | Boarding radio check, mayday, day 14 | "
+         "☐ ☐ | Run the pack without `--voices`. Also check the Sources line names the voices used "
+         "(Orus, Kore, Iapetus) |\n"
+         "| C17 | Runs from a fresh unzip"),
     ],
 }
 

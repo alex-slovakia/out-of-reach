@@ -65,7 +65,7 @@ Already done in the game (no action): the in-game Sources page names the synthet
 
 ## What to copy where (Team Owner)
 
-**First: which build ships?** A build (release candidate `5479e87`) → the files named below. B build → the same file names inside [B-build/](B-build/) (its own `form-fields.md`, deck PDF and `final-project-folder/`). Always take the deck PDF from the head of `feature/submission-pack-02`; older exports draw the headlines wrongly in browsers.
+**First: which build ships?** A build (release candidate `5479e87`) → the files named below. B-code build (`f6f4f96`) → the same file names inside [B-build/](B-build/). B-visual build (`feature/claude-max-final-b`) → the same file names inside [B-visual-build/](B-visual-build/). Each set has its own `form-fields.md`, deck PDF and `final-project-folder/`. Always take the deck PDF from the head of `feature/submission-pack-02`; older exports draw the headlines wrongly in browsers.
 
 | Form field | Copy from |
 |---|---|

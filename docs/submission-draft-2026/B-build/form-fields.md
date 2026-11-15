@@ -2,7 +2,7 @@
 
 **DRAFT for the Team Owner.** Not submitted, not published. **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758; 15 Nov, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes, with the day-14 announcement as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202); its Windows build is running. If the RC ships, the paste blocks are final as they stand. If a B build ships instead, one short diff pass follows (last section). Field names and rules were checked on the official [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/) (dated 13 Nov 2026) and [Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/), both read on 15 Nov 2026.
 
-**THIS IS THE B-BUILD SET** (checked against `f6f4f96`; extras: horizons, rad). Use it only if the B build is the one that ships. The A set for the release candidate `5479e87` is one folder up.
+**THIS IS THE SET FOR THE B-CODE BUILD** (checked against `f6f4f96`; extras: horizons, rad). Use it only if the B-code build is the one that ships. The A set for the release candidate `5479e87` is one folder up.
 
 How to use:
 - Each field has a **paste block** in plain English (no Markdown, the form is plain text).
@@ -27,7 +27,7 @@ What was verified in the tree at `5479e87` (saved `Bootstrap.unity` and its pref
 | Ending themes "Thirty-One Dawns" / "Last Carrier" | **Yes** | bound in `MissionAudioPresenter.prefab` |
 | EPIC globe on the terminal + Slovakia Terra MODIS inset | **Yes** | `MissionTerminal.prefab`: `staticImageMode: 0`, inset texture set |
 | Sources page names the synthetic voices and the NASA SVS sky | **Yes** | `UI/Report/Runtime/FlightRecorderPresenter.cs` lines 410–423 |
-| Horizons line during play, radiation estimate (MSL RAD), DSN complex in view, day-14 console reveal, stars on the spacewalk, hull V2 / capsules V02 / launch VFX | **In this B set:** horizons, rad. The rest: not included | switch sentences below |
+| Horizons line during play, radiation estimate (MSL RAD), DSN complex in view, day-14 console reveal, stars on the spacewalk, hull V2 / capsules V02 / launch VFX | **In this set:** horizons, rad. The rest: not included | switch sentences below |
 
 ---
 
@@ -55,7 +55,7 @@ A first-person survival game where the mission you design is the mission you mus
 
 The form takes **one** link. Apoliak decides at 23:00 CET which variant is used. **No video is approved, uploaded or linked at this time.**
 
-Variant A — slides (ready now: [OUT-OF-REACH_SpaceApps2026_deck.pdf](../OUT-OF-REACH_SpaceApps2026_deck.pdf) in this folder, the B deck):
+Variant A — slides (ready now: [OUT-OF-REACH_SpaceApps2026_deck.pdf](../OUT-OF-REACH_SpaceApps2026_deck.pdf) in this folder, the deck of this set):
 
 ```text
 [PUBLIC LINK to OUT-OF-REACH_SpaceApps2026_deck.pdf — 7 slides including the title. No login, permission or registration. Test it in a private browser window.]

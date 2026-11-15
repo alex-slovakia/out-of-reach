@@ -6,14 +6,17 @@
 - **Deadline:** Sun 15 Nov 2026, **23:59 Bratislava = 22:59 UTC** ("Submit for Judging" by the Team Owner). Tonight: the final build around **23:00 CET**, the game done by **23:15**, the Team Owner submits around **23:30**; resubmits are allowed until the deadline.
 - **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes; the day-14 announcement ships as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202). Alex decided that CLAUDE-MAX does the final integration (#7 6901207238). Every paste block describes only what is in the RC. **If the RC ships, the pack is final as it stands.** If a B build ships (extra NASA data lines, new models), one short diff pass follows (section below).
 
-## Two sets are ready — use the set of the build that ships
+## Three sets are ready — use the set of the build that ships
 
 | The build that ships (final post on #7) | Use |
 |---|---|
-| **A build** = release candidate `feature/claude-max-final@5479e87` | **this folder**: [form-fields.md](form-fields.md), [deck/…deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf), [final-project-folder/](final-project-folder/) |
-| **B build** = the RC plus the Horizons line and the radiation estimate (checked against `f6f4f96`) | **[B-build/](B-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
+| **A build** = release candidate `feature/claude-max-final@5479e87` (ZIP verified) | **this folder**: [form-fields.md](form-fields.md), [deck/…deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf), [final-project-folder/](final-project-folder/) |
+| **B-code build** = `feature/claude-max-final@f6f4f96`: the RC plus the Horizons line and the radiation estimate | **[B-build/](B-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
+| **B-visual build** = `feature/claude-max-final-b` (checked against `05d7a83`): B-code plus the DSN line, the eleven new voice takes, hull V2, capsule V02, terrain and grass, launch effects with the Unity Particle Pack, hold-to-skip | **[B-visual-build/](B-visual-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
 
-If the final B build has other extras (DSN line, new voices, Particle Pack launch effects, new models), `B-build/` is rebuilt first: `python make_b_build.py --sha <SHA> <flags>`.
+Each set folder has a `README.md` listing exactly what its texts add. If the build that ships has other extras than its set, rebuild the set first: `python make_b_build.py --out <folder> --label "<name>" --sha <SHA> <flags>` (about 3 minutes).
+
+**For the B-visual build two things in the game itself are still open** (not in `05d7a83`): the in-game Sources line says "Voices Orus and Kore" although the player's radio lines use the voice **Iapetus**, and the DSN line has no Sources entry yet (Codex `3a28afc` is announced). The texts of the set already name Iapetus and the DSN sites.
 
 **Deck PDF, important:** take the PDF from this branch at `feature/submission-pack-02` head, not an older export. Older PDFs (up to `e4f60f1`, including the copy in `F:\.local\out-of-reach-2330-handoff\submission-draft-9bc3c8a`) show the headline font wrongly in browsers, and "2.5" and "8.5" read like "25" and "85". The current PDFs are fixed (`deck/flatten_pdf.py`).
 

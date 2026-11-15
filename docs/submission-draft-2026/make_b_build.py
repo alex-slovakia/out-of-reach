@@ -20,14 +20,16 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "B-build"
-FLAGS = ("horizons", "rad", "dsn", "particle", "models")
+FLAGS = ("horizons", "rad", "dsn", "particle", "models", "voices")
 COPIED_MD = ("form-fields.md", "credits-and-licenses.md", "public-README-draft.md", "playthrough-checklist.md")
 WHAT = {
     "horizons": "the NASA/JPL Horizons range and one-way signal time on the next-chapter strip during play",
     "rad": "the radiation estimate from NASA's MSL RAD cruise measurement (1.8 mSv per day), with its Sources entry",
     "dsn": "the line naming the Deep Space Network complex that has Mars in view",
     "particle": "launch effects made with the Unity Particle Pack (third-party, credited in References)",
-    "models": "AURORA-7 exterior V2 and capsules V02 (original team work, credits list only)",
+    "models": "AURORA-7 exterior V2, capsules V02, terrain V03 and grass V04 (original team work, credits list only)",
+    "voices": "eleven new Gemini radio takes (vo30-vo40): the radio traffic and the day-14 announcement are spoken; "
+              "the SI texts name the extra voice Iapetus",
 }
 
 
@@ -82,14 +84,18 @@ def main() -> int:
     for flag in FLAGS:
         ap.add_argument("--" + flag, action="store_true")
     ap.add_argument("--sha", required=True, help="the B-build SHA these texts were checked against")
+    ap.add_argument("--out", default="B-build", help="output folder name next to the A set (default B-build)")
+    ap.add_argument("--label", default="B build", help="how the README calls this build")
     args = ap.parse_args()
+    global OUT
+    OUT = HERE / args.out
     flags = [f for f in FLAGS if getattr(args, f)]
     if not flags:
         ap.error("give at least one flag")
 
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp) / "pack"
-        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-build", ".build", "captures", "*.pptx", "*.pdf",
+        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-*build", ".build", "captures", "*.pptx", "*.pdf",
                                                                  "__pycache__"))
         run([sys.executable, str(HERE / "apply_b_variant.py"), "--root", str(work)] + ["--" + f for f in flags])
         recount(work / "form-fields.md")
@@ -105,15 +111,15 @@ def main() -> int:
     ff = OUT / "form-fields.md"
     text = ff.read_text(encoding="utf-8")
     text = re.sub(r"\*\*B-build variant applied \(`apply_b_variant\.py`\):\*\*[^\n]*\n",
-                  f"**THIS IS THE B-BUILD SET** (checked against `{args.sha}`; extras: "
-                  + ", ".join(flags) + "). Use it only if the B build is the one that ships. "
+                  f"**THIS IS THE SET FOR THE {args.label.upper()}** (checked against `{args.sha}`; extras: "
+                  + ", ".join(flags) + f"). Use it only if the {args.label} is the one that ships. "
                   "The A set for the release candidate `5479e87` is one folder up.\n", text, count=1)
     # in this folder the deck is the B deck next to the texts, not ../deck/
     text = text.replace("(ready now, [deck/](deck/))",
                         "(ready now: [OUT-OF-REACH_SpaceApps2026_deck.pdf](OUT-OF-REACH_SpaceApps2026_deck.pdf) "
-                        "in this folder, the B deck)")
+                        "in this folder, the deck of this set)")
     text = text.replace("| **Not in the RC** (offered for a B build) | switch sentences below |",
-                        "| **In this B set:** " + ", ".join(flags) + ". The rest: not included | switch sentences "
+                        "| **In this set:** " + ", ".join(flags) + ". The rest: not included | switch sentences "
                         "below |")
     ff.write_text(text, encoding="utf-8", newline="\n")
     for name in COPIED_MD:
@@ -132,12 +138,12 @@ def main() -> int:
          str(OUT / "final-project-folder" / "README.txt"), str(OUT / "final-project-folder" / "README.pdf")])
 
     lines = [
-        "# B-build set — use ONLY if the B build ships",
+        f"# Set for the {args.label} — use ONLY if the {args.label} ships",
         "",
         f"Built by `make_b_build.py` and checked against `feature/claude-max-final@{args.sha}`.",
         "The A set (release candidate `5479e87`) is one folder up and is unchanged.",
         "",
-        "**What the B texts add to the A texts:**",
+        "**What these texts add to the A texts:**",
         "",
     ] + [f"- {WHAT[f]}" for f in flags] + [
         "",
@@ -146,10 +152,10 @@ def main() -> int:
         "| The build that ships | Use |",
         "|---|---|",
         "| A build = release candidate `5479e87` | the files one folder up: `../form-fields.md`, `../deck/…pdf`, `../final-project-folder/` |",
-        "| B build | the files in this folder: `form-fields.md`, `OUT-OF-REACH_SpaceApps2026_deck.pdf`, `final-project-folder/` |",
+        f"| {args.label} | the files in this folder: `form-fields.md`, `OUT-OF-REACH_SpaceApps2026_deck.pdf`, `final-project-folder/` |",
         "",
-        "If the final B build has more or fewer extras than listed above, this folder must be rebuilt first",
-        "(`python make_b_build.py --sha <final> <flags>`; the checks are at the end of `form-fields.md`).",
+        "If the build that ships has more or fewer extras than listed above, this folder must be rebuilt first",
+        f"(`python make_b_build.py --out {args.out} --label \"{args.label}\" --sha <final> <flags>`; the checks are at the end of `form-fields.md`).",
         "",
         "Files here: `form-fields.md` (8 paste blocks), `OUT-OF-REACH_SpaceApps2026_deck.pdf` + `.pptx` (7 slides),",
         "`final-project-folder/` (`README.pdf`, `README.txt`, `CREDITS.txt`), and the B versions of",
@@ -158,7 +164,7 @@ def main() -> int:
         "",
     ]
     (OUT / "README.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
-    print("B-build ready:", OUT)
+    print("set ready:", OUT)
     return 0
 
 
