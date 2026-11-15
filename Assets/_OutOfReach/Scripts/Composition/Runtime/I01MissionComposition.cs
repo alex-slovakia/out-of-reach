@@ -593,7 +593,9 @@ namespace OutOfReach.Composition
                     () => session.SurvivalRecovery?.BeaconPoweredAtSimulationSeconds == null
                         ? session.SurvivalRecovery?.ContactAtSimulationSeconds
                             + SurvivalRecovery.BeaconRequestAfterContactDays * MissionCalendar.SecondsPerDay
-                        : null, drinkAction, rationAction);
+                        : null, drinkAction, rationAction, presentationCamera,
+                    habitat ? habitat.GetPresentationAnchor(InteractionIds.DrinkWater) : null,
+                    () => cinematics && cinematics.ReducedEffects);
             }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)

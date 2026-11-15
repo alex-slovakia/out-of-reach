@@ -21,6 +21,14 @@ namespace OutOfReach.Composition
         private bool controlsVisible;
         private CachedTarget[] cachedTargets = Array.Empty<CachedTarget>();
 
+        /// <summary>Read-only visual anchor from the already serialized habitat targets.</summary>
+        public Transform GetPresentationAnchor(string interactionId)
+        {
+            foreach (InteractableTarget target in targets)
+                if (target && target.InteractionId == interactionId) return target.transform;
+            return null;
+        }
+
         public void ConfigureViews(HabitatStatusPresenter view, InteractableTarget grow, InteractableTarget[] physicalTargets)
         {
             ClearBinding();

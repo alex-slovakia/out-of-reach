@@ -20,6 +20,12 @@ namespace OutOfReach.Presentation.UI
         private Func<bool> presentationAllowed;
         private Func<double?> readBeaconRequestTime;
         private IInteractable drinkAction, rationAction;
+        private Camera guidanceCamera;
+        private Transform waterTarget;
+        private Func<bool> reducedMotion;
+        private VisualElement presentationLayer;
+        private SurvivalRestEyes restEyes;
+        private SurvivalWaterLocator waterLocator;
         private bool subscribed;
         private VisualElement needsHost, detailsHost, restHost, alertsHost, needs, details, rest, alerts;
         private readonly SurvivalRestNotice restNotice = new SurvivalRestNotice();
@@ -33,7 +39,8 @@ namespace OutOfReach.Presentation.UI
         public void Configure(UIDocument ui, StyleSheet styleSheet, ISurvivalExtension needsService,
             ISurvivalRecovery recoveryService, IGameState gameState, ISimulationClock simulationClock,
             Func<bool> canPresent, Func<double?> readBeaconRequestTime = null,
-            IInteractable drinkAction = null, IInteractable rationAction = null)
+            IInteractable drinkAction = null, IInteractable rationAction = null,
+            Camera guidanceCamera = null, Transform waterTarget = null, Func<bool> reducedMotion = null)
         {
             ClearBinding();
             document = ui;
@@ -46,6 +53,9 @@ namespace OutOfReach.Presentation.UI
             this.readBeaconRequestTime = readBeaconRequestTime;
             this.drinkAction = drinkAction;
             this.rationAction = rationAction;
+            this.guidanceCamera = guidanceCamera;
+            this.waterTarget = waterTarget;
+            this.reducedMotion = reducedMotion;
             if (isActiveAndEnabled) Subscribe();
             RefreshPresentation();
         }
@@ -60,6 +70,9 @@ namespace OutOfReach.Presentation.UI
             recovery = null;
             readBeaconRequestTime = null;
             drinkAction = rationAction = null;
+            guidanceCamera = null;
+            waterTarget = null;
+            reducedMotion = null;
             state = null;
             clock = null;
             presentationAllowed = null;
@@ -74,6 +87,7 @@ namespace OutOfReach.Presentation.UI
         {
             restNotice.Advance(Time.unscaledDeltaTime, CanPresent());
             RefreshPresentation();
+            restEyes?.Advance(Time.unscaledDeltaTime, CanPresent());
         }
 
         private void Subscribe()
@@ -104,8 +118,11 @@ namespace OutOfReach.Presentation.UI
                 && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None,
                 recovery != null && recovery.IsResting, recovery?.LastRestStop ?? RestStopReason.None);
             bool visible = CanPresent();
+            restEyes?.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
             if (!visible) { HideViews(); return; }
             if (!EnsureViews()) return;
+            Show(presentationLayer, true);
+            restEyes.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
             Show(needs, true);
             hunger.Set(survival.Hunger01);
             hydration.Set(survival.Thirst01);
@@ -115,6 +132,7 @@ namespace OutOfReach.Presentation.UI
             Show(restStop, restNotice.IsVisible);
 
             bool resting = recovery != null && recovery.IsResting;
+            waterLocator.Present(guidanceCamera, waterTarget, !resting);
             Show(rest, resting);
             wake.SetEnabled(resting);
             if (resting)
@@ -174,13 +192,22 @@ namespace OutOfReach.Presentation.UI
             }
             if (needsHost == nextNeeds && detailsHost == nextDetails && restHost == nextRest
                 && alertsHost == nextAlerts && alerts?.parent == nextAlerts
-                && needs?.parent == nextNeeds && details?.parent == nextDetails && rest?.parent == nextRest)
+                && needs?.parent == nextNeeds && details?.parent == nextDetails
+                && presentationLayer?.parent == board && rest?.parent == presentationLayer)
                 return true;
             ReleaseViews();
             needsHost = nextNeeds;
             detailsHost = nextDetails;
             restHost = nextRest;
             alertsHost = nextAlerts;
+            presentationLayer = Container("survival-presentation-layer", "survival-presentation-layer");
+            presentationLayer.styleSheets.Add(sheet);
+            waterLocator = new SurvivalWaterLocator();
+            restEyes = new SurvivalRestEyes();
+            restEyes.Reset();
+            presentationLayer.Add(waterLocator);
+            presentationLayer.Add(restEyes);
+            board.Add(presentationLayer);
             needs = Container("survival-needs", "survival-needs");
             needs.styleSheets.Add(sheet);
             hunger = new NeedRow(needs, "Fed", "survival-hunger-bar", false);
@@ -200,7 +227,7 @@ namespace OutOfReach.Presentation.UI
             restFeedback = Text(string.Empty, "survival-rest-feedback");
             Show(restFeedback, false);
             rest.Add(restFeedback);
-            restHost.Add(rest);
+            presentationLayer.Add(rest);
 
             details = Container("survival-recovery-detail", "survival-recovery-detail");
             details.styleSheets.Add(sheet);
@@ -276,6 +303,7 @@ namespace OutOfReach.Presentation.UI
             Show(details, false);
             Show(rest, false);
             Show(alerts, false);
+            Show(presentationLayer, false);
             wake?.SetEnabled(false);
         }
 
@@ -286,6 +314,11 @@ namespace OutOfReach.Presentation.UI
             details?.RemoveFromHierarchy();
             rest?.RemoveFromHierarchy();
             alerts?.RemoveFromHierarchy();
+            restEyes?.Reset();
+            presentationLayer?.RemoveFromHierarchy();
+            presentationLayer = null;
+            restEyes = null;
+            waterLocator = null;
             needsHost = detailsHost = restHost = alertsHost = needs = details = rest = alerts = null;
             hunger = hydration = null;
             restDay = restTime = restFeedback = recoveryTitle = arrival = beacon = beaconAction = restStop = null;
