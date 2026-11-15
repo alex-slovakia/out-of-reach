@@ -297,6 +297,8 @@ namespace OutOfReach.Core
                     return "Suit oxygen: the tank ran empty before the crew was back in a pressurized cabin.";
                 case SurvivalFailure.ContactImpossible:
                     return "Unrecoverable mission objective: too few spare parts to repair the antenna. The crew was alive when the mission was closed.";
+                case SurvivalFailure.LaunchOverweight:
+                    return "Launch overweight: the launch mass exceeded the limit and the vehicle failed to reach orbit.";
                 default:
                     return "Ended by mission control.";
             }

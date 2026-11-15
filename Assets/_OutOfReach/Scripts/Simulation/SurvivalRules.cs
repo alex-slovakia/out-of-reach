@@ -23,7 +23,10 @@ namespace OutOfReach.Simulation
         /// <summary>Opt-in unmet food demand exceeded a game viability limit, not a medical death threshold.</summary>
         HungerLimit,
         /// <summary>Opt-in unmet water demand exceeded a game viability limit, not a medical death threshold.</summary>
-        ThirstLimit
+        ThirstLimit,
+
+        /// <summary>R27: the payload exceeded the launch mass limit and the vehicle failed to reach orbit.</summary>
+        LaunchOverweight
     }
 
     /// <summary>
