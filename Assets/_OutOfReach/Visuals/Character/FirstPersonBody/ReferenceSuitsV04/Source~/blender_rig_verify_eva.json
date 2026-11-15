@@ -1,0 +1,39 @@
+{
+ "bones": 164,
+ "rig_name": "A7_ContinuousBody_Rig",
+ "rig_scale": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "max_bind_diff_m": 7.152557373046875e-07,
+ "parent_mismatch": [],
+ "missing": [],
+ "meshes": {
+  "A7_EVA_Arm_L": {
+   "verts": 3139,
+   "parent": "A7_ContinuousBody_Rig",
+   "arm_mod": true
+  },
+  "A7_EVA_Arm_R": {
+   "verts": 3137,
+   "parent": "A7_ContinuousBody_Rig",
+   "arm_mod": true
+  },
+  "A7_EVA_Head": {
+   "verts": 12011,
+   "parent": "A7_ContinuousBody_Rig",
+   "arm_mod": true
+  },
+  "A7_EVA_TorsoLegs": {
+   "verts": 8346,
+   "parent": "A7_ContinuousBody_Rig",
+   "arm_mod": true
+  }
+ },
+ "actions": [
+  "A7_ContinuousBody_Rig|A7_ContinuousBody_Rig|BODY_FloatNeutral",
+  "A7_ContinuousBody_Rig|A7_ContinuousBody_Rig|BODY_SeatedFit",
+  "A7_ContinuousBody_Rig|A7_ContinuousBody_Rig|BODY_StandRelaxed"
+ ]
+}
