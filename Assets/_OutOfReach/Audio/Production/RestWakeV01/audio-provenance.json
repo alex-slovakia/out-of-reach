@@ -1,0 +1,22 @@
+{
+  "asset": "rest-wake-cinematic.wav",
+  "source": "Original mathematical synthesis plus this project's original contact cue; no external samples, service generation or new dependencies.",
+  "perspective": "Non-diegetic wake accent with a softened cabin/contact-like transient. Not evidence of an animated belt or a sound propagating through vacuum.",
+  "reuse": {
+    "path": "Assets/_OutOfReach/Audio/Original/LaunchEffects/departure-seatbelt-click.wav",
+    "sha256": "beef0c1715bd4c301af3574ff763562cdbc612594dd5955c1c60535965eafd7b",
+    "gain_before_final_mastering": 0.32
+  },
+  "generator": "docs/art-direction/rest-wake-audio-20261115/generate_rest_wake.py",
+  "generator_sha256": "54aa9a7cfa96243623b5bc5d68c2460b69535192f63a5a2c39c074d5906ac8b2",
+  "format": "48000 Hz stereo PCM16 WAV",
+  "duration_seconds": 3.2,
+  "frames": 153600,
+  "bytes": 614444,
+  "sample_peak_dbfs": -13.0,
+  "whole_clip_rms_dbfs": -28.759,
+  "clipped_samples": 0,
+  "sha256": "56f0fd8967e6ddb0852109ade4403a3f0994220540bb2962352d3a8204a7124c",
+  "recommended_PlaySfx_volume": 0.7,
+  "verification_limit": "Offline PCM verification only. Native mixer/listener acceptance and subjective listening remain unverified."
+}

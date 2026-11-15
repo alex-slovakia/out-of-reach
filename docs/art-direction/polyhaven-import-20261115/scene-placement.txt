@@ -1,0 +1,20 @@
+portable_generator | Launch site - stationary | (24.00, -32.60, -28.00) | scale 1
+flood_lights | Launch site - stationary | (26.00, -32.60, -30.00) | scale 1
+flood_lights | Launch site - stationary | (-25.00, -32.60, -30.00) | scale 1
+metal_toolbox | Launch site - stationary | (23.00, -32.60, -27.60) | scale 1
+flood_lights | Staging module at authored mate | (3.15, 0.03, -1.15) | scale 1
+metal_toolbox | Staging module at authored mate | (2.85, 1.31, 0.88) | scale 1
+vintage_spacecraft_instrument | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 0.85
+binoculars | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+medical_box | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+long_life_food | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+combination_wrench | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+adjustable_wrench | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+pliers | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+screwdrivers_02 | Curated CC0 service details | (0.00, 0.00, 0.00) | scale 1
+coast_land_rocks_04 | Launch site - stationary | (-82.00, -36.72, -45.00) | scale 0.75
+namaqualand_boulder_02 | Launch site - stationary | (-94.00, -36.78, -19.00) | scale 1.5
+coast_land_rocks_04 | Launch site - stationary | (83.00, -36.72, -39.00) | scale 0.75
+namaqualand_boulder_02 | Launch site - stationary | (97.00, -36.51, 12.00) | scale 1.5
+coast_land_rocks_04 | Launch site - stationary | (-87.00, -36.69, 39.00) | scale 0.75
+namaqualand_boulder_02 | Launch site - stationary | (92.00, -36.55, 58.00) | scale 1.5

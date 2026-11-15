@@ -1,0 +1,1619 @@
+{
+  "assets": [
+    {
+      "id": "portable_generator",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "portable_generator",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/portable_generator_BaseColor.png",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/portable_generator_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/portable_generator_MetalSmooth.png",
+          "emission": "",
+          "alpha": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/portable_generator_Alpha.png",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "portable_generator",
+          "triangles": 26299
+        },
+        {
+          "name": "portable_generator_dial",
+          "triangles": 38
+        },
+        {
+          "name": "portable_generator_switch",
+          "triangles": 32
+        },
+        {
+          "name": "portable_generator_toggle",
+          "triangles": 50
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/portable_generator",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "portable_generator",
+          "polygons": 14501,
+          "dimensions": [
+            0.8183407783508301,
+            0.5640000104904175,
+            0.5769232511520386
+          ]
+        },
+        {
+          "name": "portable_generator_dial",
+          "polygons": 25,
+          "dimensions": [
+            0.01053476333618164,
+            0.005288802552968264,
+            0.03042544052004814
+          ]
+        },
+        {
+          "name": "portable_generator_switch",
+          "polygons": 17,
+          "dimensions": [
+            0.026594623923301697,
+            0.03822929412126541,
+            0.01995997130870819
+          ]
+        },
+        {
+          "name": "portable_generator_toggle",
+          "polygons": 25,
+          "dimensions": [
+            0.008135609328746796,
+            0.014230306260287762,
+            0.00798087753355503
+          ]
+        }
+      ],
+      "triangles": 26419,
+      "dimensions_m_blender_xyz": [
+        0.8183407783508301,
+        0.5640000104904175,
+        0.5769232511520386
+      ],
+      "dimensions_m_unity_xyz": [
+        0.8183408081531525,
+        0.5769232507009292,
+        0.5640000104904175
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/portable_generator.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_portable_generator.prefab"
+    },
+    {
+      "id": "long_life_food",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "long_life_food",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/long_life_food_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/long_life_food_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/long_life_food_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "long_life_food_beans",
+          "triangles": 1512
+        },
+        {
+          "name": "long_life_food_milk",
+          "triangles": 116
+        },
+        {
+          "name": "long_life_food_sardines",
+          "triangles": 1572
+        },
+        {
+          "name": "long_life_food_tomatoes",
+          "triangles": 1512
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/long_life_food",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "long_life_food_beans",
+          "polygons": 756,
+          "dimensions": [
+            0.08825421333312988,
+            0.08813569694757462,
+            0.1475292593240738
+          ]
+        },
+        {
+          "name": "long_life_food_milk",
+          "polygons": 54,
+          "dimensions": [
+            0.10006465017795563,
+            0.07156907021999359,
+            0.23757457733154297
+          ]
+        },
+        {
+          "name": "long_life_food_sardines",
+          "polygons": 844,
+          "dimensions": [
+            0.13128751516342163,
+            0.07959220558404922,
+            0.027514878660440445
+          ]
+        },
+        {
+          "name": "long_life_food_tomatoes",
+          "polygons": 756,
+          "dimensions": [
+            0.11360546201467514,
+            0.11355656385421753,
+            0.11859987676143646
+          ]
+        }
+      ],
+      "triangles": 4712,
+      "dimensions_m_blender_xyz": [
+        0.5237634181976318,
+        0.11355656385421753,
+        0.23757459223270416
+      ],
+      "dimensions_m_unity_xyz": [
+        0.5237633883953094,
+        0.23757458629552275,
+        0.11355656012892723
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/long_life_food.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_long_life_food.prefab"
+    },
+    {
+      "id": "coast_land_rocks_04",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "coast_land_rocks_04",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_land_rocks_04_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_land_rocks_04_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_land_rocks_04_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "coast_land_rocks_04_LOD3",
+          "triangles": 29999
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/coast_land_rocks_04",
+      "resolution": "2k",
+      "source_objects": [
+        {
+          "name": "coast_land_rocks_04_LOD0",
+          "polygons": 1086668,
+          "dimensions": [
+            9.963102340698242,
+            11.50141716003418,
+            0.8460102081298828
+          ]
+        },
+        {
+          "name": "coast_land_rocks_04_LOD1",
+          "polygons": 543333,
+          "dimensions": [
+            9.963077545166016,
+            11.501405715942383,
+            0.8457672595977783
+          ]
+        },
+        {
+          "name": "coast_land_rocks_04_LOD2",
+          "polygons": 271665,
+          "dimensions": [
+            9.963052749633789,
+            11.501500129699707,
+            0.8485965132713318
+          ]
+        },
+        {
+          "name": "coast_land_rocks_04_LOD3",
+          "polygons": 135831,
+          "dimensions": [
+            9.962906837463379,
+            11.501480102539062,
+            0.8486063480377197
+          ]
+        }
+      ],
+      "triangles": 29999,
+      "dimensions_m_blender_xyz": [
+        9.961585998535156,
+        11.497777938842773,
+        0.8391189575195312
+      ],
+      "dimensions_m_unity_xyz": [
+        9.961585521697998,
+        0.839118979871273,
+        11.497777938842773
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/coast_land_rocks_04.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_coast_land_rocks_04.prefab"
+    },
+    {
+      "id": "namaqualand_boulder_02",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "namaqualand_boulder_02",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/namaqualand_boulder_02_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/namaqualand_boulder_02_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/namaqualand_boulder_02_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "namaqualand_boulder_02_LOD0",
+          "triangles": 30000
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/namaqualand_boulder_02",
+      "resolution": "2k",
+      "source_objects": [
+        {
+          "name": "namaqualand_boulder_02_LOD0",
+          "polygons": 97964,
+          "dimensions": [
+            2.532142162322998,
+            1.2342629432678223,
+            0.8826377987861633
+          ]
+        }
+      ],
+      "triangles": 30000,
+      "dimensions_m_blender_xyz": [
+        2.5333333015441895,
+        1.234483242034912,
+        0.8830918073654175
+      ],
+      "dimensions_m_unity_xyz": [
+        2.533333420753479,
+        0.8830918110907078,
+        1.2344833016395569
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/namaqualand_boulder_02.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_namaqualand_boulder_02.prefab"
+    },
+    {
+      "id": "combination_wrench",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "combination_wrench",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/combination_wrench_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/combination_wrench_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/combination_wrench_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "combination_wrench",
+          "triangles": 1986
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/combination_wrench",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "combination_wrench",
+          "polygons": 1111,
+          "dimensions": [
+            0.05658109486103058,
+            0.33698412775993347,
+            0.021513011306524277
+          ]
+        }
+      ],
+      "triangles": 1986,
+      "dimensions_m_blender_xyz": [
+        0.05658109486103058,
+        0.33698412775993347,
+        0.02151302434504032
+      ],
+      "dimensions_m_unity_xyz": [
+        0.05658109299838543,
+        0.02151302434504032,
+        0.33698412775993347
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/combination_wrench.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_combination_wrench.prefab"
+    },
+    {
+      "id": "adjustable_wrench",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "adjustable_wrench",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/adjustable_wrench_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/adjustable_wrench_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/adjustable_wrench_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "adjustable_wrench",
+          "triangles": 3008
+        },
+        {
+          "name": "adjustable_wrench_jaw",
+          "triangles": 1752
+        },
+        {
+          "name": "adjustable_wrench_nut",
+          "triangles": 236
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/adjustable_wrench",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "adjustable_wrench",
+          "polygons": 3244,
+          "dimensions": [
+            0.06834418326616287,
+            0.030590344220399857,
+            0.23508939146995544
+          ]
+        },
+        {
+          "name": "adjustable_wrench_jaw",
+          "polygons": 1890,
+          "dimensions": [
+            0.05271930247545242,
+            0.016944950446486473,
+            0.11723768711090088
+          ]
+        },
+        {
+          "name": "adjustable_wrench_nut",
+          "polygons": 256,
+          "dimensions": [
+            0.029359862208366394,
+            0.029359862208366394,
+            0.016316458582878113
+          ]
+        }
+      ],
+      "triangles": 4996,
+      "dimensions_m_blender_xyz": [
+        0.06834418326616287,
+        0.030590344220399857,
+        0.2541305422782898
+      ],
+      "dimensions_m_unity_xyz": [
+        0.06834418512880802,
+        0.2541305273771286,
+        0.030590344220399857
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/adjustable_wrench.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_adjustable_wrench.prefab"
+    },
+    {
+      "id": "pliers",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "pliers",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/pliers_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/pliers_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/pliers_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "pliers_a",
+          "triangles": 2199
+        },
+        {
+          "name": "pliers_b",
+          "triangles": 2153
+        },
+        {
+          "name": "pliers_pin",
+          "triangles": 188
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/pliers",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "pliers_a",
+          "polygons": 1232,
+          "dimensions": [
+            0.04038607329130173,
+            0.017985451966524124,
+            0.17978322505950928
+          ]
+        },
+        {
+          "name": "pliers_b",
+          "polygons": 1202,
+          "dimensions": [
+            0.04038611054420471,
+            0.017985451966524124,
+            0.17978322505950928
+          ]
+        },
+        {
+          "name": "pliers_pin",
+          "polygons": 94,
+          "dimensions": [
+            0.009779473766684532,
+            0.009165143594145775,
+            0.009779474698007107
+          ]
+        }
+      ],
+      "triangles": 4540,
+      "dimensions_m_blender_xyz": [
+        0.05528969317674637,
+        0.017985451966524124,
+        0.17978322505950928
+      ],
+      "dimensions_m_unity_xyz": [
+        0.05528969317674637,
+        0.17978323251008987,
+        0.0179854528978467
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/pliers.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_pliers.prefab"
+    },
+    {
+      "id": "screwdrivers_02",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "screwdrivers_02",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/screwdrivers_02_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/screwdrivers_02_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/screwdrivers_02_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "screwdrivers_02_a",
+          "triangles": 1516
+        },
+        {
+          "name": "screwdrivers_02_b",
+          "triangles": 2032
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/screwdrivers_02",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "screwdrivers_02_a",
+          "polygons": 1516,
+          "dimensions": [
+            0.02707706205546856,
+            0.2699327766895294,
+            0.02707698941230774
+          ]
+        },
+        {
+          "name": "screwdrivers_02_b",
+          "polygons": 2032,
+          "dimensions": [
+            0.02706747129559517,
+            0.21998034417629242,
+            0.027067460119724274
+          ]
+        }
+      ],
+      "triangles": 3548,
+      "dimensions_m_blender_xyz": [
+        0.10045838356018066,
+        0.2699327766895294,
+        0.02707698941230774
+      ],
+      "dimensions_m_unity_xyz": [
+        0.10045838262885809,
+        0.02707698941230774,
+        0.2699327766895294
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/screwdrivers_02.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_screwdrivers_02.prefab"
+    },
+    {
+      "id": "vintage_spacecraft_instrument",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "vintage_spacecraft_instrument",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/vintage_spacecraft_instrument_BaseColor.png",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/vintage_spacecraft_instrument_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/vintage_spacecraft_instrument_MetalSmooth.png",
+          "emission": "",
+          "alpha": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/vintage_spacecraft_instrument_Alpha.png",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "vintage_spacecraft_instrument",
+          "triangles": 13279
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/vintage_spacecraft_instrument",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "vintage_spacecraft_instrument",
+          "polygons": 7693,
+          "dimensions": [
+            0.41028693318367004,
+            0.2044019252061844,
+            0.26928550004959106
+          ]
+        }
+      ],
+      "triangles": 13279,
+      "dimensions_m_blender_xyz": [
+        0.41028693318367004,
+        0.20440194010734558,
+        0.26928550004959106
+      ],
+      "dimensions_m_unity_xyz": [
+        0.41028693318367004,
+        0.26928550004959106,
+        0.20440193265676498
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/vintage_spacecraft_instrument.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_vintage_spacecraft_instrument.prefab"
+    },
+    {
+      "id": "medical_box",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "medical_box",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/medical_box_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/medical_box_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/medical_box_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "medical_box",
+          "triangles": 1290
+        },
+        {
+          "name": "medical_box_handle",
+          "triangles": 216
+        },
+        {
+          "name": "medical_box_latch",
+          "triangles": 840
+        },
+        {
+          "name": "medical_box_latch_rings",
+          "triangles": 432
+        },
+        {
+          "name": "medical_box_lid",
+          "triangles": 940
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/medical_box",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "medical_box",
+          "polygons": 698,
+          "dimensions": [
+            0.5167397856712341,
+            0.34413132071495056,
+            0.07818616926670074
+          ]
+        },
+        {
+          "name": "medical_box_handle",
+          "polygons": 108,
+          "dimensions": [
+            0.16254398226737976,
+            0.004458487965166569,
+            0.041479893028736115
+          ]
+        },
+        {
+          "name": "medical_box_latch",
+          "polygons": 474,
+          "dimensions": [
+            0.34492337703704834,
+            0.007268617395311594,
+            0.044798046350479126
+          ]
+        },
+        {
+          "name": "medical_box_latch_rings",
+          "polygons": 216,
+          "dimensions": [
+            0.35225430130958557,
+            0.004695730749517679,
+            0.0331418439745903
+          ]
+        },
+        {
+          "name": "medical_box_lid",
+          "polygons": 506,
+          "dimensions": [
+            0.5254814624786377,
+            0.34708738327026367,
+            0.03328636288642883
+          ]
+        }
+      ],
+      "triangles": 3718,
+      "dimensions_m_blender_xyz": [
+        0.5254814624786377,
+        0.35016927123069763,
+        0.09751217067241669
+      ],
+      "dimensions_m_unity_xyz": [
+        0.5254814624786377,
+        0.0975121703792774,
+        0.35016927123069763
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/medical_box.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_medical_box.prefab"
+    },
+    {
+      "id": "metal_toolbox",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "metal_toolbox",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/metal_toolbox_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/metal_toolbox_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/metal_toolbox_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "metal_toolbox",
+          "triangles": 3975
+        },
+        {
+          "name": "metal_toolbox_handle",
+          "triangles": 3682
+        },
+        {
+          "name": "metal_toolbox_handle_latch_l",
+          "triangles": 192
+        },
+        {
+          "name": "metal_toolbox_handle_latch_r",
+          "triangles": 192
+        },
+        {
+          "name": "metal_toolbox_lid",
+          "triangles": 6051
+        },
+        {
+          "name": "metal_toolbox_tray",
+          "triangles": 136
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/metal_toolbox",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "metal_toolbox",
+          "polygons": 3975,
+          "dimensions": [
+            0.40000012516975403,
+            0.2194594442844391,
+            0.12210717797279358
+          ]
+        },
+        {
+          "name": "metal_toolbox_handle",
+          "polygons": 3682,
+          "dimensions": [
+            0.17653363943099976,
+            0.051453474909067154,
+            0.029142776504158974
+          ]
+        },
+        {
+          "name": "metal_toolbox_handle_latch_l",
+          "polygons": 192,
+          "dimensions": [
+            0.023703020066022873,
+            0.009910495020449162,
+            0.04590485990047455
+          ]
+        },
+        {
+          "name": "metal_toolbox_handle_latch_r",
+          "polygons": 192,
+          "dimensions": [
+            0.023894645273685455,
+            0.009910479187965393,
+            0.04622972384095192
+          ]
+        },
+        {
+          "name": "metal_toolbox_lid",
+          "polygons": 6051,
+          "dimensions": [
+            0.400000661611557,
+            0.21670378744602203,
+            0.091251440346241
+          ]
+        },
+        {
+          "name": "metal_toolbox_tray",
+          "polygons": 136,
+          "dimensions": [
+            0.3863373398780823,
+            0.18665003776550293,
+            0.08689296245574951
+          ]
+        }
+      ],
+      "triangles": 14228,
+      "dimensions_m_blender_xyz": [
+        0.4000099003314972,
+        0.27053308486938477,
+        0.3047237992286682
+      ],
+      "dimensions_m_unity_xyz": [
+        0.4000099003314972,
+        0.30472380365245044,
+        0.27053308486938477
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/metal_toolbox.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_metal_toolbox.prefab"
+    },
+    {
+      "id": "binoculars",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "binoculars",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/binoculars_BaseColor.png",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/binoculars_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/binoculars_MetalSmooth.png",
+          "emission": "",
+          "alpha": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/binoculars_Alpha.png",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "binoculars_column",
+          "triangles": 2848
+        },
+        {
+          "name": "binoculars_left",
+          "triangles": 6674
+        },
+        {
+          "name": "binoculars_right",
+          "triangles": 6674
+        },
+        {
+          "name": "binoculars_strap",
+          "triangles": 3052
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/binoculars",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "binoculars_column",
+          "polygons": 1472,
+          "dimensions": [
+            0.030000003054738045,
+            0.0792187750339508,
+            0.0299999937415123
+          ]
+        },
+        {
+          "name": "binoculars_left",
+          "polygons": 3480,
+          "dimensions": [
+            0.07615084946155548,
+            0.11486387252807617,
+            0.05957247316837311
+          ]
+        },
+        {
+          "name": "binoculars_right",
+          "polygons": 3479,
+          "dimensions": [
+            0.07615082710981369,
+            0.11486388742923737,
+            0.05957247316837311
+          ]
+        },
+        {
+          "name": "binoculars_strap",
+          "polygons": 1576,
+          "dimensions": [
+            0.14510805904865265,
+            0.22665399312973022,
+            0.01360611617565155
+          ]
+        }
+      ],
+      "triangles": 19248,
+      "dimensions_m_blender_xyz": [
+        0.16693279147148132,
+        0.2879329025745392,
+        0.06624972820281982
+      ],
+      "dimensions_m_unity_xyz": [
+        0.16693278402090073,
+        0.06624972447752953,
+        0.2879329025745392
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/binoculars.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_binoculars.prefab"
+    },
+    {
+      "id": "coast_sand_02",
+      "kind": "ground",
+      "materials": [
+        {
+          "key": "coast_sand_02",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_sand_02_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_sand_02_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/coast_sand_02_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": true,
+          "glass": false
+        }
+      ],
+      "objects": [],
+      "source_url": "https://polyhaven.com/a/coast_sand_02",
+      "resolution": "2k"
+    },
+    {
+      "id": "gravelly_sand",
+      "kind": "ground",
+      "materials": [
+        {
+          "key": "gravelly_sand",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/gravelly_sand_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/gravelly_sand_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/gravelly_sand_MetalSmooth.png",
+          "emission": "",
+          "alpha": "",
+          "ground": true,
+          "glass": false
+        }
+      ],
+      "objects": [],
+      "source_url": "https://polyhaven.com/a/gravelly_sand",
+      "resolution": "2k"
+    },
+    {
+      "id": "flood_lights",
+      "kind": "model",
+      "materials": [
+        {
+          "key": "flood_lights_glass",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_glass_BaseColor.png",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_glass_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_glass_MetalSmooth.png",
+          "emission": "",
+          "alpha": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_glass_Alpha.png",
+          "ground": false,
+          "glass": true
+        },
+        {
+          "key": "flood_lights",
+          "baseColor": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_BaseColor.jpg",
+          "normal": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_Normal.png",
+          "metalSmooth": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_MetalSmooth.png",
+          "emission": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Textures/flood_lights_Emission.png",
+          "alpha": "",
+          "ground": false,
+          "glass": false
+        }
+      ],
+      "objects": [
+        {
+          "name": "flood_lights_standing_double_a_bar",
+          "triangles": 840
+        },
+        {
+          "name": "flood_lights_standing_double_a_cable",
+          "triangles": 1732
+        },
+        {
+          "name": "flood_lights_standing_double_a_handle_01",
+          "triangles": 868
+        },
+        {
+          "name": "flood_lights_standing_double_a_handle_02",
+          "triangles": 868
+        },
+        {
+          "name": "flood_lights_standing_double_a_light_01",
+          "triangles": 2016
+        },
+        {
+          "name": "flood_lights_standing_double_a_light_02",
+          "triangles": 2016
+        },
+        {
+          "name": "flood_lights_standing_double_a_stand",
+          "triangles": 3074
+        },
+        {
+          "name": "flood_lights_standing_double_a_support_01",
+          "triangles": 172
+        },
+        {
+          "name": "flood_lights_standing_double_a_support_02",
+          "triangles": 172
+        }
+      ],
+      "source_url": "https://polyhaven.com/a/flood_lights",
+      "resolution": "1k",
+      "source_objects": [
+        {
+          "name": "flood_lights_cable_a_curve",
+          "polygons": 0,
+          "dimensions": [
+            0.36989861726760864,
+            0.7103172540664673,
+            1.3329613208770752
+          ]
+        },
+        {
+          "name": "flood_lights_cable_a_geo",
+          "polygons": 1333,
+          "dimensions": [
+            0.3756806254386902,
+            0.8112557530403137,
+            1.3755390644073486
+          ]
+        },
+        {
+          "name": "flood_lights_cable_b_curve",
+          "polygons": 0,
+          "dimensions": [
+            0.36989861726760864,
+            0.7103172540664673,
+            0.952961266040802
+          ]
+        },
+        {
+          "name": "flood_lights_cable_b_geo",
+          "polygons": 1062,
+          "dimensions": [
+            0.3756807744503021,
+            0.7842433452606201,
+            0.997917652130127
+          ]
+        },
+        {
+          "name": "flood_lights_cable_extension_curve",
+          "polygons": 0,
+          "dimensions": [
+            2.738088369369507e-07,
+            0.032170578837394714,
+            0.952961266040802
+          ]
+        },
+        {
+          "name": "flood_lights_cable_extension_geo",
+          "polygons": 384,
+          "dimensions": [
+            0.007941707037389278,
+            0.039986900985240936,
+            0.9571161270141602
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_bar",
+          "polygons": 401,
+          "dimensions": [
+            0.6458167433738708,
+            0.20918023586273193,
+            0.05498726665973663
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_handle_01",
+          "polygons": 442,
+          "dimensions": [
+            0.2833784520626068,
+            0.04878515377640724,
+            0.24231746792793274
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_handle_02",
+          "polygons": 442,
+          "dimensions": [
+            0.28337839245796204,
+            0.04470882937312126,
+            0.24250084161758423
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_light_01",
+          "polygons": 1224,
+          "dimensions": [
+            0.2449267953634262,
+            0.2027597874403,
+            0.17973634600639343
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_light_02",
+          "polygons": 1224,
+          "dimensions": [
+            0.24492675065994263,
+            0.20275980234146118,
+            0.17973636090755463
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_support_01",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.046490371227264404,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_a_support_02",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.03200000151991844,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_bar",
+          "polygons": 401,
+          "dimensions": [
+            0.6458167433738708,
+            0.20918023586273193,
+            0.05498726665973663
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_handle",
+          "polygons": 701,
+          "dimensions": [
+            0.06288400292396545,
+            0.1973322331905365,
+            0.3090290129184723
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_light_01",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.2027597874403,
+            0.17973634600639343
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_light_02",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733781933784485,
+            0.20275984704494476,
+            0.17973636090755463
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_support_01",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.046490371227264404,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_double_b_support_02",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.03200000151991844,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_a_bar",
+          "polygons": 401,
+          "dimensions": [
+            0.2458166480064392,
+            0.20918023586273193,
+            0.05498726665973663
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_a_handle",
+          "polygons": 442,
+          "dimensions": [
+            0.2833784520626068,
+            0.04878516495227814,
+            0.24231746792793274
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_a_light",
+          "polygons": 1224,
+          "dimensions": [
+            0.2449268251657486,
+            0.2027597874403,
+            0.17973634600639343
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_a_support",
+          "polygons": 278,
+          "dimensions": [
+            0.2211078554391861,
+            0.06070958077907562,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_b_bar",
+          "polygons": 401,
+          "dimensions": [
+            0.2458166480064392,
+            0.20918023586273193,
+            0.05498726665973663
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_b_handle",
+          "polygons": 683,
+          "dimensions": [
+            0.06288399547338486,
+            0.1973322033882141,
+            0.3090290129184723
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_b_light",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733781933784485,
+            0.20275981724262238,
+            0.17973631620407104
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_b_support",
+          "polygons": 62,
+          "dimensions": [
+            0.2211078256368637,
+            0.03200000151991844,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_handle_c",
+          "polygons": 2164,
+          "dimensions": [
+            0.3728913366794586,
+            0.20708012580871582,
+            0.3420484662055969
+          ]
+        },
+        {
+          "name": "flood_lights_floor_single_light_c",
+          "polygons": 1224,
+          "dimensions": [
+            0.2449267953634262,
+            0.2027597725391388,
+            0.17973631620407104
+          ]
+        },
+        {
+          "name": "flood_lights_plug_a",
+          "polygons": 88,
+          "dimensions": [
+            0.04606418311595917,
+            0.03862538933753967,
+            0.05569181963801384
+          ]
+        },
+        {
+          "name": "flood_lights_plug_b",
+          "polygons": 207,
+          "dimensions": [
+            0.045512061566114426,
+            0.045512065291404724,
+            0.08285462856292725
+          ]
+        },
+        {
+          "name": "flood_lights_plug_brick.",
+          "polygons": 70,
+          "dimensions": [
+            0.038106225430965424,
+            0.019671857357025146,
+            0.11136135458946228
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_bar",
+          "polygons": 463,
+          "dimensions": [
+            0.6458167433738708,
+            0.20918023586273193,
+            0.820187509059906
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_cable",
+          "polygons": 886,
+          "dimensions": [
+            0.424771249294281,
+            0.9199491739273071,
+            1.54098379611969
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_handle_01",
+          "polygons": 442,
+          "dimensions": [
+            0.2833784520626068,
+            0.04878515377640724,
+            0.24231746792793274
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_handle_02",
+          "polygons": 442,
+          "dimensions": [
+            0.2833784222602844,
+            0.04470882937312126,
+            0.24250084161758423
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_light_01",
+          "polygons": 1224,
+          "dimensions": [
+            0.2449267953634262,
+            0.2027597874403,
+            0.17973631620407104
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_light_02",
+          "polygons": 1224,
+          "dimensions": [
+            0.24492678046226501,
+            0.20275984704494476,
+            0.17973634600639343
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_stand",
+          "polygons": 1798,
+          "dimensions": [
+            0.7682774066925049,
+            0.6709429025650024,
+            0.9485785961151123
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_support_01",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.046490371227264404,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_a_support_02",
+          "polygons": 86,
+          "dimensions": [
+            0.22110781073570251,
+            0.03199999779462814,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_bar",
+          "polygons": 463,
+          "dimensions": [
+            0.6458167433738708,
+            0.20918023586273193,
+            0.820187509059906
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_cable",
+          "polygons": 946,
+          "dimensions": [
+            0.4545316994190216,
+            0.8124162554740906,
+            1.5404833555221558
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_handle",
+          "polygons": 701,
+          "dimensions": [
+            0.06288399547338486,
+            0.1973322033882141,
+            0.3090290129184723
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_light_01",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.2027597874403,
+            0.17973633110523224
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_light_02",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.20275980234146118,
+            0.17973636090755463
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_stand",
+          "polygons": 1798,
+          "dimensions": [
+            0.7682772874832153,
+            0.6709428429603577,
+            0.9485785961151123
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_support_01",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.046490371227264404,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_b_support_02",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.03200000151991844,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_bar",
+          "polygons": 84,
+          "dimensions": [
+            0.6458167433738708,
+            0.05548088252544403,
+            0.8200001120567322
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_cable",
+          "polygons": 949,
+          "dimensions": [
+            0.4153828024864197,
+            0.7921912670135498,
+            1.4408775568008423
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_light_01",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733781635761261,
+            0.20275980234146118,
+            0.17973633110523224
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_light_02",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.20275981724262238,
+            0.17973636090755463
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_stand",
+          "polygons": 1798,
+          "dimensions": [
+            0.7682774066925049,
+            0.6709429025650024,
+            0.9485785961151123
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_support_01",
+          "polygons": 86,
+          "dimensions": [
+            0.22110779583454132,
+            0.046490367501974106,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_double_c_support_02",
+          "polygons": 86,
+          "dimensions": [
+            0.2211078256368637,
+            0.03200000151991844,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_standing_single_bar",
+          "polygons": 463,
+          "dimensions": [
+            0.2458166480064392,
+            0.20918023586273193,
+            0.8200002312660217
+          ]
+        },
+        {
+          "name": "flood_lights_standing_single_cable",
+          "polygons": 885,
+          "dimensions": [
+            0.4517175555229187,
+            0.8040621280670166,
+            1.5448061227798462
+          ]
+        },
+        {
+          "name": "flood_lights_standing_single_light",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.2027597874403,
+            0.17973636090755463
+          ]
+        },
+        {
+          "name": "flood_lights_standing_single_stand",
+          "polygons": 1798,
+          "dimensions": [
+            0.7682774066925049,
+            0.6709429025650024,
+            0.9485785961151123
+          ]
+        },
+        {
+          "name": "flood_lights_standing_single_support",
+          "polygons": 86,
+          "dimensions": [
+            0.22110781073570251,
+            0.03199999779462814,
+            0.16499997675418854
+          ]
+        },
+        {
+          "name": "flood_lights_wall_base",
+          "polygons": 116,
+          "dimensions": [
+            0.260000079870224,
+            0.18025974929332733,
+            0.11999982595443726
+          ]
+        },
+        {
+          "name": "flood_lights_wall_light",
+          "polygons": 1272,
+          "dimensions": [
+            0.2733782231807709,
+            0.20275981724262238,
+            0.17973636090755463
+          ]
+        }
+      ],
+      "selection": "standing_double_a complete twin-lamp tripod, cable and brackets; other source variants omitted",
+      "triangles": 11758,
+      "dimensions_m_blender_xyz": [
+        0.7783089876174927,
+        1.2824474573135376,
+        1.788143515586853
+      ],
+      "dimensions_m_unity_xyz": [
+        0.7783089876174927,
+        1.7881435572635382,
+        1.2824474275112152
+      ],
+      "pivot": "bottom-centre of combined source pack",
+      "scaleFactor": 1.0,
+      "model": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Models/flood_lights.fbx",
+      "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_flood_lights.prefab"
+    }
+  ]
+}

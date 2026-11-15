@@ -1,0 +1,58 @@
+{
+  "type": 2,
+  "name": "Flood Lights",
+  "categories": [
+    "lighting",
+    "industrial",
+    "electronics"
+  ],
+  "category": "Lighting/Street & Outdoor/Security & Flood Lights",
+  "attributes": {
+    "material": [
+      "metal",
+      "glass",
+      "plastic",
+      "rubber"
+    ],
+    "condition": [
+      "worn",
+      "painted"
+    ]
+  },
+  "collections": [
+    "project_lighthouse"
+  ],
+  "tags": [
+    "light",
+    "outdoor",
+    "industrial",
+    "lighting",
+    "work light",
+    "portable",
+    "tripod stand",
+    "jobsite",
+    "construction"
+  ],
+  "description": "Free 8K model of weathered portable flood lights with single and twin lamps, yellow tripod stands, carry handles, cables, and plugs.",
+  "authors": {
+    "James Ray Cock": "All"
+  },
+  "category_id": "331a645d-3a48-59c7-8607-162666e288e5",
+  "max_resolution": [
+    8192,
+    8192
+  ],
+  "img_version": "6c013c1e",
+  "polycount": 76868,
+  "files_hash": "852768d8bc610b38bb8dbebd08d468d4bf8f7c91",
+  "texel_density": 9464.113647295579,
+  "dimensions": [
+    4607.212066650391,
+    2112.691640853882,
+    1810.9944090247154
+  ],
+  "date_published": 1794528000,
+  "staging": null,
+  "download_count": 130,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/flood_lights.png?width=256&height=256&format=webp&v=6c013c1e"
+}

@@ -1,0 +1,648 @@
+{
+    "checks": [
+        {
+            "utc": "2026-11-15T11:11:01.4982481Z",
+            "stage": "opt-in session setup",
+            "message": "StartSession disposes the old authority and binds a fresh one.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.5033512Z",
+            "stage": "opt-in session setup",
+            "message": "New session starts behind the real mode-choice control gate.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.5125781Z",
+            "stage": "opt-in session setup",
+            "message": "Fresh planning session contains no visible old survival state.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.5240379Z",
+            "stage": "opt-in session setup",
+            "message": "Submit enabled, visible real button: Practice · no deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.6803626Z",
+            "stage": "opt-in session setup",
+            "message": "One NavigationSubmit produces exactly one actual click ().",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.6838878Z",
+            "stage": "opt-in session setup",
+            "message": "Actual Practice button releases the composed gate without a deadline.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.7299931Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:01.8128326Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed real transport skip for UI setup",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8232625Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8268318Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives Impact.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8440918Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges Impact through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8684812Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual power repair costs | power distribution repaired (2 spare parts).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8725205Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true,
+            "simulationSeconds": 0.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.8990845Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9163204Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual airlock cycle | Inner hatch sealed. Depressurizing.",
+            "pass": true,
+            "simulationSeconds": 8400.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9237944Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real depressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9359520Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual exterior domain command (no movement claim) | Outside on the tether.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9469917Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9525884Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual return-inside domain command | Inside the airlock.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9657387Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual repressurization command | Outer hatch closed. Repressurizing.",
+            "pass": true,
+            "simulationSeconds": 9000.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9814945Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real repressurization time and resource accounting | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:02.9912182Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:03.0008183Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real saved presentation receives FalseSignal.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:03.0126075Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Disclosed setup skip acknowledges FalseSignal through its real presenter.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:03.0257078Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:03.0338215Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Reply is pending after transmission, not instant.",
+            "pass": true,
+            "simulationSeconds": 9600.0
+        },
+        {
+            "utc": "2026-11-15T11:11:03.0606244Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Advance the actual outbound/return reply interval | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2101468Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual communication service reports the received reply.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2320009Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Initial binding and contact setup do not invent a wake event",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2355404Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Real contact starts survival for scoped presentation checks",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2497457Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Actual serialized water station is bound and visible",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2614607Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Locator distance matches actual water station",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2758270Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Front marker projects to target and reports metric distance",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.2874915Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Behind target becomes screen-edge arrow",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:03.3037775Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Absent target immediately requests hidden marker",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.3766336Z",
+            "stage": "disclosed domain-command journey",
+            "message": "Capture uses the actual camera/document at 1280x720: 01-water-direction.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.5255570Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Begin a real two-hour rest | Rest up to 2 h: about 0.153 kg food and 0.208 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.7710104Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 02a-curved-rest-blink.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9536346Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest UI appears only while the real service is resting.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9557890Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Composition blocks actual player controls/cursor capture during rest after frames.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9650361Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest releases the actual cursor for Wake.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9753385Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest day matches the authoritative mission calendar.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9861535Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest countdown reflects the service's exact initial two hours.",
+            "pass": true,
+            "simulationSeconds": 11518.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:04.9947634Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Advance ten simulated rest minutes through the same resource model | Simulation advanced.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:05.0122919Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest remaining time and food/water ledger advance together.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:05.0152366Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest UI follows the actual remaining time after advancement.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:05.0233024Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest eyelids attached",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.5732520Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Real rest reaches closed eyes",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.5767890Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest hides water marker",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.5879443Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake panel draws above eyelids",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.6630644Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 02-rest.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.7449420Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Dark rest shows the larger genuine-font day heading",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:08.7464485Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Rest entry and repeated service refreshes emit no wake event",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.0141601Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Paused eyes freeze presentation progression",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.0172051Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Real runtime Update while paused freezes mission clock, rest and food/water consumption.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.0304115Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Pause hides survival HUD and disables Wake.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.0481935Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Paused UI submission and authoritative Wake guard cannot wake the crew.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.1484490Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 02b-paused-rest.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.3813050Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Resume retains the real rest and its player lock.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.3843277Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Submit enabled, visible real button: Wake.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4066206Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One NavigationSubmit produces exactly one actual click (survival-wake).",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4096405Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One actual Wake button click wakes the same session.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4192737Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake restores the prior simulation scale and actual player control/cursor intent.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4297684Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake immediately removes the rest overlay.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4404984Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One actual Wake emits one event with the true captured mission day and Woken reason",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.4521779Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake title uses actual exit-day snapshot without incrementing the day",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.5473693Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 03-wake-title-opening.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.9289030Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Actual pause freezes wake-title progress and hides it",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:09.9443809Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Resume continues the same wake-title presentation",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.6925389Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake title fades and clears after its real presentation duration",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.6965754Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Existing left objective is visible after wake overlay clears",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.7087088Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Title completion and ordinary UI refreshes do not duplicate wake event",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.7845177Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Capture uses the actual camera/document at 1280x720: 04-fully-awake.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.8995571Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Compact hunger/hydration bars are attached and visible in actual Survival.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.9041141Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Both displayed needs equal their authoritative services (remaining hunger satisfaction / remaining hydration).",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:12.9160196Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "One needs subtree and one hunger bar; no duplicate binding.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:14.4298829Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake fully reopens eyes",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:14.4334488Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Wake restores water guidance",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:14.4472718Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Reduced motion reaches full closure",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:14.4606029Z",
+            "stage": "actual rest, pause and Wake",
+            "message": "Reduced motion wake clears darkness",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:14.4747928Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Begin real short rest for reduced-motion acceptance | Rest up to 0.01 h: about 0.001 kg food and 0.001 L water at the BVAD crew-day rates; any danger wakes the crew",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:16.3929034Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Submit enabled, visible real button: Wake.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:16.4086440Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "One NavigationSubmit produces exactly one actual click (survival-wake).",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:16.4116789Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Reduced actual Wake emits exactly one correctly dated event/title",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:16.9998729Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Reduced-motion wake title fades without any downward offset and stays visually centered",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:17.0779963Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Capture uses the actual camera/document at 1280x720: 05-reduced-wake-title.",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.4343943Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Reduced wake clears title and eyes without persistent overlay",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.4763742Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Composition rebind retains the actual session and emits no wake event",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.4798884Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Rebind does not invent a wake title",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.4949970Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Disable removes owned overlay",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.5107444Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Re-enable creates one overlay",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        },
+        {
+            "utc": "2026-11-15T11:11:19.5132682Z",
+            "stage": "actual reduced-motion rest and wake title",
+            "message": "Disable/re-enable emits no additional wake event",
+            "pass": true,
+            "simulationSeconds": 12118.965642496936
+        }
+    ]
+}

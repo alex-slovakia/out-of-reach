@@ -25,6 +25,10 @@ namespace OutOfReach.Presentation.UI
         private Func<bool> reducedMotion;
         private VisualElement presentationLayer;
         private SurvivalRestEyes restEyes;
+        private SurvivalWakeTitle wakeTitle;
+        private bool restObservationInitialized, wasResting, wakePending;
+        private int pendingWakeDay;
+        private RestStopReason pendingWakeReason;
         private SurvivalWaterLocator waterLocator;
         private bool subscribed;
         private VisualElement needsHost, detailsHost, restHost, alertsHost, needs, details, rest, alerts;
@@ -33,6 +37,8 @@ namespace OutOfReach.Presentation.UI
         private Label restDay, restTime, restFeedback, recoveryTitle, arrival, beacon, beaconAction, restStop;
         private Label waterGuidance, foodGuidance;
         private Button wake;
+        /// <summary>Once per observed rest exit, when its UI can present; supplies the actual exit-day snapshot and reason.</summary>
+        public event Action<int, RestStopReason> WakePresentationStarted;
 
         /// <param name="canPresent">Root-owned visibility gate, including menu, terminal and cinematic locks.
         /// Must allow actual rest even if the player's movement control is locked. Null fails closed.</param>
@@ -77,10 +83,11 @@ namespace OutOfReach.Presentation.UI
             clock = null;
             presentationAllowed = null;
             restNotice.Reset();
+            ResetWakeObservation();
         }
 
         private void OnEnable() { Subscribe(); RefreshPresentation(); }
-        private void OnDisable() { Unsubscribe(); ReleaseViews(); restNotice.Reset(); }
+        private void OnDisable() { Unsubscribe(); ReleaseViews(); restNotice.Reset(); ResetWakeObservation(); }
         private void OnDestroy() => ClearBinding();
         // Only the notice's display lifetime uses real seconds. Mission/rest time is always read from Core.
         private void LateUpdate()
@@ -88,6 +95,7 @@ namespace OutOfReach.Presentation.UI
             restNotice.Advance(Time.unscaledDeltaTime, CanPresent());
             RefreshPresentation();
             restEyes?.Advance(Time.unscaledDeltaTime, CanPresent());
+            wakeTitle?.Advance(Time.unscaledDeltaTime, CanPresent(), reducedMotion?.Invoke() ?? false);
         }
 
         private void Subscribe()
@@ -114,6 +122,7 @@ namespace OutOfReach.Presentation.UI
 
         public void RefreshPresentation()
         {
+            ObserveRestTransition();
             restNotice.Observe(survival != null && survival.Enabled && survival.IsActive
                 && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None,
                 recovery != null && recovery.IsResting, recovery?.LastRestStop ?? RestStopReason.None);
@@ -123,6 +132,13 @@ namespace OutOfReach.Presentation.UI
             if (!EnsureViews()) return;
             Show(presentationLayer, true);
             restEyes.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
+            if (wakePending)
+            {
+                wakePending = false;
+                wakeTitle.Begin(pendingWakeDay);
+                WakePresentationStarted?.Invoke(pendingWakeDay, pendingWakeReason);
+                if (!CanPresent()) { HideViews(); return; }
+            }
             Show(needs, true);
             hunger.Set(survival.Hunger01);
             hydration.Set(survival.Thirst01);
@@ -204,9 +220,11 @@ namespace OutOfReach.Presentation.UI
             presentationLayer.styleSheets.Add(sheet);
             waterLocator = new SurvivalWaterLocator();
             restEyes = new SurvivalRestEyes();
+            wakeTitle = new SurvivalWakeTitle();
             restEyes.Reset();
             presentationLayer.Add(waterLocator);
             presentationLayer.Add(restEyes);
+            presentationLayer.Add(wakeTitle);
             board.Add(presentationLayer);
             needs = Container("survival-needs", "survival-needs");
             needs.styleSheets.Add(sheet);
@@ -218,6 +236,7 @@ namespace OutOfReach.Presentation.UI
             rest = Container("survival-rest", "survival-rest");
             rest.styleSheets.Add(sheet);
             restDay = Text(string.Empty, "survival-rest-day");
+            restDay.name = "survival-rest-day";
             restTime = Text(string.Empty, "survival-rest-time");
             rest.Add(restDay);
             rest.Add(restTime);
@@ -273,6 +292,39 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
+        private void ObserveRestTransition()
+        {
+            bool active = survival != null && survival.Enabled && survival.IsActive && recovery != null
+                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None;
+            if (!active) { ResetWakeObservation(); return; }
+            bool nowResting = recovery.IsResting;
+            if (!restObservationInitialized)
+            {
+                restObservationInitialized = true;
+                wasResting = nowResting;
+                return;
+            }
+            if (nowResting == wasResting) return;
+            wasResting = nowResting;
+            if (nowResting)
+            {
+                wakePending = false;
+                wakeTitle?.Reset();
+                return;
+            }
+            pendingWakeDay = recovery.MissionDay;
+            pendingWakeReason = recovery.LastRestStop;
+            wakePending = true;
+        }
+
+        private void ResetWakeObservation()
+        {
+            restObservationInitialized = wasResting = wakePending = false;
+            pendingWakeDay = 0;
+            pendingWakeReason = RestStopReason.None;
+            wakeTitle?.Reset();
+        }
+
         private void RefreshNeedGuidance()
         {
             bool thirsty = SurvivalChapterReadout.ValidNeed(survival.Thirst01) && survival.Thirst01 >= .25d;
@@ -315,9 +367,11 @@ namespace OutOfReach.Presentation.UI
             rest?.RemoveFromHierarchy();
             alerts?.RemoveFromHierarchy();
             restEyes?.Reset();
+            wakeTitle?.Reset();
             presentationLayer?.RemoveFromHierarchy();
             presentationLayer = null;
             restEyes = null;
+            wakeTitle = null;
             waterLocator = null;
             needsHost = detailsHost = restHost = alertsHost = needs = details = rest = alerts = null;
             hunger = hydration = null;

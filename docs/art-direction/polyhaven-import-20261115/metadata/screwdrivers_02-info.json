@@ -1,0 +1,54 @@
+{
+  "type": 2,
+  "name": "Screwdrivers 02",
+  "categories": [
+    "collection: project_lighthouse",
+    "tools",
+    "props"
+  ],
+  "category": "Tools & Equipment/Hand Tools/Screwdrivers",
+  "tags": [
+    "vintage",
+    "flathead",
+    "phillips",
+    "wooden-handle",
+    "metal",
+    "antique",
+    "old"
+  ],
+  "description": "Free 8K model of two vintage wooden-handled screwdrivers, flathead and Phillips, with hex grips, aged steel ferrules, crisp wear, scratches, and wood grain.",
+  "authors": {
+    "BKS": "All"
+  },
+  "donated": true,
+  "category_id": "3625958d-13f6-5008-a0e1-9fe9998789e7",
+  "max_resolution": [
+    8192,
+    8192
+  ],
+  "polycount": 3548,
+  "files_hash": "76d1024374cb0fdc6cd46d2ea0d07848c4d0d6a2",
+  "texel_density": 42768.53198402811,
+  "dimensions": [
+    100.45838262885809,
+    269.9327766895294,
+    27.07698941230774
+  ],
+  "date_published": 1783036800,
+  "staging": null,
+  "collections": [
+    "project_lighthouse"
+  ],
+  "attributes": {
+    "material": [
+      "wood",
+      "steel"
+    ],
+    "condition": [
+      "worn"
+    ]
+  },
+  "img_version": "54956693",
+  "download_count": 902,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/screwdrivers_02.png?width=256&height=256&format=webp&v=54956693"
+}

@@ -70,6 +70,7 @@ namespace OutOfReach.Composition
         [SerializeField] private AirlockStatusPanel airlockPanel;
         [SerializeField] private AudioClip airlockMotor;
         [SerializeField] private AudioClip airlockReady;
+        [SerializeField] private AudioClip restWakeCue;
         [SerializeField] private AstronautHandsPresenter astronautHands;
         [SerializeField] private CargoVisualPresenter cargoPresentation;
         [SerializeField] private PreflightCargoHandsPresenter cargoHands;
@@ -596,6 +597,8 @@ namespace OutOfReach.Composition
                         : null, drinkAction, rationAction, presentationCamera,
                     habitat ? habitat.GetPresentationAnchor(InteractionIds.DrinkWater) : null,
                     () => cinematics && cinematics.ReducedEffects);
+                survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
+                survivalUi.WakePresentationStarted += OnWakePresentationStarted;
             }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
@@ -711,7 +714,11 @@ namespace OutOfReach.Composition
             if (habitat) habitat.ClearBinding();
             if (embodiedBody) embodiedBody.ClearBinding();
             if (footsteps) footsteps.ClearBinding();
-            if (survivalUi) survivalUi.ClearBinding();
+            if (survivalUi)
+            {
+                survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
+                survivalUi.ClearBinding();
+            }
             menuPresentationVisible = false;
             if (cargoHands) cargoHands.ClearBinding();
             if (preflightTension) preflightTension.ClearBinding();
@@ -927,6 +934,12 @@ namespace OutOfReach.Composition
         {
             dialogueSpeaker = "FLIGHT CONTROL";
             audioPresenter.TryPlayDialogue(cue);
+        }
+
+        private void OnWakePresentationStarted(int missionDay, RestStopReason reason)
+        {
+            if (audioPresenter && restWakeCue && CanPresentSurvivalUi())
+                audioPresenter.PlaySfx(restWakeCue, .7f);
         }
 
         private void OnDepartureAudioEnded(TransportDepartureEnd _)

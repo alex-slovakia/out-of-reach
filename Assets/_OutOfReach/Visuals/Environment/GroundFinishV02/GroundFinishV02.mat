@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GroundFinishV02
+  m_Shader: {fileID: 4800000, guid: 4833c051438c415d8536ab78c356fa2b, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties:
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GravelColor:
+        m_Texture: {fileID: 2800000, guid: d1b2103b9e89464ebc0bbab9840b6ed8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GravelMask:
+        m_Texture: {fileID: 2800000, guid: 131d2a3ded5b45c685fa4af232385b76, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GravelNormal:
+        m_Texture: {fileID: 2800000, guid: 4caaa145cc4f4b55a4347bbfcb2e39f6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MacroMap:
+        m_Texture: {fileID: 2800000, guid: f5a1ecd3ba04f4744b0fb758c009e424, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SoilColor:
+        m_Texture: {fileID: 2800000, guid: 41f7c3a5dc0a488baf09dc4ecb142e61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SoilMask:
+        m_Texture: {fileID: 2800000, guid: 8376475ec7b74817ac5e79d6e3859bde, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SoilNormal:
+        m_Texture: {fileID: 2800000, guid: 1df0cf3869f144b88a4c494da66ed869, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Cull: 2
+    - _NormalStrength: 0.75
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SiteOriginWS: {r: 10000, g: 100, b: 0, a: 0}
+    - _TileMetres: {r: 3.4, g: 2.6, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

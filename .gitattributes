@@ -15,6 +15,7 @@
 
 # Preserve the byte-exact NASA response used by the provenance SHA-256.
 /docs/data/horizons/*.raw.json -text
+/docs/art-direction/nasa-deep-sky-20261115/*.html -text -diff
 
 # Binary source assets. Keep Unity YAML and .meta GUIDs as reviewable text.
 *.png filter=lfs diff=lfs merge=lfs -text

@@ -28,7 +28,7 @@ namespace OutOfReach.Composition.Editor
         private const string SeatBodyFrameName = "Departure seated WORK body";
         private const string Materials = "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/";
         private const string TransitShader = "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Preflight/DepartureTransitSky.shader";
-        private const string Stars = "Assets/_OutOfReach/Visuals/Space/DistantStars.mat";
+        private const string Stars = I06NasaDeepSkyAuthoring.MaterialPath;
         private const float TransferEyeHeight = 1.60f;
         private static readonly Vector3 SeatedEye = new Vector3(0, 1.397f, 1.40f);
         private static readonly Vector3 SeatedBodyOrigin = new Vector3(0, .12f, 1.46f);

@@ -1,0 +1,260 @@
+{
+    "editor": "6000.3.28f1",
+    "assets": [
+        {
+            "id": "portable_generator",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_portable_generator.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.2884615957736969,
+                "z": -2.9802322387695315e-8
+            },
+            "sizeMetres": {
+                "x": 0.8183407783508301,
+                "y": 0.5769232511520386,
+                "z": 0.5640000104904175
+            },
+            "triangles": 26418,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "long_life_food",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_long_life_food.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.11878728121519089,
+                "z": -7.450580596923828e-9
+            },
+            "sizeMetres": {
+                "x": 0.5237634181976318,
+                "y": 0.23757459223270417,
+                "z": 0.11355657130479813
+            },
+            "triangles": 4712,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "coast_land_rocks_04",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_coast_land_rocks_04.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.41955944895744326,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 9.961585998535157,
+                "y": 0.8391202688217163,
+                "z": 11.497776985168457
+            },
+            "triangles": 29999,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "namaqualand_boulder_02",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_namaqualand_boulder_02.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.44154587388038638,
+                "z": -5.960464477539063e-8
+            },
+            "sizeMetres": {
+                "x": 2.5333333015441896,
+                "y": 0.8830918669700623,
+                "z": 1.234483242034912
+            },
+            "triangles": 30000,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "combination_wrench",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_combination_wrench.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.010756511241197586,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.05658109486103058,
+                "y": 0.021513063460588456,
+                "z": 0.3369840979576111
+            },
+            "triangles": 1986,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "adjustable_wrench",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_adjustable_wrench.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.1270652562379837,
+                "z": -8.381903171539307e-9
+            },
+            "sizeMetres": {
+                "x": 0.06834418326616287,
+                "y": 0.2541305124759674,
+                "z": 0.030590370297431947
+            },
+            "triangles": 4996,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "pliers",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_pliers.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.08989161998033524,
+                "z": 4.6566128730773929e-9
+            },
+            "sizeMetres": {
+                "x": 0.05528969317674637,
+                "y": 0.17978321015834809,
+                "z": 0.017985472455620767
+            },
+            "triangles": 4540,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "screwdrivers_02",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_screwdrivers_02.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.01353849470615387,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.10045838356018067,
+                "y": 0.027077019214630128,
+                "z": 0.26993274688720705
+            },
+            "triangles": 3548,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "vintage_spacecraft_instrument",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_vintage_spacecraft_instrument.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.13464275002479554,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.41028693318367007,
+                "y": 0.26928550004959109,
+                "z": 0.20440195500850678
+            },
+            "triangles": 13279,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "medical_box",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_medical_box.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.04875608906149864,
+                "z": -1.4901161193847657e-8
+            },
+            "sizeMetres": {
+                "x": 0.5254814624786377,
+                "y": 0.09751222282648087,
+                "z": 0.35016924142837527
+            },
+            "triangles": 3718,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "metal_toolbox",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_metal_toolbox.prefab",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.1523618847131729,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.4000098705291748,
+                "y": 0.3047237992286682,
+                "z": 0.2705330550670624
+            },
+            "triangles": 14228,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "binoculars",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_binoculars.prefab",
+            "centreMetres": {
+                "x": 7.450580596923828e-9,
+                "y": 0.03312485292553902,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.16693279147148133,
+                "y": 0.06624975055456162,
+                "z": 0.2879328727722168
+            },
+            "triangles": 19248,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "coast_sand_02",
+            "prefab": "",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "triangles": 0,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "gravelly_sand",
+            "prefab": "",
+            "centreMetres": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeMetres": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "triangles": 0,
+            "materialCount": 1,
+            "metreBoundsMatch": true
+        },
+        {
+            "id": "flood_lights",
+            "prefab": "Assets/_OutOfReach/Visuals/ThirdParty/PolyHaven/Prefabs/PH_flood_lights.prefab",
+            "centreMetres": {
+                "x": -1.1920928955078126e-7,
+                "y": 0.894071638584137,
+                "z": -5.960464477539063e-8
+            },
+            "sizeMetres": {
+                "x": 0.7783088684082031,
+                "y": 1.7881433963775635,
+                "z": 1.2824475765228272
+            },
+            "triangles": 11758,
+            "materialCount": 2,
+            "metreBoundsMatch": true
+        }
+    ]
+}

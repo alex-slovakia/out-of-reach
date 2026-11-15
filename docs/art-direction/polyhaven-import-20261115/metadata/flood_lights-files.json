@@ -1,0 +1,1904 @@
+{
+  "blend": {
+    "1k": {
+      "blend": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/1k/flood_lights/flood_lights_1k.blend",
+        "md5": "7496973db683327306385b5371e50eb8",
+        "size": 750116,
+        "include": {
+          "textures/flood_lights_diff_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+            "md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+            "size": 779142
+          },
+          "textures/flood_lights_emissive_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_emissive_1k.png",
+            "md5": "832d7ed487d347cc112c61368236f2b8",
+            "size": 16579
+          },
+          "textures/flood_lights_glass_alpha_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_alpha_1k.png",
+            "md5": "19e705eddd3a4ec6777d3003356a624d",
+            "size": 874945
+          },
+          "textures/flood_lights_glass_diff_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_diff_1k.png",
+            "md5": "85682ddb667f61644bcabbf9d432615a",
+            "size": 3485081
+          },
+          "textures/flood_lights_glass_nor_gl_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_gl_1k.png",
+            "md5": "9999ab93ff6c3d701431460eabe331d2",
+            "size": 3019345
+          },
+          "textures/flood_lights_glass_rough_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_rough_1k.png",
+            "md5": "ebcb92b0434dcf85988d20a899dbfde5",
+            "size": 940816
+          },
+          "textures/flood_lights_metal_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_metal_1k.exr",
+            "md5": "9dde1f990d3abd8208bb76fbb3e1b503",
+            "size": 852494
+          },
+          "textures/flood_lights_nor_gl_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_gl_1k.exr",
+            "md5": "7ffd98578f672133e31306148a487501",
+            "size": 1699751
+          },
+          "textures/flood_lights_rough_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_rough_1k.exr",
+            "md5": "d72684d2dffdf9afd775cfa11647be61",
+            "size": 735966
+          }
+        }
+      }
+    },
+    "2k": {
+      "blend": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/2k/flood_lights/flood_lights_2k.blend",
+        "md5": "3f4abfa43080fa844ca500d241231e4c",
+        "size": 750071,
+        "include": {
+          "textures/flood_lights_diff_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_diff_2k.jpg",
+            "md5": "50432504b20e6f390f8a81f0aaea458f",
+            "size": 2682723
+          },
+          "textures/flood_lights_emissive_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_emissive_2k.png",
+            "md5": "37d91ee017f8689453adfe35c2e207f3",
+            "size": 51868
+          },
+          "textures/flood_lights_glass_alpha_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_alpha_2k.png",
+            "md5": "88692a634ed00f6bb3e7fda5c0afb378",
+            "size": 2811929
+          },
+          "textures/flood_lights_glass_diff_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_diff_2k.png",
+            "md5": "9aceb209cdfc0ec784294efbae673362",
+            "size": 11037365
+          },
+          "textures/flood_lights_glass_nor_gl_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_nor_gl_2k.png",
+            "md5": "f2e9993a79423f98ef105481195d1dec",
+            "size": 11375959
+          },
+          "textures/flood_lights_glass_rough_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_rough_2k.png",
+            "md5": "07d21f8c081dc635c9cba2bf95ad19d5",
+            "size": 3001612
+          },
+          "textures/flood_lights_metal_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_metal_2k.exr",
+            "md5": "8d034f8d95167abc99efe59ee8a3c2f3",
+            "size": 2720101
+          },
+          "textures/flood_lights_nor_gl_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_nor_gl_2k.exr",
+            "md5": "989daa174370c0fb7b42b11e4a395cb1",
+            "size": 6160199
+          },
+          "textures/flood_lights_rough_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_rough_2k.exr",
+            "md5": "b9c6ad488a556331d272eb95f897aede",
+            "size": 2493704
+          }
+        }
+      }
+    },
+    "4k": {
+      "blend": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/4k/flood_lights/flood_lights_4k.blend",
+        "md5": "4969067fcb66dc6bcff9040353599900",
+        "size": 750071,
+        "include": {
+          "textures/flood_lights_diff_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_diff_4k.jpg",
+            "md5": "1eb92d9ec4652e472ba602850e5be62f",
+            "size": 9059453
+          },
+          "textures/flood_lights_emissive_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_emissive_4k.png",
+            "md5": "a177c23ab1c8936ab3071cce31fde36d",
+            "size": 156286
+          },
+          "textures/flood_lights_glass_alpha_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_alpha_4k.png",
+            "md5": "a7600bde412dec47935efbe27fe585e7",
+            "size": 8195865
+          },
+          "textures/flood_lights_glass_diff_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_diff_4k.png",
+            "md5": "8471ec5c6269bdf7457bd51856f27977",
+            "size": 34717418
+          },
+          "textures/flood_lights_glass_nor_gl_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_nor_gl_4k.png",
+            "md5": "059e0048f9d70fe344269fddc3f6550c",
+            "size": 41626597
+          },
+          "textures/flood_lights_glass_rough_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_rough_4k.png",
+            "md5": "b8d04928c5338409378adb88599e04a0",
+            "size": 8304984
+          },
+          "textures/flood_lights_metal_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_metal_4k.exr",
+            "md5": "c5e3c5aeb56c9763b075c479111af424",
+            "size": 7957029
+          },
+          "textures/flood_lights_nor_gl_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_nor_gl_4k.exr",
+            "md5": "c174a65d3a7212f18ba0e97ada6c576c",
+            "size": 21234155
+          },
+          "textures/flood_lights_rough_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_rough_4k.exr",
+            "md5": "4a0550b904188c26e640b8775a01a3ac",
+            "size": 8173005
+          }
+        }
+      }
+    },
+    "8k": {
+      "blend": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/blend/8k/flood_lights/flood_lights_8k.blend",
+        "md5": "a65d2d745b963921cfc028e0910af656",
+        "size": 750071,
+        "include": {
+          "textures/flood_lights_diff_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_diff_8k.jpg",
+            "md5": "b7998c2b92f661c5552030750a6c21e9",
+            "size": 31942575
+          },
+          "textures/flood_lights_emissive_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_emissive_8k.png",
+            "md5": "ec64df9c7bf4b2817eaae9b1cf486ed1",
+            "size": 480052
+          },
+          "textures/flood_lights_glass_alpha_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_alpha_8k.png",
+            "md5": "bff1c94f1ae7f42371d97707bb181197",
+            "size": 11808341
+          },
+          "textures/flood_lights_glass_diff_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_diff_8k.png",
+            "md5": "a5ca9c4244f165248aea33c4032c672a",
+            "size": 78953224
+          },
+          "textures/flood_lights_glass_nor_gl_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_nor_gl_8k.png",
+            "md5": "5bdc5e65ef829a07e35b6909555cbfa4",
+            "size": 131196194
+          },
+          "textures/flood_lights_glass_rough_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_rough_8k.png",
+            "md5": "da34deb7bcfb2cfd27affcea21c9ecb4",
+            "size": 11173946
+          },
+          "textures/flood_lights_metal_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_metal_8k.exr",
+            "md5": "29812bd8398c3aa80c516ed33eb01e6f",
+            "size": 23655919
+          },
+          "textures/flood_lights_nor_gl_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_nor_gl_8k.exr",
+            "md5": "dd041b89ed0d648e9ac0964089e6ae38",
+            "size": 71491392
+          },
+          "textures/flood_lights_rough_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_rough_8k.exr",
+            "md5": "7a64127f3e7594de95040b8512181417",
+            "size": 27346857
+          }
+        }
+      }
+    }
+  },
+  "Alpha": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_alpha_1k.exr",
+        "md5": "80a7c1af472e9f90f16d83dad253ce44",
+        "size": 5341
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_alpha_1k.jpg",
+        "md5": "09104620a8c827a0b5f9bcd4926f6337",
+        "size": 12710
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_alpha_1k.png",
+        "md5": "61242233ef6582a6be132dd1439f6370",
+        "size": 4356
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_alpha_2k.exr",
+        "md5": "a7528bbd5fb5547816668379d432a6a7",
+        "size": 10845
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_alpha_2k.jpg",
+        "md5": "42a6322a2e98b3e061ba1bf7bd3ab4c4",
+        "size": 49574
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_alpha_2k.png",
+        "md5": "64e06872c6cca3b4c46b1a37470a99aa",
+        "size": 12843
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_alpha_4k.exr",
+        "md5": "7bb1ffe401ebf8e82707d9d625ed9261",
+        "size": 22749
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_alpha_4k.jpg",
+        "md5": "67d79ecf29729f0b2bed4faf9db62da5",
+        "size": 197030
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_alpha_4k.png",
+        "md5": "ff90d695b9444062538019ef991d1759",
+        "size": 42360
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_alpha_8k.exr",
+        "md5": "45f76d9152eafbe09a249e8e45aeb3ca",
+        "size": 49042
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_alpha_8k.jpg",
+        "md5": "1c01a70e83a7da7b944a094cb0ed8403",
+        "size": 786894
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_alpha_8k.png",
+        "md5": "f284de000a6f913767af01c44b805ff1",
+        "size": 151373
+      }
+    }
+  },
+  "AO": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_ao_1k.exr",
+        "md5": "69cce9a2ad2bbce2b19a60b7ef17f546",
+        "size": 472495
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_ao_1k.jpg",
+        "md5": "ea5dc0b1416d0a7bdb8f5f81ec58c10d",
+        "size": 411044
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_ao_1k.png",
+        "md5": "041d72100642c32684af6220220b644e",
+        "size": 998156
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_ao_2k.exr",
+        "md5": "320f9cf97bd9b6fa00429e18e871cad7",
+        "size": 1183668
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_ao_2k.jpg",
+        "md5": "0993462fdbdf597328c79881f3447c6d",
+        "size": 1067354
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_ao_2k.png",
+        "md5": "9ca7909768398af3f05e5f69b0d296cd",
+        "size": 3356973
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_ao_4k.exr",
+        "md5": "aebe966e2a705b6518ae2a38f1a9d9ff",
+        "size": 2785090
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_ao_4k.jpg",
+        "md5": "02a32a6826b20e35905f8791f3c2b815",
+        "size": 2677568
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_ao_4k.png",
+        "md5": "0a504c8a05972f921402fcd7c73f0602",
+        "size": 11374064
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_ao_8k.exr",
+        "md5": "2a88284abdb4d24cc8b7bc976c4978de",
+        "size": 6843507
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_ao_8k.jpg",
+        "md5": "024ddfa3268544b05d282b0fa48a06ae",
+        "size": 7407538
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_ao_8k.png",
+        "md5": "7a0dcf0fc90e35267d0bb212032352aa",
+        "size": 38915009
+      }
+    }
+  },
+  "arm": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_arm_1k.exr",
+        "md5": "c4a27c56c565031a94913b168cb56ee8",
+        "size": 2124489
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_arm_1k.jpg",
+        "md5": "c626f1b639cfb0002eb2f7e0033bb626",
+        "size": 912503
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_arm_1k.png",
+        "md5": "13e0f730786ce51765e8be30b90d4ac8",
+        "size": 4105132
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_arm_2k.exr",
+        "md5": "11383640377a15ced2774ed64f6ae944",
+        "size": 7187177
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_arm_2k.jpg",
+        "md5": "ec26720c8198129d7d769dd32fc6cb18",
+        "size": 3124986
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_arm_2k.png",
+        "md5": "80b3d6a1400d00c399417ea6cada5cfb",
+        "size": 13853221
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_arm_4k.exr",
+        "md5": "5928a38d76dadb666e3f373f662565d7",
+        "size": 22937750
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_arm_4k.jpg",
+        "md5": "d56db4c2830d8b304d1783f3e6447ae3",
+        "size": 10290717
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_arm_4k.png",
+        "md5": "94a67a704cd3e98d60e528c45732e61d",
+        "size": 43932124
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_arm_8k.exr",
+        "md5": "852225814dddfa6ea1fa920cec74cea2",
+        "size": 73121428
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_arm_8k.jpg",
+        "md5": "1f3887363c34bdcf7099ba41cba42de4",
+        "size": 33433123
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_arm_8k.png",
+        "md5": "1c2f2591ffd5697543156b22a5f484e9",
+        "size": 113881286
+      }
+    }
+  },
+  "Diffuse": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_diff_1k.exr",
+        "md5": "0ddbeb8a36f0fd196825f940fbfa1284",
+        "size": 1508733
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+        "md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+        "size": 779142
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_diff_1k.png",
+        "md5": "d509424dff5e6be60ce596849cc344aa",
+        "size": 4330066
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_diff_2k.exr",
+        "md5": "89c9d52ebdef629ee12cd16f18e92d4b",
+        "size": 5089397
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_diff_2k.jpg",
+        "md5": "50432504b20e6f390f8a81f0aaea458f",
+        "size": 2682723
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_diff_2k.png",
+        "md5": "85638b1e2e734f663cae84eee88bd86c",
+        "size": 14966430
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_diff_4k.exr",
+        "md5": "b45f717d30d28e5480d7609754dc2523",
+        "size": 17415566
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_diff_4k.jpg",
+        "md5": "1eb92d9ec4652e472ba602850e5be62f",
+        "size": 9059453
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_diff_4k.png",
+        "md5": "8b19407114a43235b9fade6b0a890fbf",
+        "size": 51018673
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_diff_8k.exr",
+        "md5": "87eb2f47daa786b9f202eb73bd1f946c",
+        "size": 68444660
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_diff_8k.jpg",
+        "md5": "b7998c2b92f661c5552030750a6c21e9",
+        "size": 31942575
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_diff_8k.png",
+        "md5": "b322afa6823b6fc230e9a91d3374630b",
+        "size": 151918339
+      }
+    }
+  },
+  "emissive": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_emissive_1k.exr",
+        "md5": "bd0efd44fa4b567809c807be4b48d369",
+        "size": 12486
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_emissive_1k.jpg",
+        "md5": "062d19e042319e17ee6931ae2edc1878",
+        "size": 19387
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_emissive_1k.png",
+        "md5": "832d7ed487d347cc112c61368236f2b8",
+        "size": 16579
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_emissive_2k.exr",
+        "md5": "fd128f6bd81b6ba0a9f2c7e091d699a5",
+        "size": 24333
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_emissive_2k.jpg",
+        "md5": "71e0bb69f886e6495d667d66f8d7f396",
+        "size": 71107
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_emissive_2k.png",
+        "md5": "37d91ee017f8689453adfe35c2e207f3",
+        "size": 51868
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_emissive_4k.exr",
+        "md5": "ad07a7e1560db0523fe6c0a6163b3316",
+        "size": 51690
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_emissive_4k.jpg",
+        "md5": "0c0c311c652666bb0c605b41cd48d437",
+        "size": 273774
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_emissive_4k.png",
+        "md5": "a177c23ab1c8936ab3071cce31fde36d",
+        "size": 156286
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_emissive_8k.exr",
+        "md5": "53ac876d43eefa4f02e7c465d713888e",
+        "size": 127174
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_emissive_8k.jpg",
+        "md5": "887b30d0c59ab5c0dd6016a334c5abcb",
+        "size": 1077436
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_emissive_8k.png",
+        "md5": "ec64df9c7bf4b2817eaae9b1cf486ed1",
+        "size": 480052
+      }
+    }
+  },
+  "glass_alpha": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_alpha_1k.exr",
+        "md5": "b897c592e4df2ba666c5338bf867517f",
+        "size": 512417
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_alpha_1k.jpg",
+        "md5": "972a8768f991bdec76bc0a9322ffde09",
+        "size": 479553
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_alpha_1k.png",
+        "md5": "19e705eddd3a4ec6777d3003356a624d",
+        "size": 874945
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_alpha_2k.exr",
+        "md5": "1060218f8e488bc2d4ce68bf6442bc06",
+        "size": 1572843
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_alpha_2k.jpg",
+        "md5": "6c6b312fa4f81a01c4fdb437b2b38793",
+        "size": 1499137
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_alpha_2k.png",
+        "md5": "88692a634ed00f6bb3e7fda5c0afb378",
+        "size": 2811929
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_alpha_4k.exr",
+        "md5": "f37ac54fea015d9d4344727e5dd3c0db",
+        "size": 4062079
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_alpha_4k.jpg",
+        "md5": "79462e3509d0a6f35e59db86618705c0",
+        "size": 3870808
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_alpha_4k.png",
+        "md5": "a7600bde412dec47935efbe27fe585e7",
+        "size": 8195865
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_alpha_8k.exr",
+        "md5": "3da7a26b26f7c669843e38fa7d9c68d8",
+        "size": 10256953
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_alpha_8k.jpg",
+        "md5": "5b2014354419cf0a2baf5528ec9b4c10",
+        "size": 9847611
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_alpha_8k.png",
+        "md5": "bff1c94f1ae7f42371d97707bb181197",
+        "size": 11808341
+      }
+    }
+  },
+  "glass_arm": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_arm_1k.exr",
+        "md5": "c184fe7bbdaa949991c104d063b9a71b",
+        "size": 1328593
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_arm_1k.jpg",
+        "md5": "f6e9a913749b1d691a975a2c5d152642",
+        "size": 578459
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_arm_1k.png",
+        "md5": "aef81f73181685043fd9e8b48687015f",
+        "size": 1296390
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_arm_2k.exr",
+        "md5": "9c3eaafe8fb353e2aead771768d6d36e",
+        "size": 4143459
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_arm_2k.jpg",
+        "md5": "816da6bb8b191cc5ce905aca46e58106",
+        "size": 1877794
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_arm_2k.png",
+        "md5": "62cef61f053a51280ffd1c63eb558733",
+        "size": 3946986
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_arm_4k.exr",
+        "md5": "83c2691fc354af7871ac798d9dbf16ce",
+        "size": 10646360
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_arm_4k.jpg",
+        "md5": "286e06eec2db243858fde9ac36dc0c35",
+        "size": 5202842
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_arm_4k.png",
+        "md5": "1937efc60ca6b474c626295a87f3ab27",
+        "size": 10826806
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_arm_8k.exr",
+        "md5": "b3d055352c7ae4e9c5a75803d7be5f48",
+        "size": 27044875
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_arm_8k.jpg",
+        "md5": "f128c9d4161307563897682ce3411351",
+        "size": 13616659
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_arm_8k.png",
+        "md5": "2c13dd89f022de2a22df0462bda94723",
+        "size": 14449232
+      }
+    }
+  },
+  "glass_diff": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_diff_1k.exr",
+        "md5": "ca9241c74a201376786d9bb325d30428",
+        "size": 1287814
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_diff_1k.jpg",
+        "md5": "3d4c9675af9d51f15d3d7753d9d0c8ec",
+        "size": 416800
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_diff_1k.png",
+        "md5": "85682ddb667f61644bcabbf9d432615a",
+        "size": 3485081
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_diff_2k.exr",
+        "md5": "ab0996a718fe6af6403c7334e2310106",
+        "size": 4135320
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_diff_2k.jpg",
+        "md5": "f1b71328d9559c10599c42a1b7cd6c10",
+        "size": 1352401
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_diff_2k.png",
+        "md5": "9aceb209cdfc0ec784294efbae673362",
+        "size": 11037365
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_diff_4k.exr",
+        "md5": "25502220e0c983d62e334a2d9ac3bee5",
+        "size": 12234578
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_diff_4k.jpg",
+        "md5": "a42eae07b8bf557c3f4b93dfbde612a9",
+        "size": 3728998
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_diff_4k.png",
+        "md5": "8471ec5c6269bdf7457bd51856f27977",
+        "size": 34717418
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_diff_8k.exr",
+        "md5": "c9b90cfccad9e36e61009d71292828d5",
+        "size": 33102793
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_diff_8k.jpg",
+        "md5": "a58c95bbd76433545f38b1f04187158e",
+        "size": 10759315
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_diff_8k.png",
+        "md5": "a5ca9c4244f165248aea33c4032c672a",
+        "size": 78953224
+      }
+    }
+  },
+  "glass_nor_dx": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_nor_dx_1k.exr",
+        "md5": "569fd856262cfe4ce3395d322c21d2c4",
+        "size": 1163110
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_nor_dx_1k.jpg",
+        "md5": "f982171d6c826388a977eade55bd2df9",
+        "size": 543994
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_dx_1k.png",
+        "md5": "706c9fd94cf772815b71757982f0c9cf",
+        "size": 3018078
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_nor_dx_2k.exr",
+        "md5": "87a4de057509f612cc7f0013c0d59ac8",
+        "size": 4092814
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_nor_dx_2k.jpg",
+        "md5": "9e650f4f12f25591b72faf60faeffdbd",
+        "size": 2098079
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_nor_dx_2k.png",
+        "md5": "b990cbc989c9c291f20486fb55407f95",
+        "size": 11360883
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_nor_dx_4k.exr",
+        "md5": "0d7c9e46fd8f42ecde8663fafced1d2a",
+        "size": 12523399
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_nor_dx_4k.jpg",
+        "md5": "fa969b0cb7e74627c7be735c0283137d",
+        "size": 7156883
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_nor_dx_4k.png",
+        "md5": "348f2e07e0118039582be4acb15d1bce",
+        "size": 41638017
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_nor_dx_8k.exr",
+        "md5": "50a89ee9a7b9534995393319c97f286b",
+        "size": 39263069
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_nor_dx_8k.jpg",
+        "md5": "da1171c8cf1d09c0f6da5299c9f6cd7a",
+        "size": 23477476
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_nor_dx_8k.png",
+        "md5": "f23996323b57f29d8bc538f910a04274",
+        "size": 131202531
+      }
+    }
+  },
+  "glass_nor_gl": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_nor_gl_1k.exr",
+        "md5": "56ee5328e0506b14d5f0827bcc2b07fa",
+        "size": 1162691
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_nor_gl_1k.jpg",
+        "md5": "6da35774046a1abee9ac046327c9b5dc",
+        "size": 543147
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_gl_1k.png",
+        "md5": "9999ab93ff6c3d701431460eabe331d2",
+        "size": 3019345
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_nor_gl_2k.exr",
+        "md5": "a9fa1c1d665f238731c82ad8d10ccd9b",
+        "size": 4095219
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_nor_gl_2k.jpg",
+        "md5": "b56e41fc300066ead0230cfa1686d56e",
+        "size": 2080266
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_nor_gl_2k.png",
+        "md5": "f2e9993a79423f98ef105481195d1dec",
+        "size": 11375959
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_nor_gl_4k.exr",
+        "md5": "c3997014b9e6320c77c87226c9753caa",
+        "size": 12533966
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_nor_gl_4k.jpg",
+        "md5": "3b663ee8a7f0cf1c7eef6f000bd1c615",
+        "size": 7010466
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_nor_gl_4k.png",
+        "md5": "059e0048f9d70fe344269fddc3f6550c",
+        "size": 41626597
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_nor_gl_8k.exr",
+        "md5": "5584398fcd03c3eb3ad9fb9866744d7b",
+        "size": 40068202
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_nor_gl_8k.jpg",
+        "md5": "374ad614bbe50d2a147cb8280ab67d71",
+        "size": 22063408
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_nor_gl_8k.png",
+        "md5": "5bdc5e65ef829a07e35b6909555cbfa4",
+        "size": 131196194
+      }
+    }
+  },
+  "glass_rough": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_glass_rough_1k.exr",
+        "md5": "acc8d3bcafecdc2252c9316fd409f528",
+        "size": 571406
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_rough_1k.jpg",
+        "md5": "870d180d2d2039d4d6ef7952ebaecf20",
+        "size": 476384
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_rough_1k.png",
+        "md5": "ebcb92b0434dcf85988d20a899dbfde5",
+        "size": 940816
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_glass_rough_2k.exr",
+        "md5": "c62eb436abb1a1940ee2d450f6444dcd",
+        "size": 1801557
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_rough_2k.jpg",
+        "md5": "97d52c27bd5fe3744e273225ad92f5f3",
+        "size": 1507541
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_rough_2k.png",
+        "md5": "07d21f8c081dc635c9cba2bf95ad19d5",
+        "size": 3001612
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_glass_rough_4k.exr",
+        "md5": "ad4399337a6751165e21a78a42c05e41",
+        "size": 4966727
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_rough_4k.jpg",
+        "md5": "2bb805f099260f2d0c0ae4797e60608d",
+        "size": 4036585
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_rough_4k.png",
+        "md5": "b8d04928c5338409378adb88599e04a0",
+        "size": 8304984
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_glass_rough_8k.exr",
+        "md5": "4b97d9a298af2c0dcfa900b8282f810d",
+        "size": 13813781
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_rough_8k.jpg",
+        "md5": "752ee3b6d1a56e600e82dbfbf5349b05",
+        "size": 10772146
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_rough_8k.png",
+        "md5": "da34deb7bcfb2cfd27affcea21c9ecb4",
+        "size": 11173946
+      }
+    }
+  },
+  "Metal": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_metal_1k.exr",
+        "md5": "9dde1f990d3abd8208bb76fbb3e1b503",
+        "size": 852494
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_metal_1k.jpg",
+        "md5": "d4d417456fcf611bedd110e4d1e24f61",
+        "size": 562587
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_metal_1k.png",
+        "md5": "c368470b6a3d5535cc69a850a8b468d1",
+        "size": 1109480
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_metal_2k.exr",
+        "md5": "8d034f8d95167abc99efe59ee8a3c2f3",
+        "size": 2720101
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_metal_2k.jpg",
+        "md5": "b2d55655dae0d1d9040472466c6d70dd",
+        "size": 1747578
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_metal_2k.png",
+        "md5": "75603c5362d84836400ce97c4327e445",
+        "size": 3307057
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_metal_4k.exr",
+        "md5": "c5e3c5aeb56c9763b075c479111af424",
+        "size": 7957029
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_metal_4k.jpg",
+        "md5": "6c3854b9961edd2b1d06f9b1296fa26b",
+        "size": 5059810
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_metal_4k.png",
+        "md5": "1299fc2557c060817a12a028f8e83eb7",
+        "size": 8698329
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_metal_8k.exr",
+        "md5": "29812bd8398c3aa80c516ed33eb01e6f",
+        "size": 23655919
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_metal_8k.jpg",
+        "md5": "61abca72510e7bd42a766a99e573c3ee",
+        "size": 14367175
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_metal_8k.png",
+        "md5": "e86ed2e2c0d131fac7c0f0997cee4f44",
+        "size": 15088897
+      }
+    }
+  },
+  "nor_dx": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_dx_1k.exr",
+        "md5": "8037fd57c53058b2414bbd9f1cf7fcf5",
+        "size": 1710353
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_nor_dx_1k.jpg",
+        "md5": "fffdbf7a0c88b89eb694178e2f849b38",
+        "size": 783459
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_nor_dx_1k.png",
+        "md5": "24b36125344b46124da375168efe8d39",
+        "size": 4663594
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_nor_dx_2k.exr",
+        "md5": "ca4740e944746452527cb8ddf9e4ab42",
+        "size": 6195340
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_nor_dx_2k.jpg",
+        "md5": "ff8fed6dbe6ce546dcf132afda09c9ce",
+        "size": 2843353
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_nor_dx_2k.png",
+        "md5": "8c18e2248ae04b635ee3dd677f5780ab",
+        "size": 16963645
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_nor_dx_4k.exr",
+        "md5": "3bb494196fed731601b21c9db1975a22",
+        "size": 21341333
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_nor_dx_4k.jpg",
+        "md5": "6523227dc95315b598c29356e6a24105",
+        "size": 10179680
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_nor_dx_4k.png",
+        "md5": "13c520f1129502d297d4cf76ce1dc0e2",
+        "size": 61323262
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_nor_dx_8k.exr",
+        "md5": "306662f171e89d9075c80f2c187d1739",
+        "size": 71759054
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_nor_dx_8k.jpg",
+        "md5": "93094d752af1cbafee8685cd38ea53fc",
+        "size": 35916321
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_nor_dx_8k.png",
+        "md5": "864ff61776ba25c49be075383b69399c",
+        "size": 212548568
+      }
+    }
+  },
+  "nor_gl": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_gl_1k.exr",
+        "md5": "7ffd98578f672133e31306148a487501",
+        "size": 1699751
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_nor_gl_1k.jpg",
+        "md5": "4e3ea5459f44f1a340ba5335f4ecdc6e",
+        "size": 779139
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_nor_gl_1k.png",
+        "md5": "335b7deb073c2efb1d50feb19832c5ee",
+        "size": 4663679
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_nor_gl_2k.exr",
+        "md5": "989daa174370c0fb7b42b11e4a395cb1",
+        "size": 6160199
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_nor_gl_2k.jpg",
+        "md5": "0379c3e952ae980dbac192eb94f4ad6f",
+        "size": 2818013
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_nor_gl_2k.png",
+        "md5": "5b59d330c8a45b3b1b111ebab3ededf1",
+        "size": 16964454
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_nor_gl_4k.exr",
+        "md5": "c174a65d3a7212f18ba0e97ada6c576c",
+        "size": 21234155
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_nor_gl_4k.jpg",
+        "md5": "c66c0a22b7cd959e276ff5a48ddadeac",
+        "size": 9943178
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_nor_gl_4k.png",
+        "md5": "00e3fc92010380c5686773652806eb05",
+        "size": 61327208
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_nor_gl_8k.exr",
+        "md5": "dd041b89ed0d648e9ac0964089e6ae38",
+        "size": 71491392
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_nor_gl_8k.jpg",
+        "md5": "7c7d0fcdc0be774fc083088d5a88cf4d",
+        "size": 34394380
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_nor_gl_8k.png",
+        "md5": "198ad3f6b501d9bb2e6109ce062e5130",
+        "size": 212569383
+      }
+    }
+  },
+  "Rough": {
+    "1k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_rough_1k.exr",
+        "md5": "d72684d2dffdf9afd775cfa11647be61",
+        "size": 735966
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_rough_1k.jpg",
+        "md5": "1cb80825afe3a419ffe2e8259538827c",
+        "size": 647909
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_rough_1k.png",
+        "md5": "35cdfa30a07f36ac829106a16ee80945",
+        "size": 1522130
+      }
+    },
+    "2k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_rough_2k.exr",
+        "md5": "b9c6ad488a556331d272eb95f897aede",
+        "size": 2493704
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_rough_2k.jpg",
+        "md5": "1a9a2c84087266b830d758791d786820",
+        "size": 2240542
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_rough_2k.png",
+        "md5": "79f1a55ebcc9ae6ddeb079e183572fca",
+        "size": 5246234
+      }
+    },
+    "4k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_rough_4k.exr",
+        "md5": "4a0550b904188c26e640b8775a01a3ac",
+        "size": 8173005
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_rough_4k.jpg",
+        "md5": "b8f1bb1ef501cddfec32466076c30022",
+        "size": 7498159
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_rough_4k.png",
+        "md5": "51d0d7b0d4b74cb3090087e4bab725f7",
+        "size": 16256475
+      }
+    },
+    "8k": {
+      "exr": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_rough_8k.exr",
+        "md5": "7a64127f3e7594de95040b8512181417",
+        "size": 27346857
+      },
+      "jpg": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_rough_8k.jpg",
+        "md5": "ee54843414a58dba7774d64a940cf92a",
+        "size": 25322102
+      },
+      "png": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_rough_8k.png",
+        "md5": "0918c4bb6e632bd3c49563f40cad6410",
+        "size": 30369926
+      }
+    }
+  },
+  "fbx": {
+    "1k": {
+      "fbx": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/flood_lights/flood_lights_1k.fbx",
+        "md5": "8489fd12aebd5f0dd3734f9398d4fedd",
+        "size": 2315564,
+        "include": {
+          "textures/flood_lights_diff_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+            "md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+            "size": 779142
+          },
+          "textures/flood_lights_emissive_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_emissive_1k.png",
+            "md5": "832d7ed487d347cc112c61368236f2b8",
+            "size": 16579
+          },
+          "textures/flood_lights_glass_alpha_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_alpha_1k.png",
+            "md5": "19e705eddd3a4ec6777d3003356a624d",
+            "size": 874945
+          },
+          "textures/flood_lights_glass_diff_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_diff_1k.png",
+            "md5": "85682ddb667f61644bcabbf9d432615a",
+            "size": 3485081
+          },
+          "textures/flood_lights_glass_nor_gl_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_gl_1k.png",
+            "md5": "9999ab93ff6c3d701431460eabe331d2",
+            "size": 3019345
+          },
+          "textures/flood_lights_glass_rough_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_rough_1k.png",
+            "md5": "ebcb92b0434dcf85988d20a899dbfde5",
+            "size": 940816
+          },
+          "textures/flood_lights_metal_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_metal_1k.exr",
+            "md5": "9dde1f990d3abd8208bb76fbb3e1b503",
+            "size": 852494
+          },
+          "textures/flood_lights_nor_gl_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_gl_1k.exr",
+            "md5": "7ffd98578f672133e31306148a487501",
+            "size": 1699751
+          },
+          "textures/flood_lights_rough_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_rough_1k.exr",
+            "md5": "d72684d2dffdf9afd775cfa11647be61",
+            "size": 735966
+          }
+        }
+      }
+    },
+    "2k": {
+      "fbx": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/2k/flood_lights/flood_lights_2k.fbx",
+        "md5": "645b0fbfb78c1a573091f23c78f5646e",
+        "size": 2315564,
+        "include": {
+          "textures/flood_lights_diff_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_diff_2k.jpg",
+            "md5": "50432504b20e6f390f8a81f0aaea458f",
+            "size": 2682723
+          },
+          "textures/flood_lights_emissive_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_emissive_2k.png",
+            "md5": "37d91ee017f8689453adfe35c2e207f3",
+            "size": 51868
+          },
+          "textures/flood_lights_glass_alpha_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_alpha_2k.png",
+            "md5": "88692a634ed00f6bb3e7fda5c0afb378",
+            "size": 2811929
+          },
+          "textures/flood_lights_glass_diff_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_diff_2k.png",
+            "md5": "9aceb209cdfc0ec784294efbae673362",
+            "size": 11037365
+          },
+          "textures/flood_lights_glass_nor_gl_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_nor_gl_2k.png",
+            "md5": "f2e9993a79423f98ef105481195d1dec",
+            "size": 11375959
+          },
+          "textures/flood_lights_glass_rough_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_rough_2k.png",
+            "md5": "07d21f8c081dc635c9cba2bf95ad19d5",
+            "size": 3001612
+          },
+          "textures/flood_lights_metal_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_metal_2k.exr",
+            "md5": "8d034f8d95167abc99efe59ee8a3c2f3",
+            "size": 2720101
+          },
+          "textures/flood_lights_nor_gl_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_nor_gl_2k.exr",
+            "md5": "989daa174370c0fb7b42b11e4a395cb1",
+            "size": 6160199
+          },
+          "textures/flood_lights_rough_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_rough_2k.exr",
+            "md5": "b9c6ad488a556331d272eb95f897aede",
+            "size": 2493704
+          }
+        }
+      }
+    },
+    "4k": {
+      "fbx": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/4k/flood_lights/flood_lights_4k.fbx",
+        "md5": "cfb9022ac1b27f09610c052ad8285f25",
+        "size": 2315564,
+        "include": {
+          "textures/flood_lights_diff_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_diff_4k.jpg",
+            "md5": "1eb92d9ec4652e472ba602850e5be62f",
+            "size": 9059453
+          },
+          "textures/flood_lights_emissive_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_emissive_4k.png",
+            "md5": "a177c23ab1c8936ab3071cce31fde36d",
+            "size": 156286
+          },
+          "textures/flood_lights_glass_alpha_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_alpha_4k.png",
+            "md5": "a7600bde412dec47935efbe27fe585e7",
+            "size": 8195865
+          },
+          "textures/flood_lights_glass_diff_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_diff_4k.png",
+            "md5": "8471ec5c6269bdf7457bd51856f27977",
+            "size": 34717418
+          },
+          "textures/flood_lights_glass_nor_gl_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_nor_gl_4k.png",
+            "md5": "059e0048f9d70fe344269fddc3f6550c",
+            "size": 41626597
+          },
+          "textures/flood_lights_glass_rough_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_rough_4k.png",
+            "md5": "b8d04928c5338409378adb88599e04a0",
+            "size": 8304984
+          },
+          "textures/flood_lights_metal_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_metal_4k.exr",
+            "md5": "c5e3c5aeb56c9763b075c479111af424",
+            "size": 7957029
+          },
+          "textures/flood_lights_nor_gl_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_nor_gl_4k.exr",
+            "md5": "c174a65d3a7212f18ba0e97ada6c576c",
+            "size": 21234155
+          },
+          "textures/flood_lights_rough_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_rough_4k.exr",
+            "md5": "4a0550b904188c26e640b8775a01a3ac",
+            "size": 8173005
+          }
+        }
+      }
+    },
+    "8k": {
+      "fbx": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/8k/flood_lights/flood_lights_8k.fbx",
+        "md5": "c9b68682a9b9038d470b86540c292ae6",
+        "size": 2315564,
+        "include": {
+          "textures/flood_lights_diff_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_diff_8k.jpg",
+            "md5": "b7998c2b92f661c5552030750a6c21e9",
+            "size": 31942575
+          },
+          "textures/flood_lights_emissive_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_emissive_8k.png",
+            "md5": "ec64df9c7bf4b2817eaae9b1cf486ed1",
+            "size": 480052
+          },
+          "textures/flood_lights_glass_alpha_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_alpha_8k.png",
+            "md5": "bff1c94f1ae7f42371d97707bb181197",
+            "size": 11808341
+          },
+          "textures/flood_lights_glass_diff_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_diff_8k.png",
+            "md5": "a5ca9c4244f165248aea33c4032c672a",
+            "size": 78953224
+          },
+          "textures/flood_lights_glass_nor_gl_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_nor_gl_8k.png",
+            "md5": "5bdc5e65ef829a07e35b6909555cbfa4",
+            "size": 131196194
+          },
+          "textures/flood_lights_glass_rough_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_rough_8k.png",
+            "md5": "da34deb7bcfb2cfd27affcea21c9ecb4",
+            "size": 11173946
+          },
+          "textures/flood_lights_metal_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_metal_8k.exr",
+            "md5": "29812bd8398c3aa80c516ed33eb01e6f",
+            "size": 23655919
+          },
+          "textures/flood_lights_nor_gl_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_nor_gl_8k.exr",
+            "md5": "dd041b89ed0d648e9ac0964089e6ae38",
+            "size": 71491392
+          },
+          "textures/flood_lights_rough_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_rough_8k.exr",
+            "md5": "7a64127f3e7594de95040b8512181417",
+            "size": 27346857
+          }
+        }
+      }
+    }
+  },
+  "gltf": {
+    "1k": {
+      "gltf": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/flood_lights/flood_lights_1k.gltf",
+        "md5": "376e53168b4b87c3e99e03148ee70b98",
+        "size": 110737,
+        "include": {
+          "textures/flood_lights_emissive_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_emissive_1k.jpg",
+            "md5": "062d19e042319e17ee6931ae2edc1878",
+            "size": 19387
+          },
+          "textures/flood_lights_nor_gl_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_nor_gl_1k.jpg",
+            "md5": "4e3ea5459f44f1a340ba5335f4ecdc6e",
+            "size": 779139
+          },
+          "textures/flood_lights_diff_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+            "md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+            "size": 779142
+          },
+          "textures/flood_lights_arm_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_arm_1k.jpg",
+            "md5": "c626f1b639cfb0002eb2f7e0033bb626",
+            "size": 912503
+          },
+          "textures/flood_lights_glass_nor_gl_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_nor_gl_1k.jpg",
+            "md5": "6da35774046a1abee9ac046327c9b5dc",
+            "size": 543147
+          },
+          "textures/flood_lights_glass_diff_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_diff_1k.jpg",
+            "md5": "3d4c9675af9d51f15d3d7753d9d0c8ec",
+            "size": 416800
+          },
+          "textures/flood_lights_glass_arm_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_glass_arm_1k.jpg",
+            "md5": "f6e9a913749b1d691a975a2c5d152642",
+            "size": 578459
+          },
+          "flood_lights.bin": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/flood_lights/flood_lights.bin",
+            "md5": "bf505feb54130cc9b49ae7f2e3009e09",
+            "size": 2743872
+          }
+        }
+      }
+    },
+    "2k": {
+      "gltf": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/2k/flood_lights/flood_lights_2k.gltf",
+        "md5": "b77a1d58e6b48473fefdd0d53db18cc6",
+        "size": 110737,
+        "include": {
+          "textures/flood_lights_emissive_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_emissive_2k.jpg",
+            "md5": "71e0bb69f886e6495d667d66f8d7f396",
+            "size": 71107
+          },
+          "textures/flood_lights_nor_gl_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_nor_gl_2k.jpg",
+            "md5": "0379c3e952ae980dbac192eb94f4ad6f",
+            "size": 2818013
+          },
+          "textures/flood_lights_diff_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_diff_2k.jpg",
+            "md5": "50432504b20e6f390f8a81f0aaea458f",
+            "size": 2682723
+          },
+          "textures/flood_lights_arm_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_arm_2k.jpg",
+            "md5": "ec26720c8198129d7d769dd32fc6cb18",
+            "size": 3124986
+          },
+          "textures/flood_lights_glass_nor_gl_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_nor_gl_2k.jpg",
+            "md5": "b56e41fc300066ead0230cfa1686d56e",
+            "size": 2080266
+          },
+          "textures/flood_lights_glass_diff_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_diff_2k.jpg",
+            "md5": "f1b71328d9559c10599c42a1b7cd6c10",
+            "size": 1352401
+          },
+          "textures/flood_lights_glass_arm_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_glass_arm_2k.jpg",
+            "md5": "816da6bb8b191cc5ce905aca46e58106",
+            "size": 1877794
+          },
+          "flood_lights.bin": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/flood_lights/flood_lights.bin",
+            "md5": "bf505feb54130cc9b49ae7f2e3009e09",
+            "size": 2743872
+          }
+        }
+      }
+    },
+    "4k": {
+      "gltf": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/flood_lights/flood_lights_4k.gltf",
+        "md5": "44307cfba7d69b855d332af31d846877",
+        "size": 110737,
+        "include": {
+          "textures/flood_lights_emissive_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_emissive_4k.jpg",
+            "md5": "0c0c311c652666bb0c605b41cd48d437",
+            "size": 273774
+          },
+          "textures/flood_lights_nor_gl_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_nor_gl_4k.jpg",
+            "md5": "c66c0a22b7cd959e276ff5a48ddadeac",
+            "size": 9943178
+          },
+          "textures/flood_lights_diff_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_diff_4k.jpg",
+            "md5": "1eb92d9ec4652e472ba602850e5be62f",
+            "size": 9059453
+          },
+          "textures/flood_lights_arm_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_arm_4k.jpg",
+            "md5": "d56db4c2830d8b304d1783f3e6447ae3",
+            "size": 10290717
+          },
+          "textures/flood_lights_glass_nor_gl_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_nor_gl_4k.jpg",
+            "md5": "3b663ee8a7f0cf1c7eef6f000bd1c615",
+            "size": 7010466
+          },
+          "textures/flood_lights_glass_diff_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_diff_4k.jpg",
+            "md5": "a42eae07b8bf557c3f4b93dfbde612a9",
+            "size": 3728998
+          },
+          "textures/flood_lights_glass_arm_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_glass_arm_4k.jpg",
+            "md5": "286e06eec2db243858fde9ac36dc0c35",
+            "size": 5202842
+          },
+          "flood_lights.bin": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/flood_lights/flood_lights.bin",
+            "md5": "bf505feb54130cc9b49ae7f2e3009e09",
+            "size": 2743872
+          }
+        }
+      }
+    },
+    "8k": {
+      "gltf": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/flood_lights/flood_lights_8k.gltf",
+        "md5": "44b68d976bbd931b2ba4e5d79b318cab",
+        "size": 110737,
+        "include": {
+          "textures/flood_lights_emissive_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_emissive_8k.jpg",
+            "md5": "887b30d0c59ab5c0dd6016a334c5abcb",
+            "size": 1077436
+          },
+          "textures/flood_lights_nor_gl_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_nor_gl_8k.jpg",
+            "md5": "7c7d0fcdc0be774fc083088d5a88cf4d",
+            "size": 34394380
+          },
+          "textures/flood_lights_diff_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_diff_8k.jpg",
+            "md5": "b7998c2b92f661c5552030750a6c21e9",
+            "size": 31942575
+          },
+          "textures/flood_lights_arm_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_arm_8k.jpg",
+            "md5": "1f3887363c34bdcf7099ba41cba42de4",
+            "size": 33433123
+          },
+          "textures/flood_lights_glass_nor_gl_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_nor_gl_8k.jpg",
+            "md5": "374ad614bbe50d2a147cb8280ab67d71",
+            "size": 22063408
+          },
+          "textures/flood_lights_glass_diff_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_diff_8k.jpg",
+            "md5": "a58c95bbd76433545f38b1f04187158e",
+            "size": 10759315
+          },
+          "textures/flood_lights_glass_arm_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_glass_arm_8k.jpg",
+            "md5": "f128c9d4161307563897682ce3411351",
+            "size": 13616659
+          },
+          "flood_lights.bin": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/flood_lights/flood_lights.bin",
+            "md5": "bf505feb54130cc9b49ae7f2e3009e09",
+            "size": 2743872
+          }
+        }
+      }
+    }
+  },
+  "usd": {
+    "1k": {
+      "usd": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/1k/flood_lights/flood_lights_1k.usdc",
+        "md5": "ec0ec76689f578a552521161e62b0f6d",
+        "size": 1657104,
+        "include": {
+          "textures/flood_lights_diff_1k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+            "md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+            "size": 779142
+          },
+          "textures/flood_lights_emissive_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_emissive_1k.png",
+            "md5": "832d7ed487d347cc112c61368236f2b8",
+            "size": 16579
+          },
+          "textures/flood_lights_glass_alpha_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_alpha_1k.png",
+            "md5": "19e705eddd3a4ec6777d3003356a624d",
+            "size": 874945
+          },
+          "textures/flood_lights_glass_diff_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_diff_1k.png",
+            "md5": "85682ddb667f61644bcabbf9d432615a",
+            "size": 3485081
+          },
+          "textures/flood_lights_glass_nor_gl_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_gl_1k.png",
+            "md5": "9999ab93ff6c3d701431460eabe331d2",
+            "size": 3019345
+          },
+          "textures/flood_lights_glass_rough_1k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_rough_1k.png",
+            "md5": "ebcb92b0434dcf85988d20a899dbfde5",
+            "size": 940816
+          },
+          "textures/flood_lights_metal_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_metal_1k.exr",
+            "md5": "9dde1f990d3abd8208bb76fbb3e1b503",
+            "size": 852494
+          },
+          "textures/flood_lights_nor_gl_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_gl_1k.exr",
+            "md5": "7ffd98578f672133e31306148a487501",
+            "size": 1699751
+          },
+          "textures/flood_lights_rough_1k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_rough_1k.exr",
+            "md5": "d72684d2dffdf9afd775cfa11647be61",
+            "size": 735966
+          }
+        }
+      }
+    },
+    "2k": {
+      "usd": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/2k/flood_lights/flood_lights_2k.usdc",
+        "md5": "f6061c1c2c54d72a407f3b621569fb6e",
+        "size": 1657199,
+        "include": {
+          "textures/flood_lights_diff_2k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/flood_lights/flood_lights_diff_2k.jpg",
+            "md5": "50432504b20e6f390f8a81f0aaea458f",
+            "size": 2682723
+          },
+          "textures/flood_lights_emissive_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_emissive_2k.png",
+            "md5": "37d91ee017f8689453adfe35c2e207f3",
+            "size": 51868
+          },
+          "textures/flood_lights_glass_alpha_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_alpha_2k.png",
+            "md5": "88692a634ed00f6bb3e7fda5c0afb378",
+            "size": 2811929
+          },
+          "textures/flood_lights_glass_diff_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_diff_2k.png",
+            "md5": "9aceb209cdfc0ec784294efbae673362",
+            "size": 11037365
+          },
+          "textures/flood_lights_glass_nor_gl_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_nor_gl_2k.png",
+            "md5": "f2e9993a79423f98ef105481195d1dec",
+            "size": 11375959
+          },
+          "textures/flood_lights_glass_rough_2k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/2k/flood_lights/flood_lights_glass_rough_2k.png",
+            "md5": "07d21f8c081dc635c9cba2bf95ad19d5",
+            "size": 3001612
+          },
+          "textures/flood_lights_metal_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_metal_2k.exr",
+            "md5": "8d034f8d95167abc99efe59ee8a3c2f3",
+            "size": 2720101
+          },
+          "textures/flood_lights_nor_gl_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_nor_gl_2k.exr",
+            "md5": "989daa174370c0fb7b42b11e4a395cb1",
+            "size": 6160199
+          },
+          "textures/flood_lights_rough_2k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/flood_lights/flood_lights_rough_2k.exr",
+            "md5": "b9c6ad488a556331d272eb95f897aede",
+            "size": 2493704
+          }
+        }
+      }
+    },
+    "4k": {
+      "usd": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/4k/flood_lights/flood_lights_4k.usdc",
+        "md5": "3d4ce3a8d12b56e33eda34b6d7fbc77a",
+        "size": 1657113,
+        "include": {
+          "textures/flood_lights_diff_4k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/4k/flood_lights/flood_lights_diff_4k.jpg",
+            "md5": "1eb92d9ec4652e472ba602850e5be62f",
+            "size": 9059453
+          },
+          "textures/flood_lights_emissive_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_emissive_4k.png",
+            "md5": "a177c23ab1c8936ab3071cce31fde36d",
+            "size": 156286
+          },
+          "textures/flood_lights_glass_alpha_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_alpha_4k.png",
+            "md5": "a7600bde412dec47935efbe27fe585e7",
+            "size": 8195865
+          },
+          "textures/flood_lights_glass_diff_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_diff_4k.png",
+            "md5": "8471ec5c6269bdf7457bd51856f27977",
+            "size": 34717418
+          },
+          "textures/flood_lights_glass_nor_gl_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_nor_gl_4k.png",
+            "md5": "059e0048f9d70fe344269fddc3f6550c",
+            "size": 41626597
+          },
+          "textures/flood_lights_glass_rough_4k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/4k/flood_lights/flood_lights_glass_rough_4k.png",
+            "md5": "b8d04928c5338409378adb88599e04a0",
+            "size": 8304984
+          },
+          "textures/flood_lights_metal_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_metal_4k.exr",
+            "md5": "c5e3c5aeb56c9763b075c479111af424",
+            "size": 7957029
+          },
+          "textures/flood_lights_nor_gl_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_nor_gl_4k.exr",
+            "md5": "c174a65d3a7212f18ba0e97ada6c576c",
+            "size": 21234155
+          },
+          "textures/flood_lights_rough_4k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/4k/flood_lights/flood_lights_rough_4k.exr",
+            "md5": "4a0550b904188c26e640b8775a01a3ac",
+            "size": 8173005
+          }
+        }
+      }
+    },
+    "8k": {
+      "usd": {
+        "url": "https://dl.polyhaven.org/file/ph-assets/Models/usd/8k/flood_lights/flood_lights_8k.usdc",
+        "md5": "234139b9f2ea2be3992c4af625ec05c2",
+        "size": 1657143,
+        "include": {
+          "textures/flood_lights_diff_8k.jpg": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/8k/flood_lights/flood_lights_diff_8k.jpg",
+            "md5": "b7998c2b92f661c5552030750a6c21e9",
+            "size": 31942575
+          },
+          "textures/flood_lights_emissive_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_emissive_8k.png",
+            "md5": "ec64df9c7bf4b2817eaae9b1cf486ed1",
+            "size": 480052
+          },
+          "textures/flood_lights_glass_alpha_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_alpha_8k.png",
+            "md5": "bff1c94f1ae7f42371d97707bb181197",
+            "size": 11808341
+          },
+          "textures/flood_lights_glass_diff_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_diff_8k.png",
+            "md5": "a5ca9c4244f165248aea33c4032c672a",
+            "size": 78953224
+          },
+          "textures/flood_lights_glass_nor_gl_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_nor_gl_8k.png",
+            "md5": "5bdc5e65ef829a07e35b6909555cbfa4",
+            "size": 131196194
+          },
+          "textures/flood_lights_glass_rough_8k.png": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/8k/flood_lights/flood_lights_glass_rough_8k.png",
+            "md5": "da34deb7bcfb2cfd27affcea21c9ecb4",
+            "size": 11173946
+          },
+          "textures/flood_lights_metal_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_metal_8k.exr",
+            "md5": "29812bd8398c3aa80c516ed33eb01e6f",
+            "size": 23655919
+          },
+          "textures/flood_lights_nor_gl_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_nor_gl_8k.exr",
+            "md5": "dd041b89ed0d648e9ac0964089e6ae38",
+            "size": 71491392
+          },
+          "textures/flood_lights_rough_8k.exr": {
+            "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/8k/flood_lights/flood_lights_rough_8k.exr",
+            "md5": "7a64127f3e7594de95040b8512181417",
+            "size": 27346857
+          }
+        }
+      }
+    }
+  }
+}

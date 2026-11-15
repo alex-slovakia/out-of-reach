@@ -1,0 +1,87 @@
+{
+  "retrieved_utc": "2026-11-15T10:51:39.608617+00:00",
+  "license": "CC0 1.0 Universal",
+  "license_policy": "https://docs.ambientcg.com/license/",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "assets": [
+    {
+      "id": "Metal009",
+      "page": "https://ambientcg.com/a/Metal009",
+      "source_url": "https://ambientcg.com/get?file=Metal009_1K-JPG.zip",
+      "source_size": 4767000,
+      "source_sha256": "1b1970219b40fe707e7194b28702f1a65b0d227bbea56da69dfbc8d8b5cfcb5e",
+      "maps": [
+        {
+          "name": "Metal009_1K-JPG_Color.jpg",
+          "sha256": "e066e240ad0eaab6a73fb0f40fa7caa94365160770331babc91de2e8ce6a986f"
+        },
+        {
+          "name": "Metal009_1K-JPG_NormalGL.jpg",
+          "sha256": "45c7c88685e6b44da7e8d25e2cf6d8645d42209793ccc4354e68c16cdae15d62"
+        },
+        {
+          "name": "Metal009_1K-JPG_Roughness.jpg",
+          "sha256": "6d06dfe8c240d3b6f33030740110284245bd8aefb2e10e8eb0c563444d9c0c5b"
+        },
+        {
+          "name": "Metal009_1K-JPG_Metalness.jpg",
+          "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714"
+        }
+      ],
+      "products": [
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal009_Color.jpg",
+          "sha256": "a9051c136d030c276f9738e7b0526740d5f8d62895fc9d84c0b8002e21d92eb6"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal009_MetallicSmoothness.png",
+          "sha256": "95ab7a4f00eef9b56da3cdc1b6b54f5280a43c3abab7cd28a3e446843b919e79"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal009_NormalGL.jpg",
+          "sha256": "07c0013b470db23fa86e77823bd49336bf2acd3410f9d074ed484b286a620ddc"
+        }
+      ]
+    },
+    {
+      "id": "Metal027",
+      "page": "https://ambientcg.com/a/Metal027",
+      "source_url": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
+      "source_size": 6311401,
+      "source_sha256": "12b2d9996d532cf8a31820d24f2ea83e3217b89da060c4fb29c3c5177535ac72",
+      "maps": [
+        {
+          "name": "Metal027_1K-JPG_Color.jpg",
+          "sha256": "8e2e69e767b2692da211723ccb7def5f27b9c7712c6952bc45c526e2a5183ae0"
+        },
+        {
+          "name": "Metal027_1K-JPG_NormalGL.jpg",
+          "sha256": "afbf8ca3df45111ac5543174582b6b98cb1bf154f7c7ee8f198720042b92d7c8"
+        },
+        {
+          "name": "Metal027_1K-JPG_Roughness.jpg",
+          "sha256": "8f01484981a8bf83199d4f4cb435a344294cd80cb4ee623cf8567a7726fb289e"
+        },
+        {
+          "name": "Metal027_1K-JPG_Metalness.jpg",
+          "sha256": "843102638fa0a5bf897888868877efab8ccdc4cb84a48e57bdb52bfb30f5e714"
+        }
+      ],
+      "products": [
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal027_Color.jpg",
+          "sha256": "de065442628bf83e95f880e844ff8267badc8be1408d24aefca6c1b54cabfc5f"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal027_MetallicSmoothness.png",
+          "sha256": "a64758fd2d08c9d90c3348bf6d24233a0db872b1e27ce0640249944634286e7d"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/SurfaceFinishV01/Textures/Metal027_NormalGL.jpg",
+          "sha256": "44bb965e2ebbf92e53b91e474b3e53dfcc912a4fa6c838a7479cdc3c2048744e"
+        }
+      ]
+    }
+  ],
+  "source_bytes_total": 11078401
+}

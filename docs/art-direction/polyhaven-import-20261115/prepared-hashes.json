@@ -1,0 +1,322 @@
+{
+  "NOTICE.txt": {
+    "bytes": 2048,
+    "sha256": "7d818fb118eee59b568500c5bba1d0f163c675c4c8f15a87b48ca8087a11a3f5"
+  },
+  "prepared-manifest.json": {
+    "bytes": 48747,
+    "sha256": "0a60c1382a3b66ea9469c834cedfbd7df580882686606223122fc4ba1fcc7f58"
+  },
+  "Models/adjustable_wrench.fbx": {
+    "bytes": 255356,
+    "sha256": "1ef31db1f2208af3453006ad850e86eea34df39e50bf57a1040ee0c282a59a8c"
+  },
+  "Models/binoculars.fbx": {
+    "bytes": 622844,
+    "sha256": "41ec7869514afd8bba3a95c7a0c036ddd0d2c8266003bdd6917e1e1851557c6e"
+  },
+  "Models/coast_land_rocks_04.fbx": {
+    "bytes": 1335772,
+    "sha256": "fae754424a43156952bd1dfe86055d88063997facece3f51e4fd3a0a2159dd92"
+  },
+  "Models/combination_wrench.fbx": {
+    "bytes": 88300,
+    "sha256": "d225e0a3542ee5cf135e3e33eeaf160500a5625816df1d4b0e12898709b1748f"
+  },
+  "Models/flood_lights.fbx": {
+    "bytes": 415532,
+    "sha256": "80cb5dddc50b08d5e45e5fc355b04188fb6ea1c2b47319aab60d25049c039350"
+  },
+  "Models/long_life_food.fbx": {
+    "bytes": 166764,
+    "sha256": "2f1265a60952742b2031331ef92517c9405552255448ad3192fb7c080fd730fe"
+  },
+  "Models/medical_box.fbx": {
+    "bytes": 143004,
+    "sha256": "8ba79b805acaf60e8dcae38f64c0070b4ac2eb285dbf6024cc21c1164ea74d78"
+  },
+  "Models/metal_toolbox.fbx": {
+    "bytes": 628540,
+    "sha256": "e62d3d2b1373dda5e920fca46756ae9b7da65afb2d7cf453a0bb7fdb35b7c8b2"
+  },
+  "Models/namaqualand_boulder_02.fbx": {
+    "bytes": 1188252,
+    "sha256": "69bc0cb6ade86b6b2368c673c537e0b75b123432bc9b3d4528e2f54a68cf3978"
+  },
+  "Models/pliers.fbx": {
+    "bytes": 171468,
+    "sha256": "02d5a3105e96eceae98fef64a90bf70137c3428fb3611b27284d35dbc0358136"
+  },
+  "Models/portable_generator.fbx": {
+    "bytes": 872028,
+    "sha256": "8c6ec2905f35b03286639ae9dd6d6f552eca2193b1d231788c66df174c771ee1"
+  },
+  "Models/screwdrivers_02.fbx": {
+    "bytes": 167004,
+    "sha256": "65a2ccaa9a25220b18120bdf8308a723e256be01b2d475de849ae86bb3d054cb"
+  },
+  "Models/vintage_spacecraft_instrument.fbx": {
+    "bytes": 746588,
+    "sha256": "7da9183527d82f33e89cd1b9afd8aa28b84d96289a1ee503a14922c4491e6ed1"
+  },
+  "PowerBox01/ADAPTATION.md": {
+    "bytes": 2162,
+    "sha256": "0bc0da9a4694f8b345660008aeafe12a26027f0fed8f175f8b41442e87ccb117"
+  },
+  "PowerBox01/LICENSE-SOURCE-EVIDENCE.txt": {
+    "bytes": 1357,
+    "sha256": "c0de06346ba92a33ce8048b57c077ddb27426d206980580b0a965febe89e2ce0"
+  },
+  "PowerBox01/manifest.json": {
+    "bytes": 3168,
+    "sha256": "ce5ed17bca13b2f3cfb31eb0af53a009c50039087512da613112d80fae772e5c"
+  },
+  "PowerBox01/PowerBox01_URP.mat": {
+    "bytes": 4064,
+    "sha256": "51b23941ad818923e06f3ad5c5a65bd18fd014727fe01161942ffda5fb62e912"
+  },
+  "PowerBox01/power_box_01_2k.fbx": {
+    "bytes": 1099948,
+    "sha256": "4e3cf0ec5235f1d427bb96022747b8b19b8d9d17143bc951ab144b98f728d73a"
+  },
+  "PowerBox01/power_box_01_metallic_smoothness.png": {
+    "bytes": 4985444,
+    "sha256": "f8e62450e5c0dd4833cd611f9d9f927a9eec6f9093f24d11f86d6048d55444bd"
+  },
+  "PowerBox01/provider-info.json": {
+    "bytes": 1540,
+    "sha256": "fa74027e04702609bf8607d10507b9a47f306fc07ea5f70357201fe01ebbd808"
+  },
+  "PowerBox01/provider-selection-2k.json": {
+    "bytes": 1109,
+    "sha256": "ce9a47fcd0bbc8692656476995e317d94c72eb711846cedafb103cac11386fe6"
+  },
+  "PowerBox01/textures/power_box_01_diff_2k.jpg": {
+    "bytes": 1883678,
+    "sha256": "045f04100a6a95bf6d43ea0989545b52008c84dd1d1d238ad0d7fa89789f8d0b"
+  },
+  "PowerBox01/textures/power_box_01_metal_2k.exr": {
+    "bytes": 1440535,
+    "sha256": "3863b97a069ef332b59c3dd7ed4400a3528b6f98614a9b988414d378720ef11e"
+  },
+  "PowerBox01/textures/power_box_01_nor_gl_2k.exr": {
+    "bytes": 6421294,
+    "sha256": "9131bb1fffb641f9326658c23ab8471f977f57a013b8c41a0b2c34fb8ee379bb"
+  },
+  "PowerBox01/textures/power_box_01_rough_2k.exr": {
+    "bytes": 4888996,
+    "sha256": "eca502e7f85da502df868f177dd59407c7ca55155c257391828aceff6e10bd38"
+  },
+  "Textures/adjustable_wrench_BaseColor.jpg": {
+    "bytes": 783317,
+    "sha256": "d4725eb3c741e337c28c0ed57712ecdfb5f3ee34f130907e34cea0b8e7809595"
+  },
+  "Textures/adjustable_wrench_MetalSmooth.png": {
+    "bytes": 1213660,
+    "sha256": "0a7f83cd95a6fe7142d8f08d7c5af7d94afbee0a0dbb4a1d34970f4edc740091"
+  },
+  "Textures/adjustable_wrench_Normal.png": {
+    "bytes": 2254545,
+    "sha256": "03c4732eb867a97d996b2aebf8b04404e2d5156208028b583b9ed7b05cbcdbc4"
+  },
+  "Textures/binoculars_Alpha.png": {
+    "bytes": 19460,
+    "sha256": "a3cae776c0849d06e2b088a4f2ee347a3fb09a18ef9632b7f99e3ea4a0e6df0e"
+  },
+  "Textures/binoculars_BaseColor.png": {
+    "bytes": 720322,
+    "sha256": "43321f31b03c9794c5cce009beea18cf64ed490b23148e8af0113027ebd0ba62"
+  },
+  "Textures/binoculars_MetalSmooth.png": {
+    "bytes": 1056423,
+    "sha256": "a54178e4abd267a0be195f6cae69a283439cf07368107518727f8fa462292f41"
+  },
+  "Textures/binoculars_Normal.png": {
+    "bytes": 760637,
+    "sha256": "bbcfd3978faa618640902528b4ac9542c164816ba6c5c802fdc2b4476d233118"
+  },
+  "Textures/coast_land_rocks_04_BaseColor.jpg": {
+    "bytes": 3378711,
+    "sha256": "98d321b8198a1e88dedc512a5c102cb71ffc5c59974b4c1a157eaaf2193c1012"
+  },
+  "Textures/coast_land_rocks_04_MetalSmooth.png": {
+    "bytes": 3668710,
+    "sha256": "e5ca80f57c5bc4a3d7b7b36ef95060b2ecbdc818bcae4dbc5b7cfd40a78e2de0"
+  },
+  "Textures/coast_land_rocks_04_Normal.png": {
+    "bytes": 10571746,
+    "sha256": "e871c14ba116f5d0d96f4bd8f92263c8de73d98c1885094bb7b2d932fc22ac20"
+  },
+  "Textures/coast_sand_02_BaseColor.jpg": {
+    "bytes": 3381179,
+    "sha256": "3dba77f23cecaa8ab16889fe9b30f2018a24f2afb002d1c046143b9a5e097946"
+  },
+  "Textures/coast_sand_02_MetalSmooth.png": {
+    "bytes": 3499046,
+    "sha256": "a8b5382ca97e2deed9ebc826e401d343823bf280d3473322429f4e1f7649693c"
+  },
+  "Textures/coast_sand_02_Normal.png": {
+    "bytes": 10966530,
+    "sha256": "5f95a4f326774c5e989ac432983920a741cd6954c556b5074b401654ea3b1390"
+  },
+  "Textures/combination_wrench_BaseColor.jpg": {
+    "bytes": 463822,
+    "sha256": "5cbfc5a8603d95cd310e299042d7e7a458e287dd6ca74a53228ff70c22d96071"
+  },
+  "Textures/combination_wrench_MetalSmooth.png": {
+    "bytes": 728180,
+    "sha256": "d54b31d12a453bab21b32984ffe1712f425ff0761918ac56bff6382f30e13196"
+  },
+  "Textures/combination_wrench_Normal.png": {
+    "bytes": 1309344,
+    "sha256": "fb11626fe1c864e3a70f5419d68b1c1fed41542ad87936f3b72043d4f6272e30"
+  },
+  "Textures/flood_lights_BaseColor.jpg": {
+    "bytes": 779142,
+    "sha256": "44715ae98ad0e54b9628e9cb7718192280e5720095aa1c1e5d26a63191cf7a3d"
+  },
+  "Textures/flood_lights_Emission.png": {
+    "bytes": 16579,
+    "sha256": "2ea5b6ceee91824936b85b0c0b3fb398488ba9b69bc891eeb5ccb44980cb17ed"
+  },
+  "Textures/flood_lights_glass_Alpha.png": {
+    "bytes": 874945,
+    "sha256": "e561337644af630faf214422e6c005cdb102be8441e91a36a3162448f6f95cf9"
+  },
+  "Textures/flood_lights_glass_BaseColor.png": {
+    "bytes": 1067183,
+    "sha256": "308b64408778f719788baae0394b36c3c309eadb4188908dd4536742eeb7de22"
+  },
+  "Textures/flood_lights_glass_MetalSmooth.png": {
+    "bytes": 631171,
+    "sha256": "cdf49a51ed16fee5c19e6a2f7e5ccfe3633c30f8566a1a182c1aba6300d722f8"
+  },
+  "Textures/flood_lights_glass_Normal.png": {
+    "bytes": 1145185,
+    "sha256": "1fee7d7e2c6f013098a442d9cf74b8ccde66bf1974b26446256f722f76296507"
+  },
+  "Textures/flood_lights_MetalSmooth.png": {
+    "bytes": 1617474,
+    "sha256": "16c2beabc4513f29fa999665b09207155501ed63a0fc3ae9d85fc75966110ef4"
+  },
+  "Textures/flood_lights_Normal.png": {
+    "bytes": 2076868,
+    "sha256": "8519fc97191cbbd262e8e942f609574afe43599d477ad7f7acdecacdfc61d390"
+  },
+  "Textures/gravelly_sand_BaseColor.jpg": {
+    "bytes": 4402825,
+    "sha256": "cdab7130a67bc70f8c241b9ab2cd41b731d2baf1ec533939a333573b80070dd6"
+  },
+  "Textures/gravelly_sand_MetalSmooth.png": {
+    "bytes": 3538125,
+    "sha256": "3ec656608b7ee2a2c97fa86ef76d7a18382068964d53d0efac392eab6b47be83"
+  },
+  "Textures/gravelly_sand_Normal.png": {
+    "bytes": 13028302,
+    "sha256": "773863e1aa9661875c8d6ad6ca3e9d6597e67cef192584bace23479f6491a01f"
+  },
+  "Textures/long_life_food_BaseColor.jpg": {
+    "bytes": 715844,
+    "sha256": "18ef2f29f8cec3ebc3cc05717809bc32b6ec58ebedbce7de3c9401c09b9e7162"
+  },
+  "Textures/long_life_food_MetalSmooth.png": {
+    "bytes": 1179120,
+    "sha256": "7d16e8d7cd2e4c70d983e28f0db44eb7e3e183cde53b81d22792822ce31720be"
+  },
+  "Textures/long_life_food_Normal.png": {
+    "bytes": 905580,
+    "sha256": "d97c1513a08a250cf794ba73d10b015824738dab85b1ffbfd48a98e518c8a28e"
+  },
+  "Textures/medical_box_BaseColor.jpg": {
+    "bytes": 674432,
+    "sha256": "64627e4be15f9a83a2d160b62e54bb9963f225c2312671b3d6d82928f7de19a9"
+  },
+  "Textures/medical_box_MetalSmooth.png": {
+    "bytes": 1418794,
+    "sha256": "b583df56b5bedca6b014ac842d824bd62f375fde22454d0618e9b6e95c7bdbbb"
+  },
+  "Textures/medical_box_Normal.png": {
+    "bytes": 1045358,
+    "sha256": "71bab13c53aa015b5b5d7ab7adcdaffcd4fb0a4779c30ad0e4733d0a0e396a8f"
+  },
+  "Textures/metal_toolbox_BaseColor.jpg": {
+    "bytes": 661804,
+    "sha256": "21e1d21880e49db3fde0457d53b78a70db61234a201da9f0181dd0880b110473"
+  },
+  "Textures/metal_toolbox_MetalSmooth.png": {
+    "bytes": 1461370,
+    "sha256": "0283d323c9e765e368cb4a378aaf125f7ca585515ba1327013c284ef49591ed3"
+  },
+  "Textures/metal_toolbox_Normal.png": {
+    "bytes": 1820332,
+    "sha256": "95421fddf2975f7f15023a121e4892ecf63bd298ab5084e564d0ad8aead04554"
+  },
+  "Textures/namaqualand_boulder_02_BaseColor.jpg": {
+    "bytes": 3867934,
+    "sha256": "0f81c51224deb025079f10dad21530e77e42baad541eb766922fe8fc6e46a88e"
+  },
+  "Textures/namaqualand_boulder_02_MetalSmooth.png": {
+    "bytes": 4015271,
+    "sha256": "01835d05fbeec9215c45a087454121a2b6a1027db6ab2936b8380ea1fb73935b"
+  },
+  "Textures/namaqualand_boulder_02_Normal.png": {
+    "bytes": 10429249,
+    "sha256": "5932021b1a5ea042852143780bedbde8a24108b6433171a9ae04f0012ecc58f6"
+  },
+  "Textures/pliers_BaseColor.jpg": {
+    "bytes": 669794,
+    "sha256": "57d3be6ebd943ef734b9073180f8bce5f30cb34e49e3bdcdd5a2eec231acc3a4"
+  },
+  "Textures/pliers_MetalSmooth.png": {
+    "bytes": 1431091,
+    "sha256": "cfafc283873a252578a58273ff21f621aff3dcddaff957021ee9780edfbfc582"
+  },
+  "Textures/pliers_Normal.png": {
+    "bytes": 1219846,
+    "sha256": "2331f22b8926b033ada73ca68dc55943f5386b49d469153dae71d67c1386c89a"
+  },
+  "Textures/portable_generator_Alpha.png": {
+    "bytes": 134342,
+    "sha256": "112a74af62ccb842a22916e51a79364e7121f948e231b8ce9deac797417ef6bd"
+  },
+  "Textures/portable_generator_BaseColor.png": {
+    "bytes": 1966604,
+    "sha256": "140bacc5a9450a717e9a0ecbabd85128c6194991acce5d9bd75411639241f073"
+  },
+  "Textures/portable_generator_MetalSmooth.png": {
+    "bytes": 1685738,
+    "sha256": "1133cc65e7ecd5e8d4665ed41d0d5f555f298a173a8359f47517235929b42637"
+  },
+  "Textures/portable_generator_Normal.png": {
+    "bytes": 2156002,
+    "sha256": "7c5eb39cd52cb0071079f68f3e17a3eef642a62f235d62f29b2182500c534cd6"
+  },
+  "Textures/screwdrivers_02_BaseColor.jpg": {
+    "bytes": 642727,
+    "sha256": "2ddfa1712536ee93b588ed920f5e629bdcfeb76d0dc11b021e50e8df3af0f7e9"
+  },
+  "Textures/screwdrivers_02_MetalSmooth.png": {
+    "bytes": 919328,
+    "sha256": "540e9c17da4753d93b77002bb10ea7df88e40e4d0a69ca9cd1dde9577a67c221"
+  },
+  "Textures/screwdrivers_02_Normal.png": {
+    "bytes": 2031842,
+    "sha256": "dd65144548a27c3b23c9066df3015b021ccf532e66fcdd8f6acba99e04c1eda7"
+  },
+  "Textures/vintage_spacecraft_instrument_Alpha.png": {
+    "bytes": 187153,
+    "sha256": "c9fa2a74cb265df7591f617885938f2db06fc65d7098772ab550353387e48da6"
+  },
+  "Textures/vintage_spacecraft_instrument_BaseColor.png": {
+    "bytes": 1658954,
+    "sha256": "eb59d4abe8596673632e52a5257994ccc044996ad9072f6318ffbc8105b30a25"
+  },
+  "Textures/vintage_spacecraft_instrument_MetalSmooth.png": {
+    "bytes": 1340986,
+    "sha256": "91a6c2ecc002f36b1b73a20695b49cc3e47f627bdd7663560806f444d4b76f6b"
+  },
+  "Textures/vintage_spacecraft_instrument_Normal.png": {
+    "bytes": 1497557,
+    "sha256": "4baa603928ff68ed674060290c7ad678a27d50c98fa8e115f6311fac16c34deb"
+  }
+}

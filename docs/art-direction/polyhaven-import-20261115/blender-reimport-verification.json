@@ -1,0 +1,459 @@
+{
+  "blender": "3.6.1",
+  "textures": [
+    {
+      "file": "adjustable_wrench_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "adjustable_wrench_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "adjustable_wrench_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "binoculars_Alpha.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "binoculars_BaseColor.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "binoculars_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "binoculars_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "coast_land_rocks_04_BaseColor.jpg",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "coast_land_rocks_04_MetalSmooth.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "coast_land_rocks_04_Normal.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "coast_sand_02_BaseColor.jpg",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "coast_sand_02_MetalSmooth.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "coast_sand_02_Normal.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "combination_wrench_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "combination_wrench_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "combination_wrench_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_Emission.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_glass_Alpha.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_glass_BaseColor.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_glass_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_glass_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "flood_lights_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "gravelly_sand_BaseColor.jpg",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "gravelly_sand_MetalSmooth.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "gravelly_sand_Normal.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "long_life_food_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "long_life_food_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "long_life_food_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "medical_box_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "medical_box_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "medical_box_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "metal_toolbox_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "metal_toolbox_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "metal_toolbox_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "namaqualand_boulder_02_BaseColor.jpg",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "namaqualand_boulder_02_MetalSmooth.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "namaqualand_boulder_02_Normal.png",
+      "width": 2048,
+      "height": 2048
+    },
+    {
+      "file": "pliers_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "pliers_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "pliers_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "portable_generator_Alpha.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "portable_generator_BaseColor.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "portable_generator_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "portable_generator_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "screwdrivers_02_BaseColor.jpg",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "screwdrivers_02_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "screwdrivers_02_Normal.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "vintage_spacecraft_instrument_Alpha.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "vintage_spacecraft_instrument_BaseColor.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "vintage_spacecraft_instrument_MetalSmooth.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "vintage_spacecraft_instrument_Normal.png",
+      "width": 1024,
+      "height": 1024
+    }
+  ],
+  "models": [
+    {
+      "id": "portable_generator",
+      "triangles": 26419,
+      "reimport_dimensions_m_blender_xyz": [
+        0.8183407783508301,
+        0.5640000998973846,
+        0.5769233567003162
+      ],
+      "bottom_z": -4.594363289811554e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_portable_generator",
+        "PH_portable_generator_glass"
+      ]
+    },
+    {
+      "id": "long_life_food",
+      "triangles": 4712,
+      "reimport_dimensions_m_blender_xyz": [
+        0.5237633883953094,
+        0.11355658248066902,
+        0.23757459813232096
+      ],
+      "bottom_z": -5.8996167950908784e-09,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_long_life_food"
+      ]
+    },
+    {
+      "id": "coast_land_rocks_04",
+      "triangles": 29999,
+      "reimport_dimensions_m_blender_xyz": [
+        9.961585998535156,
+        11.497777938842773,
+        0.8391208300211019
+      ],
+      "bottom_z": -9.784318990568863e-07,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_coast_land_rocks_04"
+      ]
+    },
+    {
+      "id": "namaqualand_boulder_02",
+      "triangles": 30000,
+      "reimport_dimensions_m_blender_xyz": [
+        2.5333333015441895,
+        1.2344834804534912,
+        0.8830920257810462
+      ],
+      "bottom_z": -9.920633914362043e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_namaqualand_boulder_02"
+      ]
+    },
+    {
+      "id": "combination_wrench",
+      "triangles": 1986,
+      "reimport_dimensions_m_blender_xyz": [
+        0.05658109486103058,
+        0.33698412775993347,
+        0.021513079023012693
+      ],
+      "bottom_z": -2.8600940282785814e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_combination_wrench"
+      ]
+    },
+    {
+      "id": "adjustable_wrench",
+      "triangles": 4996,
+      "reimport_dimensions_m_blender_xyz": [
+        0.06834418699145317,
+        0.03059038333594799,
+        0.2541305447703388
+      ],
+      "bottom_z": -2.492049011593167e-09,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_adjustable_wrench"
+      ]
+    },
+    {
+      "id": "pliers",
+      "triangles": 4540,
+      "reimport_dimensions_m_blender_xyz": [
+        0.05528969317674637,
+        0.017985481768846512,
+        0.1797832414257715
+      ],
+      "bottom_z": -1.465101040487582e-09,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_pliers"
+      ]
+    },
+    {
+      "id": "screwdrivers_02",
+      "triangles": 3548,
+      "reimport_dimensions_m_blender_xyz": [
+        0.10045838356018066,
+        0.2699327766895294,
+        0.02707703376588988
+      ],
+      "bottom_z": -2.200184034961694e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_screwdrivers_02"
+      ]
+    },
+    {
+      "id": "vintage_spacecraft_instrument",
+      "triangles": 13279,
+      "reimport_dimensions_m_blender_xyz": [
+        0.41028693318367004,
+        0.20440196990966797,
+        0.26928554377905023
+      ],
+      "bottom_z": -1.3927136777169835e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_vintage_spacecraft_instrument",
+        "PH_vintage_spacecraft_instrument_glass"
+      ]
+    },
+    {
+      "id": "medical_box",
+      "triangles": 3718,
+      "reimport_dimensions_m_blender_xyz": [
+        0.5254814624786377,
+        0.3501692861318588,
+        0.09751225834045663
+      ],
+      "bottom_z": -2.8063395163258065e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_medical_box"
+      ]
+    },
+    {
+      "id": "metal_toolbox",
+      "triangles": 14228,
+      "reimport_dimensions_m_blender_xyz": [
+        0.4000098705291748,
+        0.27053308486938477,
+        0.3047238164421291
+      ],
+      "bottom_z": -1.7213460878906517e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_metal_toolbox"
+      ]
+    },
+    {
+      "id": "binoculars",
+      "triangles": 19248,
+      "reimport_dimensions_m_blender_xyz": [
+        0.16693279147148132,
+        0.2879329174757004,
+        0.06624977295947332
+      ],
+      "bottom_z": -3.730607289753607e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_binoculars",
+        "PH_binoculars_glass"
+      ]
+    },
+    {
+      "id": "flood_lights",
+      "triangles": 11758,
+      "reimport_dimensions_m_blender_xyz": [
+        0.7783088684082031,
+        1.2824476957321167,
+        1.7881435734095987
+      ],
+      "bottom_z": -5.7822745702651446e-08,
+      "uv_sets_present": true,
+      "material_names": [
+        "PH_flood_lights",
+        "PH_flood_lights_glass"
+      ]
+    }
+  ],
+  "pass": true
+}

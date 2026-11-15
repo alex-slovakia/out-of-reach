@@ -1,0 +1,165 @@
+{
+  "retrieved_utc": "2026-11-15T10:44:37.791858+00:00",
+  "api_url": "https://ambientcg.com/api/v2/full_json?id=Ground109,Ground110&include=downloadData,dimensionsData,displayData",
+  "license": "CC0 1.0 Universal",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "license_policy": "https://docs.ambientcg.com/license/",
+  "assets": [
+    {
+      "id": "Ground109",
+      "page": "https://ambientcg.com/a/Ground109",
+      "source_package_url": "https://ambientcg.com/get?file=Ground109_2K-JPG.zip",
+      "source_package_bytes": 31761974,
+      "physical_width_cm": 280,
+      "method": "PBRPhotogrammetry",
+      "sources": {
+        "Color": {
+          "member": "Ground109_2K-JPG_Color.jpg",
+          "source_sha256": "0d96216c34be43b166151172e2b884849ec9b3fc24b221a0179a27c4dc876d0b",
+          "source_bytes": 5881439,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "d50b97b0"
+        },
+        "NormalGL": {
+          "member": "Ground109_2K-JPG_NormalGL.jpg",
+          "source_sha256": "68b01962ac79d49b86fcaabbdf2d24f957b4d76fa03617da729869650fde4ef0",
+          "source_bytes": 8350263,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "a473d856"
+        },
+        "Roughness": {
+          "member": "Ground109_2K-JPG_Roughness.jpg",
+          "source_sha256": "495ac3077f9a36b542a4feb4599f19fd58d9221107a7983a9534a10795c3c2b2",
+          "source_bytes": 2660000,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "7f0a5fcf"
+        },
+        "AmbientOcclusion": {
+          "member": "Ground109_2K-JPG_AmbientOcclusion.jpg",
+          "source_sha256": "5cee035431380e1824e6d5020330ebe22ca638c6064c73233befe95ce6e609fc",
+          "source_bytes": 3290360,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "3dbc6b4a"
+        },
+        "Displacement": {
+          "member": "Ground109_2K-JPG_Displacement.jpg",
+          "source_sha256": "60c1f135c46d6d36a720eaed12aeb96cf5771e1d548550cad3cfd44a723a0682",
+          "source_bytes": 1455330,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "7cae4a38"
+        }
+      },
+      "products": [
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground109_Color.jpg",
+          "sha256": "59af0bfa7db57b7889b615bf11a75c21682e076c8700e67ecf9e05e6a05ada9a",
+          "channels": "sRGB albedo"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground109_NormalGL.jpg",
+          "sha256": "a00da7bf57a972c86c7f135296a66172473b90b0d6aebd6b3877cf648b0b9779",
+          "channels": "linear OpenGL tangent normal"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground109_Mask.png",
+          "sha256": "1fcf46fe080662cd6450e3f0081dbb66af7d00f84a2e4510f671a4f872ac0501",
+          "channels": "R=AO,G=height,B=roughness,A=255;linear"
+        }
+      ]
+    },
+    {
+      "id": "Ground110",
+      "page": "https://ambientcg.com/a/Ground110",
+      "source_package_url": "https://ambientcg.com/get?file=Ground110_2K-JPG.zip",
+      "source_package_bytes": 35158854,
+      "physical_width_cm": 210,
+      "method": "PBRPhotogrammetry",
+      "sources": {
+        "Color": {
+          "member": "Ground110_2K-JPG_Color.jpg",
+          "source_sha256": "a7f64f1eaa5f7980c000556b4c87a2244c6285720ef8c8d95c5aa5e5e781c8c3",
+          "source_bytes": 6379221,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "7a3b30a0"
+        },
+        "NormalGL": {
+          "member": "Ground110_2K-JPG_NormalGL.jpg",
+          "source_sha256": "36d9399921e465bb9e9d96612a92408643cf6e54dc364a5c01968c07f2b41f5a",
+          "source_bytes": 9186042,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "e402c2fe"
+        },
+        "Roughness": {
+          "member": "Ground110_2K-JPG_Roughness.jpg",
+          "source_sha256": "e2e7f4065b3dc267e8af222aafaf10230d34a42e225cc885691700fb1cba2e04",
+          "source_bytes": 3045386,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "e2e956c1"
+        },
+        "AmbientOcclusion": {
+          "member": "Ground110_2K-JPG_AmbientOcclusion.jpg",
+          "source_sha256": "a0130d58fe714f9282c0061d3445fc73fac2afb5e7182807cd1705e24f694cae",
+          "source_bytes": 3518860,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "d3793ff3"
+        },
+        "Displacement": {
+          "member": "Ground110_2K-JPG_Displacement.jpg",
+          "source_sha256": "8046d2f917b0d2e0d4ab4992d8169a60cfd4d8c81c70cab5b882e0e3cba64dfd",
+          "source_bytes": 1993496,
+          "source_dimensions": [
+            2048,
+            2048
+          ],
+          "zip_crc32": "c461c836"
+        }
+      },
+      "products": [
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground110_Color.jpg",
+          "sha256": "f93f926c39f273d6e57af99a96df148c3033a97cb68daa450cd853a50c5653d8",
+          "channels": "sRGB albedo"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground110_NormalGL.jpg",
+          "sha256": "fb60d0424938dc4dc0de4738900af0aa97f8331308080867ec258b119b4577bd",
+          "channels": "linear OpenGL tangent normal"
+        },
+        {
+          "file": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/Textures/Ground110_Mask.png",
+          "sha256": "f151155918c3fb4350453ea607f596707f0a8cc2c062845425761331c3de8d10",
+          "channels": "R=AO,G=height,B=roughness,A=255;linear"
+        }
+      ]
+    }
+  ],
+  "downloaded_bytes_this_run": 45789319,
+  "source_map_bytes_total": 45760397
+}

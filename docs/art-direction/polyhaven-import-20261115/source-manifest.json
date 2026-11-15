@@ -1,0 +1,804 @@
+{
+  "license": "CC0-1.0",
+  "license_url": "https://polyhaven.com/license",
+  "price_paid": 0,
+  "currency": "EUR",
+  "retrieved_utc": "2026-11-15T10:43:00.838190+00:00",
+  "api_user_agent": "OutOfReachAssetReview/1.0",
+  "assets": [
+    {
+      "id": "flood_lights",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/flood_lights",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_dimensions_mm": [
+        4607.212066650391,
+        2112.691640853882,
+        1810.9944090247154
+      ],
+      "source_polycount": 76868,
+      "files": [
+        {
+          "relative": "flood_lights_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/flood_lights/flood_lights_1k.fbx",
+          "source_md5": "8489fd12aebd5f0dd3734f9398d4fedd",
+          "bytes": 2315564,
+          "sha256": "b0f237744e41f6831ba20812f54bfb2cd0931fbbf9b617a08458211a45f566bc"
+        },
+        {
+          "relative": "textures/flood_lights_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/flood_lights/flood_lights_diff_1k.jpg",
+          "source_md5": "e7bc2e7b3918823c8330a79f83f4e3c5",
+          "bytes": 779142,
+          "sha256": "44715ae98ad0e54b9628e9cb7718192280e5720095aa1c1e5d26a63191cf7a3d"
+        },
+        {
+          "relative": "textures/flood_lights_emissive_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_emissive_1k.png",
+          "source_md5": "832d7ed487d347cc112c61368236f2b8",
+          "bytes": 16579,
+          "sha256": "2ea5b6ceee91824936b85b0c0b3fb398488ba9b69bc891eeb5ccb44980cb17ed"
+        },
+        {
+          "relative": "textures/flood_lights_glass_alpha_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_alpha_1k.png",
+          "source_md5": "19e705eddd3a4ec6777d3003356a624d",
+          "bytes": 874945,
+          "sha256": "e561337644af630faf214422e6c005cdb102be8441e91a36a3162448f6f95cf9"
+        },
+        {
+          "relative": "textures/flood_lights_glass_diff_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_diff_1k.png",
+          "source_md5": "85682ddb667f61644bcabbf9d432615a",
+          "bytes": 3485081,
+          "sha256": "8d35658f9ac4c663bb799c2a7763d0678ffd4bcc60af0ff5fd5f7556fd4f827d"
+        },
+        {
+          "relative": "textures/flood_lights_glass_nor_gl_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_nor_gl_1k.png",
+          "source_md5": "9999ab93ff6c3d701431460eabe331d2",
+          "bytes": 3019345,
+          "sha256": "de32d4f49d5ad946a1493371ea25542765103d4b33ff197f53d94199ae404699"
+        },
+        {
+          "relative": "textures/flood_lights_glass_rough_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/flood_lights/flood_lights_glass_rough_1k.png",
+          "source_md5": "ebcb92b0434dcf85988d20a899dbfde5",
+          "bytes": 940816,
+          "sha256": "fd1600efa0e3223dafbc4b1cf1c95ed0c5640b4bc96be39e5b03e0807b0480bf"
+        },
+        {
+          "relative": "textures/flood_lights_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_metal_1k.exr",
+          "source_md5": "9dde1f990d3abd8208bb76fbb3e1b503",
+          "bytes": 852494,
+          "sha256": "d46539ad97b455231ccc730acabf3ee2f23431361a3b1e5092854532c6adeca1"
+        },
+        {
+          "relative": "textures/flood_lights_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_nor_gl_1k.exr",
+          "source_md5": "7ffd98578f672133e31306148a487501",
+          "bytes": 1699751,
+          "sha256": "249d6095938708e9e14d53720bb650c00b0b8084547b56b40c157eb26e2405ca"
+        },
+        {
+          "relative": "textures/flood_lights_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/flood_lights/flood_lights_rough_1k.exr",
+          "source_md5": "d72684d2dffdf9afd775cfa11647be61",
+          "bytes": 735966,
+          "sha256": "d1f3f5b883c9d70bc4173309850029f3d1593faabccd6e51ea8c67775cac701b"
+        }
+      ]
+    },
+    {
+      "id": "portable_generator",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/portable_generator",
+      "authors": {
+        "James Ray Cock": "All"
+      },
+      "source_dimensions_mm": [
+        818.3408081531525,
+        564.0000104904175,
+        576.9232391612604
+      ],
+      "source_polycount": 26419,
+      "files": [
+        {
+          "relative": "portable_generator_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/portable_generator/portable_generator_1k.fbx",
+          "source_md5": "3069d48c5abf51ff98b0d9b900cca21b",
+          "bytes": 873900,
+          "sha256": "60e725eb5356028e7721e95b2616c3de2fa8331c2e8fe06ab5ebf16bc1f1025e"
+        },
+        {
+          "relative": "textures/portable_generator_alpha_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/portable_generator/portable_generator_alpha_1k.png",
+          "source_md5": "5e66992234b814ad5ffcbd92f004bee7",
+          "bytes": 134342,
+          "sha256": "112a74af62ccb842a22916e51a79364e7121f948e231b8ce9deac797417ef6bd"
+        },
+        {
+          "relative": "textures/portable_generator_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/portable_generator/portable_generator_diff_1k.jpg",
+          "source_md5": "3d572e1716148ca5d641d8a199fe9192",
+          "bytes": 755079,
+          "sha256": "32acc300105a2df2290d872889b24e1b29ff1ca2c56c0a0cf8fbba0c5966a063"
+        },
+        {
+          "relative": "textures/portable_generator_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/portable_generator/portable_generator_metal_1k.exr",
+          "source_md5": "fd9b609198d41fcc6336652956d12d31",
+          "bytes": 795306,
+          "sha256": "5cc02ee2b460b6719ecd07324984259adcd3e04749f0cb6bbd7c000c7297b60f"
+        },
+        {
+          "relative": "textures/portable_generator_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/portable_generator/portable_generator_nor_gl_1k.exr",
+          "source_md5": "d6e2a886135cc8868861b19159d1c590",
+          "bytes": 1772190,
+          "sha256": "fb32bd134bb3a705042d6b6257a3f16afdfac229659325c6fdc984d93702bd3a"
+        },
+        {
+          "relative": "textures/portable_generator_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/portable_generator/portable_generator_rough_1k.exr",
+          "source_md5": "a9e241c16a67401faa051d23a502193e",
+          "bytes": 767846,
+          "sha256": "f2204b89a44753fbe1d616c42d58c3a7ba6b81f7f057f5ae2e424efb2fd7721d"
+        }
+      ]
+    },
+    {
+      "id": "long_life_food",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/long_life_food",
+      "authors": {
+        "Mia Pecina Zorko": "All"
+      },
+      "source_dimensions_mm": [
+        523.7634181976318,
+        113.55656012892723,
+        237.57458478212357
+      ],
+      "source_polycount": 4712,
+      "files": [
+        {
+          "relative": "long_life_food_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/long_life_food/long_life_food_1k.fbx",
+          "source_md5": "7b3aacc46f0e4f2162aa389b596cb203",
+          "bytes": 165916,
+          "sha256": "9a2e7acf5207437efe714da83faaa0218b3d883fbd647963033d23f1d22bd911"
+        },
+        {
+          "relative": "textures/long_life_food_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/long_life_food/long_life_food_diff_1k.jpg",
+          "source_md5": "572a480d7cf1b01e99c7b98dd21969dd",
+          "bytes": 715844,
+          "sha256": "18ef2f29f8cec3ebc3cc05717809bc32b6ec58ebedbce7de3c9401c09b9e7162"
+        },
+        {
+          "relative": "textures/long_life_food_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/long_life_food/long_life_food_metal_1k.exr",
+          "source_md5": "16fbcc4e51d208c1c7c3ddfd8a3d7c62",
+          "bytes": 68297,
+          "sha256": "3c684f3a2634ed16922fe060d59dbe4bc6d2e6b081aeb6dcbc8bb73ff4c0e394"
+        },
+        {
+          "relative": "textures/long_life_food_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/long_life_food/long_life_food_nor_gl_1k.exr",
+          "source_md5": "33f124aa54b4b6489679933152303ca7",
+          "bytes": 613579,
+          "sha256": "821812701c775b5dbc4b2f8b054d416ad349ef0b5e2be5a85e85ae60fe459881"
+        },
+        {
+          "relative": "textures/long_life_food_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/long_life_food/long_life_food_rough_1k.exr",
+          "source_md5": "4229cc3f8c6e9e4b0287b6ba27776814",
+          "bytes": 842694,
+          "sha256": "0913e64b29497fb1d49de6cdeb74d3040b16f131f8bb522e245f5e6de0793896"
+        }
+      ]
+    },
+    {
+      "id": "coast_land_rocks_04",
+      "resolution": "2k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/coast_land_rocks_04",
+      "authors": {
+        "Rob Tuytel": "Photography, processing",
+        "Rico Cilliers": "cleanup"
+      },
+      "source_dimensions_mm": [
+        9963.15860748291,
+        11501.500129699707,
+        848.6063703894615
+      ],
+      "source_polycount": 2037497,
+      "files": [
+        {
+          "relative": "coast_land_rocks_04_2k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/2k/coast_land_rocks_04/coast_land_rocks_04_2k.fbx",
+          "source_md5": "7004fc8112c8a4c195d44c3230f343e0",
+          "bytes": 87174956,
+          "sha256": "6f5601595e454fd4d5017466cda0e849e12ff4da5c39b11434c9a6f44b5b4a3a"
+        },
+        {
+          "relative": "textures/coast_land_rocks_04_nor_gl_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/coast_land_rocks_04/coast_land_rocks_04_nor_gl_2k.exr",
+          "source_md5": "cf78bdd7851e652da3bed0302d550918",
+          "bytes": 8560421,
+          "sha256": "7bf43a8110767a1a9cd4cc54d604788194d6cbd21f491ce257bde0010c37af09"
+        },
+        {
+          "relative": "textures/coast_land_rocks_04_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/coast_land_rocks_04/coast_land_rocks_04_diff_2k.jpg",
+          "source_md5": "045288feb03407563462f681135cb631",
+          "bytes": 3378711,
+          "sha256": "98d321b8198a1e88dedc512a5c102cb71ffc5c59974b4c1a157eaaf2193c1012"
+        },
+        {
+          "relative": "textures/coast_land_rocks_04_rough_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/coast_land_rocks_04/coast_land_rocks_04_rough_2k.exr",
+          "source_md5": "507583f4f73d8230629ffbd4edef2cfe",
+          "bytes": 3651556,
+          "sha256": "255671bb0ab438448e4f822f887ca0cb770cc0ea7f82562242e583d842ca900d"
+        }
+      ]
+    },
+    {
+      "id": "namaqualand_boulder_02",
+      "resolution": "2k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/namaqualand_boulder_02",
+      "authors": {
+        "Greg Zaal": "Photography",
+        "Rico Cilliers": "modeling"
+      },
+      "source_dimensions_mm": [
+        2533.2456827163696,
+        1234.761118888855,
+        883.3709806203842
+      ],
+      "source_polycount": 183681,
+      "files": [
+        {
+          "relative": "namaqualand_boulder_02_2k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/2k/namaqualand_boulder_02/namaqualand_boulder_02_2k.fbx",
+          "source_md5": "68c7309b72b32a7946a6d6a52d26fba7",
+          "bytes": 3095484,
+          "sha256": "ee43e9e5b274337c62b83b921ed472f5456f3441c393ec144c658fdd47cc430a"
+        },
+        {
+          "relative": "textures/namaqualand_boulder_02_rough_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulder_02/namaqualand_boulder_02_rough_2k.exr",
+          "source_md5": "5c1433f7a717cc9b6378869f03174473",
+          "bytes": 2251265,
+          "sha256": "9669c0861068639ef852e464e57ce899c7ecaac5e172abfd44559f403f629799"
+        },
+        {
+          "relative": "textures/namaqualand_boulder_02_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/namaqualand_boulder_02/namaqualand_boulder_02_diff_2k.jpg",
+          "source_md5": "0f37f02ceb397383a0d0bddfaef4441d",
+          "bytes": 3867934,
+          "sha256": "0f81c51224deb025079f10dad21530e77e42baad541eb766922fe8fc6e46a88e"
+        },
+        {
+          "relative": "textures/namaqualand_boulder_02_nor_gl_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/2k/namaqualand_boulder_02/namaqualand_boulder_02_nor_gl_2k.exr",
+          "source_md5": "96ad28e14dae30a493c7bfb8b56fc3e6",
+          "bytes": 8275148,
+          "sha256": "e548cc5e051a1f2e2b53d706276e1d73e5c26212448319e1a18903b6cc5b6fdb"
+        }
+      ]
+    },
+    {
+      "id": "combination_wrench",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/combination_wrench",
+      "authors": {
+        "BKS": "All"
+      },
+      "source_dimensions_mm": [
+        56.58109299838543,
+        336.9841277599335,
+        21.513011306524277
+      ],
+      "source_polycount": 1986,
+      "files": [
+        {
+          "relative": "combination_wrench_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/combination_wrench/combination_wrench_1k.fbx",
+          "source_md5": "de6bffc332a2342bf09273f2942c2292",
+          "bytes": 86972,
+          "sha256": "d98779c9568e46ea71f9db81154cdaf674b80b0d60b1e863e6c17f256650b440"
+        },
+        {
+          "relative": "textures/combination_wrench_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/combination_wrench/combination_wrench_diff_1k.jpg",
+          "source_md5": "6566783fa1e6904fce6862988a1a8db3",
+          "bytes": 463822,
+          "sha256": "5cbfc5a8603d95cd310e299042d7e7a458e287dd6ca74a53228ff70c22d96071"
+        },
+        {
+          "relative": "textures/combination_wrench_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/combination_wrench/combination_wrench_metal_1k.exr",
+          "source_md5": "744121db379e3cb801d2cb6cae06566e",
+          "bytes": 151480,
+          "sha256": "98a43c117535fb5ed9f86f8c844db7272a99b45ae774ac25ddb18a3587e4e4f9"
+        },
+        {
+          "relative": "textures/combination_wrench_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/combination_wrench/combination_wrench_nor_gl_1k.exr",
+          "source_md5": "9824752a2cb0b895cc7ab862b217b7a3",
+          "bytes": 979956,
+          "sha256": "c4327c44d8a1c8eb6f61b1b6ddb46467886654a4116f4008575915c801626b35"
+        },
+        {
+          "relative": "textures/combination_wrench_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/combination_wrench/combination_wrench_rough_1k.exr",
+          "source_md5": "df7b7ab694f99f37f8f65d2bcf5d9ab6",
+          "bytes": 506296,
+          "sha256": "b73efe97339619267ef0c2ce0ae5d81eadd4e1934bd399b358b72a3ff435aa48"
+        }
+      ]
+    },
+    {
+      "id": "adjustable_wrench",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/adjustable_wrench",
+      "authors": {
+        "Mateusz Sadek": "All"
+      },
+      "source_dimensions_mm": [
+        68.34418512880802,
+        30.590344220399857,
+        254.1303038597107
+      ],
+      "source_polycount": 5390,
+      "files": [
+        {
+          "relative": "adjustable_wrench_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/adjustable_wrench/adjustable_wrench_1k.fbx",
+          "source_md5": "85c68133ca4b86f4eafb3fdf2823d560",
+          "bytes": 235708,
+          "sha256": "6e5939b9e7f92bb4659cd2b758352b27b748efd91deac902b3aa3b5b5795baa1"
+        },
+        {
+          "relative": "textures/adjustable_wrench_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/adjustable_wrench/adjustable_wrench_diff_1k.jpg",
+          "source_md5": "1118cb148986000a9cf87609cd75fcd0",
+          "bytes": 783317,
+          "sha256": "d4725eb3c741e337c28c0ed57712ecdfb5f3ee34f130907e34cea0b8e7809595"
+        },
+        {
+          "relative": "textures/adjustable_wrench_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/adjustable_wrench/adjustable_wrench_metal_1k.exr",
+          "source_md5": "34cd6c519bc47e21b84849921bc86a09",
+          "bytes": 63312,
+          "sha256": "2798626750b39185cb3b6a8d5786ba0be310f3688a0e756ff0668bad3e5dbf69"
+        },
+        {
+          "relative": "textures/adjustable_wrench_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/adjustable_wrench/adjustable_wrench_nor_gl_1k.exr",
+          "source_md5": "be256bf6b2a5fbb573ae7bc171a4d79f",
+          "bytes": 1763968,
+          "sha256": "60ad17c123dc89300b15d98d42e1dec19dcde018a419d33e377c62ae684c3b01"
+        },
+        {
+          "relative": "textures/adjustable_wrench_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/adjustable_wrench/adjustable_wrench_rough_1k.exr",
+          "source_md5": "ac603f9a7b769701758b6c058ef0f05a",
+          "bytes": 818409,
+          "sha256": "7eb1d13ab46d2400889141b76e3554e5f7faac084c34e204c05268ea2a713fbf"
+        }
+      ]
+    },
+    {
+      "id": "pliers",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/pliers",
+      "authors": {
+        "PierreB3D": "All"
+      },
+      "source_dimensions_mm": [
+        55.28969317674637,
+        17.9854528978467,
+        179.78323251008987
+      ],
+      "source_polycount": 4540,
+      "files": [
+        {
+          "relative": "pliers_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/pliers/pliers_1k.fbx",
+          "source_md5": "544ab1da0b99a7b0d2b49599c1ccb4ad",
+          "bytes": 168828,
+          "sha256": "f3189084fb85a91c7151f83c0be4eeaffa66fab0616f5d9ce9add3cdd39eb3dd"
+        },
+        {
+          "relative": "textures/pliers_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/pliers/pliers_diff_1k.jpg",
+          "source_md5": "554ebf0ee29a92b8e17e0ab1b1013424",
+          "bytes": 669794,
+          "sha256": "57d3be6ebd943ef734b9073180f8bce5f30cb34e49e3bdcdd5a2eec231acc3a4"
+        },
+        {
+          "relative": "textures/pliers_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/pliers/pliers_metal_1k.exr",
+          "source_md5": "85cdeda6f21a3af4608e5bde0a5a95b7",
+          "bytes": 394175,
+          "sha256": "d26242a144bf48b061f55aad106800fd8ef840679e59d60014c2c25bc9bb5287"
+        },
+        {
+          "relative": "textures/pliers_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/pliers/pliers_nor_gl_1k.exr",
+          "source_md5": "7e94c74b905bc185730b3b8ebd57c6cd",
+          "bytes": 849092,
+          "sha256": "c4d1c530228465ef74052fba25c443e2a0f76ec33924aa00dd95c304e639227c"
+        },
+        {
+          "relative": "textures/pliers_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/pliers/pliers_rough_1k.exr",
+          "source_md5": "1bf9bf69f56da780136d71ea7ce308f4",
+          "bytes": 707001,
+          "sha256": "cb90fedba4930f211a02df6e3c7458db7c8aa227e368583e9b5353c9bee90f13"
+        }
+      ]
+    },
+    {
+      "id": "screwdrivers_02",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/screwdrivers_02",
+      "authors": {
+        "BKS": "All"
+      },
+      "source_dimensions_mm": [
+        100.45838262885809,
+        269.9327766895294,
+        27.07698941230774
+      ],
+      "source_polycount": 3548,
+      "files": [
+        {
+          "relative": "screwdrivers_02_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/screwdrivers_02/screwdrivers_02_1k.fbx",
+          "source_md5": "6565a1e67e876e0a18ad2dac6121e5df",
+          "bytes": 138940,
+          "sha256": "bb7c1b8cbec57f97103c80bc3455744b7ac6a65dcf9b77bf9678f3fa085a6448"
+        },
+        {
+          "relative": "textures/screwdrivers_02_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/screwdrivers_02/screwdrivers_02_diff_1k.jpg",
+          "source_md5": "5c372914e0abccd1cb96f2c8e4774474",
+          "bytes": 642727,
+          "sha256": "2ddfa1712536ee93b588ed920f5e629bdcfeb76d0dc11b021e50e8df3af0f7e9"
+        },
+        {
+          "relative": "textures/screwdrivers_02_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/screwdrivers_02/screwdrivers_02_metal_1k.exr",
+          "source_md5": "67de3184ff8860a884aecb96e5cb0258",
+          "bytes": 211634,
+          "sha256": "e904d8990575698c4913fdee5f8d5f5f87a441742d761af0242ef889f44a03b4"
+        },
+        {
+          "relative": "textures/screwdrivers_02_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/screwdrivers_02/screwdrivers_02_nor_gl_1k.exr",
+          "source_md5": "2e95b7b94bfb3e559d57b350d9c5d2f3",
+          "bytes": 1517567,
+          "sha256": "37ab9c66eb56ca129fd7a5a60a01ca71397a5f13cfa06bca7b5d8c70c0c77f13"
+        },
+        {
+          "relative": "textures/screwdrivers_02_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/screwdrivers_02/screwdrivers_02_rough_1k.exr",
+          "source_md5": "6f420fa98f5578465738700f8b1c1d14",
+          "bytes": 525369,
+          "sha256": "faac13c7081c856b486fa8d2b749abf518615ae537904d4542d04e8d8e806010"
+        }
+      ]
+    },
+    {
+      "id": "vintage_spacecraft_instrument",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/vintage_spacecraft_instrument",
+      "authors": {
+        "Micha\u0142 Wi\u015bniewski": "All"
+      },
+      "source_dimensions_mm": [
+        410.28693318367004,
+        204.4019252061844,
+        269.28550004959106
+      ],
+      "source_polycount": 13279,
+      "files": [
+        {
+          "relative": "vintage_spacecraft_instrument_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_1k.fbx",
+          "source_md5": "9133426f0c177146d10701032d9beb01",
+          "bytes": 919596,
+          "sha256": "491fe3dd99f34bba9f4a9fa2fbad5bdfd1a71db0540834c80249f100e693f2e2"
+        },
+        {
+          "relative": "textures/vintage_spacecraft_instrument_alpha_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_alpha_1k.png",
+          "source_md5": "ed856b7cac92f50807d786991646c031",
+          "bytes": 187153,
+          "sha256": "c9fa2a74cb265df7591f617885938f2db06fc65d7098772ab550353387e48da6"
+        },
+        {
+          "relative": "textures/vintage_spacecraft_instrument_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_diff_1k.jpg",
+          "source_md5": "441b91da9b22dc1456b12e851c17b8cd",
+          "bytes": 629038,
+          "sha256": "00beca6621b91592a17b9146cd59ce70fb63926f94f62074d62d65a10c021f0e"
+        },
+        {
+          "relative": "textures/vintage_spacecraft_instrument_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_metal_1k.exr",
+          "source_md5": "7d969d0bc55ba8da37f1bb502e0bd972",
+          "bytes": 711141,
+          "sha256": "79e02a362dc0e5f3ddaef4bbd647594cec6f8feb136fa85338b2c265e712c998"
+        },
+        {
+          "relative": "textures/vintage_spacecraft_instrument_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_nor_gl_1k.exr",
+          "source_md5": "b84f985ce48279affca813859d8bd1da",
+          "bytes": 1159689,
+          "sha256": "1b92a85899949fd1debce560e463b7a6b8bcb9d75d80fbc7232ca52d9ae72e4c"
+        },
+        {
+          "relative": "textures/vintage_spacecraft_instrument_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/vintage_spacecraft_instrument/vintage_spacecraft_instrument_rough_1k.exr",
+          "source_md5": "8d532327e0d14de492d8088f29252d06",
+          "bytes": 655424,
+          "sha256": "4d765beeea806567d8ebc9eb42ea50bd6beca003943fb3a59ad66c44f8c7ce4a"
+        }
+      ]
+    },
+    {
+      "id": "medical_box",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/medical_box",
+      "authors": {
+        "Ulan Cabanilla": "All"
+      },
+      "source_dimensions_mm": [
+        525.4814624786377,
+        350.16927123069763,
+        97.5121483206749
+      ],
+      "source_polycount": 3718,
+      "files": [
+        {
+          "relative": "medical_box_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/medical_box/medical_box_1k.fbx",
+          "source_md5": "fa44408a4a30d62a0608b505b51e6182",
+          "bytes": 139628,
+          "sha256": "1c5705d818448038c6b3811273340379d948fb5bcdbeb751b9f040b5a0a600f9"
+        },
+        {
+          "relative": "textures/medical_box_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/medical_box/medical_box_diff_1k.jpg",
+          "source_md5": "671ae67229ffd836b6a5dc259cdae74f",
+          "bytes": 674432,
+          "sha256": "64627e4be15f9a83a2d160b62e54bb9963f225c2312671b3d6d82928f7de19a9"
+        },
+        {
+          "relative": "textures/medical_box_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/medical_box/medical_box_metal_1k.exr",
+          "source_md5": "b483c58e02c125eb9fba540efc871da7",
+          "bytes": 588247,
+          "sha256": "cb1bcbcdc5a41e733598829072986c5fc9b0ff1bded10f648dcaf7cd35ae20fc"
+        },
+        {
+          "relative": "textures/medical_box_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/medical_box/medical_box_nor_gl_1k.exr",
+          "source_md5": "a40f917a87e1fa9bd0605f247433906c",
+          "bytes": 749680,
+          "sha256": "db92927feffaa0b1b9ed2828bb4ceea3dfa99e5eb3f0932249421766f692da47"
+        },
+        {
+          "relative": "textures/medical_box_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/medical_box/medical_box_rough_1k.exr",
+          "source_md5": "e6d8a2dca64808632014d065bc7a7d62",
+          "bytes": 786756,
+          "sha256": "8f95209f353593e2c6605ec6a171cd040cc8f6f74ded61d6f03cdbec1996e8f9"
+        }
+      ]
+    },
+    {
+      "id": "metal_toolbox",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/metal_toolbox",
+      "authors": {
+        "Mateusz Sadek": "All"
+      },
+      "source_dimensions_mm": [
+        400.0099003314972,
+        292.32875257730484,
+        347.10586071014404
+      ],
+      "source_polycount": 14228,
+      "files": [
+        {
+          "relative": "metal_toolbox_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/metal_toolbox/metal_toolbox_1k.fbx",
+          "source_md5": "54a40cdbd11fd72bd479bef1907e40ac",
+          "bytes": 536476,
+          "sha256": "bf46eab37ecae1d207cdf10cf67cd8b43004453bf0625930c038926d28d902b9"
+        },
+        {
+          "relative": "textures/metal_toolbox_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/metal_toolbox/metal_toolbox_diff_1k.jpg",
+          "source_md5": "63f1832b685c2e55594b6bb82739dacb",
+          "bytes": 661804,
+          "sha256": "21e1d21880e49db3fde0457d53b78a70db61234a201da9f0181dd0880b110473"
+        },
+        {
+          "relative": "textures/metal_toolbox_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/metal_toolbox/metal_toolbox_metal_1k.exr",
+          "source_md5": "0d441b7116f4f2324602e103fadda82f",
+          "bytes": 283593,
+          "sha256": "5db3e49d22e7619230b170870addc82873b9bacb62fe15a8f0a64870bc459244"
+        },
+        {
+          "relative": "textures/metal_toolbox_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/metal_toolbox/metal_toolbox_nor_gl_1k.exr",
+          "source_md5": "816d897d604bbc0348fada36b823f263",
+          "bytes": 1269369,
+          "sha256": "04a3ccd9e259842c4b7280700ddc86e4a540b4424de5b606961c262b1c307832"
+        },
+        {
+          "relative": "textures/metal_toolbox_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/metal_toolbox/metal_toolbox_rough_1k.exr",
+          "source_md5": "669a3a854ce787814b1de6dc72e3f03f",
+          "bytes": 909442,
+          "sha256": "496a6030e95f60e0cf48c188ca2999300537d4e112aab30e5138610dbcc0f04f"
+        }
+      ]
+    },
+    {
+      "id": "binoculars",
+      "resolution": "1k",
+      "kind": "model",
+      "source_url": "https://polyhaven.com/a/binoculars",
+      "authors": {
+        "Derek Wight": "All"
+      },
+      "source_dimensions_mm": [
+        166.93278402090073,
+        288.1428301334381,
+        76.575618237257
+      ],
+      "source_polycount": 19248,
+      "files": [
+        {
+          "relative": "binoculars_1k.fbx",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/fbx/1k/binoculars/binoculars_1k.fbx",
+          "source_md5": "17bccb4647e6416a4c33acdf944166f1",
+          "bytes": 589340,
+          "sha256": "faf321e31c5c995ea0300986d4c1cd7898a4fc3fc4ce2ec673610e3be5221bf3"
+        },
+        {
+          "relative": "textures/binoculars_alpha_1k.png",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/binoculars/binoculars_alpha_1k.png",
+          "source_md5": "202732de0a75583bdb75697a54c66310",
+          "bytes": 19460,
+          "sha256": "a3cae776c0849d06e2b088a4f2ee347a3fb09a18ef9632b7f99e3ea4a0e6df0e"
+        },
+        {
+          "relative": "textures/binoculars_diff_1k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/binoculars/binoculars_diff_1k.jpg",
+          "source_md5": "4d61b8ef8ab8fe2af6dfe2bb9caa5a30",
+          "bytes": 313026,
+          "sha256": "a17d09d2a70d05efb9a7b5367e8d6e0672bf35fe0698617a59dfbf54f782da92"
+        },
+        {
+          "relative": "textures/binoculars_metal_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/binoculars/binoculars_metal_1k.exr",
+          "source_md5": "b7c771d5ab4553f38e1b63deced3a833",
+          "bytes": 302627,
+          "sha256": "46460e2e4fa57f3ff4a7891089efd9e31981dd97fb74a2d03f969e473615f53e"
+        },
+        {
+          "relative": "textures/binoculars_nor_gl_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/binoculars/binoculars_nor_gl_1k.exr",
+          "source_md5": "4d6301ff5b32587a1518fa94b7b8948f",
+          "bytes": 556265,
+          "sha256": "8ae086c21e174e547c24dd97e63c58523e018b2e4cf0112aef98ed5550ca25d2"
+        },
+        {
+          "relative": "textures/binoculars_rough_1k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Models/exr/1k/binoculars/binoculars_rough_1k.exr",
+          "source_md5": "87a91ba222e4c41d3fa9b284dabb6406",
+          "bytes": 700656,
+          "sha256": "25988c6a43c0e44924ba76d8e5cd732ca2877f38155a7c934787737b88a701ae"
+        }
+      ]
+    },
+    {
+      "id": "coast_sand_02",
+      "resolution": "2k",
+      "kind": "ground",
+      "source_url": "https://polyhaven.com/a/coast_sand_02",
+      "authors": {
+        "Rob Tuytel": "All"
+      },
+      "source_dimensions_mm": [
+        15000,
+        15000
+      ],
+      "source_polycount": null,
+      "files": [
+        {
+          "relative": "textures/coast_sand_02_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/coast_sand_02/coast_sand_02_diff_2k.jpg",
+          "source_md5": "0e757f90192c825c536cb8cfcaa137a0",
+          "bytes": 3381179,
+          "sha256": "3dba77f23cecaa8ab16889fe9b30f2018a24f2afb002d1c046143b9a5e097946"
+        },
+        {
+          "relative": "textures/coast_sand_02_nor_gl_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/exr/2k/coast_sand_02/coast_sand_02_nor_gl_2k.exr",
+          "source_md5": "6f8d3bc1b3811c4cc7a9023f96f51281",
+          "bytes": 8885684,
+          "sha256": "76923a4a5b30a10e40371c15e0bd3e99a7dc07d7d0241f6265fd831674dd983f"
+        },
+        {
+          "relative": "textures/coast_sand_02_rough_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/exr/2k/coast_sand_02/coast_sand_02_rough_2k.exr",
+          "source_md5": "e5d652d5f24d49ab1214f7779b2d427b",
+          "bytes": 2406818,
+          "sha256": "ff4528ed869f1b7d8bca3c4b7301b97ccfb0f5db25bddb18ceaf2ebe70d5f62f"
+        }
+      ]
+    },
+    {
+      "id": "gravelly_sand",
+      "resolution": "2k",
+      "kind": "ground",
+      "source_url": "https://polyhaven.com/a/gravelly_sand",
+      "authors": {
+        "Dario Barresi": "All"
+      },
+      "source_dimensions_mm": [
+        2480.0000190734863,
+        2480.0000190734863
+      ],
+      "source_polycount": null,
+      "files": [
+        {
+          "relative": "textures/gravelly_sand_diff_2k.jpg",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/gravelly_sand/gravelly_sand_diff_2k.jpg",
+          "source_md5": "b90aa766dac59af8c136321149ca86bc",
+          "bytes": 4402825,
+          "sha256": "cdab7130a67bc70f8c241b9ab2cd41b731d2baf1ec533939a333573b80070dd6"
+        },
+        {
+          "relative": "textures/gravelly_sand_nor_gl_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/exr/2k/gravelly_sand/gravelly_sand_nor_gl_2k.exr",
+          "source_md5": "3a37d9b359828d7509d19f4fbb176f74",
+          "bytes": 11039251,
+          "sha256": "3de29ba70c6e909c9dd8075910297246074b408bb65e3477b86172d4c734d61b"
+        },
+        {
+          "relative": "textures/gravelly_sand_rough_2k.exr",
+          "url": "https://dl.polyhaven.org/file/ph-assets/Textures/exr/2k/gravelly_sand/gravelly_sand_rough_2k.exr",
+          "source_md5": "0d8680f1b791861158aac25c7554aaa3",
+          "bytes": 1803749,
+          "sha256": "c6ffaecdef7458ce388163ca9c961b7674bd48e47b097765bbfa78a75c03c5a1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Native Unity6000.3.28f1 renders of savedBootstrap; editor reviewcamera, existing geometry/materials/lighting. Marine/ship activated for review. No gameplay traversal proof. No scene saved by QA.

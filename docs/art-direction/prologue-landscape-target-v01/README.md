@@ -1,0 +1,9 @@
+# Prologue landscape art target
+
+`landscape-target.png` is a generated concept, NOT an implemented Unity screenshot or completed feature. Created with the built-in imagegen tool from Alex's actual ground screenshot on15Nov2026. Existing site layout and clear concrete apron remain constraints.
+
+Prompt direction: same camera/layout; photorealistic semi-arid coastal launch site, warm ochre soil and compacted gravel blended irregularly, shallow erosion/drainage, partially buried sandstone, sparse dry grass and coastal scrub in terrain-driven clusters, distant low warm hills, floodlights/cases/cable trays near apron, concrete seams, subtle tracks, soft late-afternoon side lighting and wispy Earth clouds. Avoid repetitive tiling, random junk, alien scenery, excessive haze, global wet gloss or inaccessible launch routes.
+
+Priority implementation order: distant silhouette and broad terrain variation; correctly distributed low-cost vegetation; contact/edge detail and material scale; coherent side lighting/atmospheric depth; purposeful service props. Approved crates/animations remain. Current verified asset integration is only the first material/prop increment and does not achieve this target yet.
+
+Latest playtest requests: call starting cargo-loading scene **prologue**; preserve praised color-organized crates and approved animation. Add actual loaded-mass bar with600kg limit and clear overload warning; requested failed-launch cinematic after attempting overloaded departure is a future documented game rule. Audit cargo choices' real resource effects and detached crate stains/decals. Movement mechanics moved to one Codex worker; body/carry/push animation and spaceship/tower remodeling remain queued for Claude. Water-deluge/steam/launch FX need separate ownership coordination before implementation.

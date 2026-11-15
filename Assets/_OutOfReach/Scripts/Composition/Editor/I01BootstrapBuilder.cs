@@ -669,7 +669,8 @@ namespace OutOfReach.Composition.Editor
 
         private static void ConfigureEnvironment()
         {
-            RenderSettings.skybox = AssetDatabase.LoadAssetAtPath<Material>("Assets/_OutOfReach/Visuals/Space/DistantStars.mat");
+            I06NasaDeepSkyAuthoring.EnsureAssets();
+            RenderSettings.skybox = AssetDatabase.LoadAssetAtPath<Material>(I06NasaDeepSkyAuthoring.MaterialPath);
             RenderSettings.ambientMode = AmbientMode.Flat;
             RenderSettings.ambientLight = new Color(.22f, .23f, .25f);
             RenderSettings.ambientIntensity = 1;

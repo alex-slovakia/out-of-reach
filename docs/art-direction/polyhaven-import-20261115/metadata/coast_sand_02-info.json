@@ -1,0 +1,56 @@
+{
+  "date_published": 1646697600,
+  "name": "Coast Sand 02",
+  "type": 1,
+  "staging": null,
+  "authors": {
+    "Rob Tuytel": "All"
+  },
+  "dimensions": [
+    15000,
+    15000
+  ],
+  "tags": [
+    "beach",
+    "sand",
+    "seaside",
+    "rough",
+    "coastal",
+    "ocean",
+    "uneven",
+    "stones",
+    "brown",
+    "dirt"
+  ],
+  "max_resolution": [
+    8192,
+    8192
+  ],
+  "files_hash": "f0a2615f231cff3567d9a4239c4a6070181a304a",
+  "description": "Free 8K texture of coarse coastal sand: compacted brown grains, rough uneven surface with small stones and dirt clumps, high-detail surface relief.",
+  "categories": [
+    "outdoor",
+    "terrain",
+    "sand",
+    "natural",
+    "collection: smugglers_cove",
+    "aerial"
+  ],
+  "category_id": "2bed9a9d-8f5f-5f1f-815c-e33cfa63bf69",
+  "category": "Ground & Terrain/Sand/Beach & Coastal Sand",
+  "collections": [
+    "smugglers_cove"
+  ],
+  "attributes": {
+    "surface_use": "ground",
+    "origin": "natural",
+    "setting": "outdoor",
+    "aerial": true,
+    "condition": [
+      "clean"
+    ]
+  },
+  "img_version": "7b305d92",
+  "download_count": 42932,
+  "thumbnail_url": "https://cdn.polyhaven.com/asset_img/thumbs/coast_sand_02.png?width=256&height=256&format=webp&v=7b305d92"
+}

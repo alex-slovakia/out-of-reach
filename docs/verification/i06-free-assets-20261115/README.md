@@ -1,0 +1,11 @@
+# Licensed scene detail checkpoint
+
+Unity6000.3.28f1 isolated import/authoring: `TestResults/polyhaven-scene-03.log` exit0. Imported13PolyHaven model prefabs and2ground materials;20scene instances in launch service areas, cockpit, engineering and habitat. Native imported geometry/pivots/metre bounds/materials checked. Two earlier import checks caught Texture2D-vs-Cubemap metadata and single-mesh FBX axis conversion; both were corrected before success, with strict bounds checks retained.
+
+Ground109+Ground110 blend on cloned near terrain:105908triangles,53092vertices, maximum2.363cm added relief; zero protected vertices displaced and unchanged collider identities. Ground finish is visual-only and does not claim a new walkable terrain system. Metal009/027 used on new mounting plates/brackets. New props do not grant extra supplies or create fake interactions.
+
+Native scene review `TestResults/free-assets-captures-02.log` exit0: corrected tool/ration mounts after first screenshots, removed coarse placeholder scrub, assigned preserved NASA4K celestial map as orbital sky. All captured images except the separate generated landscape concept are native Unity scene renders using an editor review camera, not proof of player traversal or final visual acceptance. The sky preview includes an intentionally activated launch terrain at an unsuitable review-camera position; it is not suitable as a space beauty screenshot. Do not use it as runtime clipping evidence; a clean sky-only capture remains pending.
+
+Source geometry/data originals retained. Scene diff has222newserializedobjects, zero removed existing objects,8modified existing sections (scene parents, saved prefab overrides, composition audio, orbital sky, RenderSettings). No packages/settings changed by the delivered scope. Skill GUID checker:2609files,0errors;47warnings from existing temporary QA fixtures. Offline Horizons32samples pass. New complete Windows build/performance and full playable-route acceptance remain unverified.
+
+This first detail pass does **not** achieve the generated prologue-landscape art target. Horizon shape, vegetation distribution and launch FX remain work. See the asset comparison and active handover for explicit limits and next work.

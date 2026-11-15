@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current increment — licensed scenery, wake title and movement handover
+
+13curated PolyHaven models/20scene placements, ambientCG ground/metal finish and NASA4Ksky passed isolated Unity import and native editor captures; [evidence and remaining visual limitations](docs/verification/i06-free-assets-20261115/README.md). Cinematic rest/wake UI passed92native scoped checks, [evidence](docs/verification/i06-rest-wake-cinematic-20261115/README.md). Larger real-day heading, curved eyelids and original audio cue; body/belt animation remains pending. User explicitly moved first movement-mechanics repair to ONE Codex worker; see [exact handover](docs/MOVEMENT-HANDOVER-2026-11-15.md). [Active work](docs/ACTIVE-HANDOFF-2026-11-15.md), [asset comparison](docs/art-direction/free-assets-review-20261115.md), [landscape target](docs/art-direction/prologue-landscape-target-v01/README.md). Claude online acknowledgement still unconfirmed; stale quota is not a live reading.
+
 ## Current increment — water locator and rest eyes
 
 `2b4931c` adds actual water-station direction/distance, curved rest eyelids, Wake reopening and reduced-motion fade. Isolated Unity 6000.3.28f1 passed69 scoped checks; [evidence](docs/verification/i06-rest-water-20261115/README.md). No body/belt animation or movement completion claim. Both outcome screens and current Sources are user-approved. [HyperFrames trailer TODO #10](https://github.com/alex-slovakia/out-of-reach/issues/10) is deferred until gameplay polish. Poly Haven asset curation/import is now explicitly authorized (free + commercial-compatible license only); root owns new imports/placement/ground finish, with exact external coordination to avoid duplicate modeling.

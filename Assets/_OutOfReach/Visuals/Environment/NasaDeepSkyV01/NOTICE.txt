@@ -1,0 +1,6 @@
+NASA SVS Deep Star Maps 2020
+Source: https://svs.gsfc.nasa.gov/4851/
+NASA/Goddard Space Flight Center Scientific Visualization Studio. Gaia DR2: ESA/Gaia/DPAC.
+Public-domain reuse policy: https://svs.gsfc.nasa.gov/help/
+No endorsement implied. Static celestial reference, artistic exposure; not mission-epoch astrometry.
+Provenance: docs/art-direction/nasa-deep-sky-20261115/README.md
