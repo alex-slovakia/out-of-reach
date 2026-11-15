@@ -435,7 +435,8 @@ namespace OutOfReach.Presentation.UI
             if (!valid) return;
             double seconds = Math.Floor(elapsedSimulationSeconds);
             double hours = Math.Floor(seconds / 3600);
-            elapsedTime.text = "Mission " + Number(hours, "00") + ":"
+            double day = Math.Floor(hours / 24) + 1;
+            elapsedTime.text = "Day " + Number(day, "0") + " · Mission " + Number(hours, "00") + ":"
                 + Number(Math.Floor(seconds / 60) % 60, "00") + ":" + Number(seconds % 60, "00");
         }
 
