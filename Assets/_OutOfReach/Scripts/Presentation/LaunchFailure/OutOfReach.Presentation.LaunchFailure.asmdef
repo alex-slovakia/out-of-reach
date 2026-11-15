@@ -1,0 +1,20 @@
+{
+  "name": "OutOfReach.Presentation.LaunchFailure",
+  "rootNamespace": "OutOfReach.Presentation.LaunchFailure",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Cinematics",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
