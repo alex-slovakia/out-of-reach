@@ -42,11 +42,13 @@ namespace OutOfReach.Presentation.UI
             if (IsBehind) direction = -direction;
             if (direction.sqrMagnitude < .0001f) direction = Vector2.down;
             float insetX = Mathf.Min(95f, w * .18f), insetY = Mathf.Min(65f, h * .18f);
-            IsEdgeMarker = IsBehind || point.x < insetX || point.x > w - insetX || point.y < insetY || point.y > h - insetY;
+            // The bottom edge stays above the subtitle band (bottom centre): the marker never covers a spoken line.
+            float insetBottom = Mathf.Max(insetY, h * .26f);
+            IsEdgeMarker = IsBehind || point.x < insetX || point.x > w - insetX || point.y < insetY || point.y > h - insetBottom;
             if (IsEdgeMarker)
             {
                 float scaleX = (center.x - insetX) / Mathf.Max(.0001f, Mathf.Abs(direction.x));
-                float scaleY = (center.y - insetY) / Mathf.Max(.0001f, Mathf.Abs(direction.y));
+                float scaleY = (center.y - (direction.y > 0f ? insetBottom : insetY)) / Mathf.Max(.0001f, Mathf.Abs(direction.y));
                 anchor = center + direction * Mathf.Min(scaleX, scaleY);
             }
             else anchor = point;
