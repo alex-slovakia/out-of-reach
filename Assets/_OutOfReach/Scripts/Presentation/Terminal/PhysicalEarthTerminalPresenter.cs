@@ -87,7 +87,30 @@ namespace OutOfReach.Presentation.Terminal
         private int configurationGeneration;
         private Vector2 pointerUv = new Vector2(.35f,.50f), previousPointer, rippleUv;
         private Vector3 targetTip, currentTip;
-        private Quaternion globeRotation=Quaternion.identity;
+        private Quaternion globeRotation=SlovakiaFacingRotation;
+        // R33 wall display: turn the EPIC disc toward Slovakia (48.7 N, 19.7 E). The EPIC centroid of this image is
+        // 11.257 S, 0.447 E (manifest), so Slovakia is 62 deg from the observed disc centre. Fully centring it would
+        // fill the upper half with the unobserved hemisphere, so the view centre is 65% of the way along the great
+        // circle (Europe/Mediterranean), north up. Assumes the EPIC natural image is north-up.
+        private static readonly Quaternion SlovakiaFacingRotation=FacingRotation(.65f,out SlovakiaMarkerUv);
+        private static readonly Vector2 SlovakiaMarkerUv;
+        private static Vector3 EpicDirection(float latDeg,float lonDeg)
+        {
+            float lat0=-11.257324f*Mathf.Deg2Rad, lon0=.446777f*Mathf.Deg2Rad, lat=latDeg*Mathf.Deg2Rad, dl=lonDeg*Mathf.Deg2Rad-lon0;
+            return new Vector3(Mathf.Cos(lat)*Mathf.Sin(dl),
+                Mathf.Cos(lat0)*Mathf.Sin(lat)-Mathf.Sin(lat0)*Mathf.Cos(lat)*Mathf.Cos(dl),
+                Mathf.Sin(lat0)*Mathf.Sin(lat)+Mathf.Cos(lat0)*Mathf.Cos(lat)*Mathf.Cos(dl)).normalized;
+        }
+        private static Quaternion FacingRotation(float fraction,out Vector2 markerUv)
+        {
+            Vector3 slovakia=EpicDirection(48.7f,19.7f);
+            Vector3 centre=Vector3.Slerp(Vector3.forward,slovakia,fraction).normalized;
+            Vector3 north=EpicDirection(90,0);
+            var rotation=Quaternion.LookRotation(centre,Vector3.ProjectOnPlane(north,centre)); // view z->centre, y->north
+            Vector3 v=Quaternion.Inverse(rotation)*slovakia;
+            markerUv=new Vector2(.275f+v.x*.34f/1.6f,.53f+v.y*.34f); // EarthTerminal.shader disc centre/radius
+            return rotation;
+        }
         private float contactAge=10, rippleAge=10, displayRefresh;
 
         public bool IsEntered => active;
@@ -460,7 +483,7 @@ namespace OutOfReach.Presentation.Terminal
             {
                 properties.SetTexture(ObservationId,observationTexture);
                 properties.SetVector(RotationId,new Vector4(globeRotation.x,globeRotation.y,globeRotation.z,globeRotation.w));
-                properties.SetVector(PointerId,Vector4.zero);
+                properties.SetVector(PointerId,observationAvailable?new Vector4(SlovakiaMarkerUv.x,SlovakiaMarkerUv.y,1,0):Vector4.zero);
                 properties.SetVector(RippleId,new Vector4(0,0,10,0));
                 properties.SetFloat(AvailableId,observationAvailable?1:0);
                 displayRenderer.SetPropertyBlock(properties);
@@ -524,12 +547,13 @@ namespace OutOfReach.Presentation.Terminal
                     label.text="Globe: NASA EPIC Team / NOAA DSCOVR, 2026-11-11\nSlovakia: NASA GIBS / ESDIS, MODIS Terra, 2026-11-14";
                     label.characterSize=.0020f;
                 }
+                if(label.name=="Control") label.text=string.Empty; // Wall display: no close/touch instructions.
                 if(label.name=="Mode")
                 { label.text="EARTH IMAGE"; label.transform.localPosition=new Vector3(-.296f,-.130f,-.0004f); }
                 if(label.name=="Truth")
                 {
                     label.transform.localPosition=new Vector3(-.296f,-.149f,-.0004f);
-                    label.text="Grab and drag the globe to turn it.\nVisual projection; reverse side not observed.\nDim pointer: out of the glove's reach.";
+                    label.text="Ring: Slovakia, 48.7 N 19.7 E.\nVisual projection; reverse side not observed.\nArchived image, not a live view.";
                     label.characterSize=.0021f;
                 }
                 var binder=label.GetComponent<ShipLabelAtlasBinder>();

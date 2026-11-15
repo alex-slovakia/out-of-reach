@@ -48,14 +48,15 @@ namespace OutOfReach.Composition
                     && focusAnchor && playerCamera && !IsEntered
                     && (Vector3.Distance(runtime.Player.ViewPivot.position,terminal.DisplayFrame.position)>MaximumEntryDistanceMetres
                         || Vector3.Distance(playerCamera.transform.position,focusAnchor.position)>MaximumFocusTranslationMetres))
-                    return "Move closer to view Earth archive";
-                return "View Earth archive";
+                    return string.Empty;
+                return string.Empty; // R33: wall display only; no prompt.
             }
         }
         public bool IsEntered => focused && terminal && terminal.IsEntered;
         // Root adds this condition to its EXISTING control/presentation policies; no delegate replacement here.
         public bool BlocksPlayerInput => focused || actions.Pending;
-        public bool CanInteract => !BlocksPlayerInput && ContextValid() && runtime.Player.ControlAllowed
+        public bool CanInteract => false; // R33: wall display only.
+        bool WasInteractable => !BlocksPlayerInput && ContextValid() && runtime.Player.ControlAllowed
             && runtime.Player.InputSource is PlayerInputActions;
         public string LastRefusal { get; private set; } = string.Empty;
         public PhysicalEarthTerminalPresenter Terminal => terminal;
@@ -86,7 +87,8 @@ namespace OutOfReach.Composition
                 throw new ArgumentException("Bind complete authored references to the current real mission session.");
             runtime=actualRuntime; session=runtime.Session; events=runtime.Events;
             contextAllowed=canPresentContext; beforeFocus=cancelCompetingContact;
-            interactionTarget.Bind(this);
+            // R33: the Earth tablet is a non-interactable live wall display; the target stays unbound and disabled.
+            interactionTarget.enabled=false;
             terminal.ConfigureSession(Acquire,Release,() => !ContextValid(),() => runtime.Calendar.NowUtc);
             events.CinematicRequested+=OnCinematic; events.PhaseChanged+=OnPhase; events.MissionEnded+=OnEnded;
             runtime.PauseChanged+=OnPause; runtime.SessionEnding+=OnSessionEnding;
