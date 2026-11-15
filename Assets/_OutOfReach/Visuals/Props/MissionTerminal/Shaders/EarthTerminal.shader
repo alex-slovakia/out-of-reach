@@ -12,6 +12,7 @@ Shader "OutOfReach/PhysicalEarthTerminal"
         _StaticRect ("Static image panel UV min.xy / max.xy", Vector) = (.025,.245,.515625,.865)
         _Inset ("R33 dated Slovakia inset (MODIS Terra)", 2D) = "black" {}
         _InsetAvailable ("-1 none: EPIC original inset / 0 pending / 1 shown", Float) = -1
+        _ScreenGain ("R33 display brightness gain (unlit screen in a dim cabin)", Float) = 1.35
         _InsetRect ("Slovakia inset UV min.xy / max.xy (1280x1012 aspect)", Vector) = (.545,.10,.725,.3277)
     }
     SubShader
@@ -32,7 +33,7 @@ Shader "OutOfReach/PhysicalEarthTerminal"
             TEXTURE2D(_Inset); SAMPLER(sampler_Inset);
             CBUFFER_START(UnityPerMaterial)
             float4 _GlobeRotation, _Pointer, _Ripple, _StaticRect, _InsetRect;
-            float _ObservationAvailable, _DiscRadius, _StaticImage, _InsetAvailable;
+            float _ObservationAvailable, _DiscRadius, _StaticImage, _InsetAvailable, _ScreenGain;
             CBUFFER_END
             Varyings Vert(Attributes input)
             {
@@ -61,10 +62,10 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                             : half3(.018,.028,.034);
                     }
                     color+=half3(.02,.12,.18)*(1-smoothstep(.0015,.004,abs(border)));
-                    return half4(color,1);
+                    return half4(color*_ScreenGain,1);
                 }
-                // R33: larger globe; presenter IsOverGlobe uses the same centre (.285,.525) and radius .32.
-                float2 disc=(uv-float2(.285,.525))*float2(1.6,1)/.32;
+                // R33: larger globe; presenter IsOverGlobe uses the same centre (.275,.53) and radius .34.
+                float2 disc=(uv-float2(.275,.53))*float2(1.6,1)/.34;
                 float radius=length(disc);
                 if(radius<1)
                 {
@@ -114,7 +115,7 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                 float ring=(1-smoothstep(.002,.005,abs(length((uv-_Ripple.xy)*float2(1.6,1))-ringRadius)));
                 float decay=saturate(1-age/.65)*step(0,age)*_Ripple.w;
                 color+=ring*decay*half3(.10,.44,.68);
-                return half4(color,1);
+                return half4(color*_ScreenGain,1);
             }
             ENDHLSL
         }

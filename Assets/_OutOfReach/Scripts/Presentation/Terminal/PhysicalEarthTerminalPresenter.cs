@@ -36,6 +36,9 @@ namespace OutOfReach.Presentation.Terminal
         [SerializeField] private Transform leftGripFrame;
         [SerializeField] private TextMesh missionLabel, observationLabel, ageLabel, statusLabel;
         private TextMesh weatherLabel; // Found by name ("OriginalInset") in static mode; not serialized.
+        private TextMesh insetLabel;   // Same label in interactive mode: captions whichever dated image the inset shows.
+        private const string EpicInsetCaption="ORIGINAL EPIC DISC  /  2026-11-11 11:01 UTC";
+        private const string SlovakiaInsetCaption="SLOVAKIA  /  TERRA  14 NOV 08:15-08:20 UTC";
         [SerializeField] private Texture observationTexture;
         [SerializeField, Min(0)] private float hoverDistance = .012f;
         [SerializeField, Range(.03f,.3f)] private float pressSeconds = .11f;
@@ -326,6 +329,7 @@ namespace OutOfReach.Presentation.Terminal
 
         private void OnEnable()
         {
+            ApplyReadableLabels(); // Readable layout even before the mission session binds (preflight).
             if (IsStaticImage) RefreshStatic(true); else RefreshIdle(true);
         }
 
@@ -423,14 +427,18 @@ namespace OutOfReach.Presentation.Terminal
                 if (readMissionUtc != null) RefreshTime();
                 else
                 {
-                    observationAvailable=false;
+                    // EPIC 2026-11-11 precedes every legal mission T0 (MissionDirector rejects T0 before the
+                    // Horizons first epoch 2026-11-14T08:00Z), so the archived globe is shown before the calendar binds.
+                    // The Slovakia pass (14 Nov 08:15-08:20) may still be in the future, so it stays gated.
+                    observationAvailable=true; insetAvailable=false;
                     SetLabel(missionLabel,"MISSION UTC\nAwaiting mission calendar");
                     SetLabel(ageLabel,"IMAGE AGE\nAwaiting mission calendar");
+                    SetLabel(insetLabel,EpicInsetCaption);
                 }
             }
             catch (Exception exception)
             {
-                observationAvailable=false;
+                observationAvailable=true; insetAvailable=false;
                 if (logFault) Debug.LogException(exception,this);
             }
             WriteDisplay(false);
@@ -447,7 +455,7 @@ namespace OutOfReach.Presentation.Terminal
             if (properties == null) properties=new MaterialPropertyBlock();
             properties.SetFloat(StaticImageId,0);
             if (staticObservationTexture) properties.SetTexture(InsetId,staticObservationTexture);
-            properties.SetFloat(InsetAvailableId,staticObservationTexture?(insetAvailable?1:0):-1);
+            properties.SetFloat(InsetAvailableId,staticObservationTexture && insetAvailable?1:-1);
             if (!interactive)
             {
                 properties.SetTexture(ObservationId,observationTexture);
@@ -505,7 +513,8 @@ namespace OutOfReach.Presentation.Terminal
                 }
                 if(label.name=="OriginalInset" && staticObservationTexture)
                 {
-                    label.text="SLOVAKIA  /  MODIS TERRA  14 NOV 08:15-08:20 UTC";
+                    insetLabel=label;
+                    label.text=insetAvailable?SlovakiaInsetCaption:EpicInsetCaption;
                     label.anchor=TextAnchor.UpperLeft; label.alignment=TextAlignment.Left;
                     label.transform.localPosition=new Vector3(.029f,-.040f,-.0004f);
                     label.characterSize=.0021f;
@@ -548,6 +557,7 @@ namespace OutOfReach.Presentation.Terminal
             }
             observationAvailable=utc>=ObservationUtc;
             insetAvailable=utc>=StaticPassEndUtc;
+            SetLabel(insetLabel,insetAvailable?SlovakiaInsetCaption:EpicInsetCaption);
             SetLabel(missionLabel,"MISSION UTC\n"+utc.ToString("yyyy-MM-dd HH:mm:ss",CultureInfo.InvariantCulture));
             SetLabel(observationLabel,"OBSERVED UTC\n2026-11-11 11:01:17");
             var age=utc-ObservationUtc;
@@ -570,8 +580,8 @@ namespace OutOfReach.Presentation.Terminal
             (displayFrame.lossyScale-Vector3.one).sqrMagnitude<.00001f;
         private bool StaticReferencesValid() => viewCamera && displayFrame && displayRenderer && staticObservationTexture &&
             activeSizeMetres.x>.01f && activeSizeMetres.y>.01f && Finite(activeSizeMetres.x) && Finite(activeSizeMetres.y);
-        // Matches EarthTerminal.shader disc centre (.285,.525) and radius .32.
-        private static bool IsOverGlobe(Vector2 uv) => new Vector2((uv.x-.285f)*1.6f,uv.y-.525f).sqrMagnitude<.32f*.32f;
+        // Matches EarthTerminal.shader disc centre (.275,.53) and radius .34.
+        private static bool IsOverGlobe(Vector2 uv) => new Vector2((uv.x-.275f)*1.6f,uv.y-.53f).sqrMagnitude<.34f*.34f;
         private static bool Finite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
         private void OnDisable() => Exit(TerminalExitReason.Disabled);
         private void OnDestroy() => Exit(TerminalExitReason.Disabled);
