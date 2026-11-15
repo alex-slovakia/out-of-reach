@@ -1,0 +1,89 @@
+{
+ "asset": "LaunchTowerV03",
+ "frame": "Unity metres, prologue root, identity",
+ "objects": {
+  "LTV3_Tower": {
+   "tris": 26140,
+   "verts": 17628,
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -4.07,
+    -32.831,
+    -14.15
+   ],
+   "bounds_max": [
+    4.75,
+    23.75,
+    -4.18
+   ],
+   "tris_by_material": {
+    "LT3_Galvanized": 4196,
+    "LT3_SteelGraphite": 12192,
+    "LT3_Hazard": 72,
+    "LT3_Grating": 2100,
+    "LT3_SafetyAmber": 6084,
+    "LT3_LampRed": 152,
+    "LT3_Rubber": 332,
+    "LT3_WarningRed": 892,
+    "LT3_LampWarm": 120
+   }
+  },
+  "LTV3_AccessArm": {
+   "tris": 2578,
+   "verts": 1618,
+   "origin": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "bounds_min": [
+    -0.46,
+    -0.62,
+    -0.46
+   ],
+   "bounds_max": [
+    2.28,
+    2.72,
+    4.34
+   ],
+   "tris_by_material": {
+    "LT3_Grating": 12,
+    "LT3_Galvanized": 174,
+    "LT3_Hazard": 72,
+    "LT3_SteelGraphite": 1408,
+    "LT3_SafetyAmber": 304,
+    "LT3_LampWarm": 36,
+    "LT3_WhiteRoom": 144,
+    "LT3_GlassDark": 24,
+    "LT3_LampCyan": 24,
+    "LT3_Rubber": 328,
+    "LT3_WarningRed": 40,
+    "LT3_LampRed": 12
+   }
+  }
+ },
+ "materials": [
+  "LT3_SteelGraphite",
+  "LT3_SafetyAmber",
+  "LT3_Galvanized",
+  "LT3_Grating",
+  "LT3_WhiteRoom",
+  "LT3_WarningRed",
+  "LT3_Rubber",
+  "LT3_Hazard",
+  "LT3_LampWarm",
+  "LT3_LampRed",
+  "LT3_LampCyan",
+  "LT3_GlassDark"
+ ],
+ "total_triangles": 28718,
+ "keep_clear_vertices": {
+  "arm_walkway": 0,
+  "hatch_doorway": 0,
+  "deck": 0
+ }
+}
