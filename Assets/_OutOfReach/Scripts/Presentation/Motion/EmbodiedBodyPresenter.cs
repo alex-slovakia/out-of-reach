@@ -107,6 +107,13 @@ namespace OutOfReach.Presentation.Motion
         public BodyPose CurrentPose => pose;
         public BodyArmVisibility VisibleArms => visible ? armMask : BodyArmVisibility.None;
         public bool HasDepartureSeat => departureSeat != null;
+        /// <summary>
+        /// LEFT foot gait cycle (0 = left heel strike, .5 = right heel strike) while the visible body walks on the ground;
+        /// NaN otherwise. Read-only presentation state, for example to time a camera bob with the footfalls.
+        /// </summary>
+        public float GaitPhase => visible && pose == BodyPose.Standing && gaitActive && gaitWeight > 0f ? gaitPhase : float.NaN;
+        /// <summary>0 standing .. 1 full gait (smoothed blend of the walking presentation).</summary>
+        public float GaitWeight => visible && pose == BodyPose.Standing ? gaitWeight : 0f;
         /// <summary>Berth rest presentation phase; None outside a rest. Core's IsResting stays the authority.</summary>
         public RestPhase RestPhase => restPhase;
         /// <summary>Seconds into the current rest phase (frozen while paused).</summary>
@@ -556,7 +563,9 @@ namespace OutOfReach.Presentation.Motion
             bool synthetic = deltaOverride.HasValue;
             // CharacterController.isGrounded flickers on slopes and steps; a short flicker keeps the feet planted.
             ungroundedTime = synthetic || groundController.isGrounded ? 0f : ungroundedTime + Mathf.Max(0f, elapsed);
-            bool walkable = groundController.enabled && ungroundedTime < .15f && !suit.IsOutside && groundedQuery();
+            // R03: grating, stair nosings and ramp seams make isGrounded flicker for several frames; only a real fall or
+            // jump (longer than .3 s) releases the feet, otherwise the legs freeze and the body glides (skating).
+            bool walkable = groundController.enabled && ungroundedTime < .3f && !suit.IsOutside && groundedQuery();
             if (!walkable)
             {
                 // No stepping outside the grounded mode: the feet stay on their standing slots.
@@ -587,13 +596,21 @@ namespace OutOfReach.Presentation.Motion
                 return;
             }
 
+            // R03: after a long frame (below 12 fps) the body has travelled further than a leg reaches. The feet are
+            // re-planted under the body and the walk carries on, instead of dragging a foot or squatting to it.
+            if (elapsed > .08f) rig.ResetFeet();
+
             // Motion the controller did not make (a push, a carrier) does not drive the gait; planted feet stay put.
-            bool consistent = (displacement - controllerTravel).magnitude <= .015f + distance * .2f;
+            // R03: collisions and step offsets make the controller's reported velocity differ from the frame's travel by
+            // a few centimetres; only a clearly foreign motion (a push, a carrier) is ignored.
+            bool consistent = (displacement - controllerTravel).magnitude <= .03f + distance * .35f;
             bool moved = consistent && distance > elapsed * .08f && Vector3.Dot(displacement, controllerTravel) > 0f;
             sinceMoved = moved ? 0f : sinceMoved + elapsed;
-            // A single still frame inside a walk does not end the gait.
-            bool moving = moved || (gaitActive && sinceMoved < .12f);
-            gaitWeight = Mathf.MoveTowards(gaitWeight, moving ? 1f : 0f, elapsed * (moving ? 9f : 7f));
+            // A few still frames inside a walk (frame pacing, a collision) do not end the gait.
+            bool moving = moved || (gaitActive && sinceMoved < .2f);
+            // Smooth blend in and out of the walk (about .25 s in, .3 s out) instead of a pop.
+            float blendTarget = moving ? Mathf.Clamp01(gaitSpeed / .6f) : 0f;
+            gaitWeight = Mathf.MoveTowards(gaitWeight, moving ? Mathf.Max(blendTarget, .35f) : 0f, elapsed * (moving ? 4f : 3.3f));
             if (moved)
             {
                 Vector3 nextDirection = Quaternion.Inverse(visualRoot.rotation) * (displacement / distance);
@@ -603,8 +620,20 @@ namespace OutOfReach.Presentation.Motion
                     gaitDirection = nextDirection;
                     gaitSpeed = measured;
                     gaitVelocity = displacement / elapsed;
-                    gaitPhase = rig.StartPhase(ModelGait.Stance(Mathf.Max(gaitSpeed, .3f)));
+                    gaitPhase = rig.StartPhase(ModelGait.GaitStance(gaitSpeed, rig.LegLength, gaitDirection, rig.MaxHalfSpan,
+                        (activeEva ? ModelGaitProfile.Eva : ModelGaitProfile.Work).StrideScale));
                     gaitActive = true;
+                }
+                else if (Vector3.Dot(nextDirection, gaitDirection) < 0f)
+                {
+                    // R03: a reversal (W to S, A to D). The planted feet were placed for the old direction, so the walk
+                    // restarts its cycle with the foot that is now furthest behind lifting off, instead of dragging it.
+                    gaitDirection = nextDirection;
+                    gaitSpeed = measured;
+                    gaitVelocity = displacement / elapsed;
+                    float stance = ModelGait.GaitStance(gaitSpeed, rig.LegLength, gaitDirection, rig.MaxHalfSpan,
+                        (activeEva ? ModelGaitProfile.Eva : ModelGaitProfile.Work).StrideScale);
+                    gaitPhase = Mathf.Repeat(stance + (rig.LeftTrails(visualRoot, displacement / distance, activeEva) ? 0f : .5f), 1f);
                 }
                 else
                 {
@@ -613,7 +642,7 @@ namespace OutOfReach.Presentation.Motion
                     gaitVelocity = Vector3.Lerp(gaitVelocity, displacement / elapsed, 1f - Mathf.Exp(-12f * elapsed));
                 }
                 ModelGaitProfile profile = activeEva ? ModelGaitProfile.Eva : ModelGaitProfile.Work;
-                float stride = ModelGait.StrideLength(Mathf.Max(gaitSpeed, .3f), rig.LegLength, Mathf.Abs(gaitDirection.x)) * profile.StrideScale;
+                float stride = ModelGait.GaitStride(gaitSpeed, rig.LegLength, gaitDirection, rig.MaxHalfSpan, profile.StrideScale);
                 gaitPhase = Mathf.Repeat(gaitPhase + distance / stride, 1f);
             }
             if (!moving)

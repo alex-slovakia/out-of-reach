@@ -253,10 +253,15 @@ namespace OutOfReach.Presentation.Motion
             float actualSpeed = Mathf.Min(distance / frameSeconds, velocitySpeed);
             bool walking = body.isGrounded && actualSpeed > .05f && distance > .00001f;
             float strength = walking ? Mathf.Clamp01(actualSpeed / Mathf.Max(.1f, fullAmplitudeAtMetresPerSecond)) : 0f;
-            if (walking)
+            // R03: with the visible body walking, the bob follows its footfalls (lowest at each heel strike, highest at
+            // mid-stance, swaying over the standing foot); otherwise it runs on travelled distance as before.
+            float gaitPhase = GaitPhase();
+            if (!float.IsNaN(gaitPhase))
+                phaseRadians = Mathf.Repeat(gaitPhase, 1f) * Mathf.PI * 2f;
+            else if (walking)
                 phaseRadians = Mathf.Repeat(phaseRadians + distance / Mathf.Max(1f, cycleDistanceMetres) * Mathf.PI * 2f, Mathf.PI * 2f);
-            float side = Mathf.Sin(phaseRadians);
-            float rise = Mathf.Sin(phaseRadians * 2f);
+            float side = -Mathf.Sin(phaseRadians);
+            float rise = -Mathf.Cos(phaseRadians * 2f);
             Vector3 cameraTarget = new Vector3(side * Mathf.Clamp(cameraLateralMetres, 0f, .005f),
                 rise * Mathf.Clamp(cameraVerticalMetres, 0f, .02f), 0f) * strength;
             Vector3 handsTarget = new Vector3(-side * Mathf.Clamp(handsLateralMetres, 0f, .015f),
@@ -295,6 +300,30 @@ namespace OutOfReach.Presentation.Motion
             if (handsPivot)
                 handsPivot.SetLocalPositionAndRotation(handsNeutralPosition + handsOffset,
                     handsNeutralRotation * Quaternion.AngleAxis(handsRoll, Vector3.forward));
+        }
+
+        /// <summary>
+        /// Optional: the first-person body whose footfalls time the bob. Without it the presenter uses the scene's body
+        /// if there is exactly one, else the travelled-distance cycle. Read-only; never changes the body.
+        /// </summary>
+        public void ConfigureGaitSource(EmbodiedBodyPresenter body)
+        {
+            gaitSource = body;
+            gaitSourceResolved = true;
+        }
+
+        private EmbodiedBodyPresenter gaitSource;
+        private bool gaitSourceResolved;
+
+        private float GaitPhase()
+        {
+            if (!gaitSourceResolved)
+            {
+                gaitSourceResolved = true;
+                EmbodiedBodyPresenter[] bodies = FindObjectsByType<EmbodiedBodyPresenter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                gaitSource = bodies.Length == 1 ? bodies[0] : null;
+            }
+            return gaitSource && gaitSource.isActiveAndEnabled ? gaitSource.GaitPhase : float.NaN;
         }
 
         private void SamplePosition()

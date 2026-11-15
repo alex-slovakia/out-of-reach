@@ -42,12 +42,33 @@ namespace OutOfReach.Presentation.Motion
         private Quaternion standingHipsRotation, spineLowRotation, spineHighRotation;
 
         public float LegLength { get; private set; } = ModelGait.ReferenceLegLength;
+        /// <summary>Pelvis crouch (share of leg length) the gait may need to reach a planted foot.</summary>
+        internal const float PelvisDropBudget = .065f;
+        /// <summary>Hard limit of the pelvis crouch (share of leg length).</summary>
+        internal const float MaxPelvisDrop = .11f;
+        /// <summary>Limit while standing: turning on the spot with a steep look-down needs a deeper knee bend.</summary>
+        internal const float MaxStandingPelvisDrop = .17f;
+        /// <summary>Largest fore/aft ankle offset from the hip a planted foot may need (measured on the standing rig).</summary>
+        public float MaxHalfSpan { get; private set; } = .3f;
         internal bool HasTorso => spineLow != null;
         internal bool IsStepping => left.Stepping || right.Stepping;
         internal bool IsPlanted(bool leftFoot) => (leftFoot ? left : right).Planted;
         internal float ShownPitch(bool leftFoot) => (leftFoot ? left : right).ShownPitch;
         internal float SlotDistance(bool leftFoot) => (leftFoot ? left : right).SlotDistance;
         internal float YawOffset(bool leftFoot) => (leftFoot ? left : right).YawOffset;
+
+        /// <summary>
+        /// True when the LEFT foot is the one further behind its standing slot along a world travel direction: after a
+        /// sharp change of direction that foot lifts first.
+        /// </summary>
+        internal bool LeftTrails(Transform reference, Vector3 worldDirection, bool eva)
+        {
+            if (!left.Valid || !right.Valid) return true;
+            ModelGaitProfile profile = eva ? ModelGaitProfile.Eva : ModelGaitProfile.Work;
+            float l = Vector3.Dot(left.Shown - reference.TransformPoint(left.StandingLocal(profile)), worldDirection);
+            float r = Vector3.Dot(right.Shown - reference.TransformPoint(right.StandingLocal(profile)), worldDirection);
+            return l <= r;
+        }
 
         public ModelGaitRig(Dictionary<string, Transform> nodes)
         {
@@ -77,6 +98,9 @@ namespace OutOfReach.Presentation.Motion
             left.CaptureStanding(reference);
             right.CaptureStanding(reference);
             LegLength = Mathf.Clamp((left.Length + right.Length) * .5f, .55f, 1.3f);
+            // R03: how far a planted ankle may sit ahead of / behind the hip with at most PelvisDropBudget of crouch.
+            float budget = PelvisDropBudget * LegLength;
+            MaxHalfSpan = Mathf.Clamp(Mathf.Min(left.HalfSpan(budget), right.HalfSpan(budget)), .12f * LegLength, .45f * LegLength);
             leftArm?.CaptureStanding();
             rightArm?.CaptureStanding();
             armsPosed = false;
@@ -119,9 +143,15 @@ namespace OutOfReach.Presentation.Motion
             float legLength = LegLength;
             float speed = Mathf.Max(f.Speed, .3f);
             float scale = legLength / ModelGait.ReferenceLegLength;
-            float stride = ModelGait.StrideLength(speed, legLength, Mathf.Abs(f.Direction.x)) * profile.StrideScale;
-            float stance = ModelGait.Stance(speed);
-            float lift = ModelGait.Lift(speed, legLength) * profile.LiftScale;
+            float stride = ModelGait.GaitStride(speed, legLength, f.Direction, MaxHalfSpan, profile.StrideScale);
+            float stance = ModelGait.GaitStance(speed, legLength, f.Direction, MaxHalfSpan, profile.StrideScale);
+            // Where a foot lands ahead of its standing slot: half the stance travel, but never further than the leg
+            // reaches (the pelvis sits back by the look-down setback, which takes that much off the forward reach).
+            float lead = Mathf.Min(stride * stance * .5f, Mathf.Max(.05f, MaxHalfSpan - f.Setback * Mathf.Max(0f, f.Direction.z)));
+            float back = ModelGait.Backward01(f.Direction);
+            // Backwards: lower swing and a toe-first landing (the heel-strike roll is mirrored and damped).
+            float lift = ModelGait.Lift(speed, legLength) * profile.LiftScale * Mathf.Lerp(1f, .7f, back);
+            float pitchScale = Mathf.Lerp(1f, -.45f, back);
             float leftPhase = Mathf.Repeat(f.Phase, 1f), rightPhase = Mathf.Repeat(f.Phase + .5f, 1f);
             float baseY = reference.position.y;
             float referenceYaw = reference.eulerAngles.y;
@@ -145,11 +175,11 @@ namespace OutOfReach.Presentation.Motion
                     gaitActive = true; squaring = false;
                     left.Stepping = right.Stepping = false;
                 }
-                GaitFoot(left, reference, f, profile, leftPhase, stride, stance, lift, speed, referenceYaw, baseY, leftSlot,
+                GaitFoot(left, reference, f, profile, leftPhase, stride, stance, lead, lift, speed, referenceYaw, baseY, leftSlot,
                     out leftFlat, out leftYaw, out leftNormal, out leftPitch);
-                GaitFoot(right, reference, f, profile, rightPhase, stride, stance, lift, speed, referenceYaw, baseY, rightSlot,
+                GaitFoot(right, reference, f, profile, rightPhase, stride, stance, lead, lift, speed, referenceYaw, baseY, rightSlot,
                     out rightFlat, out rightYaw, out rightNormal, out rightPitch);
-                leftPitch *= w; rightPitch *= w;
+                leftPitch *= w * pitchScale; rightPitch *= w * pitchScale;
             }
             else
             {
@@ -188,8 +218,12 @@ namespace OutOfReach.Presentation.Motion
             }
 
             float blend = .02f * scale * Mathf.Max(w, .3f);
-            float drop = SmoothHigher(.022f * scale * w, SmoothHigher(left.DropToReach(leftTarget), right.DropToReach(rightTarget), blend), .02f * scale * w);
-            hips.position -= Vector3.up * Mathf.Min(.25f, drop);
+            // R03: only a foot on the ground pulls the pelvis down. A foot in the air fades out after lift-off and back in
+            // before it lands, so the pelvis is highest in the flight of a jog instead of squatting to the swinging leg.
+            float drop = SmoothHigher(.022f * scale * w, SmoothHigher(left.DropToReach(leftTarget) * left.ReachWeight,
+                right.DropToReach(rightTarget) * right.ReachWeight, blend), .02f * scale * w);
+            // R03: a bounded crouch. A foot left far away (a turn, a stop, a hitch) is stepped home; the body never squats to it.
+            hips.position -= Vector3.up * Mathf.Min(Mathf.Lerp(MaxStandingPelvisDrop, MaxPelvisDrop, w) * legLength, drop);
             left.Pose(reference, leftTarget, w);
             right.Pose(reference, rightTarget, w);
 
@@ -205,7 +239,7 @@ namespace OutOfReach.Presentation.Motion
         }
 
         private static void GaitFoot(Leg foot, Transform reference, in ModelGaitFrame f, ModelGaitProfile profile, float phase,
-            float stride, float stance, float lift, float speed, float referenceYaw, float baseY, Vector3 slot,
+            float stride, float stance, float lead, float lift, float speed, float referenceYaw, float baseY, Vector3 slot,
             out Vector3 flat, out float yaw, out Vector3 normal, out float pitch)
         {
             pitch = ModelGait.FootPitch(phase, stance, speed);
@@ -216,15 +250,17 @@ namespace OutOfReach.Presentation.Motion
                 if (HorizontalDistance(foot.Plant, slot) > Mathf.Max(.8f, stride * .8f) || Mathf.Abs(foot.Plant.y - slot.y) > .35f)
                     foot.Land(slot, referenceYaw, Vector3.up);
                 flat = foot.Plant; yaw = foot.PlantYaw; normal = foot.PlantNormal;
+                foot.SwingU = 1f;
                 return;
             }
             float s = (phase - stance) / (1f - stance);
             if (foot.Planted || !foot.Stepping) foot.Liftoff(s);
             float u = foot.FromS >= .999f ? 1f : Mathf.Clamp01((s - foot.FromS) / (1f - foot.FromS));
+            foot.SwingU = u;
             float remaining = (1f - s) * (1f - stance) * stride / speed;
             float turn = Mathf.Clamp(f.YawRate * remaining, -75f, 75f);
             Quaternion turning = Quaternion.AngleAxis(turn, Vector3.up);
-            Vector3 local = foot.StandingLocal(profile) + f.Direction * (stride * stance * .5f);
+            Vector3 local = foot.StandingLocal(profile) + f.Direction * lead;
             local.x += foot.Side * .05f * Mathf.Abs(f.Direction.x);
             local.x = foot.Side * Mathf.Max(Mathf.Abs(foot.StandingAnkle.x) * .9f, foot.Side * local.x);
             Vector3 predictedRoot = f.Pivot + f.Velocity * remaining + turning * (reference.position - f.Pivot);
@@ -243,6 +279,7 @@ namespace OutOfReach.Presentation.Motion
             {
                 if (dt > 0f) foot.StepT += dt / Mathf.Max(.05f, foot.StepDuration);
                 float u = Mathf.Clamp01(foot.StepT), h = ModelGait.Ease(u);
+                foot.SwingU = u;
                 flat = Vector3.Lerp(foot.From, slot, h) + Vector3.up * (ModelGait.StepBump(u) * IdleStepLift);
                 yaw = Mathf.LerpAngle(foot.FromYaw, referenceYaw, h);
                 normal = Vector3.Slerp(foot.FromNormal, slotNormal, h);
@@ -252,6 +289,7 @@ namespace OutOfReach.Presentation.Motion
             // A plant that is absurdly far (missed warp, a lift or carrier) jumps home instead of stretching the leg.
             if (HorizontalDistance(foot.Plant, slot) > .9f || Mathf.Abs(foot.Plant.y - slot.y) > .35f) foot.Land(slot, referenceYaw, slotNormal);
             flat = foot.Plant; yaw = foot.PlantYaw; normal = foot.PlantNormal;
+            foot.SwingU = 1f;
         }
 
         // One foot steps at a time: the one furthest from its standing slot in distance and heading.
@@ -338,6 +376,10 @@ namespace OutOfReach.Presentation.Motion
 
             // World-anchored foot state.
             public bool Valid, Planted, Stepping;
+            /// <summary>Progress of the current step in the air (0 lift-off .. 1 landing); 1 while planted.</summary>
+            public float SwingU = 1f;
+            /// <summary>How much this foot may pull the pelvis down: fully while planted, fading out after lift-off and in before landing.</summary>
+            public float ReachWeight => Planted ? 1f : Mathf.Max(1f - SwingU * 4f, Mathf.SmoothStep(0f, 1f, (SwingU - .5f) * 2f));
             public Vector3 Plant, From, Shown;
             public Vector3 PlantNormal = Vector3.up, FromNormal = Vector3.up, ShownNormal = Vector3.up;
             public float PlantYaw, FromYaw, ShownYaw, ShownPitch, FromS, StepT, StepDuration = .3f;
@@ -386,6 +428,7 @@ namespace OutOfReach.Presentation.Motion
                 // body (gait weight 0) is not pulled down by the reach limit.
                 float standingReach = (ankle.position - Thigh.position).magnitude;
                 reachCap = Mathf.Min(thighLength + shinLength - .004f, Mathf.Max(standingReach + .004f, (thighLength + shinLength) * .975f));
+                standingHeight = Thigh.position.y - ankle.position.y;
                 ankleHeight = Mathf.Clamp(standingAnkle.y, .04f, .14f);
                 float toes = 0f; int count = 0;
                 foreach (Transform t in ankle.GetComponentsInChildren<Transform>(true))
@@ -396,6 +439,14 @@ namespace OutOfReach.Presentation.Motion
                 if (count > 0) ballForward = Mathf.Clamp(toes / count, .08f, .22f);
                 heelBack = Mathf.Clamp(ballForward * .5f, .04f, .09f);
             }
+
+            /// <summary>Horizontal ankle offset from below the hip that the leg reaches with <paramref name="drop"/> of crouch.</summary>
+            public float HalfSpan(float drop)
+            {
+                float height = Mathf.Max(.1f, standingHeight - drop);
+                return Mathf.Sqrt(Mathf.Max(0f, reachCap * reachCap - height * height));
+            }
+            private float standingHeight;
 
             public void RestoreStanding()
             {
