@@ -1,0 +1,27 @@
+{
+  "name": "OutOfReach.Presentation.CinematicSkip",
+  "rootNamespace": "OutOfReach.Presentation.CinematicSkip",
+  "references": [
+    "Unity.InputSystem",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Simulation",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.Cinematics",
+    "OutOfReach.Composition",
+    "OutOfReach.UI",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Presentation.Rescue"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
