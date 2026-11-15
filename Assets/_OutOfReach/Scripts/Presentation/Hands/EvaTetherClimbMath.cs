@@ -144,11 +144,39 @@ namespace OutOfReach.Presentation.Hands
             float maxObliquityDegrees)
         {
             Vector3 forward = ropeForward.sqrMagnitude > 1e-8f ? ropeForward.normalized : Vector3.forward;
-            Vector3 x = hand == EvaTetherHand.Left ? forward : -forward;
-            Vector3 elbow = SolveElbow(shoulder, ropeCentre, upperMetres, foreMetres, pole, out bool reachable);
-            Quaternion handRotation = GripRotation(x, ropeCentre - elbow, bodyUp, maxObliquityDegrees, out float oblique);
-            Vector3 wrist = ropeCentre - (handRotation * tubeCentreInHand);
-            elbow = SolveElbow(shoulder, wrist, upperMetres, foreMetres, pole, out reachable);
+            Vector3 thumbForward = hand == EvaTetherHand.Left ? forward : -forward;
+            // Thumb towards the facing sense is the natural pull; where the rope runs along the forearm (steep or
+            // behind the shoulder) the reversed grip can bend the wrist far less, so keep the better of the two.
+            EvaTetherArmPose best = SolveGripAxis(ropeCentre, thumbForward, shoulder, pole, bodyUp, tubeCentreInHand,
+                upperMetres, foreMetres, maxObliquityDegrees);
+            if (best.WristBendDegrees > 55f)
+            {
+                EvaTetherArmPose reversed = SolveGripAxis(ropeCentre, -thumbForward, shoulder, pole, bodyUp,
+                    tubeCentreInHand, upperMetres, foreMetres, maxObliquityDegrees);
+                if (reversed.WristBendDegrees + 10f < best.WristBendDegrees)
+                {
+                    best = reversed;
+                }
+            }
+
+            return best;
+        }
+
+        private static EvaTetherArmPose SolveGripAxis(Vector3 ropeCentre, Vector3 x, Vector3 shoulder, Vector3 pole,
+            Vector3 bodyUp, Vector3 tubeCentreInHand, float upperMetres, float foreMetres, float maxObliquityDegrees)
+        {
+            // Fixed-point refinement: elbow -> grip frame -> wrist -> elbow, so the fingers follow the final forearm.
+            Vector3 wrist = ropeCentre;
+            Vector3 elbow = SolveElbow(shoulder, wrist, upperMetres, foreMetres, pole, out bool reachable);
+            Quaternion handRotation = Quaternion.identity;
+            float oblique = 0f;
+            for (int pass = 0; pass < 3; pass++)
+            {
+                handRotation = GripRotation(x, wrist - elbow, bodyUp, maxObliquityDegrees, out oblique);
+                wrist = ropeCentre - (handRotation * tubeCentreInHand);
+                elbow = SolveElbow(shoulder, wrist, upperMetres, foreMetres, pole, out reachable);
+            }
+
             Vector3 forearm = wrist - elbow;
             if (forearm.sqrMagnitude < 1e-8f)
             {
