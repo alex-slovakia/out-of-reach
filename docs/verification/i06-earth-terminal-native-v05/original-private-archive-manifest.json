@@ -1,0 +1,144 @@
+{
+  "native_run": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z",
+  "unedited_source_evidence": true,
+  "files": [
+    {
+      "file": "Evidence/00-actual-approach.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\00-actual-approach.png",
+      "bytes": 592650,
+      "sha256": "8b14086b49a61552e0ba369d7830a85347ee13592d291cb5ed7c0367744b414b"
+    },
+    {
+      "file": "Evidence/00-actual-approach.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\00-actual-approach.txt",
+      "bytes": 169,
+      "sha256": "17a08f2d2c9d19c800798fb5c36ba79f1936a01e16e7298111cb0ac5c80662f1"
+    },
+    {
+      "file": "Evidence/01-actual-v2-focused.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\01-actual-v2-focused.png",
+      "bytes": 681309,
+      "sha256": "775b2ba26b07fee3ea9116d5118e9069beaa7122a91ab58edaedc6de12a08391"
+    },
+    {
+      "file": "Evidence/01-actual-v2-focused.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\01-actual-v2-focused.txt",
+      "bytes": 168,
+      "sha256": "b01c1645941b10ae1a97248039a9cfc6231c4254822f3c0795281f902882b8c6"
+    },
+    {
+      "file": "Evidence/02-actual-fingertip-ripple.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\02-actual-fingertip-ripple.png",
+      "bytes": 686171,
+      "sha256": "0a0778e44e1ffe7e682bcfc37f5aa11f27fd172a22784c53c52a52b4a4d8b03b"
+    },
+    {
+      "file": "Evidence/02-actual-fingertip-ripple.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\02-actual-fingertip-ripple.txt",
+      "bytes": 168,
+      "sha256": "0a0871608cd06806b895da08d79a3ddd0242ab54b208cb2da525ef1c2fd120d9"
+    },
+    {
+      "file": "Evidence/03-actual-dragged-disc.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\03-actual-dragged-disc.png",
+      "bytes": 697961,
+      "sha256": "68e510e7d6347ee5736f5beb8ba3caed07c7a4e5d88bf0b213a068f4c60c65dd"
+    },
+    {
+      "file": "Evidence/03-actual-dragged-disc.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\03-actual-dragged-disc.txt",
+      "bytes": 168,
+      "sha256": "0a0871608cd06806b895da08d79a3ddd0242ab54b208cb2da525ef1c2fd120d9"
+    },
+    {
+      "file": "Evidence/03b-actual-unreachable-upper-left.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\03b-actual-unreachable-upper-left.png",
+      "bytes": 713705,
+      "sha256": "63765b0812711e3ab84f76589b2c6b4a912a4ca86b157b64496b75576db559e4"
+    },
+    {
+      "file": "Evidence/03b-actual-unreachable-upper-left.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\03b-actual-unreachable-upper-left.txt",
+      "bytes": 168,
+      "sha256": "5880156483453ceb93da9c6c1759117faeb4bc896e3e1d68bd75b42356543f20"
+    },
+    {
+      "file": "Evidence/04-actual-returned-controls.png",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\04-actual-returned-controls.png",
+      "bytes": 498979,
+      "sha256": "9295d96dfdc6e9cc3802725ea83c189abbfec59899d3ea538c348ac26e564e93"
+    },
+    {
+      "file": "Evidence/04-actual-returned-controls.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\04-actual-returned-controls.txt",
+      "bytes": 172,
+      "sha256": "715cf3df5e8ea294c0d16f986756f724b2322a0570d56579d49f0004dc7e8d23"
+    },
+    {
+      "file": "Evidence/cap-frames.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\cap-frames.txt",
+      "bytes": 3976,
+      "sha256": "6255e586d6db3f68962ca3e535446d01e1f2f1b85aa2581298256767c071c6b8"
+    },
+    {
+      "file": "Evidence/checks.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\checks.txt",
+      "bytes": 11798,
+      "sha256": "e08f566cc35b0baf5f24ca812ba24a6e9ca172cf26d3d6e2a673fddc42317855"
+    },
+    {
+      "file": "Evidence/editor-environment-errors.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\editor-environment-errors.txt",
+      "bytes": 954,
+      "sha256": "5dfcc994eb76169e7bd60f5b027da71d3bfb89a90f3ae0dea60abd1805be5221"
+    },
+    {
+      "file": "Evidence/entry-frames.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\entry-frames.txt",
+      "bytes": 52723,
+      "sha256": "5b90e9fa812c283832eb09d313d9d5eccd5047cf05dd1abd859afe7f67f917fe"
+    },
+    {
+      "file": "Evidence/mesh-contact.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\mesh-contact.txt",
+      "bytes": 528,
+      "sha256": "65dd01b90f1ceac86f4b20395d0bcfe547255b87c8610fb75312056ec5c39be6"
+    },
+    {
+      "file": "Evidence/PASS.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\PASS.txt",
+      "bytes": 183,
+      "sha256": "53caaafbeaf9919520f6b7b553eab456024ff2e08ced24918be151798ae823f0"
+    },
+    {
+      "file": "Evidence/reach-contact.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\reach-contact.txt",
+      "bytes": 895,
+      "sha256": "31349030ad578d5bc5fe41c23280e6ff8f1e37acb88edf9f9438963e476408ce"
+    },
+    {
+      "file": "Evidence/result.json",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\result.json",
+      "bytes": 30,
+      "sha256": "4bf4e3a0d99e54d4297b407761d145e7c42e296c256a7372d54493c8e56cb480"
+    },
+    {
+      "file": "Evidence/scope.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\scope.txt",
+      "bytes": 1237,
+      "sha256": "99648dd211a8156c7c3d6f18a81db7032ec41e58351678984d480f723c3c8e06"
+    },
+    {
+      "file": "Evidence/source-sha256.txt",
+      "source": ".local\\i01-integration\\.local\\earth-terminal-native-qa\\20261115T010219483Z\\source-sha256.txt",
+      "bytes": 50067,
+      "sha256": "6b53a0894d123d17f9bbc690bac61f7ca227e6d926d7a92cbf53f91204c78df6"
+    },
+    {
+      "file": "Evidence/i06-earth-terminal-native-5.log",
+      "source": ".local\\i01-integration\\TestResults\\i06-earth-terminal-native-5.log",
+      "bytes": 57075,
+      "sha256": "7d706b58685a40d1cbad19fb1caa178d9dbfa7f5428649552b8d6b3e454eb91a"
+    }
+  ]
+}

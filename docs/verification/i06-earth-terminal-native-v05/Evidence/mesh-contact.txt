@@ -1,0 +1,5 @@
+(0.29, 0.51) index-nearest=0.000992128 index-max-plane=-7.154047E-05 whole-right-max-plane=-7.154047E-05
+(0.30, 0.40) index-nearest=0.0009921192 index-max-plane=-7.154047E-05 whole-right-max-plane=-7.154047E-05
+(0.40, 0.55) index-nearest=0.000992145 index-max-plane=-7.153302E-05 whole-right-max-plane=-7.153302E-05
+(0.50, 0.50) index-nearest=0.0009921439 index-max-plane=-7.152511E-05 whole-right-max-plane=-7.152511E-05
+(0.70, 0.30) index-nearest=0.0009921489 index-max-plane=-7.151067E-05 whole-right-max-plane=-7.151067E-05

@@ -72,6 +72,14 @@ namespace OutOfReach.Presentation.Motion
         public Transform GetWorkBone(string boneName) => workCache != null && boneName != null
             && workCache.Nodes.TryGetValue(boneName, out Transform node) ? node : null;
 
+        /// <summary>Read the actual visible outfit before a presentation lease hides or resets it.</summary>
+        public Transform GetVisibleBone(string boneName)
+        {
+            ModelCache selected = activeEva ? evaCache : workCache;
+            return IsVisible && selected != null && boneName != null
+                && selected.Nodes.TryGetValue(boneName, out Transform node) ? node : null;
+        }
+
         public Vector3 GetVisualFeetOffset(BodyPose forPose) => forPose == BodyPose.Floating ? floatingFeetVisualOffset
             : forPose == BodyPose.Seated ? seatedFeetVisualOffset : feetVisualOffset;
 

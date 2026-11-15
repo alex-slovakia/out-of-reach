@@ -1,0 +1,17 @@
+[
+  {
+    "file": "01-actual-v2-focused.png",
+    "utc_roi_bright_pixels": 1994,
+    "title_roi_bright_pixels": 3575
+  },
+  {
+    "file": "02-actual-fingertip-ripple.png",
+    "utc_roi_bright_pixels": 1994,
+    "title_roi_bright_pixels": 3575
+  },
+  {
+    "file": "03-actual-dragged-disc.png",
+    "utc_roi_bright_pixels": 1994,
+    "title_roi_bright_pixels": 3575
+  }
+]

@@ -1,0 +1,1 @@
+Actual V2 E entry/pointer/press/drag/occlusion, Escape action lease, pause/disable/restart and real cinematic cancellation checked. Inspect captures for hardware/glove art acceptance.

@@ -16,7 +16,12 @@ namespace OutOfReach.Presentation.Terminal
         private readonly Dictionary<string, Transform> joints = new Dictionary<string, Transform>();
         private readonly Dictionary<string, Quaternion> press = new Dictionary<string, Quaternion>();
         private readonly Dictionary<string, Quaternion> grip = new Dictionary<string, Quaternion>();
-        private Transform root, rightArm, leftArm, leftHand;
+        private Transform root, rightArm, leftArm, leftHand, rightHand;
+        private TerminalReachFrame reach;
+        private Camera view;
+        public Vector3 SolvedElbow { get; private set; }
+        public float WristAngleDegrees { get; private set; }
+        public bool IsActive => snapshot != null && root && rightArm && rightHand;
         private Snapshot[] snapshot;
         private bool originalActive;
         private struct Snapshot
@@ -43,7 +48,7 @@ namespace OutOfReach.Presentation.Terminal
                 joints.Add(joint.name, joint);
             }
             if (!joints.TryGetValue("R_Arm", out rightArm) || !joints.TryGetValue("L_Arm", out leftArm)
-                || !joints.TryGetValue("L_Hand", out leftHand) || joints.Count != 34) return false;
+                || !joints.TryGetValue("L_Hand", out leftHand) || !joints.TryGetValue("R_Hand",out rightHand) || joints.Count != 34) return false;
             Rig rig;
             try { rig = JsonUtility.FromJson<Rig>(json.text); }
             catch (Exception) { return false; }
@@ -66,9 +71,11 @@ namespace OutOfReach.Presentation.Terminal
             return true;
         }
 
-        public bool Begin()
+        public bool Begin(TerminalReachFrame actualReach, Camera camera)
         {
-            if (!root || !rightArm || !leftArm || !leftHand) return false;
+            if (!root || !rightArm || !leftArm || !leftHand || !rightHand || !actualReach.IsValid || !camera
+                || rightHand.localPosition.sqrMagnitude>.0000001f) return false;
+            reach=actualReach; view=camera;
             var transforms = root.GetComponentsInChildren<Transform>(true);
             snapshot = new Snapshot[transforms.Length]; originalActive = root.gameObject.activeSelf;
             for (int i = 0; i < transforms.Length; i++)
@@ -79,30 +86,64 @@ namespace OutOfReach.Presentation.Terminal
             }
             foreach (var entry in press) if (entry.Key.StartsWith("R_", StringComparison.Ordinal)) joints[entry.Key].localRotation = entry.Value;
             foreach (var entry in grip) if (entry.Key.StartsWith("L_", StringComparison.Ordinal)) joints[entry.Key].localRotation = entry.Value;
+            // No unverified physical left brace: this session uses the measured right touch hand only.
+            leftArm.gameObject.SetActive(false);
             root.gameObject.SetActive(true);
             return true;
         }
 
-        public bool Place(Vector3 fingertip, Quaternion orientation, Transform leftGrip)
+        public bool Place(Vector3 fingertip, Quaternion displayRotation, bool apply = true)
         {
-            if (snapshot == null || !root || !rightArm || !leftArm || !leftHand) return false;
-            rightArm.rotation = orientation;
-            // Calibrated by the delivered glove's Press pose; wrist + finger meshes are unchanged.
-            rightArm.position = fingertip - orientation * new Vector3(-.0089f, -.0690f, .1864f);
-            if (leftGrip)
+            if (!IsActive || !reach.IsValid || !view) return false;
+            // Original Press fingers and hand surface stay unchanged. Only arm/wrist rotations change.
+            Quaternion hand = displayRotation * Quaternion.Euler(0,-20,0) * Quaternion.Euler(-40,0,0)
+                * Quaternion.Euler(0,0,-8) * press["R_Hand"];
+            Vector3 tipInHand = Quaternion.Inverse(press["R_Hand"]) * new Vector3(-.0089f,-.0690f,.1864f);
+            Vector3 wrist = fingertip-hand*tipInHand;
+            Vector3 delta=wrist-reach.RightShoulder;
+            float distance=delta.magnitude, upper=reach.UpperLength, lower=reach.LowerLength;
+            if(distance>upper+lower-.002f || distance<Mathf.Abs(upper-lower)+.005f) return false;
+            Vector3 axis=delta/distance;
+            float along=(upper*upper-lower*lower+distance*distance)/(2*distance);
+            float height=Mathf.Sqrt(Mathf.Max(0,upper*upper-along*along));
+            Vector3 down=Vector3.ProjectOnPlane(Vector3.down,axis).normalized;
+            if(down.sqrMagnitude<.9f) return false;
+            Vector3 across=Vector3.Cross(axis,down);
+            float best=float.PositiveInfinity,bestWrist=0; Vector3 bestElbow=default,bestForward=default;
+            for(int i=0;i<72;i++)
             {
-                leftArm.gameObject.SetActive(true);
-                var rotation = leftGrip.rotation * Quaternion.Inverse(leftHand.localRotation);
-                leftArm.rotation = rotation;
-                leftArm.position = leftGrip.position - rotation * new Vector3(-.0149f, -.0635f, .0597f);
+                float angle=i*5*Mathf.Deg2Rad;
+                Vector3 elbow=reach.RightShoulder+axis*along+height*(Mathf.Cos(angle)*down+Mathf.Sin(angle)*across);
+                Vector3 forward=(wrist-elbow).normalized;
+                float bend=Vector3.Angle(forward,hand*Vector3.forward);
+                if(bend>80 || Vector3.Dot(elbow-reach.ShoulderCentre,reach.BodyRight)<.060f
+                    || Vector3.Dot(elbow-reach.RightShoulder,reach.BodyForward)<.080f
+                    || elbow.y>wrist.y-.045f) continue;
+                // The original 320 mm garment extends beyond the shorter anatomical elbow distance.
+                // Check its entire axis against the actual eye; never shrink or stretch the source sleeve.
+                Vector3 rear=wrist-forward*.320f;
+                if(SegmentDistance(view.transform.position,rear,wrist)<.115f) continue;
+                float cost=bend+200*Mathf.Max(0,elbow.y-reach.RightShoulder.y);
+                if(cost>=best) continue;
+                best=cost; bestElbow=elbow; bestForward=forward; bestWrist=bend;
             }
-            else leftArm.gameObject.SetActive(false);
+            if(float.IsPositiveInfinity(best)) return false;
+            if(!apply) return true;
+            Quaternion arm=Quaternion.FromToRotation(hand*Vector3.forward,bestForward)*hand;
+            rightArm.SetPositionAndRotation(wrist,arm);
+            rightHand.localRotation=Quaternion.Inverse(arm)*hand;
+            SolvedElbow=bestElbow; WristAngleDegrees=bestWrist;
             return true;
+        }
+        private static float SegmentDistance(Vector3 p,Vector3 a,Vector3 b)
+        {
+            Vector3 d=b-a;
+            return Vector3.Distance(p,a+d*Mathf.Clamp01(Vector3.Dot(p-a,d)/d.sqrMagnitude));
         }
 
         public void Restore()
         {
-            var saved = snapshot; snapshot = null;
+            var saved = snapshot; snapshot = null; view=null; reach=default;
             if (saved == null) return;
             foreach (var s in saved)
                 if (s.Target)

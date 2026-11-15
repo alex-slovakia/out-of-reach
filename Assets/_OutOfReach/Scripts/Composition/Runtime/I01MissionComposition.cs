@@ -13,6 +13,7 @@ using OutOfReach.Presentation.Cinematics.Preflight;
 using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
+using OutOfReach.Presentation.Terminal;
 using OutOfReach.Presentation.UI;
 using OutOfReach.Simulation;
 using UnityEngine;
@@ -164,6 +165,17 @@ namespace OutOfReach.Composition
         {
             if (microgravityBridge) microgravityBridge.Release();
             if (embodiedBody) embodiedBody.RefreshPresentation();
+        }
+        private TerminalReachFrame ReadActualTerminalReach()
+        {
+            if (!embodiedBody || !embodiedBody.IsVisible || !runtime || !runtime.Player) return default;
+            Transform rightShoulder = embodiedBody.GetVisibleBone("upperarm01.R");
+            Transform leftShoulder = embodiedBody.GetVisibleBone("upperarm01.L");
+            Transform rightElbow = embodiedBody.GetVisibleBone("lowerarm01.R");
+            Transform rightWrist = embodiedBody.GetVisibleBone("wrist.R");
+            if (!rightShoulder || !leftShoulder || !rightElbow || !rightWrist) return default;
+            return new TerminalReachFrame(rightShoulder.position, leftShoulder.position,
+                rightElbow.position, rightWrist.position, runtime.Player.transform.forward);
         }
         public void ConfigureAntennaRepair(I06AntennaRepairBindings bindings, Transform interactionOrigin)
         {
@@ -491,9 +503,14 @@ namespace OutOfReach.Composition
             if (!ReferenceEquals(session, transferredSession)) transferredSession = null;
             modeChosen = runtime.GameState.Phase != GamePhase.Planning || runtime.PlanningDeadline.IsEnabled;
             BindPlanningControlGate();
-            if (earthTerminal) earthTerminal.ConfigureSession(runtime, CanPresentEarthViewer, PrepareEarthViewer);
+            if (earthTerminal)
+            {
+                earthTerminal.ConfigureSession(runtime, CanPresentEarthViewer, PrepareEarthViewer);
+                earthTerminal.Terminal.ConfigureReach(ReadActualTerminalReach);
+            }
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
             flightBoard.SetDeparturePresentation(false);
+            flightBoard.SetPhysicalTerminalPresentation(false);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
             flightBoard.ConfigureExertion(() => runtime && runtime.Player ? runtime.Player.ExertionRemaining01 : float.NaN);
             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
@@ -647,6 +664,7 @@ namespace OutOfReach.Composition
             {
                 flightBoard.SetDeparturePresentation(false);
                 flightBoard.ClearInteractionPrompt();
+                flightBoard.SetPhysicalTerminalPresentation(false);
                 flightBoard.ClearSubtitle();
                 flightBoard.ConfigureExertion(null);
                 flightBoard.ConfigurePlanningInstruction(null);
@@ -985,7 +1003,10 @@ namespace OutOfReach.Composition
         private void RefreshCinematicHud()
         {
             if (flightBoard && attached && boundSession != null)
+            {
                 flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying) || EarthViewerOwnsInput);
+                flightBoard.SetPhysicalTerminalPresentation(EarthViewerOwnsInput);
+            }
         }
 
         private void RefreshSubtitle()

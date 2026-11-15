@@ -32,6 +32,7 @@ namespace OutOfReach.Presentation.UI
         private bool physicalPlanning;
         private bool menuOverlayVisible;
         private bool departurePresentation;
+        private bool physicalTerminalPresentation;
         private string commandExplanation = string.Empty;
         private string subtitleText = string.Empty;
         private string subtitleSpeaker = string.Empty;
@@ -49,6 +50,14 @@ namespace OutOfReach.Presentation.UI
             if (disposed) return;
             departurePresentation = active;
             view?.SetDeparturePresentation(active);
+        }
+
+        /// <summary>Keep live dialogue below the physical display while its exclusive viewer is active.</summary>
+        public void SetPhysicalTerminalPresentation(bool active)
+        {
+            if (disposed) return;
+            physicalTerminalPresentation = active;
+            view?.SetPhysicalTerminalPresentation(active);
         }
 
         public void ConfigureExertion(Func<float> readRemaining)
@@ -252,6 +261,7 @@ namespace OutOfReach.Presentation.UI
             readExertionRemaining = null;
             physicalPlanning = false;
             departurePresentation = false;
+            physicalTerminalPresentation = false;
             hasResourceReference = false;
             subtitleText = string.Empty;
             subtitleSpeaker = string.Empty;
@@ -267,6 +277,7 @@ namespace OutOfReach.Presentation.UI
             view = new FlightBoardView(root, styleSheet);
             view.SetMenuOverlayVisible(menuOverlayVisible);
             view.SetDeparturePresentation(departurePresentation);
+            view.SetPhysicalTerminalPresentation(physicalTerminalPresentation);
             view.SetPhysicalPlanning(physicalPlanning);
             view.QuantityChangeRequested += ChangeQuantity;
             view.LaunchRequested += Launch;

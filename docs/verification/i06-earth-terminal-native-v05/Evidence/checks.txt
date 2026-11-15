@@ -1,0 +1,177 @@
+PASS Saved Bootstrap contains root-wired V2 terminal and dedicated original gloves.
+PASS Actual 17 right glove joints plus left forearm cached from original rigid meshes.
+PASS Earth display shader supported with zero native shader errors.
+PASS One actual view/listener.
+PASS Earth target is separate from the domain target array.
+PASS QA-created keyboard/mouse are enabled and current under temporary cloned batch input settings.
+PASS Real default PlayerInputActions retained.
+PASS Actual Interact action resolves the QA keyboard E control; no keyboard binding replaced by micro LMB lease.
+PASS Actual pointer-look action resolves the QA mouse; fixture aim is delivered through PlayerInputActions.
+PASS Actual valid Practice launch | AURORA-7 launched with 7 equipment line(s).
+PASS Disclosed actual transport skip
+PASS Actual transfer complete
+PASS Actual cockpit check | Cockpit check complete. Impact detected.
+PASS Disclosed actual Impact skip
+PASS Saved scene uses approved close-focus instance override; source model remains unchanged.
+PASS Far-entry negative fixture is genuinely outside the .550 m eye-to-display bound.
+PASS Too-far real stance refuses without input lease, player move or camera flight.
+PASS Real aim selects terminal casing within reach.
+PASS Standalone terminal bound, inactive until interaction.
+PASS Virtual input devices remain enabled before real E.
+PASS Actual body is visible before terminal acquire for independent joint measurement.
+PASS Current outfit rig exists.
+PASS Actual entry eye is within .550 m of display centre.
+PASS Actual focus translation is at most .120 m, independently of interaction resolver reach.
+PASS Real Interact action performed after queued E; see entry-frames.txt.
+PASS Real Player routed E to InteractionResolver.Interacted; stale LastRefusal alone is not an entry result.
+PASS Actual E opened physical viewer. 
+PASS Root control gate and only owned action leases active.
+PASS Input source unchanged and micro routing not faulted.
+PASS Dedicated original gloves visible.
+PASS Actual active body joints were captured before focus hides/resets them; no invented anatomical lengths.
+PASS No unverified left brace is presented.
+PASS Physical text uses the enlarged authored baseline; actual pixel readability still needs image review.
+PASS No duplicate body or normal view gloves during viewer.
+PASS Sole view exactly at authored focus frame.
+PASS Display uses actual mission UTC.
+PASS Opening E does not also press touchscreen.
+PASS Actual pointer and press UV match.
+PASS Actual unchanged right meshes reach display without >3 mm plane penetration at (0.29, 0.51)
+PASS Actual wrist/forearm orientation uses finite measured body chain and <=80 degree wrist at (0.29, 0.51)
+PASS Held drag rotates actual display property block.
+PASS Actual unchanged right meshes reach display without >3 mm plane penetration at (0.30, 0.40)
+PASS Actual wrist/forearm orientation uses finite measured body chain and <=80 degree wrist at (0.30, 0.40)
+PASS Actual unchanged right meshes reach display without >3 mm plane penetration at (0.40, 0.55)
+PASS Actual wrist/forearm orientation uses finite measured body chain and <=80 degree wrist at (0.40, 0.55)
+PASS Actual unchanged right meshes reach display without >3 mm plane penetration at (0.50, 0.50)
+PASS Actual wrist/forearm orientation uses finite measured body chain and <=80 degree wrist at (0.50, 0.50)
+PASS Actual unchanged right meshes reach display without >3 mm plane penetration at (0.70, 0.30)
+PASS Actual wrist/forearm orientation uses finite measured body chain and <=80 degree wrist at (0.70, 0.30)
+PASS Unreachable upper-left only dims pointer; no press callback or fictitious arm reach.
+PASS Unreachable held pointer cannot rotate the observation.
+PASS Actual solid screen occluder rejects pointer contact.
+PASS Escape closes viewer without pausing actual mission.
+PASS Viewer/glove/input lease fully released.
+PASS Camera local pose/FOV restored exactly.
+PASS Same input source and original action enabled states restored.
+PASS Actual Player control restored.
+PASS Viewer never moved or teleported player root.
+PASS Escape/exit does not replay an interaction.
+PASS Actual E and adapter recheck both reject an occluded entry.
+PASS Virtual input devices remain enabled before real E.
+PASS Actual body is visible before terminal acquire for independent joint measurement.
+PASS Current outfit rig exists.
+PASS Actual entry eye is within .550 m of display centre.
+PASS Actual focus translation is at most .120 m, independently of interaction resolver reach.
+PASS Real Interact action performed after queued E; see entry-frames.txt.
+PASS Real Player routed E to InteractionResolver.Interacted; stale LastRefusal alone is not an entry result.
+PASS Actual E opened physical viewer. 
+PASS Root control gate and only owned action leases active.
+PASS Input source unchanged and micro routing not faulted.
+PASS Dedicated original gloves visible.
+PASS Actual active body joints were captured before focus hides/resets them; no invented anatomical lengths.
+PASS No unverified left brace is presented.
+PASS Physical text uses the enlarged authored baseline; actual pixel readability still needs image review.
+PASS No duplicate body or normal view gloves during viewer.
+PASS Sole view exactly at authored focus frame.
+PASS Display uses actual mission UTC.
+PASS External actual pause closes viewer and preserves pause.
+PASS Viewer/glove/input lease fully released.
+PASS Camera local pose/FOV restored exactly.
+PASS Same input source and original action enabled states restored.
+PASS Viewer never moved or teleported player root.
+PASS Virtual input devices remain enabled before real E.
+PASS Actual body is visible before terminal acquire for independent joint measurement.
+PASS Current outfit rig exists.
+PASS Actual entry eye is within .550 m of display centre.
+PASS Actual focus translation is at most .120 m, independently of interaction resolver reach.
+PASS Real Interact action performed after queued E; see entry-frames.txt.
+PASS Real Player routed E to InteractionResolver.Interacted; stale LastRefusal alone is not an entry result.
+PASS Actual E opened physical viewer. 
+PASS Root control gate and only owned action leases active.
+PASS Input source unchanged and micro routing not faulted.
+PASS Dedicated original gloves visible.
+PASS Actual active body joints were captured before focus hides/resets them; no invented anatomical lengths.
+PASS No unverified left brace is presented.
+PASS Physical text uses the enlarged authored baseline; actual pixel readability still needs image review.
+PASS No duplicate body or normal view gloves during viewer.
+PASS Sole view exactly at authored focus frame.
+PASS Display uses actual mission UTC.
+PASS Viewer/glove/input lease fully released.
+PASS Camera local pose/FOV restored exactly.
+PASS Same input source and original action enabled states restored.
+PASS Actual Player control restored.
+PASS Viewer never moved or teleported player root.
+PASS Disable clears only the separate terminal target.
+PASS Real in-place restart rebinds separate Earth target.
+PASS Actual valid Practice launch | AURORA-7 launched with 7 equipment line(s).
+PASS Disclosed actual transport skip
+PASS Actual transfer complete
+PASS Actual cockpit check | Cockpit check complete. Impact detected.
+PASS Disclosed actual Impact skip
+PASS Saved scene uses approved close-focus instance override; source model remains unchanged.
+PASS Real aim selects terminal casing within reach.
+PASS Virtual input devices remain enabled before real E.
+PASS Actual body is visible before terminal acquire for independent joint measurement.
+PASS Current outfit rig exists.
+PASS Actual entry eye is within .550 m of display centre.
+PASS Actual focus translation is at most .120 m, independently of interaction resolver reach.
+PASS Real Interact action performed after queued E; see entry-frames.txt.
+PASS Real Player routed E to InteractionResolver.Interacted; stale LastRefusal alone is not an entry result.
+PASS Actual E opened physical viewer. 
+PASS Root control gate and only owned action leases active.
+PASS Input source unchanged and micro routing not faulted.
+PASS Dedicated original gloves visible.
+PASS Actual active body joints were captured before focus hides/resets them; no invented anatomical lengths.
+PASS No unverified left brace is presented.
+PASS Physical text uses the enlarged authored baseline; actual pixel readability still needs image review.
+PASS No duplicate body or normal view gloves during viewer.
+PASS Sole view exactly at authored focus frame.
+PASS Display uses actual mission UTC.
+PASS Restart while entered restores gloves and binds a genuinely new session.
+PASS Actual valid Practice launch | AURORA-7 launched with 7 equipment line(s).
+PASS Disclosed actual transport skip
+PASS Actual transfer complete
+PASS Actual cockpit check | Cockpit check complete. Impact detected.
+PASS Disclosed actual Impact skip
+PASS Actual paid power repair | power distribution repaired (2 spare parts).
+PASS Actual paid life support repair | life support repaired (2 spare parts, 1 kWh).
+PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+PASS Actual airlock cycle | Inner hatch sealed. Depressurizing.
+PASS Actual depressurization time | Simulation advanced.
+PASS Actual outside transition for setup | Outside on the tether.
+PASS Actual paid antenna repair | high-gain antenna repaired (3 spare parts, 0.5 kWh).
+PASS Actual return | Inside the airlock.
+PASS Actual repressurization | Outer hatch closed. Repressurizing.
+PASS Actual repressurization time | Simulation advanced.
+PASS Saved scene uses approved close-focus instance override; source model remains unchanged.
+PASS Real aim selects terminal casing within reach.
+PASS Virtual input devices remain enabled before real E.
+PASS Actual body is visible before terminal acquire for independent joint measurement.
+PASS Current outfit rig exists.
+PASS Actual entry eye is within .550 m of display centre.
+PASS Actual focus translation is at most .120 m, independently of interaction resolver reach.
+PASS Real Interact action performed after queued E; see entry-frames.txt.
+PASS Real Player routed E to InteractionResolver.Interacted; stale LastRefusal alone is not an entry result.
+PASS Actual E opened physical viewer. 
+PASS Root control gate and only owned action leases active.
+PASS Input source unchanged and micro routing not faulted.
+PASS Dedicated original gloves visible.
+PASS Actual active body joints were captured before focus hides/resets them; no invented anatomical lengths.
+PASS No unverified left brace is presented.
+PASS Physical text uses the enlarged authored baseline; actual pixel readability still needs image review.
+PASS No duplicate body or normal view gloves during viewer.
+PASS Sole view exactly at authored focus frame.
+PASS Display uses actual mission UTC.
+PASS Real FalseSignal trigger while viewer entered | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+PASS Actual cinematic synchronously preempts viewer.
+PASS Camera local pose restored before cinematic capture.
+PASS Disclosed public FalseSignal skip
+PASS Viewer/glove/input lease fully released.
+PASS Camera local pose/FOV restored exactly.
+PASS Same input source and original action enabled states restored.
+PASS Actual Player control restored.
+PASS Viewer never moved or teleported player root.
+PASS Earth display shader supported with zero native shader errors.
+PASS Actual forearm-cap geometry audit completed: 
+PASS Both original forearm rear caps remain outside the visible front-facing frustum across actual focused renders. samples=32 exposed=0. If this fails, input/lifecycle results stand but visual acceptance is blocked; inspect captures/cap-frames.txt.

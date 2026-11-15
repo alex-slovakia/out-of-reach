@@ -1,0 +1,2 @@
+Actual saved Bootstrap player view and UI; entered=False paused=False phase=Transmission presses=5 missionUtc=2026-11-14T10:40:00.0000000Z
+Camera=(2.26, 1.70, 2.24) fov=68

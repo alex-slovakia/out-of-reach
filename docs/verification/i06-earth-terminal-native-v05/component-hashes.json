@@ -1,0 +1,80 @@
+[
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/Terminal/TerminalGlovePose.cs",
+    "tested_sha256": "9ba4d5181d1191caa193b914e276ad92cef54dde5cc386467198477580677a92",
+    "archive_time_workspace_sha256": "9ba4d5181d1191caa193b914e276ad92cef54dde5cc386467198477580677a92",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/Terminal/PhysicalEarthTerminalPresenter.cs",
+    "tested_sha256": "41234dc1a20ce7bc2452d7806b4daff76a7a8a582365d2ed2e1aebb77d96df5b",
+    "archive_time_workspace_sha256": "41234dc1a20ce7bc2452d7806b4daff76a7a8a582365d2ed2e1aebb77d96df5b",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/Motion/EmbodiedBodyPresenter.cs",
+    "tested_sha256": "61f4b7668c0d64dab8102df0113312e43ba14a3937f0ef7a5bc4e0068a657d2b",
+    "archive_time_workspace_sha256": "61f4b7668c0d64dab8102df0113312e43ba14a3937f0ef7a5bc4e0068a657d2b",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs",
+    "tested_sha256": "84706c89d9ea814bfb141833838a007c611c1b2061a7d1d36e7ad04c5d332500",
+    "archive_time_workspace_sha256": "84706c89d9ea814bfb141833838a007c611c1b2061a7d1d36e7ad04c5d332500",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06EarthTerminalBindings.cs",
+    "tested_sha256": "bbd0f85d8536d1d7a595d061e6abdbd1637d7db0b9b4198c6db50f9a418f5da5",
+    "archive_time_workspace_sha256": "bbd0f85d8536d1d7a595d061e6abdbd1637d7db0b9b4198c6db50f9a418f5da5",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06EarthTerminalAuthoring.cs",
+    "tested_sha256": "03a0a081096c843af1061fbe70f61e197522cec380a1a10948ff71d4ca9a9634",
+    "archive_time_workspace_sha256": "03a0a081096c843af1061fbe70f61e197522cec380a1a10948ff71d4ca9a9634",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+    "tested_sha256": "51e10801e89b470b795f14a865b3f5a1e916f895727b7f14eef0d2c72a93eeec",
+    "archive_time_workspace_sha256": "51e10801e89b470b795f14a865b3f5a1e916f895727b7f14eef0d2c72a93eeec",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/Editor/EarthTerminalNativeQa/EarthTerminalNativeQa.cs",
+    "tested_sha256": "9cdf2dc5f79fff64a6cbe3c0504b904eae4a4327a3057c9912d54398a1186f40",
+    "archive_time_workspace_sha256": "9cdf2dc5f79fff64a6cbe3c0504b904eae4a4327a3057c9912d54398a1186f40",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/UI/Runtime/MissionFlightBoard.cs",
+    "tested_sha256": "55ca74d9513d537f4ddfd8deab69f3fab8adcd2399d3c94cd05f04e5b3012881",
+    "archive_time_workspace_sha256": "55ca74d9513d537f4ddfd8deab69f3fab8adcd2399d3c94cd05f04e5b3012881",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs",
+    "tested_sha256": "e8f2dd1855bb1d74c9dc97a498817a4daae079a34a144fcdf1792f52e09b9827",
+    "archive_time_workspace_sha256": "e8f2dd1855bb1d74c9dc97a498817a4daae079a34a144fcdf1792f52e09b9827",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands.prefab",
+    "tested_sha256": "33b5bb526ecc19769aa4a0ec0690066b671a5ad291dfdebd1711b398ec0c5a0c",
+    "archive_time_workspace_sha256": "33b5bb526ecc19769aa4a0ec0690066b671a5ad291dfdebd1711b398ec0c5a0c",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/AstronautHands_rig.json",
+    "tested_sha256": "025b9e5c798b345979366d36f4904d51ceb138443dd20916a0b46e747a62dd3e",
+    "archive_time_workspace_sha256": "025b9e5c798b345979366d36f4904d51ceb138443dd20916a0b46e747a62dd3e",
+    "matches_tested": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/Props/MissionTerminal/Shaders/EarthTerminal.shader",
+    "tested_sha256": "16d5bb6d4e71e4b312a7e7cafe48574c0533f81844df5313f7d08d8d2129447c",
+    "archive_time_workspace_sha256": "16d5bb6d4e71e4b312a7e7cafe48574c0533f81844df5313f7d08d8d2129447c",
+    "matches_tested": true
+  }
+]

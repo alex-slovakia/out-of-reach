@@ -1,0 +1,7 @@
+{
+  "path": "Assets/_OutOfReach/UI/Styles/MissionFlightBoard.uss",
+  "sha256": "f63a3a17c0446f12845cbfa0a688d8b5c2b07388834838925fd05bd07dae93d6",
+  "bytes": 17200,
+  "evidence_kind": "Archive-time exact stylesheet pin; native runner source manifest excludes .uss. Actual native5 images independently demonstrate resulting below-glass subtitle placement.",
+  "rule": ".flight-board.physical-terminal-presentation.departure-presentation .subtitle-overlay { left: 15%; right: 15%; bottom: 1%; }"
+}

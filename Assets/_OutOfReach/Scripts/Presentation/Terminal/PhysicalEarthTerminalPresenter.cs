@@ -6,6 +6,23 @@ namespace OutOfReach.Presentation.Terminal
 {
     public enum TerminalExitReason { User, Escape, Pause, Restart, Disabled, Reconfigured, Invalidated, Fault }
 
+    /// <summary>Immutable actual body geometry, read before the terminal's camera/input acquire hides the body.</summary>
+    public readonly struct TerminalReachFrame
+    {
+        public readonly Vector3 RightShoulder, LeftShoulder, RightElbow, RightWrist, BodyForward;
+        public TerminalReachFrame(Vector3 rightShoulder,Vector3 leftShoulder,Vector3 rightElbow,Vector3 rightWrist,Vector3 bodyForward)
+        { RightShoulder=rightShoulder; LeftShoulder=leftShoulder; RightElbow=rightElbow; RightWrist=rightWrist;
+            BodyForward=Vector3.ProjectOnPlane(bodyForward,Vector3.up).normalized; }
+        public Vector3 ShoulderCentre => (RightShoulder+LeftShoulder)*.5f;
+        public Vector3 BodyRight => Vector3.Cross(Vector3.up,BodyForward);
+        public float UpperLength => Vector3.Distance(RightShoulder,RightElbow);
+        public float LowerLength => Vector3.Distance(RightElbow,RightWrist);
+        public bool IsValid => Finite(RightShoulder)&&Finite(LeftShoulder)&&Finite(RightElbow)&&Finite(RightWrist)&&Finite(BodyForward)
+            && BodyForward.sqrMagnitude>.99f && UpperLength>.15f&&UpperLength<.40f&&LowerLength>.15f&&LowerLength<.40f
+            && Vector3.Distance(RightShoulder,LeftShoulder)>.25f&&Vector3.Distance(RightShoulder,LeftShoulder)<.55f;
+        static bool Finite(Vector3 v)=>!float.IsNaN(v.x)&&!float.IsInfinity(v.x)&&!float.IsNaN(v.y)&&!float.IsInfinity(v.y)&&!float.IsNaN(v.z)&&!float.IsInfinity(v.z);
+    }
+
     /// <summary>Physical display presentation only. Root owns E, cursor, camera and the sole player-input lease.</summary>
     [DisallowMultipleComponent]
     public sealed class PhysicalEarthTerminalPresenter : MonoBehaviour
@@ -30,6 +47,8 @@ namespace OutOfReach.Presentation.Terminal
         private Func<bool> tryAcquireSession, mustCloseSession;
         private Action releaseSession, acquiredRelease;
         private Func<DateTime> readMissionUtc;
+        private Func<TerminalReachFrame> readReach;
+        private bool pointerReachable;
         private readonly TerminalGlovePose glove = new TerminalGlovePose();
         private MaterialPropertyBlock properties, previousProperties;
         private bool active, transitioning, pointerValid, dragging, held, observationAvailable;
@@ -40,6 +59,15 @@ namespace OutOfReach.Presentation.Terminal
         private float contactAge=10, rippleAge=10, displayRefresh;
 
         public bool IsEntered => active;
+        public bool TouchReachable => pointerValid && pointerReachable;
+        public TerminalReachFrame ActiveReachFrame { get; private set; }
+        public Vector3 RightElbowWorld => glove.SolvedElbow;
+        public float RightWristAngleDegrees => glove.WristAngleDegrees;
+        public string LastTouchRefusal { get; private set; } = string.Empty;
+        /// <summary>Root supplies actual body joints; this view never writes or samples a body pose.</summary>
+        public void ConfigureReach(Func<TerminalReachFrame> reader)
+        { int generation=++configurationGeneration; Exit(TerminalExitReason.Reconfigured);
+            if(generation==configurationGeneration) readReach=reader; }
         public Transform DisplayFrame => displayFrame;
         public Vector2 ActiveSizeMetres => activeSizeMetres;
         public Renderer DisplayRenderer => displayRenderer;
@@ -65,6 +93,8 @@ namespace OutOfReach.Presentation.Terminal
             Exit(TerminalExitReason.Reconfigured);
             if (generation != configurationGeneration) return;
             tryAcquireSession=acquire; releaseSession=release; mustCloseSession=close; readMissionUtc=missionUtc;
+            if(acquire==null) readReach=null;
+            ApplyReadableLabels();
         }
 
         public void ConfigureDisplay(Texture image, TextMesh mission, TextMesh observed, TextMesh age, TextMesh status)
@@ -87,18 +117,26 @@ namespace OutOfReach.Presentation.Terminal
             try
             {
                 if (mustCloseSession()) return false;
+                // Snapshot before acquire: root legitimately hides/resets the body from that callback.
+                TerminalReachFrame actualReach=readReach!=null?readReach():default;
+                if(generation!=configurationGeneration) return false;
+                if(!actualReach.IsValid) { LastTouchRefusal="Actual body reach is unavailable."; return false; }
+                ActiveReachFrame=actualReach;
                 acquired=tryAcquireSession();
                 if (!acquired) return false;
                 if (generation != configurationGeneration || !isActiveAndEnabled || !ReferencesValid() || mustCloseSession())
                     return false;
                 if (generation != configurationGeneration) return false;
-                if (!glove.Bind(separateGloveInstance, rigJson) || !glove.Begin()) return false;
+                if (!glove.Bind(separateGloveInstance, rigJson) || !glove.Begin(actualReach,viewCamera)) return false;
+                if(!glove.Place(PointOnScreen(new Vector2(.35f,.5f),hoverDistance),displayFrame.rotation))
+                { LastTouchRefusal="Move into a reachable stance before opening the terminal."; return false; }
                 if (properties == null) properties=new MaterialPropertyBlock();
                 if (previousProperties == null) previousProperties=new MaterialPropertyBlock();
                 displayRenderer.GetPropertyBlock(previousProperties);
                 displayRenderer.GetPropertyBlock(properties);
                 acquiredRelease=release; active=true; acquired=false;
-                pointerValid=false; dragging=false; held=false;
+                pointerValid=false; pointerReachable=false; dragging=false; held=false;
+                LastTouchRefusal=string.Empty;
                 contactAge=rippleAge=10; displayRefresh=0;
                 pointerUv=new Vector2(.35f,.5f);
                 targetTip=currentTip=PointOnScreen(pointerUv,hoverDistance);
@@ -110,6 +148,7 @@ namespace OutOfReach.Presentation.Terminal
                 transitioning=false;
                 if (!active)
                 {
+                    ActiveReachFrame=default; pointerReachable=false;
                     acquiredRelease=null;
                     try { glove.Restore(); }
                     catch (Exception exception) { Debug.LogException(exception,this); }
@@ -124,7 +163,7 @@ namespace OutOfReach.Presentation.Terminal
         public void Exit(TerminalExitReason reason=TerminalExitReason.User)
         {
             if (!active) return;
-            active=false; pointerValid=false; dragging=false; held=false;
+            active=false; pointerValid=false; pointerReachable=false; dragging=false; held=false; ActiveReachFrame=default;
             var release=acquiredRelease; acquiredRelease=null;
             // Restore before callbacks. Even synchronous re-entry cannot inherit the previous pose or screen state.
             bool wasTransitioning=transitioning;
@@ -151,14 +190,23 @@ namespace OutOfReach.Presentation.Terminal
                 pointerValid=false; dragging=false; held=false;
                 return;
             }
-            pointerValid=true; pointerUv=uv; held=isHeld;
+            pointerValid=true; pointerUv=uv;
+            Vector3 proposed=PointOnScreen(uv,(pressed||isHeld)?.001f:hoverDistance);
+            pointerReachable=glove.Place(proposed,displayFrame.rotation,false);
+            if(!pointerReachable)
+            {
+                held=dragging=false; contactAge=10;
+                LastTouchRefusal="Outside the actual arm's touch reach.";
+                ApplyDisplay(); return;
+            }
+            LastTouchRefusal=string.Empty; held=isHeld;
             if (pressed)
             {
                 contactAge=0; rippleAge=0; rippleUv=uv;
                 previousPointer=uv; dragging=IsOverGlobe(uv);
                 // Contact and its ripple share the exact screen point; smoothing applies to hover and release only.
                 currentTip=PointOnScreen(uv,.001f);
-                if (!glove.Place(currentTip,displayFrame.rotation*Quaternion.Euler(0,0,-8),leftGripFrame))
+                if (!glove.Place(currentTip,displayFrame.rotation))
                 { Exit(TerminalExitReason.Invalidated); return; }
                 Notify(ContactPressed,uv);
                 if (!active || transitioning) return;
@@ -206,11 +254,13 @@ namespace OutOfReach.Presentation.Terminal
 
         private void PlaceHands(float dt)
         {
+            if(!glove.IsActive) { Exit(TerminalExitReason.Invalidated); return; }
+            if(pointerValid && !pointerReachable) return;
             float contact=pointerValid ? (held ? 1 : Mathf.Clamp01(1-contactAge/pressSeconds)) : 0;
             targetTip=PointOnScreen(pointerUv,Mathf.Lerp(hoverDistance,.001f,contact));
             currentTip=dt<=0 ? targetTip : Vector3.Lerp(currentTip,targetTip,1-Mathf.Exp(-35*dt));
-            if (!glove.Place(currentTip,displayFrame.rotation*Quaternion.Euler(0,0,-8),leftGripFrame))
-                Exit(TerminalExitReason.Invalidated);
+            if (!glove.Place(currentTip,displayFrame.rotation))
+            { pointerReachable=false; held=dragging=false; LastTouchRefusal="Outside the actual arm's touch reach."; }
         }
 
         private Vector3 PointOnScreen(Vector2 uv,float frontOffset) => displayFrame.TransformPoint(
@@ -221,10 +271,32 @@ namespace OutOfReach.Presentation.Terminal
             if (!active || !displayRenderer) return;
             properties.SetTexture(ObservationId,observationTexture);
             properties.SetVector(RotationId,new Vector4(globeRotation.x,globeRotation.y,globeRotation.z,globeRotation.w));
-            properties.SetVector(PointerId,new Vector4(pointerUv.x,pointerUv.y,pointerValid?1:0,held?1:0));
+            properties.SetVector(PointerId,new Vector4(pointerUv.x,pointerUv.y,pointerValid?(pointerReachable?1:.20f):0,held?1:0));
             properties.SetVector(RippleId,new Vector4(rippleUv.x,rippleUv.y,rippleAge,active?1:0));
             properties.SetFloat(AvailableId,observationAvailable?1:0);
             displayRenderer.SetPropertyBlock(properties);
+        }
+
+        private void ApplyReadableLabels()
+        {
+            if(!displayFrame) return;
+            foreach(var label in displayFrame.GetComponentsInChildren<TextMesh>(true))
+            {
+                if(label.transform.parent!=displayFrame) continue;
+                float size=label.name=="Title"?.0036f:label.name=="Credit"?.0022f:.0024f;
+                label.characterSize=size; label.fontSize=64; label.lineSpacing=1.1f;
+                label.color=new Color(.82f,.89f,.92f,1);
+                if(label.name=="Mode")
+                { label.text="EARTH IMAGE"; label.transform.localPosition=new Vector3(-.296f,-.130f,-.0004f); }
+                if(label.name=="Truth")
+                {
+                    label.transform.localPosition=new Vector3(-.296f,-.149f,-.0004f);
+                    label.text="Visual projection, not a coordinate map.\nReverse side not observed.\nDim pointer: out of reach.";
+                    label.characterSize=.0021f;
+                }
+                var binder=label.GetComponent<ShipLabelAtlasBinder>();
+                if(binder) binder.RefreshAtlas();
+            }
         }
 
         private void RefreshTime()
@@ -238,7 +310,7 @@ namespace OutOfReach.Presentation.Terminal
             var age=utc-ObservationUtc;
             SetLabel(ageLabel,observationAvailable ? string.Format(CultureInfo.InvariantCulture,
                 "IMAGE AGE\n{0}d {1:00}h {2:00}m {3:00}s",age.Days,age.Hours,age.Minutes,age.Seconds) : "OBSERVATION UNAVAILABLE\nAt this mission time");
-            SetLabel(statusLabel,"ARCHIVED OBSERVATION\nNot a live feed or forecast.\nAURORA-7 position: not propagated.");
+            SetLabel(statusLabel,"ARCHIVED OBSERVATION\nNot a live feed or forecast.\nSpacecraft position unavailable.");
         }
 
         private static void SetLabel(TextMesh label,string text)
