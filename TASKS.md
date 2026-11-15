@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current checkpoint — 15 November 2026, manual playtest delivery
+
+I06 runtime `ed1a4c5` is now in the original project on `feature/visuals-cinematics`: natural hand pushes, grounded gait, explicit avatar profiles and launch FX V04. Alex requested immediate delivery and will handle broad gameplay testing; keep subsequent automated checks small and relevant. Live-editor import/compile of this revision is not confirmed because computer control was stopped with Escape. Full-route acceptance and a new Windows executable remain open. [Exact delivery, earlier evidence and limitations](docs/verification/i06-manual-playtest-handoff.md). Older claims below are historical.
+
 ## Current checkpoint — 15 November 2026, 01:48 CET
 
 The isolated I06 integration includes land-launch art/surroundings, enabled physical microgravity, metre-correct standing body, delayed recovery/Mars presentation, two-step Quit, a verified continuous antenna sleeve and the functional Earth terminal. **Not yet promoted.** Antenna190, land225 and Earth145 native assertions passed in their documented scopes. Earth arm/text and Intro subtitle clearance remain visual issues; the whole-ship float routeV04 still fails. Claude verified91ef61a independently (323 EditMode/91 PlayMode), not the later candidate. [The overnight checkpoint](docs/verification/i06-overnight-checkpoint.md) records exact limits. Complete current suite/build/playthrough and original-project promotion remain gates. Original stays33f474f; no80–90% claim. Older checkpoints below are historical.
