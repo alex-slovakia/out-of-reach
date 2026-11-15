@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Live user priorities — 15 November 2026, 10:37 CET
+
+Movement is priority: one Claude Opus writer owns responsive microgravity, real handholds/EVA hand-over-hand rope motion and coherent WORK/EVA body animation. Complete-package ETA remains unconfirmed; earlier 13:00/14:00 CET estimates are partial milestones only. Codex owns antenna distance explanation (`84eb640`, isolated compile passed), death-card UI, integration and music. Berth sleep/rest and physical Earth-screen manipulation are recorded behind movement. Music generation hit insufficient Krea balance; no new score is delivered. [Requests, exact limitations and screenshots](docs/verification/i06-player-feedback-20261115/README.md).
+
 ## Current increment — 15 November 2026, pause menu initialization
 
 `I06-PAUSE-RESUME` runtime `044395b` fills menu labels before revealing the bound menu and retries initialization if the runtime was not yet ready. Isolated Unity 6000.3.28f1 compile/native run exited 0 with 20 scoped checks, including visible Resume at 1280x720/960x540, UI rebuild and actual resume command. The user's original missing-text screenshot did not reproduce in clean startup; this is lifecycle hardening, with live visual acceptance pending. [Evidence and current body/movement coordination](docs/verification/i06-player-feedback-20261115/README.md).

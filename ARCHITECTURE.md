@@ -72,6 +72,25 @@ Bootstrap, audio, camera motion and composition wiring remain with Codex. UI cha
 different transient-feedback or subtitle wiring are requested against the exact composition
 call site; do not copy that runtime into the UI folder. Core/planner/resource state stays authoritative.
 
+## Live single-writer override — 15 November 2026
+
+Per Alex's movement/body/rope requests, coordinated in issue #7 comments 6892247283,
+6892272212, 6892285024 and 6892419714, the ONE Claude Opus movement writer additionally owns:
+
+- `Scripts/Presentation/Motion/EmbodiedBodyPresenter.cs` and new sibling `ModelGait*.cs/.meta`.
+- `Scripts/Presentation/Hands/AstronautHandsPresenter.cs`, `BareArmContactPresenter.cs`, new sibling `EvaTether*.cs/.meta`.
+- `Scripts/Composition/Runtime/I06MicrogravityBridge.cs`, `I06MicrogravityInputBindings.cs`, `I06InteriorHandholds.cs` if registration changes are needed.
+- New `Scripts/Composition/Editor/EvaTetherAuthoring.cs/.meta` and `Visuals/Props/EvaTetherV02/**`.
+
+All paths above are below `Assets/_OutOfReach/`. Existing Claude Player/Core ownership still applies;
+the claimed files include FirstPersonController, PlayerExertion, MicrogravityLocomotion,
+PlayerInputActions, TetheredRoute and Core/CargoLoading. Codex must not edit these concurrently.
+Codex retains Bootstrap, I01MissionComposition, existing builders, camera, lighting, audio,
+cargo presenter and all UI. One Codex UI writer owns FlightRecorderPresenter.cs/FlightRecorder.uss
+(optional FlightRecorderElements.cs) for the death-card increment. Rest camera/UI/audio remains
+Codex scope; a future body-pose interface must be coordinated with the movement writer.
+No additional rest/globe body writer is assigned while movement is in progress.
+
 ## Naming and boundaries
 
 Namespaces follow `OutOfReach.Contracts`, `OutOfReach.Core`, `OutOfReach.Simulation`, `OutOfReach.Interaction`, `OutOfReach.Player`, `OutOfReach.Inventory`, `OutOfReach.Presentation`. Prefer one public type per file. C# type/file names use PascalCase; private fields use camelCase. Name quantities with units, such as `DistanceKm`, `ElapsedSeconds` and `EnergyKWh`.
