@@ -408,7 +408,9 @@ as before, including the "mission objective unrecoverable" rule.
 | `workbench` | cartridge offered, together with the bay | Builds one CO₂ absorber cartridge; it is carried until installed | 1 spare part + 0.2 kWh |
 | `absorber-bay` | cartridge offered, together with the bench | Installs a carried cartridge; a working one is left alone, a spent one is replaced | 1 cartridge |
 
-- **Where:** inside the ship in `Emergency`, `Repair` and `Transmission`. Never during an EVA, never before the impact.
+- **Where:** inside the ship in `Emergency`, `Repair`, `Transmission` and `Survival` (the optional post-contact
+  chapter; `FieldModifications.CheckInsideShip`). Never during an EVA, never before the impact. On the default loadout
+  the repairs use up the spare parts, so salvage is how the grow module gets its part after contact.
 - **Cartridge model.** While cabin CO₂ would rise, an installed cartridge takes up as much as the crew produces,
   so the concentration **stops rising** until the capacity is used: 0.505 kg, stated as 12 crew-hours at the cited
   1.01 kg per crew-day. It needs no power. It is **not** used up while the main scrubbers cope or the crew
