@@ -9,8 +9,9 @@ namespace OutOfReach.Presentation.UI.Report
     public sealed class FlightRecorderPresenter : IDisposable
     {
         private const string MarsSourceUrl = "https://science.nasa.gov/3d-resources/mars/";
-        private readonly VisualElement endCard, detail, summary, marsCredits, rollControls;
+        private readonly VisualElement endCard, detail, summary, marsCredits, rollControls, recordLayout;
         private readonly Label endHeadline, endSummary, endEyebrow, endElapsed, detailTitle, headline, reason, elapsed;
+        private readonly Label recordStatus, recordDeck;
         private readonly ScrollView record, sources;
         private readonly VisualElement sourceLayout, nasaPage, artPage, assumptionsPage;
         private readonly Button nasaTab, artTab, assumptionsTab;
@@ -62,13 +63,18 @@ namespace OutOfReach.Presentation.UI.Report
             detailTitle = FlightRecorderElements.Text(string.Empty, "recorder-detail-title");
             navigation.Add(detailTitle);
             detail.Add(navigation);
+            // R40: the record shares the Sources page structure (title column + scrolling body), no boxed panel.
+            recordLayout = Element("recordLayout", "recorder-record-layout");
+            var recordNav = Element("recordNavigation", "recorder-record-navigation");
+            recordNav.Add(FlightRecorderElements.Text("MISSION RECORD", "recorder-record-title"));
             rollControls = Element("recordRollControls", "recorder-roll-controls");
             rollControls.Add(FlightRecorderElements.Text("YOUR DECISIONS / THE SCIENCE BEHIND THEM", "recorder-roll-caption"));
             rollPauseButton = Button("Pause scroll", "recordRollPauseButton", ToggleRecordRoll);
             rollSkipButton = Button("Skip recap", "recordRollSkipButton", OnBackRequested);
             rollControls.Add(rollPauseButton);
             rollControls.Add(rollSkipButton);
-            detail.Add(rollControls);
+            recordNav.Add(rollControls);
+            recordLayout.Add(recordNav);
             record = Scroll("missionRecord");
             record.RegisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
             record.RegisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
@@ -114,15 +120,20 @@ namespace OutOfReach.Presentation.UI.Report
             marsSourceButton.RegisterCallback<PointerEnterEvent>(OnMarsSourcePointerEnter);
             marsSourceButton.RegisterCallback<FocusInEvent>(OnMarsSourceFocusIn);
             marsCredits.Add(marsSourceButton);
-            detail.Add(record);
+            recordLayout.Add(record);
+            detail.Add(recordLayout);
             detail.Add(sourceLayout);
             Root.Add(detail);
 
             summary = Element("reportFullSummary", "recorder-summary");
+            recordStatus = FlightRecorderElements.Text(string.Empty, "recorder-record-status");
             headline = FlightRecorderElements.Text(string.Empty, "recorder-headline");
+            recordDeck = FlightRecorderElements.Text(string.Empty, "recorder-record-deck");
             reason = FlightRecorderElements.Text(string.Empty, "recorder-reason");
             elapsed = FlightRecorderElements.Text(string.Empty, "recorder-elapsed");
+            summary.Add(recordStatus);
             summary.Add(headline);
+            summary.Add(recordDeck);
             summary.Add(reason);
             summary.Add(elapsed);
             host.Add(Root);
@@ -169,6 +180,13 @@ namespace OutOfReach.Presentation.UI.Report
             reason.text = string.IsNullOrWhiteSpace(report.OutcomeReason)
                 ? (report.IsFinal ? "No outcome explanation recorded." : "The mission has not ended.") : report.OutcomeReason;
             elapsed.text = FlightRecorderElements.ElapsedTime(report.ElapsedSimulationSeconds);
+            // R40 copy only: status and plain-language line reuse the end card's existing outcome mapping;
+            // the recorded OutcomeReason above stays verbatim beneath them.
+            recordStatus.text = FlightRecorderEndCardCopy.RecordStatus(report);
+            string deck = FlightRecorderEndCardCopy.Summary(report);
+            recordDeck.text = string.Equals(deck, reason.text, StringComparison.Ordinal)
+                || string.Equals(deck, headline.text, StringComparison.Ordinal) ? string.Empty : deck;
+            Show(recordDeck, recordDeck.text.Length > 0);
             record.Add(summary);
             var sections = report.Sections;
             if (sections != null)
@@ -212,16 +230,19 @@ namespace OutOfReach.Presentation.UI.Report
             marsSourceButton.SetEnabled(false);
             endHeadline.text = endSummary.text = detailTitle.text = headline.text = reason.text = elapsed.text = string.Empty;
             endEyebrow.text = endElapsed.text = string.Empty;
+            recordStatus.text = recordDeck.text = string.Empty;
             Root.RemoveFromClassList("recorder-recovery");
             Root.RemoveFromClassList("recorder-lost");
             Root.RemoveFromClassList("recorder-contact");
             Show(Root, false);
             Show(detail, false);
             Show(rollControls, false);
+            Show(recordLayout, false);
             Show(record, false);
             Show(sources, false);
             Show(sourceLayout, false);
             Show(endCard, true);
+            detail.RemoveFromClassList("recorder-record-open");
             restartButton.text = "Plan again";
             restartButton.SetEnabled(false);
             recordButton.SetEnabled(false);
@@ -421,13 +442,15 @@ namespace OutOfReach.Presentation.UI.Report
             showingSources = sourceView;
             Show(endCard, false);
             Show(detail, true);
+            Show(recordLayout, !sourceView);
             Show(record, !sourceView);
             Show(sources, sourceView);
             Show(sourceLayout, sourceView);
             detail.EnableInClassList("recorder-sources-open", sourceView);
+            detail.EnableInClassList("recorder-record-open", !sourceView);
             Show(rollControls, !sourceView && finalRecord);
             detailTitle.text = sourceView ? string.Empty : "Mission record";
-            backButton.text = sourceView ? "ESC   Back" : "Back";
+            backButton.text = "ESC   Back";
             (sourceView ? sources : record).scrollOffset = Vector2.zero;
             backButton.Focus();
             if (!sourceView && finalRecord) StartRecordRoll();
@@ -437,6 +460,7 @@ namespace OutOfReach.Presentation.UI.Report
         {
             StopRecordRoll();
             Show(detail, false);
+            Show(recordLayout, false);
             Show(record, false);
             Show(sources, false);
             Show(sourceLayout, false);
@@ -622,6 +646,20 @@ namespace OutOfReach.Presentation.UI.Report
                 return "The mission could not continue. Its recorded cause is in Mission record.";
             }
             return "The mission record contains the recorded outcome.";
+        }
+
+        /// <summary>Short status line above the record headline; derived only from the supplied outcome.</summary>
+        public static string RecordStatus(IMissionReport report)
+        {
+            if (report == null || !report.IsFinal) return "MISSION IN PROGRESS";
+            switch (report.Outcome)
+            {
+                case MissionOutcome.Recovered: return "MISSION SUCCESS  ·  CREW RECOVERED";
+                case MissionOutcome.RecoveryPossible: return "EARTH LINK RESTORED  ·  RESCUE NOT YET ARRIVED";
+                case MissionOutcome.Lost: return IsRecordedCrewDeath(report)
+                    ? "FLIGHT ENDED  ·  CAUSE OF LOSS" : "MISSION LOST  ·  RECORDED CAUSE";
+                default: return "MISSION ENDED";
+            }
         }
 
         private static bool IsRecordedCrewDeath(IMissionReport report)

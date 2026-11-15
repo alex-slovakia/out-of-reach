@@ -202,3 +202,48 @@
 .recorder-sources-open .recorder-source-layout { margin-top: 28px; margin-bottom: 56px; }
 .recorder-sources-open #reportNasaPage { padding-top: 90px; }
 .recorder-loss-compact .recorder-sources-open #reportNasaPage { padding-top: 40px; }
+
+/* R40 Mission Record: same page language as Sources (no boxed panel, Barlow headings, title column, ESC Back bottom-left). */
+.recorder-detail.recorder-record-open { padding: 0; background-color: rgba(8, 11, 12, 0.65); border-width: 0; }
+.recorder-record-open .recorder-detail-navigation { position: absolute; left: 0; bottom: 0; padding: 0; }
+.recorder-record-open .recorder-detail-title { display: none; }
+.recorder-record-open #reportBackButton { border-width: 0; background-color: rgba(0, 0, 0, 0); padding: 8px 0; color: #c5c6c2; font-size: 18px; }
+.recorder-record-open #reportBackButton:hover, .recorder-record-open #reportBackButton:focus { color: #edbc72; border-width: 0; background-color: rgba(0, 0, 0, 0); }
+.recorder-record-layout { flex-direction: row; flex-grow: 1; min-height: 0; min-width: 0; margin-top: 28px; margin-bottom: 56px; }
+.recorder-record-navigation { width: 235px; flex-shrink: 0; margin-right: 42px; }
+.recorder-record-title { font-size: 50px; letter-spacing: 2px; margin-bottom: 36px; white-space: normal; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-record-layout .recorder-roll-controls { flex-direction: column; align-items: stretch; padding-bottom: 0; border-bottom-width: 0; }
+.recorder-record-layout .recorder-roll-caption { flex-grow: 0; margin: 0 0 14px 0; font-size: 13px; letter-spacing: 1.4px; color: #aeb5b2; }
+.recorder-record-layout .recorder-roll-controls .recorder-button { -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); background-color: rgba(0, 0, 0, 0); color: #eee8dc; border-width: 0; border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0); border-radius: 0; margin: 0 0 14px 0; padding: 9px 12px; min-height: 44px; font-size: 21px; letter-spacing: 1px; -unity-text-align: middle-left; }
+.recorder-record-layout .recorder-roll-controls .recorder-button:hover, .recorder-record-layout .recorder-roll-controls .recorder-button:focus { background-color: rgba(255, 255, 255, 0.04); border-width: 0; border-left-width: 2px; border-left-color: #efd19a; }
+.recorder-record-layout .recorder-scroll { flex-basis: 0; }
+.recorder-record-layout .recorder-summary { padding-top: 12px; padding-bottom: 28px; max-width: 820px; }
+.recorder-record-status { font-size: 13px; letter-spacing: 2.5px; color: #d7be85; white-space: normal; margin-bottom: 10px; }
+.recorder-lost .recorder-record-status { color: #e0675b; }
+.recorder-recovery .recorder-record-status { color: #9fd4c8; }
+.recorder-record-layout .recorder-headline { font-size: 44px; letter-spacing: 1px; margin-bottom: 8px; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-record-deck { font-size: 25px; color: #c5c6c2; white-space: normal; margin-bottom: 14px; }
+.recorder-record-layout .recorder-reason { font-size: 20px; max-width: 720px; margin-bottom: 0; color: #eee8dc; }
+.recorder-lost .recorder-record-layout .recorder-reason { border-left-width: 2px; border-left-color: #d85045; padding-left: 12px; }
+.recorder-recovery .recorder-record-layout .recorder-reason { border-left-width: 2px; border-left-color: #7fbfb2; padding-left: 12px; }
+.recorder-record-layout .recorder-elapsed { font-size: 13px; letter-spacing: 1.2px; color: #aeb5b2; margin-top: 14px; }
+.recorder-record-layout .recorder-section { max-width: 900px; padding-top: 18px; padding-bottom: 22px; border-top-color: rgba(184, 193, 188, 0.18); }
+.recorder-record-layout .recorder-section:focus { border-top-color: #d7be85; }
+.recorder-record-layout .recorder-number { width: 40px; font-size: 22px; padding-top: 4px; color: #d7be85; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-record-layout .recorder-section-title { font-size: 30px; letter-spacing: 1px; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-record-layout .recorder-classification { font-size: 13px; letter-spacing: 1.6px; }
+.recorder-record-layout .recorder-label { font-size: 18px; color: #aeb5b2; }
+.recorder-record-layout .recorder-value { font-size: 20px; }
+.recorder-record-layout .recorder-empty { font-size: 18px; }
+.recorder-loss-compact .recorder-record-navigation { width: 175px; margin-right: 24px; }
+.recorder-loss-compact .recorder-record-title { font-size: 36px; }
+.recorder-loss-compact .recorder-record-layout .recorder-roll-controls .recorder-button { font-size: 17px; padding: 8px; }
+.recorder-loss-compact .recorder-record-layout .recorder-headline { font-size: 36px; }
+.recorder-compact .recorder-record-layout { flex-direction: column; margin-top: 12px; }
+.recorder-compact .recorder-record-navigation { width: auto; margin: 0 0 12px 0; }
+.recorder-compact .recorder-record-title { margin-bottom: 8px; }
+.recorder-compact .recorder-record-layout .recorder-roll-controls { flex-direction: row; flex-wrap: wrap; align-items: center; }
+.recorder-compact .recorder-record-layout .recorder-roll-caption { width: 100%; margin-bottom: 6px; }
+.recorder-compact .recorder-record-layout .recorder-roll-controls .recorder-button { margin: 0 8px 0 0; }
+.recorder-compact .recorder-record-layout .recorder-headline { font-size: 30px; }
+.recorder-compact .recorder-record-deck { font-size: 20px; }
