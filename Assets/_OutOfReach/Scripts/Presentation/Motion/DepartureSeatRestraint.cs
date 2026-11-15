@@ -18,6 +18,10 @@ namespace OutOfReach.Presentation.Motion
         internal bool IsUsable => props && bodyFrame && seatFrame && seatFrame.parent == seatParent &&
             seatFrame.gameObject.activeInHierarchy && (seatFrame.lossyScale - Vector3.one).sqrMagnitude < .000001f;
         internal bool IsLatched { get; private set; }
+        // The body has no head. While the seat shot shows the body from outside the eye, the neck chain is collapsed
+        // into its root joint so the open neck closes into the collar; restored on dispose.
+        private readonly Transform neck;
+        private readonly Vector3 neckScale;
 
         internal DepartureSeatRestraint(Transform bodyFrame, Transform seatFrame,
             Dictionary<string, Transform> bones, Shader litShader)
@@ -25,6 +29,7 @@ namespace OutOfReach.Presentation.Motion
             this.bodyFrame = bodyFrame;
             this.seatFrame = seatFrame;
             seatParent = seatFrame.parent;
+            if (bones.TryGetValue("neck01", out neck) && neck) neckScale = neck.localScale;
             var leftArm = new SeatArm(bones, "L", -1f);
             var rightArm = new SeatArm(bones, "R", 1f);
             leftFoot = new SeatFoot(bones, "L");
@@ -73,12 +78,48 @@ namespace OutOfReach.Presentation.Motion
             left.Present(bodyFrame, receiver);
             right.Present(bodyFrame, insert);
             IsLatched = insert.Draw == 1f;
+            HideNeck();
+        }
+
+        // The seated body has no head. Seen from the seat eye, the collapsed neck closes the open collar. Seen from
+        // outside (the camera still on its way into the seat), the whole body and its straps are not drawn while the
+        // place where the head would be is in view, so a headless body can never be on screen.
+        private Renderer[] guarded;
+        private bool guardHidden;
+
+        private void HideNeck()
+        {
+            if (!neck) return;
+            neck.localScale = neckScale * .001f;
+            Camera view = Camera.main;
+            bool hide = false;
+            if (view)
+            {
+                Vector3 headPoint = neck.position + bodyFrame.up * .2f;
+                Vector3 toHead = headPoint - view.transform.position;
+                float limit = guardHidden ? .45f : .5f;
+                if (toHead.sqrMagnitude > limit * limit && Vector3.Dot(toHead, view.transform.forward) > 0f)
+                {
+                    Vector3 viewport = view.WorldToViewportPoint(headPoint);
+                    hide = viewport.x > -.3f && viewport.x < 1.3f && viewport.y > -.3f && viewport.y < 1.3f;
+                }
+            }
+            if (hide == guardHidden) return;
+            guardHidden = hide;
+            guarded ??= bodyFrame.GetComponentsInChildren<Renderer>(true);
+            foreach (Renderer renderer in guarded)
+                if (renderer) renderer.forceRenderingOff = hide;
         }
 
         private void FollowSeat() => bodyFrame.SetPositionAndRotation(seatFrame.position, seatFrame.rotation);
 
         public void Dispose()
         {
+            if (neck) neck.localScale = neckScale;
+            if (guarded != null)
+                foreach (Renderer renderer in guarded)
+                    if (renderer) renderer.forceRenderingOff = false;
+            guardHidden = false;
             if (props) props.SetActive(false);
             left?.Dispose();
             right?.Dispose();

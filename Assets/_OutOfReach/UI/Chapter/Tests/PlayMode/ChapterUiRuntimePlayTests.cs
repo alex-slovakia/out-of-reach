@@ -6,6 +6,7 @@ using OutOfReach.Contracts;
 using OutOfReach.Core;
 using OutOfReach.Interaction;
 using OutOfReach.Presentation.UI.Chapter;
+using OutOfReach.Simulation;
 using OutOfReach.Tests.PlayMode;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -46,6 +47,7 @@ namespace OutOfReach.Tests.ChapterUi
             presenter = ui.Presenter;
             presenter.Configure(ui.Document, ui.Style, harness.Runtime.ChapterFlow, harness.Runtime.GameState, harness.Runtime.Clock,
                 harness.Runtime.Resources, harness.Runtime.SurvivalRecovery, harness.Runtime.Survival, () => true);
+            presenter.ConfigureMissionData(harness.Runtime.Communications, () => harness.Runtime.Calendar?.NowUtc);
         }
 
         [TearDown]
@@ -133,6 +135,23 @@ namespace OutOfReach.Tests.ChapterUi
                 what + ": " + Flow.LastRoutineStopText);
         }
 
+        /// <summary>MISSION-DATA: the strip repeats the real link's NASA/JPL sample in Core's own format.</summary>
+        private string ExpectMissionData(bool transmitted, string when)
+        {
+            presenter.Tick(0f);
+            ICommunicationSystem link = harness.Runtime.Communications;
+            string expected = "Earth " + CommunicationSystem.FormatDistance(link.ReferenceDistanceKm) + " · signal "
+                + CommunicationSystem.FormatDuration(link.OneWayLightSeconds) + " one way";
+            Assert.That(ui.Shown("chapter-strip-data"), Is.True, "NASA/JPL line " + when);
+            Assert.That(ui.Text("chapter-strip-data"), Is.EqualTo(expected), when);
+            Assert.That(ui.Text("chapter-strip-source"), Is.EqualTo(ChapterCopy.EarthLineSource(transmitted)), when);
+            string dsn = ChapterCopy.DsnLine(harness.Runtime.Calendar.NowUtc);
+            Assert.That(dsn, Does.StartWith("DSN: ").And.EndsWith("(line of sight)"), "the mission date is inside the snapshot " + when);
+            Assert.That(ui.Shown("chapter-strip-dsn"), Is.True, "DSN line " + when);
+            Assert.That(ui.Text("chapter-strip-dsn"), Is.EqualTo(dsn), "the calculator's line for the real mission date " + when);
+            return expected;
+        }
+
         private IEnumerator ExpectBeat(string title)
         {
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Beat), "beat card " + title);
@@ -155,6 +174,8 @@ namespace OutOfReach.Tests.ChapterUi
             yield return Present(MissionChapterPresenter.BeatSeconds + .2f);
             Assert.That(presenter.View.StripAction.enabledSelf, Is.False);
             Assert.That(ui.Text("chapter-strip-detail"), Is.EqualTo("Prepare and eat the first stored ration first."));
+            string dayOneData = ExpectMissionData(false, "day 1");
+            Assert.That(dayOneData, Is.EqualTo("Earth 197,708,000 km · signal 10 min 59 s one way"), "row 0 of the Horizons snapshot");
             yield return Use(harness.Ration);
             yield return Use(harness.Sleep);
             yield return RunUntil(() => !Session.SurvivalRecovery.IsResting, 30d, "the first rest completes");
@@ -167,6 +188,8 @@ namespace OutOfReach.Tests.ChapterUi
                 + ChapterCopy.Span(Flow.RoutineStoppedAtSimulationSeconds.Value - Flow.RoutineStartedAtSimulationSeconds.Value) + " of routine: "
                 + ChapterCopy.Tally(Flow.RoutineRations, Flow.RoutineDrinks, Flow.RoutineRests) + "."), "Core's own tally and times");
             Assert.That(Flow.RoutineRests, Is.GreaterThanOrEqualTo(3), "ordinary nights, not one long sleep");
+            string dayFiveData = ExpectMissionData(false, "day 5");
+            Assert.That(dayFiveData, Is.Not.EqualTo(dayOneData), "Core moved to the sample of the new mission date");
             yield return ExpectBeat("CONSEQUENCES");
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Decision));
             Assert.That(Flow.PendingDecision, Is.EqualTo(ChapterDecision.ScienceOrSalvage));
@@ -187,10 +210,13 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(ui.Text("chapter-card-title"), Is.EqualTo("Help is coming"));
             Assert.That(ui.Text("chapter-card-body"), Does.Contain("about mission day 14"));
             presenter.DismissCard();
+            string sentData = ExpectMissionData(true, "after the call on day 9");
+            Assert.That(sentData, Is.Not.EqualTo(dayFiveData), "the call went out with the day-9 sample");
 
             // Days 9 -> 14: the causally delayed failure, acknowledged through the card.
             yield return RoutineThroughTheUi("days 9 to 14");
             Assert.That(Flow.LatestDispatch.Id, Is.EqualTo(ChapterCopy.RescueFailedDispatchId));
+            Assert.That(ExpectMissionData(true, "day 14"), Is.EqualTo(sentData), "Core keeps the transmitted sample; nothing is interpolated");
             yield return ExpectBeat("THE MESSAGE");
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Message));
             MissionDispatch dispatch = Flow.LatestDispatch;

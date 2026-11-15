@@ -1,0 +1,16 @@
+{
+    "name": "OutOfReach.AuroraCapsulesV02.Editor",
+    "rootNamespace": "OutOfReach.Visuals.AuroraCapsulesV02.Editor",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,32 @@
+8.61 | DISPATCH / day=1 phase=Planning control=False routine=False radioQueued=0 played=[]
+67.92 | BEAT START radio.aurora-boarding day=1 phase=Intro sim=47 control=True sessionControl=True floating=True reduced=False sway=1 total=12.40 paused=False
+69.41 | LINE 0 Receive [MISSION CONTROL · RADIO] seconds=5.24 cue=- ptt=False led=Receive pose=1.00
+69.41 | SUBTITLE [MISSION CONTROL · RADIO] Aurora Seven, Mission Control. We show you aboard. Radio check, how do you read?
+70.55 | PAUSE True t=2.47
+72.28 | PAUSE False t=2.54
+76.77 | LINE 1 Transmit [YOU · RADIO] seconds=4.66 cue=- ptt=True led=Transmit pose=1.00
+76.77 | SUBTITLE [YOU · RADIO] Loud and clear, Control. Aboard and floating. Starting cockpit checks.
+82.13 | BEAT END radio.aurora-boarding after 14.21 s skipped=False control=True phase=Intro subtitleNow=''
+327.99 | BEAT START radio.distress-call day=9 phase=Transmission sim=742869 control=True sessionControl=True floating=True reduced=False sway=1 total=11.24 paused=False
+328.79 | LINE 0 Transmit [YOU · RADIO] seconds=5.41 cue=- ptt=True led=Transmit pose=1.00
+328.79 | SUBTITLE [YOU · RADIO] Mayday, mayday. Earth, this is Aurora. Debris strike. Antenna repaired, crew alive.
+330.31 | BEAT END radio.distress-call after 2.32 s skipped=True control=True phase=Transmission subtitleNow=''
+366.74 | BEAT START radio.earth-reply-day14 day=9 phase=Survival sim=751696 control=True sessionControl=True floating=True reduced=False sway=1 total=12.23 paused=False
+367.89 | BEAT END radio.earth-reply-day14 after 1.15 s skipped=True control=False phase=Survival subtitleNow=''
+385.97 | DISPATCH rescue-1-failed/dispatch.rescue-1-failed day=14 phase=Survival control=False routine=False radioQueued=1 played=[radio.aurora-boarding,radio.distress-call,radio.earth-reply-day14,radio.day14-call]
+393.45 | BEAT START radio.day14-call day=14 phase=Survival sim=1154225 control=True sessionControl=True floating=True reduced=True sway=0 total=5.67 paused=False
+394.64 | LINE 0 Receive [MISSION CONTROL · EARTH · RADIO] seconds=4.02 cue=- ptt=False led=Receive pose=1.00
+394.64 | SUBTITLE [MISSION CONTROL · EARTH · RADIO] Aurora, Earth. Priority traffic. Go to the console, Aurora.
+399.12 | BEAT END radio.day14-call after 5.67 s skipped=False control=True phase=Survival subtitleNow=''
+418.04 | BEAT START radio.day14-announcement day=14 phase=Survival sim=1161601 control=True sessionControl=True floating=True reduced=True sway=0 total=19.98 paused=False
+419.24 | LINE 0 Receive [MISSION CONTROL · RADIO] seconds=18.33 cue=vo23_mc_rescue_lost_dayneutral ptt=False led=Receive pose=1.00
+419.24 | VOICE playing paused=False line=0 t=1.20
+419.24 | SUBTITLE [MISSION CONTROL · RADIO] Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach.
+420.47 | PAUSE True t=2.29
+420.47 | VOICE silent paused=True line=0 t=2.29
+422.33 | PAUSE False t=2.38
+422.33 | VOICE playing paused=False line=0 t=2.38
+430.03 | SUBTITLE [MISSION CONTROL · RADIO] I'm sorry. A second craft is already in transit. Conserve your supplies.
+436.84 | SUBTITLE [MISSION CONTROL · RADIO] We are not giving up on you.
+439.18 | VOICE silent paused=False line=0 t=19.23
+439.94 | BEAT END radio.day14-announcement after 21.90 s skipped=False control=True phase=Survival subtitleNow=''

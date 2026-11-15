@@ -1,0 +1,2 @@
+Unity 6000.3.28f1, scene Assets/_OutOfReach/Scenes/Bootstrap.unity opened in memory, not saved.
+INSTALLED into 'Assets/_OutOfReach/Scenes/Bootstrap.unity' (scene not saved). VALIDATE PASS: hull renderers 29, hull max along docking axis -1.600 m (limit -0.600), adapter contact face at 0.0000 m from the contact plane, cameras/listeners/colliders 0.

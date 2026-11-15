@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.LaunchVfxMax.Editor",
+  "rootNamespace": "OutOfReach.Presentation.LaunchVfxMax.Editor",
+  "references": ["OutOfReach.LaunchVfxMax", "OutOfReach.Cinematics", "OutOfReach.Composition", "OutOfReach.LaunchFXV03"],
+  "includePlatforms": ["Editor"]
+}

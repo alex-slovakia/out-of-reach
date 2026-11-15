@@ -23,7 +23,7 @@ namespace OutOfReach.Player
     /// approach against such a surface; <see cref="TryPushFromFootContact"/> pushes off a surface the feet actually
     /// touch (the floor below, out of hand reach); only registered handholds can be gripped (<see cref="TryGrab"/>),
     /// and a grip holds the body within reach of its anchor. WASD and
-    /// sprint give no thrust while floating (no hidden force); A and D only lean the view (MOVE-MECH-01), and the body
+    /// sprint give no thrust while floating (no hidden force); A and D never roll the view (lean removed 15 Nov), and the body
     /// stays upright. The composition root
     /// registers the handholds and binds the hand inputs to these calls; tuning is in <see cref="MicrogravityLocomotion"/>.
     /// </para>
@@ -121,8 +121,8 @@ namespace OutOfReach.Player
         public float PitchDegrees { get; private set; }
 
         /// <summary>
-        /// MOVE-MECH-01: current view lean (roll about the view direction), degrees; positive leans left. Only A and D
-        /// while floating lean the view; it returns level on release and outside float. Orientation only, never motion.
+        /// MOVE-MECH-01: current view lean (roll about the view direction), degrees; positive leans left. Since 15 Nov
+        /// (Alex) A and D no longer lean the view, so this stays 0 and the view never rolls. Orientation only, never motion.
         /// </summary>
         public float LeanDegrees { get; private set; }
 
@@ -488,11 +488,22 @@ namespace OutOfReach.Player
             }
 
             ReleaseHold();
-            floatVelocity = microgravity.Push(floatVelocity, away, strength01);
+            floatVelocity = microgravity.Push(StopApproach(floatVelocity, normal), away, strength01);
             lastPushAt = floatClock;
             strandedFor = 0f;
             Pushed?.Invoke(floatVelocity);
             return FloatActionResult.Done;
+        }
+
+        /// <summary>
+        /// CLAUDE-MAX space verify: the hand or foot meets the surface before it pushes, so any drift INTO that surface
+        /// stops there first (the same inelastic contact as <see cref="TryBrace"/> and a collision); sliding along it
+        /// is kept. Without this a push off a wall you are drifting towards only slowed the approach and could leave
+        /// the body still moving into the wall. Never adds speed and never acts away from the surface.
+        /// </summary>
+        private static Vector3 StopApproach(Vector3 velocity, Vector3 surfaceNormal)
+        {
+            return MicrogravityLocomotion.RemoveInto(velocity, surfaceNormal);
         }
 
         /// <summary>
@@ -527,20 +538,21 @@ namespace OutOfReach.Player
                 return FloatActionResult.Cooldown;
             }
 
-            FloatActionResult first = VerifyPushContact(surfaceA, pointA, directionA, out Vector3 awayA);
+            FloatActionResult first = VerifyPushContact(surfaceA, pointA, directionA, out Vector3 awayA, out Vector3 normalA);
             if (first != FloatActionResult.Done)
             {
                 return first;
             }
 
-            FloatActionResult second = VerifyPushContact(surfaceB, pointB, directionB, out Vector3 awayB);
+            FloatActionResult second = VerifyPushContact(surfaceB, pointB, directionB, out Vector3 awayB, out Vector3 normalB);
             if (second != FloatActionResult.Done)
             {
                 return second;
             }
 
             ReleaseHold();
-            floatVelocity = microgravity.PushPair(floatVelocity, awayA, strengthA, awayB, strengthB);
+            Vector3 arrived = StopApproach(StopApproach(floatVelocity, normalA), normalB);
+            floatVelocity = microgravity.PushPair(arrived, awayA, strengthA, awayB, strengthB);
             lastPushAt = floatClock;
             strandedFor = 0f;
             Pushed?.Invoke(floatVelocity);
@@ -555,10 +567,10 @@ namespace OutOfReach.Player
         }
 
         /// <summary>The per-contact part of <see cref="TryPushOff"/>'s verification; changes nothing.</summary>
-        private FloatActionResult VerifyPushContact(Collider surface, Vector3 point, Vector3 direction, out Vector3 away)
+        private FloatActionResult VerifyPushContact(Collider surface, Vector3 point, Vector3 direction, out Vector3 away, out Vector3 normal)
         {
             away = Vector3.zero;
-            FloatActionResult verified = VerifySurface(surface, point, out Vector3 normal);
+            FloatActionResult verified = VerifySurface(surface, point, out normal);
             if (verified != FloatActionResult.Done)
             {
                 return verified;
@@ -703,7 +715,7 @@ namespace OutOfReach.Player
             }
 
             ReleaseHold();
-            floatVelocity = microgravity.Push(floatVelocity, away, strength01);
+            floatVelocity = microgravity.Push(StopApproach(floatVelocity, normal), away, strength01);
             lastPushAt = floatClock;
             strandedFor = 0f;
             Pushed?.Invoke(floatVelocity);
@@ -915,7 +927,7 @@ namespace OutOfReach.Player
             }
         }
 
-        /// <summary>A/D lean while floating (orientation only); returns level on release and outside float.</summary>
+        /// <summary>Steps the view lean towards the input (orientation only). Called with 0 only since 15 Nov: never rolls.</summary>
         private void UpdateLean(float leanInput, float deltaSeconds)
         {
             float next = microgravity.StepLean(LeanDegrees, leanInput, deltaSeconds);

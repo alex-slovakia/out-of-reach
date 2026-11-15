@@ -349,6 +349,109 @@ namespace OutOfReach.Presentation.UI.Chapter
             return "Late ration";
         }
 
+        // ---------- MISSION-DATA: the NASA/JPL Horizons line of the next-routine strip ----------
+
+        /// <summary>Source label of the reference range (NASA-DATA.md, NASA-01).</summary>
+        public const string HorizonsSource = "NASA/JPL Horizons";
+
+        /// <summary>
+        /// Core's display rule (CommunicationSystem.FormatDistance, NASA-DATA.md): nearest thousand kilometres,
+        /// "197,708,000 km". Empty for a value Core's reference table cannot hold.
+        /// </summary>
+        public static string EarthDistance(double distanceKm)
+        {
+            if (!Finite(distanceKm) || distanceKm <= 0d) return string.Empty;
+            double rounded = Math.Round(distanceKm / 1000d, MidpointRounding.AwayFromZero) * 1000d;
+            return rounded.ToString("#,0", CultureInfo.InvariantCulture) + " km";
+        }
+
+        /// <summary>Core's display rule (CommunicationSystem.FormatDuration): nearest whole second, "10 min 59 s", "9 min 05 s".</summary>
+        public static string LightTime(double seconds)
+        {
+            if (!Finite(seconds) || seconds < 0d) return string.Empty;
+            double rounded = Math.Round(seconds, MidpointRounding.AwayFromZero);
+            long total = (long)Math.Max(0d, Math.Min(rounded, long.MaxValue / 2d));
+            long hours = total / 3600, minutes = (total % 3600) / 60, rest = total % 60;
+            if (hours > 0) return string.Format(CultureInfo.InvariantCulture, "{0} h {1:00} min {2:00} s", hours, minutes, rest);
+            return minutes > 0
+                ? string.Format(CultureInfo.InvariantCulture, "{0} min {1:00} s", minutes, rest)
+                : string.Format(CultureInfo.InvariantCulture, "{0} s", rest);
+        }
+
+        /// <summary>"Earth 197,708,000 km · signal 10 min 59 s one way"; empty when Core supplies no usable sample.</summary>
+        public static string EarthLine(double referenceDistanceKm, double oneWayLightSeconds)
+        {
+            string distance = EarthDistance(referenceDistanceKm), light = LightTime(oneWayLightSeconds);
+            return distance.Length == 0 || light.Length == 0 ? string.Empty : "Earth " + distance + " · signal " + light + " one way";
+        }
+
+        /// <summary>
+        /// What the number is: the Earth–Mars range of the reference ephemeris standing in for the ship's own distance (no
+        /// trajectory of the ship is computed). Core follows the mission date until the call is sent and keeps the
+        /// transmitted sample afterwards, so the label says which of the two is on screen. Nothing is interpolated.
+        /// </summary>
+        public static string EarthLineSource(bool frozenAtTransmission) => HorizonsSource
+            + (frozenAtTransmission ? " · Earth–Mars range when the call was sent" : " · today's Earth–Mars range")
+            + ", used as a Mars-vicinity proxy";
+
+        // ---------- MISSION-DATA: informational radiation estimate (never read by the simulation) ----------
+
+        /// <summary>
+        /// Average galactic-cosmic-ray dose equivalent the RAD instrument measured inside the Mars Science Laboratory
+        /// spacecraft on its 2011-2012 cruise to Mars, as NASA/JPL states it (30 May 2013): 1.8 millisieverts per day.
+        /// https://www.jpl.nasa.gov/news/data-from-nasa-rovers-voyage-to-mars-aids-planning/
+        /// </summary>
+        public const double RadCruiseMilliSievertsPerDay = 1.8d;
+
+        /// <summary>
+        /// Rough accumulated dose for the mission time so far: elapsed mission days x the MSL RAD cruise rate. For
+        /// orientation only (another craft, other shielding, another solar cycle); no rule of the game reads it.
+        /// One decimal below ten millisieverts, whole millisieverts above: "0.5 mSv", "25 mSv".
+        /// </summary>
+        public static string RadiationDose(double elapsedSimulationSeconds)
+        {
+            if (!Finite(elapsedSimulationSeconds)) return string.Empty;
+            double dose = Math.Max(0d, elapsedSimulationSeconds) / SecondsPerDay * RadCruiseMilliSievertsPerDay;
+            return dose.ToString(dose < 9.95d ? "0.0" : "0", CultureInfo.InvariantCulture) + " mSv";
+        }
+
+        /// <summary>"Radiation since Day 1 ≈ 25 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)".</summary>
+        public static string RadiationLine(double elapsedSimulationSeconds)
+        {
+            string dose = RadiationDose(elapsedSimulationSeconds);
+            return dose.Length == 0
+                ? string.Empty
+                : "Radiation since Day 1 ≈ " + dose + " (est. at " + RadCruiseMilliSievertsPerDay.ToString("0.0#", CultureInfo.InvariantCulture)
+                  + " mSv/day, NASA MSL RAD cruise measurement)";
+        }
+
+        // ---------- MISSION-DATA: Deep Space Network line (DsnVisibility, derived from the Horizons vectors) ----------
+
+        /// <summary>The strip re-reads the DSN geometry once per this many simulated minutes of the mission date.</summary>
+        public const int DsnStepMinutes = 10;
+
+        /// <summary>Said after the calculator's line: it is geometry, not the Deep Space Network's tracking schedule.</summary>
+        public const string DsnLineOfSight = " (line of sight)";
+
+        /// <summary>Start of the mission date's ten-minute step, UTC. The line is the same for the whole step.</summary>
+        public static DateTime DsnStep(DateTime missionDateUtc)
+        {
+            if (missionDateUtc.Kind == DateTimeKind.Local) missionDateUtc = missionDateUtc.ToUniversalTime();
+            long step = TimeSpan.TicksPerMinute * DsnStepMinutes;
+            return new DateTime(missionDateUtc.Ticks - (missionDateUtc.Ticks % step), DateTimeKind.Utc);
+        }
+
+        /// <summary>
+        /// "DSN: Madrid has Mars in view · el. 59° (line of sight)": which Deep Space Network complex has Mars' centre at
+        /// least 10° above its horizon at the mission date (DsnVisibility). Geometry from the committed Horizons vectors
+        /// and Earth's rotation: not the real tracking schedule, and Mars stands in for the ship as in the delay model.
+        /// Empty outside the committed snapshot.
+        /// </summary>
+        public static string DsnLine(DateTime missionDateUtc)
+        {
+            return DsnVisibility.TryDescribe(DsnStep(missionDateUtc), out string line) ? line + DsnLineOfSight : string.Empty;
+        }
+
         public static string Mass(double kg) => Finite(kg) ? kg.ToString("0.0", CultureInfo.InvariantCulture) + " kg" : "—";
         public static string Litres(double litres) => Finite(litres) ? litres.ToString("0.0", CultureInfo.InvariantCulture) + " L" : "—";
         public static string Energy(double kWh) => Finite(kWh) ? kWh.ToString("0.00", CultureInfo.InvariantCulture) + " kWh" : "—";

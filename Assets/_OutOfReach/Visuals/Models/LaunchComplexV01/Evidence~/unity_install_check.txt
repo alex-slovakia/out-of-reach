@@ -1,0 +1,44 @@
+LaunchComplexV01 install check, Unity 6000.3.28f1, scene Assets/_OutOfReach/Scenes/Bootstrap.unity (opened, not saved)
+[tower V03 installer, in memory]
+V03 instantiated under I06 isolated marine prologue/Launch site - stationary; arm under I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted at pivot (-0.900, 0.000, -6.900)
+walk colliders: 8 on layer Default
+deactivated I06 isolated marine prologue/Launch site - stationary/Launch tower V02 detail - b330226
+deactivated I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted/LTV2_ArmDetail
+renderer off I06 isolated marine prologue/Launch site - stationary/AccessMastTower
+renderer off I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted/AccessArm
+scene marked dirty, not saved
+
+[installer]
+vehicle under I06 isolated marine prologue/Transport vehicle - root controls launch at (0.000, 0.000, 0.000)
+pad dressing under I06 isolated marine prologue/Launch site - stationary at (0.000, 0.000, 0.000)
+renderer off I06 isolated marine prologue/Transport vehicle - root controls launch/BoosterStack (object, colliders and children kept)
+renderer off I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/LS_LaunchMount (object, colliders and children kept)
+renderer off I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/LS_Umbilicals (object, colliders and children kept)
+renderer off I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/LS_WaterTower (object, colliders and children kept)
+renderer off I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/LS_FloodTowers (object, colliders and children kept)
+scene marked dirty, not saved
+
+PASS vehicle instance is a child of the launch root at identity
+PASS pad dressing is a child of the stationary site at identity
+PASS second install is a no-op : already installed under I06 isolated marine prologue (nothing changed)
+PASS old BoosterStack kept: active object, renderer off, COL_Booster enabled
+PASS EngineEmitter still at (0, -31.4, 0) : (0.000, -31.400, 0.000)
+PASS every pre-existing transform under the prologue keeps its name, parent and pose (1514 transforms)
+PASS no collider added or removed (112)
+PASS land kit still has 11 renderers and 5 enabled mesh colliders
+PASS LS_LaunchMount renderer off, object active
+PASS LS_Umbilicals renderer off, object active
+PASS LS_WaterTower renderer off, object active
+PASS LS_FloodTowers renderer off, object active
+PASS LS_FlameTrench renderer still on
+PASS LS_Barriers renderer still on
+PASS LS_Markings renderer still on
+PASS LS_LaunchFoundation renderer still on
+PASS LS_PadDeck_Optional renderer still on
+PASS all 18 new renderers use LC1 URP Lit materials with their base maps
+PASS vehicle LOD0 bounds stay inside the old booster envelope plus fins : (-2.72, -31.62, -2.72) .. (2.72, -0.55, 2.72)
+triangles after Unity import: LC1_Deluge_LOD0=4360, LC1_Deluge_LOD1=1336, LC1_FloodTowers_LOD0=4816, LC1_FloodTowers_LOD1=1552, LC1_Lightning_LOD0=9648, LC1_Lightning_LOD1=5608, LC1_Markings_LOD0=2506, LC1_Mount_LOD0=4512, LC1_Mount_LOD1=1040, LC1_TankFarm_LOD0=6355, LC1_TankFarm_LOD1=2324, LC1_Trench_LOD0=1794, LC1_Trench_LOD1=350, LC1_Vehicle_LOD0=11488, LC1_Vehicle_LOD1=3304, LC1_Vehicle_LOD2=544, LC1_Vehicles_LOD0=5512, LC1_Vehicles_LOD1=3236
+  total _LOD0: vehicle 11488, pad 39503
+  total _LOD1: vehicle 3304, pad 15446
+  total _LOD2: vehicle 544, pad 0
+RESULT PASS

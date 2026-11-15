@@ -79,6 +79,18 @@ namespace OutOfReach.Presentation.UI.Chapter
         private float stripFeedbackSeconds;
         private bool routineSeen;
 
+        // MISSION-DATA: Core's own reference sample, read while the strip shows and re-formatted only when it changes.
+        private ICommunicationSystem link;
+        private double dataKm = double.NaN, dataLight = double.NaN;
+        private bool dataFrozen;
+        private string dataLine = string.Empty, dataSource = string.Empty;
+        private long doseMinute = long.MinValue;
+        private string doseLine = string.Empty;
+        private Func<DateTime?> missionDate;
+        private DateTime dsnStep;
+        private bool dsnKnown;
+        private string dsnLine = string.Empty;
+
         /// <summary>The screen presented in the last frame (None while hidden).</summary>
         public ChapterScreen CurrentScreen => presentable ? screen : ChapterScreen.None;
 
@@ -122,9 +134,29 @@ namespace OutOfReach.Presentation.UI.Chapter
             lastStage = recovery?.Stage ?? RecoveryStage.NotStarted;
         }
 
+        /// <summary>
+        /// MISSION-DATA: the link whose NASA/JPL Horizons reference sample the strip shows, distance and one-way light time
+        /// exactly as Core holds them (the mission date's sample until the call is sent, the transmitted one afterwards).
+        /// Optional: call it after <see cref="Configure"/>, which clears it. Null hides the line.
+        /// </summary>
+        /// <param name="missionDateUtc">
+        /// Optional: the mission date (the UTC epoch Core selects the Horizons sample with). With it the strip also names
+        /// the Deep Space Network complex that has Mars in view (DsnVisibility). Null hides that line.
+        /// </param>
+        public void ConfigureMissionData(ICommunicationSystem communication, Func<DateTime?> missionDateUtc = null)
+        {
+            link = communication;
+            dataKm = dataLight = double.NaN;
+            dataLine = dataSource = string.Empty;
+            missionDate = missionDateUtc;
+            dsnKnown = false;
+            dsnLine = string.Empty;
+        }
+
         /// <summary>Releases the session: hides and forgets every card, deferral and observation (restart, unbind).</summary>
         public void ClearBinding()
         {
+            ConfigureMissionData(null);
             flow = null;
             state = null;
             clock = null;
@@ -400,7 +432,42 @@ namespace OutOfReach.Presentation.UI.Chapter
             }
 
             bool strip = (screen == ChapterScreen.None || screen == ChapterScreen.Beat) && FillStrip(now, realSeconds);
+            if (strip) FillMissionData();
+            if (strip) FillDsn();
+            if (strip) FillRadiationEstimate(now);
             ChapterView.Show(view.Strip, strip);
+        }
+
+        /// <summary>MISSION-DATA: static text under the strip's action. No clock, no interpolation, no animation.</summary>
+        private void FillMissionData()
+        {
+            if (link != null)
+            {
+                try
+                {
+                    double km = link.ReferenceDistanceKm, light = link.OneWayLightSeconds;
+                    CommunicationState linkState = link.State;
+                    bool frozen = linkState == CommunicationState.AwaitingReply || linkState == CommunicationState.ReplyReceived;
+                    if (km != dataKm || light != dataLight || frozen != dataFrozen)
+                    {
+                        dataKm = km;
+                        dataLight = light;
+                        dataFrozen = frozen;
+                        dataLine = ChapterCopy.EarthLine(km, light);
+                        dataSource = dataLine.Length > 0 ? ChapterCopy.EarthLineSource(frozen) : string.Empty;
+                    }
+                }
+                catch (Exception error)
+                {
+                    // The data line is optional: it must never take the routine strip down with it.
+                    Debug.LogException(error, this);
+                    link = null;
+                    dataLine = dataSource = string.Empty;
+                }
+            }
+
+            ChapterView.SetText(view.StripData, dataLine);
+            ChapterView.SetText(view.StripSource, dataSource);
         }
 
         private void ObserveDecisionState()
@@ -419,6 +486,60 @@ namespace OutOfReach.Presentation.UI.Chapter
                 if (stage != RecoveryStage.BeaconRequested) beaconDeferred = false;
                 lastStage = stage;
             }
+        }
+
+        /// <summary>
+        /// MISSION-DATA: an estimate for orientation, the one mission clock x the MSL RAD cruise rate. Display only: nothing
+        /// is stored, charged or decided from it. Re-formatted once per simulated minute.
+        /// </summary>
+        private void FillRadiationEstimate(double now)
+        {
+            long minute = ChapterCopy.Finite(now) ? (long)Math.Floor(Math.Max(0d, now) / 60d) : -1L;
+            if (minute != doseMinute)
+            {
+                doseMinute = minute;
+                doseLine = ChapterCopy.RadiationLine(now);
+            }
+
+            ChapterView.SetText(view.StripDose, doseLine);
+        }
+
+        /// <summary>
+        /// MISSION-DATA: which Deep Space Network complex has Mars above its horizon at the mission date (DsnVisibility,
+        /// derived from the committed Horizons vectors). Static text, re-read once per ten simulated minutes; display only.
+        /// </summary>
+        private void FillDsn()
+        {
+            if (missionDate != null)
+            {
+                try
+                {
+                    DateTime? utc = missionDate();
+                    if (!utc.HasValue)
+                    {
+                        dsnKnown = false;
+                        dsnLine = string.Empty;
+                    }
+                    else
+                    {
+                        DateTime step = ChapterCopy.DsnStep(utc.Value);
+                        if (!dsnKnown || step != dsnStep)
+                        {
+                            dsnKnown = true;
+                            dsnStep = step;
+                            dsnLine = ChapterCopy.DsnLine(step);
+                        }
+                    }
+                }
+                catch (Exception error)
+                {
+                    // Optional like the Horizons line: it must never take the routine strip down with it.
+                    Debug.LogException(error, this);
+                    missionDate = null;
+                }
+            }
+
+            ChapterView.SetText(view.StripDsn, missionDate != null ? dsnLine : string.Empty);
         }
 
         // ---------- beat card ----------

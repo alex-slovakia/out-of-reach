@@ -398,6 +398,12 @@ namespace OutOfReach.Presentation.UI.Report
                 }
             nasaPage.Add(dataset);
             nasaPage.Add(FlightRecorderElements.Text("AURORA-7 is fictional. This is a distance reference, not its trajectory.", "recorder-source-note"));
+            nasaPage.Add(FlightRecorderElements.Text("Cruise radiation — Mars Science Laboratory", "recorder-source-deck"));
+            nasaPage.Add(FlightRecorderElements.Text("The routine estimate multiplies elapsed mission days by 1.8 mSv/day, the average dose equivalent from galactic cosmic rays measured by RAD inside the Mars Science Laboratory spacecraft during cruise. The estimate is informational.", "recorder-source-description"));
+            nasaPage.Add(SourceLink("NASA/JPL · Mars cruise radiation measurements (2013)", "https://www.jpl.nasa.gov/news/data-from-nasa-rovers-voyage-to-mars-aids-planning/", true));
+            nasaPage.Add(FlightRecorderElements.Text("Deep Space Network — Mars in view", "recorder-source-deck"));
+            nasaPage.Add(FlightRecorderElements.Text("The line-of-sight estimate uses the mission time, NASA/JPL Horizons vectors and the locations of DSS-14 (Goldstone), DSS-63 (Madrid) and DSS-43 (Canberra). It shows Mars at or above 10° elevation from those sites, using Mars as the reference for AURORA-7.", "recorder-source-description"));
+            nasaPage.Add(SourceLink("NASA · Deep Space Network", "https://www.nasa.gov/communicating-with-missions/dsn/", true));
             artPage.Add(FlightRecorderElements.Text("MUSIC & ART", "recorder-source-heading"));
             artPage.Add(FlightRecorderElements.Text("Cobalt — Scott Buckley", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Exploration music · Creative Commons Attribution 4.0. Edited loop with level adjustment and an eight-second crossfade.", "recorder-source-description"));
@@ -411,7 +417,7 @@ namespace OutOfReach.Presentation.UI.Report
             artPage.Add(FlightRecorderElements.Text("Apollo 11 launch commentary (public domain). Two excerpts, radio band-limited; the mission name is omitted. No NASA endorsement is implied.", "recorder-source-description"));
             artPage.Add(SourceLink("NASA launch commentary · source", "https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3", true));
             artPage.Add(FlightRecorderElements.Text("Space sky — NASA/Goddard Space Flight Center Scientific Visualization Studio", "recorder-source-deck"));
-            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Unmodified; public-domain reuse per NASA SVS.", "recorder-source-description"));
+            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020. Gaia DR2: ESA/Gaia/DPAC. The game adjusts the skybox exposure for presentation.", "recorder-source-description"));
             artPage.Add(SourceLink("NASA SVS · Deep Star Maps 2020", "https://svs.gsfc.nasa.gov/4851/", true));
             artPage.Add(FlightRecorderElements.Text("Earth archive — NASA EPIC Team / NOAA DSCOVR", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Natural-color Earth image observed 11 Nov 2026 at 11:01:17 UTC.", "recorder-source-description"));

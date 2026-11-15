@@ -1,0 +1,379 @@
+{
+ "note": "colours are linear RGB; texture sets are A7X_<tex>_BaseColor/_Normal/_Mask.png; mask = R metallic, G occlusion, A smoothness",
+ "materials": [
+  {
+   "name": "A7X_Whipple",
+   "tex": "Whipple",
+   "baseMap": "",
+   "tint": [
+    0.6,
+    0.6,
+    0.6
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Blanket",
+   "tex": "Blanket",
+   "baseMap": "",
+   "tint": [
+    0.58,
+    0.58,
+    0.57
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Graphite",
+   "tex": "Graphite",
+   "baseMap": "",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Radiator",
+   "tex": "Radiator",
+   "baseMap": "",
+   "tint": [
+    0.56,
+    0.565,
+    0.58
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_SolarCells",
+   "tex": "SolarCells",
+   "baseMap": "",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_SolarBack",
+   "tex": "SolarBack",
+   "baseMap": "",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_MLIGold",
+   "tex": "MLIGold",
+   "baseMap": "",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 0.8,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Engine",
+   "tex": "Engine",
+   "baseMap": "",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Aluminium",
+   "tex": "Metal",
+   "baseMap": "",
+   "tint": [
+    0.93,
+    0.94,
+    0.96
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Amber",
+   "tex": "Metal",
+   "baseMap": "",
+   "tint": [
+    1.0,
+    0.56,
+    0.11
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_DarkMetal",
+   "tex": "Metal",
+   "baseMap": "",
+   "tint": [
+    0.13,
+    0.135,
+    0.15
+   ],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.5,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_PaintWhite",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.43,
+    0.43,
+    0.41
+   ],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.42,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_PaintRed",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.48,
+    0.045,
+    0.035
+   ],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.45,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_PaintAmber",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.78,
+    0.4,
+    0.035
+   ],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.45,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Rubber",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.022,
+    0.022,
+    0.026
+   ],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.22,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Glass",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.008,
+    0.012,
+    0.02
+   ],
+   "emission": [
+    1.0,
+    0.6,
+    0.3
+   ],
+   "estr": 0.02,
+   "smooth": 0.96,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_WindowLight",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.3,
+    0.2,
+    0.1
+   ],
+   "emission": [
+    1.0,
+    0.68,
+    0.38
+   ],
+   "estr": 1.5,
+   "smooth": 0.6,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_LampRed",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.25,
+    0.02,
+    0.02
+   ],
+   "emission": [
+    1.0,
+    0.03,
+    0.02
+   ],
+   "estr": 2.6,
+   "smooth": 0.8,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_LampCyan",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.02,
+    0.18,
+    0.22
+   ],
+   "emission": [
+    0.0,
+    0.7,
+    1.0
+   ],
+   "estr": 2.6,
+   "smooth": 0.8,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_LampWhite",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "emission": [
+    1.0,
+    0.95,
+    0.85
+   ],
+   "estr": 4.0,
+   "smooth": 0.8,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_LampAmber",
+   "tex": "",
+   "baseMap": "",
+   "tint": [],
+   "color": [
+    0.3,
+    0.15,
+    0.02
+   ],
+   "emission": [
+    1.0,
+    0.42,
+    0.0
+   ],
+   "estr": 2.6,
+   "smooth": 0.8,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": false
+  },
+  {
+   "name": "A7X_Markings",
+   "tex": "",
+   "baseMap": "A7X_Markings.png",
+   "tint": [],
+   "color": [],
+   "emission": [],
+   "estr": 0.0,
+   "smooth": 0.35,
+   "smoothScale": 1.0,
+   "metallic": 0.0,
+   "alpha": true
+  }
+ ]
+}

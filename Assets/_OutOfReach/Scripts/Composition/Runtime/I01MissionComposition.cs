@@ -700,6 +700,10 @@ namespace OutOfReach.Composition
                 chapterUi.Configure(survivalDocument, chapterStyle, runtime.ChapterFlow, runtime.GameState, runtime.Clock,
                     runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
                     () => cinematics && cinematics.ReducedEffects);
+                // MISSION-DATA: the strip repeats Core's NASA/JPL Horizons reference sample (distance, one-way light time)
+                // and, from the mission date, names the Deep Space Network complex that has Mars in view.
+                chapterUi.ConfigureMissionData(runtime.Communications,
+                    () => runtime && runtime.Calendar != null ? runtime.Calendar.NowUtc : (DateTime?)null);
                 if (survivalUi)
                     survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation
                         || RestBodyEntering());

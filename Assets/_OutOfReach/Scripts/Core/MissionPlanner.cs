@@ -261,7 +261,7 @@ namespace OutOfReach.Core
             }
 
             CommandResult validation = draft.Validate();
-            if (!validation.Succeeded)
+            if (!validation.Succeeded && !OverweightLaunch.IsOnlyOverweight(draft))
             {
                 return validation;
             }

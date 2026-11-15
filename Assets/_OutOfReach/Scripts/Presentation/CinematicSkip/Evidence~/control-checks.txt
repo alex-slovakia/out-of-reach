@@ -1,0 +1,45 @@
+PASS [opening actual saved Bootstrap] Saved root composition is present.
+PASS [opening actual saved Bootstrap] Saved MissionRuntime is present.
+PASS [opening actual saved Bootstrap] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
+PASS [native actual Bootstrap] Saved composition, runtime, player, resolver, default input and marine bindings exist (startup).
+PASS [menu] Mode menu offers the timed mission: Start timed · 60 s | Practice · no deadline | Quit to desktop
+PASS [menu] A fresh session starts in Planning: Planning
+PASS [menu] Exactly one enabled AudioListener at the menu
+PASS [menu] Mode button visible: Practice
+PASS [menu] Practice choice releases control
+PASS [menu] The mode menu closes after the choice
+PASS [marine boarding W] seat E launches: prompt allows it: 'Begin mission: 546 of 600 kg, 720 of 800 credits'
+PASS [marine boarding W] Single E: seat E launches [cockpit-console] prompt 'Begin mission: 546 of 600 kg, 720 of 800 credits' -> OK 'AURORA-7 launched with 7 equipment line(s).'
+PASS [marine boarding W] Seat E launch succeeded
+PASS [departure: control run, no hold] CinematicSkipInput installed itself (RuntimeInitializeOnLoadMethod)
+PASS [departure: control run, no hold] Skip component is bound to the scene presenters
+PASS [departure: control run, no hold] Player control is locked during the departure
+PASS [departure: control run, no hold] Skip target during the departure: Departure
+PASS [departure: control run, no hold] 'Hold Space to skip' hint is on screen in the first seconds
+PASS [departure: control run, no hold] Seated pose is active before the skip
+PASS [departure: control run, no hold] Short Space/Enter taps do not skip the departure (t=2,72 s, skips 0)
+PASS [departure: control run, no hold] Control run: the departure is still playing at 9 s
+PASS [departure: control run, no hold] Hint is gone after the first seconds when no key is held
+PASS [departure: control run, no hold] Control run: nothing was skipped (0)
+PASS [departure: control run, no hold] Control run: the departure ran its full length: 34,9 real s
+PASS [departure: control run, no hold] Control run: Transferred fired exactly once (1)
+PASS [arrival] Arrival enters interior float
+PASS [arrival] Arrival is inside the ship
+PASS [arrival] After arrival the phase is Intro (cockpit check pending): Intro
+PASS [arrival] Exactly one enabled AudioListener aboard
+PASS [cockpit check -> impact: control run] Holding Space in gameplay skips nothing (target None, pushes 1)
+PASS [cockpit check -> impact: control run] cockpit systems check: prompt allows it: 'Run cockpit systems check'
+PASS [cockpit check -> impact: control run] Single E: cockpit systems check [cockpit-console] prompt 'Run cockpit systems check' -> OK 'Cockpit check complete. Impact detected.'
+PASS [cockpit check -> impact: control run] Cockpit check E accepted
+PASS [cockpit check -> impact: control run] The cockpit check triggers the accident
+PASS [cockpit check -> impact: control run] Impact cinematic is playing
+PASS [cockpit check -> impact: control run] Impact leaves the player in control (so it is gameplay input, not a skip target)
+PASS [cockpit check -> impact: control run] No skip is offered during Impact (target None)
+PASS [cockpit check -> impact: control run] impact cinematic completes in 7,5 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [cockpit check -> impact: control run] Impact ran its full length: 8,4 real s
+PASS [cockpit check -> impact: control run] Impact ends in Emergency (Emergency)
+PASS [cockpit check -> impact: control run] Phase after Impact: Emergency
+PASS [cockpit check -> impact: control run] Core no longer waits for the cinematic
+PASS [cockpit check -> impact: control run] Control is with the player after the impact
+PASS [cockpit check -> impact: control run] Skip count unchanged by the cockpit check and Impact (0)
+PASS [cockpit check -> impact: control run] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )

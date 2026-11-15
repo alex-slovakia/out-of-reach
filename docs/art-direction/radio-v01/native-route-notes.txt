@@ -1,0 +1,73 @@
+STORY-RADIO native route run (temporary driver, never committed): a copy of the QA-E2E driver with radio hooks.
+Tested head: 75946e4 (base codex/nasa-2330-staging@022138d). Run folder: 20261115T204438Z-75946e4-success
+QA-E2E-01 full mission, scenario=success, chapter=scene, sha=75946e4, gpu=NVIDIA GeForce RTX 4070 Laptop GPU (Direct3D12)
+Actual saved Bootstrap, real virtual keyboard/mouse. Disclosed shortcuts are listed in shortcuts.txt. Every Assets file hash protected.
+
+Radio checks: 39 PASS of 40 (native-route-checks.txt). What the radio did, frame by frame: native-route-trace.txt.
+Real input: startup cards, Practice, the walk to the transport, seat E, departure, transfer, Escape (pause), Enter (skip), E (console).
+
+Disclosed shortcuts of this run (QA-E2E navigation fallbacks and the radio lane ones):
+20:46:42.211 [movement probe: WORK clothes at arrival] WORK clothes at arrival: no registered rail within hand reach; QA teleport next to rail AURORA-7 delivered Blender models/I06 interior handholds/Console lower at (-0.39, 0.02, -0.99) (the grip/push themselves stay real input)
+20:47:06.247 [cockpit check -> impact] Leg 'arrival -> cockpit console' not reached by real input in 14,7 s (floating=True, onRoute=False); QA teleport to (0.00, 0.03, -0.42) next to cockpit-console
+20:47:30.695 [repair Power] Leg 'to repair-power' not reached by real input in 14,6 s (floating=True, onRoute=False); QA teleport to (-1.47, 0.03, 7.10) next to repair-power
+20:47:39.681 [chapter day 1 meal + sleep (phase Repair)] Meal retry: QA teleport next to the galley drawer after 'Too far' (the E itself is real input).
+20:49:01.913 [EVA suit] Leg 'to suit locker' not reached by real input in 14,3 s (floating=True, onRoute=False); QA teleport to (1.60, 0.03, 20.00) next to suit-locker
+20:49:03.376 [movement probe: EVA suit inside the ship] EVA suit inside the ship: no registered rail within hand reach; QA teleport next to rail AURORA-7 delivered Blender models/I06 interior handholds/Existing outer portal inside 1 at (1.10, 0.02, 20.41) (the grip/push themselves stay real input)
+20:51:44.941 [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: reduced effects switched ON through I01MissionComposition.SetReducedEffects (the method the Settings toggle calls) when the rescue-1-failed dispatch arrived; switched OFF after the Day-14 checks.
+20:52:16.358 [radio: Day 14 dispatch rescue-1-failed (day 14)] Leg 'day 14 -> cockpit console' not reached by real input in 18,3 s (floating=True, onRoute=False); QA teleport to (0.00, 0.03, -0.42) next to cockpit-console
+
+QA-E2E-01 scenario=success chapter=scene
+captures=63 teleports=6 realLegs=5 interactions=19 pushes=25
+
+Pacing (real seconds):
+  phase Planning (real s): 10.5
+  departure (real s): 36.9
+  phase Intro (real s): 97.2
+  impact cinematic (real s): 8.4
+  phase Emergency (real s): 16.1
+  phase Repair (real s): 102.2
+  phase Eva (real s): 56.4
+  reply wait (real s): 9.4
+  phase Transmission (real s): 48.8
+
+Timeline:
+  8.6s menu | phase=Planning sim=0
+  13.5s practice boarding | phase=Planning sim=0
+  13.5s marine boarding W | phase=Planning sim=0
+  19.1s departure | phase=Intro sim=0
+  56.0s radio: Aurora boarding beat on the real route | phase=Intro sim=35
+  82.7s arrival | phase=Intro sim=60
+  83.2s movement probe: WORK clothes at arrival | phase=Intro sim=61
+  92.6s cockpit check -> impact | phase=Intro sim=70
+  117.2s repair Power | phase=Emergency sim=285
+  133.1s repair LifeSupport | phase=Repair sim=5125
+  134.9s pause check: interior repair phase | phase=Repair sim=5682
+  137.9s chapter day 1 meal + sleep (phase Repair) | phase=Repair sim=6024
+  164.3s chapter UI loop (before EVA) | phase=Repair sim=41993
+  208.7s EVA suit | phase=Repair sim=721107
+  224.4s movement probe: EVA suit inside the ship | phase=Repair sim=734160
+  233.7s EVA airlock depressurize | phase=Repair sim=737007
+  244.7s EVA exit | phase=Eva sim=737875
+  245.7s EVA route out | phase=Eva sim=737936
+  261.7s EVA antenna repair | phase=Eva sim=738883
+  265.1s EVA route back | phase=Eva sim=739095
+  280.9s EVA airlock repressurize | phase=Eva sim=740038
+  291.1s link diagnostic | phase=Transmission sim=740653
+  308.7s transmit | phase=Transmission sim=741699
+  308.8s radio: day-1 distress call (skip by Enter) | phase=Transmission sim=741719
+  340.9s radio: Earth reply beat | phase=Survival sim=743890
+  365.9s chapter UI loop (after contact) | phase=Survival sim=751453
+  386.0s radio: Day 14 dispatch rescue-1-failed (day 14) | phase=Survival sim=1152000
+  442.3s radio route end | phase=Survival sim=1168249
+
+Earlier run (20261115T203002Z-5f23efd-success): head 5f23efd on codex/nasa-2330-staging@7303687, before the
+STORY-RADIO-01d/01e fixes. 35 PASS of 37 radio checks. The two soft failures and one cut-short beat are what
+those fixes address:
+- The distress call started in the 0.8 s gap between two ship-computer lines; the HUD showed the computer's
+  lines first ("the subtitle is cleared after the skip" read the computer's next line 'Awaiting Earth reply.').
+- Earth's reply beat waited behind the CONTACT card for more than 25 s, then started and was cut 1.1 s later
+  when the routine began.
+- The Day-14 call started between two chapter cards and was cut after 1.74 s by the next card.
+In that run the boarding beat (starts by itself 10.4 s after control returned, Escape pause 2.46 -> 2.46 s,
+natural end), the Enter skip (0.22 s) and the whole Day-14 console announcement (voice, 3 subtitle chunks equal
+to the transcript, Escape pause 2.30 -> 2.30 s, plays once) passed as well.

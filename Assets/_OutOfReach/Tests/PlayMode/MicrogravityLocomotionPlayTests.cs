@@ -703,5 +703,40 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0f).Within(1e-4f), "inelastic stop");
             Assert.That(Player.IsFloating, Is.True);
         }
+
+        // CLAUDE-MAX space verify: a push off the wall you are drifting into must send you away from it. Before the fix
+        // the push only added to the approach (-0.958 + 0.55 m/s), so the body kept moving into the wall.
+        [UnityTest]
+        public IEnumerator APushOffTheWallAhead_WhileDriftingIntoIt_StopsTheApproachFirst_KeepsTheSlide_AndLeavesAway()
+        {
+            for (int pair = 0; pair < 2; pair++)
+            {
+                FloatAt(new Vector3(-1.3f, 50.2f, 2.4f));
+                Done(Player.TryPushOff(dividerLeft, new Vector3(-1.3f, 50.2f + Eye, 2.95f), new Vector3(0.3f, 0f, -1f), Speed(1f)));
+                for (int i = 0; i < 200 && Position.z > 0.7f; i++)
+                {
+                    yield return null;
+                }
+
+                Assert.That(Position.z, Is.InRange(0.66f, 0.7f), "drifting into the back wall, now within reach of it");
+                Vector3 approach = Player.FloatVelocity;
+                Assert.That(approach.z, Is.LessThan(-0.9f), "still approaching the back wall");
+                Assert.That(Player.PushCooldownRemaining, Is.Zero);
+
+                float eye = Position.y + Eye;
+                FloatActionResult result = pair == 0
+                    ? Player.TryPushOff(back, BackPoint, Vector3.forward, Speed(0.55f))
+                    : Player.TryPushOffPair(back, new Vector3(Position.x - 0.1f, eye, 0f), Vector3.forward, Speed(0.275f),
+                        back, new Vector3(Position.x + 0.1f, eye, 0f), Vector3.forward, Speed(0.275f));
+                Done(result);
+                Vector3 expected = new Vector3(approach.x, 0f, 0.55f);
+                Assert.That(Vector3.Distance(Player.FloatVelocity, expected), Is.LessThan(1e-4f),
+                    "the hand stops the approach, keeps the slide along the wall, then pushes away (pair " + pair + ")");
+
+                float leaving = Position.z;
+                yield return Frames(20);
+                Assert.That(Position.z, Is.GreaterThan(leaving + 0.2f), "the body leaves the wall it pushed off (pair " + pair + ")");
+            }
+        }
     }
 }
