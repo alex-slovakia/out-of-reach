@@ -1,0 +1,409 @@
+{
+ "task": "LAND-SURROUNDINGS-V01",
+ "status": "original static surroundings kit for root's native check; not placed in any scene by this kit",
+ "fbx": "LSS_LandSurroundings.fbx",
+ "space": "Unity metres, y up, local to the prologue origin; every object's pivot is the prologue origin",
+ "unity_import": "ship ModelImporter settings: bakeAxisConversion 1, useFileUnits 1, useFileScale 1, globalScale 1, no cameras/lights, preserveHierarchy 0",
+ "ground_y": -36.6,
+ "kept_clear": {
+  "launch_foundation": {
+   "x": [
+    -72,
+    72
+   ],
+   "z": [
+    -62,
+    72
+   ]
+  },
+  "plume_outlet_corridor": {
+   "x": [
+    -35,
+    35
+   ],
+   "z": [
+    60,
+    320
+   ]
+  },
+  "crawlerway_corridor_and_facility": {
+   "x": [
+    -55,
+    95
+   ],
+   "z": [
+    -1020,
+    -50
+   ]
+  },
+  "margins": "patches and scrub keep their full footprint plus 3-4 m clear; hammock points 12 m"
+ },
+ "objects": {
+  "LSS_GroundBreakup": {
+   "triangles": 2400,
+   "triangles_unity": 2400,
+   "bounds_min": [
+    -1328.45284,
+    -36.58,
+    -1496.53769
+   ],
+   "bounds_max": [
+    1388.54027,
+    -36.16816,
+    1132.4119
+   ],
+   "materials": [
+    "LSS_GrassDry"
+   ]
+  },
+  "LSS_Scrub": {
+   "triangles": 3360,
+   "triangles_unity": 3360,
+   "bounds_min": [
+    -833.87529,
+    -36.58,
+    -791.59423
+   ],
+   "bounds_max": [
+    888.05902,
+    -34.90057,
+    921.69111
+   ],
+   "materials": [
+    "LSS_Scrub"
+   ]
+  },
+  "LSS_TreeLines": {
+   "triangles": 5230,
+   "triangles_unity": 5230,
+   "bounds_min": [
+    -2546.25925,
+    -36.6,
+    -2157.65383
+   ],
+   "bounds_max": [
+    2223.97811,
+    -18.60542,
+    2347.63398
+   ],
+   "materials": [
+    "LSS_Canopy"
+   ]
+  },
+  "LSS_Berms": {
+   "triangles": 660,
+   "triangles_unity": 660,
+   "bounds_min": [
+    -626.05424,
+    -36.6,
+    -427.56781
+   ],
+   "bounds_max": [
+    568.40622,
+    -32.60664,
+    607.60303
+   ],
+   "materials": [
+    "LSS_GrassDry"
+   ]
+  },
+  "LSS_Drainage": {
+   "triangles": 1548,
+   "triangles_unity": 1548,
+   "bounds_min": [
+    -102.03577,
+    -36.9764,
+    -40.2
+   ],
+   "bounds_max": [
+    190.2,
+    -35.5,
+    250.2
+   ],
+   "materials": [
+    "A7_PaintGraphite",
+    "LSS_Rock",
+    "LS_Concrete"
+   ]
+  },
+  "LSS_Fence": {
+   "triangles": 2712,
+   "triangles_unity": 2712,
+   "bounds_min": [
+    -200.045,
+    -36.6,
+    -200.045
+   ],
+   "bounds_max": [
+    200.045,
+    -34.1,
+    330.045
+   ],
+   "materials": [
+    "A7_Aluminum"
+   ]
+  },
+  "LSS_UtilityPoles": {
+   "triangles": 1122,
+   "triangles_unity": 1122,
+   "bounds_min": [
+    110.8,
+    -36.6,
+    -910.13856
+   ],
+   "bounds_max": [
+    113.2,
+    -25.6,
+    -69.86144
+   ],
+   "materials": [
+    "A7_PaintGraphite",
+    "LS_ConcreteBarrier"
+   ]
+  }
+ },
+ "triangles_total": 17032,
+ "triangles_total_unity": 17032,
+ "anchors": {
+  "LSS_FenceGate_North": [
+   20.0,
+   -36.6,
+   -200.0
+  ],
+  "LSS_FenceCorner_SW": [
+   -200.0,
+   -36.6,
+   330.0
+  ],
+  "LSS_FenceCorner_NE": [
+   200.0,
+   -36.6,
+   -200.0
+  ],
+  "LSS_PoleLine_North": [
+   112.0,
+   -36.6,
+   -910.0
+  ],
+  "LSS_PoleLine_South": [
+   112.0,
+   -36.6,
+   -70.0
+  ],
+  "LSS_Drainage_West_Mid": [
+   -100.0,
+   -36.6,
+   105.0
+  ],
+  "LSS_Drainage_South_Mid": [
+   119.0,
+   -36.6,
+   150.0
+  ]
+ },
+ "materials": [
+  {
+   "name": "LSS_GrassDry",
+   "set": "LSS_Vegetation",
+   "tint": "#B3A577",
+   "tiling": 0.125,
+   "normal": 0.4,
+   "new": true,
+   "unity": "URP Lit; maps LSS_Vegetation_BaseColor / _Normal / _MODS (R metallic, G occlusion, A smoothness); tiling 0.125 per metre (8 m)"
+  },
+  {
+   "name": "LSS_Scrub",
+   "set": "LSS_Vegetation",
+   "tint": "#6F7A45",
+   "tiling": 0.5,
+   "normal": 0.9,
+   "new": true,
+   "unity": "same maps as LSS_GrassDry, olive tint, tiling 0.5"
+  },
+  {
+   "name": "LSS_Canopy",
+   "set": "LSS_Vegetation",
+   "tint": "#5A6A40",
+   "tiling": 0.1,
+   "normal": 0.6,
+   "new": true,
+   "unity": "same maps as LSS_GrassDry, dark green tint, tiling 0.1"
+  },
+  {
+   "name": "LSS_Rock",
+   "set": "LS_Concrete",
+   "tint": "#9A958C",
+   "tiling": 0.5,
+   "normal": 1.0,
+   "new": true,
+   "unity": "LAND's LS_Concrete maps with a grey tint, tiling 0.5"
+  },
+  {
+   "name": "LS_Concrete",
+   "set": "LS_Concrete",
+   "tint": "#E2E0DA",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "LS_ConcreteBarrier",
+   "set": "LS_Concrete",
+   "tint": "#EFEDE7",
+   "tiling": 0.5,
+   "normal": 0.5,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "shared_with_ship": true,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  }
+ ],
+ "verification": {
+  "blender_fbx_roundtrip": {
+   "pass": true,
+   "checks": 14,
+   "failed": 0
+  },
+  "unity": {
+   "editor": "6000.3.28f1",
+   "where": "isolated project, exact FBX, ship importer settings",
+   "result": "7 renderer bounds + 7 anchors equal this manifest (max 0.3 mm); 17,032 triangles in Unity = FBX"
+  }
+ },
+ "excluded": "no lights, cameras, colliders, particles, scripts, terrain or water; PV_* context (LAND kit, vehicle, mast, brown ground, sky, sun) only in the .blend",
+ "provenance": {
+  "author": "Claude Opus 5.5 (AI) for Apoliak7777's team",
+  "ai_generated": true,
+  "method": "procedural Blender 5.3 and Python scripts in source/, fixed seeds",
+  "third_party": "none"
+ },
+ "files": {
+  "ATTRIBUTION.md": {
+   "sha256": "2f1cd86efba98b5e5cc24550b903041b97f2f241a3ef23561ce95264aa742fbf",
+   "bytes": 497
+  },
+  "LSS_LandSurroundings.blend": {
+   "sha256": "e5cd4212ca4b5663b84dd96d8cd13e24fd2b2fe0b49e87e42aa708b5e85786c3",
+   "bytes": 712613
+  },
+  "LSS_LandSurroundings.fbx": {
+   "sha256": "632a5c46f22e972fc41cbbbf1058efe2935e2bed68d076078d2bdbe86ce5fff4",
+   "bytes": 599388
+  },
+  "README.md": {
+   "sha256": "22148c4bd550cad71e9ffa4f1cb73f24307d0deb0731f53ca7fe48e4aa4249f9",
+   "bytes": 5785
+  },
+  "lss_build_report.json": {
+   "sha256": "d6e195902da57123fa8453d6943210c1ee9ae71c7b4c275f75ccd3073a117deb",
+   "bytes": 3152
+  },
+  "lss_build_roundtrip.json": {
+   "sha256": "a7c8ab088f5415d84d8172466e07abab5a93abcc3ae4ae6d50955f5ab8121d0c",
+   "bytes": 1865
+  },
+  "renders/LSS_aerial.png": {
+   "sha256": "c5dba1a188c183f0f327cdd53c26849a66e5a112eb467f454e4bbe675a94add7",
+   "bytes": 979893
+  },
+  "renders/LSS_deck_east.png": {
+   "sha256": "f977aaa6369f4ae83ff52fba1d6be9364c19ff6a8407cfe9672e2ab40bb10852",
+   "bytes": 964474
+  },
+  "renders/LSS_deck_north.png": {
+   "sha256": "0f375c822d79a57bb15abd2eae739e516250618dcc878283ca35c3d4128ca7f8",
+   "bytes": 906197
+  },
+  "renders/LSS_ground_west.png": {
+   "sha256": "7cdee08313132c7a18ff4221bbb2e03a903246e62abc9077d2d94c3955a53cdb",
+   "bytes": 909394
+  },
+  "renders/LSS_sheet.png": {
+   "sha256": "f039531bc00ebd57e068dccd89cb1a34d1be80ad931624fa790ff268a295ecfb",
+   "bytes": 532278
+  },
+  "source/a7_textures.py": {
+   "sha256": "6eef19853ceb38947631cef7ec403745d79b83d8c09cc4cbe6e8242311652700",
+   "bytes": 47555
+  },
+  "source/a7kit.py": {
+   "sha256": "13bd12539c53d4c7cf4ae6f03951991f7605d1bef7b5f7f47418332feb0cc86b",
+   "bytes": 22736
+  },
+  "source/build_habitat.py": {
+   "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26",
+   "bytes": 20395
+  },
+  "source/build_surroundings.py": {
+   "sha256": "7e7851fce5d1536f5fade36d1bc0e0d378a5ff41e6cbe589326884ee9ea852e9",
+   "bytes": 6858
+  },
+  "source/hb_kit.py": {
+   "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8",
+   "bytes": 35895
+  },
+  "source/lss_kit.py": {
+   "sha256": "cb193d2177f657ccd5a7e6521859ba9bcf46c21a6ca199105d2fd2df657ad02c",
+   "bytes": 12851
+  },
+  "source/lss_materials.json": {
+   "sha256": "a3a009a236cc55c7bd50f694131ac11c9a3fc4f1db1ea0893439db307973119d",
+   "bytes": 1756
+  },
+  "source/lss_textures.py": {
+   "sha256": "eee41309c89a0bb584528198038390c11b1191a74b7a2689f78015ee486ca6a5",
+   "bytes": 1001
+  },
+  "source/make_sheet.py": {
+   "sha256": "c26f299cd732a3a90961234cf2580e98c1e942cf050a72a7fd4c18e87d148f18",
+   "bytes": 796
+  },
+  "source/roundtrip_habitat.py": {
+   "sha256": "60f4d01282a22b575baa6dac219f2bf27eec6b775af0bbd44e006802f2a7819a",
+   "bytes": 4118
+  },
+  "textures/LSS_Vegetation_BaseColor.png": {
+   "sha256": "6587111238a4a7211fa186f454b51b084b941acc2aa741d13e86cd8cd763ec25",
+   "bytes": 1018147
+  },
+  "textures/LSS_Vegetation_MODS.png": {
+   "sha256": "98d56c487f6f35d5b9950616fe7c9a30bff4c0ba0074418ef6cfb6c06e05e891",
+   "bytes": 536510
+  },
+  "textures/LSS_Vegetation_Normal.png": {
+   "sha256": "f4ff03507f0e51db1137f65723355a2feccb85d098271b3c8c27659cb9737196",
+   "bytes": 2057556
+  },
+  "unity_check/LSSCheck.cs": {
+   "sha256": "445270c1df4011685f4021d1e4dec4592ef2c0fd76ddd20ca6a37f1ea855c16a",
+   "bytes": 3416
+  },
+  "unity_check/lss_check.tsv": {
+   "sha256": "d19ae18a3689a3d2e9b4e71c41e67643c693264a54070beac48d3b333e2af583",
+   "bytes": 1773
+  },
+  "unity_check/lss_compare.py": {
+   "sha256": "63e0ab2ac6af24f9178896b1cd67ed63731f2ebc4caf193738039831c49415a2",
+   "bytes": 3334
+  },
+  "unity_check/lss_compare.txt": {
+   "sha256": "4a3309402c6477b4bd7b8fc7cc65908598c928fb927b38324cefeaa2e8eb49d1",
+   "bytes": 209
+  }
+ }
+}

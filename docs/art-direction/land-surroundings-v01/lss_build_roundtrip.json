@@ -1,0 +1,119 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "LSS_LandSurroundings": {
+   "fbx": "LSS_LandSurroundings.fbx",
+   "objects_in_file": 14,
+   "checks": [
+    {
+     "object": "LSS_GroundBreakup",
+     "ok": true,
+     "triangles": 2400,
+     "expected": 2400
+    },
+    {
+     "object": "LSS_Scrub",
+     "ok": true,
+     "triangles": 3360,
+     "expected": 3360
+    },
+    {
+     "object": "LSS_TreeLines",
+     "ok": true,
+     "triangles": 5230,
+     "expected": 5230
+    },
+    {
+     "object": "LSS_Berms",
+     "ok": true,
+     "triangles": 660,
+     "expected": 660
+    },
+    {
+     "object": "LSS_Drainage",
+     "ok": true,
+     "triangles": 1548,
+     "expected": 1548
+    },
+    {
+     "object": "LSS_Fence",
+     "ok": true,
+     "triangles": 2712,
+     "expected": 2712
+    },
+    {
+     "object": "LSS_UtilityPoles",
+     "ok": true,
+     "triangles": 1122,
+     "expected": 1122
+    },
+    {
+     "anchor": "LSS_FenceGate_North",
+     "ok": true,
+     "point": [
+      20.0,
+      -36.6,
+      -200.0
+     ]
+    },
+    {
+     "anchor": "LSS_FenceCorner_SW",
+     "ok": true,
+     "point": [
+      -200.0,
+      -36.6,
+      330.0
+     ]
+    },
+    {
+     "anchor": "LSS_FenceCorner_NE",
+     "ok": true,
+     "point": [
+      200.0,
+      -36.6,
+      -200.0
+     ]
+    },
+    {
+     "anchor": "LSS_PoleLine_North",
+     "ok": true,
+     "point": [
+      112.0,
+      -36.6,
+      -910.0
+     ]
+    },
+    {
+     "anchor": "LSS_PoleLine_South",
+     "ok": true,
+     "point": [
+      112.0,
+      -36.6,
+      -70.0
+     ]
+    },
+    {
+     "anchor": "LSS_Drainage_West_Mid",
+     "ok": true,
+     "point": [
+      -100.0,
+      -36.6,
+      105.0
+     ]
+    },
+    {
+     "anchor": "LSS_Drainage_South_Mid",
+     "ok": true,
+     "point": [
+      119.0,
+      -36.6,
+      150.0
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}
