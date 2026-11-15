@@ -10,7 +10,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
     /// </summary>
     public static class PampasGrassMeshes
     {
-        public const float PartLeaf = 0f, PartStalk = .33f, PartPlume = .66f, PartCard = 1f;
+        public const float PartLeaf = 0f, PartStalk = .33f, PartPlume = .66f, PartCap = .9f, PartCard = 1f;
 
         private sealed class Builder
         {
@@ -68,13 +68,13 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         }
 
         /// <summary>
-        /// Full clump (~380 triangles): a fountain of 22 arching, drooping leaves and 9 bare stalks of different
+        /// Full clump (~420 triangles): a fountain of 26 arching, drooping leaves and 9 bare stalks of different
         /// heights, each carrying a seed head as two crossed quads (aspect 1:2, one cell of PampasPlumesV04.png).
         /// </summary>
         public static Mesh BuildNearClump()
         {
             var b = new Builder();
-            const int stems = 9, leaves = 22;
+            const int stems = 9, leaves = 26;
             for (int i = 0; i < stems; i++)
             {
                 float az = (i + Hash(i, 1) * .8f) / stems * Mathf.PI * 2f;
@@ -108,12 +108,13 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 Vector3 side = Vector3.Cross(Vector3.up, outward).normalized;
                 // Fountain leaf: climbs steeply, arches over at ~58 % of its length and droops to ~45 % of its peak.
                 b.Ribbon(v => outward * (reach * (.35f * v + .65f * v * v)) + Vector3.up * (rise * (3.46f * v - 3f * v * v)),
-                    v => .02f * (1f - v * v * v), side, 5, PartLeaf, Hash(i, 15), .5f);
+                    v => .012f * (1f - v * v * v), side, 5, PartLeaf, Hash(i, 15), .5f);
             }
             return b.Build("Pampas clump V04 (near)");
         }
 
-        /// <summary>Far card: two crossed vertical quads, three bend segments each (12 triangles).</summary>
+        /// <summary>Far card: two crossed vertical quads, three bend segments each, and a horizontal cap at 55 % of
+        /// the height that carries the plant seen from above (14 triangles).</summary>
         public static Mesh BuildFarCard()
         {
             var b = new Builder();
@@ -123,6 +124,15 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 Vector3 side = new Vector3(Mathf.Cos(az), 0, Mathf.Sin(az));
                 b.Ribbon(v => Vector3.up * v, v => .5f, side, 3, PartCard, q / 2f + .1f, 1);
             }
+            int cap = b.P.Count;
+            for (int k = 0; k < 4; k++)
+            {
+                float x = (k & 1) == 0 ? -.62f : .62f, z = (k & 2) == 0 ? -.62f : .62f;
+                b.P.Add(new Vector3(x, .55f, z)); b.N.Add(Vector3.up);
+                b.U.Add(new Vector2((k & 1) == 0 ? 0 : 1, (k & 2) == 0 ? 0 : 1));
+                b.C.Add(new Color(1, PartCap, .37f, 1));
+            }
+            b.T.Add(cap); b.T.Add(cap + 2); b.T.Add(cap + 1); b.T.Add(cap + 1); b.T.Add(cap + 2); b.T.Add(cap + 3);
             for (int i = 0; i < b.N.Count; i++) b.N[i] = Vector3.up;
             return b.Build("Pampas clump V04 (far card)");
         }

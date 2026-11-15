@@ -29,6 +29,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         public const string ProfilePath = Folder + "/LaunchCinematicV04.asset";
         public const string PlumeTexturePath = Folder + "/PampasPlumesV04.png";
         public const string ClumpTexturePath = Folder + "/PampasClumpsV04.png";
+        public const string TopTexturePath = Folder + "/PampasTopsV04.png";
         public const string FieldName = "Launch grass V04 - pampas field";
         public const string LookName = "Launch look V04 - grade, haze and thruster gust";
         public const string ShellMeadowName = "Launch grass V03 - dense meadow";
@@ -91,6 +92,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             Material grass = EnsureMaterial(GrassMaterialPath, GrassShaderPath);
             grass.SetTexture("_PlumeTex", EnsureTexture(PlumeTexturePath));
             grass.SetTexture("_ClumpTex", EnsureTexture(ClumpTexturePath));
+            grass.SetTexture("_TopTex", EnsureTexture(TopTexturePath));
             Material haze = EnsureMaterial(HazeMaterialPath, HazeShaderPath);
             VolumeProfile profile = EnsureProfile();
             Vector4[] footprints = Footprints(site, inner);

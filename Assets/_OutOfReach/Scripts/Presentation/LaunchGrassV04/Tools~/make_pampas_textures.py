@@ -6,6 +6,7 @@ accumulated as soft coverage so the core is dense and the rim stays wispy. Deter
 Outputs (next to the shaders, sRGB, alpha = coverage):
   PampasPlumesV04.png  1024x512   4 plume heads (256x512 cells), base at the bottom centre of each cell
   PampasClumpsV04.png  1024x1024  4 whole clumps (512x512 cells): leaf fountain, bare stalks, plume heads
+  PampasTopsV04.png    512x512    4 clumps seen from above (256x256 cells): radiating leaves and seed heads
 
 Usage:  python make_pampas_textures.py <output folder>
 Needs numpy and Pillow only.
@@ -173,6 +174,32 @@ def clump_cell(seed):
     return cv.finish()
 
 
+def top_cell(seed):
+    """A clump seen from straight above: leaves radiating from the centre, seed heads fanning outwards."""
+    rng = np.random.default_rng(seed)
+    cv = Canvas(256, 256)
+    cx = cy = 128
+    for _ in range(120):
+        ang = rng.uniform(0, 2 * np.pi)
+        length = rng.uniform(55, 116)
+        m = 14
+        s = np.linspace(0, 1, m)
+        a = ang + np.radians(rng.uniform(-22, 22)) * s
+        x = cx + rng.uniform(-6, 6) + np.cumsum(np.sin(a)) * length / m
+        y = cy + rng.uniform(-6, 6) + np.cumsum(np.cos(a)) * length / m
+        tone = rng.uniform(.8, 1.1)
+        cv.stroke(np.stack([x, y], 1), rng.uniform(2.6, 4.2), .9, .95, .8,
+                  np.array(OLIVE_DARK) * tone, np.array(STRAW if rng.random() < .45 else OLIVE_MID) * tone)
+    count = int(rng.integers(9, 13))
+    for k in range(count):
+        ang = (k + rng.uniform(.1, .9)) / count * 2 * np.pi
+        r0 = rng.uniform(14, 52)
+        x0, y0 = cx + np.sin(ang) * r0, cy + np.cos(ang) * r0
+        plume(cv, rng, x0, y0, rng.uniform(52, 70), rng.uniform(15, 19), ang + np.radians(rng.uniform(-18, 18)),
+              np.radians(rng.uniform(-14, 14)), density=.22, fine=1.0)
+    return cv.finish()
+
+
 def save(cells, cols, path):
     rows = [np.concatenate(cells[r * cols:(r + 1) * cols], axis=1) for r in range(len(cells) // cols)]
     img = np.concatenate(rows, axis=0)
@@ -184,3 +211,4 @@ if __name__ == '__main__':
     out = sys.argv[1]
     save([plume_cell(s) for s in (11, 12, 13, 14)], 4, out + '/PampasPlumesV04.png')
     save([clump_cell(s) for s in (21, 22, 23, 24)], 2, out + '/PampasClumpsV04.png')
+    save([top_cell(s) for s in (31, 32, 33, 34)], 2, out + '/PampasTopsV04.png')

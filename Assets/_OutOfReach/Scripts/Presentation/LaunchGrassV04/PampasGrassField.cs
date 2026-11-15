@@ -44,8 +44,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [SerializeField] private int seed = 1977;
         [Header("Distance and LOD (metres)")]
         [SerializeField, Range(50f, 600f)] private float maxDrawDistance = 440f;
-        [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 40f;
-        [SerializeField, Range(1f, 12f)] private float lodBand = 4f;
+        [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 48f;
+        [SerializeField, Range(1f, 12f)] private float lodBand = 3f;
         [SerializeField, Range(.05f, 1f)] private float farCountFraction = .3f;
         [SerializeField, Range(.2f, 1f), Tooltip("Far count scale for a camera at eye level, where nearer grass hides most far cards.")]
         private float lowCameraFarScale = .5f;
