@@ -1,0 +1,14 @@
+{
+  "name": "OutOfReach.UI.Chapter.TestSupport",
+  "rootNamespace": "OutOfReach.Tests.ChapterUi",
+  "references": ["OutOfReach.Contracts", "OutOfReach.UI.Chapter"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

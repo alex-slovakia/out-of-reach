@@ -1,0 +1,26 @@
+{
+  "name": "OutOfReach.UI.Chapter.Tests.PlayMode",
+  "rootNamespace": "OutOfReach.Tests.ChapterUi",
+  "references": [
+    "UnityEngine.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Simulation",
+    "OutOfReach.Interaction",
+    "OutOfReach.Player",
+    "OutOfReach.Tests.PlayMode",
+    "OutOfReach.UI.Chapter",
+    "OutOfReach.UI.Chapter.TestSupport",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

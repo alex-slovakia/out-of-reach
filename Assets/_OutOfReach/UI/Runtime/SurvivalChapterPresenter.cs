@@ -23,6 +23,7 @@ namespace OutOfReach.Presentation.UI
         private Camera guidanceCamera;
         private Transform waterTarget;
         private Func<bool> reducedMotion;
+        private Func<bool> restPresentationOwner;
         private VisualElement presentationLayer;
         private SurvivalRestEyes restEyes;
         private SurvivalWakeTitle wakeTitle;
@@ -66,6 +67,17 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
+        /// <summary>
+        /// Optional (CHAPTER-UI-01): while this returns true another presenter owns rest presentation (the chapter
+        /// routine montage). No rest overlay, eyelids, rest notice or wake title is shown, and no wake that happened
+        /// meanwhile is replayed afterwards. Null keeps the previous behaviour.
+        /// </summary>
+        public void ConfigureRestPresentationOwner(Func<bool> ownedElsewhere)
+        {
+            restPresentationOwner = ownedElsewhere;
+            RefreshPresentation();
+        }
+
         public void ClearBinding()
         {
             Unsubscribe();
@@ -79,6 +91,7 @@ namespace OutOfReach.Presentation.UI
             guidanceCamera = null;
             waterTarget = null;
             reducedMotion = null;
+            restPresentationOwner = null;
             state = null;
             clock = null;
             presentationAllowed = null;
@@ -122,16 +135,18 @@ namespace OutOfReach.Presentation.UI
 
         public void RefreshPresentation()
         {
-            ObserveRestTransition();
-            restNotice.Observe(survival != null && survival.Enabled && survival.IsActive
-                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None,
+            bool owned = RestOwnedElsewhere();
+            ObserveRestTransition(owned);
+            restNotice.Observe(!owned && survival != null && survival.Enabled && survival.IsActive
+                && state != null && SurvivalChapterReadout.InSurvivalPhase(state.Phase) && state.Outcome == MissionOutcome.None,
                 recovery != null && recovery.IsResting, recovery?.LastRestStop ?? RestStopReason.None);
             bool visible = CanPresent();
-            restEyes?.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
+            bool restShown = !owned && recovery != null && recovery.IsResting;
+            restEyes?.Observe(restShown, reducedMotion?.Invoke() ?? false);
             if (!visible) { HideViews(); return; }
             if (!EnsureViews()) return;
             Show(presentationLayer, true);
-            restEyes.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
+            restEyes.Observe(restShown, reducedMotion?.Invoke() ?? false);
             if (wakePending)
             {
                 wakePending = false;
@@ -148,8 +163,8 @@ namespace OutOfReach.Presentation.UI
             Show(restStop, restNotice.IsVisible && recovery != null
                 && recovery.LastRestStop != RestStopReason.Completed && recovery.LastRestStop != RestStopReason.Woken);
 
-            bool resting = recovery != null && recovery.IsResting;
-            waterLocator.Present(guidanceCamera, waterTarget, !resting);
+            bool resting = restShown;
+            waterLocator.Present(guidanceCamera, waterTarget, !resting && !owned);
             Show(rest, resting);
             wake.SetEnabled(resting);
             if (resting)
@@ -297,11 +312,11 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
-        private void ObserveRestTransition()
+        private void ObserveRestTransition(bool owned)
         {
             bool active = survival != null && survival.Enabled && survival.IsActive && recovery != null
-                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None;
-            if (!active) { ResetWakeObservation(); return; }
+                && state != null && SurvivalChapterReadout.InSurvivalPhase(state.Phase) && state.Outcome == MissionOutcome.None;
+            if (!active || owned) { ResetWakeObservation(); return; }
             bool nowResting = recovery.IsResting;
             if (!restObservationInitialized)
             {
@@ -320,6 +335,13 @@ namespace OutOfReach.Presentation.UI
             pendingWakeDay = recovery.MissionDay;
             pendingWakeReason = recovery.LastRestStop;
             wakePending = true;
+        }
+
+        private bool RestOwnedElsewhere()
+        {
+            if (restPresentationOwner == null) return false;
+            try { return restPresentationOwner(); }
+            catch (Exception error) { Debug.LogException(error, this); return false; }
         }
 
         private void ResetWakeObservation()
@@ -547,8 +569,16 @@ namespace OutOfReach.Presentation.UI
     internal static class SurvivalChapterReadout
     {
         public static bool CanShow(ISurvivalExtension needs, IGameState state, ISimulationClock clock) =>
-            needs != null && needs.Enabled && needs.IsActive && state != null && state.Phase == GamePhase.Survival
+            needs != null && needs.Enabled && needs.IsActive && state != null && InSurvivalPhase(state.Phase)
             && state.Outcome == MissionOutcome.None && clock != null && !clock.IsPaused;
+
+        /// <summary>
+        /// Survival after contact. In the opt-in chapter loop (CHAPTER-UI-01) the needs are already active from the end of
+        /// the impact, so the cabin phases before contact count too; EVA keeps its suit HUD. Without the chapter loop the
+        /// needs only become active at contact, so this changes nothing there.
+        /// </summary>
+        public static bool InSurvivalPhase(GamePhase phase) => phase == GamePhase.Survival || phase == GamePhase.Emergency
+            || phase == GamePhase.Repair || phase == GamePhase.Transmission;
 
         public static bool CanWake(ISurvivalExtension needs, ISurvivalRecovery rest, IGameState state, ISimulationClock clock) =>
             CanShow(needs, state, clock) && rest != null && rest.IsResting;
