@@ -34,6 +34,17 @@ namespace OutOfReach.Presentation.UI
         private readonly VisualElement interactionPrompt, subtitleOverlay, microgravityTutorial, railPrompt;
         private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
         private bool showMicrogravityTutorial, showRailPrompt;
+        // MOVEMENT-HINT-01: the first in-flight movement hint teaches the delivered controls, then leaves ONCE per session,
+        // slowly sliding and fading out to the right (fade only with reduced motion). Presentation time only.
+        public const float MicrogravityHintHoldSeconds = 14f, MicrogravityHintMinimumSeconds = 6f;
+        public const float MicrogravityHintExitSeconds = 1.6f, MicrogravityHintReducedExitSeconds = .45f, MicrogravityHintExitPixels = 180f;
+        public enum MicrogravityHintPhase { Hidden, Showing, Exiting, Done }
+        private MicrogravityHintPhase microgravityHintPhase;
+        private float microgravityHintShown, microgravityHintExit;
+        private bool microgravityHintCompleteRequested, microgravityHintVisible, reducedMotion;
+        public MicrogravityHintPhase MicrogravityHint => microgravityHintPhase;
+        public VisualElement MicrogravityHintElement => microgravityTutorial;
+        public bool IsMicrogravityHintVisible => microgravityHintVisible;
         private readonly Label[] planningResources, hudResources;
         private readonly ResourceGauge oxygenGauge, waterGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
         private readonly ResourceGauge exertionGauge;
@@ -191,30 +202,39 @@ namespace OutOfReach.Presentation.UI
             compression.Add(elapsedTime);
             microgravityTutorial = Element("microgravity-move");
             microgravityTutorial.name = "microgravity-tutorial";
-            var handsHint = Element("control-hint-row");
-            var handsKeys = Element("control-hint-inputs");
-            handsKeys.Add(MousePictogram("left-mouse", true, false));
-            handsKeys.Add(MousePictogram("right-mouse", false, true));
-            handsHint.Add(handsKeys);
-            handsHint.Add(Text("Push / grip", "control-hint-action"));
-            microgravityTutorial.Add(handsHint);
+            microgravityTutorial.pickingMode = PickingMode.Ignore;
+            microgravityTutorial.Add(Text("MOVING IN MICROGRAVITY", "microgravity-title"));
+            // The delivered movement (MOVE-MECH-01..03): legs or hands push off, hands grab rails, A/D lean and side-step.
             var pushHint = Element("control-hint-row");
             var pushKeys = Element("control-hint-inputs");
-            pushKeys.Add(MousePictogram("both-mouse-buttons", true, true));
-            pushKeys.Add(Text("/", "control-hint-separator"));
             pushKeys.Add(KeyPictogram("W"));
             pushKeys.Add(Text("+", "control-hint-separator"));
             pushKeys.Add(KeyPictogram("SPACE"));
             pushHint.Add(pushKeys);
-            pushHint.Add(Text("Push", "control-hint-action"));
+            pushHint.Add(Text(MicrogravityHintLines[0], "control-hint-action"));
             microgravityTutorial.Add(pushHint);
-            var tiltHint = Element("control-hint-row");
-            var tiltKeys = Element("control-hint-inputs");
-            tiltKeys.Add(KeyPictogram("A"));
-            tiltKeys.Add(KeyPictogram("D"));
-            tiltHint.Add(tiltKeys);
-            tiltHint.Add(Text("Tilt", "control-hint-action"));
-            microgravityTutorial.Add(tiltHint);
+            var handsHint = Element("control-hint-row");
+            var handsKeys = Element("control-hint-inputs");
+            handsKeys.Add(MousePictogram("left-mouse", true, false));
+            handsKeys.Add(Text("/", "control-hint-separator"));
+            handsKeys.Add(MousePictogram("right-mouse", false, true));
+            handsHint.Add(handsKeys);
+            handsHint.Add(Text(MicrogravityHintLines[1], "control-hint-action"));
+            microgravityTutorial.Add(handsHint);
+            var pairHint = Element("control-hint-row");
+            var pairKeys = Element("control-hint-inputs");
+            pairKeys.Add(MousePictogram("both-mouse-buttons", true, true));
+            pairHint.Add(pairKeys);
+            pairHint.Add(Text(MicrogravityHintLines[2], "control-hint-action"));
+            microgravityTutorial.Add(pairHint);
+            var leanHint = Element("control-hint-row");
+            var leanKeys = Element("control-hint-inputs");
+            leanKeys.Add(KeyPictogram("A"));
+            leanKeys.Add(Text("/", "control-hint-separator"));
+            leanKeys.Add(KeyPictogram("D"));
+            leanHint.Add(leanKeys);
+            leanHint.Add(Text(MicrogravityHintLines[3], "control-hint-action"));
+            microgravityTutorial.Add(leanHint);
             compression.Add(microgravityTutorial);
             railPrompt = Text("Handhold in reach", "microgravity-rail-prompt");
             compression.Add(railPrompt);
@@ -566,13 +586,113 @@ namespace OutOfReach.Presentation.UI
             interactionText.text = string.Empty;
         }
 
+        /// <summary>The four lines of the first in-flight movement hint, in teaching order.</summary>
+        public static readonly string[] MicrogravityHintLines =
+        {
+            "Hold W + press Space: push off (legs on the deck, hands near walls)",
+            "LMB / RMB: push with the left / right hand. On a handrail: grab it, click again to push off",
+            "Both buttons: strong two-hand push",
+            "A / D: lean and side-step off a nearby surface",
+        };
+
+        /// <summary>
+        /// <paramref name="showTutorial"/>: the movement hint may be shown now (controls usable). The view itself decides
+        /// how long: it stays while the context allows it, pauses while it does not, and leaves once per session.
+        /// </summary>
         public void SetMicrogravityPrompt(bool showTutorial, bool showRail)
         {
-            if (showMicrogravityTutorial == showTutorial && showRailPrompt == showRail) return;
+            if (showRailPrompt != showRail)
+            {
+                showRailPrompt = showRail;
+                SetVisible(railPrompt, showRail);
+            }
             showMicrogravityTutorial = showTutorial;
-            showRailPrompt = showRail;
-            SetVisible(microgravityTutorial, showTutorial);
-            SetVisible(railPrompt, showRail);
+            if (showTutorial && microgravityHintPhase == MicrogravityHintPhase.Hidden)
+            {
+                microgravityHintPhase = MicrogravityHintPhase.Showing;
+                microgravityHintShown = microgravityHintExit = 0f;
+                ApplyMicrogravityHintPose(0f);
+            }
+            else if (!showTutorial && microgravityHintPhase == MicrogravityHintPhase.Exiting) FinishMicrogravityHint();
+            RefreshMicrogravityHintVisibility();
+        }
+
+        /// <summary>The player has moved (first push): leave after the minimum reading time instead of the full hold.</summary>
+        public void CompleteMicrogravityTutorial()
+        {
+            microgravityHintCompleteRequested = true;
+            if (microgravityHintPhase == MicrogravityHintPhase.Hidden) FinishMicrogravityHint();
+        }
+
+        /// <summary>A replacement session teaches again.</summary>
+        public void ResetMicrogravityHint()
+        {
+            microgravityHintPhase = MicrogravityHintPhase.Hidden;
+            microgravityHintShown = microgravityHintExit = 0f;
+            microgravityHintCompleteRequested = false;
+            ApplyMicrogravityHintPose(0f);
+            RefreshMicrogravityHintVisibility();
+        }
+
+        /// <summary>Already taught in this session (for example a rebuilt view): stay hidden.</summary>
+        public void SkipMicrogravityHint() => FinishMicrogravityHint();
+
+        /// <summary>The existing reduced camera motion and light effects option: the hint then fades without moving.</summary>
+        public void SetReducedMotion(bool reduced)
+        {
+            reducedMotion = reduced;
+            if (microgravityHintPhase == MicrogravityHintPhase.Exiting) ApplyMicrogravityHintPose(MicrogravityHintExitProgress);
+        }
+
+        public float MicrogravityHintExitProgress => microgravityHintPhase == MicrogravityHintPhase.Exiting
+            ? Mathf.Clamp01(microgravityHintExit / (reducedMotion ? MicrogravityHintReducedExitSeconds : MicrogravityHintExitSeconds))
+            : microgravityHintPhase == MicrogravityHintPhase.Done ? 1f : 0f;
+
+        private void AdvanceMicrogravityHint(float step)
+        {
+            // Only time the player can actually see counts: menus, cinematics and rest suspend the hint.
+            if (!microgravityHintVisible) return;
+            if (microgravityHintPhase == MicrogravityHintPhase.Showing)
+            {
+                microgravityHintShown += step;
+                if (microgravityHintShown >= MicrogravityHintHoldSeconds
+                    || (microgravityHintCompleteRequested && microgravityHintShown >= MicrogravityHintMinimumSeconds))
+                {
+                    microgravityHintPhase = MicrogravityHintPhase.Exiting;
+                    microgravityHintExit = 0f;
+                }
+                return;
+            }
+            if (microgravityHintPhase != MicrogravityHintPhase.Exiting) return;
+            microgravityHintExit += step;
+            float t = MicrogravityHintExitProgress;
+            ApplyMicrogravityHintPose(t);
+            if (t >= 1f) FinishMicrogravityHint();
+        }
+
+        private void FinishMicrogravityHint()
+        {
+            microgravityHintPhase = MicrogravityHintPhase.Done;
+            ApplyMicrogravityHintPose(1f);
+            RefreshMicrogravityHintVisibility();
+        }
+
+        private void ApplyMicrogravityHintPose(float t)
+        {
+            t = Mathf.Clamp01(t);
+            float eased = t * t * (3f - 2f * t);
+            microgravityTutorial.style.opacity = 1f - eased;
+            float x = reducedMotion ? 0f : MicrogravityHintExitPixels * eased;
+            microgravityTutorial.style.translate = new Translate(new Length(x, LengthUnit.Pixel), new Length(0f, LengthUnit.Pixel));
+        }
+
+        private void RefreshMicrogravityHintVisibility()
+        {
+            bool visible = showMicrogravityTutorial && (microgravityHintPhase == MicrogravityHintPhase.Showing
+                || microgravityHintPhase == MicrogravityHintPhase.Exiting);
+            if (visible == microgravityHintVisible && microgravityTutorial.ClassListContains("is-hidden") == !visible) return;
+            microgravityHintVisible = visible;
+            SetVisible(microgravityTutorial, visible);
         }
 
         public void ShowSubtitle(string text, string speakerLabel)
@@ -831,6 +951,7 @@ namespace OutOfReach.Presentation.UI
             if (paused || float.IsNaN(elapsedRealSeconds) || float.IsInfinity(elapsedRealSeconds)
                 || elapsedRealSeconds <= 0) return;
             float step = Math.Min(elapsedRealSeconds, 0.1f);
+            AdvanceMicrogravityHint(step);
             oxygenGauge.Advance(step);
             waterGauge.Advance(step);
             foodGauge.Advance(step);

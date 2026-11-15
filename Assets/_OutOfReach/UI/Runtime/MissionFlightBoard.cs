@@ -39,6 +39,7 @@ namespace OutOfReach.Presentation.UI
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
         private bool showMicrogravityTutorial, showRailPrompt;
+        private bool microgravityHintCompleted, microgravityHintTaught, reducedMotion;
         private Func<float> readExertionRemaining;
         private Func<bool> readInteriorSystemsOperational;
         private Func<string> readPlanningInstruction;
@@ -103,6 +104,9 @@ namespace OutOfReach.Presentation.UI
                 view?.SetPhysicalPlanning(false);
                 hasResourceReference = false;
                 view?.ClearResourceReference();
+                // A replacement session teaches the movement hint again.
+                microgravityHintCompleted = microgravityHintTaught = false;
+                view?.ResetMicrogravityHint();
             }
             planner = missionPlanner;
             resources = resourceSystem;
@@ -218,6 +222,26 @@ namespace OutOfReach.Presentation.UI
             view?.SetMicrogravityPrompt(showTutorial, showRail);
         }
 
+        /// <summary>MOVEMENT-HINT-01: the player has moved; the hint leaves after its minimum reading time.</summary>
+        public void CompleteMicrogravityTutorial()
+        {
+            if (disposed) return;
+            microgravityHintCompleted = true;
+            view?.CompleteMicrogravityTutorial();
+        }
+
+        /// <summary>The existing reduced-effects option: hint exits fade without sliding.</summary>
+        public void SetReducedMotion(bool reduced)
+        {
+            if (disposed) return;
+            reducedMotion = reduced;
+            view?.SetReducedMotion(reduced);
+        }
+
+        public FlightBoardView.MicrogravityHintPhase MicrogravityHint => view != null ? view.MicrogravityHint : FlightBoardView.MicrogravityHintPhase.Hidden;
+        public bool IsMicrogravityHintVisible => view != null && view.IsMicrogravityHintVisible;
+        public float MicrogravityHintExitProgress => view != null ? view.MicrogravityHintExitProgress : 0f;
+
         private void LateUpdate()
         {
             // These interfaces have no change events. Read Core's values after its frame update;
@@ -227,6 +251,7 @@ namespace OutOfReach.Presentation.UI
             view?.SetExertion(readExertionRemaining != null && state != null && state.Outcome == MissionOutcome.None
                 ? readExertionRemaining() : float.NaN);
             view?.AdvancePresentation(Time.unscaledDeltaTime, menuOverlayVisible || (clock != null && clock.IsPaused));
+            if (view != null && view.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Done) microgravityHintTaught = true;
             // Tab reveals telemetry only. It never changes player, camera, cursor or mission authority.
             view?.SetSystemsHeld(state != null && state.Phase != GamePhase.Planning
                 && Keyboard.current != null && Keyboard.current.tabKey.isPressed);
@@ -292,6 +317,9 @@ namespace OutOfReach.Presentation.UI
             var root = document.rootVisualElement;
             if (root == null) return;
             view = new FlightBoardView(root, styleSheet);
+            view.SetReducedMotion(reducedMotion);
+            if (microgravityHintTaught) view.SkipMicrogravityHint();
+            else if (microgravityHintCompleted) view.CompleteMicrogravityTutorial();
             view.SetMenuOverlayVisible(menuOverlayVisible);
             view.SetDeparturePresentation(departurePresentation);
             view.SetPhysicalTerminalPresentation(physicalTerminalPresentation);

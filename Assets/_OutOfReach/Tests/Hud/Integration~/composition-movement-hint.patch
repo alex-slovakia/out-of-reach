@@ -1,0 +1,37 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+index 0676d72..9c2cb22 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+@@ -262,13 +262,14 @@ namespace OutOfReach.Composition
+                 railHintVisible = microgravityInput.AimAtReachableRail();
+                 nextRailHintProbe = Time.unscaledTime + .10f;
+             }
+-            flightBoard.SetMicrogravityPrompt(!microgravityTutorialCompleted, railHintVisible);
++            // MOVEMENT-HINT-01: the board shows the movement hint once per session and owns its timed exit.
++            flightBoard.SetMicrogravityPrompt(true, railHintVisible);
+         }
+ 
+         private void OnMicrogravityHandPushCompleted()
+         {
++            if (!microgravityTutorialCompleted && flightBoard) flightBoard.CompleteMicrogravityTutorial();
+             microgravityTutorialCompleted = true;
+-            if (flightBoard) flightBoard.SetMicrogravityPrompt(false, railHintVisible);
+         }
+         public bool HasInteriorRailGrip => microgravityInput && microgravityInput.HasRailGrip;
+ 
+@@ -649,6 +650,7 @@ namespace OutOfReach.Composition
+                 () => session.Systems.Power.IsOperational && session.Systems.LifeSupport.IsOperational);
+             flightBoard.SetDeparturePresentation(false);
+             flightBoard.SetPhysicalTerminalPresentation(false);
++            flightBoard.SetReducedMotion(cinematics && cinematics.ReducedEffects);
+             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
+             flightBoard.ConfigureExertion(() => runtime && runtime.Player ? runtime.Player.ExertionRemaining01 : float.NaN);
+             flightBoard.ConfigurePhysicalPlanning(runtime.PreflightWalk, runtime.Cargo);
+@@ -928,6 +930,7 @@ namespace OutOfReach.Composition
+             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
+             if (preflightTension) preflightTension.SetReducedEffects(reduced);
+             if (cargoHands) cargoHands.SetReducedMotion(reduced);
++            if (flightBoard) flightBoard.SetReducedMotion(reduced);
+         }
+ 
+         private void OnPauseChanged(bool paused)
