@@ -4,6 +4,8 @@
 
 **THIS IS THE SET FOR THE F BUILD** (checked against `b2f7a89`; extras: horizons, rad, dsn, particle, models, voices). Use it only if the F build is the one that ships. The A set for the release candidate `5479e87` is one folder up.
 
+**It also applies to G `b82c5e7`, the build that ships** (#7 6902406903): G is F plus one commit that hides the tower access arm inside the closed transport cabin. Test counts are unchanged (EditMode 544/544, PlayMode 178/178); content, credits, voices and data are unchanged. ZIP `OUT-OF-REACH_b82c5e7_Windows_x64.zip`, SHA-256 `a5457672eed2462052e33880e57d94daff6d5caa4a4ea3c8fc0380b90c695462`.
+
 ## SET F (final): what differs from the B-visual set (read this first)
 
 Checked against the final candidate `feature/claude-max-final-b@b2f7a89` (#7 6902220076; ZIP `OUT-OF-REACH_b2f7a89_Windows_x64.zip`, SHA-256 `e3f5c8d4b0f15f5e9f70d1e6f19574d08c2ea5c21911bf24cd1112cadb947bfc` as given in that post; EditMode 544/544, PlayMode 178/178). The paste blocks below already hold everything of the B-visual set (Horizons range and signal delay on screen, radiation estimate from MSL RAD, Deep Space Network complex in view, Particle Pack launch effects, hull V2, voiced radio traffic). Set F adds:

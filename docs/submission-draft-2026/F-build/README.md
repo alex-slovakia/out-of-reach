@@ -1,5 +1,12 @@
 # Set for the F build — use ONLY if the F build ships
 
+**The build that ships is G: `feature/claude-max-final-b@b82c5e7`** (announced 15 Nov, 23:27 CET, #7 6902406903).
+G is F `b2f7a89` plus one commit: the tower access arm no longer shows inside the closed transport cabin.
+ZIP `OUT-OF-REACH_b82c5e7_Windows_x64.zip`, SHA-256 `a5457672eed2462052e33880e57d94daff6d5caa4a4ea3c8fc0380b90c695462`.
+The test counts are the same as on F (EditMode 544/544, PlayMode 178/178), and game content, credits, voices
+and data did not change. **This set therefore applies to G as it stands**; wherever a text below says it was
+checked against `b2f7a89`, that check was made on F and holds for G.
+
 Built by `make_b_build.py` and checked against `b2f7a89`.
 The A set (release candidate `5479e87`) is one folder up and is unchanged.
 

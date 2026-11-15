@@ -88,6 +88,8 @@ Sources: [Project Submission Guide](https://www.spaceappschallenge.org/resources
 | Public final-project location and public demo link | Open — Team Owner |
 | Submit for Judging | Open — Team Owner only, around 23:30 CET |
 
-## Set F, final (build `feature/claude-max-final-b@b2f7a89`)
+## Set F, final (build `feature/claude-max-final-b@b2f7a89`; also valid for G `b82c5e7`, the build that ships)
+
+G is F plus one commit (the tower access arm no longer shows inside the closed transport cabin); test counts, content and credits are unchanged, so set F applies to G as it stands. Details at the top of [F-build/README.md](F-build/README.md).
 
 Folder [F-build/](F-build/): deck PDF and PPTX, form texts, credits, AI statement and the public-folder files for build F, the final candidate. Start with the section "SET F" at the top of [F-build/form-fields.md](F-build/form-fields.md). Rebuild: `python make_f_build.py`.
