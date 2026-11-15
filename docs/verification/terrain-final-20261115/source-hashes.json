@@ -1,0 +1,22 @@
+[
+  {
+    "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+    "sha256": "538B3CD30354A8ADEC600F99CF87A8220C18EC29EF3D9E7045C9CF0FEBE20083"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MarineBindings.cs",
+    "sha256": "9BD3B1F402EDE1380431C33A39421104CA75CC5DB20CCBD89CB45DFC5CDB489B"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/Environment/GroundFinishV02/GroundFinishV02.shader",
+    "sha256": "E5BEA3C1CFCE98BFF168EFF9D6C6F540D8DB72006C3EE0F10D52B19C67CB95FA"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchVegetationV03/Editor/LaunchVegetationAuthoring.cs",
+    "sha256": "6B532042858EE500ED864D63B41E98479BC263AE910E3DFEA63578BC6267D4B7"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchLandscapeV02/Editor/LaunchLandscapeAuthoring.cs",
+    "sha256": "4A69EB3D52384389077528FA7D098612190871C002A2449EF2A321E40FB773E8"
+  }
+]

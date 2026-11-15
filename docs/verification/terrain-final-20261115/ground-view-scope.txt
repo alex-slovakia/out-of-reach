@@ -1,0 +1,1 @@
+Temporary QA camera placement on actual saved site; presentation inspection only, not a walking or traversal claim. Original camera parent/local pose restored immediately after capture.

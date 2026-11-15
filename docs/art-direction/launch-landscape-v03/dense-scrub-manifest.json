@@ -1,0 +1,26 @@
+[
+  {
+    "name": "coastal_scrub_dense_a_LOD0",
+    "triangles": 9798,
+    "source": "shrub_04",
+    "modification": "seven real source branches, rotations/scales, silhouette-preserving mesh reduction; original photographic RGBA maps"
+  },
+  {
+    "name": "coastal_scrub_dense_a_LOD1",
+    "triangles": 2800,
+    "source": "shrub_04",
+    "modification": "seven real source branches, rotations/scales, silhouette-preserving mesh reduction; original photographic RGBA maps"
+  },
+  {
+    "name": "coastal_scrub_dense_b_LOD0",
+    "triangles": 9798,
+    "source": "shrub_04",
+    "modification": "seven real source branches, rotations/scales, silhouette-preserving mesh reduction; original photographic RGBA maps"
+  },
+  {
+    "name": "coastal_scrub_dense_b_LOD1",
+    "triangles": 2800,
+    "source": "shrub_04",
+    "modification": "seven real source branches, rotations/scales, silhouette-preserving mesh reduction; original photographic RGBA maps"
+  }
+]

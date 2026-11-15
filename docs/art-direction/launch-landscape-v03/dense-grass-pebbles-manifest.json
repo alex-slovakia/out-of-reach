@@ -1,0 +1,74 @@
+[
+  {
+    "name": "coastal_grass_dense_0_LOD0",
+    "triangles": 1698,
+    "dimensions": [
+      0.665419340133667,
+      0.5197494029998779,
+      0.5665192604064941
+    ]
+  },
+  {
+    "name": "coastal_grass_dense_0_LOD1",
+    "triangles": 259,
+    "dimensions": [
+      0.6669716835021973,
+      0.5214382410049438,
+      0.5654232501983643
+    ]
+  },
+  {
+    "name": "coastal_grass_dense_1_LOD0",
+    "triangles": 1699,
+    "dimensions": [
+      0.6316298842430115,
+      0.5895942449569702,
+      0.5444551706314087
+    ]
+  },
+  {
+    "name": "coastal_grass_dense_1_LOD1",
+    "triangles": 259,
+    "dimensions": [
+      0.633392870426178,
+      0.5903844833374023,
+      0.5433508157730103
+    ]
+  },
+  {
+    "name": "coastal_grass_dense_2_LOD0",
+    "triangles": 1699,
+    "dimensions": [
+      0.534801185131073,
+      0.6537760496139526,
+      0.5276495218276978
+    ]
+  },
+  {
+    "name": "coastal_grass_dense_2_LOD1",
+    "triangles": 258,
+    "dimensions": [
+      0.5358085632324219,
+      0.6554155349731445,
+      0.5266467928886414
+    ]
+  },
+  {
+    "name": "coastal_pebble_scan_LOD0",
+    "triangles": 419,
+    "dimensions": [
+      2.5088624954223633,
+      1.2322734594345093,
+      0.845312774181366
+    ]
+  },
+  {
+    "name": "coastal_pebble_scan_LOD1",
+    "triangles": 100,
+    "dimensions": [
+      2.4871740341186523,
+      1.2099285125732422,
+      0.8550488352775574
+    ]
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "name": "grass_medium_02_c_LOD0",
+    "source": "grass_medium_02",
+    "triangles": 1215,
+    "dimensions_m_blender": [
+      0.2616771459579468,
+      0.24951034784317017,
+      0.23166149854660034
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_c_LOD0.fbx"
+  },
+  {
+    "name": "grass_medium_02_c_LOD1",
+    "source": "grass_medium_02",
+    "triangles": 450,
+    "dimensions_m_blender": [
+      0.2616771459579468,
+      0.24951034784317017,
+      0.23166149854660034
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_c_LOD1.fbx"
+  },
+  {
+    "name": "grass_medium_02_d_LOD0",
+    "source": "grass_medium_02",
+    "triangles": 2489,
+    "dimensions_m_blender": [
+      0.3173760771751404,
+      0.36192572116851807,
+      0.260376513004303
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_d_LOD0.fbx"
+  },
+  {
+    "name": "grass_medium_02_d_LOD1",
+    "source": "grass_medium_02",
+    "triangles": 449,
+    "dimensions_m_blender": [
+      0.3173760771751404,
+      0.36192572116851807,
+      0.260376513004303
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_d_LOD1.fbx"
+  },
+  {
+    "name": "grass_medium_02_e_LOD0",
+    "source": "grass_medium_02",
+    "triangles": 1664,
+    "dimensions_m_blender": [
+      0.3555693030357361,
+      0.43324655294418335,
+      0.40323612093925476
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_e_LOD0.fbx"
+  },
+  {
+    "name": "grass_medium_02_e_LOD1",
+    "source": "grass_medium_02",
+    "triangles": 449,
+    "dimensions_m_blender": [
+      0.3555693030357361,
+      0.43324655294418335,
+      0.40323612093925476
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_e_LOD1.fbx"
+  },
+  {
+    "name": "shrub_02_b_LOD0",
+    "source": "shrub_02",
+    "triangles": 5242,
+    "dimensions_m_blender": [
+      0.9021583795547485,
+      1.0400395393371582,
+      1.224005103111267
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_b_LOD0.fbx"
+  },
+  {
+    "name": "shrub_02_b_LOD1",
+    "source": "shrub_02",
+    "triangles": 1500,
+    "dimensions_m_blender": [
+      0.9021583795547485,
+      1.0400395393371582,
+      1.224005103111267
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_b_LOD1.fbx"
+  },
+  {
+    "name": "shrub_02_c_LOD0",
+    "source": "shrub_02",
+    "triangles": 9234,
+    "dimensions_m_blender": [
+      1.4356555938720703,
+      1.8568041324615479,
+      1.0683579444885254
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_c_LOD0.fbx"
+  },
+  {
+    "name": "shrub_02_c_LOD1",
+    "source": "shrub_02",
+    "triangles": 1500,
+    "dimensions_m_blender": [
+      1.4356555938720703,
+      1.8568041324615479,
+      1.0683579444885254
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_c_LOD1.fbx"
+  },
+  {
+    "name": "shrub_04_b_LOD0",
+    "source": "shrub_04",
+    "triangles": 6589,
+    "dimensions_m_blender": [
+      0.1427975594997406,
+      0.16642028093338013,
+      0.20770247280597687
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_04_b_LOD0.fbx"
+  },
+  {
+    "name": "shrub_04_b_LOD1",
+    "source": "shrub_04",
+    "triangles": 1500,
+    "dimensions_m_blender": [
+      0.1427975594997406,
+      0.16642028093338013,
+      0.20770247280597687
+    ],
+    "pivot": "individual variant bottom centre",
+    "model": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_04_b_LOD1.fbx"
+  }
+]

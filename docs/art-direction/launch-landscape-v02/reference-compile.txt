@@ -1,0 +1,1 @@
+PASS reference compile against Unity6000.3.28f1 assemblies; final source includes derivative seam normals. No Unity import, shader or render claim.

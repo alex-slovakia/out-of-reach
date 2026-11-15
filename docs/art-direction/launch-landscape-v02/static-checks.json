@@ -1,0 +1,10 @@
+{
+  "tool": "check_unity_project",
+  "files_checked": 2631,
+  "error_count": 0,
+  "warning_count": 47,
+  "owned_warning_count": 0,
+  "errors": [],
+  "owned_warnings": [],
+  "note": "47 warnings are existing temporary editor QA class/file mismatches outside owned paths; full output kept in .local/launch-landscape-v02/unity-checker.json."
+}

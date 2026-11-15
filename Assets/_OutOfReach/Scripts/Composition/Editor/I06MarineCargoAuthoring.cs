@@ -90,6 +90,7 @@ namespace OutOfReach.Composition.Editor
             }
             // Aboard solids follow those exact case GameObjects: existing presenter activation controls their lifetime.
             // No changes to carried case/cradle/hands, trigger dimensions, inventory or scene-state bindings.
+            I06CargoPlacardAuthoring.Apply(stage.Presenter);
             Validate(stage, marine, gameplayCamera.GetComponentInParent<FirstPersonController>());
             return stage;
         }

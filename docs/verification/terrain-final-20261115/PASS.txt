@@ -1,0 +1,1 @@
+Outdoor A/B captures complete; real transfer and idempotent environment restoration passed. Visual improvement requires comparison; no whole-scene art claim.

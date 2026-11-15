@@ -1,0 +1,14 @@
+[
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchLandscapeV02/Editor/LaunchLandscapeAuthoring.cs",
+    "sha256": "4a69eb3d52384389077528fa7d098612190871c002a2449ef2a321e40fb773e8"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchLandscapeV02/LandscapeSurface.shader",
+    "sha256": "1b2c5c7300b4e9ba42befb502a0f06c054fc323b71f7df50f03a4c9c605bdf1f"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchLandscapeV02/Editor/OutOfReach.LaunchLandscape.Editor.asmdef",
+    "sha256": "d5aa739616200b46cf409d5d87712bb1eb3660ae3af732dbacf0a1863e999b25"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "reference_compile": "PASS Unity6000.3.28f1 DLLs",
+  "owned_assets_and_folders_with_unique_valid_meta": 49,
+  "prepared_file_count": 43,
+  "prepared_bytes": 24893062,
+  "source_payload_bytes": 18782170,
+  "full_checker_prior_to_dense_addition": {
+    "files": 2758,
+    "errors": 0,
+    "warnings": 49
+  },
+  "native_unity": "NOT RUN BY WORKER"
+}

@@ -1,0 +1,12 @@
+PASS Actual saved Planning prologue
+PASS Candidate atmosphere actually applied by saved-scene binding
+PASS Repeated Planning Bind retains candidate once
+PASS Consumed transfer snapshot is not reused
+PASS Actual valid planner launch
+PASS Disclosed real transport Skip
+PASS Real transfer restores every captured ship environment value
+PASS Consumed transfer snapshot is not reused
+PASS Repeated teardown does not modify restored ship
+PASS Consumed transfer snapshot is not reused
+PASS Post-transfer bind/unbind preserves restored environment
+PASS Consumed transfer snapshot is not reused

@@ -335,13 +335,13 @@ namespace OutOfReach.Composition
         {
             RenderSettings.skybox = marineSky;
             RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared;
-            RenderSettings.fogColor = new Color(.60f, .68f, .74f); RenderSettings.fogDensity = .00045f;
+            RenderSettings.fogColor = new Color(.65f, .69f, .73f); RenderSettings.fogDensity = .00013f;
             RenderSettings.ambientMode = AmbientMode.Trilight;
             RenderSettings.ambientSkyColor = new Color(.45f, .54f, .63f);
             RenderSettings.ambientEquatorColor = new Color(.34f, .39f, .43f);
-            RenderSettings.ambientGroundColor = new Color(.22f, .24f, .22f);
+            RenderSettings.ambientGroundColor = new Color(.28f, .27f, .23f);
             RenderSettings.ambientIntensity = 1; RenderSettings.reflectionIntensity = .45f;
-            if (sun) { sun.color = new Color(1, .93f, .82f); sun.intensity = 2f; sun.transform.rotation = Quaternion.Euler(28, -48, 0); }
+            if (sun) { sun.color = new Color(1, .87f, .69f); sun.intensity = 2.1f; sun.transform.rotation = Quaternion.Euler(18, -48, 0); }
             playerCamera.farClipPlane = 10500;
             playerCamera.clearFlags = CameraClearFlags.Skybox;
         }

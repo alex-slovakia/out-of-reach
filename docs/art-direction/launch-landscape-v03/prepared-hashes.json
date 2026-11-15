@@ -1,0 +1,260 @@
+[
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/coastal_scrub_dense_a_LOD0.fbx",
+    "bytes": 546924,
+    "sha256": "dbcb769cd052fa867d75399aee63f046d2caaad9cb83180cbb1164ad0c862e88",
+    "guid": "81541ebef1c9477081bde5ffc442d460"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/coastal_scrub_dense_a_LOD1.fbx",
+    "bytes": 170124,
+    "sha256": "bf5213acd4503bbde2bd4d17f433ef4bf1f215a9c966c9ed14d3f84801879e9e",
+    "guid": "cc4d8bd3b66a48358c52bd35fb632da3"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/coastal_scrub_dense_b_LOD0.fbx",
+    "bytes": 545868,
+    "sha256": "1b2a3ec894deccacd2b41a76165cd74b5008081d07937e30aaec5b1135701aa8",
+    "guid": "0e44a1f437534519bfae3079716a7f70"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/coastal_scrub_dense_b_LOD1.fbx",
+    "bytes": 169916,
+    "sha256": "3fc533f3d902aafd0c9775e3914b87e04e680af39200f9d605520413e92bd58e",
+    "guid": "d44f49455caa46b5b201925bae7dcd22"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_c_LOD0.fbx",
+    "bytes": 68972,
+    "sha256": "4404d5646daf1d7d0f6d6e7340a822710c5912bc78a0f1f0df1fd388f39b9499",
+    "guid": "31a1a8edf8a14f12b11b16586c30538c"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_c_LOD1.fbx",
+    "bytes": 48332,
+    "sha256": "454e3b50704a89fb690eaebd6f983f5777de25ed39e4c9aa5df7426ad9514430",
+    "guid": "2e5bc40d695c498fb7a7b6da37f158f0"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_d_LOD0.fbx",
+    "bytes": 113692,
+    "sha256": "5d3218c51a053b7843844f989e5296454773c3b1a30c1a242dc4c17c67b2f049",
+    "guid": "4da78b28b08c4fa3a44f52fea4e71bd0"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_d_LOD1.fbx",
+    "bytes": 54076,
+    "sha256": "4ad04f112312cbf81b9c6bed8ebe3b14555786a7efebe9b09a39bf20ba34e7ab",
+    "guid": "1919c5ba9df84142b7d5d157d5589665"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_e_LOD0.fbx",
+    "bytes": 85468,
+    "sha256": "09650dc6b13a5748f0e6740dcb484acd24ace03a6516694bbf90f044a5094e03",
+    "guid": "f2a2b51d47454818873a4a654192b1f1"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/grass_medium_02_e_LOD1.fbx",
+    "bytes": 49932,
+    "sha256": "635ede9a4b4e4033b609f2071c3bcdcadd99528834f769446e90bca5bbc4e6ee",
+    "guid": "091cfaa3e44b4bc1b58045e3c0d69f47"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_b_LOD0.fbx",
+    "bytes": 171244,
+    "sha256": "5a8d4e029d91f68c87d1294bf56461763b5abaec2013f984f5a8232046615d33",
+    "guid": "448827f473a345cea9b9c31000eabcb0"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_b_LOD1.fbx",
+    "bytes": 87580,
+    "sha256": "1504d4badcdee0c3916d66272382d3478dc7a09c729edfd9581847ff46468f27",
+    "guid": "8215b2bd6b064e2bba2ee4ffdb5ade52"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_c_LOD0.fbx",
+    "bytes": 289036,
+    "sha256": "bf46e34d68d9286ea57e7deaedba061f6095744ad170f56ac58e495763bbea84",
+    "guid": "d8d5a26340f5450c955aad64f3ae4656"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_02_c_LOD1.fbx",
+    "bytes": 98556,
+    "sha256": "3c4eeb651a44e9cdf3c40df1c2d5c73dbd25a9518382962f1e5f9e685e120457",
+    "guid": "7f022880962949189ebe110024431cbb"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_04_b_LOD0.fbx",
+    "bytes": 214828,
+    "sha256": "cc5979c42df1190842fe6d8295f72bf1bdf64045a8f0ffbc43d425e121ad4ff5",
+    "guid": "fee8d70d0e5d4ca396733eb76e85c1ec"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/shrub_04_b_LOD1.fbx",
+    "bytes": 100380,
+    "sha256": "0d44cad2c37427b15b9793d42330ab164327925bed360e8edd94718cecbe3511",
+    "guid": "df56c59251654c44831512e6eff1d609"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/coastal_scrub_dense_a_LOD0-shrub_04.mat",
+    "bytes": 3362,
+    "sha256": "8bd79470b66ad8d624440fd5b65992c09e49d86e96e23abdc7c7788c626262c7",
+    "guid": "29e176733955d6048a9187e01aefa15b"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/coastal_scrub_dense_a_LOD1-shrub_04.mat",
+    "bytes": 3362,
+    "sha256": "8014ce79252618917d68451877adec8ea1dd3de0438ba6f8d2bef8235722206e",
+    "guid": "1994d4b2ce5632b4eac597c7e49ecb96"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/coastal_scrub_dense_b_LOD0-shrub_04.mat",
+    "bytes": 3362,
+    "sha256": "1eaf99ad4fc25c274d7e35fff6bc43d6f2514d7cf8ac46ef9ecafca40492e489",
+    "guid": "fb6931753a0d96a45884bac5ae6655d8"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/coastal_scrub_dense_b_LOD1-shrub_04.mat",
+    "bytes": 3362,
+    "sha256": "6521a2dcf035ed480d6ff2d6fc8adb3ea0b0a3c346607057782f2af50895d6d9",
+    "guid": "6923e4f1c74af904a93ede7ac61a7dda"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_c_LOD0-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "98dd8ee35dbfcec446e8e28953d79476a9d498e23debbe5360918e1b659973dc",
+    "guid": "54b978b57eaa45d4c8b496c5a065007a"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_c_LOD1-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "1b9ac37f9af40d605236e58e1e23263364a3923f136f6e7bd7118afc70c15d9e",
+    "guid": "c8d2bb34f98e52f4d96b823159ee6487"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_d_LOD0-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "4646b52230d2531933f32eb3657530422e009bbf37780c7905c35543ffb7c2bb",
+    "guid": "d8c3f69726080c74383083c8b81e192e"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_d_LOD1-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "cffbd2592b28f921a96c1d77491b9c7facb6d6d40e5c7376411047bf1c149122",
+    "guid": "48a17b70c498b0448ace59d61f7913e1"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_e_LOD0-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "87725613b5e652cb671e390d19faa074a9628c3392a1e2e8e3efc8c1058b5a6d",
+    "guid": "ce094383854ba044d874e9020ed017d6"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/grass_medium_02_e_LOD1-PHV_grass_medium_02.mat",
+    "bytes": 3381,
+    "sha256": "a35a75cc08916dfb436720da5e3b618655ff0998a222d25ce9ef26fb6b0c402c",
+    "guid": "8be0de9a6b03bd04383b95d0b7093708"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_02_b_LOD0-PHV_shrub_02.mat",
+    "bytes": 3355,
+    "sha256": "ae722f5612f6fa7103b0fa162560766ff8bdaa932d018e812eed55501b1e7e83",
+    "guid": "cab4509bdab736a4f96a7db0fb7326ee"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_02_b_LOD1-PHV_shrub_02.mat",
+    "bytes": 3355,
+    "sha256": "e9a4a455500638989f57a69089c34265f45a5f836a6acef743ec14748df28dc5",
+    "guid": "a62a016e8a9bae246b13909f411dc56b"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_02_c_LOD0-PHV_shrub_02.mat",
+    "bytes": 3355,
+    "sha256": "27897b58785a41d6457516dd9470a62912d9fffdc0e4714de03e7aba222cd850",
+    "guid": "73e13f9edea696e4fa3c1332a68c4146"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_02_c_LOD1-PHV_shrub_02.mat",
+    "bytes": 3355,
+    "sha256": "5e19be0c4ad27b304f127e22c3e2bb0c8cfd18d9a43118ca2cf66ee79b47ccc7",
+    "guid": "173c630271f783641917dd6b4b4cd542"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_04_b_LOD0-PHV_shrub_04.mat",
+    "bytes": 3355,
+    "sha256": "2de3feb3bdd7e2220323b1751a67e7ed6aa96f5feb0daa8c9adf6cc46ee87d5c",
+    "guid": "fd6c5735674fb994f9786c9d144ca76a"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Models/Materials/shrub_04_b_LOD1-PHV_shrub_04.mat",
+    "bytes": 3355,
+    "sha256": "4d1bdbf3fd121851985356288f4ccda232173cf95408b4bc4bdcc9989924eba7",
+    "guid": "7348ad6790bed344cb269f1bd9ba8433"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/grass_medium_02_BaseColor.png",
+    "bytes": 815222,
+    "sha256": "18b7ea702bdcb4278ae8d1bee0660d31bf806a3eeb5a351469a707e238663b1a",
+    "guid": "b812cc9ea1f746a2833d007ef5ef9a6a"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/grass_medium_02_MetalSmooth.png",
+    "bytes": 885427,
+    "sha256": "3f9d324aac7127bfe14b0106b0a4d5d85c1b3d449250321bbb28302f6ff97440",
+    "guid": "acb5cd94f7da40a9b3cb80743534a754"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/grass_medium_02_Normal.png",
+    "bytes": 988545,
+    "sha256": "069728d1298feba350bd240760704617faef33492cddeb1fe004b2a44551f668",
+    "guid": "7174da2f1880497992b329f996be008a"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_02_BaseColor.png",
+    "bytes": 3255752,
+    "sha256": "3654159cd234c9f5e41691b99ba4b2a024f52a1d6a0fd698d639c1402356c1c2",
+    "guid": "bae96c538b7a475ba8692980037c77df"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_02_MetalSmooth.png",
+    "bytes": 1564290,
+    "sha256": "8f6c8443fcf51f304136eb49767885508acece5e76d9fda37f39f880c1c8bc40",
+    "guid": "1749099bd7fa4b0cbb382be9514bd74d"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_02_Normal.png",
+    "bytes": 5156103,
+    "sha256": "290d32cb997fa8cd61f47ab30999f0bb6890ee49a633220372baaad83e9ac590",
+    "guid": "ebd0fed37f30459fa8e52858def0ac01"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_04_BaseColor.png",
+    "bytes": 3090323,
+    "sha256": "f123021fd7a05307a5aa74ca2f6a9b7c1a7ef3c192b2aaa1a3c6b40f53934e3f",
+    "guid": "385216f230ab4dbbbfdded413b03c4be"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_04_MetalSmooth.png",
+    "bytes": 1409186,
+    "sha256": "291e74e76ffa3fcbd91beb8a820dc02e9f73f43f79e58084dd841d083dbfd341",
+    "guid": "1bbc15a4e0ba4153b425902917d38c50"
+  },
+  {
+    "path": "Assets/_OutOfReach/Visuals/LaunchVegetationV03/Textures/shrub_04_Normal.png",
+    "bytes": 4839419,
+    "sha256": "590a0dccb58ddddd83bcbe737dd3994ca58f3f804f65f2eb9455cf8750f5d3a8",
+    "guid": "6979627b104c4cb285f418039a58f11f"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchVegetationV03/Editor/LaunchVegetationAuthoring.cs",
+    "bytes": 23951,
+    "sha256": "a5ba7d37034a97665bc61a3090b455860cd80456ffdd0eeb305966c55eccdc00",
+    "guid": "b199dc5904294d638ac8cce1cd30c2dc"
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Presentation/LaunchVegetationV03/Editor/OutOfReach.LaunchVegetation.Editor.asmdef",
+    "bytes": 232,
+    "sha256": "103be2e3f8536dc4634426147f8e54dcf5b7b74a94275dcac3fec241bbcb5dde",
+    "guid": "34ec068fca3741ef86ea8fec650b46c3"
+  }
+]

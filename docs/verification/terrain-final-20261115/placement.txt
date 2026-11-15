@@ -1,0 +1,1 @@
+grassTufts=963 coastalShrubs=45 smallScannedRocks=291 leafDetails=15 within15mOfReferenceCamera=84 lod0Triangles=2297479 lod1Triangles=426700 patches=16 rockFootprints=6 rejectedInsideRocks=17 grassHeightRange=0.4300605..0.6999441 protectedFootprintPlants=0 collidersChanged=0 seed=150303

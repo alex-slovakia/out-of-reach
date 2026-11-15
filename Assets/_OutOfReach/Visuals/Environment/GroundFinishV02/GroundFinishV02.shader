@@ -68,27 +68,36 @@ Shader "OutOfReach/Ground Finish V02"
             return lerp(lerp(Hash(c),Hash(c+float2(1,0)),f.x),
                 lerp(Hash(c+float2(0,1)),Hash(c+1),f.x),f.y);
         }
+        half4 GroundSample(TEXTURE2D_PARAM(map, mapSampler), float2 uv, float blend)
+        {
+            // Broad irregular regions exchange two translated versions of the same scan.
+            // Translation preserves normal orientation; masks and color use identical weights.
+            return lerp(SAMPLE_TEXTURE2D(map,mapSampler,uv),
+                SAMPLE_TEXTURE2D(map,mapSampler,uv+float2(.371,.683)),blend);
+        }
         void GroundSurface(Varyings input,out half3 albedo,out half3 normalWS,out half roughness,out half ao)
         {
             float2 p=(input.positionWS-_SiteOriginWS.xyz).xz;
             float2 soilUV=p/_TileMetres.x;
             // Incommensurate physical sizes and rotation avoid matching repeated features.
             float2 gravelUV=float2(.93358*p.x-.35837*p.y,.35837*p.x+.93358*p.y)/_TileMetres.y;
-            half4 soilMask=SAMPLE_TEXTURE2D(_SoilMask,sampler_SoilMask,soilUV);
-            half4 gravelMask=SAMPLE_TEXTURE2D(_GravelMask,sampler_GravelMask,gravelUV);
+            float soilShift=smoothstep(.28,.72,Noise(p*.19+float2(7,31)));
+            float gravelShift=smoothstep(.27,.73,Noise(p*.137+float2(53,11)));
+            half4 soilMask=GroundSample(TEXTURE2D_ARGS(_SoilMask,sampler_SoilMask),soilUV,soilShift);
+            half4 gravelMask=GroundSample(TEXTURE2D_ARGS(_GravelMask,sampler_GravelMask),gravelUV,gravelShift);
             float broad=Noise(p*.047)+.32*Noise(p*.139+float2(17,39));
             float blend=smoothstep(.49,.79,broad+(gravelMask.g-soilMask.g)*.14);
             float variation=lerp(.88,1.08,Noise(p*.0123+float2(23,41)));
-            half3 soil=SAMPLE_TEXTURE2D(_SoilColor,sampler_SoilColor,soilUV).rgb;
-            half3 gravel=SAMPLE_TEXTURE2D(_GravelColor,sampler_GravelColor,gravelUV).rgb;
+            half3 soil=GroundSample(TEXTURE2D_ARGS(_SoilColor,sampler_SoilColor),soilUV,soilShift).rgb;
+            half3 gravel=GroundSample(TEXTURE2D_ARGS(_GravelColor,sampler_GravelColor),gravelUV,gravelShift).rgb;
             half3 nearColor=lerp(soil,gravel,blend)*variation;
             half3 macro=SAMPLE_TEXTURE2D(_MacroMap,sampler_MacroMap,input.uv).rgb;
             float nearWeight=1-smoothstep(180,360,length(p));
             albedo=lerp(macro,nearColor,nearWeight);
             roughness=lerp(.88,lerp(soilMask.b,gravelMask.b,blend),nearWeight);
             ao=lerp(1,lerp(soilMask.r,gravelMask.r,blend),nearWeight*.65);
-            half3 soilN=UnpackNormalScale(SAMPLE_TEXTURE2D(_SoilNormal,sampler_SoilNormal,soilUV),_NormalStrength);
-            half3 gravelN=UnpackNormalScale(SAMPLE_TEXTURE2D(_GravelNormal,sampler_GravelNormal,gravelUV),_NormalStrength);
+            half3 soilN=UnpackNormalScale(GroundSample(TEXTURE2D_ARGS(_SoilNormal,sampler_SoilNormal),soilUV,soilShift),_NormalStrength);
+            half3 gravelN=UnpackNormalScale(GroundSample(TEXTURE2D_ARGS(_GravelNormal,sampler_GravelNormal),gravelUV,gravelShift),_NormalStrength);
             // Rotate the sampled tangent slopes back into the original world XZ axes.
             gravelN.xy=float2(.93358*gravelN.x+.35837*gravelN.y,-.35837*gravelN.x+.93358*gravelN.y);
             half3 detail=normalize(lerp(soilN,gravelN,blend));
