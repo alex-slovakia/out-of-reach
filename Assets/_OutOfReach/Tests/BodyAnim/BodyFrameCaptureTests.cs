@@ -50,6 +50,7 @@ namespace OutOfReach.Tests.BodyAnim
             public EmbodiedBodyPresenter Body;
             public CharacterController Controller;
             public bool Sprint;
+            public bool Floating;
         }
 
         private static string OutDir => Environment.GetEnvironmentVariable("OOR_BODYANIM_OUT");
@@ -73,7 +74,9 @@ namespace OutOfReach.Tests.BodyAnim
             var side = new GameObject("Side"); stage.Side = side.AddComponent<Camera>(); stage.Side.fieldOfView = 28f; stage.Side.enabled = false;
             var parent = new GameObject("Presentation").transform;
             stage.Body = I06BodyAuthoring.Create(parent, player.transform, stage.Eye);
-            stage.Body.ConfigureSession(stage.Suit, new Clock(), () => true, () => false, () => EmbodiedBodyPresenter.BodyArmVisibility.Both);
+            foreach (SkinnedMeshRenderer r in stage.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            { r.forceMatrixRecalculationPerRender = true; r.updateWhenOffscreen = true; }
+            stage.Body.ConfigureSession(stage.Suit, new Clock(), () => true, () => stage.Floating, () => EmbodiedBodyPresenter.BodyArmVisibility.Both);
             stage.Body.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, new Vector3(0f, 0f, -.285f));
             stage.Body.ConfigureGroundLocomotion(stage.Controller, () => true, () => stage.Sprint);
             return stage;
@@ -196,6 +199,39 @@ namespace OutOfReach.Tests.BodyAnim
                 Assert.Greater(walkingNear, .05f, tag + " mesh crosses the camera near plane at pitch " + pitch);
                 Assert.Greater(standingNear, .05f, tag + " standing mesh crosses the camera at pitch " + pitch);
             }
+        }
+
+        [TestCase(false), TestCase(true)]
+        public void LegPushPlantsExtendsAndReleasesInBothSuits(bool eva)
+        {
+            Stage s = Build();
+            s.Suit.On = eva; s.Suit.Raise();
+            s.Floating = true;
+            Settle(s);
+            Assert.AreEqual(EmbodiedBodyPresenter.BodyPose.Floating, s.Body.CurrentPose);
+            Transform footL = Bone(s, "foot.L"), footR = Bone(s, "foot.R"), hipL = Bone(s, "upperleg01.L");
+            Vector3 direction = new Vector3(0f, .6f, .8f).normalized;
+            float neutral = (footL.position - hipL.position).magnitude;
+            s.Body.PlayLegPush(direction);
+            float minReach = float.MaxValue, maxReach = 0f; string tag = eva ? "eva" : "work";
+            for (int i = 0; i < 48; i++)
+            {
+                s.Body.AdvancePresentation(1f / 60f);
+                float reach = (footL.position - hipL.position).magnitude;
+                Assert.IsFalse(float.IsNaN(reach), "NaN leg at frame " + i);
+                minReach = Mathf.Min(minReach, reach); maxReach = Mathf.Max(maxReach, reach);
+                if (OutDir != null && i % 6 == 5)
+                {
+                    s.Side.transform.position = s.Player.position + new Vector3(4.2f, 1.2f, 0f);
+                    s.Side.transform.rotation = Quaternion.LookRotation(new Vector3(-1f, -.1f, 0f), Vector3.up);
+                    Save(Render(s.Side, 640, 360), tag + "_legpush_" + (i / 6));
+                }
+            }
+            Debug.Log("[BODYANIM] " + tag + " legpush neutral reach " + neutral + " min " + minReach + " max " + maxReach);
+            Assert.Less(minReach, neutral * .75f, "legs must tuck before the push");
+            Assert.Greater(maxReach, neutral * 1.02f, "legs must extend towards the deck");
+            for (int i = 0; i < 20; i++) s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(neutral, (footL.position - hipL.position).magnitude, neutral * .06f, "must return to the floating pose");
         }
 
         // Horizontal drift of an ankle across stretches where it stays on the ground (within 12 mm of its lowest point).
