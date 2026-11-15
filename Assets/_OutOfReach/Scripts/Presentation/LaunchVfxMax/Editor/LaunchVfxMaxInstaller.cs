@@ -17,7 +17,10 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
         private const string PreviewType = "OutOfReach.Presentation.ParticleLaunchPreview.ParticleLaunchPreviewPresenter";
 
         [MenuItem("Out of Reach/Launch/Install Launch VFX MAX (Particle Pack)")]
-        public static void Install()
+        public static void Install() => Install(true);
+
+        /// <summary>Binds (or re-binds) the presenter. With save false the scene is only marked dirty (evidence renders).</summary>
+        public static LaunchVfxMaxPresenter Install(bool save)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
                 throw new InvalidOperationException("Stop Play mode before installing launch VFX.");
@@ -32,8 +35,10 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
             var outlet = Read<Transform>(serialized, "launchTrenchExit", false);
 
             var flame = Prefab("Fire & Explosion Effects/Prefabs/FlameStream.prefab", true);
-            var smoke = Prefab("Smoke & Steam Effects/Prefabs/RocketTrail.prefab", true);
+            var billow = Prefab("Smoke & Steam Effects/Prefabs/SmokeEffect.prefab", true);
             var dust = Prefab("Smoke & Steam Effects/Prefabs/DustStorm.prefab", true);
+            var column = Prefab("Smoke & Steam Effects/Prefabs/RocketTrail.prefab", false);
+            var deluge = Prefab("Smoke & Steam Effects/Prefabs/Steam.prefab", false);
             var sparks = Prefab("Misc Effects/Prefabs/SparksEffect.prefab", false);
             var heat = Prefab("Smoke & Steam Effects/Prefabs/HeatDistortion.prefab", false);
             var steam = Prefab("Smoke & Steam Effects/Prefabs/PressurisedSteam.prefab", false);
@@ -50,16 +55,18 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
                 presenter = Undo.AddComponent<LaunchVfxMaxPresenter>(go);
             }
             Undo.RecordObject(presenter, "Bind Launch VFX MAX");
-            presenter.Configure(timeline, nozzle, deflector, pad, outlet, flame, smoke, dust, sparks, heat, steam);
+            presenter.Configure(timeline, nozzle, deflector, pad, outlet, flame, column, dust, sparks, heat, steam, billow, deluge);
             EditorUtility.SetDirty(presenter);
 
             int retired = RetirePreview();
             EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
-            Debug.Log($"LAUNCH_VFX_MAX_INSTALLED {LaunchVfxMaxPresenter.Version}: fire+embers, smoke column, flank dust/debris/sand, "
-                + $"sparks={(sparks ? "on" : "missing")}, heat={(heat ? "on (needs URP opaque texture)" : "missing")}, "
-                + $"trench jet={(steam ? "on" : "missing")}, plume light. Retired ParticleLaunchPreview owners: {retired}. "
-                + "LaunchFxV03 plume/steam/pad light kept. Timeline, camera shake and grass gust untouched.");
+            if (save) EditorSceneManager.SaveScene(scene);
+            Debug.Log($"LAUNCH_VFX_MAX_INSTALLED {LaunchVfxMaxPresenter.Version}: fire+embers, trench billows, smoke column, dust front, "
+                + $"flank dust/debris/sand, deluge={(deluge ? "on" : "missing")}, sparks={(sparks ? "on" : "missing")}, "
+                + $"heat={(heat ? "on (needs URP opaque texture)" : "missing")}, trench jet={(steam ? "on" : "missing")}, lights. "
+                + $"Retired ParticleLaunchPreview owners: {retired}. Scene saved: {save}. "
+                + "LaunchFxV03 kept. Timeline and camera shake untouched.");
+            return presenter;
         }
 
         [MenuItem("Out of Reach/Launch/Remove Launch VFX MAX")]
