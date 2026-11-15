@@ -1,0 +1,8 @@
+{
+  "name": "OutOfReach.LaunchGrassV04.Editor",
+  "rootNamespace": "OutOfReach.Presentation.LaunchGrassV04.Editor",
+  "references": ["OutOfReach.LaunchGrassV04", "OutOfReach.Cinematics", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

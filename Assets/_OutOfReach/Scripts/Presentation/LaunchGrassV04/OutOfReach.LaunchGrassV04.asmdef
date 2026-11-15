@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.LaunchGrassV04",
+  "rootNamespace": "OutOfReach.Presentation.LaunchGrassV04",
+  "references": ["OutOfReach.Cinematics", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"],
+  "autoReferenced": true
+}
