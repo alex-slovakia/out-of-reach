@@ -38,6 +38,8 @@ namespace OutOfReach.Composition
         public bool HasRailGrip => bound && (suit.IsSuitOn || bridge.WorkGripAvailable);
         public bool AimAtReachableRail() => HasInputLease && HasRailGrip && !bridge.IsBusy && PreferRailGrip();
         public string LastRefusal { get; private set; } = string.Empty;
+        /// <summary>Increments on every refusal, so a HUD can show <see cref="LastRefusal"/> even when the text repeats.</summary>
+        public int RefusalRevision { get; private set; }
         public FloatActionResult? LastFootResult { get; private set; }
 
         /// <param name="sessionIsCurrent">Identity check for the exact session/services supplied here.</param>
@@ -167,8 +169,12 @@ namespace OutOfReach.Composition
             }
             if (!left && !right) return false;
             ContactHand hand = left ? ContactHand.Left : ContactHand.Right;
-            if ((left && right) || grip || player.HeldHandhold)
-                DispatchHand(hand, grip && !(left && right), left && right, ReadTravelIntent());
+            bool both = left && right;
+            // A plain click aimed at a registered rail in reach grips it (Ctrl stays an alias); a click while
+            // holding releases; a click on any other reachable surface pushes. Selection only: the bridge re-proves it.
+            bool gripRail = !both && !player.HeldHandhold && (grip || (!bridge.IsBusy && PreferRailGrip()));
+            if (both || gripRail || player.HeldHandhold)
+                DispatchHand(hand, gripRail, both, ReadTravelIntent());
             else
             {
                 handClickPending = true; pendingHand = hand;
@@ -197,6 +203,12 @@ namespace OutOfReach.Composition
             if (bridge.IsBusy) { Refuse("The current hand contact is still in progress."); return; }
             if (grip)
             {
+                if (!suit.IsSuitOn && !bridge.WorkGripAvailable)
+                {
+                    // Honest refusal: no verified WORK bare-hand grip pose is installed, so no fake hold is shown.
+                    Refuse(BareGripUnavailable);
+                    return;
+                }
                 if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
                 return;
             }
@@ -209,7 +221,8 @@ namespace OutOfReach.Composition
         void DispatchFoot()
         {
             LastFootResult = null; LastRefusal = string.Empty;
-            if (bridge.IsBusy || player.HeldHandhold) { Refuse("Release the hand contact before pushing from foot support."); return; }
+            if (player.HeldHandhold) { Refuse(FootRefusalReason(FloatActionResult.AlreadyHolding)); return; }
+            if (bridge.IsBusy) { Refuse("Space waits until the current hand contact is finished."); return; }
             Vector2 move = source.Move;
             Vector3 up = player.transform.up, direction = up;
             if (move.sqrMagnitude > .01f)
@@ -221,7 +234,7 @@ namespace OutOfReach.Composition
                 direction = up * away + tangent * Mathf.Sqrt(1f - away * away);
             }
             LastFootResult = player.TryPushFromFootContact(direction, footStrength);
-            if (LastFootResult != FloatActionResult.Done) Refuse("Foot push refused: " + LastFootResult + ".");
+            if (LastFootResult != FloatActionResult.Done) Refuse(FootRefusalReason(LastFootResult.Value));
         }
         bool ModeValid() => player && bridge && bridge.IsBound && eye && eye == player.ViewPivot && player.IsFloating
             && !player.IsOnRoute && !suit.IsOutside && state.Outcome == MissionOutcome.None
@@ -286,7 +299,28 @@ namespace OutOfReach.Composition
             float axial = Vector3.Dot(delta, axis.normalized), straightHalf = rail.height * axis.magnitude * .5f - radius;
             return straightHalf > .04f && Mathf.Abs(axial) <= straightHalf - .04f;
         }
-        bool Refuse(string reason) { LastRefusal = reason ?? "Contact request refused."; return false; }
+        bool Refuse(string reason) { LastRefusal = string.IsNullOrEmpty(reason) ? "Contact request refused." : reason; RefusalRevision++; return false; }
+
+        /// <summary>HUD text when a rail click cannot grip with bare WORK hands.</summary>
+        public const string BareGripUnavailable = "Bare-hand rail grip is not available yet (no verified WORK grip pose). Click another surface to push off.";
+
+        /// <summary>Space is only a foot push from real deck support; every refusal has a readable reason.</summary>
+        public static string FootRefusalReason(FloatActionResult result)
+        {
+            switch (result)
+            {
+                case FloatActionResult.Done: return string.Empty;
+                case FloatActionResult.NoSurface: return "Space pushes off with your feet only when they touch the deck. Nothing is under your feet.";
+                case FloatActionResult.IntoSurface: return "That foot push would drive into the deck. Aim away from it.";
+                case FloatActionResult.Cooldown: return "Still recovering from the last push.";
+                case FloatActionResult.AlreadyHolding: return "Release the rail first (click), then push off with your feet.";
+                case FloatActionResult.ControlDenied: return "Controls are locked right now.";
+                case FloatActionResult.NotFloating: return "Foot push works only while floating.";
+                case FloatActionResult.OnRoute: return "On the tether, Space does not push off.";
+                case FloatActionResult.InvalidInput: return "Foot push needs a valid direction.";
+                default: return "Foot push refused: " + result + ".";
+            }
+        }
         static bool ValidStrength(float value) => !float.IsNaN(value) && !float.IsInfinity(value) && value > 0f && value <= 1f;
     }
 }

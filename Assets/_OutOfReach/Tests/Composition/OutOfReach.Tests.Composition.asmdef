@@ -5,6 +5,7 @@
     "UnityEngine.TestRunner",
     "OutOfReach.Contracts",
     "OutOfReach.Composition",
+    "OutOfReach.Player",
     "OutOfReach.UI.Report"
   ],
   "includePlatforms": [],

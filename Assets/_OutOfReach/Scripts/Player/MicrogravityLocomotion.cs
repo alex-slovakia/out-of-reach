@@ -42,13 +42,13 @@ namespace OutOfReach.Player
         [SerializeField, Range(0f, 1f)] private float minimumFootSupportDot = 0.8f;
 
         [Tooltip("Largest speed change one full push gives, metres per second.")]
-        [SerializeField, Min(0f)] private float maxPushSpeed = 1f;
+        [SerializeField, Min(0f)] private float maxPushSpeed = 1.3f;
 
         [Tooltip("Speed cap while floating, metres per second.")]
-        [SerializeField, Min(0.1f)] private float maxSpeed = 1.5f;
+        [SerializeField, Min(0.1f)] private float maxSpeed = 2f;
 
         [Tooltip("Minimum time between pushes (hand or foot), seconds, so a held button cannot accelerate continuously.")]
-        [SerializeField, Min(0f)] private float pushCooldownSeconds = 0.35f;
+        [SerializeField, Min(0f)] private float pushCooldownSeconds = 0.25f;
 
         [Tooltip("Exponential damping per second. Default 0: no hidden force, a push carries on until a surface. Any value above 0 is a disclosed gameplay compromise.")]
         [SerializeField, Min(0f)] private float dragPerSecond;
