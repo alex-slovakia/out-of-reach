@@ -1,0 +1,119 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "LT_Surroundings_v02": {
+   "fbx": "LT_Surroundings_v02.fbx",
+   "objects_in_file": 14,
+   "checks": [
+    {
+     "object": "LSS_GroundBreakup_v02",
+     "ok": true,
+     "triangles": 11200,
+     "expected": 11200
+    },
+    {
+     "object": "LSS_Scrub_v02",
+     "ok": true,
+     "triangles": 3360,
+     "expected": 3360
+    },
+    {
+     "object": "LSS_TreeLines_v02",
+     "ok": true,
+     "triangles": 5230,
+     "expected": 5230
+    },
+    {
+     "object": "LSS_Berms_v02",
+     "ok": true,
+     "triangles": 660,
+     "expected": 660
+    },
+    {
+     "object": "LSS_Drainage_v02",
+     "ok": true,
+     "triangles": 1548,
+     "expected": 1548
+    },
+    {
+     "object": "LSS_Fence_v02",
+     "ok": true,
+     "triangles": 5968,
+     "expected": 5968
+    },
+    {
+     "object": "LSS_UtilityPoles_v02",
+     "ok": true,
+     "triangles": 1122,
+     "expected": 1122
+    },
+    {
+     "anchor": "LSS_FenceGate_North_v02",
+     "ok": true,
+     "point": [
+      20.0,
+      -36.6,
+      -200.0
+     ]
+    },
+    {
+     "anchor": "LSS_FenceCorner_SW_v02",
+     "ok": true,
+     "point": [
+      -200.0,
+      -34.4175,
+      330.0
+     ]
+    },
+    {
+     "anchor": "LSS_FenceCorner_NE_v02",
+     "ok": true,
+     "point": [
+      200.0,
+      -37.1203,
+      -200.0
+     ]
+    },
+    {
+     "anchor": "LSS_PoleLine_North_v02",
+     "ok": true,
+     "point": [
+      112.0,
+      -36.121,
+      -910.0
+     ]
+    },
+    {
+     "anchor": "LSS_PoleLine_South_v02",
+     "ok": true,
+     "point": [
+      112.0,
+      -36.5623,
+      -70.0
+     ]
+    },
+    {
+     "anchor": "LSS_Drainage_West_Mid_v02",
+     "ok": true,
+     "point": [
+      -100.0,
+      -36.7321,
+      105.0
+     ]
+    },
+    {
+     "anchor": "LSS_Drainage_South_Mid_v02",
+     "ok": true,
+     "point": [
+      119.0,
+      -35.8668,
+      150.0
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

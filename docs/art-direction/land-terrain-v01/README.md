@@ -9,9 +9,19 @@ Replaces the flat, brown, empty launch ground (playtest AM03) with a bounded, or
 
 No mountains, no water, no logos. Nothing in the LAND kit or in the game scene is changed by this package.
 
-**Status:** art package for root's native check. Blender round trip, footprint boundary check and an isolated Unity import check pass (numbers below). It is not imported into the game scene, and the material is not checked in Unity.
+**Status:** art packages for root's native check. Blender round trips, the footprint boundary check and isolated Unity import checks pass (numbers below). Nothing here is imported into the game scene, and the materials are not checked in Unity.
+
+The folder holds two packages:
+1. **Terrain**: `LT_LandTerrain.fbx`.
+2. **LAND-SURROUNDINGS v02**: `LT_Surroundings_v02.fbx`, the v01 kit re-seated on this terrain (see [Package 2](#package-2-land-surroundings-v02)).
+
+Terrain only:
 
 ![deck north, deck east, aerial, ground](renders/LT_sheet.png)
+
+Terrain with LAND-SURROUNDINGS v02:
+
+![deck north, deck east, aerial, ground, with surroundings v02](renders/LT2_sheet.png)
 
 The renders are Cycles previews with a stand-in sun and sky and a simple distance haze (1 − e^(−d / 10 km), added in post). They are not runtime results.
 
@@ -38,7 +48,9 @@ The renders are Cycles previews with a stand-in sun and sky and a simple distanc
 
 Total: **63,824 triangles** (limit about 80,000).
 
-Bounds (Unity): inner x −3,000..3,000, y −57.01..−10.10, z −2,990..3,000; far x, z ±8,998.8, y −57.43..11.96; rocks x −1,343.5..1,195.3, y −43.62..−28.10, z −1,221.5..1,143.8.
+Bounds (Unity): inner x −3,000..3,000, y −57.01..−10.38, z −2,990..3,000; far x, z ±8,998.8, y −57.43..11.96; rocks x −1,343.5..1,195.3, y −43.54..−28.81, z −1,221.5..1,143.8.
+
+Rocks are seated on the rendered terrain mesh (`source/lt_surface.py`), not on the analytic h: each one's lowest vertex is 0.05–0.38 m below the lowest mesh ground under its footprint.
 
 The rocks use their own icosahedron, not `a7kit.sphere` or `capsule_tank`, so there are no 1 µm pole slivers for Unity to weld away (the smallest rock triangle is 0.0045 m²).
 
@@ -67,7 +79,7 @@ The ground is y = −36.6 + h(x, z), with h = M(d) · R(x, z). It is defined in 
 
 | Term | What it does | Size |
 |---|---|---|
-| dunes | Shore-parallel ridges along z, about 60 m apart. Higher on the coast side (+x); faded out by 3 km, where the mesh can no longer resolve them. | up to about 4 m |
+| dunes | Shore-parallel ridges along z, about 60 m apart. Higher on the coast side (+x); faded out over 500–1,300 m, where the mesh can no longer resolve them. | up to about 4 m |
 | swales | Shallow depressions. | down to −1.3 m |
 | swells | Mid-scale undulation. | ±1 m near, ±4 m from 1.3 km |
 | rolling ground | Amplitude grows with distance. | about 1.5 m near, 10–20 m at 2–3 km |
@@ -80,12 +92,16 @@ Sampled from h (200,000 random points per band, outside the blend; slopes from t
 
 | Distance from origin | h, 1st–99th percentile | Steepest slope |
 |---|---|---|
-| 80–300 m | −2.4..3.1 m | 11° |
-| 300–800 m | −2.1..5.7 m | 10° |
-| 1.5–3 km | −14..21 m | 13° |
+| 80–300 m | −2.4..2.9 m | 11° |
+| 300–800 m | −2.5..5.3 m | 8° |
+| 1.5–3 km | −15..20 m | 12° |
 | 6–9 km | −11..42 m (max 53 m) | 8° |
 
 Vertex normals come from the gradient of h, sampled over half the local mesh spacing. The inner/far seam, which shares its vertices, therefore shades without a line.
+
+**The rendered ground is the mesh, not h.** The mesh vertices lie exactly on h, but between vertices the mesh is linear. At 80–2,900 m it differs from h by −0.94..+0.93 m (1st–99th percentile; maximum 2.1 m). To seat anything on the ground, use:
+- in Python, `lt_surface.surface().y(x, z)` or `.seat(x, z, radius)`, which sample the exact mesh;
+- in Unity, a raycast against the terrain mesh.
 
 ## Materials (Unity URP Lit, no custom shader)
 
@@ -152,8 +168,8 @@ All maps are procedural (`source/lt_textures.py`).
   - **No overlap:** 0 terrain vertices and 0 triangle centroids are inside the footprint.
   - **No gap:** the inner boundary loop is 16 edges and 556.000 m, the rectangle's perimeter.
   - **Seam:** 260 inner-outer boundary vertices equal the far ring's 260 inner boundary vertices (max distance 0.0 m). The far ring's other open edge is its 192-vertex rim at r 9,000 m.
-  - **Rocks:** 0 vertices inside the footprint or corridors.
-  - **Triangle sizes:** the smallest triangle is 3.0 m² (inner), 3,465 m² (far) and 0.0045 m² (rocks).
+  - **Rocks:** 0 vertices inside the footprint or corridors. All 470 rock bottoms are below the lowest mesh ground under their footprint (0.05–0.38 m), and all 470 tops are above the ground at their centre.
+  - **Triangle sizes:** the smallest triangle is 3.0 m² (inner), 3,463 m² (far) and 0.0045 m² (rocks).
 - **Unity 6000.3.28f1 import** (`unity_check/`; isolated project, the exact FBX, ship importer settings, Bake Axis Conversion ON): **PASS**.
   - The world bounds of all 3 renderers equal the build report within 0.4 mm, and all 4 anchors are exact.
   - Every node has rotation 0 and scale 1.
@@ -169,6 +185,61 @@ All maps are procedural (`source/lt_textures.py`).
 - Depth and shadow precision out to 9 km with root's camera planes.
 - Performance on the target machine.
 
+## Package 2: LAND-SURROUNDINGS v02
+
+`LT_Surroundings_v02.fbx` replaces LAND-SURROUNDINGS v01 (`LSS_LandSurroundings.fbx`) on the new terrain. **Use one or the other, not both.** It uses the same importer settings and placement: pivot at the prologue origin, Bake Axis Conversion ON.
+
+**What changed from v01:**
+- **The same kit and layout.** It has the same seeds and the same random draws in the same order, so every mound, clump, tree line, berm, rock, post and pole is where v01 put it. Every group's x/z bounds equal v01's; the ground-breakup outlines differ by up to 0.76 m because of their finer outline.
+- **Ground from the terrain.** v01 stood everything on the constant datum (G = −36.6). v02 takes the ground from the rendered terrain mesh (`source/lt_surface.py`), not from the analytic h. Every base, mound, berm and tree-line bottom follows that surface.
+
+| Object (v01 name + `_v02`) | Triangles | Materials | How it sits on the terrain |
+|---|---:|---|---|
+| `LSS_GroundBreakup_v02` | 11,200 | `LT_Terrain` | Mounds follow the surface, with 4 rings and twice v01's segments. They are 0.15 m higher than v01 (0.30–0.60 m), and their outer ring is 0.12 m below the ground. **Material changed:** they use `LT_Terrain` with the terrain's macro UV0, because v01's `LSS_GrassDry` read as dark stains on the new ground. They are now low hummocks in the ground's own colour. |
+| `LSS_Scrub_v02` | 3,360 | `LSS_Scrub` | v01 clump shape on the surface; outer ring 0.15 m below the ground. |
+| `LSS_TreeLines_v02` | 5,230 | `LSS_Canopy` | Every cross-section vertex on the surface; the bottom edges 0.8 m below it. |
+| `LSS_Berms_v02` | 660 | `LSS_GrassDry` | The same, with bottoms 0.3 m below the ground. |
+| `LSS_Drainage_v02` | 1,548 | `LSS_Rock`, `LS_Concrete`, `A7_PaintGraphite` | Riprap rocks sit on the lowest ground under each rock, sunk 35 %. They lie in the terrain's 0.7 m ditches. The culvert headwalls stand 0.15 m below the lowest ground under them. |
+| `LSS_Fence_v02` | 5,968 | `A7_Aluminum` | Posts run from 0.3 m below the ground to 2.5 m above it. The two rails go post to post at 2.38 m and 1.2 m above the ground, following the slope: 4-sided tubes, 6 cm and 4 cm (v01 had one straight bar per side). |
+| `LSS_UtilityPoles_v02` | 1,122 | `LS_ConcreteBarrier`, `A7_PaintGraphite` | Poles run from 0.5 m below the ground to 11 m above it, with crossarms at 10.3 m. The wires sag 0.9 m between crossarms at their own heights. |
+
+- **Total:** 29,088 triangles (v01: 17,032).
+- **Materials:** the `LSS_*` materials and maps are v01's (`docs/art-direction/land-surroundings-v01/textures/LSS_Vegetation_*`, on `feature/land-surroundings-v1`). `LS_*` and `A7_*` are the existing LAND and ship materials; remap them by name. `LT_Terrain` is this package's material.
+
+**Anchors** (v01 names + `_v02`, on the ground):
+
+| Anchor | x, y, z |
+|---|---|
+| `LSS_FenceGate_North_v02` | 20, −36.6, −200 |
+| `LSS_FenceCorner_SW_v02` | −200, −34.417, 330 |
+| `LSS_FenceCorner_NE_v02` | 200, −37.120, −200 |
+| `LSS_PoleLine_North_v02` | 112, −36.121, −910 |
+| `LSS_PoleLine_South_v02` | 112, −36.562, −70 |
+| `LSS_Drainage_West_Mid_v02` | −100, −36.732, 105 |
+| `LSS_Drainage_South_Mid_v02` | 119, −35.867, 150 |
+
+**Verification (v02):**
+- **Blender 5.3 FBX round trip** (`lss_v02_build_roundtrip.json`): **PASS, 14 checks, 0 failed.**
+- **Unity 6000.3.28f1 import** (`unity_check/lss_v02_*`; the same isolated project and settings): **PASS**.
+  - All 7 renderers' world bounds equal the report within 0.4 mm, and all 7 anchors are exact.
+  - Every node has rotation 0 and scale 1.
+  - **29,088 = 29,088 triangles**, 0 zero-area.
+- **Seating** (`seating` in `lss_v02_build_report.json`): each recorded base point is checked against the terrain-mesh ground at its own x, z, and **none floats**. The base points are mound and canopy edges, rock bottoms, and post, pole and headwall feet.
+
+| Group | Base points | Depth below the ground |
+|---|---:|---|
+| GroundBreakup | 1,600 | 0.12 m |
+| Scrub | 1,120 | 0.15 m |
+| TreeLines | 1,318 | 0.8 m |
+| Berms | 168 | 0.3 m |
+| Drainage | 71 | 0.13–0.47 m |
+| Fence | 216 | 0.3 m |
+| UtilityPoles | 15 | 0.5 m |
+
+**Not verified (v02):**
+- Between their vertices, the hummock, berm and canopy triangles and the terrain triangles are different linear patches. The buried edges (0.12–0.8 m) are meant to hide the difference, but this is not proven for every pixel, so small patches of terrain may show through low hummocks.
+- The look in root's scene.
+
 ## Rebuild
 
 Needs Blender 5.3, and Python 3 with NumPy and Pillow. `<land>` is `docs/art-direction/land-launch-site-v01`.
@@ -179,6 +250,10 @@ blender -b --factory-startup --python source/build_terrain.py -- --out <out> --t
 blender -b --factory-startup --python source/roundtrip_habitat.py -- --out <out> --report lt_build_report.json
 blender -b --factory-startup --python source/check_terrain.py -- --out <out> --land-fbx <land>/LS_LandLaunchSite.fbx
 python source/make_sheet.py <out>/renders LT
+blender -b --factory-startup --python source/build_surroundings_v02.py -- --out <out> --textures <dir with LSS_, LS_, A7_Paint_, A7_Brushed_ maps> --lt-textures <out>/textures
+blender -b --factory-startup --python source/roundtrip_habitat.py -- --out <out> --report lss_v02_build_report.json
+blender -b --factory-startup --python source/build_terrain.py -- --out <out2> --textures <out>/textures --land-textures <...> --lss-textures <dir with LSS_ maps> --land-src <land>/source --render --surroundings --samples 32
+python source/make_sheet.py <out2>/renders LT2
 python source/make_manifest.py <package dir>
 ```
 

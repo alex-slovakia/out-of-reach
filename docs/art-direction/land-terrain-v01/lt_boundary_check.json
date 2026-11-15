@@ -9,6 +9,7 @@
   "seam": true,
   "far_open_edges_only_seam_and_rim": true,
   "rocks_clear": true,
+  "rocks_seated": true,
   "no_tiny_triangles": true
  },
  "results": {
@@ -25,6 +26,13 @@
   "seam_max_distance_m": 0.0,
   "far_outer_rim_min_radius_m": 9000.0,
   "rock_vertices_in_footprint_or_corridors": 0,
+  "rocks": {
+   "count": 470,
+   "bottom_below_lowest_ground_under_footprint": 470,
+   "top_above_ground_at_centre": 470,
+   "min_burial_m": 0.0454,
+   "max_burial_m": 0.3842
+  },
   "triangle_areas": {
    "LT_Rocks": {
     "triangles": 9400,

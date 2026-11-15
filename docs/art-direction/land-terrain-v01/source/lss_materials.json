@@ -1,0 +1,74 @@
+{
+ "materials": [
+  {
+   "name": "LSS_GrassDry",
+   "set": "LSS_Vegetation",
+   "tint": "#B3A577",
+   "tiling": 0.125,
+   "normal": 0.4,
+   "new": true,
+   "unity": "URP Lit; maps LSS_Vegetation_BaseColor / _Normal / _MODS (R metallic, G occlusion, A smoothness); tiling 0.125 per metre (8 m)"
+  },
+  {
+   "name": "LSS_Scrub",
+   "set": "LSS_Vegetation",
+   "tint": "#6F7A45",
+   "tiling": 0.5,
+   "normal": 0.9,
+   "new": true,
+   "unity": "same maps as LSS_GrassDry, olive tint, tiling 0.5"
+  },
+  {
+   "name": "LSS_Canopy",
+   "set": "LSS_Vegetation",
+   "tint": "#5A6A40",
+   "tiling": 0.1,
+   "normal": 0.6,
+   "new": true,
+   "unity": "same maps as LSS_GrassDry, dark green tint, tiling 0.1"
+  },
+  {
+   "name": "LSS_Rock",
+   "set": "LS_Concrete",
+   "tint": "#9A958C",
+   "tiling": 0.5,
+   "normal": 1.0,
+   "new": true,
+   "unity": "LAND's LS_Concrete maps with a grey tint, tiling 0.5"
+  },
+  {
+   "name": "LS_Concrete",
+   "set": "LS_Concrete",
+   "tint": "#E2E0DA",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "LS_ConcreteBarrier",
+   "set": "LS_Concrete",
+   "tint": "#EFEDE7",
+   "tiling": 0.5,
+   "normal": 0.5,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "shared_with_ship": true,
+   "unity": "existing material of this name (LAND kit / ship); remap by name"
+  }
+ ]
+}

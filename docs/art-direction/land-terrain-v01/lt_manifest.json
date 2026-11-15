@@ -14,12 +14,12 @@
     ],
     "bounds_min": [
      -3000.0,
-     -57.00762,
+     -57.0147,
      -2990.0
     ],
     "bounds_max": [
      3000.0,
-     -10.10027,
+     -10.37644,
      3000.0
     ],
     "per_material": {
@@ -56,12 +56,12 @@
     ],
     "bounds_min": [
      -1343.5177,
-     -43.62445,
+     -43.53808,
      -1221.50288
     ],
     "bounds_max": [
      1195.30065,
-     -28.10044,
+     -28.80995,
      1143.81035
     ],
     "per_material": {
@@ -121,6 +121,7 @@
      "seam": true,
      "far_open_edges_only_seam_and_rim": true,
      "rocks_clear": true,
+     "rocks_seated": true,
      "no_tiny_triangles": true
     },
     "results": {
@@ -137,6 +138,13 @@
      "seam_max_distance_m": 0.0,
      "far_outer_rim_min_radius_m": 9000.0,
      "rock_vertices_in_footprint_or_corridors": 0,
+     "rocks": {
+      "count": 470,
+      "bottom_below_lowest_ground_under_footprint": 470,
+      "top_above_ground_at_centre": 470,
+      "min_burial_m": 0.0454,
+      "max_burial_m": 0.3842
+     },
      "triangle_areas": {
       "LT_Rocks": {
        "triangles": 9400,
@@ -564,7 +572,7 @@
   "d": "smooth distance (polynomial smooth-min, k 24 m) to the union of the footprint and both corridors; 0 inside",
   "M": "smootherstep((d - 6) / 64): 0 inside and within 6 m of every protected edge, 1 beyond 70 m",
   "R": {
-   "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out over 350..1000 m and the field over 1400..3000 m), 4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
+   "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out over 150..450 m and the field over 500..1300 m), 4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
    "swales": "down to -1.3 m (fbm, 190 m cells)",
    "swells": "(1.2 + 4.3 smoothstep(200, 1300, r)) * 1.7 fbm(220 m, 2 octaves)",
    "rolling": "a(r) * (1.7 fbm(620 m, 3 octaves) + 0.22), a(r) = 1.3 + 14.7 smoothstep(300, 2500, r) - 5 smoothstep(3200, 6500, r)",
@@ -716,58 +724,357 @@
   "third_party": "none",
   "branding": "none"
  },
+ "surroundings_v02": {
+  "fbx": "LT_Surroundings_v02.fbx",
+  "objects": {
+   "LSS_GroundBreakup_v02": {
+    "triangles": 11200,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -1328.45284,
+     -43.57141,
+     -1496.53769
+    ],
+    "bounds_max": [
+     1388.59959,
+     -25.30075,
+     1133.16978
+    ],
+    "per_material": {
+     "LT_Terrain": 11200
+    }
+   },
+   "LSS_Scrub_v02": {
+    "triangles": 3360,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -833.87529,
+     -42.08816,
+     -791.59423
+    ],
+    "bounds_max": [
+     888.05902,
+     -28.48075,
+     921.69111
+    ],
+    "per_material": {
+     "LSS_Scrub": 3360
+    }
+   },
+   "LSS_TreeLines_v02": {
+    "triangles": 5230,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -2546.25925,
+     -54.36669,
+     -2157.65383
+    ],
+    "bounds_max": [
+     2223.97811,
+     1.40668,
+     2347.63398
+    ],
+    "per_material": {
+     "LSS_Canopy": 5230
+    }
+   },
+   "LSS_Berms_v02": {
+    "triangles": 660,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -626.05424,
+     -39.20831,
+     -427.56781
+    ],
+    "bounds_max": [
+     568.40622,
+     -30.15089,
+     607.60303
+    ],
+    "per_material": {
+     "LSS_GrassDry": 660
+    }
+   },
+   "LSS_Drainage_v02": {
+    "triangles": 1548,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -102.03577,
+     -37.44713,
+     -40.2
+    ],
+    "bounds_max": [
+     190.2,
+     -33.63188,
+     250.2
+    ],
+    "per_material": {
+     "LSS_Rock": 1340,
+     "LS_Concrete": 48,
+     "A7_PaintGraphite": 160
+    }
+   },
+   "LSS_Fence_v02": {
+    "triangles": 5968,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -200.045,
+     -38.52216,
+     -200.045
+    ],
+    "bounds_max": [
+     200.045,
+     -30.99151,
+     330.045
+    ],
+    "per_material": {
+     "A7_Aluminum": 5968
+    }
+   },
+   "LSS_UtilityPoles_v02": {
+    "triangles": 1122,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     110.8,
+     -37.15918,
+     -910.13856
+    ],
+    "bounds_max": [
+     113.2,
+     -25.12102,
+     -69.86144
+    ],
+    "per_material": {
+     "LS_ConcreteBarrier": 270,
+     "A7_PaintGraphite": 852
+    }
+   }
+  },
+  "anchors": {
+   "LSS_FenceGate_North_v02": [
+    20.0,
+    -36.6,
+    -200.0
+   ],
+   "LSS_FenceCorner_SW_v02": [
+    -200.0,
+    -34.41748,
+    330.0
+   ],
+   "LSS_FenceCorner_NE_v02": [
+    200.0,
+    -37.12032,
+    -200.0
+   ],
+   "LSS_PoleLine_North_v02": [
+    112.0,
+    -36.12102,
+    -910.0
+   ],
+   "LSS_PoleLine_South_v02": [
+    112.0,
+    -36.56227,
+    -70.0
+   ],
+   "LSS_Drainage_West_Mid_v02": [
+    -100.0,
+    -36.73214,
+    105.0
+   ],
+   "LSS_Drainage_South_Mid_v02": [
+    119.0,
+    -35.86679,
+    150.0
+   ]
+  },
+  "triangles_total": 29088,
+  "verification": {
+   "blender_fbx_roundtrip": {
+    "pass": true,
+    "tolerance_m": 0.001,
+    "checks": 14,
+    "failed": 0,
+    "blender": "5.3.0"
+   },
+   "unity_6000_3_28f1_import": [
+    "root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 7 anchors 7",
+    "max world-bounds deviation 0.0004 m, max anchor deviation 0.0000 m, rotation 0 / scale 1 on every node: True",
+    "  LSS_Berms_v02          Unity triangles    660 (report    660), vertices    718, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LSS_Drainage_v02       Unity triangles   1548 (report   1548), vertices   2682, zero-area 0, submeshes 3, UInt16, normals True, uv0 True",
+    "  LSS_Fence_v02          Unity triangles   5968 (report   5968), vertices  10182, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LSS_GroundBreakup_v02  Unity triangles  11200 (report  11200), vertices   6480, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LSS_Scrub_v02          Unity triangles   3360 (report   3360), vertices   3214, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LSS_TreeLines_v02      Unity triangles   5230 (report   5230), vertices   6188, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LSS_UtilityPoles_v02   Unity triangles   1122 (report   1122), vertices   2169, zero-area 0, submeshes 2, UInt16, normals True, uv0 True",
+    "triangles total: report 29088, Unity 29088",
+    "RESULT PASS"
+   ]
+  },
+  "seating": {
+   "LSS_Drainage_v02": {
+    "base_points": 71,
+    "min_depth_m": 0.1343,
+    "max_depth_m": 0.4716,
+    "floating": 0
+   },
+   "LSS_GroundBreakup_v02": {
+    "base_points": 1600,
+    "min_depth_m": 0.12,
+    "max_depth_m": 0.12,
+    "floating": 0
+   },
+   "LSS_Scrub_v02": {
+    "base_points": 1120,
+    "min_depth_m": 0.15,
+    "max_depth_m": 0.15,
+    "floating": 0
+   },
+   "LSS_TreeLines_v02": {
+    "base_points": 1318,
+    "min_depth_m": 0.8,
+    "max_depth_m": 0.8,
+    "floating": 0
+   },
+   "LSS_Berms_v02": {
+    "base_points": 168,
+    "min_depth_m": 0.3,
+    "max_depth_m": 0.3,
+    "floating": 0
+   },
+   "LSS_Fence_v02": {
+    "base_points": 216,
+    "min_depth_m": 0.3,
+    "max_depth_m": 0.3,
+    "floating": 0
+   },
+   "LSS_UtilityPoles_v02": {
+    "base_points": 15,
+    "min_depth_m": 0.5,
+    "max_depth_m": 0.5,
+    "floating": 0
+   }
+  }
+ },
  "files": {
   "ATTRIBUTION.md": {
    "sha256": "122f72fcaafe34e4dba865b21ba565b60d4f9d7ed9d699d8ea6a2a64047c61ca",
    "bytes": 1138
   },
   "LT_LandTerrain.blend": {
-   "sha256": "95ce096cdf5acfd795399dde0cf49834af3e1b117012933a9c5a105571e7890f",
-   "bytes": 2502128
+   "sha256": "330d792572e0d99119e59aad20adbaa73fca915653008ecbaf08538a79b9221a",
+   "bytes": 2496831
   },
   "LT_LandTerrain.fbx": {
-   "sha256": "a39b99f80a5060491f4d042682ceace0c22475f76ef634abf0d353112e90e286",
-   "bytes": 1986060
+   "sha256": "99a6d124b25ce6549e85d74913ee76925b989c4f3161a4cd190d0a0a19d7620f",
+   "bytes": 1985180
+  },
+  "LT_Surroundings_v02.blend": {
+   "sha256": "89734c1dd30980a2da4d9492b5851d91bea1821f99db78d1512b504f1f78d46b",
+   "bytes": 965762
+  },
+  "LT_Surroundings_v02.fbx": {
+   "sha256": "9f451fe06e19f56a259ec7b6b4a15d3f17fddc5faddadd1559e49044a5ccbec2",
+   "bytes": 1043292
   },
   "README.md": {
-   "sha256": "590ab541c58c20c469ec12a16dc213fc0b07ac10a75e0d9131b2a730d6b2dccc",
-   "bytes": 12658
+   "sha256": "529f4baa0075422f8bd8335e7802396e4d60c73f05ff67ac0d8fcce357b58db2",
+   "bytes": 18869
+  },
+  "lss_v02_build_report.json": {
+   "sha256": "e5aa7b763de7997881a74d7c19761e39e2d8670558d5f6bdc78241e62837a11f",
+   "bytes": 4098
+  },
+  "lss_v02_build_roundtrip.json": {
+   "sha256": "d7ec93e6f84dd3f4c3d434d9a10e5ff848172350f517167acce5e55e76a7af3b",
+   "bytes": 1938
   },
   "lt_boundary_check.json": {
-   "sha256": "ab27bb33b938b4b5397ab822b45e47b21666eecc2f5d0c164dfb51def30a6fab",
-   "bytes": 1805
+   "sha256": "2f6c6b4aa16178c0c71e45cb3b02a469f96a5605fa4fb474a8de5b366a649634",
+   "bytes": 2009
   },
   "lt_build_report.json": {
-   "sha256": "186375ef4d4b415712fd7712b18fa292acf2fbef8a988d07e32d6526ee86a814",
-   "bytes": 8965
+   "sha256": "3d009fafb1ba2ab1e030dbb6f626901f435ca946d3e2a80078eff7d81c776532",
+   "bytes": 8962
   },
   "lt_build_roundtrip.json": {
    "sha256": "b33287a2fe9e93c613a21327d9c70b44fe21865ba9a0da7884a1274563992e92",
    "bytes": 1015
   },
+  "renders/LT2_aerial.png": {
+   "sha256": "d436c6e7499d9fe4202c5ca7e49dd9d175b3263b29c0cb2880024cad6773d420",
+   "bytes": 787460
+  },
+  "renders/LT2_deck_east.png": {
+   "sha256": "a59b23d4ad57bbcb5c97de434765dfc9b46cb847d4ce5a036c0310242254485b",
+   "bytes": 822351
+  },
+  "renders/LT2_deck_north.png": {
+   "sha256": "1330c54569aaac28d54ae2af2e153a35f52903ee42635aeb2bfa98b61b379f5e",
+   "bytes": 742689
+  },
+  "renders/LT2_ground.png": {
+   "sha256": "8416a737f31752e65de44c6f696b7d8685213305bd07ffa58df7f333872dd884",
+   "bytes": 857858
+  },
+  "renders/LT2_sheet.png": {
+   "sha256": "96d996dd26ceee1cdac4b0fedb821930781f635da292883b7695f56efbcc8e11",
+   "bytes": 870854
+  },
+  "renders/LT2_views.json": {
+   "sha256": "2f9f84ed07ddc8307dbbaa65569c13bd7f1f0ac85a402c82abe47f27cde85d5a",
+   "bytes": 614
+  },
   "renders/LT_aerial.png": {
-   "sha256": "d8fc515f4a5c1055df9513e8713d35e3eaf5dda794b43ba30b1ccaa3fea22592",
-   "bytes": 767119
+   "sha256": "cdbcaec77daacf003830e49ac478f0a59cec3a854bd8992d575e7c0d129da3f9",
+   "bytes": 747411
   },
   "renders/LT_deck_east.png": {
-   "sha256": "487be4b0fc0b2ee11a31d9f1f0736be3b17fed0490d8423ab5257ffce43b5646",
-   "bytes": 800654
+   "sha256": "c43bc8f2015db6540bfc74822a99d775a32f766b0a2c5b971e21172e81b39421",
+   "bytes": 797853
   },
   "renders/LT_deck_north.png": {
-   "sha256": "41ab4b1c47d97c3898d8effbed7f100198c3bbf9471a9af2b918279808c16857",
-   "bytes": 732377
+   "sha256": "a9ea95e4dab93a0eb23efde6b57b50b72b7c5868f9233cb3142a4b04ccb862e0",
+   "bytes": 729778
   },
   "renders/LT_ground.png": {
-   "sha256": "974c73a6185f43d91c6765b4941974f36847618f0af427605479b2be5a8641da",
-   "bytes": 845138
+   "sha256": "032b4a7cb7fec38043b2e469876063bbce6143bdfe31aba0d851e43fe37d0d57",
+   "bytes": 848674
   },
   "renders/LT_sheet.png": {
-   "sha256": "561c24d38e7c33d1afa06eab3ee83c5724a42f36cd08cd189f36102833bb9f5f",
-   "bytes": 853265
+   "sha256": "2da5b126c141ffa7b81d74fcc4defdcfda8744ceabfb4a15c93a97df260d9b27",
+   "bytes": 841264
   },
   "renders/LT_views.json": {
-   "sha256": "b5b8d4be7e5fa27ea9d520aafd493f8c76cfe9792ab1cc5a86b7d1148d7a142b",
-   "bytes": 615
+   "sha256": "2f9f84ed07ddc8307dbbaa65569c13bd7f1f0ac85a402c82abe47f27cde85d5a",
+   "bytes": 614
   },
   "source/a7_textures.py": {
    "sha256": "6eef19853ceb38947631cef7ec403745d79b83d8c09cc4cbe6e8242311652700",
@@ -781,29 +1088,45 @@
    "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26",
    "bytes": 20395
   },
+  "source/build_surroundings_v02.py": {
+   "sha256": "99bff1756f4d8f4bb8610c139b18b2ca3874e849127dbf6b3c4c0a3b8c05a830",
+   "bytes": 3448
+  },
   "source/build_terrain.py": {
-   "sha256": "9b824f13e7a1e54d2d354fb6813ac818d9b49c34793bddf10a6f2dd9ce8fdf60",
-   "bytes": 15570
+   "sha256": "7926c079803923e1ad5938e3b0c0ac5dc28bf5b948ed0b5dc1e9fa4d5a748fb2",
+   "bytes": 15640
   },
   "source/check_terrain.py": {
-   "sha256": "e2bbf0bed527e4fe74b56536a4a4d2640da0f12302887a0eec80fbbde46b47f6",
-   "bytes": 7495
+   "sha256": "183a5b7c915ef83ad3b7fd902b892fad875f44915023ee80ab49a1ac3da80639",
+   "bytes": 8904
   },
   "source/hb_kit.py": {
    "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8",
    "bytes": 35895
   },
+  "source/lss_kit_v02.py": {
+   "sha256": "b8b66d989d030b638f3f95a761f8a83a0422c3dc0816aa36a622be994abb34f2",
+   "bytes": 15916
+  },
+  "source/lss_materials.json": {
+   "sha256": "a3a009a236cc55c7bd50f694131ac11c9a3fc4f1db1ea0893439db307973119d",
+   "bytes": 1756
+  },
   "source/lt_height.py": {
-   "sha256": "f29da0a9b72d3c917c99b76df490797adfec856232150318bc143eea78bf7b3a",
-   "bytes": 13064
+   "sha256": "3f1f45698d7e550ddf9a615badb59ebdb2b028d6ae4c5062c934312e0b5eb3dc",
+   "bytes": 13214
   },
   "source/lt_kit.py": {
-   "sha256": "6fbc1ea82293df65819f4ec31680cd9e2ac9ad4957ee6f6fb4c1debb617bf54d",
-   "bytes": 10773
+   "sha256": "7e155d776b4ecf1f7503795d587d4b12c7f5fb4402108dd00cb5739e59ddac3f",
+   "bytes": 10866
   },
   "source/lt_materials.json": {
    "sha256": "8b82382c21dcf8a127f517fe7fd293875b9a046f45980d5f45dd72d6627afd45",
    "bytes": 1680
+  },
+  "source/lt_surface.py": {
+   "sha256": "0c14f6221d07ad700ce27003c8cbf10c902bb3cff132c8bb00d04a41cb237021",
+   "bytes": 4068
   },
   "source/lt_textures.py": {
    "sha256": "2fd81a96821d91f02c65edc4c8315af58bf29f67815bc851eff898e2f61dc04d",
@@ -834,15 +1157,23 @@
    "bytes": 814729
   },
   "textures/LT_Terrain_Macro.png": {
-   "sha256": "d839ab98cf1342f6c15d02719fc7e940adc64de76bd9b73b0884960b1a158771",
-   "bytes": 3737141
+   "sha256": "fe82918e62b6b03858ed97e801745632b460c19a9f700c2303bb03e301b61f97",
+   "bytes": 3601351
   },
   "unity_check/LTCheck.cs": {
    "sha256": "c3ff945a6170e1ac48b1c637f5a31174ec4fc1bbdc296f58e59a55980cfa159f",
    "bytes": 4999
   },
+  "unity_check/lss_v02_check.tsv": {
+   "sha256": "bfb5c2ab54429d183324540f60a078aa4394ec94a2e4c5015037ff4347aa47e8",
+   "bytes": 1976
+  },
+  "unity_check/lss_v02_compare.txt": {
+   "sha256": "993e1f4c4762820b7d64ec67dbc7c38a39bc3778119ccc3c8db9a9898ca28268",
+   "bytes": 1212
+  },
   "unity_check/lt_check.tsv": {
-   "sha256": "5c37191fc7bf489a2e3399446162deca8c04cd23d173b0754d2a5393fcd9355b",
+   "sha256": "42b56f1e6504f86c237693a9eeac6322a07d70344655b5cd96ee048582368077",
    "bytes": 1192
   },
   "unity_check/lt_compare.py": {

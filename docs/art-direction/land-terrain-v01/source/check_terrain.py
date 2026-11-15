@@ -9,7 +9,9 @@ Imports the terrain FBX (bake_space_transform, like the round trip) and, separat
      (no gap);
   5. the inner terrain's outer boundary vertices equal the far ring's inner boundary vertices (seam, 1 mm), and the
      far ring has no other open edge than its outer rim;
-  6. no LT_Rocks vertex inside the footprint or either corridor; no zero-area triangle in any object.
+  6. no LT_Rocks vertex inside the footprint or either corridor; every rock's lowest vertex is below the lowest
+     terrain-mesh ground under its footprint and its top above the ground at its centre (lt_surface);
+     no zero-area triangle in any object.
 Writes <out>/lt_boundary_check.json, exits 1 on failure.
 
 Run: blender -b --factory-startup --python check_terrain.py -- --out <dir> --land-fbx <LS_LandLaunchSite.fbx>
@@ -17,6 +19,7 @@ Run: blender -b --factory-startup --python check_terrain.py -- --out <dir> --lan
 import json
 import os
 import sys
+sys.dont_write_bytecode = True
 from collections import Counter
 
 import bpy
@@ -110,6 +113,24 @@ def main():
     for c in CORRIDORS:
         in_zone |= (vr[:, 0] > c[0]) & (vr[:, 0] < c[1]) & (vr[:, 2] > c[2]) & (vr[:, 2] < c[3])
     res["rock_vertices_in_footprint_or_corridors"] = int(in_zone.sum())
+    # every rock (12 vertices each, in build order): its lowest vertex is below the lowest terrain-mesh ground under its
+    # footprint (so it never floats) and its top is above the ground at its centre (so it shows)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import lt_surface  # noqa: E402
+    surf = lt_surface.surface()
+    rk = vr.reshape(-1, 12, 3)
+    sunk = shows = 0
+    margins = []
+    for rock in rk:
+        cx, cz = rock[:, 0].mean(), rock[:, 2].mean()
+        rad = float(np.hypot(rock[:, 0] - cx, rock[:, 2] - cz).max())
+        seat = surf.seat(cx, cz, rad)
+        margins.append(seat - rock[:, 1].min())
+        sunk += rock[:, 1].min() < seat
+        shows += rock[:, 1].max() > surf.y(cx, cz)
+    res["rocks"] = {"count": int(len(rk)), "bottom_below_lowest_ground_under_footprint": int(sunk),
+                    "top_above_ground_at_centre": int(shows), "min_burial_m": round(float(min(margins)), 4),
+                    "max_burial_m": round(float(max(margins)), 4)}
     tiny = {}
     for name, (pv, pt) in terrain.items():
         tt = np.asarray(pt)
@@ -136,6 +157,8 @@ def main():
         "seam": res["seam_max_distance_m"] is not None and res["seam_max_distance_m"] <= 1e-3,
         "far_open_edges_only_seam_and_rim": len(far_inner_ids) + len(far_outer_ids) == len(set(i for e in bf for i in e)),
         "rocks_clear": res["rock_vertices_in_footprint_or_corridors"] == 0,
+        "rocks_seated": res["rocks"]["bottom_below_lowest_ground_under_footprint"] == res["rocks"]["count"]
+                        and res["rocks"]["top_above_ground_at_centre"] == res["rocks"]["count"],
         "no_tiny_triangles": all(x["below_1e-4_m2"] == 0 for x in tiny.values()),
     }
     fails = [k for k, ok in checks.items() if not ok]

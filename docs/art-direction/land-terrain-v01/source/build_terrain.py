@@ -182,6 +182,7 @@ def add_context(coll):
         for n, sp in lss_specs.items():
             lss_mats[n] = bpy.data.materials.get(n) or bh.build_material(
                 n, sp, LSS_TEX if sp.get("set", "").startswith("LSS_") else LAND_TEX)
+        lss_mats["LT_Terrain"] = bpy.data.materials.get("LT_Terrain")
         for model in lss_kit_v02.build_kit()[0]:
             bh.make_object("PV_" + model.name, model, lss_mats, coll)
 
