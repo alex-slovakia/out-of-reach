@@ -1,0 +1,104 @@
+{
+ "license": "CC0-1.0 (MakeHuman graphical assets)",
+ "license_url": "https://www.makehumancommunity.org/about/license.html",
+ "core_assets_source": "makehumancommunity/makehuman @ a8bc2d54ff0ac92e78ff71431b1023eda42bf482 (base.obj, default.mhskel, default_weights.mhw, data/targets/...) - same files and hashes as FitV02/Provenance/MakeHumanCC0-manifest.json for the first three",
+ "system_assets_source": "MakeHuman system assets pack makehuman_system_assets_cc0.zip, sha256 b542127a8e25547c7c29c19f2d1d2adb9a664c80396ecd694095dbc8028a0107 (local copy on the build PC, not redistributed)",
+ "files": {
+  "base.obj": {
+   "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+   "bytes": 1749303
+  },
+  "default.mhskel": {
+   "sha256": "99f179bce0aa850b45d4191a1d0d234c5851f881c057439470ded3bddf729a24",
+   "bytes": 117790
+  },
+  "default_weights.mhw": {
+   "sha256": "0f3641d651ae3d00ad6b4ccee43142edb109d3bd909d27d9e4139ef1beed8625",
+   "bytes": 897521
+  },
+  "targets/african-male-young.target": {
+   "sha256": "894abc1fbb3d28543a51fef16f89d5d4bdf9aa2e1534413339811a3d47818b7d",
+   "bytes": 406170
+  },
+  "targets/asian-male-young.target": {
+   "sha256": "ed2e8c191cb6b87b4a2d97c80486acb2604fa549316c7aa2a738a5d5a14334dc",
+   "bytes": 421040
+  },
+  "targets/caucasian-male-young.target": {
+   "sha256": "70e228ba7164737dae664454394536fc5935fa48d333c1a97d77e2dc6eacc5f5",
+   "bytes": 396479
+  },
+  "targets/universal-male-young-averagemuscle-minweight.target": {
+   "sha256": "fac0d53b7051f4d1f06230d0b419e916eb5bae5ce67c031a9998fdde05229755",
+   "bytes": 147071
+  },
+  "targets/universal-male-young-maxmuscle-averageweight.target": {
+   "sha256": "c171ff9cc95e96273beb3e3b1969a01988c2d4982ebc6fe04bf81cf72ee3b295",
+   "bytes": 147110
+  },
+  "targets/universal-male-young-maxmuscle-minweight.target": {
+   "sha256": "5873f11edc96fde72a79ec35fa1d292a6a1a594b5eadfd82d59faf48834561de",
+   "bytes": 150179
+  },
+  "system_assets/clothes/male_casualsuit02/male_casualsuit02.mhclo": {
+   "sha256": "f9e6821704a1508a02d5e416b2360785b705cfe5a130c359021a4b4570dcc43a",
+   "bytes": 145975
+  },
+  "system_assets/clothes/male_casualsuit02/male_casualsuit02.obj": {
+   "sha256": "e07cbd1a43d21bd700e6598f01f74341a9dd66eac4e035c8be8de2650eac380f",
+   "bytes": 170324
+  },
+  "system_assets/clothes/male_casualsuit02/male_casualsuit02_normal.png": {
+   "sha256": "1c31a7a5fbbef1ee40176114295038703f370d163a3cf040f55b60c85369d12c",
+   "bytes": 6036834
+  },
+  "system_assets/clothes/male_casualsuit02/male_casualsuit02_ao.png": {
+   "sha256": "ef7f75de0868fdbe01c05e3c8ac3ec2a59a35247b501473b3aba79e7901dfbd9",
+   "bytes": 722980
+  },
+  "system_assets/clothes/shoes02/shoes02.mhclo": {
+   "sha256": "0d447fd6b7415d6b2603e91697336ee51ac2f00ef85878d6667e9acfb45a20fe",
+   "bytes": 110217
+  },
+  "system_assets/clothes/shoes02/shoes02.obj": {
+   "sha256": "5726aabac42ff489998d0a769545dea013961bbb71b9c6024d75170181a98818",
+   "bytes": 125457
+  },
+  "system_assets/clothes/shoes02/shoes02.mhw": {
+   "sha256": "dba34894b93f102ea64d7ad21968894a9788c7a0770c066584a66a536a3e92b6",
+   "bytes": 309023
+  },
+  "system_assets/clothes/shoes02/shoes02_diffuse.png": {
+   "sha256": "efef94ea34b0e0c2283095cb47a9e0389b55449c61a4f4972d0ad4d2bf06b4f0",
+   "bytes": 1282057
+  },
+  "system_assets/hair/short02/short02.mhclo": {
+   "sha256": "625736cdb73e6d094df6e5a2df18f371781f1d2cd37b0ae15795c5d7051c3ec2",
+   "bytes": 119240
+  },
+  "system_assets/hair/short02/short02.obj": {
+   "sha256": "48f979114adfa712165a69cc55c45a70831af1fb3cba8e2a89120f0c87407b64",
+   "bytes": 139742
+  },
+  "system_assets/hair/short02/short02_diffuse.png": {
+   "sha256": "47fe33831a3929567c733356dd66243116e05df2ace1f884ddca0080b728229f",
+   "bytes": 3553543
+  },
+  "system_assets/eyes/high-poly/high-poly.mhclo": {
+   "sha256": "b183cfe37120ab726f9b3f2ea6cd3a64c44ce7b4bd91a77c841cf70c04f83a0d",
+   "bytes": 72490
+  },
+  "system_assets/eyes/high-poly/high-poly.obj": {
+   "sha256": "da2493215b708a344c33dc72f2a9a5b8fa985dcc5a70ad3b208995cf871da8e1",
+   "bytes": 100882
+  },
+  "system_assets/eyes/materials/brown_eye.png": {
+   "sha256": "4659691c7295ad6206c78b003e5fd0e5f91dcd53032fa914a229bb48cabe424b",
+   "bytes": 610817
+  },
+  "system_assets/skins/young_caucasian_male/young_lightskinned_male_diffuse.png": {
+   "sha256": "862a26e335e958b70534cb5f0d7c47ef30ab148a56c42b3e9da969cf76f12963",
+   "bytes": 3693828
+  }
+ }
+}

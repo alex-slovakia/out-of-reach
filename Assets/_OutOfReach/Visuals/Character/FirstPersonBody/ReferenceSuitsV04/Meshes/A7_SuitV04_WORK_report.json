@@ -1,0 +1,59 @@
+{
+ "fbx": "A7_SuitV04_WORK.fbx",
+ "bones": 164,
+ "actions": [
+  "BODY_FloatNeutral",
+  "BODY_SeatedFit",
+  "BODY_StandRelaxed"
+ ],
+ "objects": {
+  "A7_WORK_TorsoLegs": {
+   "verts": 4476,
+   "tris": 8500,
+   "materials": [
+    "MAT_Cabin_BareHands",
+    "MAT_V04_Suit",
+    "MAT_V04_TrouserTrim",
+    "MAT_V04_Zip",
+    "MAT_V04_ShirtRib",
+    "MAT_V04_Shoes"
+   ],
+   "groups": 139
+  },
+  "A7_WORK_Arm_L": {
+   "verts": 2233,
+   "tris": 4376,
+   "materials": [
+    "MAT_Cabin_BareHands",
+    "MAT_V04_Suit",
+    "MAT_V04_TrouserTrim",
+    "MAT_V04_Zip",
+    "MAT_V04_ShirtRib"
+   ],
+   "groups": 139
+  },
+  "A7_WORK_Arm_R": {
+   "verts": 2233,
+   "tris": 4376,
+   "materials": [
+    "MAT_Cabin_BareHands",
+    "MAT_V04_Suit",
+    "MAT_V04_TrouserTrim",
+    "MAT_V04_Zip",
+    "MAT_V04_ShirtRib"
+   ],
+   "groups": 139
+  },
+  "A7_WORK_Head": {
+   "verts": 6949,
+   "tris": 13580,
+   "materials": [
+    "MAT_Cabin_BareHands",
+    "MAT_V04_Hair",
+    "MAT_V04_Eyes"
+   ],
+   "groups": 139
+  }
+ },
+ "total_tris": 30832
+}
