@@ -1,0 +1,20 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+index 2ae6e82..fc9eec4 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+@@ -776,6 +776,7 @@ namespace OutOfReach.Composition
+             boundEvents.AirlockStateChanged += OnAirlockStateChanged;
+             if (airlockDoors) airlockDoors.Configure(runtime.EvaStatus, runtime.Clock);
+             if (airlockPanel) airlockPanel.Configure(runtime.EvaStatus, runtime.Clock);
++            if (shipLighting) shipLighting.SetReducedEffects(cinematics.ReducedEffects);
+             if (shipLighting)
+                 shipLighting.Configure(boundEvents, runtime.GameState, Repairable(ShipSystemId.Power), workingLights, emergencyLights, runtime.Clock);
+             audioPresenter.SetPresentationPaused(runtime.IsPaused);
+@@ -928,6 +929,7 @@ namespace OutOfReach.Composition
+             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
+             if (preflightTension) preflightTension.SetReducedEffects(reduced);
+             if (cargoHands) cargoHands.SetReducedMotion(reduced);
++            if (shipLighting) shipLighting.SetReducedEffects(reduced);
+         }
+ 
+         private void OnPauseChanged(bool paused)
