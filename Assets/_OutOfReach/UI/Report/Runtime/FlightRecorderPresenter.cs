@@ -369,7 +369,7 @@ namespace OutOfReach.Presentation.UI.Report
         {
             nasaPage.Add(FlightRecorderElements.Text("NASA / JPL HORIZONS", "recorder-source-heading"));
             nasaPage.Add(FlightRecorderElements.Text("The distance behind the delay.", "recorder-source-deck"));
-            nasaPage.Add(FlightRecorderElements.Text("Earth–Mars reference data sets the minimum time for a signal to reach Earth and return.", "recorder-source-description"));
+            nasaPage.Add(FlightRecorderElements.Text("The game takes the Earth–Mars distance from NASA/JPL Horizons. A longer distance means a longer radio wait: distance divided by light speed for each leg, plus time on Earth to process the message.", "recorder-source-description"));
             var dataset = new Foldout { name = "reportDatasetDetails", text = "View dataset details", value = false };
             dataset.AddToClassList("recorder-source-disclosure");
             assumptionsPage.Add(FlightRecorderElements.Text("WHAT THE GAME SIMPLIFIES", "recorder-source-heading"));
@@ -413,6 +413,12 @@ namespace OutOfReach.Presentation.UI.Report
             artPage.Add(FlightRecorderElements.Text("Space sky — NASA/Goddard Space Flight Center Scientific Visualization Studio", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Unmodified; public-domain reuse per NASA SVS.", "recorder-source-description"));
             artPage.Add(SourceLink("NASA SVS · Deep Star Maps 2020", "https://svs.gsfc.nasa.gov/4851/", true));
+            artPage.Add(FlightRecorderElements.Text("Earth archive — NASA EPIC Team / NOAA DSCOVR", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Natural-color Earth image observed 11 Nov 2026 at 11:01:17 UTC.", "recorder-source-description"));
+            artPage.Add(SourceLink("NASA EPIC · image and metadata", "https://epic.gsfc.nasa.gov/api/natural/date/2026-11-11", true));
+            artPage.Add(FlightRecorderElements.Text("Slovakia archive — Terra MODIS · 14 Nov 2026", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).", "recorder-source-description"));
+            artPage.Add(SourceLink("NASA Worldview · Earth observation archive", "https://worldview.earthdata.nasa.gov/", true));
             artPage.Add(FlightRecorderElements.Text("Synthetic voices — Google Gemini text-to-speech", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Voices Orus and Kore. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants.", "recorder-source-description"));
             artPage.Add(marsCredits);
