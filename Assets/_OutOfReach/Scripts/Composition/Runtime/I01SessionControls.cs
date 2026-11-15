@@ -16,6 +16,7 @@ namespace OutOfReach.Composition
     [DisallowMultipleComponent]
     public sealed class I01SessionControls : MonoBehaviour
     {
+        public const string PrimaryButtonName = "session-primary-action";
         public const string QuitLabel = "Quit to desktop";
         public const string QuitConfirmLabel = "Click again to quit";
         public const string QuittingLabel = "Quitting…";
@@ -55,6 +56,7 @@ namespace OutOfReach.Composition
         private VisualElement reportHost;
         private FlightRecorderPresenter recorder;
         private IMissionReport displayedReport;
+        private bool viewHydrated;
         private bool showingMode;
         private bool showingOutcome;
         private float feedbackUntil;
@@ -121,7 +123,7 @@ namespace OutOfReach.Composition
 
         private void LateUpdate()
         {
-            if (composition && root == null) { EnsureView(); Refresh(); }
+            if (composition && (root == null || !viewHydrated)) { EnsureView(); Refresh(); }
             if (feedback != null && feedback.style.display.value != DisplayStyle.None && Time.unscaledTime >= feedbackUntil)
                 feedback.style.display = DisplayStyle.None;
             if (quitConfirmation.Expire(Time.unscaledTime, quitConfirmSeconds)) RefreshQuitButtons();
@@ -164,6 +166,21 @@ namespace OutOfReach.Composition
                 recorder?.Clear();
                 displayedReport = null;
             }
+            // Populate a rebuilt view before exposing it to input or rendering.
+            heading.text = showingMode ? "Choose planning mode" : showingOutcome ? "Mission ended" : "Paused";
+            detail.text = showingMode
+                ? composition.Runtime.BoardAfterLoadingDeadline
+                    ? "60 seconds to secure supplies. Then loading closes: board the transport and secure your seat. Carried cargo stays behind. Practice has no deadline."
+                    : "60 active real seconds. At zero, launch the valid loadout or the last valid loadout. Carried cargo is not aboard. Practice has no deadline."
+                : showingOutcome
+                    ? "Review your mission record."
+                    : string.Empty;
+            detail.style.display = string.IsNullOrEmpty(detail.text) ? DisplayStyle.None : DisplayStyle.Flex;
+            primary.text = showingMode ? "Start timed · 60 s" : showingOutcome ? "Restart mission" : "Resume";
+            secondary.text = showingMode ? "Practice · no deadline" : "Restart mission";
+            secondary.style.display = showingOutcome ? DisplayStyle.None : DisplayStyle.Flex;
+            reduced.SetValueWithoutNotify(composition.Cinematics && composition.Cinematics.ReducedEffects);
+            viewHydrated = true;
             bool visible = showingMode || paused || showingOutcome;
             // An armed quit belongs to the menu it was pressed in: any other or no menu disarms it.
             int menuContext = !visible ? 0 : showRecord ? (recordQuit != null && IsShown(recordQuit) ? 4 : 5)
@@ -193,19 +210,7 @@ namespace OutOfReach.Composition
             RefreshCommunications();
             if (!visible) return;
 
-            heading.text = showingMode ? "Choose planning mode" : showingOutcome ? "Mission ended" : "Paused";
-            detail.text = showingMode
-                ? composition.Runtime.BoardAfterLoadingDeadline
-                    ? "60 seconds to secure supplies. Then loading closes: board the transport and secure your seat. Carried cargo stays behind. Practice has no deadline."
-                    : "60 active real seconds. At zero, launch the valid loadout or the last valid loadout. Carried cargo is not aboard. Practice has no deadline."
-                : showingOutcome
-                    ? "Review your mission record."
-                    : string.Empty;
-            detail.style.display = string.IsNullOrEmpty(detail.text) ? DisplayStyle.None : DisplayStyle.Flex;
-            primary.text = showingMode ? "Start timed · 60 s" : showingOutcome ? "Restart mission" : "Resume";
-            secondary.text = showingMode ? "Practice · no deadline" : "Restart mission";
-            secondary.style.display = showingOutcome ? DisplayStyle.None : DisplayStyle.Flex;
-            reduced.SetValueWithoutNotify(composition.Cinematics && composition.Cinematics.ReducedEffects);
+
         }
 
         public void ShowFeedback(string text, float seconds = 4f)
@@ -235,6 +240,7 @@ namespace OutOfReach.Composition
             modal = new VisualElement { name = "i01-mode-pause-overlay", pickingMode = PickingMode.Position };
             Fill(modal);
             modal.AddToClassList("session-menu");
+            modal.style.display = DisplayStyle.None; // Configure/Refresh reveals only a fully bound menu.
             root.Add(modal);
             panel = new VisualElement();
             panel.AddToClassList("session-menu-panel");
@@ -245,6 +251,7 @@ namespace OutOfReach.Composition
             detail = new Label();
             detail.AddToClassList("session-menu-detail");
             primary = ActionButton(OnPrimary, true);
+            primary.name = PrimaryButtonName;
             secondary = ActionButton(OnSecondary, false);
             quit = ActionButton(() => OnQuit(quit), false);
             quit.name = QuitButtonName;
@@ -467,6 +474,7 @@ namespace OutOfReach.Composition
             if (reduced != null) reduced.UnregisterValueChangedCallback(OnReducedChanged);
             if (root != null) root.RemoveFromHierarchy();
             root = modal = panel = null;
+            viewHydrated = false;
             heading = detail = feedback = controlsHint = communications = null;
             reportHost = null;
             primary = secondary = quit = recordQuit = null;
