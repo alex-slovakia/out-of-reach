@@ -106,8 +106,8 @@ namespace OutOfReach.Tests.Composition
             string hint = I01SessionControls.ControlsHintFor(true, false, false);
 
             Assert.That(hint, Does.Contain("click a surface in reach: push off"));
-            Assert.That(hint, Does.Contain("WASD only aims a push"));
-            Assert.That(hint, Does.Contain("Space: foot push, only while your feet touch support"));
+            Assert.That(hint, Does.Contain("Hold W + Space: push off"));
+            Assert.That(hint, Does.Contain("A/D: lean"));
             Assert.That(hint, Does.Contain("E use equipment"));
             Assert.That(hint, Does.Contain("Esc resume"));
             Assert.That(hint, Does.Not.Contain("WASD move"));
