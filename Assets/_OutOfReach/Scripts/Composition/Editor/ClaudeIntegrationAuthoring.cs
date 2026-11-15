@@ -54,6 +54,64 @@ namespace OutOfReach.Composition.Editor
             Debug.Log("CLAUDE_INTEGRATION_SET2 " + (changed ? "SAVED" : "VERIFIED") + "\n" + report);
         }
 
+        // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplySet3
+        public static void ApplySet3()
+        {
+            if (Application.unityVersion != "6000.3.28f1" || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Run on Unity 6000.3.28f1 outside Play mode.");
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            GameObject[] roots = scene.GetRootGameObjects();
+            var report = new StringBuilder();
+            bool changed = ApplyLaunchFxV03(roots, report);
+            if (changed)
+            {
+                EditorSceneManager.MarkSceneDirty(scene);
+                if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save Bootstrap.");
+            }
+            Debug.Log("CLAUDE_INTEGRATION_SET3 " + (changed ? "SAVED" : "VERIFIED") + "\n" + report);
+        }
+
+        public const string LaunchFxPrefabPath = "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab";
+        private const string TrenchExitName = "LS_TrenchExit_Ground";
+
+        // Same binding as the LaunchFX writer's builder commit 0331c91, applied to the saved scene: the prefab under
+        // the presentation root, bound to the old FX's own deflector and pad planes plus the land kit's trench outlet.
+        private static bool ApplyLaunchFxV03(GameObject[] roots, StringBuilder report)
+        {
+            var marine = ExactlyOne<I06MarineBindings>(roots);
+            Transform presentationRoot = ExactlyOne<OutOfReach.Presentation.Cinematics.TransportDeparturePresenter>(roots).transform;
+            var serialized = new SerializedObject(marine);
+            var nozzle = (Transform)serialized.FindProperty("nozzleFrame").objectReferenceValue;
+            var deflector = (Transform)serialized.FindProperty("deckPlane").objectReferenceValue;
+            var pad = (Transform)serialized.FindProperty("dustPlane").objectReferenceValue;
+            Transform site = Child(marine.MarineRoot, SiteName);
+            Transform exit = Descendants(site, TrenchExitName).Single();
+            if (!nozzle || nozzle.name != "EngineEmitter" || !deflector || deflector.name != "Actual deflector contact plane"
+                || !pad || pad.name != "Land pad top plane")
+                throw new InvalidOperationException("Saved FX anchors differ: " + Path(nozzle) + " | " + Path(deflector) + " | " + Path(pad));
+            float padY = marine.MarineRoot.InverseTransformPoint(pad.position).y;
+            if (Mathf.Abs(padY + 32.6f) > .01f) throw new InvalidOperationException("Pad plane is not at prologue -32.6 m: " + padY);
+            var current = serialized.FindProperty("launchFx").objectReferenceValue as OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter;
+            bool bound = current && serialized.FindProperty("launchDeflector").objectReferenceValue == deflector
+                && serialized.FindProperty("launchPad").objectReferenceValue == pad
+                && serialized.FindProperty("launchTrenchExit").objectReferenceValue == exit;
+            if (bound)
+            {
+                report.AppendLine("launchFx=already " + Path(current.transform));
+                return false;
+            }
+            if (current) throw new InvalidOperationException("A different LaunchFX binding exists: " + Path(current.transform));
+            var prefab = Required<GameObject>(LaunchFxPrefabPath);
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, presentationRoot);
+            var presenter = instance.GetComponent<OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter>()
+                ?? throw new InvalidOperationException("LaunchFX_V03.prefab has no presenter.");
+            marine.ConfigureLaunchFxV03(presenter, deflector, pad, exit);
+            EditorUtility.SetDirty(marine);
+            report.AppendLine("launchFx=" + Path(instance.transform) + " nozzle=" + Path(nozzle) + " deflector=" + Path(deflector)
+                + " pad=" + Path(pad) + " (y " + padY.ToString("F2") + ") exit=" + Path(exit));
+            return true;
+        }
+
         private static bool ApplyWorkGripPose(GameObject[] roots, StringBuilder report)
         {
             var pose = AssetDatabase.LoadAssetAtPath<BareRailGripPose>(WorkGripPosePath);

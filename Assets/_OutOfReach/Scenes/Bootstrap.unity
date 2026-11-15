@@ -59999,6 +59999,7 @@ Transform:
   - {fileID: 539041178}
   - {fileID: 420694681}
   - {fileID: 1225210199}
+  - {fileID: 1267953405}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1105916632
@@ -70876,6 +70877,79 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267828348}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1267953404
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1105916631}
+    m_Modifications:
+    - target: {fileID: 2277333935144941793, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_Name
+      value: LaunchFX_V03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+--- !u!4 &1267953405 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8218513694047041947, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+  m_PrefabInstance: {fileID: 1267953404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267953406 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 698846611716368941, guid: 08db9769b226608498fadae2b3f5a2fc, type: 3}
+  m_PrefabInstance: {fileID: 1267953404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59158fee47474d50b5b341ef76f8549d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutOfReach.LaunchFXV03::OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter
 --- !u!1 &1268047863
 GameObject:
   m_ObjectHideFlags: 0
@@ -76506,6 +76580,10 @@ MonoBehaviour:
   departureFx: {fileID: 1105916630}
   nozzleFrame: {fileID: 362352052}
   deckPlane: {fileID: 1630944849}
+  launchFx: {fileID: 1267953406}
+  launchDeflector: {fileID: 1630944849}
+  launchPad: {fileID: 2068100111}
+  launchTrenchExit: {fileID: 3698457060851980119}
   fxExhaust: {fileID: 2100000, guid: 3722c60c340d4efb97ceabe5ee560558, type: 2}
   fxSteam: {fileID: 2100000, guid: a9a69108cce04a23b2d84f696a5720ae, type: 2}
   stationarySite: {fileID: 121531554}
