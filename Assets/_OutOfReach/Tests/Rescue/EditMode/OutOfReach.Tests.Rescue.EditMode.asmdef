@@ -1,0 +1,26 @@
+{
+  "name": "OutOfReach.Tests.Rescue.EditMode",
+  "rootNamespace": "OutOfReach.Tests.Rescue.EditMode",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Presentation.Rescue"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
