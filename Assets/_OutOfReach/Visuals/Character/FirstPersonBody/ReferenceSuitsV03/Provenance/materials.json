@@ -290,5 +290,16 @@
   "transparent": null,
   "emission": null,
   "normal_strength": 1.0
+ },
+ "MAT_V03_EvaBootShaft": {
+  "base": "#CDC6B8",
+  "rough": 0.82,
+  "metal": 0.0,
+  "diffuse": null,
+  "normal": null,
+  "alpha_clip": false,
+  "transparent": null,
+  "emission": null,
+  "normal_strength": 1.0
  }
 }

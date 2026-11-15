@@ -136,6 +136,7 @@ else:
     DISPLAYM = smat("MAT_V03_EvaDisplay", "#FFFFFF", 0.3, diffuse=os.path.abspath(DISPLAY), emission=("#FFFFFF", 1.5))
     PANELHW = smat("MAT_V03_EvaHardware", "#CEC8BC", 0.75)
     GREYHW = smat("MAT_V03_EvaBootGrey", "#5A5E62", 0.8)
+    SHAFT = smat("MAT_V03_EvaBootShaft", "#CDC6B8", 0.82)
 
 # ------------------------------------------------------------------ fit the CC0 proxies
 suit, suit_clo = build_proxy("suit", arm, mb, CS, mat=CLOTH_A)
@@ -252,7 +253,7 @@ if SUIT == "WORK":
 else:
     SU, PN, ST, ME, RD = 0, slot(suit, PANEL), slot(suit, STRAP), slot(suit, METAL), slot(suit, RED)
     ZC = (1.512, 1.45, 1.40, 1.36, 1.33, 1.30, 1.18, 1.175, 1.10, 1.095, 1.085, 1.04, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72,
-          0.64, 0.60, 0.585, 0.56, 0.55, 0.52, 0.495, 0.47, 0.445, 0.42, 0.365, 0.36, 0.30, 0.25, 0.245)
+          0.64, 0.60, 0.585, 0.56, 0.55, 0.42, 0.365, 0.36, 0.30, 0.25, 0.245, 0.19, 0.18, 0.165)
     for z in ZC:
         cutz(bm, z)
     for y in (-0.06, -0.065, 0.02):
@@ -267,10 +268,11 @@ else:
     raise_region(bm, region(0.60, 0.72, S_, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True), 0.010, PN)           # side pockets
     fp = raise_region(bm, region(0.64, 0.78, S_, yhi=-0.06, xlo=0.06, xhi=0.16, absx=True), 0.009, PN)        # front pockets
     raise_region(bm, [f for f in fp if f.is_valid and f.calc_center_median().z > 0.76], 0.004, PN)
-    raise_region(bm, region(0.42, 0.55, S_, yhi=-0.06), 0.013, PN)                                           # knee pads
-    for lo_, hi_ in ((0.445, 0.47), (0.495, 0.52)):
-        raise_region(bm, region(lo_, hi_, {PN}, yhi=-0.06), 0.005, PN)
-    raise_region(bm, region(0.30, 0.42, S_, yhi=-0.06), 0.006, PN)                                           # shin panels
+    raise_region(bm, region(0.42, 0.55, S_, yhi=-0.06), 0.007, PN)                                           # knee pads (smooth)
+    raise_region(bm, region(0.30, 0.42, S_, yhi=-0.06), 0.0035, PN)                                          # shin panels
+    SH = slot(suit, SHAFT)
+    raise_region(bm, region(0.0, 0.19, S_, noarm=False), 0.008, SH)                                          # boot shafts
+    raise_region(bm, region(0.165, 0.18, {SH}, noarm=False), 0.004, ST)                                      # boot strap
     raise_region(bm, region(0.56, 0.585, S_, yhi=-0.06), 0.004, RD)                                          # red bands at the knees
     for lo_, hi_ in ((1.175, 1.18), (1.095, 1.10), (0.36, 0.365), (0.245, 0.25)):
         raise_region(bm, region(lo_, hi_, S_), 0.0025, PN)                                                     # layer seams
@@ -318,6 +320,13 @@ if SUIT == "EVA":
     bm.normal_update()
     for v in bm.verts:
         v.co += v.normal * 0.012                                                 # chunky EVA boots
+    ig = slot(shoes, GREYHW)
+    fcs = {s_: arm.data.bones["foot." + s_].head_local for s_ in "LR"}
+    for f in bm.faces:
+        c = f.calc_center_median()
+        fc = fcs["L" if c.x > 0 else "R"]
+        if c.z < 0.028 or (c.z < 0.07 and c.y < fc.y - 0.15):                   # grey sole and toe cap
+            f.material_index = ig
     bm.to_mesh(shoes.data)
     bm.free()
 

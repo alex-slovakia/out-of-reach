@@ -22,10 +22,10 @@
 [EVA] SMR A7_SuitV03_EVA_Head verts=8957 tris=14758 bindposes=164 smrBones=164 bounds.center=(0.000, -0.025, 1.645) size=(0.184, 0.248, 0.300) baked.size=(0.262, 0.323, 0.343) mats=[MAT_V03_Hair,MAT_V03_Brows,MAT_V03_Lashes,MAT_V03_Eyes,MAT_V03_Skin]
 [EVA] SMR A7_SuitV03_EVA_Helmet verts=2928 tris=3824 bindposes=164 smrBones=164 bounds.center=(0.000, -0.017, 1.706) size=(0.415, 0.318, 0.359) baked.size=(0.415, 0.344, 0.386) mats=[MAT_V03_EvaHardware,MAT_V03_EvaMetal,MAT_V03_EvaRed,MAT_V03_EvaDark,MAT_V03_EvaStrap,MAT_V03_EvaLight]
 [EVA] SMR A7_SuitV03_EVA_Plss verts=3728 tris=2508 bindposes=164 smrBones=164 bounds.center=(-0.012, 0.235, 1.284) size=(0.398, 0.229, 0.832) baked.size=(0.398, 0.429, 0.859) mats=[MAT_V03_EvaDark,MAT_V03_EvaHardware,MAT_V03_EvaRed,MAT_V03_EvaMetal,MAT_V03_EvaStrap]
-[EVA] SMR A7_SuitV03_EVA_TorsoLegs verts=13092 tris=19973 bindposes=164 smrBones=164 bounds.center=(0.001, -0.069, 0.748) size=(0.633, 0.422, 1.558) baked.size=(0.775, 0.661, 1.719) mats=[MAT_V03_EvaSuit,MAT_V03_EvaMetal,MAT_V03_EvaStrap,MAT_V03_EvaPanel,MAT_V03_EvaRed,MAT_V03_EvaBoot,MAT_V03_Skin]
+[EVA] SMR A7_SuitV03_EVA_TorsoLegs verts=13181 tris=20089 bindposes=164 smrBones=164 bounds.center=(0.000, -0.069, 0.748) size=(0.650, 0.422, 1.558) baked.size=(0.775, 0.661, 1.719) mats=[MAT_V03_EvaSuit,MAT_V03_EvaMetal,MAT_V03_EvaStrap,MAT_V03_EvaPanel,MAT_V03_EvaBootShaft,MAT_V03_EvaRed,MAT_V03_EvaBoot,MAT_V03_EvaBootGrey,MAT_V03_Skin]
 [EVA] SMR A7_SuitV03_EVA_Visor verts=1294 tris=2198 bindposes=164 smrBones=164 bounds.center=(0.000, -0.124, 1.722) size=(0.304, 0.222, 0.316) baked.size=(0.304, 0.246, 0.332) mats=[MAT_V03_EvaVisorGold,MAT_V03_EvaVisorClear]
 [EVA] FITV02 SMR A7_EVA_Arm_L baked.size=(0.338, 0.488, 0.568) center=(-0.205, -0.114, 1.367)
 [EVA] FITV02 SMR A7_EVA_Arm_R baked.size=(0.338, 0.488, 0.568) center=(0.205, -0.114, 1.367)
 [EVA] FITV02 SMR A7_EVA_TorsoLegs baked.size=(0.752, 0.638, 1.725) center=(0.000, -0.062, 0.838)
-[EVA] TOTAL triangles (unity) = 62407 => PASS
+[EVA] TOTAL triangles (unity) = 62523 => PASS
 RESULT PASS
