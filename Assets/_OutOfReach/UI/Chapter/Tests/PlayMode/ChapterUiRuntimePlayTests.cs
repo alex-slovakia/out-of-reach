@@ -155,9 +155,14 @@ namespace OutOfReach.Tests.ChapterUi
             yield return Present(MissionChapterPresenter.BeatSeconds + .2f);
             Assert.That(presenter.View.StripAction.enabledSelf, Is.False);
             Assert.That(ui.Text("chapter-strip-detail"), Is.EqualTo("Prepare and eat the first stored ration first."));
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Get through the first days"), "HUD objective from Core's refusal");
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Prepare and eat the first stored ration first."));
             yield return Use(harness.Ration);
             yield return Use(harness.Sleep);
             yield return RunUntil(() => !Session.SurvivalRecovery.IsResting, 30d, "the first rest completes");
+            presenter.Tick(.3f);
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Continue the routine"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · press R"));
 
             // Days 2 -> 5.
             yield return RoutineThroughTheUi("days 2 to 5");

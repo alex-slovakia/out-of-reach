@@ -401,5 +401,56 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Report));
             Assert.That(ui.Text("chapter-report-kicker"), Is.EqualTo("ROUTINE STOPPED · SUPPLIES"));
         }
+
+        [Test]
+        public void TheHudObjective_NamesTheChaptersRealNextStep_FromCoreOnly()
+        {
+            PastOpeningBeat();
+            Assert.That(presenter.ObjectiveTitle, Is.Empty, "Emergency keeps root's phase copy");
+
+            mission.Phase = GamePhase.Repair;
+            flow.ContinueCheck = new CommandResult(false, CommandFailure.PreconditionsNotMet, "Prepare and eat the first stored ration first.");
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Get through the first days"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Prepare and eat the first stored ration first."), "Core's own refusal");
+
+            flow.ContinueCheck = new CommandResult(true, CommandFailure.None, "Routine days until the inspection");
+            Tick(.3f);
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Continue the routine"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · press R"));
+
+            flow.StartRoutine();
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Routine: ordinary crew days"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Until Day 5, 08:00 · R stops the routine"));
+
+            flow.Chapter = MissionChapter.Consequences;
+            flow.PendingDecision = ChapterDecision.ScienceOrSalvage;
+            flow.StopRoutine(RoutineStopReason.ReachedChapter, "reached the inspection of the repairs and reserves");
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Decide: keep or salvage the instrument"));
+
+            flow.PendingDecision = ChapterDecision.None;
+            flow.Chapter = MissionChapter.Contact;
+            flow.NextChapter = MissionChapter.RescueFailed;
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.Empty, "before contact the spacewalk is the step: root's copy stays");
+            mission.Phase = GamePhase.Eva;
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.Empty);
+
+            mission.Phase = GamePhase.Survival;
+            flow.Chapter = MissionChapter.Rendezvous;
+            recovery.Stage = RecoveryStage.BeaconRequested;
+            recovery.BeaconWindowEndsAtSimulationSeconds = FakeMission.At(30, 16);
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Power the recovery beacon"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Cockpit console · window closes Day 30, 16:00"));
+
+            mission.Outcome = MissionOutcome.Lost;
+            mission.Phase = GamePhase.Outcome;
+            Tick();
+            Assert.That(presenter.ObjectiveTitle, Is.Empty, "a decided mission keeps root's outcome copy");
+        }
     }
 }

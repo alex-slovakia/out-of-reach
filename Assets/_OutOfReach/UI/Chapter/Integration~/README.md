@@ -22,6 +22,14 @@ clock, ledger, day counter or story state of its own.
    open), the `chapterUi.Configure(...)` + `survivalUi.ConfigureRestPresentationOwner(...)` block right after the
    survival UI block in `BindSession`, and `chapterUi.ClearBinding()` in `UnbindSession`. No music/countdown line is
    touched (those belong to `audio-opening`).
+   **2b. CHAPTER-UI-02 (HUD objective), on top of step 2** (a separate file, so a branch that already has step 2 only adds this):
+   ```bash
+   git apply --3way Assets/_OutOfReach/UI/Chapter/Integration~/I01MissionComposition.chapter-objective.patch
+   ```
+   One call in the `chapterUi` block: `flightBoard.ConfigureObjectiveOverride(...)`. The top-left HUD objective then names
+   the chapter loop's real next step (Core's own refusal, a pending decision, the beacon, the next beat with R) instead of
+   "Prepare for a spacewalk" on days 1-9 after the repairs, and instead of the bare "Survive until rescue" after contact.
+   `FlightBoardView` applies it only after the interior repairs and in Survival; other phases keep root's copy.
 3. **Apply the habitat patch** — required for the loop to be playable in the real scene:
    ```bash
    git apply --3way Assets/_OutOfReach/UI/Chapter/Integration~/I06HabitatBindings.chapter-mode.patch

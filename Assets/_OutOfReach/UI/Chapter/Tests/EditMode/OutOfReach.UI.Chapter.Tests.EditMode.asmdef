@@ -5,6 +5,7 @@
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner",
     "OutOfReach.Contracts",
+    "OutOfReach.UI",
     "OutOfReach.UI.Chapter",
     "OutOfReach.UI.Chapter.TestSupport"
   ],
