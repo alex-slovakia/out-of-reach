@@ -61,6 +61,7 @@ namespace OutOfReach.Composition
         public bool IsBusy => pending;
         public FloatActionResult? LastCommandResult { get; private set; }
         public string LastRefusal { get; private set; } = string.Empty;
+        public event Action HandPushCompleted;
 
         /// <summary>
         /// Call after body.ConfigureSession and gloves.ConfigureSession. Root policy must read the current
@@ -408,7 +409,11 @@ namespace OutOfReach.Composition
             int token = generation;
             FloatActionResult result = player.TryPushOffPair(surface, leftSample.Point, leftDirection, pushStrength,
                 secondPush.Surface, sample.Point, rightDirection, pushStrength);
-            if (token == generation) LastCommandResult = result;
+            if (token == generation)
+            {
+                LastCommandResult = result;
+                if (result == FloatActionResult.Done) HandPushCompleted?.Invoke();
+            }
             return result == FloatActionResult.Done;
         }
 
@@ -440,6 +445,7 @@ namespace OutOfReach.Composition
                 : player.TryPushOff(surface, sample.Point, direction, pushStrength);
             if (token != generation) return result == FloatActionResult.Done;
             LastCommandResult = result;
+            if (result == FloatActionResult.Done && kind == HandContactKind.Push) HandPushCompleted?.Invoke();
             if (result != FloatActionResult.Done) ownedGrip = null;
             if (result == FloatActionResult.Done && kind == HandContactKind.Grip)
             {

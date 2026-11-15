@@ -27,12 +27,13 @@ namespace OutOfReach.Presentation.UI
         private readonly Label[] preflightResources;
         private bool physicalPlanning, planningDetailsHeld;
         private IMissionConfiguration displayedLastValid;
-        private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry, timing;
+        private readonly VisualElement instruments, primaryTelemetry, evaTelemetry, expandedTelemetry;
         private readonly Label suitDuration, suitSeal;
         private readonly Button systems;
         private bool systemsPinned, systemsHeld, showingPlanning, evaContext, co2NeedsAttention;
-        private readonly VisualElement interactionPrompt, subtitleOverlay;
-        private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText, microgravityHelp;
+        private readonly VisualElement interactionPrompt, subtitleOverlay, microgravityTutorial, railPrompt;
+        private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
+        private bool showMicrogravityTutorial, showRailPrompt;
         private readonly Label[] planningResources, hudResources;
         private readonly ResourceGauge oxygenGauge, waterGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
         private readonly ResourceGauge exertionGauge;
@@ -171,22 +172,34 @@ namespace OutOfReach.Presentation.UI
             root.Add(hud);
             var header = Element("hud-header");
             hud.Add(header);
+            var missionObjective = Element("hud-mission-objective");
+            header.Add(missionObjective);
             phase = Text("Waiting for mission", "hud-phase");
-            header.Add(phase);
+            missionObjective.Add(phase);
             objective = Text(string.Empty, "hud-objective");
-            header.Add(objective);
+            missionObjective.Add(objective);
             deadlineFallback = Text(string.Empty, "deadline-fallback");
             header.Add(deadlineFallback);
             outcomeReason = Text(string.Empty, "outcome-reason");
             header.Add(outcomeReason);
 
-            timing = Element("systems-timing");
-            elapsedTime = Text(string.Empty, "elapsed-time");
-            timing.Add(elapsedTime);
             var compression = Element("hud-timing");
             hud.Add(compression);
             simulationTiming = Text(string.Empty, "simulation-timing");
             compression.Add(simulationTiming);
+            elapsedTime = Text(string.Empty, "elapsed-time");
+            compression.Add(elapsedTime);
+            microgravityTutorial = Element("microgravity-move");
+            microgravityTutorial.name = "microgravity-tutorial";
+            microgravityTutorial.Add(Text("Move", "microgravity-action"));
+            microgravityTutorial.Add(MousePictogram("left-mouse", true, false));
+            microgravityTutorial.Add(MousePictogram("right-mouse", false, true));
+            microgravityTutorial.Add(MousePictogram("both-mouse-buttons", true, true));
+            compression.Add(microgravityTutorial);
+            railPrompt = Text("Ctrl + click · Grip this rail", "microgravity-rail-prompt");
+            compression.Add(railPrompt);
+            SetVisible(microgravityTutorial, false);
+            SetVisible(railPrompt, false);
 
             instruments = Element("hud-instruments");
             hud.Add(instruments);
@@ -228,7 +241,6 @@ namespace OutOfReach.Presentation.UI
                 tooltip = "Hold Tab to inspect all ship reserves. Click to keep them visible."
             };
             systems.AddToClassList("systems-button");
-            instruments.Add(timing);
             instruments.Add(systems);
             IgnorePicking(hud);
             systems.pickingMode = PickingMode.Position;
@@ -242,11 +254,6 @@ namespace OutOfReach.Presentation.UI
             interactionPrompt.Add(interactionText);
             IgnorePicking(interactionPrompt);
             ClearInteractionPrompt();
-
-            microgravityHelp = Text(string.Empty, "microgravity-help");
-            microgravityHelp.pickingMode = PickingMode.Ignore;
-            hud.Add(microgravityHelp);
-            SetVisible(microgravityHelp, false);
 
             subtitleOverlay = Element("subtitle-overlay");
             root.Add(subtitleOverlay);
@@ -515,7 +522,6 @@ namespace OutOfReach.Presentation.UI
             SetVisible(suitGauge.Element, evaContext);
             SetVisible(co2Gauge.Element, co2NeedsAttention || inspect);
             SetVisible(evaTelemetry, evaContext && inspect);
-            SetVisible(timing, inspect);
             instruments.EnableInClassList("inspecting-systems", inspect);
             instruments.EnableInClassList("eva-context", evaContext);
             systems.text = systemsPinned ? "Close systems" : "Tab  Systems";
@@ -541,11 +547,13 @@ namespace OutOfReach.Presentation.UI
             interactionText.text = string.Empty;
         }
 
-        public void SetMicrogravityHelp(string text)
+        public void SetMicrogravityPrompt(bool showTutorial, bool showRail)
         {
-            if (microgravityHelp.text == text) return;
-            microgravityHelp.text = text;
-            SetVisible(microgravityHelp, !string.IsNullOrEmpty(text));
+            if (showMicrogravityTutorial == showTutorial && showRailPrompt == showRail) return;
+            showMicrogravityTutorial = showTutorial;
+            showRailPrompt = showRail;
+            SetVisible(microgravityTutorial, showTutorial);
+            SetVisible(railPrompt, showRail);
         }
 
         public void ShowSubtitle(string text, string speakerLabel)
@@ -562,6 +570,53 @@ namespace OutOfReach.Presentation.UI
             subtitleOverlay.style.display = DisplayStyle.None;
             subtitleText.text = string.Empty;
             subtitleSpeaker.text = string.Empty;
+        }
+
+        private static VisualElement MousePictogram(string name, bool left, bool right)
+        {
+            var element = Element("mouse-pictogram");
+            element.name = name;
+            element.generateVisualContent += context =>
+            {
+                var painter = context.painter2D;
+                painter.fillColor = new Color32(232, 172, 97, 255);
+                painter.BeginPath();
+                if (left)
+                {
+                    painter.MoveTo(new Vector2(3, 13));
+                    painter.LineTo(new Vector2(3, 9));
+                    painter.QuadraticCurveTo(new Vector2(3, 3), new Vector2(11, 2));
+                    painter.LineTo(new Vector2(11, 13));
+                    painter.ClosePath();
+                }
+                if (right)
+                {
+                    painter.MoveTo(new Vector2(13, 13));
+                    painter.LineTo(new Vector2(13, 2));
+                    painter.QuadraticCurveTo(new Vector2(21, 3), new Vector2(21, 9));
+                    painter.LineTo(new Vector2(21, 13));
+                    painter.ClosePath();
+                }
+                painter.Fill();
+                painter.strokeColor = new Color32(245, 237, 222, 255);
+                painter.lineWidth = 1.5f;
+                painter.lineJoin = LineJoin.Round;
+                painter.BeginPath();
+                painter.MoveTo(new Vector2(12, 2));
+                painter.QuadraticCurveTo(new Vector2(3, 2), new Vector2(3, 10));
+                painter.LineTo(new Vector2(3, 19));
+                painter.QuadraticCurveTo(new Vector2(3, 27), new Vector2(12, 27));
+                painter.QuadraticCurveTo(new Vector2(21, 27), new Vector2(21, 19));
+                painter.LineTo(new Vector2(21, 10));
+                painter.QuadraticCurveTo(new Vector2(21, 2), new Vector2(12, 2));
+                painter.ClosePath();
+                painter.MoveTo(new Vector2(3, 13));
+                painter.LineTo(new Vector2(21, 13));
+                painter.MoveTo(new Vector2(12, 2));
+                painter.LineTo(new Vector2(12, 13));
+                painter.Stroke();
+            };
+            return element;
         }
 
         private static string FormatLoadoutCounts(IReadOnlyList<EquipmentSelection> selections,

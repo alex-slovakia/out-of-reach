@@ -51,12 +51,9 @@ namespace OutOfReach.Composition
         [SerializeField] private UIDocument antennaProgressDocument;
         [SerializeField] private Font antennaProgressFont;
         [SerializeField] private EvaWorkLampPresenter evaWorkLamp;
-        private const float MicrogravityHelpSeconds = 20f;
-        private const string MicrogravityHelp = "MICROGRAVITY\nAim at a nearby wall, floor or ceiling.\nLeft / right click · Push with that hand\nBoth buttons · Push with both hands\nSpace · Push off the floor with your feet\nHold WASD while pushing to steer.";
-        private const string RailGripHelp = "Ctrl + click · Grip this rail";
         private static readonly Vector3 PreflightStandingFit = new Vector3(0f, 0f, -.285f);
         private static readonly Vector3 InFlightStandingFit = new Vector3(0f, 0f, -.197f);
-        private float microgravityHelpRemaining;
+        private bool microgravityTutorialCompleted;
         private float nextRailHintProbe;
         private bool railHintVisible;
         private bool orbitalLocationReached;
@@ -237,7 +234,7 @@ namespace OutOfReach.Composition
             {
                 railHintVisible = false;
                 nextRailHintProbe = 0f;
-                flightBoard.SetMicrogravityHelp(null);
+                flightBoard.SetMicrogravityPrompt(false, false);
                 return;
             }
             if (Time.unscaledTime >= nextRailHintProbe)
@@ -245,12 +242,13 @@ namespace OutOfReach.Composition
                 railHintVisible = microgravityInput.AimAtReachableRail();
                 nextRailHintProbe = Time.unscaledTime + .10f;
             }
-            if (microgravityHelpRemaining > 0f)
-            {
-                flightBoard.SetMicrogravityHelp(railHintVisible ? MicrogravityHelp + "\n" + RailGripHelp : MicrogravityHelp);
-                microgravityHelpRemaining -= Time.unscaledDeltaTime;
-            }
-            else flightBoard.SetMicrogravityHelp(railHintVisible ? RailGripHelp : null);
+            flightBoard.SetMicrogravityPrompt(!microgravityTutorialCompleted, railHintVisible);
+        }
+
+        private void OnMicrogravityHandPushCompleted()
+        {
+            microgravityTutorialCompleted = true;
+            if (flightBoard) flightBoard.SetMicrogravityPrompt(false, railHintVisible);
         }
         public bool HasInteriorRailGrip => microgravityInput && microgravityInput.HasRailGrip;
 
@@ -538,7 +536,7 @@ namespace OutOfReach.Composition
             UnbindSession();
             boundSession = session;
             boundEvents = runtime.Events;
-            microgravityHelpRemaining = MicrogravityHelpSeconds;
+            microgravityTutorialCompleted = false;
             orbitalLocationReached = ReferenceEquals(session, transferredSession)
                 || (!marine && runtime.GameState.Phase != GamePhase.Planning);
             if (!ReferenceEquals(session, transferredSession)) transferredSession = null;
@@ -612,6 +610,7 @@ namespace OutOfReach.Composition
                     throw new InvalidOperationException("The interior contact rails could not bind to the current Player.");
                 microgravityBridge.Configure(runtime.Player, embodiedBody, astronautHands, bareArmContacts,
                     runtime.EvaStatus, runtime.GameState, runtime.Clock, CanUseMicroContacts);
+                microgravityBridge.HandPushCompleted += OnMicrogravityHandPushCompleted;
                 microgravityInput.Configure(runtime.Player, microgravityBridge, runtime.Player.ViewPivot,
                     runtime.EvaStatus, runtime.GameState, runtime.Clock, MicroSessionCurrent, CanUseMicroContacts);
             }
@@ -670,10 +669,14 @@ namespace OutOfReach.Composition
             if (antennaProgress) antennaProgress.ClearBinding();
             if (antennaRepair) antennaRepair.ClearBinding();
             if (microgravityInput) microgravityInput.ClearBinding();
-            if (microgravityBridge) microgravityBridge.Clear();
+            if (microgravityBridge)
+            {
+                microgravityBridge.HandPushCompleted -= OnMicrogravityHandPushCompleted;
+                microgravityBridge.Clear();
+            }
             if (interiorHandholds) interiorHandholds.Unbind();
             orbitalLocationReached = false;
-            if (flightBoard) flightBoard.SetMicrogravityHelp(null);
+            if (flightBoard) flightBoard.SetMicrogravityPrompt(false, false);
             if (marine)
             {
                 marine.Unbind();

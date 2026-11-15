@@ -38,7 +38,7 @@ namespace OutOfReach.Presentation.UI
         private string subtitleSpeaker = string.Empty;
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
-        private string microgravityHelp = string.Empty;
+        private bool showMicrogravityTutorial, showRailPrompt;
         private Func<float> readExertionRemaining;
         private Func<bool> readInteriorSystemsOperational;
         private Func<string> readPlanningInstruction;
@@ -210,11 +210,12 @@ namespace OutOfReach.Presentation.UI
             view?.ClearInteractionPrompt();
         }
 
-        public void SetMicrogravityHelp(string text)
+        public void SetMicrogravityPrompt(bool showTutorial, bool showRail)
         {
             if (disposed) return;
-            microgravityHelp = text ?? string.Empty;
-            view?.SetMicrogravityHelp(microgravityHelp);
+            showMicrogravityTutorial = showTutorial;
+            showRailPrompt = showRail;
+            view?.SetMicrogravityPrompt(showTutorial, showRail);
         }
 
         private void LateUpdate()
@@ -389,7 +390,7 @@ namespace OutOfReach.Presentation.UI
             }
 
             bool planning = state.Phase == GamePhase.Planning;
-            view.SetMicrogravityHelp(microgravityHelp);
+            view.SetMicrogravityPrompt(showMicrogravityTutorial, showRailPrompt);
             view.SetPhysicalPlanning(physicalPlanning);
             view.ShowPlanning(planning);
             RefreshObjective();
