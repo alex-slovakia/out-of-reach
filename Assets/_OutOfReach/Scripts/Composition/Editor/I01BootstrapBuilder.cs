@@ -321,6 +321,7 @@ namespace OutOfReach.Composition.Editor
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/Exhaust.mat"),
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/IgnitionSteam.mat"));
             composition.ConfigureMarine(marineBindings);
+            composition.ConfigureDepartureScore(Required<AudioClip>("Assets/_OutOfReach/Audio/Music/titan-departure.wav"));
             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/SFX/planning_tick.wav"));
             composition.ConfigureCargoPresentation(cargoStage.Presenter);

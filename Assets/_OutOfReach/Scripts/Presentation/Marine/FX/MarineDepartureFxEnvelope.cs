@@ -2,14 +2,14 @@ using System;
 
 namespace OutOfReach.Presentation.MarineOcean.FX
 {
-    /// <summary>Pure visual sample of root's supplied 22-second departure playhead. Never advances time.</summary>
+    /// <summary>Pure visual sample of root's supplied launch playhead. Never advances time.</summary>
     public static class MarineDepartureFxEnvelope
     {
         public const float IgnitionSeconds = 9f;
         public const float LiftoffSeconds = 10.5f;
         public const float EndSeconds = 22f;
-        public const int SteamLobes = 4;
-        public const float MaximumPlumeLength = 8f;
+        public const int SteamLobes = 16;
+        public const float MaximumPlumeLength = 31f;
 
         public readonly struct Frame
         {
@@ -29,22 +29,23 @@ namespace OutOfReach.Presentation.MarineOcean.FX
         public static Frame Evaluate(float activeSeconds, bool reducedEffects)
         {
             if (!Finite(activeSeconds) || activeSeconds < 0f || activeSeconds >= EndSeconds) return default;
-            float ignition = Smooth((activeSeconds - IgnitionSeconds) / .8f);
-            float shutdown = 1f - Smooth((activeSeconds - 21.5f) / .5f);
-            float intensity = ignition * shutdown * (reducedEffects ? .65f : 1f);
-            float climb = Smooth((activeSeconds - LiftoffSeconds) / 3f);
-            return new Frame(activeSeconds, intensity,
-                (.85f + (MaximumPlumeLength - .85f) * climb) * (reducedEffects ? .8f : 1f),
-                .70f, reducedEffects ? 0f : 1f);
+            float ignition = Smooth((activeSeconds - IgnitionSeconds) / .35f);
+            float shutdown = 1f - Smooth((activeSeconds - 21.15f) / .65f);
+            float intensity = ignition * shutdown * (reducedEffects ? .74f : 1f);
+            float climb = Smooth((activeSeconds - LiftoffSeconds) / 3.6f);
+            float length = 8f + (MaximumPlumeLength - 8f) * climb;
+            return new Frame(activeSeconds, intensity, length * (reducedEffects ? .8f : 1f),
+                1.16f + .40f * climb, reducedEffects ? 0f : 1f);
         }
 
         public static SteamFrame Steam(float activeSeconds, int lobe, bool reducedEffects)
         {
             if (reducedEffects || lobe < 0 || lobe >= SteamLobes || !Finite(activeSeconds)) return default;
-            float age = activeSeconds - (9.15f + lobe * .3f);
-            if (age < 0 || age >= 3.8f) return default;
-            // Four finite ignition puffs, with a soft arrival and a long clear-out. No ongoing emitter.
-            float opacity = .13f * Smooth(age / .55f) * (1f - Smooth((age - 1.7f) / 2.1f));
+            int wave = lobe / 8;
+            float age = activeSeconds - (9.03f + wave * .9f + (lobe % 8) * .036f);
+            if (age < 0 || age >= 5.3f) return default;
+            // Two ground-hugging bursts. They stay at the pad as the engine climbs.
+            float opacity = (wave == 0 ? .56f : .64f) * Smooth(age / .35f) * (1f - Smooth((age - 2.3f) / 3f));
             return new SteamFrame(age, opacity);
         }
 

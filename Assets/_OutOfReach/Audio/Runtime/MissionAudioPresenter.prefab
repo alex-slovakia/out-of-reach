@@ -44,7 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01e6f93379949a4a6809e5869711471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: OutOfReach.Audio::OutOfReach.Presentation.Audio.MissionAudioPresenter
-  dialogueCues: []
+  dialogueCues:
+  - cueId: departure-secure
+    cleanClip: {fileID: 8300000, guid: 1e011ae5bc56552b8a0b267754b984e8, type: 3}
+    subtitleText: Secure for departure.
+  - cueId: departure-sealing
+    cleanClip: {fileID: 8300000, guid: b130b813aba759268d581f64b1d92c71, type: 3}
+    subtitleText: Sealing cabin.
+  - cueId: departure-hatch-secured
+    cleanClip: {fileID: 8300000, guid: 798ac72363ca56dca45f5e52f8b03660, type: 3}
+    subtitleText: Hatch secured.
+  - cueId: departure-ignition
+    cleanClip: {fileID: 8300000, guid: dd471dae89ca52aabd2bc744f5e10dec, type: 3}
+    subtitleText: Ignition.
+  - cueId: departure-liftoff
+    cleanClip: {fileID: 8300000, guid: 9ad8bd06a1805ed9889dd97bd9d961c6, type: 3}
+    subtitleText: Liftoff.
   sfxCues:
   - cueId: ui_select
     clip: {fileID: 8300000, guid: 8e913034f62544c43b44bed8e3bac5c9, type: 3}
@@ -67,6 +82,24 @@ MonoBehaviour:
   - cueId: warning_pulse
     clip: {fileID: 8300000, guid: 9cfd2e4da446eb0468cfbe277407a8fd, type: 3}
     volume: 1
+  - cueId: departure-seatbelt-click
+    clip: {fileID: 8300000, guid: ab4bf96e1ea745beb663acef79daf7a0, type: 3}
+    volume: 0.9
+  - cueId: departure-hatch-latch
+    clip: {fileID: 8300000, guid: 92685cd0a4e44eaa9c99a5367f8ba52e, type: 3}
+    volume: 0.85
+  - cueId: departure-ignition-ramp
+    clip: {fileID: 8300000, guid: 473121538c464f19be26956822730bbf, type: 3}
+    volume: 1
+  - cueId: departure-engine-vibration
+    clip: {fileID: 8300000, guid: 08fab191f0a142c8bfc6d58bb4672dc6, type: 3}
+    volume: 0.9
+  - cueId: departure-pad-roar
+    clip: {fileID: 8300000, guid: e0c4f8188ed05cb5b48b7029977514b3, type: 3}
+    volume: 0.92
+  - cueId: departure-liftoff-shock
+    clip: {fileID: 8300000, guid: c7caefcbf6cb52d7bb3db5cd602e5b4c, type: 3}
+    volume: 0.94
   isolationMusic: {fileID: 8300000, guid: d506184100d646deb877ebd447a2eba2, type: 3}
   tensionMusic: {fileID: 8300000, guid: 24854550049f4041a977639bf4e9c159, type: 3}
   emergencyMusic: {fileID: 8300000, guid: b0a36cc7d366482fba52397a1822171b, type: 3}

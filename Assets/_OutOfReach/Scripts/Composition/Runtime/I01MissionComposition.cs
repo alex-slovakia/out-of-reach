@@ -60,6 +60,8 @@ namespace OutOfReach.Composition
         private MissionSession transferredSession;
         [SerializeField] private I06HabitatBindings habitat;
         [SerializeField] private I06MarineBindings marine;
+        [SerializeField] private AudioClip departureScore;
+        private bool departureRestraintCuePlayed;
         [SerializeField] private Transform firstPersonMotionPivot;
         [SerializeField] private OpeningMenuMotionPresenter openingMenuMotion;
         [SerializeField] private Transform openingMenuMotionPivot;
@@ -277,6 +279,7 @@ namespace OutOfReach.Composition
         }
         public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
         public void ConfigureMarine(I06MarineBindings bindings) => marine = bindings;
+        public void ConfigureDepartureScore(AudioClip score) => departureScore = score;
 
         // A pause keeps the body in the actual scene behind the menu. Contact commands
         // use the stricter player-control gate; visibility alone never grants input.
@@ -459,6 +462,12 @@ namespace OutOfReach.Composition
         {
             MaintainMicrogravity();
             UpdateMicrogravityHelp();
+            if (!departureRestraintCuePlayed && marine && marine.IsSeatedDeparture
+                && embodiedBody && embodiedBody.IsDepartureSeatLatched && audioPresenter)
+            {
+                departureRestraintCuePlayed = true;
+                audioPresenter.TryPlayDepartureEffectCue("departure-seatbelt-click");
+            }
             if (astronautHands && CanPresentHands() && runtime && !runtime.IsPaused
                 && !(microgravityInput && microgravityInput.ContactRoutingRequested)
                 && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId))
@@ -561,6 +570,7 @@ namespace OutOfReach.Composition
             {
                 marine.CaptionChanged += OnCinematicCaption;
                 marine.CueRaised += OnDepartureCue;
+                marine.DepartureEnded += OnDepartureAudioEnded;
                 marine.Transferred += OnTransportTransferred;
                 marine.Bind(runtime, cinematics.ReducedEffects);
             }
@@ -682,6 +692,7 @@ namespace OutOfReach.Composition
                 marine.Unbind();
                 marine.CaptionChanged -= OnCinematicCaption;
                 marine.CueRaised -= OnDepartureCue;
+                marine.DepartureEnded -= OnDepartureAudioEnded;
                 marine.Transferred -= OnTransportTransferred;
             }
             if (habitat) habitat.ClearBinding();
@@ -863,9 +874,55 @@ namespace OutOfReach.Composition
         private void OnDepartureCue(TransportDepartureCue cue)
         {
             if (!audioPresenter) return;
-            if (cue == TransportDepartureCue.HatchClosing && airlockMotor) audioPresenter.PlaySfx(airlockMotor, .6f);
-            if (cue == TransportDepartureCue.Acceleration) audioPresenter.SetMood(MusicMood.Tension, .7f);
-            if (cue == TransportDepartureCue.LaterAboard) audioPresenter.SetMood(MusicMood.Isolation, 1f);
+            switch (cue)
+            {
+                case TransportDepartureCue.Boarding:
+                    departureRestraintCuePlayed = false;
+                    if (departureScore) audioPresenter.PlayDepartureMusic(departureScore);
+                    PlayDepartureVoice("departure-secure");
+                    break;
+                case TransportDepartureCue.HatchClosing:
+                    audioPresenter.TryPlayDepartureEffectCue("departure-hatch-latch");
+                    PlayDepartureVoice("departure-sealing");
+                    break;
+                case TransportDepartureCue.ArmRetracting:
+                    PlayDepartureVoice("departure-hatch-secured");
+                    break;
+                case TransportDepartureCue.Acceleration:
+                    PlayDepartureVoice("departure-ignition");
+                    audioPresenter.TryPlayDepartureEffectCue("departure-ignition-ramp");
+                    audioPresenter.TryPlayDepartureEffectCue("departure-engine-vibration");
+                    break;
+                case TransportDepartureCue.PadIgnition:
+                    audioPresenter.StopDepartureEffects();
+                    audioPresenter.TryPlayDepartureEffectCue("departure-pad-roar");
+                    break;
+                case TransportDepartureCue.Ascent:
+                    PlayDepartureVoice("departure-liftoff");
+                    audioPresenter.TryPlayDepartureEffectCue("departure-liftoff-shock");
+                    break;
+                case TransportDepartureCue.UpperAtmosphere:
+                    audioPresenter.StopDepartureEffects();
+                    break;
+                case TransportDepartureCue.LaterAboard:
+                    audioPresenter.SetMood(MusicMood.Isolation, 1f);
+                    break;
+            }
+        }
+
+        private void PlayDepartureVoice(string cue)
+        {
+            dialogueSpeaker = "FLIGHT CONTROL";
+            audioPresenter.TryPlayDialogue(cue);
+        }
+
+        private void OnDepartureAudioEnded(TransportDepartureEnd _)
+        {
+            departureRestraintCuePlayed = false;
+            if (!audioPresenter) return;
+            audioPresenter.StopDepartureEffects();
+            audioPresenter.StopDialogue();
+            audioPresenter.StopDepartureMusic();
         }
 
         private void OnTransportTransferred()

@@ -1,0 +1,63 @@
+{
+  "source": "Original mathematical synthesis. No samples, recordings, or external dependencies.",
+  "generator": "generate_launch_effects.py",
+  "generator_sha256": "2bf7bc1a7eda770aa46dcd7fc6cadc94354662ea1db96e81828171476671e911",
+  "format": "48,000 Hz mono 16-bit little-endian PCM WAV",
+  "perspective": "Cabin-transmitted contact and vibration, plus a separately gated pad-atmosphere roar.",
+  "clips": [
+    {
+      "file": "departure-seatbelt-click.wav",
+      "description": "Two buckle contact transients and a short strap scrape.",
+      "length_seconds": 0.48,
+      "sample_frames": 23040,
+      "sample_peak_dbfs": -11.0,
+      "whole_file_rms_dbfs": -30.86,
+      "sha256": "beef0c1715bd4c301af3574ff763562cdbc612594dd5955c1c60535965eafd7b"
+    },
+    {
+      "file": "departure-hatch-latch.wav",
+      "description": "Cabin hatch drive, deceleration, then pawl and latch at the end of the close.",
+      "length_seconds": 2.98,
+      "sample_frames": 143040,
+      "sample_peak_dbfs": -10.0,
+      "whole_file_rms_dbfs": -27.81,
+      "sha256": "a45598ba5b1ea4ddf8aabd29f0e78f4ffd8327e15e19b3aa9c2a0c5b8d057f1b"
+    },
+    {
+      "file": "departure-ignition-ramp.wav",
+      "description": "Rapid engine onset with hull resonance, cut-ready at the first exterior frame.",
+      "length_seconds": 0.75,
+      "sample_frames": 36000,
+      "sample_peak_dbfs": -8.0,
+      "whole_file_rms_dbfs": -19.34,
+      "sha256": "5239b5f22f1e10af162679f4de43c94864eaf742ce908f6fc39af993b5c28e7e"
+    },
+    {
+      "file": "departure-engine-vibration.wav",
+      "description": "Optional sustained structural vibration for an interior ascent shot.",
+      "length_seconds": 7.35,
+      "sample_frames": 352800,
+      "sample_peak_dbfs": -10.0,
+      "whole_file_rms_dbfs": -21.05,
+      "sha256": "d4703da04e804b8f1f84cd05050ac4beedf7bdc52ab73d46cc9fe57f2922b422"
+    },
+    {
+      "file": "departure-pad-roar.wav",
+      "description": "Atmospheric exhaust roar only, cut before the upper-air transition.",
+      "length_seconds": 7.75,
+      "sample_frames": 372000,
+      "sample_peak_dbfs": -9.0,
+      "whole_file_rms_dbfs": -19.05,
+      "sha256": "092ebf4fb27444bb6084c8c7fcb6e5a4e984a17ffd67cf6ffacbeca1b3b4a7e2"
+    },
+    {
+      "file": "departure-liftoff-shock.wav",
+      "description": "Cinematic launch-pad acoustic pressure transient, with a sharp front and falling bass tail.",
+      "length_seconds": 1.68,
+      "sample_frames": 80640,
+      "sample_peak_dbfs": -6.5,
+      "whole_file_rms_dbfs": -21.17,
+      "sha256": "99d3e5155526fb206822ec2c846ad50eb3d984bbe288fb07a91eaedb21bd27c4"
+    }
+  ]
+}

@@ -7,6 +7,12 @@ namespace OutOfReach.Presentation.Audio.Editor
     /// <summary>Writes only an owned audio prefab. It never edits Bootstrap, settings, voice takes or SFX files.</summary>
     public static class MissionAudioAuthoring
     {
+        private static SfxCueBinding DepartureCue(string cue, float gain) => new SfxCueBinding(cue,
+            RequiredClip("Assets/_OutOfReach/Audio/Original/LaunchEffects/" + cue + ".wav"), gain);
+
+        private static DialogueCueBinding DepartureVoice(string cue, string text) => new DialogueCueBinding(cue,
+            RequiredClip("Assets/_OutOfReach/Audio/Voices/Departure/" + cue + ".wav"), text);
+
         public const string PrefabPath = "Assets/_OutOfReach/Audio/Runtime/MissionAudioPresenter.prefab";
 
         [MenuItem("OUT OF REACH/Audio/Create music and SFX presenter prefab")]
@@ -19,14 +25,27 @@ namespace OutOfReach.Presentation.Audio.Editor
             {
                 var presenter = root.AddComponent<MissionAudioPresenter>();
                 string[] names = { "ui_select", "ui_confirm", "planning_tick", "planning_urgent", "comms_loss", "power_down", "warning_pulse" };
-                var effects = new SfxCueBinding[names.Length];
+                var effects = new SfxCueBinding[names.Length + 6];
                 for (int i = 0; i < names.Length; i++)
                     effects[i] = new SfxCueBinding(names[i], RequiredClip("Assets/_OutOfReach/Audio/SFX/" + names[i] + ".wav"));
+                effects[names.Length] = DepartureCue("departure-seatbelt-click", .90f);
+                effects[names.Length + 1] = DepartureCue("departure-hatch-latch", .85f);
+                effects[names.Length + 2] = DepartureCue("departure-ignition-ramp", 1f);
+                effects[names.Length + 3] = DepartureCue("departure-engine-vibration", .90f);
+                effects[names.Length + 4] = DepartureCue("departure-pad-roar", .92f);
+                effects[names.Length + 5] = DepartureCue("departure-liftoff-shock", .94f);
                 presenter.ConfigureClips(
                     RequiredClip("Assets/_OutOfReach/Audio/Music/mx01_isolation.wav"),
                     RequiredClip("Assets/_OutOfReach/Audio/Music/mx02_tension.wav"),
                     RequiredClip("Assets/_OutOfReach/Audio/Music/mx03_emergency.wav"),
-                    Array.Empty<DialogueCueBinding>(), effects);
+                    new[]
+                    {
+                        DepartureVoice("departure-secure", "Secure for departure."),
+                        DepartureVoice("departure-sealing", "Sealing cabin."),
+                        DepartureVoice("departure-hatch-secured", "Hatch secured."),
+                        DepartureVoice("departure-ignition", "Ignition."),
+                        DepartureVoice("departure-liftoff", "Liftoff.")
+                    }, effects);
                 presenter.ConfigureRecoveryMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/mx04_recovery.wav"));
                 if (!presenter.ValidateConfiguration(out string reason)) throw new InvalidOperationException(reason);
                 if (!PrefabUtility.SaveAsPrefabAsset(root, PrefabPath))

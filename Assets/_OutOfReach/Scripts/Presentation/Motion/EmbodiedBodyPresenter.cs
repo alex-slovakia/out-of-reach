@@ -51,6 +51,7 @@ namespace OutOfReach.Presentation.Motion
         private Vector3 previousFeetPosition, gaitDirection;
         private bool hasFeetPosition;
         private float gaitPhase, gaitWeight, sprintWeight, walkingPace;
+        private DepartureSeatRestraint departureSeat;
 
         /// <summary>
         /// Synchronous lease cancellation before sampling, restoration, hide, clear or disable.
@@ -63,6 +64,8 @@ namespace OutOfReach.Presentation.Motion
         public bool IsEvaVisible => IsVisible && activeEva;
         public BodyPose CurrentPose => pose;
         public BodyArmVisibility VisibleArms => visible ? armMask : BodyArmVisibility.None;
+        public bool HasDepartureSeat => departureSeat != null;
+        public bool IsDepartureSeatLatched => departureSeat != null && departureSeat.IsLatched;
         public Transform VisualRoot => visualRoot;
         public Transform PlayerFeet => playerFeet;
         public Camera PlayerCamera => playerCamera;
@@ -165,6 +168,72 @@ namespace OutOfReach.Presentation.Motion
             if (bound && isActiveAndEnabled) Refresh();
         }
 
+        /// <summary>
+        /// Atomically leases the same WORK skin at an explicit, metre-scale chair reference.
+        /// The frame is the body origin (+Z forward, +Y vehicle-up), not the seat eye or player feet.
+        /// Root releases other hand owners before acquiring and releases this lease on every departure exit.
+        /// </summary>
+        public bool TryBeginDepartureSeat(Transform seatBodyFrame)
+        {
+            if (!Application.isPlaying || !bound || !isActiveAndEnabled || notifyingReset || departureSeat != null
+                || clock.IsPaused || suit.IsSuitOn || suit.IsOutside || !seatBodyFrame
+                || !seatBodyFrame.gameObject.activeInHierarchy || !seatBodyFrame.parent
+                || !visualRoot || !visualRoot.gameObject.activeInHierarchy || !playerFeet || !playerCamera
+                || seatBodyFrame == visualRoot || seatBodyFrame.IsChildOf(visualRoot)
+                || seatBodyFrame == playerFeet || seatBodyFrame.IsChildOf(playerFeet)
+                || seatBodyFrame == playerCamera.transform || seatBodyFrame.IsChildOf(playerCamera.transform)
+                || !Finite(seatBodyFrame.position) || (seatBodyFrame.lossyScale - Vector3.one).sqrMagnitude > .000001f
+                || !work.modelRoot || !work.torsoLegs || !work.leftArm || !work.rightArm || !work.seated) return false;
+
+            Shader lit = null;
+            foreach (Material material in work.torsoLegs.sharedMaterials)
+                if (material && material.shader && material.shader.name == "Universal Render Pipeline/Lit")
+                { lit = material.shader; break; }
+            if (!lit) return false;
+            var lease = new DepartureSeatRestraint(visualRoot, seatBodyFrame, workCache.Nodes, lit);
+            ResetOwnedVisuals();
+            try
+            {
+                work.seated.SampleAnimation(work.modelRoot.gameObject, 0f);
+                lease.Activate();
+                departureSeat = lease;
+                activeEva = false;
+                pose = BodyPose.Seated;
+                armMask = BodyArmVisibility.Both;
+                work.torsoLegs.enabled = work.leftArm.enabled = work.rightArm.enabled = true;
+                visible = true;
+                return true;
+            }
+            catch
+            {
+                lease.Dispose();
+                ResetOwnedVisuals();
+                throw;
+            }
+        }
+
+        /// <summary>Call after the actual vehicle/camera frame. The departure owner supplies its held playhead.</summary>
+        public bool PresentDepartureSeat(float presentedSeconds)
+        {
+            if (!bound || !isActiveAndEnabled || departureSeat == null || notifyingReset) return false;
+            if (!CanRetainDepartureSeat())
+            {
+                EndDepartureSeat();
+                return false;
+            }
+            if (presentedSeconds < 0f || float.IsNaN(presentedSeconds) || float.IsInfinity(presentedSeconds)) return false;
+            if (!clock.IsPaused) departureSeat.Present(presentedSeconds);
+            return true;
+        }
+
+        /// <summary>Release before restoring gameplay camera controls or switching to an exterior shot.</summary>
+        public void EndDepartureSeat()
+        {
+            if (notifyingReset || departureSeat == null) return;
+            ReleaseDepartureSeat();
+            if (bound && isActiveAndEnabled) Refresh();
+        }
+
         /// <summary>Root may request immediate gate/state reconciliation; otherwise LateUpdate does this.</summary>
         public void RefreshPresentation()
         {
@@ -179,6 +248,7 @@ namespace OutOfReach.Presentation.Motion
             bound = false; suit = null; clock = null;
             visibleQuery = floatingQuery = null; armsQuery = null;
             groundController = null; groundedQuery = sprintQuery = null;
+            DisposeDepartureSeat();
             ResetOwnedVisuals();
             seatedRequested = wasPaused = offsetResetRequested = false;
         }
@@ -206,6 +276,11 @@ namespace OutOfReach.Presentation.Motion
                 || !work.modelRoot || !eva.modelRoot || !work.torsoLegs || !eva.torsoLegs
                 || !work.leftArm || !work.rightArm || !eva.leftArm || !eva.rightArm)
             { if (bound) ClearBinding(); return; }
+            if (departureSeat != null)
+            {
+                if (CanRetainDepartureSeat()) return;
+                ReleaseDepartureSeat();
+            }
             int version = bindingVersion;
             bool permitted = visibleQuery();
             if (version != bindingVersion || !bound) return;
@@ -256,6 +331,21 @@ namespace OutOfReach.Presentation.Motion
                 else if (reset && gaitWeight > 0f) ApplyGroundPose();
             }
             wasPaused = paused;
+        }
+
+        private bool CanRetainDepartureSeat() => departureSeat.IsUsable && !suit.IsSuitOn && !suit.IsOutside;
+
+        private void ReleaseDepartureSeat()
+        {
+            DisposeDepartureSeat();
+            ResetOwnedVisuals();
+        }
+
+        private void DisposeDepartureSeat()
+        {
+            DepartureSeatRestraint lease = departureSeat;
+            departureSeat = null;
+            lease?.Dispose();
         }
 
         private void UpdateGroundMotion()

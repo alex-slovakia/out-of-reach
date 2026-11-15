@@ -27,6 +27,8 @@ namespace OutOfReach.Presentation.Audio
         [Range(0, 1)] [SerializeField] private float masterVolume = 1f;
         [Range(0, 1)] [SerializeField] private float dialogueVolume = 1f;
         [Range(0, 1)] [SerializeField] private float musicVolume = .8f;
+        [Range(0, 1)] [SerializeField] private float backgroundScoreTrim = .44f;
+        [Range(0, 1)] [SerializeField] private float departureMusicTrim = .65f;
         [Range(0, 1)] [SerializeField] private float sfxVolume = .8f;
         [Range(-40, 0)] [SerializeField] private float dialogueMusicDuckDb = -8f;
         [Min(.001f)] [SerializeField] private float duckAttackSeconds = .08f;
@@ -41,6 +43,9 @@ namespace OutOfReach.Presentation.Audio
         private AudioSource dialogueSource;
         private AudioSource sfxSource;
         private AudioSource menuSource;
+        private AudioSource departureCabinSource;
+        private AudioSource departureMusicSource;
+        private bool departureMusicActive;
         private float lastMenuCueTime = -10f;
         private readonly AudioSource[] musicSources = new AudioSource[4];
         private readonly bool[] musicStarted = new bool[4];
@@ -90,6 +95,8 @@ namespace OutOfReach.Presentation.Audio
         {
             if (presentationPaused || AudioListener.pause) return;
             if (dialogueActive && dialogueSource && !dialogueSource.isPlaying) FinishDialogue();
+            if (departureMusicActive && (!departureMusicSource || !departureMusicSource.isPlaying))
+                departureMusicActive = false;
             float delta = Time.unscaledDeltaTime;
             if (!Finite(delta) || delta < 0) return;
 
@@ -214,14 +221,68 @@ namespace OutOfReach.Presentation.Audio
 
         public bool TryPlaySfx(string cueId)
         {
-            SfxCueBinding match = null;
+            return TryFindSfx(cueId, out SfxCueBinding match) && PlaySfx(match.Clip, match.Volume);
+        }
+
+        /// <summary>Plays a timed transport effect through the pause-aware, dialogue-ducked cabin source.</summary>
+        public bool TryPlayDepartureEffectCue(string cueId)
+        {
+            if (!CanPlay() || !TryFindSfx(cueId, out SfxCueBinding match) || !PrepareClip(match.Clip)) return false;
+            if (!Finite(match.Volume)) return Reject("Departure cabin SFX volume must be finite.");
+            EnsureSources();
+            if (!departureCabinSource)
+                departureCabinSource = MakeSource("Departure launch effects", false, sfxOutput, 56);
+            ApplyVolumes();
+            departureCabinSource.PlayOneShot(match.Clip, Safe01(match.Volume));
+            LastRejection = string.Empty;
+            return true;
+        }
+
+        public void StopDepartureEffects()
+        {
+            if (departureCabinSource) departureCabinSource.Stop();
+        }
+
+        /// <summary>Plays the selected departure score once, at a PCM offset, independently of mission mood.</summary>
+        public bool PlayDepartureMusic(AudioClip clip, float startSeconds = 0f)
+        {
+            if (!CanPlay() || !PrepareClip(clip)) return false;
+            if (!Finite(startSeconds) || startSeconds < 0 || startSeconds >= clip.length || clip.samples <= 0)
+                return Reject("Departure music needs a start time inside the clip.");
+            if (departureMusicActive && departureMusicSource && departureMusicSource.clip == clip)
+                return Reject("This departure score is already playing.");
+            EnsureSources();
+            if (!departureMusicSource)
+                departureMusicSource = MakeSource("Departure score", false, musicOutput, 96);
+            departureMusicSource.Stop();
+            departureMusicSource.clip = clip;
+            departureMusicSource.timeSamples = Math.Min(clip.samples - 1, (int)((double)startSeconds * clip.frequency));
+            departureMusicSource.volume = 0;
+            departureMusicSource.Play();
+            departureMusicActive = departureMusicSource.isPlaying;
+            ApplyVolumes();
+            if (!departureMusicActive) return Reject("Departure music playback did not start.");
+            LastRejection = string.Empty;
+            return true;
+        }
+
+        public void StopDepartureMusic()
+        {
+            if (departureMusicSource) departureMusicSource.Stop();
+            departureMusicActive = false;
+            ApplyVolumes();
+        }
+
+        private bool TryFindSfx(string cueId, out SfxCueBinding match)
+        {
+            match = null;
             foreach (SfxCueBinding cue in sfxCues ?? Array.Empty<SfxCueBinding>())
             {
                 if (cue == null || cue.CueId != cueId) continue;
                 if (match != null) return Reject("Duplicate configured SFX id: " + cueId);
                 match = cue;
             }
-            return match == null ? Reject("SFX cue is not configured: " + cueId) : PlaySfx(match.Clip, match.Volume);
+            return match != null || Reject("SFX cue is not configured: " + cueId);
         }
 
         /// <summary>Menu feedback remains usable while gameplay sound is paused; it does not resume other channels.</summary>
@@ -257,6 +318,8 @@ namespace OutOfReach.Presentation.Audio
             presentationPaused = paused;
             PauseSource(dialogueSource, paused);
             PauseSource(sfxSource, paused);
+            PauseSource(departureCabinSource, paused);
+            PauseSource(departureMusicSource, paused);
             foreach (AudioSource source in musicSources) PauseSource(source, paused);
         }
 
@@ -265,6 +328,8 @@ namespace OutOfReach.Presentation.Audio
         {
             StopDialogue();
             if (sfxSource) sfxSource.Stop();
+            StopDepartureEffects();
+            StopDepartureMusic();
             if (menuSource) menuSource.Stop();
             for (int i = 0; i < musicSources.Length; i++)
             {
@@ -420,8 +485,12 @@ namespace OutOfReach.Presentation.Audio
             float master = Safe01(masterVolume);
             if (dialogueSource) dialogueSource.volume = master * Safe01(dialogueVolume);
             if (sfxSource) sfxSource.volume = master * Safe01(sfxVolume);
+            if (departureCabinSource) departureCabinSource.volume = master * Safe01(sfxVolume) * duckGain;
+            float scoreLevel = master * Safe01(musicVolume) * duckGain;
+            if (departureMusicSource) departureMusicSource.volume = scoreLevel * Safe01(departureMusicTrim);
+            float backgroundScoreLevel = departureMusicActive ? 0f : scoreLevel * Safe01(backgroundScoreTrim);
             for (int i = 0; i < musicSources.Length; i++)
-                if (musicSources[i]) musicSources[i].volume = master * Safe01(musicVolume) * musicWeights[i] * duckGain;
+                if (musicSources[i]) musicSources[i].volume = backgroundScoreLevel * musicWeights[i];
         }
 
         private static void PauseSource(AudioSource source, bool paused)

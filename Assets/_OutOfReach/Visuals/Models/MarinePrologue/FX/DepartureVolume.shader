@@ -44,7 +44,7 @@ Shader "OutOfReach/Marine/DepartureVolume"
                 if (_Mode<.5)
                 {
                     float profile=lerp(1.0,.10,p.z)*(.95+.14*sin(p.z*3.14159));
-                    float wander=(Noise3(float3(p.xy*1.6,p.z*5-t*3))-.5)*.09*_FxParameters.z;
+                    float wander=(Noise3(float3(p.xy*1.6,p.z*6-t*3.5))-.5)*.30*_FxParameters.z;
                     p.xy*=profile*(1+wander);
                 }
                 else p*=1+(Noise3(p*2.3+float3(t*.18,_FxParameters.w,t*.11))-.5)*.12*_FxParameters.z;
@@ -62,20 +62,20 @@ Shader "OutOfReach/Marine/DepartureVolume"
                     float noise=Noise3(float3(cos(angle)*2,sin(angle)*2,along*11-time*6));
                     float fine=Noise3(float3(cos(angle)*4+7,sin(angle)*4+3,along*23-time*9));
                     float detailAA=saturate(1-fwidth(along*23)*.8);
-                    float turbulence=lerp(.7,.48+.40*noise+.12*fine,detailAA);
+                    float turbulence=lerp(.64,.30+.60*noise+.20*fine,detailAA);
                     float tail=1-smoothstep(.62,1,along);
-                    float edge=smoothstep(0,.55,facing);
+                    float edge=smoothstep(.08,.85,facing);
                     float heat=lerp(.65,1,pow(saturate(1-along),2))*turbulence;
                     float strength=saturate(_FxParameters.y)*tail*edge*heat;
-                    float3 color=lerp(_HotColor.rgb,_TailColor.rgb,smoothstep(.03,.78,along));
+                    float3 color=lerp(_HotColor.rgb,_TailColor.rgb,smoothstep(.015,.60,along));
                     return half4(color*strength,0); // restrained additive volume, never an opaque screen veil
                 }
                 float noise=Noise3(input.local*2.6+float3(time*.13,_FxParameters.w,time*.08));
                 float aa=max(.025,fwidth(noise)*1.5);
                 float density=smoothstep(.27-aa,.72+aa,noise);
                 float edge=smoothstep(.02,.6,facing);
-                float alpha=min(.13,saturate(_FxParameters.y))*density*edge;
-                return half4(_SteamColor.rgb*alpha,alpha); // premultiplied low-opacity closed lobe
+                float alpha=min(.47,saturate(_FxParameters.y))*density*edge;
+                return half4(_SteamColor.rgb*alpha,alpha); // premultiplied ground cloud
             }
             ENDHLSL
         }

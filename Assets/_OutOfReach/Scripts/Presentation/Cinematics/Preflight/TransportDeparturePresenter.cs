@@ -16,17 +16,21 @@ namespace OutOfReach.Presentation.Cinematics
         [SerializeField] private Transform accessArmFrame;
         [SerializeField] private Transform seatedCamera;
         [SerializeField] private bool reducedMotion;
+        [SerializeField] private Transform capsulePort, booster, auroraReceiver;
+        [SerializeField] private Transform approachCamera, dockCamera, boardingStartCamera, boardingEndCamera;
 
         private IGameState state;
         private ISimulationClock clock;
-        private bool armed, active, suspended, notifying;
+        private bool armed, active, suspended, notifying, orbitalViewsLeased, boosterWasActive;
         private float elapsed;
         private double lastSimulationSeconds;
         private Snapshot pivotStart, vehicleStart, hatchStart, armStart;
         private Snapshot pivotFrame, vehicleFrame, hatchFramePose, armFrame;
         private Snapshot[] cameraChain = Array.Empty<Snapshot>();
-        private Vector3 cameraStartPosition, cameraRelativePosition;
-        private Quaternion cameraStartRotation, cameraRelativeRotation;
+        private Vector3 cameraStartPosition, cameraRelativePosition, portLocalPosition;
+        private Quaternion cameraStartRotation, cameraRelativeRotation, portLocalRotation;
+        private float cameraStartFov;
+        private TransportDepartureTimeline.Frame currentFrame;
         private TransportDepartureCue lastCue;
 
         public event Action<TransportDepartureCue> CueRaised;
@@ -37,6 +41,13 @@ namespace OutOfReach.Presentation.Cinematics
         public bool IsPlaying => active;
         public bool IsSuspended => active && suspended;
         public float Progress01 => elapsed / TransportDepartureTimeline.DurationSeconds;
+        public float PresentedSeconds => elapsed;
+        public float Cover01 => active ? currentFrame.Cover : 0f;
+        public float AtmosphereBlend01 => active ? currentFrame.AtmosphereBlend : 0f;
+        public float BoardingTravel01 => IsBoardingAurora ? currentFrame.BoardingTravel : 0f;
+        public bool IsInOrbit => active && orbitalViewsLeased && elapsed >= TransportDepartureTimeline.OrbitSeconds &&
+            elapsed < TransportDepartureTimeline.BoardingAuroraSeconds;
+        public bool IsBoardingAurora => active && orbitalViewsLeased && elapsed >= TransportDepartureTimeline.BoardingAuroraSeconds;
         public string CurrentCaption { get; private set; } = string.Empty;
         public bool ReducedMotion { get => reducedMotion; set { reducedMotion = value; } }
 
@@ -59,12 +70,30 @@ namespace OutOfReach.Presentation.Cinematics
             elapsed = 0f;
         }
 
+        /// <summary>Bind the two mating planes (+Z outward) and four camera-pose anchors.
+        /// Root owns Aurora geometry, lighting and transfer body. The actual capsule and booster are leased.</summary>
+        public void ConfigureOrbitalViews(Transform actualCapsulePort, Transform actualBooster, Transform receivingPort,
+            Transform approachView, Transform dockingView, Transform transferStartView, Transform transferEndView)
+        {
+            if (active || notifying) throw new InvalidOperationException("Configure orbital views before departure.");
+            capsulePort = actualCapsulePort;
+            booster = actualBooster;
+            auroraReceiver = receivingPort;
+            approachCamera = approachView;
+            dockCamera = dockingView;
+            boardingStartCamera = transferStartView;
+            boardingEndCamera = transferEndView;
+        }
+
         /// <summary>Root calls once, only after a successful Planning-to-Intro launch and acquiring every transform/control lease.</summary>
         public bool Begin()
         {
             if (active || notifying || !isActiveAndEnabled || !armed || state == null || clock == null || clock.IsPaused ||
                 state.Phase != GamePhase.Intro || state.Outcome != MissionOutcome.None || !ValidScene()) return false;
             if (!Finite(clock.ElapsedSimulationSeconds)) return false;
+            bool hasOrbitalBindings = capsulePort || booster || auroraReceiver || approachCamera || dockCamera ||
+                boardingStartCamera || boardingEndCamera;
+            if (hasOrbitalBindings && !ValidOrbitalViews()) return false;
             if (Quaternion.Angle(hatchFrame.localRotation, Quaternion.Euler(0f, 160f, 0f)) > 0.25f ||
                 Quaternion.Angle(accessArmFrame.localRotation, Quaternion.identity) > 0.25f) return false;
             pivotStart = new Snapshot(cameraOffsetPivot);
@@ -73,6 +102,14 @@ namespace OutOfReach.Presentation.Cinematics
             armStart = new Snapshot(accessArmFrame);
             cameraStartPosition = sceneCamera.transform.position;
             cameraStartRotation = sceneCamera.transform.rotation;
+            cameraStartFov = sceneCamera.fieldOfView;
+            orbitalViewsLeased = hasOrbitalBindings;
+            if (orbitalViewsLeased)
+            {
+                boosterWasActive = booster.gameObject.activeSelf;
+                portLocalPosition = vehicleRoot.InverseTransformPoint(capsulePort.position);
+                portLocalRotation = Quaternion.Inverse(vehicleRoot.rotation) * capsulePort.rotation;
+            }
             CaptureCameraChain();
             lastSimulationSeconds = clock.ElapsedSimulationSeconds;
             elapsed = 0f;
@@ -106,7 +143,9 @@ namespace OutOfReach.Presentation.Cinematics
                 return;
             }
             if (state == null || clock == null || state.Phase != GamePhase.Intro || state.Outcome != MissionOutcome.None ||
-                !ValidScene() || !ParentsUnchanged() || !Finite(clock.ElapsedSimulationSeconds) ||
+                !ValidScene(orbitalViewsLeased && elapsed >= TransportDepartureTimeline.UpperAirSeconds) ||
+                !ParentsUnchanged() || (orbitalViewsLeased && !ValidOrbitalViews()) ||
+                !Finite(clock.ElapsedSimulationSeconds) ||
                 clock.ElapsedSimulationSeconds + 0.000001 < lastSimulationSeconds)
             { Stop(TransportDepartureEnd.Cancelled); return; }
             lastSimulationSeconds = clock.ElapsedSimulationSeconds;
@@ -122,55 +161,126 @@ namespace OutOfReach.Presentation.Cinematics
             // Resume at the held playhead for one frame, with no pause-sized delta or extra cue.
             if (suspended) { suspended = false; ApplyFrame(); return; }
             if (!Finite(activeRealDelta) || activeRealDelta < 0f) return;
-            elapsed = Mathf.Min(TransportDepartureTimeline.DurationSeconds, elapsed + activeRealDelta);
+            float duration = orbitalViewsLeased ? TransportDepartureTimeline.DurationSeconds : TransportDepartureTimeline.OrbitSeconds;
+            // A stalled render can hold the shot, but it must not jump past a shot or its cue.
+            elapsed = Mathf.Min(duration, elapsed + Mathf.Min(activeRealDelta, .10f));
             ApplyFrame();
             PublishFrame(false);
-            if (active && elapsed >= TransportDepartureTimeline.DurationSeconds) Stop(TransportDepartureEnd.Completed);
+            if (active && elapsed >= duration) Stop(TransportDepartureEnd.Completed);
         }
 
         private void ApplyFrame()
         {
-            var f = TransportDepartureTimeline.Evaluate(elapsed, reducedMotion);
-            vehicleRoot.SetPositionAndRotation(vehicleStart.WorldPosition + Vector3.up * f.HeightMetres, vehicleStart.WorldRotation);
-            hatchFrame.localRotation = Quaternion.Euler(0f, f.HatchDegrees, 0f);
-            accessArmFrame.localRotation = Quaternion.Euler(0f, f.ArmDegrees, 0f);
-            Vector3 position;
-            Quaternion rotation;
-            if (f.Exterior)
+            currentFrame = TransportDepartureTimeline.Evaluate(elapsed, reducedMotion, orbitalViewsLeased);
+            var frame = currentFrame;
+            if (IsInOrbit || IsBoardingAurora)
             {
-                // A deliberate camera cut, never a flight through the capsule wall. Full 32 m booster stays in frame.
-                position = vehicleRoot.TransformPoint(new Vector3(16f, 7f, -26f));
-                rotation = Quaternion.LookRotation(vehicleRoot.TransformPoint(new Vector3(0f, -10f, 0f)) - position, Vector3.up);
+                if (booster.gameObject.activeSelf) booster.gameObject.SetActive(false);
+                // Match the capsule's outward docking normal with the opposite receiving normal.
+                Quaternion portFacing = Quaternion.LookRotation(-auroraReceiver.forward, auroraReceiver.up);
+                Quaternion capsuleRotation = portFacing * Quaternion.Inverse(portLocalRotation);
+                Vector3 portPosition = auroraReceiver.position + auroraReceiver.forward * frame.PortDistance +
+                    auroraReceiver.right * frame.ApproachOffset;
+                vehicleRoot.SetPositionAndRotation(portPosition - capsuleRotation * portLocalPosition, capsuleRotation);
             }
             else
             {
-                position = Vector3.Lerp(cameraStartPosition, seatedCamera.position, f.SeatBlend);
-                rotation = Quaternion.Slerp(cameraStartRotation, seatedCamera.rotation, f.SeatBlend);
-                Vector3 vibration = new Vector3(Mathf.Sin(elapsed * 39f), Mathf.Sin(elapsed * 47f), 0f) * (0.002f * f.Shake);
-                position += rotation * vibration;
-                rotation *= Quaternion.Euler(0.10f * f.Shake * Mathf.Sin(elapsed * 31f), 0f, 0.08f * f.Shake * Mathf.Sin(elapsed * 29f));
+                Quaternion launchRotation = vehicleStart.WorldRotation;
+                Vector3 displacement = Vector3.up * frame.HeightMetres + launchRotation * Vector3.forward *
+                    (260f * frame.AtmosphereBlend * frame.AtmosphereBlend);
+                vehicleRoot.SetPositionAndRotation(vehicleStart.WorldPosition + displacement,
+                    launchRotation * Quaternion.Euler(26f * frame.AtmosphereBlend, 0f, 0f));
             }
+            hatchFrame.localRotation = Quaternion.Euler(0f, frame.HatchDegrees, 0f);
+            accessArmFrame.localRotation = Quaternion.Euler(0f, frame.ArmDegrees, 0f);
+
+            EvaluateCamera(frame, out Vector3 position, out Quaternion rotation, out float fov);
+            AddCameraVibration(frame.Shake, frame.Shot == TransportDepartureShot.Seat, ref position, ref rotation);
             Quaternion pivotRotation = rotation * Quaternion.Inverse(cameraRelativeRotation);
             cameraOffsetPivot.SetPositionAndRotation(position - pivotRotation * cameraRelativePosition, pivotRotation);
+            sceneCamera.fieldOfView = fov;
             vehicleFrame = new Snapshot(vehicleRoot);
             hatchFramePose = new Snapshot(hatchFrame);
             armFrame = new Snapshot(accessArmFrame);
             pivotFrame = new Snapshot(cameraOffsetPivot);
         }
 
+        private void EvaluateCamera(TransportDepartureTimeline.Frame frame, out Vector3 position, out Quaternion rotation, out float fov)
+        {
+            Quaternion launchRotation = vehicleStart.WorldRotation;
+            switch (frame.Shot)
+            {
+                case TransportDepartureShot.Pad:
+                    // The camera stays near the deck while the engine and airframe visibly leave the fixed pad.
+                    position = vehicleStart.WorldPosition + launchRotation * new Vector3(29f, -27f, -36f);
+                    rotation = LookAt(position, vehicleStart.WorldPosition + launchRotation *
+                        new Vector3(0f, -21f + frame.HeightMetres * .65f, 0f));
+                    fov = 43f;
+                    return;
+                case TransportDepartureShot.Climb:
+                    float tracking = reducedMotion ? 0f : Mathf.InverseLerp(TransportDepartureTimeline.ClimbCutSeconds,
+                        TransportDepartureTimeline.UpperAirSeconds, elapsed);
+                    position = vehicleRoot.position + launchRotation * Vector3.Lerp(new Vector3(39f, -29f, -26f),
+                        new Vector3(49f, -35f, -18f), tracking);
+                    rotation = LookAt(position, vehicleRoot.TransformPoint(new Vector3(0f, -15f, 0f)));
+                    fov = 49f;
+                    return;
+                case TransportDepartureShot.UpperAir:
+                    position = vehicleRoot.position + launchRotation * new Vector3(-55f, 1f, -32f);
+                    rotation = LookAt(position, vehicleRoot.TransformPoint(new Vector3(0f, -12f, 0f)));
+                    fov = 45f;
+                    return;
+                case TransportDepartureShot.Approach:
+                    position = approachCamera.position;
+                    rotation = approachCamera.rotation;
+                    fov = 47f;
+                    return;
+                case TransportDepartureShot.Collar:
+                    position = dockCamera.position;
+                    rotation = dockCamera.rotation;
+                    fov = 41f;
+                    return;
+                case TransportDepartureShot.Transfer:
+                    position = Vector3.Lerp(boardingStartCamera.position, boardingEndCamera.position, frame.BoardingTravel);
+                    rotation = Quaternion.Slerp(boardingStartCamera.rotation, boardingEndCamera.rotation, frame.BoardingTravel);
+                    fov = Mathf.Lerp(60f, cameraStartFov, frame.BoardingTravel);
+                    return;
+                default:
+                    position = Vector3.Lerp(cameraStartPosition, seatedCamera.position, frame.SeatBlend);
+                    rotation = Quaternion.Slerp(cameraStartRotation, seatedCamera.rotation, frame.SeatBlend);
+                    fov = cameraStartFov;
+                    return;
+            }
+        }
+
+        private static Quaternion LookAt(Vector3 position, Vector3 target) => Quaternion.LookRotation(target - position, Vector3.up);
+
+        private void AddCameraVibration(float strength, bool cabin, ref Vector3 position, ref Quaternion rotation)
+        {
+            if (strength <= 0f) return;
+            float t = elapsed - TransportDepartureTimeline.IgnitionSeconds;
+            // Layer a short engine kick over bounded rumble. Use real-time sampling so a pause holds exactly.
+            float kick = Mathf.Sin(t * 13f) * Mathf.Exp(-5.5f * t);
+            Vector3 jitter = new Vector3(.65f * Mathf.Sin(t * 34f) + .35f * Mathf.Sin(t * 16f),
+                .7f * Mathf.Sin(t * 29f) + .3f * Mathf.Sin(t * 49f), .45f * Mathf.Sin(t * 19f));
+            position += rotation * (jitter * ((cabin ? .029f : .11f) * strength));
+            float angle = (cabin ? 1.8f : .85f) * strength;
+            rotation *= Quaternion.Euler(angle * (.65f * Mathf.Sin(t * 27f) + kick),
+                angle * .35f * Mathf.Sin(t * 21f), angle * .52f * Mathf.Sin(t * 33f));
+        }
+
         private void PublishFrame(bool first)
         {
-            var frame = TransportDepartureTimeline.Evaluate(elapsed, reducedMotion);
-            if (first || frame.Cue != lastCue)
+            if (first || currentFrame.Cue != lastCue)
             {
-                lastCue = frame.Cue;
-                CurrentCaption = TransportDepartureTimeline.Caption(frame.Cue);
-                CueRaised?.Invoke(frame.Cue);
+                lastCue = currentFrame.Cue;
+                CurrentCaption = TransportDepartureTimeline.Caption(currentFrame.Cue);
+                CueRaised?.Invoke(currentFrame.Cue);
                 if (!active) return;
                 CaptionChanged?.Invoke(CurrentCaption);
                 if (!active) return;
             }
-            ProgressChanged?.Invoke(frame.Progress);
+            ProgressChanged?.Invoke(currentFrame.Progress);
         }
 
         private void Stop(TransportDepartureEnd reason)
@@ -189,6 +299,9 @@ namespace OutOfReach.Presentation.Cinematics
         private void Restore()
         {
             vehicleStart.Restore(); hatchStart.Restore(); armStart.Restore(); pivotStart.Restore();
+            if (sceneCamera) sceneCamera.fieldOfView = cameraStartFov;
+            if (orbitalViewsLeased && booster) booster.gameObject.SetActive(boosterWasActive);
+            orbitalViewsLeased = false;
         }
 
         private bool ParentsUnchanged() => pivotStart.HasOriginalParent && vehicleStart.HasOriginalParent &&
@@ -218,7 +331,7 @@ namespace OutOfReach.Presentation.Cinematics
             return cameraChain.Length > 0;
         }
 
-        private bool ValidScene()
+        private bool ValidScene(bool allowHiddenAccessArm = false)
         {
             if (!cameraOffsetPivot || !sceneCamera || !vehicleRoot || !hatchFrame || !accessArmFrame || !seatedCamera) return false;
             if (!sceneCamera.transform.IsChildOf(cameraOffsetPivot) || sceneCamera.transform == cameraOffsetPivot ||
@@ -228,12 +341,25 @@ namespace OutOfReach.Presentation.Cinematics
                 cameraOffsetPivot.IsChildOf(vehicleRoot) || vehicleRoot.IsChildOf(cameraOffsetPivot) ||
                 cameraOffsetPivot.IsChildOf(accessArmFrame) || accessArmFrame.IsChildOf(cameraOffsetPivot)) return false;
             return ValidTransform(cameraOffsetPivot) && ValidTransform(sceneCamera.transform) && ValidTransform(vehicleRoot) &&
-                ValidTransform(hatchFrame) && ValidTransform(accessArmFrame) && ValidTransform(seatedCamera);
+                ValidTransform(hatchFrame) && ValidTransform(accessArmFrame, !allowHiddenAccessArm) && ValidTransform(seatedCamera);
         }
 
-        private static bool ValidTransform(Transform value)
+        private bool ValidOrbitalViews() =>
+            ValidTransform(capsulePort) && ValidTransform(booster, false) &&
+            capsulePort != vehicleRoot && booster != vehicleRoot &&
+            capsulePort.IsChildOf(vehicleRoot) && booster.IsChildOf(vehicleRoot) &&
+            !capsulePort.IsChildOf(booster) && !hatchFrame.IsChildOf(booster) && !seatedCamera.IsChildOf(booster) &&
+            ValidOrbitalAnchor(auroraReceiver) && ValidOrbitalAnchor(approachCamera) && ValidOrbitalAnchor(dockCamera) &&
+            ValidOrbitalAnchor(boardingStartCamera) && ValidOrbitalAnchor(boardingEndCamera);
+
+        private bool ValidOrbitalAnchor(Transform value) => ValidTransform(value, false) &&
+            value != vehicleRoot && value != accessArmFrame && value != cameraOffsetPivot &&
+            !value.IsChildOf(vehicleRoot) && !value.IsChildOf(accessArmFrame) && !value.IsChildOf(cameraOffsetPivot);
+
+        private static bool ValidTransform(Transform value, bool requireActive = true)
         {
-            if (!value.gameObject.activeInHierarchy || !Finite(value.position) || !Finite(value.rotation)) return false;
+            if (!value || (requireActive && !value.gameObject.activeInHierarchy) || !Finite(value.position) ||
+                !Finite(value.rotation)) return false;
             for (Transform p = value; p; p = p.parent)
                 if ((p.localScale - Vector3.one).sqrMagnitude > 0.00000001f || !Finite(p.localScale)) return false;
             return true;

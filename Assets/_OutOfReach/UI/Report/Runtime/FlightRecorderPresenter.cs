@@ -161,6 +161,7 @@ namespace OutOfReach.Presentation.UI.Report
             if (sections == null || sections.Count == 0)
                 record.Add(FlightRecorderElements.Text("No detailed facts were supplied with this report.", "recorder-empty"));
             sources.Add(marsCredits);
+            sources.Add(FlightRecorderElements.Text("Departure music · Titan by Scott Buckley (CC BY 4.0)", "recorder-classification"));
             marsSourceButton.SetEnabled(true);
             hasSources = true;
             canRestart = FlightRecorderEndCardCopy.CanRestart(report);
