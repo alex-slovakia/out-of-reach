@@ -25,7 +25,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [Header("Field (site-local metres)")]
         [SerializeField] private Vector2 centre = new Vector2(0f, 5f);
         [SerializeField, Range(100f, 600f)] private float outerRadius = 430f;
-        [SerializeField, Range(.7f, 3f)] private float spacing = 1.15f;
+        [SerializeField, Range(.7f, 3f)] private float spacing = 1.0f;
         [SerializeField, Range(8f, 64f)] private float chunkSize = 24f;
         [SerializeField, Tooltip("x0, z0, x1, z1 rectangles kept clear, site-local; soft edge of `clearRamp` metres.")]
         private Vector4[] clearAreas =
@@ -43,15 +43,15 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private float maxSlope = 38f;
         [SerializeField] private int seed = 1977;
         [Header("Distance and LOD (metres)")]
-        [SerializeField, Range(50f, 600f)] private float maxDrawDistance = 260f;
+        [SerializeField, Range(50f, 600f)] private float maxDrawDistance = 340f;
         [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 32f;
         [SerializeField, Range(1f, 12f)] private float lodBand = 4f;
-        [SerializeField, Range(.05f, 1f)] private float farCountFraction = .2f;
+        [SerializeField, Range(.05f, 1f)] private float farCountFraction = .1f;
         [Header("Reduced effects")]
         [SerializeField, Range(.1f, 1f)] private float reducedDrawDistance = .65f;
         [Header("Wind (shared globals)")]
         [SerializeField] private Vector2 windDirection = new Vector2(.82f, .57f);
-        [SerializeField, Range(0f, .6f)] private float swayAngle = .12f;
+        [SerializeField, Range(0f, .6f)] private float swayAngle = .16f;
         [SerializeField, Range(0f, 1f)] private float gustAngle = .38f;
         [SerializeField, Range(.5f, 20f)] private float gustSpeed = 6.5f;
         [SerializeField, Range(4f, 120f)] private float gustWavelength = 34f;
@@ -113,6 +113,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
 
         private void Release()
         {
+            pending = null;
             buffer?.Release(); buffer = null;
             chunks = Array.Empty<Chunk>();
             DestroyOwned(nearMesh); DestroyOwned(farMesh); nearMesh = farMesh = null;
@@ -127,19 +128,63 @@ namespace OutOfReach.Presentation.LaunchGrassV04
 
         // ---------------- generation ----------------
 
+        private sealed class Generated { public Vector4[] Instances; public Chunk[] Chunks; public double Milliseconds; public string Error; }
+        private System.Threading.Tasks.Task<Generated> pending;
+
+        /// <summary>Reads the ground mesh on the main thread, then generates the instances: on a worker thread in
+        /// Play mode (no load hitch; the field appears when ready), synchronously in Edit mode and the installer.</summary>
         private void Build()
         {
             if (!material || !ground || !ground.sharedMesh) return;
-            if (!SystemInfo.supportsComputeShaders && SystemInfo.graphicsShaderLevel < 45) return;
+            if (SystemInfo.graphicsShaderLevel < 45) return;
+            Mesh mesh = ground.sharedMesh;
+            if (!mesh.isReadable) { Debug.LogWarning("LAUNCH_GRASS_V04: ground mesh is not readable; field not built.", this); return; }
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var heights = new HeightGrid(ground, transform, centre, outerRadius + chunkSize, 2f);
-            if (!heights.Valid) { Debug.LogWarning("LAUNCH_GRASS_V04: ground mesh is not readable; field not built.", this); return; }
+            Matrix4x4 m = transform.worldToLocalMatrix * ground.transform.localToWorldMatrix;
+            Vector3[] vertices = mesh.vertices;
+            for (int i = 0; i < vertices.Length; i++) vertices[i] = m.MultiplyPoint3x4(vertices[i]);
+            var triangles = new List<int>();
+            for (int sub = 0; sub < mesh.subMeshCount; sub++)
+                if (mesh.GetTopology(sub) == MeshTopology.Triangles) triangles.AddRange(mesh.GetTriangles(sub));
+            int[] tris = triangles.ToArray();
+            Matrix4x4 toWorld = transform.localToWorldMatrix;
+            Vector4[] clear = clearAreas ?? Array.Empty<Vector4>(), footprints = footprintClearAreas ?? Array.Empty<Vector4>();
+            Vector2 c = centre; float radius = outerRadius, step = spacing, chunk = chunkSize, ramp = clearRamp, holes = clearings;
+            float cosSlope = Mathf.Cos(maxSlope * Mathf.Deg2Rad); int fieldSeed = seed;
+            Generated Run()
+            {
+                try { return Generate(vertices, tris, toWorld, clear, footprints, c, radius, step, chunk, ramp, holes, cosSlope, fieldSeed, watch); }
+                catch (Exception e) { return new Generated { Error = e.ToString() }; }
+            }
+            if (Application.isPlaying) pending = System.Threading.Tasks.Task.Run(Run);
+            else Finish(Run());
+        }
 
-            float cosSlope = Mathf.Cos(maxSlope * Mathf.Deg2Rad);
+        private void Finish(Generated g)
+        {
+            pending = null;
+            if (g.Error != null) { Debug.LogError("LAUNCH_GRASS_V04: generation failed: " + g.Error, this); return; }
+            if (g.Instances.Length == 0) return;
+            buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, g.Instances.Length, 16) { name = "LaunchGrassV04 instances" };
+            buffer.SetData(g.Instances);
+            chunks = g.Chunks;
+            nearMesh = PampasGrassMeshes.BuildNearClump();
+            farMesh = PampasGrassMeshes.BuildFarCard();
+            InstanceCount = g.Instances.Length;
+            BuildMilliseconds = (float)g.Milliseconds;
+            Debug.Log("LAUNCH_GRASS_V04_READY instances=" + InstanceCount + " chunks=" + chunks.Length + " nearTris=" + NearTriangles
+                + " cardTris=" + CardTriangles + " bufferKB=" + (InstanceCount * 16 / 1024) + " generateMs=" + BuildMilliseconds.ToString("F1")
+                + " async=" + Application.isPlaying, this);
+        }
+
+        private static Generated Generate(Vector3[] vertices, int[] tris, Matrix4x4 toWorld, Vector4[] clearAreas, Vector4[] footprints,
+            Vector2 centre, float outerRadius, float spacing, float chunkSize, float clearRamp, float clearings, float cosSlope, int seed,
+            System.Diagnostics.Stopwatch watch)
+        {
+            var heights = new HeightGrid(vertices, tris, centre, outerRadius + chunkSize, 2f);
             int cells = Mathf.CeilToInt(outerRadius * 2f / spacing);
             int chunkCells = Mathf.CeilToInt(outerRadius * 2f / chunkSize);
             var perChunk = new Dictionary<int, List<Vector4>>();
-            Matrix4x4 toWorld = transform.localToWorldMatrix;
             for (int j = 0; j < cells; j++)
             for (int i = 0; i < cells; i++)
             {
@@ -148,7 +193,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 if ((p - centre).sqrMagnitude > outerRadius * outerRadius) continue;
                 float keep = 1f;
                 foreach (Vector4 r in clearAreas) keep *= 1f - Box(p, r, clearRamp);
-                foreach (Vector4 r in footprintClearAreas) keep *= 1f - Box(p, r, 3f);
+                foreach (Vector4 r in footprints) keep *= 1f - Box(p, r, 3f);
+                if (keep <= 0f) continue;
                 float n = ValueNoise(p / 41f + new Vector2(seed * .01f, 3.1f)) * .7f + ValueNoise(p / 12f + new Vector2(7.7f, seed * .02f)) * .3f;
                 keep *= Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(clearings - .12f, clearings + .14f, n));
                 if (Hash(i, j, seed + 29) >= keep) continue;
@@ -157,18 +203,18 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 int cx = Mathf.Clamp(Mathf.FloorToInt((p.x - centre.x + outerRadius) / chunkSize), 0, chunkCells - 1);
                 int cz = Mathf.Clamp(Mathf.FloorToInt((p.y - centre.y + outerRadius) / chunkSize), 0, chunkCells - 1);
                 int key = cz * chunkCells + cx;
-                if (!perChunk.TryGetValue(key, out var list)) perChunk.Add(key, list = new List<Vector4>(512));
+                if (!perChunk.TryGetValue(key, out var list)) perChunk.Add(key, list = new List<Vector4>(640));
                 list.Add(new Vector4(world.x, world.y, world.z, Hash(i, j, seed + 47)));
             }
 
-            var all = new List<Vector4>(perChunk.Count * 400);
+            var all = new List<Vector4>(perChunk.Count * 500);
             var built = new List<Chunk>(perChunk.Count);
             var rng = new System.Random(seed);
             var keys = new List<int>(perChunk.Keys); keys.Sort();
             foreach (int key in keys)
             {
                 List<Vector4> list = perChunk[key];
-                for (int k = list.Count - 1; k > 0; k--) { int s = rng.Next(k + 1); (list[k], list[s]) = (list[s], list[k]); }
+                for (int k = list.Count - 1; k > 0; k--) { int swap = rng.Next(k + 1); (list[k], list[swap]) = (list[swap], list[k]); }
                 var bounds = new Bounds(list[0], Vector3.zero);
                 foreach (Vector4 v in list) bounds.Encapsulate(v);
                 bounds.Expand(new Vector3(4f, 0f, 4f));
@@ -176,16 +222,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 built.Add(new Chunk { Start = all.Count, Count = list.Count, Bounds = bounds });
                 all.AddRange(list);
             }
-            if (all.Count == 0) return;
-            buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, all.Count, 16) { name = "LaunchGrassV04 instances" };
-            buffer.SetData(all);
-            chunks = built.ToArray();
-            nearMesh = PampasGrassMeshes.BuildNearClump();
-            farMesh = PampasGrassMeshes.BuildFarCard();
-            InstanceCount = all.Count;
-            BuildMilliseconds = (float)watch.Elapsed.TotalMilliseconds;
-            Debug.Log("LAUNCH_GRASS_V04_READY instances=" + InstanceCount + " chunks=" + chunks.Length + " nearTris=" + NearTriangles
-                + " cardTris=" + CardTriangles + " bufferKB=" + (InstanceCount * 16 / 1024) + " buildMs=" + BuildMilliseconds.ToString("F1"), this);
+            return new Generated { Instances = all.ToArray(), Chunks = built.ToArray(), Milliseconds = watch.Elapsed.TotalMilliseconds };
         }
 
         private static float Box(Vector2 p, Vector4 r, float ramp)
@@ -221,23 +258,13 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             private readonly int size; private readonly float cell; private readonly Vector2 origin;
             public readonly bool Valid;
 
-            public HeightGrid(MeshFilter filter, Transform field, Vector2 centre, float radius, float cellSize)
+            public HeightGrid(Vector3[] v, int[] t, Vector2 centre, float radius, float cellSize)
             {
-                Mesh mesh = filter.sharedMesh;
-                if (!mesh.isReadable) return;
                 cell = cellSize; size = Mathf.CeilToInt(radius * 2f / cell) + 2;
                 origin = centre - new Vector2(radius, radius);
                 h = new float[size * size]; up = new float[size * size];
                 for (int i = 0; i < h.Length; i++) h[i] = float.NaN;
-                Matrix4x4 m = field.worldToLocalMatrix * filter.transform.localToWorldMatrix;
-                Vector3[] v = mesh.vertices;
-                for (int i = 0; i < v.Length; i++) v[i] = m.MultiplyPoint3x4(v[i]);
-                for (int sub = 0; sub < mesh.subMeshCount; sub++)
-                {
-                    if (mesh.GetTopology(sub) != MeshTopology.Triangles) continue;
-                    int[] t = mesh.GetTriangles(sub);
-                    for (int k = 0; k < t.Length; k += 3) Raster(v[t[k]], v[t[k + 1]], v[t[k + 2]]);
-                }
+                for (int k = 0; k + 2 < t.Length; k += 3) Raster(v[t[k]], v[t[k + 1]], v[t[k + 2]]);
                 Valid = true;
             }
 
@@ -288,6 +315,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private void Update()
         {
             if (rebuildRequested && isActiveAndEnabled) { rebuildRequested = false; Release(); Build(); }
+            if (pending != null && pending.IsCompleted) Finish(pending.Result);
             Vector2 wd = windDirection.sqrMagnitude > 1e-6f ? windDirection.normalized : Vector2.right;
             Shader.SetGlobalVector(WindId, new Vector4(wd.x, wd.y, swayAngle * (reducedEffects ? .5f : 1f), gustAngle));
             Shader.SetGlobalVector(WindWaveId, new Vector4(gustSpeed, gustWavelength, reducedEffects ? 1f : 0f, 0f));
@@ -342,7 +370,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private float KeepFraction(float d, float near, float max)
         {
             float t = Mathf.Clamp01((d - near) / Mathf.Max(max - near, 1f));
-            return Mathf.Lerp(1f, farCountFraction, t * t * (3f - 2f * t));
+            float e = 1f - t;                                   // same curve as KeepFraction in the shader
+            return Mathf.Lerp(1f, farCountFraction, 1f - e * e);
         }
 
         private void Submit(ref RenderParams rp, ref int used, int chunk, int count, bool card, Mesh mesh)

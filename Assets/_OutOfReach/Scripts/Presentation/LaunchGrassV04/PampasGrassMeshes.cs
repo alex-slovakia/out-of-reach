@@ -67,21 +67,21 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             return ((h ^ (h >> 16)) & 0xffffff) / 16777216f;
         }
 
-        /// <summary>Full clump: 7 stalks with crossed feather plumes and 9 arching leaves (~250 triangles).</summary>
+        /// <summary>Full clump: 11 stalks with crossed feather plumes and 6 arching leaves (~250 triangles).</summary>
         public static Mesh BuildNearClump()
         {
             var b = new Builder();
-            const int stems = 7, leaves = 9;
+            const int stems = 11, leaves = 6;
             for (int i = 0; i < stems; i++)
             {
                 float az = (i + Hash(i, 1) * .7f) / stems * Mathf.PI * 2f;
                 Vector3 outward = new Vector3(Mathf.Cos(az), 0, Mathf.Sin(az));
-                Vector3 baseP = outward * (.02f + .07f * Hash(i, 2));
-                float lean = Mathf.Lerp(.06f, .26f, Hash(i, 3));
-                float height = Mathf.Lerp(.80f, 1f, Hash(i, 4));
+                Vector3 baseP = outward * (.02f + .12f * Hash(i, 2));
+                float lean = Mathf.Lerp(.08f, .34f, Hash(i, 3));
+                float height = Mathf.Lerp(.74f, 1f, Hash(i, 4));
                 float rnd = Hash(i, 5);
-                float droop = Mathf.Lerp(.02f, .10f, Hash(i, 6));
-                float stalkTop = .60f;
+                float droop = Mathf.Lerp(.04f, .17f, Hash(i, 6));
+                float stalkTop = .55f;
                 System.Func<float, Vector3> stemCurve = v =>
                 {
                     float y = v * height;
@@ -93,7 +93,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 for (int q = 0; q < 2; q++)
                 {
                     Vector3 plumeSide = q == 0 ? side : outward;
-                    b.Ribbon(v => stemCurve(Mathf.Lerp(stalkTop - .03f, 1f, v)), v => .085f, plumeSide, 4, PartPlume, rnd, 1);
+                    b.Ribbon(v => stemCurve(Mathf.Lerp(stalkTop - .03f, 1f, v)), v => .075f, plumeSide, 3, PartPlume, rnd, 1);
                 }
             }
             for (int i = 0; i < leaves; i++)
@@ -106,7 +106,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 Vector3 side = Vector3.Cross(Vector3.up, outward).normalized;
                 // Arching leaf: rises, then droops back down under its own weight.
                 b.Ribbon(v => outward * (reach * v * length / .6f) + Vector3.up * (rise * length / .6f * (v * 1.6f - .9f * v * v)),
-                    v => .022f * (1f - v * v), side, 5, PartLeaf, Hash(i, 15), .55f);
+                    v => .024f * (1f - v * v), side, 4, PartLeaf, Hash(i, 15), .55f);
             }
             return b.Build("Pampas clump V04 (near)");
         }

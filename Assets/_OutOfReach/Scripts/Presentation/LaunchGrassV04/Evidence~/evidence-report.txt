@@ -1,0 +1,28 @@
+unity=6000.3.28f1 gpu=NVIDIA GeForce RTX 3070 api=Direct3D12 cpu=Intel(R) Core(TM) i7-10700F CPU @ 2.90GHz date=2026-11-15 20:14
+shader Assets/_OutOfReach/Visuals/LaunchGrassV04/PampasGrassV04.shader loaded=True hasError=False messages=0 passes=3 supported=True
+shader Assets/_OutOfReach/Visuals/LaunchGrassV04/LaunchHazeDomeV04.shader loaded=True hasError=False messages=0 passes=1 supported=True
+innerMesh verts=53092 bounds=Center: (0.00, -33.70, 5.00), Extents: (3000.00, 23.32, 2995.00) readable=True
+installer ms=1264 report: field=Launch grass V04 - pampas field instances=498048 chunks=993 nearTris=246 cardTris=18 buildMs=913.6 footprintsCleared=0 departureBound=Departure (stub) gustOrigin=Land pad top plane switchedOff=[Launch grass V03 - dense meadow] collidersChanged=0
+LAUNCH_GRASS_V04_COST instances=498048 chunks=993 nearTris=246 cardTris=18 buildMs=913.6 lastDrawCalls=0 lastNearInstances=0 lastCardInstances=0 lastTriangles=0 reduced=False
+shellsActiveAfterInstall=False profileComponents=Tonemapping,Bloom,WhiteBalance,ColorAdjustments,SplitToning,FilmGrain,Vignette
+shot 01-eye-level-backlit-towards-sun pos=(150.0, -34.6, 70.0) drawCalls=161 near=2304 cards=35399 tris=1203966 gust=0.00 front=0
+shot 02-eye-level-towards-pad pos=(115.0, -34.9, -40.0) drawCalls=143 near=2808 cards=20282 tris=1055844 gust=0.00 front=0
+shot 03-elevated-30m-over-field-sunward pos=(60.0, -2.6, -50.0) drawCalls=177 near=0 cards=35831 tris=644958 gust=0.00 front=0
+shot 04-elevated-30m-away-from-sun pos=(-60.0, -2.6, 60.0) drawCalls=188 near=0 cards=39254 tris=706572 gust=0.00 front=0
+shot 05-ground-closeup-plumes pos=(140.0, -34.4, 85.0) drawCalls=177 near=4590 cards=38624 tris=1824372 gust=0.00 front=0
+shot 06-gust-eye-level-t+0.4s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2808 cards=20282 tris=1055844 gust=1.00 front=18
+shot 07-gust-aerial-t+0.4s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=20724 tris=373032 gust=1.00 front=18
+shot 06-gust-eye-level-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2808 cards=20282 tris=1055844 gust=1.00 front=50
+shot 07-gust-aerial-t+1.2s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=20724 tris=373032 gust=1.00 front=50
+shot 06-gust-eye-level-t+2.4s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2808 cards=20282 tris=1055844 gust=1.00 front=92
+shot 07-gust-aerial-t+2.4s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=20724 tris=373032 gust=1.00 front=92
+shot 06-gust-eye-level-t+4.0s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2808 cards=20282 tris=1055844 gust=1.00 front=138
+shot 07-gust-aerial-t+4.0s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=20724 tris=373032 gust=1.00 front=138
+shot 08-reduced-effects-gust-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=47 near=1744 cards=4426 tris=508692 gust=0.50 front=50
+shot 09-reduced-effects-backlit pos=(150.0, -34.6, 70.0) drawCalls=87 near=1432 cards=12150 tris=570972 gust=0.00 front=0
+shot 10-idle-no-launch-grade-backlit pos=(150.0, -34.6, 70.0) drawCalls=161 near=2304 cards=35399 tris=1203966 gust=0.00 front=0
+--- frame timing (camera.Render + GPU sync via 1x1 readback, 1600x900, median of 24 after 4 warm-up) ---
+01-eye-level-backlit-towards-sun noGrassMs=2.35 v04Ms=16.65 drawCalls=161 near=2304 cards=35399 tris=1203966 v04ReducedMs=7.29 drawCalls=87 tris=570972 v03ShellsMs=5.06
+02-eye-level-towards-pad noGrassMs=2.77 v04Ms=6.39 drawCalls=143 near=2808 cards=20282 tris=1055844 v04ReducedMs=4.98 drawCalls=47 tris=508692 v03ShellsMs=4.25
+03-elevated-30m-over-field-sunward noGrassMs=6.40 v04Ms=37.08 drawCalls=177 near=0 cards=35831 tris=644958 v04ReducedMs=12.73 drawCalls=81 tris=196542 v03ShellsMs=7.20
+05-ground-closeup-plumes noGrassMs=4.76 v04Ms=12.21 drawCalls=177 near=4590 cards=38624 tris=1824372 v04ReducedMs=9.99 drawCalls=96 tris=946770 v03ShellsMs=10.37

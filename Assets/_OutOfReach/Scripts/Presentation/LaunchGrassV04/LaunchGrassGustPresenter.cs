@@ -27,9 +27,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [SerializeField] private Material hazeMaterial;
         [Header("Thruster gust")]
         [SerializeField, Range(5f, 120f)] private float frontSpeed = 46f;
-        [SerializeField, Range(20f, 500f)] private float maxFrontRadius = 260f;
+        [SerializeField, Range(20f, 500f)] private float maxFrontRadius = 300f;
         [SerializeField, Range(2f, 60f)] private float frontWidth = 16f;
-        [SerializeField, Range(10f, 300f)] private float sustainedReach = 120f;
+        [SerializeField, Range(10f, 300f)] private float sustainedReach = 230f;
         [SerializeField, Range(0f, 1f)] private float flutter = .8f;
         [SerializeField, Range(0f, 1f)] private float strength = 1f;
         [Header("Look weights")]

@@ -15,16 +15,17 @@ Shader "OutOfReach/Launch Pampas Grass V04"
     Properties
     {
         _HeightRange("Clump height min, max (m)",Vector)=(1.05,1.7,0,0)
-        _Olive("Olive base",Color)=(0.30,0.29,0.14,1)
-        _Straw("Straw stems and leaves",Color)=(0.66,0.52,0.27,1)
-        _Gold("Golden amber",Color)=(0.80,0.58,0.27,1)
-        _Plume("Seed heads (pale amber)",Color)=(0.93,0.80,0.58,1)
+        _Olive("Olive base",Color)=(0.20,0.19,0.08,1)
+        _Straw("Straw stems and leaves",Color)=(0.40,0.30,0.15,1)
+        _Gold("Golden amber",Color)=(0.50,0.35,0.15,1)
+        _Plume("Seed heads (pale amber)",Color)=(0.60,0.46,0.27,1)
         _OliveShare("Olive share",Range(0,1))=0.35
-        _Translucency("Back-light through plumes",Range(0,4))=2.2
-        _TransTint("Back-light tint",Color)=(1.0,0.72,0.38,1)
+        _Translucency("Back-light through plumes",Range(0,4))=1.15
+        _TransTint("Back-light tint",Color)=(1.0,0.66,0.34,1)
+        _FarCanopy("Canopy colour at the draw-distance edge (matches the ground shader)",Color)=(0.19,0.15,0.07,1)
         _Ambient("Ambient scale",Range(0,2))=0.9
-        _GustSheen("Brightening in gust waves",Range(0,1))=0.22
-        _HazeDensity("Aerial haze per metre",Float)=0.0032
+        _GustSheen("Brightening in gust waves",Range(0,1))=0.3
+        _HazeDensity("Aerial haze per metre",Float)=0.0012
         _HazeColor("Haze away from the sun",Color)=(0.62,0.58,0.52,1)
         _HazeSunColor("Haze towards the sun",Color)=(1.0,0.80,0.52,1)
         _HazeSunPower("Sun-ward haze sharpness",Float)=6
@@ -38,7 +39,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
         CBUFFER_START(UnityPerMaterial)
         float4 _HeightRange;
-        half4 _Olive, _Straw, _Gold, _Plume, _TransTint, _HazeColor, _HazeSunColor;
+        half4 _Olive, _Straw, _Gold, _Plume, _TransTint, _HazeColor, _HazeSunColor, _FarCanopy;
         half _OliveShare, _Translucency, _Ambient, _GustSheen, _Cutoff;
         float _HazeDensity, _HazeSunPower;
         float _ChunkStart, _ChunkCount, _IsCard;
@@ -71,7 +72,8 @@ Shader "OutOfReach/Launch Pampas Grass V04"
         float KeepFraction(float d)
         {
             float t=saturate((d-_OOR_GrassLod.x)/max(_OOR_GrassLod.z-_OOR_GrassLod.x,1));
-            return lerp(1,_OOR_GrassLod.w,t*t*(3-2*t));
+            float e=1-t;
+            return lerp(1,_OOR_GrassLod.w,1-e*e);
         }
 
         Varyings GrassVertex(Attributes v)
@@ -89,7 +91,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             float keep=KeepFraction(d)*(_OOR_GrassWindWave.z>.5?.55:1);
             float visible=saturate((keep-rank)/.06);
             float widen=clamp(rsqrt(max(keep,.05)),1,2.4);
-            float fade=1-smoothstep(_OOR_GrassLod.z*.78,_OOR_GrassLod.z,d);
+            float fade=1-smoothstep(_OOR_GrassLod.z*.6,_OOR_GrassLod.z,d);
 
             // Height: per instance and in broad patches (taller swathes, lower hollows).
             float patch=Noise(root.xz/46+17)*.65+Noise(root.xz/13+3)*.35;
@@ -123,11 +125,11 @@ Shader "OutOfReach/Launch Pampas Grass V04"
                 float2 rel=root.xz-_OOR_GrassGust.xz; float dist=length(rel)+1e-3; float2 rdir=rel/dist;
                 float frontW=max(_OOR_GrassGustWave.y,1);
                 float q=(dist-_OOR_GrassGustWave.x)/frontW; float front=exp(-q*q);
-                float inside=saturate(1-dist/max(_OOR_GrassGustWave.z,1))*saturate((_OOR_GrassGustWave.x-dist)/frontW+1);
+                float inside=pow(saturate(1-dist/max(_OOR_GrassGustWave.z,1)),.7)*saturate((_OOR_GrassGustWave.x-dist)/frontW+1);
                 float push=_OOR_GrassGust.w*(front*1.1+inside*.75);
                 float shiver=sin(t*23+r3*60+dist*.7)*_OOR_GrassGustWave.w*push*(1-reduced);
                 bendVec+=rdir*(push*1.25+shiver*.22);
-                wave=max(wave,saturate(push));
+                wave=max(wave,push*1.6);
             }
             float angle=min(length(bendVec),1.35);
             float2 bendDir=bendVec/max(length(bendVec),1e-4);
@@ -149,41 +151,55 @@ Shader "OutOfReach/Launch Pampas Grass V04"
 
         float IGN(float2 pixel){return frac(52.9829189*frac(dot(pixel,float2(.06711056,.00583715))));}
 
-        // Coverage of the procedural parts; returns alpha-test value (clip at _Cutoff).
-        float Coverage(Varyings i, float2 pixel)
+        // Fibre coordinate across a plume: fibres fan out towards the tip.
+        float PlumeFibre(float2 uv,float rnd){return (uv.x-.5)*(1.7-.7*uv.y)*58+rnd*17;}
+
+        // Near mesh. Leaves and stalks are solid ribbons. Plumes: a soft spindle envelope with a thin dense
+        // core and fine fibres of random length fanning towards the tip, lightly dithered at the rim.
+        float NearCoverage(Varyings i,float dither)
         {
-            float part=i.uvPart.z; float2 uv=i.uvPart.xy;
-            float dither=IGN(pixel);
-            float lodW=i.shade.w;
-            if(_IsCard<.5)
+            float cover=1;
+            if(i.uvPart.z>.5)
             {
-                if(1-lodW<dither) return 0;                          // cross-fade out into cards
-                if(part<.5) return 1;                                // leaves and stalks: geometry taper
-                // Feather plume: tapering envelope, central rachis and angled barbs.
+                float2 uv=i.uvPart.xy;
                 float v=uv.y, du=abs(uv.x-.5);
-                float env=pow(saturate(sin(3.14159*saturate(v*.9+.06))),.65)*.5*(1-.35*v);
-                float s=v*24-du*7+i.uvPart.w*13;
-                float strand=1-abs(frac(s)-.5)*2;
-                float aa=saturate(fwidth(s)*1.2);
-                strand=lerp(strand,.62,aa);
-                float edge=saturate(1-du/max(env,1e-3));
-                float rachis=saturate(1-du/.035);
-                return max((.25+.75*strand)*pow(edge,.45),rachis)*step(du,env);
+                float env=.5*pow(saturate(sin(3.14159*pow(saturate(v),.7))),.8)*(1-.25*v);
+                float rel=du/max(env,1e-3);
+                float fib=PlumeFibre(uv,i.uvPart.w);
+                float len=Hash21(float2(floor(fib),i.uvPart.w*9.1+3));
+                float fibre=smoothstep(.5,.1,abs(frac(fib)-.5))*step(v,lerp(.45,1.02,len))*step(.08*len,v);
+                fibre=lerp(fibre,.5,saturate(fwidth(fib)*.9));
+                float core=1-smoothstep(.04,.26,rel);
+                cover=(max(core,fibre*(1-smoothstep(.55,1,rel)*.8))+(dither-.5)*.35*rel)*step(rel,1);
             }
-            if(lodW<dither) return 0;                                // cross-fade in from meshes
-            // Far card: 5 plumed stems per quad and a dense leafy base.
-            float cols=5; float u=uv.x*cols; float k=floor(u); float cu=frac(u);
+            return (1-i.shade.w<dither)?0:cover;                       // cross-fade out into cards
+        }
+
+        // Far card: 7 plumed stems per quad (plumes take the top ~45%) above a dense leafy base.
+        float CardCoverage(Varyings i,float dither)
+        {
+            float2 uv=i.uvPart.xy;
+            float u=uv.x*7; float k=floor(u); float cu=frac(u);
             float rk=Hash21(float2(k,i.uvPart.w*31+i.shade.y*7));
-            float top=lerp(.72,1,rk);
+            float top=lerp(.70,1,rk);
             float v=uv.y;
-            float plumeV=saturate((v-(top-.36))/.36);
-            float env=pow(saturate(sin(3.14159*plumeV)),.6)*.42*step(v,top)*step(top-.36,v);
-            float plume=saturate(1-abs(cu-.5)/max(env,1e-3))*step(1e-3,env);
-            float stalkW=max(.05,fwidth(u)*.8);
-            float stalk=step(abs(cu-.5+(v-.5)*.08*(rk-.5)),stalkW)*step(v,top-.3);
-            float baseN=Noise(float2(uv.x*38,v*9)+i.shade.y*13);
-            float base=saturate((.42-v)/.42)*(.55+.6*baseN);
-            return max(max(plume*1.15,stalk),base);
+            float plumeV=saturate((v-(top-.46))/.46);
+            float env=.44*pow(saturate(sin(3.14159*pow(plumeV,.7))),.8)*step(v,top)*step(top-.46,v);
+            float rel=abs(cu-.5+(plumeV-.5)*.12*(rk-.5))/max(env,1e-3);
+            float fluff=Noise(float2(u*9,v*40)+i.shade.y*5);
+            float plume=(1-smoothstep(.35,1,rel))*(.7+.55*fluff)*step(1e-3,env);
+            float stalk=step(abs(cu-.5),max(.05,fwidth(u)*.8))*step(v,top-.4);
+            float base=saturate((.45-v)/.45)*(.6+.6*Noise(float2(uv.x*38,v*9)+i.shade.y*13));
+            float cover=max(max(plume,stalk),base)+(dither-.5)*.2;
+            return (i.shade.w<dither)?0:cover;                         // cross-fade in from meshes
+        }
+
+        float Coverage(Varyings i,float2 pixel)
+        {
+            float dither=IGN(pixel);
+            float cover;
+            if(_IsCard<.5) cover=NearCoverage(i,dither); else cover=CardCoverage(i,dither);
+            return cover;
         }
 
         half3 Albedo(Varyings i)
@@ -194,11 +210,14 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             half3 stem=lerp(_Straw.rgb,_Gold.rgb,saturate(Hash11(seed*3.7)*.7+patchN*.5));
             stem=lerp(stem,_Olive.rgb*1.25,olive*.55*(1-h));
             half3 col=lerp(_Olive.rgb,stem,smoothstep(0,.55,h));         // olive, shaded bases
-            half3 plume=_Plume.rgb*lerp(.88,1.06,Hash11(seed*11.3+i.uvPart.w));
-            float isPlume=_IsCard>.5?smoothstep(.55,.75,i.uvPart.y):step(.5,part)*step(part,.8);
+            half3 plume=_Plume.rgb*lerp(.86,1.08,Hash11(seed*11.3+i.uvPart.w));
+            if(_IsCard<.5) plume*=lerp(.78,1.12,Hash21(float2(floor(PlumeFibre(i.uvPart.xy,i.uvPart.w)),i.uvPart.w*5.3)));
+            float isPlume=_IsCard>.5?smoothstep(.45,.7,i.uvPart.y):step(.5,part)*step(part,.8);
             col=lerp(col,plume,isPlume);
             col*=lerp(.42,1,smoothstep(0,.6,h));                          // self-shadowed thatch at the base
-            return col*(1+_GustSheen*i.shade.z);
+            col*=1+_GustSheen*i.shade.z;
+            float farT=smoothstep(_OOR_GrassLod.z*.22,_OOR_GrassLod.z*.9,length(i.positionWS-_WorldSpaceCameraPos));
+            return lerp(col,_FarCanopy.rgb,farT*.92);
         }
         ENDHLSL
 
@@ -222,19 +241,21 @@ Shader "OutOfReach/Launch Pampas Grass V04"
                 clip(cover-_Cutoff);
                 half3 albedo=Albedo(i);
                 float3 N=normalize(i.normalWS)*(front?1:-1);
-                N=normalize(lerp(N,float3(0,1,0),.45));
-                float3 V=normalize(_WorldSpaceCameraPos-i.positionWS);
-                Light light=GetMainLight(TransformWorldToShadowCoord(i.positionWS));
-                float shadow=light.shadowAttenuation;
-                float ndl=saturate(dot(N,light.direction)*.6+.4);
                 float part=i.uvPart.z;
+                N=normalize(lerp(N,float3(0,1,0),part>.5?.92:.45));
+                float3 V=normalize(_WorldSpaceCameraPos-i.positionWS);
+                Light light=GetMainLight();
+                float shadow=1;
+                if(_IsCard<.5) shadow=MainLightRealtimeShadow(TransformWorldToShadowCoord(i.positionWS));
+                float ndl=saturate(dot(N,light.direction)*.6+.4);
                 float thin=_IsCard>.5?lerp(.45,1,smoothstep(.5,.8,i.uvPart.y)):(part>.5?1:(part>.2?.35:.55));
                 float back=pow(saturate(dot(-V,light.direction)),5);
                 float rim=pow(1-saturate(abs(dot(normalize(i.normalWS),V))),3)*.35;
                 float h=i.shade.x;
                 half3 ambient=SampleSH(float3(0,1,0))*_Ambient*lerp(.45,1,h);
                 half3 color=albedo*(light.color*ndl*shadow+ambient);
-                color+=albedo*_TransTint.rgb*light.color*(back*_Translucency+rim*back)*thin*lerp(.3,1,shadow)*smoothstep(.1,.7,h);
+                float farT=smoothstep(_OOR_GrassLod.z*.22,_OOR_GrassLod.z*.9,length(i.positionWS-_WorldSpaceCameraPos));
+                color+=albedo*_TransTint.rgb*light.color*(back*_Translucency+rim*back)*thin*lerp(.3,1,shadow)*smoothstep(.1,.7,h)*(1-.85*farT);
 
                 // Aerial haze: warm and glowing towards the low sun, cooler away from it.
                 float d=length(i.positionWS-_WorldSpaceCameraPos);
