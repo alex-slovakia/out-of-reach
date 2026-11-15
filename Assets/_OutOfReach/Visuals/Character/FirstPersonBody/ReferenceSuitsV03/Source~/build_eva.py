@@ -7,6 +7,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from suitlib import *
 from head import build_head
+from suitlib import _frame, _smooth01
 
 A = sys.argv[sys.argv.index("--") + 1:]
 IN, INW, OUT, MHDIR, DISPLAY_PNG = (os.path.abspath(a) for a in A[:5])
@@ -19,6 +20,11 @@ bpy.ops.import_scene.fbx(filepath=INW)
 wobjs = [o for o in bpy.context.scene.objects if o.name not in meshes and o is not arm and o.type in ("MESH", "ARMATURE")]
 wmesh = {o.name: o for o in wobjs if o.type == "MESH"}
 log("bones", len(arm.data.bones), HASH0)
+MALE = MaleField(MHDIR, A[A.index("--male") + 1]) if "--male" in A else None
+if MALE:
+    for o in list(meshes.values()) + list(wmesh.values()):
+        apply_male(o, MALE)
+    log("male shape applied")
 
 PAL = [
     ("MAT_V03_EvaSuit", dict(hexcol="#D6D2C8", rough=0.85)),
@@ -29,8 +35,8 @@ PAL = [
     ("MAT_V03_EvaGlove", dict(hexcol="#CFCABF", rough=0.8)),
     ("MAT_V03_EvaGloveGrip", dict(hexcol="#4A4E52", rough=0.85)),
     ("MAT_V03_EvaStrap", dict(hexcol="#47494C", rough=0.88)),
-    ("MAT_V03_EvaMetal", dict(hexcol="#9AA2A8", rough=0.4, metal=0.8)),
-    ("MAT_V03_EvaRed", dict(hexcol="#B5382C", rough=0.75)),
+    ("MAT_V03_EvaMetal", dict(hexcol="#A3A9AD", rough=0.55, metal=0.55)),
+    ("MAT_V03_EvaRed", dict(hexcol="#A93A2F", rough=0.85)),
     ("MAT_V03_EvaDisplay", dict(hexcol="#FFFFFF", rough=0.3)),
     ("MAT_V03_EvaVisorGold", dict(hexcol="#C9A24A", rough=0.12, metal=1.0)),
     ("MAT_V03_EvaLight", dict(hexcol="#FFF2D0", rough=0.3, emission="#FFE9B0", emission_strength=6.0)),
@@ -38,7 +44,7 @@ PAL = [
     ("MAT_V03_EvaDark", dict(hexcol="#1B1C1E", rough=0.7)),
     ("MAT_V03_EvaVisorClear", dict(hexcol="#C8D6DE", rough=0.05)),
     ("MAT_V03_Skin", dict(hexcol="#A67A64", rough=0.65)),
-    ("MAT_V03_Hair", dict(hexcol="#2B211B", rough=0.75)),
+    ("MAT_V03_Hair", dict(hexcol="#2A2019", rough=0.88)),
     ("MAT_V03_EyeWhite", dict(hexcol="#D8D3CA", rough=0.3)),
     ("MAT_V03_EyeIris", dict(hexcol="#3A2B22", rough=0.2)),
 ]
@@ -75,7 +81,7 @@ def loose(v):
     if z < SHOE_TOP + 0.005:
         return n * 0.006
     if z > 0.92:
-        d = 0.016 if z < 1.46 else 0.006
+        d = 0.030 if z < 1.44 else (0.030 - 0.022 * min(1.0, (z - 1.44) / 0.06))
     else:
         d = 0.030 + 0.008 * min(1.0, max(0.0, (z - 0.2) / 0.6))
         inward = -sgn(v.co.x) * n.x
@@ -87,8 +93,8 @@ def loose(v):
 for v in bm.verts:
     v.co = v.co + loose(v)
 bm.normal_update()
-ZC = (1.512, 1.45, 1.40, 1.30, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72, 0.64, 0.635, 0.60, 0.57, 0.545,
-      0.52, 0.495, 0.47, 0.35, 0.17, 0.14, 0.08, SHOE_TOP, 0.06)
+ZC = (1.512, 1.45, 1.40, 1.30, 1.18, 1.175, 1.10, 1.095, 0.365, 0.36, 0.25, 0.245, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72, 0.64, 0.60, 0.585, 0.56, 0.55,
+      0.52, 0.495, 0.47, 0.445, 0.42, 0.30, 0.17, 0.14, 0.08, SHOE_TOP, 0.06)
 for z in ZC:
     cutz(bm, z)
 for y in (-0.06, -0.065, 0.02, -0.12, -0.14):
@@ -126,12 +132,14 @@ raise_region(bm, region(0.80, 0.83), 0.006, STRAP)                              
 raise_region(bm, region(0.60, 0.72, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True), 0.010, PANEL)   # side pockets
 fp = raise_region(bm, region(0.64, 0.78, yhi=-0.06, xlo=0.06, xhi=0.16, absx=True), 0.009, PANEL)  # front thigh pockets
 raise_region(bm, [f for f in fp if f.is_valid and fcenter(f).z > 0.76], 0.004, PANEL)              # pocket flaps
-raise_region(bm, region(0.47, 0.60, yhi=-0.06), 0.012, PANEL)                                    # knee pads
-for lo_, hi_ in ((0.495, 0.52), (0.545, 0.57)):
-    raise_region(bm, region(lo_, hi_, mat=PANEL, yhi=-0.06), 0.004, PANEL)                       # knee bellows ribs
-raise_region(bm, region(0.35, 0.47, yhi=-0.06), 0.006, PANEL)                                    # shin panels
+raise_region(bm, region(0.42, 0.55, yhi=-0.06), 0.013, PANEL)                                    # knee pads on the knee
+for lo_, hi_ in ((0.445, 0.47), (0.495, 0.52)):
+    raise_region(bm, region(lo_, hi_, mat=PANEL, yhi=-0.06), 0.005, PANEL)                       # knee bellows ribs
+raise_region(bm, region(0.30, 0.42, yhi=-0.06), 0.006, PANEL)                                    # shin panels
 raise_region(bm, region(0.14, 0.17), 0.007, STRAP)                                               # ankle straps
-raise_region(bm, region(0.60, 0.635, yhi=-0.06), 0.0035, RED)                                    # red bands above knees
+raise_region(bm, region(0.56, 0.585, yhi=-0.06), 0.004, RED)                                     # red bands just above the knees
+for lo_, hi_ in ((1.175, 1.18), (1.095, 1.10), (0.36, 0.365), (0.245, 0.25)):
+    raise_region(bm, region(lo_, hi_), 0.0025, PANEL)                                           # layer seams (piping)
 finish_mesh(tl, bm, M, 38.0)
 log("TorsoLegs", len(tl.data.vertices), vg_weight_report(tl, arm))
 bm.free()
@@ -194,7 +202,7 @@ for s in "LR":
         f.material_index = SUIT
     vnn = vnormals_from_faces(bm.faces)
     for v, n in vnn.items():
-        v.co = v.co + n * 0.012
+        v.co = v.co + n * 0.020
     bm.normal_update()
     ribs = []
     for lo_, hi_ in ((-0.070, -0.062), (-0.056, -0.048), (-0.042, -0.034), (-0.028, -0.020)):
@@ -216,14 +224,18 @@ for s in "LR":
     raise_region(bm, [f for f in bm.faces if 1.36 <= fcenter(f).z <= 1.40 and f.material_index == SUIT
                       and fcenter(f).dot(d) < s_end - 0.2], 0.0035, RED)
 
+    SLEEVE_END = [v.co.copy() for v in bm.verts if abs(v.co.dot(d) - (s_end - 0.03)) < 0.012]
+
     def is_hand(f, sd=d, se=s_end):
         return f.material_index == 5 and fcenter(f).dot(sd) > se - 0.035
     nf = copy_faces(src, is_hand, ob, bm)
     vh = vnormals_from_faces(nf)
-    for v, n in vh.items():
-        v.co = v.co + n * 0.007
     dl = bm.verts.layers.deform.verify()
     names = {g.index: g.name for g in ob.vertex_groups}
+    for v, n in vh.items():
+        ws = v[dl]
+        dom = names[max(ws.keys(), key=lambda k: ws[k])] if len(ws) else ""
+        v.co = v.co + n * (0.0065 if dom.startswith("finger") else 0.011)      # thick padded glove
     for f in nf:
         w = {}
         for v in f.verts:
@@ -233,8 +245,41 @@ for s in "LR":
         f.material_index = GRIP if dom.startswith("finger") and not dom.startswith("finger1-1") else GLOVE
     bm.normal_update()
     finish_mesh(ob, bm, M, 40.0)
-    log(ob.name, len(ob.data.vertices), "glove faces", len(nf), vg_weight_report(ob, arm))
     bm.free()
+    # gauntlet cuff: tapered tube from under the wrist ring over the wrist, skinned lowerarm02 -> wrist
+    W0 = wr.head_local.copy()
+    rs = sorted(((p - W0) - d * (p - W0).dot(d)).length for p in SLEEVE_END)
+    r0 = min(0.066, rs[int(len(rs) * 0.85)] + 0.004) if rs else 0.055
+    gob = bpy.data.objects.new("gauntlet_" + s, bpy.data.meshes.new("gauntlet_" + s))
+    bpy.context.scene.collection.objects.link(gob)
+    gbm = bmesh.new()
+    t0, t1 = s_end - 0.020, s_end + 0.050
+    _, uu, ww_ = _frame(d)
+    rings_ = []
+    for k, (t, r, m_) in enumerate(((t0, r0 * 0.97, GRIP), (t0 + 0.010, r0 * 1.02, GRIP), (t0 + 0.012, r0 * 1.03, GLOVE), (t1 - 0.012, r0 * 0.86, GLOVE), (t1, r0 * 0.80, GLOVE))):
+        cpt = W0 + d * (t - W0.dot(d))
+        rings_.append(([gbm.verts.new(cpt + (uu * math.cos(2 * math.pi * i / 32) + ww_ * math.sin(2 * math.pi * i / 32)) * r) for i in range(32)], m_, t))
+    for k in range(len(rings_) - 1):
+        (ra, ma, _), (rb, mb, _) = rings_[k], rings_[k + 1]
+        for i in range(32):
+            j = (i + 1) % 32
+            f = gbm.faces.new((ra[i], ra[j], rb[j], rb[i]))
+            f.material_index = mb
+    bmesh.ops.recalc_face_normals(gbm, faces=list(gbm.faces))
+    for f in gbm.faces:
+        f.smooth = True
+    M.apply(gob)
+    gbm.to_mesh(gob.data)
+    gbm.free()
+    g1 = gob.vertex_groups.new(name="lowerarm02." + s)
+    g2 = gob.vertex_groups.new(name="wrist." + s)
+    for v in gob.data.vertices:
+        tt = (v.co.dot(d) - t0) / (t1 - t0)
+        w2 = _smooth01(tt)
+        g1.add([v.index], 1.0 - w2, "REPLACE")
+        g2.add([v.index], max(w2, 1e-4), "REPLACE")
+    join_into(ob, [gob])
+    log(ob.name, len(ob.data.vertices), "glove faces", len(nf), "gauntlet r0", round(r0, 4), vg_weight_report(ob, arm))
 
 
 # ------------------------------------------------------------------ rigid parts (skinned 100 % to one bone)
@@ -266,9 +311,38 @@ for x in (-0.096, 0.096):
 box(bm, 0, pb - 0.020, 1.398, 0.150, 0.042, 0.072, PANEL, 0.008, 3)
 box(bm, 0, pb - 0.042, 1.425, 0.154, 0.006, 0.026, PANEL, 0.003)
 box(bm, 0, pb - 0.0425, 1.398, 0.156, 0.005, 0.012, STRAP, 0.002)                  # pouch strap
+for sx in (1, -1):                                                                 # harness buckles + adjusters on the straps
+    box(bm, sx * 0.0775, CHEST_Y - 0.020, 1.455, 0.034, 0.012, 0.030, METAL, 0.003)
+    box(bm, sx * 0.0775, CHEST_Y - 0.018, 1.395, 0.030, 0.010, 0.020, STRAP, 0.003)
+    box(bm, sx * 0.112, pf + 0.010, 1.200, 0.020, 0.016, 0.022, METAL, 0.003)        # hose connectors
 finalize_part(ob, bm, M, "spine02")
 bm.free()
 chest = ob
+from mathutils.bvhtree import BVHTree
+TLB = BVHTree.FromPolygons([v.co for v in tl.data.vertices], [p.vertices for p in tl.data.polygons])
+hose_objs = []
+for sx in (1, -1):
+    A_ = lambda a: a if sx > 0 else 180.0 - a
+    pts = [Vector((sx * 0.092, pf + 0.012, 1.206)), Vector((sx * 0.100, pf + 0.020, 1.178))]
+    for z, ang, off in ((1.150, -68.0, 0.026), (1.105, -42.0, 0.030), (1.060, -16.0, 0.030), (1.035, 2.0, 0.026)):
+        pts.append(surface_point(TLB, z, A_(ang), off))
+    hob = bpy.data.objects.new("hose_%d" % sx, bpy.data.meshes.new("hose_%d" % sx))
+    bpy.context.scene.collection.objects.link(hob)
+    hbm = bmesh.new()
+    tube(hbm, pts, 0.0125, STRAP, 14)
+    for f in hbm.faces:
+        f.smooth = True
+    M.apply(hob)
+    hbm.to_mesh(hob.data)
+    hbm.free()
+    ga, gb = hob.vertex_groups.new(name="spine02"), hob.vertex_groups.new(name="spine04")
+    for v in hob.data.vertices:
+        w = _smooth01((v.co.z - 1.03) / 0.14)
+        ga.add([v.index], max(w, 1e-4), "REPLACE")
+        gb.add([v.index], max(1.0 - w, 1e-4), "REPLACE")
+    hose_objs.append(hob)
+join_into(tl, hose_objs)
+log("chest hoses joined into TorsoLegs")
 
 # PLSS backpack (spine02)
 ob, bm = new_part("A7_SuitV03_EVA_Plss", "spine02")
@@ -297,6 +371,13 @@ for x in (-0.092, 0.092):
 box(bm, 0, ycan + 0.059, 0.930, 0.150, 0.004, 0.012, RED, 0.001)
 tube(bm, [(0.150, yb0 + 0.080, 1.120), (0.192, yb0 + 0.095, 1.075), (0.200, yb0 + 0.100, 1.005), (0.185, ycan + 0.02, 0.955),
           (0.152, ycan + 0.01, 0.935)], 0.011, METAL, 12)
+box(bm, 0, yc, 1.505, 0.300, 0.150, 0.012, PANEL, 0.006)                            # top hatch
+for x in (-0.105, 0.105):
+    box(bm, x, yb + 0.004, 1.315, 0.010, 0.008, 0.330, PANEL, 0.002)                 # back rails
+for z in (1.20, 1.36):
+    for x in (-0.03, 0.0, 0.03):
+        box(bm, x - 0.09, yb + 0.006, z, 0.016, 0.004, 0.040, DARK, 0.002)          # vents
+box(bm, 0, yb + 0.010, 1.380, 0.060, 0.008, 0.040, METAL, 0.003)                  # hatch latch
 box(bm, 0.140, yb0 + 0.120, 1.507, 0.030, 0.030, 0.016, METAL, 0.004)
 cylinder(bm, (0.140, yb0 + 0.120, 1.605), (0, 0, 1), 0.004, 0.190, METAL, 8)
 finalize_part(ob, bm, M, "spine02")
@@ -304,7 +385,7 @@ bm.free()
 plss = ob
 
 # head (CC0 MakeHuman) under the helmet
-head = build_head("A7_SuitV03_EVA_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN)
+head = build_head("A7_SuitV03_EVA_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN, MALE)
 HV = [head.matrix_world @ v.co for v in head.data.vertices if (head.matrix_world @ v.co).z > 1.58]
 lo = Vector([min(p[i] for p in HV) for i in range(3)])
 hi = Vector([max(p[i] for p in HV) for i in range(3)])

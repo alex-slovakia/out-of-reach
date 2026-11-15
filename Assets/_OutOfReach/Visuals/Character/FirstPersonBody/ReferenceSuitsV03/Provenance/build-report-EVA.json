@@ -3,8 +3,8 @@
  "bones": 164,
  "meshes": {
   "A7_SuitV03_EVA_TorsoLegs": {
-   "verts": 37478,
-   "tris": 78646,
+   "verts": 42432,
+   "tris": 90324,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -28,27 +28,27 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 37478,
+    "verts": 42432,
     "bad_weight_sum": 0,
     "max_influences": 4,
     "groups": 59
    },
    "bbox": [
     [
-     -0.327,
-     -0.261,
-     0.002
+     -0.326,
+     -0.311,
+     -0.002
     ],
     [
-     0.327,
-     0.17,
-     1.559
+     0.326,
+     0.148,
+     1.558
     ]
    ]
   },
   "A7_SuitV03_EVA_Arm_L": {
-   "verts": 9668,
-   "tris": 20168,
+   "verts": 9969,
+   "tris": 20792,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -72,27 +72,27 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 9668,
+    "verts": 9969,
     "bad_weight_sum": 0,
     "max_influences": 4,
     "groups": 30
    },
    "bbox": [
     [
-     0.149,
-     -0.342,
-     1.006
+     0.148,
+     -0.324,
+     1.005
     ],
     [
-     0.528,
-     0.082,
-     1.523
+     0.54,
+     0.096,
+     1.537
     ]
    ]
   },
   "A7_SuitV03_EVA_Arm_R": {
-   "verts": 9668,
-   "tris": 20168,
+   "verts": 9969,
+   "tris": 20792,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -116,27 +116,27 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 9668,
+    "verts": 9969,
     "bad_weight_sum": 0,
     "max_influences": 4,
     "groups": 30
    },
    "bbox": [
     [
-     -0.528,
-     -0.342,
-     1.006
+     -0.54,
+     -0.324,
+     1.005
     ],
     [
-     -0.149,
-     0.082,
-     1.523
+     -0.148,
+     0.096,
+     1.537
     ]
    ]
   },
   "A7_SuitV03_EVA_Head": {
-   "verts": 6850,
-   "tris": 13524,
+   "verts": 7720,
+   "tris": 15320,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -160,27 +160,27 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 6850,
+    "verts": 7720,
     "bad_weight_sum": 0,
     "max_influences": 4,
     "groups": 34
    },
    "bbox": [
     [
-     -0.094,
-     -0.179,
+     -0.092,
+     -0.149,
      1.495
     ],
     [
-     0.094,
-     0.048,
-     1.802
+     0.092,
+     0.092,
+     1.798
     ]
    ]
   },
   "A7_SuitV03_EVA_ChestPanel": {
-   "verts": 888,
-   "tris": 1678,
+   "verts": 1080,
+   "tris": 2038,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -204,27 +204,27 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 888,
+    "verts": 1080,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
    },
    "bbox": [
     [
-     -0.114,
-     -0.289,
-     1.194
+     -0.122,
+     -0.329,
+     1.189
     ],
     [
-     0.114,
-     -0.219,
-     1.438
+     0.122,
+     -0.26,
+     1.47
     ]
    ]
   },
   "A7_SuitV03_EVA_Plss": {
-   "verts": 1100,
-   "tris": 2076,
+   "verts": 1420,
+   "tris": 2676,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -248,7 +248,7 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 1100,
+    "verts": 1420,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
@@ -256,19 +256,19 @@
    "bbox": [
     [
      -0.187,
-     0.118,
+     0.137,
      0.868
     ],
     [
      0.211,
-     0.347,
+     0.366,
      1.7
     ]
    ]
   },
   "A7_SuitV03_EVA_Helmet": {
-   "verts": 2018,
-   "tris": 3824,
+   "verts": 2014,
+   "tris": 3816,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -292,7 +292,7 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 2018,
+    "verts": 2014,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
@@ -300,19 +300,19 @@
    "bbox": [
     [
      -0.228,
-     -0.231,
-     1.512
+     -0.199,
+     1.51
     ],
     [
      0.228,
-     0.122,
-     1.912
+     0.166,
+     1.91
     ]
    ]
   },
   "A7_SuitV03_EVA_Visor": {
-   "verts": 1155,
-   "tris": 2214,
+   "verts": 1159,
+   "tris": 2222,
    "materials": [
     "MAT_V03_EvaSuit",
     "MAT_V03_EvaPanel",
@@ -336,7 +336,7 @@
     "MAT_V03_EyeIris"
    ],
    "weights": {
-    "verts": 1155,
+    "verts": 1159,
     "bad_weight_sum": 0,
     "max_influences": 1,
     "groups": 1
@@ -344,16 +344,16 @@
    "bbox": [
     [
      -0.172,
-     -0.296,
-     1.549
+     -0.266,
+     1.547
     ],
     [
      0.172,
-     -0.054,
-     1.907
+     -0.017,
+     1.905
     ]
    ]
   }
  },
- "tris_total": 142298
+ "tris_total": 157980
 }

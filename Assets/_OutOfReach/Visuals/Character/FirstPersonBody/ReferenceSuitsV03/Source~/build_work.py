@@ -13,6 +13,11 @@ os.makedirs(OUT, exist_ok=True)
 
 arm, meshes = load_fbx(IN)
 HASH0 = bone_hash(arm)
+MALE = MaleField(MHDIR, A[A.index("--male") + 1]) if "--male" in A else None
+if MALE:
+    for o in meshes.values():
+        apply_male(o, MALE)
+    log("male shape applied to", list(meshes))
 log("bones", len(arm.data.bones), HASH0)
 
 PAL = [
@@ -23,7 +28,7 @@ PAL = [
     ("MAT_V03_Sole", dict(hexcol="#16181A", rough=0.9)),
     ("MAT_V03_Skin", dict(hexcol="#A67A64", rough=0.65)),
     ("MAT_V03_Trim", dict(hexcol="#1B1C1E", rough=0.7)),
-    ("MAT_V03_Hair", dict(hexcol="#2B211B", rough=0.75)),
+    ("MAT_V03_Hair", dict(hexcol="#2A2019", rough=0.88)),
     ("MAT_V03_EyeWhite", dict(hexcol="#D8D3CA", rough=0.3)),
     ("MAT_V03_EyeIris", dict(hexcol="#3A2B22", rough=0.2)),
     ("MAT_V03_ShirtSeam", dict(hexcol="#1E2843", rough=0.9)),
@@ -71,7 +76,7 @@ def loose(v):
             d = 0.004
         else:
             t = min(1.0, max(0.0, (z - 1.38) / 0.08))   # chest (0.006) -> waist/hem (0.016)
-            d = 0.011 - 0.005 * (z - 0.885) / (1.38 - 0.885) if z < 1.38 else 0.006
+            d = 0.008 - 0.002 * (z - 0.885) / (1.38 - 0.885) if z < 1.38 else 0.006
             d = max(0.006, d) if z < 1.38 else 0.006
     else:                                          # straight-cut trousers: slim at the hips, fuller calves
         if z >= 0.86:
@@ -152,6 +157,26 @@ raise_region(bm, region(0.40, 0.57, ylo=-9, yhi=-0.06), 0.006, PANEL)
 raise_region(bm, region(0.835, 0.915, ylo=0.06, xlo=0.035, xhi=0.16, absx=True), 0.004, PANEL)
 # waistband under the hem
 
+# low trail shoes: flat contact, outsole rim, toe spring, lace panel with lace bars
+FC = []
+for sd in ("L", "R"):
+    fh, tt = arm.data.bones["foot." + sd].head_local, arm.data.bones["toe1-1." + sd].tail_local
+    FC.append(Vector(((fh.x + tt.x) / 2, (fh.y + tt.y) / 2, 0.0)))
+reshape_shoe(bm, {SHOE, SOLE, SHOEMID}, FC)
+bm.normal_update()
+lace = []
+for f in bm.faces:
+    if f.material_index != SHOE:
+        continue
+    c = fcenter(f)
+    fc = FC[0] if c.x > 0 else FC[1]
+    if 0.050 <= c.z <= 0.108 and abs(c.x - fc.x) < 0.024 and c.y < fc.y + 0.03 and f.normal.z > 0.25:
+        lace.append(f)
+lcaps = raise_region(bm, lace, 0.003, TRIM)
+for f in lcaps:
+    c = fcenter(f)
+    if int((c.y + 1.0) / 0.011) % 2 == 0:
+        f.material_index = SHOEMID
 finish_mesh(tl, bm, M, 38.0)
 log("TorsoLegs verts", len(tl.data.vertices), vg_weight_report(tl, arm))
 bm.free()
@@ -182,7 +207,17 @@ for s in "LR":
     log(ob.name, "verts", len(ob.data.vertices), vg_weight_report(ob, arm))
     bm.free()
 
-head = build_head("A7_SuitV03_WORK_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN)
+head = build_head("A7_SuitV03_WORK_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN, MALE)
+# close the gap between the neck and the crew collar with a short shirt-coloured cone (rib inner face)
+HV = [v.co.copy() for v in head.data.vertices if 1.495 < v.co.z < 1.525]
+cen = (0.0, sum(p.y for p in HV) / len(HV))
+TLV = [v.co.copy() for v in tl.data.vertices if v.co.z > 1.495 and abs(v.co.x) < 0.14]
+outer = [r + 0.001 for r in polar_profile(TLV, cen, 48, "min")]
+inner = [r - 0.004 for r in polar_profile(HV, cen, 48, "mean")]
+ztop = max(v.co.z for v in tl.data.vertices if abs(v.co.x) < 0.06)
+ring = ring_between("collar_fill", arm, M, SHIRT, outer, inner, cen, ztop - 0.002, 1.497, {"spine01": 0.5, "neck01": 0.5})
+join_into(tl, [ring])
+log("collar fill: top z", round(ztop, 4), "outer r", round(min(outer), 4), round(max(outer), 4), "inner r", round(min(inner), 4), round(max(inner), 4))
 ren = {"A7_WORK_TorsoLegs": "A7_SuitV03_WORK_TorsoLegs", "A7_WORK_Arm_L": "A7_SuitV03_WORK_Arm_L", "A7_WORK_Arm_R": "A7_SuitV03_WORK_Arm_R"}
 for o, n in ren.items():
     meshes[o].name = n

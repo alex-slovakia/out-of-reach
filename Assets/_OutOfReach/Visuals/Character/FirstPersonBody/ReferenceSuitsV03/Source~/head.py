@@ -44,9 +44,11 @@ def _head_vert(p):
     return p.z > NECK_CUT - 0.01 and (abs(p.x) < 0.085 or p.z > 1.56)
 
 
-def build_head(name, arm, M, mh_folder, skin, hair, eyewhite, iris, stubble):
+def build_head(name, arm, M, mh_folder, skin, hair, eyewhite, iris, stubble, male=None):
     """Creates a skinned head object. M = Mat table (suitlib.Mat); material args are slot indices in M."""
     V, VT, F, per = load_mh(mh_folder)
+    if male is not None:
+        V = [V[i] + male.at(V[i]) for i in range(len(V))]   # eyes/lashes follow the face (helpers have no own delta)
     me = bpy.data.meshes.new(name)
     ob = bpy.data.objects.new(name, me)
     bpy.context.scene.collection.objects.link(ob)
@@ -99,7 +101,10 @@ def build_head(name, arm, M, mh_folder, skin, hair, eyewhite, iris, stubble):
         kinds[f] = kind
     bm.normal_update()
     # materials: skin, eyes (iris = faces looking forward out of the eyeball), lashes = hair colour
-    eye_c = {s: arm.data.bones["eye." + s].head_local.copy() for s in "LR"}
+    eye_c = {}
+    for sd, grp in (("L", "eye.L"), ("R", "eye.R")):
+        pts = [v.co for f, k in kinds.items() if k == "eye" for v in f.verts if (v.co.x > 0) == (sd == "L")]
+        eye_c[sd] = sum(pts, Vector()) / max(1, len(pts))
     for f, k in kinds.items():
         if k == "skin":
             f.material_index = skin
@@ -114,7 +119,7 @@ def build_head(name, arm, M, mh_folder, skin, hair, eyewhite, iris, stubble):
     cutz(bm, NECK_CUT)
     bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.calc_center_median().z < NECK_CUT and f.material_index == skin], context="FACES")
     # hairline = intersection of three planes (front/nape + two sides): every boundary is a straight cut
-    planes = [((0, -0.10, 1.706), (0, 0.66, 1.0)), ((0.075, 0, 1.668), (-0.55, 0.45, 1.0)), ((-0.075, 0, 1.668), (0.55, 0.45, 1.0))]
+    planes = [((0, -0.10, 1.706), (0, 0.90, 1.0)), ((0.075, 0, 1.652), (-0.55, 0.60, 1.0)), ((-0.075, 0, 1.652), (0.55, 0.60, 1.0))]
     for co, no in planes:
         cut(bm, co, no)
     # arched brows (outer end lower), stubble line, lip box
@@ -141,7 +146,9 @@ def build_head(name, arm, M, mh_folder, skin, hair, eyewhite, iris, stubble):
     for v in {v for f in hair_faces for v in f.verts}:
         if any(f not in hset for f in v.link_faces):
             continue                                   # hairline vertices stay on the skin: tapered, no ledge
-        v.co = v.co + v.normal * (0.006 + 0.016 * min(1.0, max(0.0, (v.co.z - 1.69) / 0.09)))
+        jit = 0.0015 * math.sin(v.co.x * 211.0 + v.co.y * 157.0) * math.cos(v.co.z * 173.0)     # tousled, not a cap
+        top = min(1.0, max(0.0, (v.co.z - 1.690) / 0.080)) ** 1.2 * min(1.0, max(0.0, 1.0 - abs(v.co.x) / 0.085))
+        v.co = v.co + v.normal * (0.0022 + 0.0170 * top + jit)          # short sides, volume on top and front
     bm.normal_update()
     brows = []
     for f in bm.faces:

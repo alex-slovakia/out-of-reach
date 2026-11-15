@@ -51,10 +51,10 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _Metallic: 0.8
+    - _Metallic: 0.55
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.6
+    - _Smoothness: 0.45
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -62,8 +62,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.323143, g: 0.361307, b: 0.391572, a: 1}
-    - _Color: {r: 0.323143, g: 0.361307, b: 0.391572, a: 1}
+    - _BaseColor: {r: 0.366253, g: 0.396755, b: 0.417885, a: 1}
+    - _Color: {r: 0.366253, g: 0.396755, b: 0.417885, a: 1}
     - _EmissionColor: {r: 0.000000, g: 0.000000, b: 0.000000, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

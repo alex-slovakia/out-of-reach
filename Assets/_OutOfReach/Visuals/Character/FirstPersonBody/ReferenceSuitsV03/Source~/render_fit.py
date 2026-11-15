@@ -15,6 +15,10 @@ DEBUG = "--debug" in A
 KEEP = "--keepmats" in A
 CAMS = A[A.index("--cams") + 1].split(",") if "--cams" in A else ["front", "back"]
 SCALEL = float(A[A.index("--light") + 1]) if "--light" in A else 1.0
+CYCLES = "CYCLES" in A
+REFPOSE = "REFPOSE" in A
+WEAVE = A[A.index("--weave") + 1] if "--weave" in A else None
+CLOTH = ("Shirt", "Trousers", "TrousersPanel", "ShirtSeam", "EvaSuit", "EvaPanel", "EvaBoot", "EvaGlove", "EvaGloveGrip", "EvaStrap")
 
 
 def srgb2lin(c):
@@ -48,6 +52,23 @@ def main():
     if arm:
         arm.animation_data_clear() if arm.animation_data else None
         arm.data.pose_position = "REST"
+        if REFPOSE:                                   # preview only: lower the arms / close the legs like the boards
+            from mathutils import Matrix
+            arm.data.pose_position = "POSE"
+            for pb in arm.pose.bones:                 # clear the pose left over from the FBX takes (FloatNeutral)
+                pb.rotation_mode = "QUATERNION"
+                pb.rotation_quaternion = (1, 0, 0, 0)
+                pb.location = (0, 0, 0)
+                pb.scale = (1, 1, 1)
+            for bn, deg in (("upperarm01.L", 14), ("upperarm01.R", -14), ("upperleg01.L", 3.5), ("upperleg01.R", -3.5)):
+                pb = arm.pose.bones.get(bn)
+                if pb is None:
+                    continue
+                B = pb.bone.matrix_local.to_3x3()
+                Rw = Matrix.Rotation(math.radians(deg), 3, "Y")
+                pb.rotation_mode = "QUATERNION"
+                pb.rotation_quaternion = (B.inverted() @ Rw @ B).to_quaternion()
+            bpy.context.view_layer.update()
     seen = {}
     for o in scn.objects:
         if o.type != "MESH":
@@ -83,12 +104,12 @@ def main():
             seen[key] = nm
     # world, lights
     w = bpy.data.worlds.new("W"); scn.world = w; w.use_nodes = True
-    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.60, 0.56, 0.55, 1); bg.inputs[1].default_value = 1.0
+    bg = w.node_tree.nodes["Background"]; bg.inputs[0].default_value = (0.36, 0.32, 0.31, 1); bg.inputs[1].default_value = 1.6
     ground = bpy.data.objects.new("G", bpy.data.meshes.new("G"))
     me = ground.data
     me.from_pydata([(-6, -6, 0), (6, -6, 0), (6, 6, 0), (-6, 6, 0)], [], [(0, 1, 2, 3)])
     gm = bpy.data.materials.new("GM"); gm.use_nodes = True
-    gm.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.38, 0.35, 0.34, 1)
+    gm.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.30, 0.27, 0.26, 1)
     gm.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 1.0
     me.materials.append(gm)
     scn.collection.objects.link(ground)
@@ -100,7 +121,35 @@ def main():
         scn.collection.objects.link(lo)
     cam = bpy.data.objects.new("C", bpy.data.cameras.new("C")); scn.collection.objects.link(cam); scn.camera = cam
     cam.data.lens = 85 if not ZOOM_ARG else float(ZOOM_ARG); cam.data.sensor_width = 36
-    scn.render.engine = "BLENDER_EEVEE"
+    if WEAVE:
+        wimg = bpy.data.images.load(WEAVE)
+        wimg.colorspace_settings.name = "Non-Color"
+        for m in bpy.data.materials:
+            if not m.use_nodes or not any(m.name.endswith(c) or ("_" + c) in m.name for c in CLOTH):
+                continue
+            nt = m.node_tree
+            b = nt.nodes.get("Principled BSDF")
+            if b is None:
+                continue
+            tc = nt.nodes.new("ShaderNodeTexCoord"); mp = nt.nodes.new("ShaderNodeMapping")
+            mp.inputs["Scale"].default_value = (14, 14, 14)
+            ti = nt.nodes.new("ShaderNodeTexImage"); ti.image = wimg
+            nm = nt.nodes.new("ShaderNodeNormalMap"); nm.inputs["Strength"].default_value = 0.6
+            nt.links.new(tc.outputs["UV"], mp.inputs["Vector"]); nt.links.new(mp.outputs["Vector"], ti.inputs["Vector"])
+            nt.links.new(ti.outputs["Color"], nm.inputs["Color"]); nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
+    scn.render.engine = "CYCLES" if CYCLES else "BLENDER_EEVEE"
+    if CYCLES:
+        scn.cycles.samples = 48
+        scn.cycles.use_denoising = True
+        try:
+            prefs = bpy.context.preferences.addons["cycles"].preferences
+            prefs.compute_device_type = "OPTIX"
+            prefs.get_devices()
+            for dv in prefs.devices:
+                dv.use = True
+            scn.cycles.device = "GPU"
+        except Exception as ex:
+            print("GPU setup failed", ex)
     try:
         scn.eevee.taa_render_samples = 32
     except Exception:
@@ -112,6 +161,20 @@ def main():
     zc, dist = (float(ZOOM[0]), float(ZOOM[1])) if ZOOM else (0.95, 5.6)
     azi = {"front": 0, "back": 180, "side": 90, "q3": 35, "q3b": 215}
     for tag in CAMS:
+        if tag == "fp":                                   # FitV02 first-person fixture: eye 1.651, 0.33 m ahead, 80 deg down
+            cam.location = (0, -0.330, 1.651)
+            cam.rotation_euler = (math.radians(10), 0, math.radians(180))
+            cam.data.sensor_fit = "VERTICAL"
+            cam.data.angle_y = math.radians(68)
+            cam.data.clip_start = 0.05
+            rx, ry = scn.render.resolution_x, scn.render.resolution_y
+            scn.render.resolution_x, scn.render.resolution_y = 1280, 720
+            p = PREFIX + "_fp.png"
+            scn.render.filepath = p
+            bpy.ops.render.render(write_still=True)
+            scn.render.resolution_x, scn.render.resolution_y = rx, ry
+            cam.data.sensor_fit = "AUTO"; cam.data.lens = 85 if not ZOOM_ARG else float(ZOOM_ARG)
+            continue
         a_ = math.radians(azi[tag])
         # azimuth 0 = camera on -Y looking +Y (sees the front, character faces -Y)
         cam.location = (math.sin(a_) * dist, -math.cos(a_) * dist, zc)
@@ -122,6 +185,8 @@ def main():
         bpy.ops.render.render(write_still=True)
         outs.append(p)
     # stitch
+    if len(outs) < 1:
+        return
     imgs = [bpy.data.images.load(p) for p in outs]
     arrs = [np.array(i.pixels[:], dtype=np.float32).reshape(i.size[1], i.size[0], 4) for i in imgs]
     both = np.concatenate(arrs, axis=1)

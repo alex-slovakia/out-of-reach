@@ -429,3 +429,187 @@ def alpha_material(mat, alpha):
     except Exception:
         pass
     mat.diffuse_color = (mat.diffuse_color[0], mat.diffuse_color[1], mat.diffuse_color[2], alpha)
+
+
+# ------------------------------------------------------------------ male shape (same skeleton)
+def _smooth01(t):
+    t = min(1.0, max(0.0, t))
+    return t * t * (3 - 2 * t)
+
+
+def bump(z, a, b, c, d):
+    """0 below a, ramps to 1 on [b, c], back to 0 at d."""
+    if z <= a or z >= d:
+        return 0.0
+    if z < b:
+        return _smooth01((z - a) / (b - a))
+    if z > c:
+        return _smooth01((d - z) / (d - c))
+    return 1.0
+
+
+def male_tweak(co):
+    """Reviewer-requested silhouette: narrower hip flare (crotch untouched), no waist pinch, broader shoulders,
+    flat belly and crotch. Pure function of rest position, so shared torso/arm seam vertices stay coincident."""
+    x, y, z = co.x, co.y, co.z
+    ax = abs(x)
+    s = 1.0 if x >= 0 else -1.0
+    dx = dy = 0.0
+    # hips/thighs: pull the outer flank in (about x = +-0.06), strongest at 0.84-0.94
+    hb = bump(z, 0.66, 0.82, 0.95, 1.06)
+    if ax > 0.06:
+        dx -= s * 0.17 * (ax - 0.06) * hb
+    # waist: fill the pinch at the sides
+    wb = bump(z, 0.98, 1.05, 1.14, 1.24)
+    if ax > 0.09:
+        dx += s * 0.010 * wb * min(1.0, (ax - 0.09) / 0.05)
+    # chest / shoulders: broader
+    cb = bump(z, 1.22, 1.32, 1.46, 1.54)
+    if ax > 0.10:
+        dx += s * 0.008 * cb * min(1.0, (ax - 0.10) / 0.08)
+    # belly flatter (front), strongest just above the belt
+    if y < -0.05:
+        dy += 0.018 * bump(z, 0.92, 1.00, 1.16, 1.27) * min(1.0, (-0.05 - y) / 0.05)
+    # crotch flatter (front centre)
+    if ax < 0.08 and y < -0.04:
+        dy += 0.012 * bump(z, 0.76, 0.82, 0.90, 0.95) * (1.0 - ax / 0.08) * min(1.0, (-0.04 - y) / 0.04)
+    return Vector((dx, dy, 0.0))
+
+
+class MaleField:
+    """Displacement field from the skeleton-compensated MakeHuman male shape, sampled on the base body surface."""
+
+    def __init__(self, mh_dir, delta_npy):
+        import numpy as np
+        S, TZ = 0.1065109505563943, 0.875583749
+        V = [tuple(float(t) for t in l.split()[1:4]) for l in open(os.path.join(mh_dir, "base.obj")) if l.startswith("v ")]
+        body, g = set(), None
+        for l in open(os.path.join(mh_dir, "base.obj")):
+            if l.startswith("g "):
+                g = l.split()[1]
+            elif l.startswith("f ") and g == "body":
+                for tok in l.split()[1:]:
+                    body.add(int(tok.split("/")[0]) - 1)
+        self.delta = np.load(delta_npy)
+        self.idx = sorted(body)
+        self.kd = KDTree(len(self.idx))
+        for k, i in enumerate(self.idx):
+            x, y, zz = V[i]
+            self.kd.insert(Vector((S * x, -S * zz, S * y + TZ)), k)
+        self.kd.balance()
+
+    def at(self, co, n=6):
+        acc, ws = Vector(), 0.0
+        for p, k, dist in self.kd.find_n(co, n):
+            w = 1.0 / (dist * dist + 1e-6)
+            acc += Vector(self.delta[self.idx[k]]) * w
+            ws += w
+        return acc / ws if ws else Vector()
+
+    def vertex_delta(self, i):
+        return Vector(self.delta[i])
+
+
+def apply_male(obj, field, tweak=True):
+    me = obj.data
+    for v in me.vertices:
+        d = field.at(v.co)
+        if tweak:
+            d = d + male_tweak(v.co)
+        v.co = v.co + d
+    me.update()
+
+
+# ------------------------------------------------------------------ V03b helpers
+def polar_profile(points, center, bins=48, mode="min"):
+    """radius per angle bin around center (x, y) for a list of Vectors."""
+    import math as _m
+    rb = [[] for _ in range(bins)]
+    for p in points:
+        a = _m.atan2(p.y - center[1], p.x - center[0])
+        k = int((a + _m.pi) / (2 * _m.pi) * bins) % bins
+        rb[k].append(((p.x - center[0]) ** 2 + (p.y - center[1]) ** 2) ** 0.5)
+    out = []
+    for k in range(bins):
+        if rb[k]:
+            out.append(min(rb[k]) if mode == "min" else sum(rb[k]) / len(rb[k]))
+        else:
+            out.append(None)
+    # fill gaps from neighbours
+    for k in range(bins):
+        if out[k] is None:
+            for d in range(1, bins):
+                c = out[(k - d) % bins] or out[(k + d) % bins]
+                if c:
+                    out[k] = c
+                    break
+    return out
+
+
+def ring_between(name, arm, M, mat, outer, inner, center, z_out, z_in, weights, bins=48):
+    """skinned annulus/cone between two polar profiles (used to close neck/collar gaps)."""
+    import math as _m
+    me = bpy.data.meshes.new(name)
+    ob = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(ob)
+    ob.parent = arm
+    ob.modifiers.new("Armature", "ARMATURE").object = arm
+    bm = bmesh.new()
+    vo, vi = [], []
+    for k in range(bins):
+        a = -_m.pi + (k + 0.5) * 2 * _m.pi / bins
+        ca, sa = _m.cos(a), _m.sin(a)
+        vo.append(bm.verts.new((center[0] + ca * outer[k], center[1] + sa * outer[k], z_out)))
+        vi.append(bm.verts.new((center[0] + ca * inner[k], center[1] + sa * inner[k], z_in)))
+    for k in range(bins):
+        j = (k + 1) % bins
+        f = bm.faces.new((vo[k], vo[j], vi[j], vi[k]))
+        f.material_index = mat
+    bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+    for f in bm.faces:
+        if f.normal.z < 0:
+            f.normal_flip()
+        f.smooth = True
+    M.apply(ob)
+    bm.to_mesh(me)
+    bm.free()
+    for bn, w in weights.items():
+        ob.vertex_groups.new(name=bn).add([v.index for v in me.vertices], w, "REPLACE")
+    return ob
+
+
+def join_into(target, others):
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in others:
+        o.select_set(True)
+    target.select_set(True)
+    bpy.context.view_layer.objects.active = target
+    bpy.ops.object.join()
+
+
+def surface_point(bvh, z, ang_deg, off, center=(0.0, 0.0)):
+    """point on a body surface at height z in direction ang (0 = +x, 90 = +y), pushed out by off."""
+    import math as _m
+    d = Vector((_m.cos(_m.radians(ang_deg)), _m.sin(_m.radians(ang_deg)), 0.0))
+    o = Vector((center[0], center[1], z))
+    hit = None
+    loc, nrm, idx, dist = bvh.ray_cast(o + d * 0.6, -d, 0.7)        # from outside inwards: outermost surface
+    if loc is not None:
+        hit = loc + d * off
+    return hit if hit is not None else o + d * (0.2 + off)
+
+
+def reshape_shoe(bm, shoe_mats, foot_centers):
+    """flat ground contact, a defined outsole rim and a slight toe spring on the existing boot geometry."""
+    for v in bm.verts:
+        if not any(f.material_index in shoe_mats for f in v.link_faces):
+            continue
+        fc = foot_centers[0] if v.co.x > 0 else foot_centers[1]
+        if v.co.z < 0.014:
+            v.co.z = 0.004 if v.co.z < 0.010 else v.co.z
+        if v.co.z < 0.034:                    # outsole/midsole wall: push out 4 mm horizontally
+            dvec = Vector((v.co.x - fc.x, v.co.y - fc.y, 0.0))
+            if dvec.length > 1e-6:
+                v.co += dvec.normalized() * 0.004
+        if v.co.y < fc.y - 0.11 and v.co.z < 0.03:     # toe spring
+            v.co.z += min(0.012, (fc.y - 0.11 - v.co.y) * 0.25)
