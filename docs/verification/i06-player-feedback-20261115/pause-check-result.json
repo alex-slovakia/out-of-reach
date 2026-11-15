@@ -1,0 +1,6 @@
+{
+    "pass": true,
+    "message": "Targeted pause/Resume visibility and real submit only; observed failures=0. No Application.Quit invocation. Inspect actual GPU captures.",
+    "scope": "Actual saved Bootstrap session-menu/native GPU probe; supplied domain/time setup disclosed; real desktop Quit excluded.",
+    "assertions": 20
+}

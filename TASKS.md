@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current increment — 15 November 2026, pause menu initialization
+
+`I06-PAUSE-RESUME` runtime `044395b` fills menu labels before revealing the bound menu and retries initialization if the runtime was not yet ready. Isolated Unity 6000.3.28f1 compile/native run exited 0 with 20 scoped checks, including visible Resume at 1280x720/960x540, UI rebuild and actual resume command. The user's original missing-text screenshot did not reproduce in clean startup; this is lifecycle hardening, with live visual acceptance pending. [Evidence and current body/movement coordination](docs/verification/i06-player-feedback-20261115/README.md).
+
 ## Current increment — 15 November 2026, carry clearance
 
 `I06-CARRY-KNEE` runtime `a18b134` is on disk in the original project. It limits the complete carried assembly's downward pitch while preserving handle contacts and body visibility. Isolated Unity 6000.3.28f1 import/compile exited 0; repository and NASA checks passed. Live Play was left untouched; visual ramp acceptance is still pending. Claude has the newly user-assigned sole grounded-gait scope; Codex does not edit that presenter concurrently. [Actual player screenshots, paths, hashes and limits](docs/verification/i06-player-feedback-20261115/README.md).

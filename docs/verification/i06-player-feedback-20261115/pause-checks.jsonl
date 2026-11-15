@@ -1,0 +1,20 @@
+{"utc":"2026-11-15T09:14:16.2789462Z","stage":"opening saved Bootstrap","message":"Saved scene has the actual cinematic owner.","pass":true}
+{"utc":"2026-11-15T09:14:27.8085250Z","stage":"actual Bootstrap recovery","message":"Actual saved session controls, attached UIDocument, camera and cinematic owner exist.","pass":true}
+{"utc":"2026-11-15T09:14:28.1626327Z","stage":"actual Bootstrap recovery","message":"Feedback during a released binding cannot expose an empty menu","pass":true}
+{"utc":"2026-11-15T09:14:29.7077399Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Resume at 1280x720","pass":true}
+{"utc":"2026-11-15T09:14:29.7092567Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Restart mission at 1280x720","pass":true}
+{"utc":"2026-11-15T09:14:29.7097831Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Quit to desktop at 1280x720","pass":true}
+{"utc":"2026-11-15T09:14:29.9138377Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Resume at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:29.9154473Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Restart mission at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:29.9176905Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Quit to desktop at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.0775997Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Resume at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.0775997Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Restart mission at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.0801475Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Quit to desktop at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.2386181Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Resume at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.2401441Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Restart mission at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.2411514Z","stage":"actual Bootstrap recovery","message":"Menu action inside viewport: Quit to desktop at 960x540","pass":true}
+{"utc":"2026-11-15T09:14:30.2957110Z","stage":"actual Bootstrap recovery","message":"Rebuilt pause primary has visible bounds and Resume text","pass":true}
+{"utc":"2026-11-15T09:14:30.2967253Z","stage":"actual Bootstrap recovery","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:14:30.3461776Z","stage":"actual Bootstrap recovery","message":"Actual Resume submit unpauses canonical runtime","pass":true}
+{"utc":"2026-11-15T09:14:30.4647353Z","stage":"actual Bootstrap recovery","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-15T09:14:37.8994602Z","stage":"actual Bootstrap recovery","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}
