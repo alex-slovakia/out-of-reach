@@ -13,6 +13,8 @@ The SFX use deterministic original synthesis: membrane modes, decaying metal res
 
 ## Musical development
 
+Integration handoff: `opening-titan-ascent-v02-master.wav` is now included through Git LFS. It is the exact approved 84-second mix without the preview-only ending fade, for Claude's runtime integration. This file's publication does not mean the game already plays it. Preserve the attribution below and coordinate its loading/launch transitions; it is not a seamless loop.
+
 The selected source passage runs from 48 to 132 seconds without cuts or loops. Its own orchestration rises through the preview. Added sparse low accents begin around 24 seconds, become a measured pulse around 42–60 seconds, and gain tom responses around 63–79 seconds. The final 2.5-second fade is for audition only. The PCM master has no audition fade, but this excerpt is **not a seamless runtime loop**; transition timing and voice ducking remain integration work.
 
 The original local MP3 header reports 175.804 seconds but the actual decoded stream contains 132.520 seconds. This preview uses only valid decoded audio. No missing ending was invented or described as listened to. Source dynamics and transient timing were inspected programmatically; subjective listening approval is still required.
