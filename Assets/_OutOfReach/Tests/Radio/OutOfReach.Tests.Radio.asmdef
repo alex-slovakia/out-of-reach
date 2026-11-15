@@ -4,7 +4,8 @@
   "references": [
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner",
-    "OutOfReach.Presentation.Radio"
+    "OutOfReach.Presentation.Radio",
+    "OutOfReach.Contracts"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
