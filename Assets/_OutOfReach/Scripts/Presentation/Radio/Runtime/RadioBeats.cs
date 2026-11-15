@@ -28,18 +28,26 @@ namespace OutOfReach.Presentation.Radio
         public float Seconds { get; }
         public RadioLine WithSeconds(float seconds) => new RadioLine(Speaker, Text, Kind, CueId, seconds);
 
+        /// <summary>Lines up to this length are shown whole.</summary>
+        public const int WholeLineCharacters = 90;
+        /// <summary>
+        /// Longest chunk of a split line. One centred HUD line of this length ends left of the chapter strip in
+        /// the lower right corner, which otherwise covers the end of the subtitle.
+        /// </summary>
+        public const int ChunkCharacters = 52;
+
         /// <summary>
         /// Subtitle shown at <paramref name="t"/> seconds into the line: long lines are split at sentence ends into
-        /// readable chunks (max ~95 characters) timed in proportion to their length.
+        /// readable chunks (max <see cref="ChunkCharacters"/> characters) timed in proportion to their length.
         /// </summary>
         public string SubtitleAt(float t)
         {
-            if (Text.Length <= 110) return Text;
+            if (Text.Length <= WholeLineCharacters) return Text;
             var chunks = new List<string>();
             string current = string.Empty;
             foreach (string sentence in SplitSentences(Text))
             {
-                if (current.Length > 0 && current.Length + 1 + sentence.Length > 95) { chunks.Add(current); current = sentence; }
+                if (current.Length > 0 && current.Length + 1 + sentence.Length > ChunkCharacters) { chunks.Add(current); current = sentence; }
                 else current = current.Length == 0 ? sentence : current + " " + sentence;
             }
             if (current.Length > 0) chunks.Add(current);
