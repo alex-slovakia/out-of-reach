@@ -104,9 +104,13 @@ namespace OutOfReach.Presentation.Radio
         public const string DistressCall = "radio.distress-call";
         public const string EarthReplyDay14 = "radio.earth-reply-day14";
         public const string Day14Call = "radio.day14-call";
-        /// <summary>Voiced Day-14 announcement at the console (Codex's approved vo23, Alex 6896919554).</summary>
+        /// <summary>
+        /// Voiced Day-14 announcement at the console. The voice is the day-neutral cut of Codex's approved vo23
+        /// (Voices/PROVENANCE.md): the sentence naming the new rendezvous day is removed, so the line never
+        /// contradicts Core's schedule.
+        /// </summary>
         public const string Day14Announcement = "radio.day14-announcement";
-        public const string RescueLostCue = "vo23_mc_rescue_lost";
+        public const string RescueLostCue = "vo23_mc_rescue_lost_dayneutral";
 
         public const string PadSpeaker = "PAD CONTROL · RADIO";
         public const string PlayerSpeaker = "YOU · RADIO";
@@ -130,10 +134,11 @@ namespace OutOfReach.Presentation.Radio
                 new RadioLine(EarthSpeaker, "A rescue rocket is being readied. Expect rescue on day fourteen. Ration carefully. Earth out.", RadioLineKind.Receive)),
             [Day14Call] = new RadioBeat(Day14Call, true,
                 new RadioLine(EarthSpeaker, "Aurora, Earth. Priority traffic. Go to the console, Aurora.", RadioLineKind.Receive)),
-            // Transcript exactly as approved and recorded (Audio/Voices/Story02/vo23_mc_rescue_lost.txt).
+            // Transcript exactly as spoken by the day-neutral cut (Voices/vo23_mc_rescue_lost_dayneutral.txt): the
+            // approved recording without "New rendezvous: mission day thirty-one.".
             [Day14Announcement] = new RadioBeat(Day14Announcement, true,
                 new RadioLine(ControlSpeaker, "Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach. "
-                    + "I'm sorry. A second craft is already in transit. New rendezvous: mission day thirty-one. "
+                    + "I'm sorry. A second craft is already in transit. "
                     + "Conserve your supplies. We are not giving up on you.", RadioLineKind.Receive, RescueLostCue)),
         };
 

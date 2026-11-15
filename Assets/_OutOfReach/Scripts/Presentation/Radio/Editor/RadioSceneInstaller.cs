@@ -19,8 +19,11 @@ namespace OutOfReach.Presentation.Radio.Editor
         public const string ObjectName = "Handheld radio V01";
         /// <summary>Existing Core content id of the Day-14 dispatch (MissionChapterFlow.RescueFailedContentId).</summary>
         public const string Day14DispatchContentId = "dispatch.rescue-1-failed";
-        /// <summary>Codex's approved recording (feature/visuals-cinematics 8d95b7d), bound when present in the checkout.</summary>
-        public const string RescueLostVoicePath = "Assets/_OutOfReach/Audio/Voices/Story02/vo23_mc_rescue_lost.wav";
+        /// <summary>
+        /// Day-neutral cut of Codex's approved vo23 (Voices/PROVENANCE.md), bound when present. Delete the WAV and
+        /// re-run the installer to fall back to subtitles with the radio sound only.
+        /// </summary>
+        public const string RescueLostVoicePath = "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/vo23_mc_rescue_lost_dayneutral.wav";
 
         public static string LastReport { get; private set; }
 
