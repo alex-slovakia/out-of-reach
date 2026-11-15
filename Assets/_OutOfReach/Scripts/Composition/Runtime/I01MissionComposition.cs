@@ -695,6 +695,9 @@ namespace OutOfReach.Composition
                     () => cinematics && cinematics.ReducedEffects);
                 if (survivalUi)
                     survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation);
+                // CHAPTER-UI-02: the HUD objective names the chapter loop's real next step (only after the repairs and in Survival).
+                flightBoard.ConfigureObjectiveOverride(() => chapterUi ? chapterUi.ObjectiveTitle : null,
+                    () => chapterUi ? chapterUi.ObjectiveDetail : null);
             }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
