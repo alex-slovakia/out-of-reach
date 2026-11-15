@@ -1,11 +1,11 @@
 {
  "AuroraCrewTransport": {
   "triangles": {
-   "CapsuleShell_LOD0": 31996,
-   "Hatch_LOD0": 2565,
-   "CapsuleShell_LOD1": 15782,
+   "CapsuleShell_LOD0": 32833,
+   "Hatch_LOD0": 2570,
+   "CapsuleShell_LOD1": 16255,
    "Hatch_LOD1": 788,
-   "CapsuleShell_LOD2": 6010
+   "CapsuleShell_LOD2": 6288
   },
   "bounds_blender_m": {
    "CapsuleShell_LOD0": [
@@ -22,14 +22,14 @@
    ],
    "Hatch_LOD0": [
     [
-     -1.4,
+     -1.4171,
      -0.1803,
-     0.02
+     0.006
     ],
     [
      0.046,
      0.127,
-     2.13
+     2.144
     ]
    ],
    "CapsuleShell_LOD1": [
@@ -46,14 +46,14 @@
    ],
    "Hatch_LOD1": [
     [
-     -1.4,
+     -1.4171,
      -0.18,
-     0.02
+     0.006
     ],
     [
      0.046,
      0.122,
-     2.13
+     2.144
     ]
    ],
    "CapsuleShell_LOD2": [
@@ -70,20 +70,20 @@
    ]
   },
   "lod_totals": {
-   "LOD0": 34561,
-   "LOD1": 16570,
-   "LOD2": 6010
+   "LOD0": 35403,
+   "LOD1": 17043,
+   "LOD2": 6288
   }
  },
  "AuroraRescueCraft": {
   "triangles": {
-   "CapsuleShell_LOD0": 35142,
-   "Hatch_LOD0": 2565,
+   "CapsuleShell_LOD0": 35986,
+   "Hatch_LOD0": 2570,
    "ServiceModule_LOD0": 11960,
-   "CapsuleShell_LOD1": 18095,
+   "CapsuleShell_LOD1": 18555,
    "Hatch_LOD1": 788,
    "ServiceModule_LOD1": 6730,
-   "CapsuleShell_LOD2": 6991,
+   "CapsuleShell_LOD2": 7268,
    "ServiceModule_LOD2": 2556
   },
   "bounds_blender_m": {
@@ -101,14 +101,14 @@
    ],
    "Hatch_LOD0": [
     [
-     -1.4,
+     -1.4171,
      -0.1803,
-     0.02
+     0.006
     ],
     [
      0.046,
      0.127,
-     2.13
+     2.144
     ]
    ],
    "ServiceModule_LOD0": [
@@ -137,14 +137,14 @@
    ],
    "Hatch_LOD1": [
     [
-     -1.4,
+     -1.4171,
      -0.18,
-     0.02
+     0.006
     ],
     [
      0.046,
      0.122,
-     2.13
+     2.144
     ]
    ],
    "ServiceModule_LOD1": [
@@ -185,9 +185,9 @@
    ]
   },
   "lod_totals": {
-   "LOD0": 49667,
-   "LOD1": 25613,
-   "LOD2": 9547
+   "LOD0": 50516,
+   "LOD1": 26073,
+   "LOD2": 9824
   }
  }
 }
