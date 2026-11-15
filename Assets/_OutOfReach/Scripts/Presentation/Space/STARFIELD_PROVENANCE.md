@@ -1,6 +1,6 @@
-# Distant star background - current GMAT derivative
+# Distant star background provenance
 
-The committed six `Assets/_OutOfReach/Visuals/Space/Stars{Front,Back,Left,Right,Up,Down}.png` faces are 1024-pixel projections of the NASA GMAT star graphics data, not the former seed-74031 random-star artwork. All six file hashes match `docs/data/gmat-skybox-v01/manifest.json`; `DistantStars.mat` binds their preserved GUIDs. `DistantSpaceAuthoring.Build()` now validates these existing files and bindings; it does not regenerate procedural stars. Bootstrap saves this star sky, and the marine prologue temporarily applies its separate daylight sky before restoring the saved environment.
+The committed six `Assets/_OutOfReach/Visuals/Space/Stars{Front,Back,Left,Right,Up,Down}.png` faces are 1024-pixel projections of the NASA GMAT star graphics data, not the former seed-74031 random-star artwork. All six file hashes match `docs/data/gmat-skybox-v01/manifest.json`; `DistantStars.mat` binds their preserved GUIDs. `DistantSpaceAuthoring.Build()` now validates these existing files and bindings; it does not regenerate procedural stars. Bootstrap's saved space skybox references `NasaDeepSky.mat` ([NASA SVS Deep Star Maps 2020](https://svs.gsfc.nasa.gov/4851/), Gaia DR2: ESA/Gaia/DPAC). The marine prologue temporarily applies its daylight sky before restoring the saved environment.
 
 ## Source, units and limits
 
@@ -14,6 +14,6 @@ J2000 alignment is inferred from the upstream renderer. The raw star asset does 
 
 The inspected GMAT repository/application distribution supplies Apache License 2.0; the selected star path contained no separate asset-specific notice. This is the recorded licensing basis, not a claim about unrelated GMAT assets. Ship `Assets/StreamingAssets/ThirdParty/NASA-GMAT/LICENSE.txt` and `NOTICE.txt` with the derivative. The full source audit is `docs/data/gmat-starfield-v01/source-audit.json`.
 
-Use `DistantStars.mat` as the space skybox. Its directional sampling avoids translation parallax inside the cabin; do not attach nearby star particles to windows. Static source/hash/binding verification is separate from native GPU and movement acceptance.
+`DistantStars.mat` retains the archived GMAT projection. The SVS runtime image and reuse credit are recorded in `Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NOTICE.txt`.
 
 Suggested credit: "Star directions from NASA GMAT star graphics data, Apache-2.0, converted for OUT OF REACH. Approximate source magnitudes; artistic exposure and point spread; stellar epoch unspecified." Attribution does not imply NASA endorsement.
