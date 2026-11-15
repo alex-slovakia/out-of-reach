@@ -15,7 +15,7 @@ Core already ends a survived mission with `Recovered` and requests `RecoveryArri
    Stand by for docking."
 2. **Aft docking camera (14–25 s).** The centreline feed at the hatch, with a reticle and a live range readout:
    1. The craft closes and makes **visible contact** at 19.4 s, with a contact clunk and shake.
-   2. **VO24b** starts at 19.75 s, only after that contact, as the Story02 manifest requires: "Contact. Capture
+   2. **VO24b** starts at 20.0 s, after visible contact, as the Story02 manifest requires: "Contact. Capture
       confirmed. Hard dock. …"
    3. Capture at 21.35 s: the collar lights turn cyan.
    4. Hard dock at 23.25 s: the latches pull in the last centimetres, with a big clunk and shake.

@@ -32,6 +32,9 @@ namespace OutOfReach.Tests.Rescue.EditMode
             Assert.Less(T.DockClosing(T.Contact - .5f), 1f);
             Assert.Less(T.Contact, T.Capture);
             Assert.Less(T.Capture, T.HardDock);
+            Assert.GreaterOrEqual(T.Lines.Single(line => line.Text == "Contact.").Start, T.Contact);
+            Assert.GreaterOrEqual(T.Lines.Single(line => line.Text == "Capture confirmed.").Start, T.Capture);
+            Assert.GreaterOrEqual(T.Lines.Single(line => line.Text == "Hard dock.").Start, T.HardDock);
             Assert.LessOrEqual(T.VoiceApproachStart + T.VoiceApproachSeconds, T.Contact, "VO24a ends before the contact");
             Assert.LessOrEqual(T.VoiceDockedStart + T.VoiceDockedSeconds, T.FadeOutEnd, "VO24b is heard before the fade ends");
         }

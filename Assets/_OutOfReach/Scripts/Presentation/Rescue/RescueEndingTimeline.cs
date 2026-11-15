@@ -38,7 +38,7 @@ namespace OutOfReach.Presentation.Rescue
         // Shot 2, the aft docking camera: centreline closing, visible contact, capture, hard dock.
         public const float CutOut1 = 13.4f, Cut1 = 14.1f, CutIn1 = 14.8f;
         public const float DockApproachStart = 14.1f, Contact = 19.4f, Capture = 21.35f, HardDockStart = 22.9f, HardDock = 23.25f;
-        public const float VoiceDockedStart = 19.75f;   // VO24b, only after the visible contact
+        public const float VoiceDockedStart = 20f;      // VO24b, with each confirmation after its visible event
         // Shot 3, inside the airlock: latches, pressure, the hatch opens and light floods in, fade.
         public const float CutOut2 = 24.2f, Cut2 = 24.9f, CutIn2 = 25.6f;
         public static readonly float[] LatchTimes = { 25.9f, 26.4f, 26.9f };
