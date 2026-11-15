@@ -65,12 +65,12 @@ Material:
     - _HazeDensity: 0.00009
     - _HazeFloor: 1400
     - _NormalStrength: 0.7
-    - _Sheen: 0.25
+    - _Sheen: 0.55
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GrassDry: {r: 0.61, g: 0.57, b: 0.43, a: 1}
-    - _GrassGreen: {r: 0.44, g: 0.48, b: 0.3, a: 1}
-    - _GrassLush: {r: 0.33, g: 0.4, b: 0.22, a: 1}
+    - _GrassDry: {r: 0.72, g: 0.6, b: 0.36, a: 1}
+    - _GrassGreen: {r: 0.55, g: 0.52, b: 0.3, a: 1}
+    - _GrassLush: {r: 0.44, g: 0.45, b: 0.24, a: 1}
     - _HazeColor: {r: 0.42, g: 0.48, b: 0.58, a: 1}
     - _HazeSunColor: {r: 0.85, g: 0.8, b: 0.72, a: 1}
     - _Rock: {r: 0.58, g: 0.45, b: 0.34, a: 1}
@@ -78,5 +78,6 @@ Material:
     - _Scrub: {r: 0.3, g: 0.31, b: 0.19, a: 1}
     - _SiteOriginWS: {r: 10000, g: 100, b: 0, a: 0}
     - _TileMetres: {r: 3.1, g: 11.7, b: 0, a: 0}
+    - _WindDir: {r: 0.82, g: 0.57, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

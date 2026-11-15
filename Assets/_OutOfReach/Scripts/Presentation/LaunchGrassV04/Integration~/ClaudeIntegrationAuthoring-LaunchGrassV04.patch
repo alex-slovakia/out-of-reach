@@ -1,0 +1,39 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Editor/ClaudeIntegrationAuthoring.cs b/Assets/_OutOfReach/Scripts/Composition/Editor/ClaudeIntegrationAuthoring.cs
+index 721bcd5..e889328 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Editor/ClaudeIntegrationAuthoring.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Editor/ClaudeIntegrationAuthoring.cs
+@@ -127,6 +127,21 @@ namespace OutOfReach.Composition.Editor
+             return frameChanged || referencesChanged;
+         }
+ 
++        // LAUNCH-GRASS-V04 (#11 R07): pampas field under the stationary launch site, launch Volume + gust/haze presenter
++        // beside it, V03 shell meadow switched off (kept). Idempotent; asserts the active collider set is unchanged.
++        // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplyLaunchGrassV04
++        public static void ApplyLaunchGrassV04()
++        {
++            if (Application.unityVersion != "6000.3.28f1" || EditorApplication.isPlayingOrWillChangePlaymode)
++                throw new InvalidOperationException("Run on Unity 6000.3.28f1 outside Play mode.");
++            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
++            OutOfReach.Presentation.LaunchGrassV04.Editor.LaunchGrassV04Installer.Apply(scene);
++            AssetDatabase.SaveAssets();
++            EditorSceneManager.MarkSceneDirty(scene);
++            if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save Bootstrap.");
++            Debug.Log("CLAUDE_INTEGRATION_LAUNCH_GRASS_V04 SAVED " + OutOfReach.Presentation.LaunchGrassV04.Editor.LaunchGrassV04Installer.LastReport);
++        }
++
+         // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplySet6
+         // Alex P1 (#7 6896392077): the BUFFER DIAGNOSTIC (FalseSignal) is a brief intentional shot, not an 11.5 s lock.
+         // Core's cinematic handshake blocks player control only while the presenter plays; the diagnostic voice line
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef b/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
+index 157eb8e..9ec35ff 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
++++ b/Assets/_OutOfReach/Scripts/Composition/Editor/OutOfReach.Composition.Editor.asmdef
+@@ -4,6 +4,8 @@
+   "references": [
+     "OutOfReach.Composition",
+     "OutOfReach.LaunchFXV03",
++    "OutOfReach.LaunchGrassV04",
++    "OutOfReach.LaunchGrassV04.Editor",
+     "OutOfReach.MarineOcean",
+     "OutOfReach.MarineOcean.Editor",
+     "OutOfReach.Contracts",
