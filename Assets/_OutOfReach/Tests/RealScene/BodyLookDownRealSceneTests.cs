@@ -104,6 +104,25 @@ namespace OutOfReach.Tests.RealScene
             }
         }
 
+        // CLAUDE-INTEGRATION: the loaded Bootstrap (and its MissionRuntime) must not leak into later fixtures, which build
+        // their own runtime and otherwise fail with "a second mission runtime was enabled".
+        [UnityTearDown]
+        public IEnumerator UnloadTheRealScene()
+        {
+            Scene empty = SceneManager.CreateScene("RealScene teardown " + Guid.NewGuid().ToString("N"));
+            SceneManager.SetActiveScene(empty);
+            for (int i = SceneManager.sceneCount - 1; i >= 0; i--)
+            {
+                Scene loaded = SceneManager.GetSceneAt(i);
+                if (loaded != empty && loaded.isLoaded)
+                {
+                    AsyncOperation unload = SceneManager.UnloadSceneAsync(loaded);
+                    while (unload != null && !unload.isDone) yield return null;
+                }
+            }
+            for (int i = 0; i < 3; i++) yield return null;
+        }
+
         // Share of the screen (64 x 36 cells) that the belly and lower chest skin (0.95-1.40 m above the feet) covers.
         private static float BellyCoverage(EmbodiedBodyPresenter body, Camera camera, out float nearest)
         {
