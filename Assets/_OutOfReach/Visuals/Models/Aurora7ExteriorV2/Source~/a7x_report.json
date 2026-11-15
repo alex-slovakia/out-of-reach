@@ -1,0 +1,76 @@
+{
+ "adapter": {
+  "DockAdapter": 5680,
+  "DockLamps": 288,
+  "DockMarkings": 108,
+  "total": 6076
+ },
+ "axes": "Blender (x, y, z) = Unity (x, z, y)",
+ "hero_total_lod0_with_adapter": 54992,
+ "lods": {
+  "LOD0": {
+   "ArrayPort": 1512,
+   "ArrayStbd": 1512,
+   "HGA": 3004,
+   "Hull": 26384,
+   "Lamps": 844,
+   "Markings": 340,
+   "Propulsion": 14560,
+   "Radiators": 760,
+   "bounds_unity_max": [
+    12.35,
+    9.539,
+    23.027
+   ],
+   "bounds_unity_min": [
+    -12.35,
+    -2.949,
+    -5.216
+   ],
+   "total": 48916
+  },
+  "LOD1": {
+   "ArrayPort": 712,
+   "ArrayStbd": 712,
+   "HGA": 1148,
+   "Hull": 13178,
+   "Lamps": 424,
+   "Markings": 204,
+   "Propulsion": 7536,
+   "Radiators": 600,
+   "bounds_unity_max": [
+    12.35,
+    9.535,
+    23.027
+   ],
+   "bounds_unity_min": [
+    -12.35,
+    -2.949,
+    -5.216
+   ],
+   "total": 24514
+  },
+  "LOD2": {
+   "ArrayPort": 420,
+   "ArrayStbd": 420,
+   "HGA": 544,
+   "Hull": 3808,
+   "Lamps": 424,
+   "Markings": 108,
+   "Propulsion": 4008,
+   "Radiators": 72,
+   "bounds_unity_max": [
+    12.35,
+    9.535,
+    23.027
+   ],
+   "bounds_unity_min": [
+    -12.35,
+    -2.948,
+    -5.216
+   ],
+   "total": 9804
+  }
+ },
+ "units": "metres"
+}
