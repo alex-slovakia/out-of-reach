@@ -1,0 +1,476 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using OutOfReach.Composition;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.Meal;
+using OutOfReach.Presentation.Motion;
+using OutOfReach.Presentation.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+// MEAL-PRES-01 native QA (Claude meal writer, temporary, never committed). The actual saved Bootstrap with the meal
+// installer and the composition patch applied in the writer's own clone. Real Practice UI, marine W boarding, seat E,
+// real departure and arrival. EXPLICIT SHORTCUTS, logged: domain commands to contact (as RepairLoopHarness.ReachContact),
+// a teleport to the galley aisle, simulated waits until a ration is due and domain drinks so thirst never ends the run.
+// The meal itself only through a real E press on the real survival-ration target. Infrastructure adapted from the
+// gameplay lead's MoveMechNativeQa (itself from root's SurfacePushNativeQa).
+[InitializeOnLoad]
+public static class MealNativeQa
+{
+    const string Key = "OutOfReach.MealNativeQa.";
+    public const string Bootstrap = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
+    public static string Output => SessionState.GetString(Key + "output", "C:/Users/alexp/NASA/_qa/meal-pres-01/failed-start");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+    [Serializable] sealed class Result { public bool pass; public string message, utc, scope; public int softFailures; }
+    static MealNativeQa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+    public static void Run()
+    {
+        try
+        {
+            if (!Application.isBatchMode || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Start in batch Edit mode only.");
+            if (Application.unityVersion != "6000.3.28f1" || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null)
+                throw new InvalidOperationException("Exact Unity 6000.3.28f1 and a real GPU are required.");
+            string tag = Environment.GetEnvironmentVariable("QA_TAG") ?? "meal";
+            SessionState.SetString(Key + "output", Path.Combine(Environment.GetEnvironmentVariable("QA_OUT") ?? "C:/Users/alexp/NASA/_qa/meal-pres-01",
+                DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + "-" + tag).Replace('\\', '/'));
+            Directory.CreateDirectory(Output); SessionState.SetInt(Key + "soft", 0); SessionState.SetString(Key + "errors", "");
+            SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(720).ToString("O", CultureInfo.InvariantCulture));
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation); ShaderUtil.allowAsyncCompilation = false;
+            File.WriteAllText(Path.Combine(Output, "scope.txt"),
+                "Actual saved Bootstrap (meal installer + composition patch applied in the meal writer's clone, uncommitted).\n"
+                + "Real Practice UI, marine W boarding, seat E, real departure/arrival. SHORTCUTS: domain commands to contact, teleport to the galley aisle, "
+                + "simulated waits until a ration is due, domain water portions between meals. Meals only via real E on the real survival-ration target.\n");
+            SetStage("opening actual saved Bootstrap");
+            Scene scene = EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            Check(Object.FindFirstObjectByType<I01MissionComposition>(), "Saved root composition is present.");
+            if (Environment.GetEnvironmentVariable("QA_INSTALL") != "0")
+            {
+                // The assembler's step 3, run here on the writer's uncommitted copy: install and SAVE, then play the saved scene.
+                OutOfReach.Presentation.Meal.Editor.MealPresentationInstaller.Install(scene, true, out string report);
+                Note("installer: " + report);
+                scene = EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            }
+            else Note("QA_INSTALL=0: the committed Bootstrap is played exactly as saved by the integrator (no installer run).");
+            Check(Object.FindFirstObjectByType<MealPresenter>(), "The installed meal presenter is in the re-opened saved scene.");
+            SetStage("entering"); EditorApplication.isPlaying = true;
+        }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || Stage != "entering") return;
+        try { SetStage("native actual Bootstrap"); new GameObject("MEAL_NATIVE_QA_UNSAVED").AddComponent<MealNativeQaDriver>(); }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void Watchdog()
+    {
+        if (Stage.Length == 0) return;
+        if (DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime deadline)
+            && DateTime.UtcNow > deadline) Finish(false, "720-second watchdog expired; see checks and captures.");
+    }
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (Stage.Length == 0 || (type != LogType.Error && type != LogType.Exception && type != LogType.Assert)) return;
+        string entry = type + ": " + message + "\n" + stack + "\n";
+        if (type == LogType.Exception && stack.Contains("UnityEditor.Search") && !stack.Contains("OutOfReach"))
+        { File.AppendAllText(Path.Combine(Output, "editor-environment-errors.txt"), entry); return; }
+        SessionState.SetString(Key + "errors", SessionState.GetString(Key + "errors", "") + entry);
+        File.AppendAllText(Path.Combine(Output, "runtime-errors.txt"), entry);
+    }
+    public static void RequireNoErrors() { string e = SessionState.GetString(Key + "errors", ""); if (e.Length > 0) throw new InvalidOperationException(e); }
+    public static void SetStage(string value) => SessionState.SetString(Key + "stage", value);
+    static void Record(bool ok, string message, string verdict) => File.AppendAllText(Path.Combine(Output, "checks.txt"), verdict + " " + Stage + " | " + message + "\n");
+    public static void Check(bool ok, string message) { Record(ok, message, ok ? "PASS" : "FAIL"); if (!ok) throw new InvalidOperationException(message); }
+    public static bool Soft(bool ok, string message)
+    {
+        Record(ok, message, ok ? "PASS" : "SOFT-FAIL");
+        if (!ok) SessionState.SetInt(Key + "soft", SessionState.GetInt(Key + "soft", 0) + 1);
+        return ok;
+    }
+    public static void Note(string message) => File.AppendAllText(Path.Combine(Output, "observations.txt"), message + "\n");
+    public static void Finish(bool pass, string message)
+    {
+        try { RequireNoErrors(); } catch (Exception error) { pass = false; message += "\n" + error; }
+        int soft = SessionState.GetInt(Key + "soft", 0);
+        SessionState.SetString(Key + "stage", ""); ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Directory.CreateDirectory(Output);
+        bool all = pass && soft == 0;
+        File.WriteAllText(Path.Combine(Output, all ? "PASS.txt" : "FAIL.txt"), message + "\nsoft failures: " + soft);
+        File.WriteAllText(Path.Combine(Output, "result.json"), JsonUtility.ToJson(new Result { pass = all, message = message, softFailures = soft,
+            utc = DateTime.UtcNow.ToString("O"), scope = "Actual saved Bootstrap MEAL-PRES-01 native run with logged shortcuts; images need visual review." }, true));
+        Debug.Log((all ? "MEAL_NATIVE_QA_PASS " : "MEAL_NATIVE_QA_FAIL ") + message + " soft=" + soft + " output=" + Output);
+        EditorApplication.Exit(all ? 0 : 1);
+    }
+}
+
+[DefaultExecutionOrder(600)]
+public sealed class MealNativeQaDriver : MonoBehaviour
+{
+    I01MissionComposition composition;
+    MissionRuntime runtime;
+    FirstPersonController player;
+    InteractionResolver resolver;
+    I06MarineBindings marine;
+    MissionCinematicPresenter cinematics;
+    MealPresenter meal;
+    EmbodiedBodyPresenter body;
+    Camera view;
+    UIDocument document;
+    Keyboard keyboard;
+    Mouse mouse;
+    InputSettings originalSettings, qaSettings;
+    HideFlags originalFlags;
+    bool previousBackground;
+    readonly List<InputDevice> disabledDevices = new List<InputDevice>();
+    int interactions, transferred;
+    double stageFood; bool stageEaten;
+    CommandResult lastInteraction;
+    readonly List<string> mealEvents = new List<string>();
+    string stage = "startup";
+    MissionSession Session => runtime.Session;
+    PlayerInputActions Input => player.InputSource as PlayerInputActions;
+    static string Output => MealNativeQa.Output;
+    void Check(bool ok, string message) => MealNativeQa.Check(ok, message);
+    bool Soft(bool ok, string message) => MealNativeQa.Soft(ok, message);
+    void Stage(string value) { stage = value; MealNativeQa.SetStage(value); Note("== " + value); }
+    void Note(string text) => MealNativeQa.Note(Time.realtimeSinceStartupAsDouble.ToString("F3") + " | " + text);
+
+    IEnumerator Start()
+    {
+        DontDestroyOnLoad(gameObject); // the real restart reloads the saved scene; the driver must observe it
+        previousBackground = Application.runInBackground; Application.runInBackground = true;
+        originalSettings = InputSystem.settings; originalFlags = originalSettings.hideFlags;
+        if (originalFlags == HideFlags.HideAndDontSave) originalSettings.hideFlags = HideFlags.DontSave;
+        qaSettings = Object.Instantiate(originalSettings); qaSettings.hideFlags = HideFlags.DontSave;
+        qaSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        qaSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+        InputSystem.settings = qaSettings;
+        foreach (var device in InputSystem.devices.ToArray())
+            if (device.enabled && (device is Mouse || device is Keyboard || device is Gamepad)) { disabledDevices.Add(device); InputSystem.DisableDevice(device); }
+        keyboard = InputSystem.AddDevice<Keyboard>("Meal QA keyboard"); mouse = InputSystem.AddDevice<Mouse>("Meal QA mouse");
+        var stack = new Stack<IEnumerator>(); stack.Push(Exercise()); Exception failed = null;
+        while (stack.Count > 0)
+        {
+            bool more = false; object yielded = null;
+            try { MealNativeQa.RequireNoErrors(); more = stack.Peek().MoveNext(); if (more) yielded = stack.Peek().Current; }
+            catch (Exception error) { failed = error; }
+            if (failed != null) break;
+            if (!more) { stack.Pop(); continue; }
+            if (yielded is IEnumerator nested) { stack.Push(nested); continue; }
+            yield return yielded;
+        }
+        if (failed != null)
+        {
+            Keys();
+            if (view) yield return Capture("FAIL-actual-state");
+            Cleanup(); MealNativeQa.Finish(false, "Stage=" + stage + "\n" + failed); yield break;
+        }
+        Cleanup(); MealNativeQa.Finish(true, "MEAL-PRES-01 native meals completed; see checks, observations and captures.");
+    }
+
+    IEnumerator Exercise()
+    {
+        yield return WaitFor(() => Object.FindFirstObjectByType<MissionRuntime>()?.Session != null, 15, "Actual saved session startup");
+        composition = Object.FindFirstObjectByType<I01MissionComposition>(); runtime = composition.Runtime; player = runtime.Player;
+        resolver = player.Interaction; marine = Object.FindFirstObjectByType<I06MarineBindings>();
+        cinematics = Object.FindFirstObjectByType<MissionCinematicPresenter>(); meal = Object.FindFirstObjectByType<MealPresenter>();
+        body = Object.FindFirstObjectByType<EmbodiedBodyPresenter>();
+        view = Camera.main; document = Object.FindFirstObjectByType<MissionFlightBoard>().GetComponent<UIDocument>();
+        Check(marine && cinematics && meal && body && view && Input != null, "Saved marine, cinematics, meal, body, camera and default input exist.");
+        Check(composition.Meal == meal, "The composition's meal field points at the installed presenter (patch + installer).");
+        Check(meal.IsBound && meal.RationTarget && meal.RationTarget.Interactable is MealSequence, "The real survival-ration target is decorated by the meal for the current session.");
+        player.SendMessage("OnApplicationFocus", true, SendMessageOptions.RequireReceiver);
+        meal.SendMessage("OnApplicationFocus", true, SendMessageOptions.DontRequireReceiver);
+        resolver.Interacted += OnInteract; marine.Transferred += OnTransferred;
+        meal.Started += k => mealEvents.Add("started " + k); meal.Eaten += r => mealEvents.Add("eaten " + r.Explanation);
+        meal.Finished += r => mealEvents.Add("finished " + r.Explanation); meal.Cancelled += (r, e) => mealEvents.Add("cancelled " + e + ": " + r);
+        meal.StatusChanged += line => Note("MEAL STATUS " + line);
+
+        yield return WaitFor(() => PracticeButton() != null, 8, "Actual Practice UI"); Submit(PracticeButton()); yield return Frames(3);
+        Check(composition.ModeChosen && player.ControlAllowed, "Actual Practice choice releases ordinary deck controls.");
+        Stage("marine boarding W");
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, -12)), .13f, 20);
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, .7f)), .13f, 25);
+        yield return Use(Target(InteractionIds.CockpitConsole), true);
+        yield return WaitFor(() => composition.IsTransportDeparturePlaying, 4, "Real seat E starts departure");
+        yield return WaitFor(() => transferred == 1 && !marine.OwnsPresentation && player.ControlAllowed, 40, "Actual complete departure/transfer");
+        Note("Arrival phase " + Session.State.Phase + "; floating " + player.IsFloating);
+
+        Stage("SHORTCUT domain commands until rations are taken by hand");
+        yield return ShortcutToContact();
+        Check(Session.Survival.IsActive, "Rations are taken by hand now (phase " + Session.State.Phase + ", chapter loop " + (runtime.ChapterFlow != null) + ").");
+
+        Stage("SHORTCUT teleport to the galley aisle");
+        Transform drawer = FindNamed("RationInteractionSurface");
+        Check(drawer, "The actual habitat ration drawer surface exists.");
+        yield return StandAtGalley(drawer);
+        yield return Capture("00-galley-before-meal");
+
+        double initialFood = Session.Resources.Snapshot.FoodKg;
+        var expected = new[] { MealPreparation.Warmed, MealPreparation.Rehydrated, MealPreparation.ReadyToEat };
+        for (int i = 0; i < expected.Length; i++) yield return OneMeal(i + 1, expected[i], drawer);
+        double rations = 3 * Session.Survival.RationFoodKg;
+        Check(Math.Abs((initialFood - Session.Resources.Snapshot.FoodKg) - rations) < 1e-6,
+            "Three meals debited exactly three rations: " + (initialFood - Session.Resources.Snapshot.FoodKg).ToString("F6") + " kg vs " + rations.ToString("F6"));
+
+        Stage("meal 4: pause and restart interrupt safely");
+        yield return DueRation();
+        yield return Aim(drawer.position); yield return Frames(2);
+        double food4 = Session.Resources.Snapshot.FoodKg;
+        int commands = meal.Sequence.CommandsIssued;
+        yield return PressE("meal 4");
+        yield return WaitFor(() => meal.Stage == MealStage.Prepare && meal.Sequence.StageProgress01 > .45, 8, "meal 4 reaches its preparation");
+        Keys(Key.Escape); yield return Frames(2); Keys(); yield return Frames(4);
+        Check(runtime.IsPaused, "Real Esc pauses the mission.");
+        double frozen = meal.Sequence.ElapsedActiveSeconds; yield return Seconds(1.0);
+        Check(Math.Abs(meal.Sequence.ElapsedActiveSeconds - frozen) < 1e-6 && meal.IsEating, "Pause freezes the meal (elapsed " + frozen.ToString("F3") + " s).");
+        yield return Capture("40-meal4-paused");
+        runtime.SetPaused(false); yield return Frames(4);
+        Check(!runtime.IsPaused && meal.IsEating, "Resume continues the same meal.");
+        Note("Restart during meal 4 at " + meal.Stage + " " + meal.Sequence.StageProgress01.ToString("F2"));
+        yield return Capture("41-meal4-before-restart");
+        MissionSession old = Session;
+        MissionRuntime oldRuntime = runtime;
+        MealPresenter oldMeal = meal;
+        Check(Math.Abs(old.Resources.Snapshot.FoodKg - food4) < 1e-12 && meal.IsEating && !meal.Sequence.HasEaten, "Meal 4 is mid-preparation with nothing eaten yet.");
+        runtime.RestartMission(); // the saved scene uses ReloadActiveScene: everything is rebuilt
+        yield return WaitFor(() => { var r = Object.FindFirstObjectByType<MissionRuntime>(); return r && r != oldRuntime && r.Session != null; }, 30, "The real restart rebuilds the saved scene");
+        yield return Frames(10);
+        Check(!oldMeal, "The old meal presenter is gone with the old scene.");
+        Soft(mealEvents.Any(e => e.StartsWith("cancelled False")), "Meal 4 reported an honest cancel with nothing eaten: " + string.Join(" | ", mealEvents.Where(e => e.StartsWith("cancelled"))));
+        Check(Math.Abs(old.Resources.Snapshot.FoodKg - food4) < 1e-12, "The interrupted meal 4 ate nothing (old session food unchanged).");
+        runtime = Object.FindFirstObjectByType<MissionRuntime>();
+        meal = Object.FindFirstObjectByType<MealPresenter>();
+        composition = Object.FindFirstObjectByType<I01MissionComposition>();
+        Check(meal && composition.Meal == meal, "The rebuilt scene has its meal presenter wired to the composition.");
+        Check(!meal.IsEating && !meal.PouchVisible && !meal.BlocksMovement, "After the restart no meal runs, no pouch shows and no movement lock is held.");
+        Soft(meal.IsBound && meal.RationTarget && meal.RationTarget.Interactable is MealSequence, "The new session's ration target is decorated again.");
+        Note("Meal events: " + string.Join(" | ", mealEvents));
+    }
+
+    IEnumerator OneMeal(int index, MealPreparation expected, Transform drawer)
+    {
+        Stage("meal " + index + " " + expected);
+        yield return DueRation();
+        yield return Aim(drawer.position); yield return Frames(2);
+        double food = Session.Resources.Snapshot.FoodKg, hunger = Session.Survival.Hunger01, ration = Session.Survival.RationFoodKg;
+        int commands = meal.Sequence.CommandsIssued;
+        resolver.Refresh();
+        Note("Prompt before E: '" + resolver.CurrentPrompt + "' can=" + resolver.CurrentCanInteract + " eye-drawer=" + Vector3.Distance(view.transform.position, drawer.position).ToString("F2"));
+        yield return PressE("meal " + index);
+        Check(meal.IsEating && meal.Sequence.Preparation == expected, "E starts meal " + index + " as " + meal.Sequence.Preparation);
+        Check(!player.ControlAllowed, "The composition's movement lock holds during the meal.");
+        string p = index.ToString("00");
+        yield return CaptureAt(MealStage.Take, .80, p + "-1-take-" + expected);
+        Check(!stageEaten && Math.Abs(stageFood - food) < 1e-12, "Taking the pouch grants nothing.");
+        yield return CaptureAt(MealStage.Prepare, .52, p + "-2-prepare-" + expected);
+        yield return CaptureAt(MealStage.Open, .90, p + "-3-open-" + expected);
+        Check(!stageEaten && Math.Abs(stageFood - food) < 1e-12, "Preparing and opening grant nothing (at the end of opening, before the first bite).");
+        yield return CaptureAt(MealStage.Eat, .35, p + "-4-eat-" + expected);
+        Check(stageEaten && Math.Abs((food - stageFood) - ration) < 1e-9, "The first bite debits exactly one ration (" + ration.ToString("F4") + " kg).");
+        Check(Session.Survival.Hunger01 < hunger, "Fed status increases: hunger " + hunger.ToString("F3") + " -> " + Session.Survival.Hunger01.ToString("F3"));
+        yield return WaitFor(() => !meal.IsEating, 10, "meal " + index + " finishes");
+        yield return Frames(3);
+        Check(meal.Sequence.CommandsIssued == commands + 1, "One real command for meal " + index + ".");
+        Check(!meal.PouchVisible && player.ControlAllowed, "After meal " + index + " the pouch is stowed and control returns.");
+        Check(Math.Abs((food - Session.Resources.Snapshot.FoodKg) - ration) < 1e-9, "No second debit after the meal.");
+        yield return Capture(p + "-5-after-" + expected);
+    }
+
+    IEnumerator CaptureAt(MealStage target, double progress, string name)
+    {
+        yield return WaitFor(() => !meal.IsEating || meal.Stage > target || (meal.Stage == target && meal.Sequence.StageProgress01 >= progress), 12, "reach " + name);
+        Check(meal.IsEating && meal.Stage == target, "Meal is in " + target + " for " + name + " (now " + meal.Stage + ")");
+        // The capture renders several frames while the meal goes on: judge the ledger at the moment the stage was reached.
+        stageFood = Session.Resources.Snapshot.FoodKg; stageEaten = meal.Sequence.HasEaten;
+        Note(name + ": stage=" + meal.Stage + " p=" + meal.Sequence.StageProgress01.ToString("F2") + " pouch=" + (meal.Pouch ? meal.Pouch.position.ToString("F3") : "none")
+            + " visible=" + meal.PouchVisible + " opened=" + meal.PouchOpened + " hand=" + meal.IsHandHolding
+            + " headErr=" + (meal.HandHeadErrorMetres * 1000f).ToString("F1") + "mm reachShort=" + (meal.HandReachShortfallMetres * 1000f).ToString("F0") + "mm"
+            + " eye-pouch=" + (meal.Pouch ? Vector3.Distance(view.transform.position, meal.Pouch.position).ToString("F2") : "-"));
+        Soft(meal.PouchVisible, name + ": the pouch is visible.");
+        Soft(meal.IsHandHolding, name + ": the visible WORK right hand carries the pouch.");
+        if (meal.IsHandHolding) Soft(meal.HandHeadErrorMetres < .002f, name + ": measured clasp joints within 2 mm (" + (meal.HandHeadErrorMetres * 1000f).ToString("F2") + " mm).");
+        yield return Capture(name);
+    }
+
+    IEnumerator ShortcutToContact()
+    {
+        MissionSession s = Session;
+        Note("SHORTCUT start phase=" + s.State.Phase);
+        if (s.State.Phase == GamePhase.Planning) Req(s.Planner.TryLaunch(), "launch");
+        yield return Settle();
+        if (s.State.Phase == GamePhase.Intro) Req(s.Director.TryCompleteCockpitCheck(), "impact");
+        yield return Settle();
+        if (!s.Systems.Power.IsOperational) Req(s.Systems.Power.TryRepair(s.Resources), "power repair");
+        if (!s.Systems.LifeSupport.IsOperational) Req(s.Systems.LifeSupport.TryRepair(s.Resources), "life-support repair");
+        yield return Settle();
+        if (s.Survival.IsActive)
+        {
+            // Approved chapter loop: hand-issued rations start at the end of the impact (day 1), in the cabin phases.
+            Note("SHORTCUT end (chapter loop): phase=" + s.State.Phase + " first meal: " + s.Survival.CheckConsumeRation().Explanation);
+            yield break;
+        }
+        Req(s.Eva.TryPrepareSuit(), "suit");
+        Req(s.Eva.TryBeginEva(), "begin EVA");
+        Req(s.AdvanceSimulation(s.Eva.Spec.DepressurizationSeconds), "depressurize");
+        Req(s.Eva.TryGoOutside(), "go outside");
+        Req(s.Systems.Antenna.TryRepair(s.Resources), "antenna repair");
+        Req(s.Eva.TryReturnInside(), "return inside");
+        Req(s.Eva.TryEndEva(), "end EVA");
+        Req(s.AdvanceSimulation(s.Eva.Spec.RepressurizationSeconds), "repressurize");
+        yield return Settle();
+        Req(s.Director.TryRunLinkDiagnostic(), "link diagnostic");
+        yield return Settle();
+        Req(s.Communications.TryTransmit(), "transmit");
+        Req(s.AdvanceSimulation(s.Communications.ReplyDelaySimulationSeconds), "reply");
+        yield return Settle();
+        Note("SHORTCUT end phase=" + s.State.Phase + " suit=" + runtime.EvaStatus.IsSuitOn + " outside=" + runtime.EvaStatus.IsOutside);
+    }
+
+    IEnumerator Settle()
+    {
+        double end = Now + 25;
+        while (Now < end)
+        {
+            MissionSession s = Session;
+            if (s.Cinematics.IsWaiting && cinematics.IsPlaying) cinematics.SkipActive();
+            else if (s.Cinematics.IsWaiting) s.Events.Publish(new CinematicFinished(s.Cinematics.ActiveCinematic, s.Cinematics.ActiveSequenceId, false));
+            if (!s.Cinematics.IsWaiting && !cinematics.IsPlaying) { yield return Frames(3); if (!s.Cinematics.IsWaiting && !cinematics.IsPlaying) yield break; }
+            yield return null;
+        }
+        Note("Settle timed out: waiting=" + Session.Cinematics.IsWaiting + " playing=" + cinematics.IsPlaying);
+    }
+
+    IEnumerator DueRation()
+    {
+        MissionSession s = Session;
+        double wait = Math.Max(0d, s.Survival.Spec.PortionSeconds * (1d + 1e-3) - (s.Survival.Hunger01 * s.Survival.Spec.HungerLimitSeconds)) + 300d;
+        Req(s.AdvanceSimulation(wait), "SHORTCUT wait until a ration is due");
+        if (s.Survival.CheckDrinkWater().Succeeded) Req(s.Survival.TryDrinkWater(), "SHORTCUT domain water portion (thirst would otherwise end the run)");
+        yield return Frames(4);
+        Check(s.Survival.CheckConsumeRation().Succeeded, "A ration is due: " + s.Survival.CheckConsumeRation().Explanation);
+    }
+
+    IEnumerator StandAtGalley(Transform drawer)
+    {
+        Vector3 aisle = drawer.position + Flat(drawer.forward) * .56f;
+        Check(Physics.Raycast(aisle, Vector3.down, out RaycastHit floor, 3f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore), "Deck below the galley aisle.");
+        Vector3 feet = floor.point + Vector3.up * .02f;
+        Vector3 toward = drawer.position - feet; toward.y = 0f;
+        player.Teleport(feet, Mathf.Atan2(toward.x, toward.z) * Mathf.Rad2Deg);
+        Physics.SyncTransforms();
+        yield return Seconds(.6);
+        yield return Aim(drawer.position);
+        yield return Seconds(.3);
+        Note("At galley: feet=" + player.transform.position.ToString("F2") + " eye=" + view.transform.position.ToString("F2") + " floating=" + player.IsFloating
+            + " body visible=" + body.IsVisible + " eva=" + body.IsEvaVisible + " arms=" + body.VisibleArms);
+    }
+
+    IEnumerator PressE(string what)
+    {
+        resolver.Refresh();
+        Check(resolver.CurrentTarget == meal.RationTarget, what + ": the actual interaction ray resolves the ration drawer (" + (resolver.CurrentTarget ? resolver.CurrentTarget.name : "none") + ")");
+        int before = interactions;
+        Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(2);
+        Check(interactions == before + 1 && lastInteraction.Succeeded, what + ": single actual E starts the meal | " + lastInteraction.Explanation);
+    }
+
+    Quaternion[] ArmPose()
+    {
+        var names = new[] { "upperarm01.R", "lowerarm01.R", "wrist.R", "finger2-1.R" };
+        return names.Select(n => body.GetVisibleBone(n) ? body.GetVisibleBone(n).localRotation : Quaternion.identity).ToArray();
+    }
+
+    void Req(CommandResult result, string step) { Note("domain " + step + ": " + result.Succeeded + " " + result.Explanation); Check(result.Succeeded, step + ": " + result.Explanation); }
+    InteractableTarget Target(string id) => runtime.InteractionTargets.Single(t => t.InteractionId == id);
+    static Transform FindNamed(string name) => Object.FindObjectsByType<Transform>(FindObjectsInactive.Include, FindObjectsSortMode.None).SingleOrDefault(t => t.name == name);
+    UnityEngine.UIElements.Button PracticeButton() => document.rootVisualElement.Query<UnityEngine.UIElements.Button>().ToList()
+        .FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy && Visible(b));
+    static void Submit(VisualElement e) { e.Focus(); using (var action = NavigationSubmitEvent.GetPooled()) { action.target = e; e.SendEvent(action); } }
+    static bool Visible(VisualElement e) { for (var n = e; n != null; n = n.parent) if (n.resolvedStyle.display == DisplayStyle.None || n.resolvedStyle.visibility != Visibility.Visible) return false; return e?.panel != null; }
+    void Keys(params Key[] keys) { if (keyboard != null && keyboard.added) InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys)); }
+    static Vector3 Flat(Vector3 v) { v.y = 0f; return v.sqrMagnitude > 1e-6f ? v.normalized : Vector3.forward; }
+    void OnInteract(CommandResult result) { interactions++; lastInteraction = result; Note("INTERACTION " + result.Succeeded + " " + result.Explanation); }
+    void OnTransferred() { transferred++; Note("ACTUAL MARINE TRANSFER"); }
+    void Cleanup()
+    {
+        Keys();
+        if (resolver) resolver.Interacted -= OnInteract;
+        if (marine) marine.Transferred -= OnTransferred;
+        if (keyboard != null && keyboard.added) InputSystem.RemoveDevice(keyboard); if (mouse != null && mouse.added) InputSystem.RemoveDevice(mouse);
+        foreach (var device in disabledDevices) if (device.added) InputSystem.EnableDevice(device);
+        if (originalSettings) { InputSystem.settings = originalSettings; originalSettings.hideFlags = originalFlags; }
+        if (qaSettings) Object.Destroy(qaSettings);
+        Application.runInBackground = previousBackground;
+    }
+    IEnumerator Aim(Vector3 worldPoint)
+    {
+        double end = Now + 2.5;
+        while (true)
+        {
+            Vector3 delta = worldPoint - player.ViewPivot.position; if (delta.sqrMagnitude < .000001f) yield break;
+            float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, pitch = Mathf.Atan2(delta.y, new Vector2(delta.x, delta.z).magnitude) * Mathf.Rad2Deg;
+            Vector2 degrees = new Vector2(Mathf.DeltaAngle(player.transform.eulerAngles.y, yaw), Mathf.Clamp(pitch, -80f, 80f) - player.PitchDegrees);
+            if (degrees.sqrMagnitude < .04f) break; if (Now > end) { Note("Aim did not converge; remaining=" + degrees); break; }
+            degrees = Vector2.ClampMagnitude(degrees, 70); InputSystem.QueueStateEvent(mouse, new MouseState { delta = degrees / Input.MouseDegreesPerPixel }); yield return null;
+        }
+        InputSystem.QueueStateEvent(mouse, new MouseState()); yield return Frames(1);
+    }
+    IEnumerator WalkTo(Vector3 goal, float radius, double seconds)
+    {
+        double end = Now + seconds;
+        while (Horizontal(goal, player.transform.position) > radius)
+        {
+            if (Now > end) throw new TimeoutException("Actual marine W route stalled at " + player.transform.position);
+            Vector3 flat = goal; flat.y = player.ViewPivot.position.y; yield return Aim(flat); Keys(Key.W); yield return Seconds(.08); Keys(); yield return Frames(1);
+        }
+        Keys();
+    }
+    IEnumerator Use(InteractableTarget target, bool expect)
+    {
+        Keys(); yield return Aim(target.transform.position); yield return Frames(2); resolver.Refresh();
+        Check(resolver.CurrentTarget == target, "Actual interaction ray resolves " + target.InteractionId);
+        int before = interactions; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(2);
+        Check(interactions == before + 1 && lastInteraction.Succeeded == expect, "Single actual E: " + target.InteractionId + " | " + lastInteraction.Explanation);
+    }
+    static double Now => Time.realtimeSinceStartupAsDouble;
+    static float Horizontal(Vector3 a, Vector3 b) => Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+    static IEnumerator Frames(int count) { for (int i = 0; i < count; i++) yield return null; }
+    static IEnumerator Seconds(double seconds) { double end = Now + seconds; while (Now < end) yield return null; }
+    static IEnumerator WaitFor(Func<bool> ready, double seconds, string why) { double end = Now + seconds; while (!ready()) { if (Now > end) throw new TimeoutException(why); yield return null; } }
+    IEnumerator Capture(string name)
+    {
+        var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create(); var old = view.targetTexture; float aspect = view.aspect;
+        var panels = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled && d.panelSettings && d.rootVisualElement?.panel != null).Select(d => d.panelSettings).Distinct().ToArray();
+        var targets = panels.Select(p => p.targetTexture).ToArray(); var clears = panels.Select(p => p.clearColor).ToArray();
+        try
+        {
+            view.targetTexture = texture; view.aspect = 16f / 9; foreach (var panel in panels) { panel.targetTexture = texture; panel.clearColor = false; }
+            yield return Frames(2); var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
+            try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); }
+            finally { RenderTexture.active = active; Object.Destroy(image); }
+        }
+        finally { view.targetTexture = old; view.aspect = aspect; for (int i = 0; i < panels.Length; i++) if (panels[i]) { panels[i].targetTexture = targets[i]; panels[i].clearColor = clears[i]; } texture.Release(); Object.Destroy(texture); }
+    }
+}

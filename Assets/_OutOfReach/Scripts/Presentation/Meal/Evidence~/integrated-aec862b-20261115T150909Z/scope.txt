@@ -1,0 +1,2 @@
+Actual saved Bootstrap (meal installer + composition patch applied in the meal writer's clone, uncommitted).
+Real Practice UI, marine W boarding, seat E, real departure/arrival. SHORTCUTS: domain commands to contact, teleport to the galley aisle, simulated waits until a ration is due, domain water portions between meals. Meals only via real E on the real survival-ration target.

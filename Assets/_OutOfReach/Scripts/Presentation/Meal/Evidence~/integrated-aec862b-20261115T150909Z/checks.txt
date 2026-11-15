@@ -1,0 +1,120 @@
+PASS opening actual saved Bootstrap | Saved root composition is present.
+PASS opening actual saved Bootstrap | The installed meal presenter is in the re-opened saved scene.
+PASS native actual Bootstrap | Saved marine, cinematics, meal, body, camera and default input exist.
+PASS native actual Bootstrap | The composition's meal field points at the installed presenter (patch + installer).
+PASS native actual Bootstrap | The real survival-ration target is decorated by the meal for the current session.
+PASS native actual Bootstrap | Actual Practice choice releases ordinary deck controls.
+PASS marine boarding W | Actual interaction ray resolves cockpit-console
+PASS marine boarding W | Single actual E: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS SHORTCUT domain commands until rations are taken by hand | impact: Cockpit check complete. Impact detected.
+PASS SHORTCUT domain commands until rations are taken by hand | power repair: power distribution repaired (2 spare parts).
+PASS SHORTCUT domain commands until rations are taken by hand | life-support repair: life support repaired (2 spare parts, 1 kWh).
+PASS SHORTCUT domain commands until rations are taken by hand | Rations are taken by hand now (phase Repair, chapter loop True).
+PASS SHORTCUT teleport to the galley aisle | The actual habitat ration drawer surface exists.
+PASS SHORTCUT teleport to the galley aisle | Deck below the galley aisle.
+PASS meal 1 Warmed | SHORTCUT wait until a ration is due: Simulation advanced.
+PASS meal 1 Warmed | SHORTCUT domain water portion (thirst would otherwise end the run): Drink stored water: 0.625 L
+PASS meal 1 Warmed | A ration is due: Prepare and eat the first packaged meal: 0.4575 kg
+PASS meal 1 Warmed | meal 1: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 1 Warmed | meal 1: single actual E starts the meal | Meal started: thermostabilised, warmed, 8.8 s
+PASS meal 1 Warmed | E starts meal 1 as Warmed
+PASS meal 1 Warmed | The composition's movement lock holds during the meal.
+PASS meal 1 Warmed | Meal is in Take for 01-1-take-Warmed (now Take)
+PASS meal 1 Warmed | 01-1-take-Warmed: the pouch is visible.
+PASS meal 1 Warmed | 01-1-take-Warmed: the visible WORK right hand carries the pouch.
+PASS meal 1 Warmed | 01-1-take-Warmed: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 1 Warmed | Taking the pouch grants nothing.
+PASS meal 1 Warmed | Meal is in Prepare for 01-2-prepare-Warmed (now Prepare)
+PASS meal 1 Warmed | 01-2-prepare-Warmed: the pouch is visible.
+PASS meal 1 Warmed | 01-2-prepare-Warmed: the visible WORK right hand carries the pouch.
+PASS meal 1 Warmed | 01-2-prepare-Warmed: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 1 Warmed | Meal is in Open for 01-3-open-Warmed (now Open)
+PASS meal 1 Warmed | 01-3-open-Warmed: the pouch is visible.
+PASS meal 1 Warmed | 01-3-open-Warmed: the visible WORK right hand carries the pouch.
+PASS meal 1 Warmed | 01-3-open-Warmed: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 1 Warmed | Preparing and opening grant nothing (at the end of opening, before the first bite).
+PASS meal 1 Warmed | Meal is in Eat for 01-4-eat-Warmed (now Eat)
+PASS meal 1 Warmed | 01-4-eat-Warmed: the pouch is visible.
+PASS meal 1 Warmed | 01-4-eat-Warmed: the visible WORK right hand carries the pouch.
+PASS meal 1 Warmed | 01-4-eat-Warmed: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 1 Warmed | The first bite debits exactly one ration (0,4575 kg).
+PASS meal 1 Warmed | Fed status increases: hunger 0,127 -> 0,013
+PASS meal 1 Warmed | One real command for meal 1.
+PASS meal 1 Warmed | After meal 1 the pouch is stowed and control returns.
+PASS meal 1 Warmed | No second debit after the meal.
+PASS meal 2 Rehydrated | SHORTCUT wait until a ration is due: Simulation advanced.
+PASS meal 2 Rehydrated | SHORTCUT domain water portion (thirst would otherwise end the run): Drink stored water: 0.625 L
+PASS meal 2 Rehydrated | A ration is due: Eat stored ration: 0.4575 kg
+PASS meal 2 Rehydrated | meal 2: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 2 Rehydrated | meal 2: single actual E starts the meal | Meal started: rehydratable, water added, 9.0 s
+PASS meal 2 Rehydrated | E starts meal 2 as Rehydrated
+PASS meal 2 Rehydrated | The composition's movement lock holds during the meal.
+PASS meal 2 Rehydrated | Meal is in Take for 02-1-take-Rehydrated (now Take)
+PASS meal 2 Rehydrated | 02-1-take-Rehydrated: the pouch is visible.
+PASS meal 2 Rehydrated | 02-1-take-Rehydrated: the visible WORK right hand carries the pouch.
+PASS meal 2 Rehydrated | 02-1-take-Rehydrated: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 2 Rehydrated | Taking the pouch grants nothing.
+PASS meal 2 Rehydrated | Meal is in Prepare for 02-2-prepare-Rehydrated (now Prepare)
+PASS meal 2 Rehydrated | 02-2-prepare-Rehydrated: the pouch is visible.
+PASS meal 2 Rehydrated | 02-2-prepare-Rehydrated: the visible WORK right hand carries the pouch.
+PASS meal 2 Rehydrated | 02-2-prepare-Rehydrated: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 2 Rehydrated | Meal is in Open for 02-3-open-Rehydrated (now Open)
+PASS meal 2 Rehydrated | 02-3-open-Rehydrated: the pouch is visible.
+PASS meal 2 Rehydrated | 02-3-open-Rehydrated: the visible WORK right hand carries the pouch.
+PASS meal 2 Rehydrated | 02-3-open-Rehydrated: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 2 Rehydrated | Preparing and opening grant nothing (at the end of opening, before the first bite).
+PASS meal 2 Rehydrated | Meal is in Eat for 02-4-eat-Rehydrated (now Eat)
+PASS meal 2 Rehydrated | 02-4-eat-Rehydrated: the pouch is visible.
+PASS meal 2 Rehydrated | 02-4-eat-Rehydrated: the visible WORK right hand carries the pouch.
+PASS meal 2 Rehydrated | 02-4-eat-Rehydrated: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 2 Rehydrated | The first bite debits exactly one ration (0,4575 kg).
+PASS meal 2 Rehydrated | Fed status increases: hunger 0,127 -> 0,014
+PASS meal 2 Rehydrated | One real command for meal 2.
+PASS meal 2 Rehydrated | After meal 2 the pouch is stowed and control returns.
+PASS meal 2 Rehydrated | No second debit after the meal.
+PASS meal 3 ReadyToEat | SHORTCUT wait until a ration is due: Simulation advanced.
+PASS meal 3 ReadyToEat | SHORTCUT domain water portion (thirst would otherwise end the run): Drink stored water: 0.625 L
+PASS meal 3 ReadyToEat | A ration is due: Eat stored ration: 0.4575 kg
+PASS meal 3 ReadyToEat | meal 3: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 3 ReadyToEat | meal 3: single actual E starts the meal | Meal started: ready to eat, 7.0 s
+PASS meal 3 ReadyToEat | E starts meal 3 as ReadyToEat
+PASS meal 3 ReadyToEat | The composition's movement lock holds during the meal.
+PASS meal 3 ReadyToEat | Meal is in Take for 03-1-take-ReadyToEat (now Take)
+PASS meal 3 ReadyToEat | 03-1-take-ReadyToEat: the pouch is visible.
+PASS meal 3 ReadyToEat | 03-1-take-ReadyToEat: the visible WORK right hand carries the pouch.
+PASS meal 3 ReadyToEat | 03-1-take-ReadyToEat: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 3 ReadyToEat | Taking the pouch grants nothing.
+PASS meal 3 ReadyToEat | Meal is in Prepare for 03-2-prepare-ReadyToEat (now Prepare)
+PASS meal 3 ReadyToEat | 03-2-prepare-ReadyToEat: the pouch is visible.
+PASS meal 3 ReadyToEat | 03-2-prepare-ReadyToEat: the visible WORK right hand carries the pouch.
+PASS meal 3 ReadyToEat | 03-2-prepare-ReadyToEat: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 3 ReadyToEat | Meal is in Open for 03-3-open-ReadyToEat (now Open)
+PASS meal 3 ReadyToEat | 03-3-open-ReadyToEat: the pouch is visible.
+PASS meal 3 ReadyToEat | 03-3-open-ReadyToEat: the visible WORK right hand carries the pouch.
+PASS meal 3 ReadyToEat | 03-3-open-ReadyToEat: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 3 ReadyToEat | Preparing and opening grant nothing (at the end of opening, before the first bite).
+PASS meal 3 ReadyToEat | Meal is in Eat for 03-4-eat-ReadyToEat (now Eat)
+PASS meal 3 ReadyToEat | 03-4-eat-ReadyToEat: the pouch is visible.
+PASS meal 3 ReadyToEat | 03-4-eat-ReadyToEat: the visible WORK right hand carries the pouch.
+PASS meal 3 ReadyToEat | 03-4-eat-ReadyToEat: measured clasp joints within 2 mm (0,01 mm).
+PASS meal 3 ReadyToEat | The first bite debits exactly one ration (0,4575 kg).
+PASS meal 3 ReadyToEat | Fed status increases: hunger 0,127 -> 0,010
+PASS meal 3 ReadyToEat | One real command for meal 3.
+PASS meal 3 ReadyToEat | After meal 3 the pouch is stowed and control returns.
+PASS meal 3 ReadyToEat | No second debit after the meal.
+PASS meal 3 ReadyToEat | Three meals debited exactly three rations: 1,372500 kg vs 1,372500
+PASS meal 4: pause and restart interrupt safely | SHORTCUT wait until a ration is due: Simulation advanced.
+PASS meal 4: pause and restart interrupt safely | SHORTCUT domain water portion (thirst would otherwise end the run): Drink stored water: 0.625 L
+PASS meal 4: pause and restart interrupt safely | A ration is due: Eat stored ration: 0.4575 kg
+PASS meal 4: pause and restart interrupt safely | meal 4: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 4: pause and restart interrupt safely | meal 4: single actual E starts the meal | Meal started: thermostabilised, warmed, 9.5 s
+PASS meal 4: pause and restart interrupt safely | Real Esc pauses the mission.
+PASS meal 4: pause and restart interrupt safely | Pause freezes the meal (elapsed 2,575 s).
+PASS meal 4: pause and restart interrupt safely | Resume continues the same meal.
+PASS meal 4: pause and restart interrupt safely | Meal 4 is mid-preparation with nothing eaten yet.
+PASS meal 4: pause and restart interrupt safely | The old meal presenter is gone with the old scene.
+PASS meal 4: pause and restart interrupt safely | Meal 4 reported an honest cancel with nothing eaten: cancelled False: The meal was interrupted. Nothing was eaten.
+PASS meal 4: pause and restart interrupt safely | The interrupted meal 4 ate nothing (old session food unchanged).
+PASS meal 4: pause and restart interrupt safely | The rebuilt scene has its meal presenter wired to the composition.
+PASS meal 4: pause and restart interrupt safely | After the restart no meal runs, no pouch shows and no movement lock is held.
+PASS meal 4: pause and restart interrupt safely | The new session's ration target is decorated again.
