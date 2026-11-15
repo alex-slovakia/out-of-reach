@@ -1,0 +1,129 @@
+PASS opening actual saved Bootstrap | Saved Bootstrap contains actual I06MarineBindings.
+PASS opening actual saved Bootstrap | Saved marine bindings reference their actual console and player camera.
+PASS opening actual saved Bootstrap | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.
+PASS native actual Bootstrap | Probe runs the actual saved Bootstrap, not an alternate fixture.
+PASS native actual Bootstrap | Saved runtime enables physical marine boarding and normal frame clock.
+PASS native actual Bootstrap | Actual PlayerInputActions remains the input source.
+PASS native actual Bootstrap | Actual opening mode modal blocks control before choice.
+PASS native actual Bootstrap | Actual marine location is visible with no departure lease during Planning.
+PASS native actual Bootstrap | Saved Bootstrap has28 unique actual targets, including14 cargo; no fixture targets added.
+PASS native actual Bootstrap | Exactly one actual antenna work adapter owns the intended timed presentation.
+PASS native actual Bootstrap | Exact authoritative target binding: cockpit-console
+PASS native actual Bootstrap | Exact authoritative target binding: repair-power
+PASS native actual Bootstrap | Exact authoritative target binding: repair-life-support
+PASS native actual Bootstrap | Exact authoritative target binding: suit-locker
+PASS native actual Bootstrap | Exact authoritative target binding: airlock-controls
+PASS native actual Bootstrap | Exact authoritative target binding: eva-exit
+PASS native actual Bootstrap | Exact authoritative target binding: eva-return
+PASS native actual Bootstrap | Exact antenna target -> actual current-session3s WorkGate -> canonical domain interactable binding.
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:oxygen-tank
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:oxygen-tank
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:water-tank
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:water-tank
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:food-locker
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:food-locker
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:battery-module
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:battery-module
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:solar-wing
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:solar-wing
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:spare-parts-kit
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:spare-parts-kit
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-supply:spectrometer
+PASS native actual Bootstrap | Exact authoritative target binding: cargo-bay:spectrometer
+PASS native actual Bootstrap | Exact authoritative target binding: survival-ration
+PASS native actual Bootstrap | Exact authoritative target binding: survival-water
+PASS native actual Bootstrap | Exact authoritative target binding: grow-build
+PASS native actual Bootstrap | Exact authoritative target binding: survival-sleep
+PASS native actual Bootstrap | Exact authoritative target binding: recovery-beacon
+PASS native actual Bootstrap | Exact authoritative target binding: salvage-payload
+PASS native actual Bootstrap | Exactly one real cockpit/seat target is reused.
+PASS native actual Bootstrap | Single actual runtime/marine/cargo/hands owners, including after restart.
+PASS native actual Bootstrap | Actual pinned land kit and passive coastal horizon are active at the prologue.
+PASS native actual Bootstrap | Land kit and horizon share the stationary SiteRoot, outside moving VehicleRoot.
+PASS native actual Bootstrap | No active Ocean or LaunchBarge remains in the actual land prologue.
+PASS native actual Bootstrap | Actual land kit uses all11 pinned imported model modules, not fixture geometry.
+PASS native actual Bootstrap | Actual land kit retains five authored structural MeshColliders.
+PASS native actual Bootstrap | Actual imported land pad has correct metre bounds and negativeZ center; no stale mirrored axis.
+PASS native actual Bootstrap | Actual saved passive land horizon uses its persisted mesh at the ground datum, without an invented support collider.
+PASS native actual Bootstrap | Original authoritative546 kg default and empty hands; no fixture inventory grant.
+PASS native actual Bootstrap | The single real cockpit target has moved to the actual marine seat surface.
+PASS native actual Bootstrap | Actual player/camera start at marine location with marine viewing range.
+PASS native actual Bootstrap | Actual Start timed UI chooses mode and arms Core deadline.
+PASS native actual Bootstrap | Actual composed/domain gate releases control after Timed choice.
+PASS native actual Bootstrap | Actual gate remains allowed at grounding readiness: after actual Timed choice
+PASS native actual Bootstrap | Actual capsule grounds without gravity/position edits: after actual Timed choice
+PASS native actual Bootstrap | Actual deadline starts near60 seconds and is driven naturally.
+PASS native actual Bootstrap | Actual1280x720 Bootstrap GPU capture contains spatial variation: 01-actual-dock; visual acceptance remains human review.
+PASS actual elevated deck land views | Actual1280x720 Bootstrap GPU capture contains spatial variation: 01a-land-from-deck-left; visual acceptance remains human review.
+PASS actual elevated deck land views | Actual1280x720 Bootstrap GPU capture contains spatial variation: 01b-land-from-deck-right; visual acceptance remains human review.
+PASS actual elevated deck land views | Actual1280x720 Bootstrap GPU capture contains spatial variation: 01c-land-facility-horizon; visual acceptance remains human review.
+PASS actual cargo cycle and continuous loaded W approach | Actual gate remains allowed at grounding readiness: cargo-bay:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Actual capsule grounds without gravity/position edits: cargo-bay:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Actual saved2 m nearest ray resolves cargo-bay:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Exactly one actual keyboard E succeeds: cargo-bay:oxygen-tank | Carrying oxygen tank.
+PASS actual cargo cycle and continuous loaded W approach | Actual bay E unloads one oxygen crate.
+PASS actual cargo cycle and continuous loaded W approach | Actual gate remains allowed at grounding readiness: cargo-supply:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Actual capsule grounds without gravity/position edits: cargo-supply:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Oxygen tank back on the pallet.
+PASS actual cargo cycle and continuous loaded W approach | Actual supply E returns that unit; no fake available crate.
+PASS actual cargo cycle and continuous loaded W approach | Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Carrying oxygen tank.
+PASS actual cargo cycle and continuous loaded W approach | Actual pickup shows the carried case and real two-hand rig.
+PASS actual cargo cycle and continuous loaded W approach | Actual saved destination binding points to the real oxygen bay.
+PASS actual cargo cycle and continuous loaded W approach | Production destination guide is visible while carrying.
+PASS actual cargo cycle and continuous loaded W approach | Actual1280x720 Bootstrap GPU capture contains spatial variation: 02-actual-carried-cargo; visual acceptance remains human review.
+PASS actual cargo cycle and continuous loaded W approach | Actual gate remains allowed at grounding readiness: before actual W route
+PASS actual cargo cycle and continuous loaded W approach | Actual capsule grounds without gravity/position edits: before actual W route
+PASS actual cargo cycle and continuous loaded W approach | Actual oxygen-tank W route: 13.436 m / 6.447 s, matches real speed factor and no side collision.
+PASS actual cargo cycle and continuous loaded W approach | Actual saved2 m nearest ray resolves cargo-bay:oxygen-tank
+PASS actual cargo cycle and continuous loaded W approach | Exactly one actual keyboard E succeeds: cargo-bay:oxygen-tank | Oxygen tank loaded.
+PASS actual cargo cycle and continuous loaded W approach | Real E stow restores exact original546 kg manifest after continuous loaded walk.
+PASS actual cargo cycle and continuous loaded W approach | Production held hands and guidance clear after stow.
+PASS actual cargo cycle and continuous loaded W approach | Actual gate remains allowed at grounding readiness: before actual W route
+PASS actual cargo cycle and continuous loaded W approach | Actual capsule grounds without gravity/position edits: before actual W route
+PASS actual cargo cycle and continuous loaded W approach | Actual empty-hands W route: 1.731 m / 0.692 s, matches real speed factor and no side collision.
+PASS actual cargo cycle and continuous loaded W approach | Actual saved2 m nearest ray resolves cockpit-console
+PASS actual cargo cycle and continuous loaded W approach | Representative loaded route and actual seat approach finish before the real deadline.
+PASS actual cargo cycle and continuous loaded W approach | Actual1280x720 Bootstrap GPU capture contains spatial variation: 03-cabin-before-deadline; visual acceptance remains human review.
+PASS full actual60-second deadline then real seat E | Observed real timed mode expires at approximately60 wall seconds: 59.859
+PASS full actual60-second deadline then real seat E | Actual deadline seals manifest and leaves first-person boarding control, without launching automatically.
+PASS full actual60-second deadline then real seat E | Actual saved2 m nearest ray resolves cockpit-console
+PASS full actual60-second deadline then real seat E | Exactly one actual keyboard E succeeds: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS full actual60-second deadline then real seat E | Real seat E launches sealed manifest into Intro.
+PASS full actual60-second deadline then real seat E | Core teleports the real camera's player ancestor to Aurora while the same camera parent holds the marine world shot.
+PASS full actual60-second deadline then real seat E | Production departure lease blocks real movement and interaction.
+PASS full actual60-second deadline then real seat E | Cargo visibility check occurs during actual Intro departure lease.
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: oxygen-tank
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: water-tank
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: food-locker
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: battery-module
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: solar-wing
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: spare-parts-kit
+PASS full actual60-second deadline then real seat E | Loaded actual aboard case renderers remain active during Intro: spectrometer
+PASS full actual60-second deadline then real seat E | Intro visible aboard cases do not restore held hands or cargo interactions.
+PASS full actual60-second deadline then real seat E | Actual cabin camera settles at the authored marine seat despite Core relocation.
+PASS full actual60-second deadline then real seat E | Actual1280x720 Bootstrap GPU capture contains spatial variation: 04-cabin-launch-loaded-cases; visual acceptance remains human review.
+PASS actual departure pause/resume world-shot stability | Pause holds the pre-ascent world shot instead of restoring a camera offset under Core's relocated player.
+PASS actual departure pause/resume world-shot stability | Real paused W reaches the action map but cannot move, interact or advance departure/domain time.
+PASS actual departure pause/resume world-shot stability | Paused actual camera, transport, hatch and arm retain stable world transforms.
+PASS actual departure pause/resume world-shot stability | Pause emits no duplicate departure cue.
+PASS actual departure pause/resume world-shot stability | Actual1280x720 Bootstrap GPU capture contains spatial variation: 05-actual-paused-departure; visual acceptance remains human review.
+PASS actual departure pause/resume world-shot stability | Resume continues from held cabin playhead/world shot without a pause-sized jump.
+PASS actual departure pause/resume world-shot stability | Resume retains actual departure control lease.
+PASS actual exterior shot and completed transfer | Actual timeline reaches exterior camera cut on the same player camera.
+PASS actual exterior shot and completed transfer | Cargo visibility check occurs during actual Intro departure lease.
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: oxygen-tank
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: water-tank
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: food-locker
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: battery-module
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: solar-wing
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: spare-parts-kit
+PASS actual exterior shot and completed transfer | Loaded actual aboard case renderers remain active during Intro: spectrometer
+PASS actual exterior shot and completed transfer | Intro visible aboard cases do not restore held hands or cargo interactions.
+PASS actual exterior shot and completed transfer | Actual1280x720 Bootstrap GPU capture contains spatial variation: 06-actual-exterior-ascent; visual acceptance remains human review.
+PASS actual exterior shot and completed transfer | Actual pinned land kit and passive coastal horizon are active at the prologue.
+PASS actual exterior shot and completed transfer | Land kit and horizon share the stationary SiteRoot, outside moving VehicleRoot.
+PASS actual exterior shot and completed transfer | No active Ocean or LaunchBarge remains in the actual land prologue.
+FAIL actual exterior shot and completed transfer | Actual land kit uses all11 pinned imported model modules, not fixture geometry.
+PASS actual exterior shot and completed transfer | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.

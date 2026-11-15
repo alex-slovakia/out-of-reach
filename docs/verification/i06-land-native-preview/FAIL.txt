@@ -1,0 +1,6 @@
+System.InvalidOperationException: Actual land kit uses all11 pinned imported model modules, not fixture geometry.
+  at LandBootstrapNativeQa.Check (System.Boolean condition, System.String message) [0x000c9] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\LandBootstrapNativeQa\LandBootstrapNativeQa.cs:127 
+  at LandBootstrapNativeQaDriver.Check (System.Boolean value, System.String text) [0x00000] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\LandBootstrapNativeQa\LandBootstrapNativeQa.cs:208 
+  at LandBootstrapNativeQaDriver.ValidateLand () [0x00113] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\LandBootstrapNativeQa\LandBootstrapNativeQa.cs:405 
+  at LandBootstrapNativeQaDriver+<Exercise>d__53.MoveNext () [0x00d74] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\LandBootstrapNativeQa\LandBootstrapNativeQa.cs:307 
+  at LandBootstrapNativeQaDriver+<Start>d__52.MoveNext () [0x000c9] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\LandBootstrapNativeQa\LandBootstrapNativeQa.cs:228 
