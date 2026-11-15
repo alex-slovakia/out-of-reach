@@ -184,6 +184,24 @@ public sealed class RadioQaDriver : MonoBehaviour
         radio.Skip();
         yield return Wait(() => !radio.IsPlaying, 2, "distress skipped");
         RadioQa.Check(!radio.TryPlay(RadioBeats.DistressCall), "A beat plays once per session (no duplicate)");
+
+        // Day-14 voiced announcement: Codex's approved vo23 recording, bound by the installer, through the radio band.
+        RadioQa.Check(radio.HasVoice(RadioBeats.RescueLostCue), "vo23_mc_rescue_lost bound by the installer");
+        RadioQa.Check(radio.TryPlay(RadioBeats.Day14Announcement), "Day-14 announcement queued");
+        yield return Wait(() => radio.Timeline.LineIndex == 0, 5, "announcement line");
+        yield return Seconds(.7);
+        RadioQa.Check(radio.IsVoicePlaying, "Recorded vo23 plays on the radio voice source");
+        float lineSeconds = radio.Timeline.Beat.Lines[0].Seconds;
+        RadioQa.Note("announcement line seconds " + lineSeconds.ToString("F2"));
+        yield return Capture("08-day14-announcement-a");
+        runtime.SetPaused(true);
+        yield return Seconds(.8);
+        RadioQa.Check(!radio.IsVoicePlaying && radio.IsPlaying, "Pause pauses the recorded voice and the beat");
+        runtime.SetPaused(false);
+        yield return Seconds(lineSeconds * .55);
+        yield return Capture("09-day14-announcement-b");
+        yield return Wait(() => !radio.IsPlaying, lineSeconds + 4, "announcement ends");
+        RadioQa.Check(!radio.IsVoicePlaying, "Voice stops with the beat");
     }
 
     void RadioTimeline() => RadioQa.Note("boarding beat total " + radio.Timeline.TotalSeconds.ToString("F2") + " s");

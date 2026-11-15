@@ -2,10 +2,15 @@ PASS Installed radio presenter exists in the running scene
 PASS No radio beat before the boarding threshold
 PASS Pad-hatch radio check started by proximity to BoardingThreshold (player at (10000.00, 100.02, -4.10))
 PASS Player line keys the PTT, amber LED
-PASS Pause freezes the radio beat (5,60 -> 5,60)
+PASS Pause freezes the radio beat (5,64 -> 5,64)
 PASS Radio is lowered and hidden after the beat
 PASS Day-14 call queued
 PASS Reduced motion: no sway
 PASS Skip lowers and ends the Day-14 call
 PASS Distress call queued
 PASS A beat plays once per session (no duplicate)
+PASS vo23_mc_rescue_lost bound by the installer
+PASS Day-14 announcement queued
+PASS Recorded vo23 plays on the radio voice source
+PASS Pause pauses the recorded voice and the beat
+PASS Voice stops with the beat
