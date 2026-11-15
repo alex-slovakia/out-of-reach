@@ -6,6 +6,8 @@
 - **Deadline:** Sun 15 Nov 2026, **23:59 Bratislava = 22:59 UTC** ("Submit for Judging" by the Team Owner). Tonight: the final build around **23:00 CET**, the game done by **23:15**, the Team Owner submits around **23:30**; resubmits are allowed until the deadline.
 - **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes; the day-14 announcement ships as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202). Alex decided that CLAUDE-MAX does the final integration (#7 6901207238). Every paste block describes only what is in the RC. **If the RC ships, the pack is final as it stands.** If a B build ships (extra NASA data lines, new models), one short diff pass follows (section below).
 
+**Alex (Team Owner): start with [HANDOFF-TO-ALEX.md](HANDOFF-TO-ALEX.md).** One page, five steps. The submit-pack lane on Apoliak's side is closed; nothing here needs it any more.
+
 ## Three sets are ready — use the set of the build that ships
 
 | The build that ships (final post on #7) | Use |
