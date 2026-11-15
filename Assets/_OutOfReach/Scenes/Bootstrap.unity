@@ -73085,7 +73085,29 @@ MonoBehaviour:
   dispatchBeats:
   - contentId: dispatch.rescue-1-failed
     beatId: radio.day14-call
-  voiceClips: []
+  voiceClips:
+  - cueId: vo30_mc_aurora_radio_check
+    clip: {fileID: 8300000, guid: 19e391eae9ca43279f08c44f4b4310b7, type: 3}
+  - cueId: vo31_crew_aurora_loud_clear
+    clip: {fileID: 8300000, guid: 553897cc44434f8a95ea2753fa468346, type: 3}
+  - cueId: vo32_pad_radio_check
+    clip: {fileID: 8300000, guid: c5dbc30d4f3c438aae78013c59861943, type: 3}
+  - cueId: vo33_crew_pad_loud_clear
+    clip: {fileID: 8300000, guid: a63615c9968c4582ac8154cf0b7b8244, type: 3}
+  - cueId: vo34_pad_strap_in
+    clip: {fileID: 8300000, guid: e0dd6ae70128484f83c6d2b38b273bcb, type: 3}
+  - cueId: vo35_crew_mayday
+    clip: {fileID: 8300000, guid: cef904bd33824584947c6408c7b13e56, type: 3}
+  - cueId: vo36_crew_requesting_rescue
+    clip: {fileID: 8300000, guid: 4decc20651e444e18382de5fe1c093fc, type: 3}
+  - cueId: vo37_mc_earth_we_hear_you
+    clip: {fileID: 8300000, guid: ee3d367bb6274b9aa118fb6b62ebe35e, type: 3}
+  - cueId: vo38_mc_earth_rescue_day14
+    clip: {fileID: 8300000, guid: 36d1cc87c1124bc289db97b9fb553d6c, type: 3}
+  - cueId: vo39_mc_priority_traffic
+    clip: {fileID: 8300000, guid: a280150ad3b440cea4595f3b1b1076c1, type: 3}
+  - cueId: vo40_mc_rescue_lost_day14
+    clip: {fileID: 8300000, guid: f96e61e0c479469cb067441a49588b9c, type: 3}
   heldPosition: {x: 0.125, y: -0.152, z: 0.31}
   heldEuler: {x: -10, y: -26, z: 8}
   hiddenPosition: {x: 0.2, y: -0.47, z: 0.24}
