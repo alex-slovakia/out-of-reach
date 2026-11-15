@@ -1,0 +1,25 @@
+WHAT GOES INTO THE PUBLIC "FINAL PROJECT" FOLDER (Team Owner)
+
+This list is for the Team Owner. Do not upload this file itself.
+
+Upload exactly these files to one Google Drive folder:
+
+  1. The Windows build ZIP named in the final post on issue #7
+     (check its SHA-256 against that post before uploading).
+  2. README.pdf      (this folder; two pages, with four real in-game captures)
+  3. README.txt      (this folder; the same text as plain text)
+  4. CREDITS.txt     (this folder; every third-party asset and licence)
+  5. OUT-OF-REACH_SpaceApps2026_deck.pdf   (from ../deck/; 7 slides)
+
+Sharing: "Anyone with the link" + "Viewer". Then open the folder link in a private browser window:
+it must open without a login, a permission request or a registration.
+
+The folder link is the "Link to Final Project" of the form.
+The link to the deck PDF (share that one file the same way) is the "Link to Project Demo",
+unless Apoliak chooses a video at 23:00 CET.
+
+Do NOT upload: the working repository, anything from docs/art-direction (unwatermarked AI concept
+boards), docs/references (third-party video frames), make_readme_pdf.py, any *_DoNotShip folder.
+
+If the build changes after this folder was prepared: nothing in README.txt, README.pdf or CREDITS.txt
+names a build number, so they stay valid. Only replace the ZIP.

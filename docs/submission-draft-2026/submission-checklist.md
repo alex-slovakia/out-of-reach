@@ -41,7 +41,7 @@ Do **not** flip `alex-slovakia/out-of-reach` to public: that would publish issue
 
 | Option | What | Owner | Effort |
 |---|---|---|---|
-| **B (fastest, recommended tonight)** | A **Google Drive folder**, "Anyone with the link · Viewer", with: the final Windows build ZIP, `README.pdf` or `README.txt` (from [public-README-draft.md](public-README-draft.md)), the deck PDF, `CREDITS.txt` (block A of the credits file) | Team Owner | ~15 min + upload time (the ZIP is about 530 MB) |
+| **B (fastest, recommended tonight)** | A **Google Drive folder**, "Anyone with the link · Viewer", with: the final Windows build ZIP plus the ready files in [final-project-folder/](final-project-folder/) (`README.pdf`, `README.txt`, `CREDITS.txt`) and the deck PDF. The exact list is in [final-project-folder/UPLOAD-LIST.txt](final-project-folder/UPLOAD-LIST.txt) | Team Owner | ~10 min + upload time (the ZIP is about 530 MB) |
 | A | A **new public GitHub repository** (for example `out-of-reach-space-apps-2026`) with: `README.md` from the public README draft plus 4–6 real captures; `CREDITS.md`; the game source (`Assets/_OutOfReach/**`, `Packages/`, `ProjectSettings/`) **without** `docs/references/`, `docs/art-direction/`, `.local/`; a **Release** with the Windows build ZIP (GitHub allows up to 2 GB per file) | Team Owner (owns the GitHub account) | ~30–45 min |
 
 Build ZIP: use the one named in the final post on #7, check its SHA-256 against that post, and test it once on a PC: unzip, run `OutOfReach.exe` (no admin rights). Windows SmartScreen may warn about an unsigned game: the README says "More info → Run anyway". Leave out any `*_BurstDebugInformation_DoNotShip` folder.

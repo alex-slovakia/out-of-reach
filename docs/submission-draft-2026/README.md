@@ -15,7 +15,7 @@
 | 3 | [deck/OUT-OF-REACH_SpaceApps2026_deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf) (+ `.pptx`, `build_deck.py`, `export_pdf.ps1`) — 7 slides including the title, real in-game captures only | the demo link (variant A), final-project folder |
 | 4 | [credits-and-licenses.md](credits-and-licenses.md) — every third-party asset, licence, required attribution, what must stay private | Team Owner, README |
 | 5 | [ai-disclosure.md](ai-disclosure.md) — the SI rules, our inventory, the labels in place | Team Owner, README |
-| 6 | [public-README-draft.md](public-README-draft.md) — the project page for the public final-project link | Team Owner |
+| 6 | [final-project-folder/](final-project-folder/) — **ready to upload**: `README.pdf` (two pages with four real captures), `README.txt`, `CREDITS.txt`, and `UPLOAD-LIST.txt` saying what else goes into the public folder. [public-README-draft.md](public-README-draft.md) is the same content as Markdown for a public repository | Team Owner |
 | 7 | [playthrough-checklist.md](playthrough-checklist.md) — one play of the final build to confirm every claim | whoever plays the build |
 
 **Demo link:** the form takes one link, a video of 30 s or less **or** at most 7 slides. **No video is approved, uploaded or linked.** Apoliak decides at 23:00 CET; [form-fields.md](form-fields.md) §3 has both variants. The deck is ready now. (`demo-video-30s.md` and its `.srt` are an older script, kept only in case Apoliak chooses a video; nothing in this pack depends on them.)

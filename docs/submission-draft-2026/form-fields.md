@@ -151,7 +151,7 @@ The guide says this answer is for data collection and is **not shown to judges**
 ```text
 Yes. We used SI tools as implementation accelerators under the team's direction. The idea, the story, the mission premise and every design decision came from the two team members, who directed, reviewed, playtested and approved all work.
 
-Code: Claude Code (Anthropic; models Claude Opus 5.5, Claude Fable 5.2 and Claude Sonnet 5.5) wrote most gameplay and simulation code, movement, body animation, the chapter loop, the tether, the meal, the handheld radio, the routine montage and the rescue sequence, the tests, and the final integration. OpenAI Codex wrote most presentation, UI, scene composition, audio runtime and build tooling, and most documentation. Claude-written commits carry a "Co-Authored-By: Claude" trailer in the git metadata; the project README states the rest.
+Code: Claude Code (Anthropic; models Claude Opus 5.5, Claude Fable 5.2 and Claude Sonnet 5.5) wrote most gameplay and simulation code, movement, body animation, the chapter loop, the tether, the meal, the handheld radio, the routine montage, the rescue sequence and the tests, and did the final integration. OpenAI Codex wrote most presentation, UI, scene composition, audio runtime and build tooling, and most documentation. Claude-written commits carry a "Co-Authored-By: Claude" trailer in the git metadata; the project README states the rest.
 
 3D models, textures and drawings: our original meshes, textures and the sketched title cards were produced by code and by Python scripts for Blender and NumPy/Pillow that these assistants wrote. No generative image or 3D model produced any in-game asset. Third-party CC0 models and textures are credited separately.
 
