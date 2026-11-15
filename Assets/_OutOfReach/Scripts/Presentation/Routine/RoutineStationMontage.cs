@@ -7,6 +7,7 @@ using OutOfReach.Core.Runtime;
 using OutOfReach.Interaction;
 using OutOfReach.Presentation.Cinematics;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 namespace OutOfReach.Presentation.Routine
@@ -52,7 +53,7 @@ namespace OutOfReach.Presentation.Routine
         private RenderTexture texture;
         private float rescanIn, hostScanIn, opacity, driftSeconds;
         private int cutsSeen;
-        private bool bound, wasRunning, anchorsResolved, faulted;
+        private bool bound, wasRunning, anchorsResolved, faulted, textureFailed;
 
         /// <summary>Station whose picture or caption is on screen now (None when nothing is shown).</summary>
         public RoutineStation ShownStation { get; private set; }
@@ -166,7 +167,8 @@ namespace OutOfReach.Presentation.Routine
             bool cardVisible = host.panel != null && host.resolvedStyle.display != DisplayStyle.None;
             RoutineStation station = cardVisible ? schedule.Current : RoutineStation.None;
             Pose pose = default;
-            bool posed = station != RoutineStation.None && TryPose(station, out pose);
+            // Without a graphics device (headless test runs) or a backdrop texture there is no picture: caption only.
+            bool posed = station != RoutineStation.None && PicturesSupported && TryPose(station, out pose) && EnsureCamera();
             if (schedule.Cuts != cutsSeen || station != ShownStation)
             {
                 cutsSeen = schedule.Cuts;
@@ -182,7 +184,6 @@ namespace OutOfReach.Presentation.Routine
 
             if (posed)
             {
-                EnsureCamera();
                 if (!reduced && !paused) driftSeconds += realSeconds;
                 // A slow, small drift keeps the shot alive; reduced effects hold it still.
                 Quaternion sway = Quaternion.AngleAxis(Mathf.Sin(driftSeconds * .9f) * 1.1f, Vector3.up);
@@ -307,7 +308,10 @@ namespace OutOfReach.Presentation.Routine
             host = null;
         }
 
-        private void EnsureCamera()
+        /// <summary>False where nothing can be rendered (a null graphics device) or the backdrop texture once failed.</summary>
+        private bool PicturesSupported => !textureFailed && SystemInfo.graphicsDeviceType != GraphicsDeviceType.Null;
+
+        private bool EnsureCamera()
         {
             if (!texture)
             {
@@ -319,6 +323,14 @@ namespace OutOfReach.Presentation.Routine
                     name = "RoutineStationBackdrop (R18)",
                     hideFlags = HideFlags.DontSave
                 };
+                if (!texture.Create())
+                {
+                    // No backdrop for this session; the card and the captions keep working.
+                    textureFailed = true;
+                    Destroy(texture);
+                    texture = null;
+                    return false;
+                }
             }
 
             if (!stationCamera)
@@ -341,6 +353,8 @@ namespace OutOfReach.Presentation.Routine
                 // The aspect follows the backdrop texture, whatever the copied camera had set.
                 stationCamera.ResetAspect();
             }
+
+            return true;
         }
 
         private bool TryPose(RoutineStation station, out Pose pose)
