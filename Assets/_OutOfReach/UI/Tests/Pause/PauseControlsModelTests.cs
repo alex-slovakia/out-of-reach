@@ -88,10 +88,10 @@ namespace OutOfReach.Tests.PauseControls
             Assert.That(Row(rows, "Grip"), Is.Null, "a bare-hand grip is not authored");
             Assert.That(Signatures(Row(rows, "Push off")), Is.EqualTo(new[] { "mouse:L", "mouse:R" }));
             Assert.That(Signatures(Row(rows, "Push with both")), Is.EqualTo(new[] { "mouse:LR" }));
-            Assert.That(Signatures(Row(rows, "Aim the push")), Is.EqualTo(new[] { "cluster(key:W,key:A,key:S,key:D)+mouse:L" }));
-            var foot = Row(rows, "Foot push");
-            Assert.That(Signatures(foot), Is.EqualTo(new[] { "key:SPACE" }));
-            Assert.That(foot.Note, Does.Contain("feet touch support"));
+            Assert.That(Signatures(Row(rows, "Lean")), Is.EqualTo(new[] { "key:A", "key:D" }));
+            var push = Row(rows, "Hold W + Space");
+            Assert.That(Signatures(push), Is.EqualTo(new[] { "key:W+key:SPACE" }));
+            Assert.That(push.Note, Does.Contain("Legs on the deck"));
             Assert.That(Signatures(Row(rows, "Use equipment")), Is.EqualTo(new[] { "key:E" }), "mouse click is a push here");
         }
 
@@ -102,7 +102,7 @@ namespace OutOfReach.Tests.PauseControls
 
             var suited = PauseControlsModel.Build(PauseControlsMode.Floating, true, bindings);
 
-            Assert.That(Signatures(Row(suited, "Grip a reachable rail")), Is.EqualTo(new[] { "key:CTRL+mouse:L" }));
+            Assert.That(Signatures(Row(suited, "Grip a reachable rail")), Is.EqualTo(new[] { "mouse:L", "mouse:R" }));
             Assert.That(Row(PauseControlsModel.Build(PauseControlsMode.Floating, false, bindings), "Grip"), Is.Null);
         }
 
