@@ -1,6 +1,7 @@
 """make_sheet - contact sheet of the SHIP-DETAIL-02 preview renders (original tooling; Pillow's built-in font).
 
 Run: python -B make_sheet.py      (reads ../Previews~/DP02_*.png, writes ../Previews~/DP02_Sheet.png)
+     python -B make_sheet.py --refine   (CKP-REFINE: writes ../Previews~/DP02_CKR_Sheet.png from DP02_CKR_*.png)
 """
 import os
 import sys
@@ -43,5 +44,46 @@ def main():
     print("sheet", len(tiles), "tiles ->", os.path.basename(out), sheet.size)
 
 
+REFINE = [  # (file, caption, column span)
+    ("DP02_CKR_FirstPerson.png", "FIRST PERSON  standing at the console (1.65 m eye, 80 deg), generated ship, Cycles", 2),
+    ("DP02_CKR_Front.png", "ISOLATED FRONT  console + CKP-REFINE (orthographic)", 1),
+    ("DP02_CKR_Side.png", "ISOLATED SIDE  starboard end (orthographic)", 1),
+    ("DP02_CKR_Before.png", "BEFORE  existing console", 1),
+    ("DP02_CKR_After.png", "AFTER  with CKP-REFINE", 1),
+]
+
+
+def refine_sheet():
+    """FIRST PERSON over the full width, then front | side and before | after."""
+    cell_w, cell_h = W, H
+    rows = [[REFINE[0]], REFINE[1:3], REFINE[3:5]]
+    heights = [(2 * cell_h if row[0][2] == 2 else cell_h) + BAR for row in rows]
+    sheet = Image.new("RGB", (2 * cell_w, sum(heights) + 40), (18, 19, 22))
+    draw = ImageDraw.Draw(sheet)
+    try:
+        font = ImageFont.load_default(size=18)
+        title = ImageFont.load_default(size=22)
+    except TypeError:
+        font = title = ImageFont.load_default()
+    draw.text((12, 9), "AURORA-7  SHIP-DETAIL-02  CKP-REFINE: close-range cockpit console and seats (original work)",
+              font=title, fill=(230, 176, 74))
+    y = 40
+    for row, height in zip(rows, heights):
+        x = 0
+        for name, text, span in row:
+            w, h = span * cell_w, (2 * cell_h if span == 2 else cell_h)
+            image = Image.open(os.path.join(PREVIEWS, name)).convert("RGB").resize((w, h), Image.LANCZOS)
+            sheet.paste(image, (x, y))
+            draw.text((x + 10, y + h + 7), text, font=font, fill=(200, 205, 210))
+            x += w
+        y += height
+    out = os.path.join(PREVIEWS, "DP02_CKR_Sheet.png")
+    sheet.save(out, optimize=True)
+    print("refine sheet ->", os.path.basename(out), sheet.size)
+
+
 if __name__ == "__main__":
-    main()
+    if "--refine" in sys.argv[1:]:
+        refine_sheet()
+    else:
+        main()

@@ -1,6 +1,7 @@
 """Compares Unity's import of the DP02 FBX files (dp02_unity_check.tsv from DP02Check.cs) with the Blender build
 report: importer settings, world bounds and pivots (1 mm), triangle counts (exact), sub-mesh count = material count,
-anchor positions (1 mm). Prints one line per check and PASS/FAIL; exit code 1 on any mismatch.
+anchor positions (1 mm), zero-area triangles (must be 0 when the TSV has the column), and lists the materials.
+Prints one line per check and PASS/FAIL; exit code 1 on any mismatch.
 
 Run: python -B dp02_unity_compare.py <dp02_unity_check.tsv> <dp02_build_report.json> [<out.json>]
 """
@@ -21,7 +22,8 @@ for line in open(tsv, encoding="utf-8"):
     elif kind == "MESH":
         g["mesh"][parts[2]] = {"min": vec(parts[3]), "max": vec(parts[4]), "pos": vec(parts[5]), "rot": vec(parts[6]),
                                "scale": vec(parts[7]), "tris": int(parts[8]), "submeshes": int(parts[9]),
-                               "materials": [m for m in parts[10].split(";") if m]}
+                               "materials": [m for m in parts[10].split(";") if m],
+                               "zero_area": int(parts[11].split("=", 1)[1]) if len(parts) > 11 else None}
     elif kind == "ANCHOR":
         g["anchor"][parts[2]] = vec(parts[3])
 want_importer = {"bakeAxisConversion": "True", "useFileUnits": "True", "useFileScale": "True", "globalScale": "1",
@@ -47,10 +49,12 @@ for unit_name, unit in report["units"].items():
         unity_tris += u["tris"]
         mats_ok = u["submeshes"] == len(o["per_material"]) and (not u["materials"] or "null" in u["materials"] or
                                                                sorted(u["materials"]) == sorted(o["per_material"]))
-        ok = e <= 0.001 and u["tris"] == o["triangles"] and mats_ok and max(abs(c) for c in u["rot"]) < 1e-3
+        zero_ok = u["zero_area"] in (None, 0)
+        ok = e <= 0.001 and u["tris"] == o["triangles"] and mats_ok and zero_ok and max(abs(c) for c in u["rot"]) < 1e-3
         tri_ok &= u["tris"] == o["triangles"]
-        lines.append("%-30s tris blender %5d unity %5d | bounds/pivot err %.5f m | submeshes %d/%d | %s" % (
-            name, o["triangles"], u["tris"], e, u["submeshes"], len(o["per_material"]), "ok" if ok else "MISMATCH"))
+        lines.append("%-30s tris blender %5d unity %5d | bounds/pivot err %.5f m | submeshes %d/%d | zero-area %s | %s" % (
+            name, o["triangles"], u["tris"], e, u["submeshes"], len(o["per_material"]), u["zero_area"],
+            "ok" if ok else "MISMATCH"))
         if not ok:
             failures.append("%s/%s: %s vs %s" % (unit_name, name, u, {k: o[k] for k in ("triangles", "bounds_min", "bounds_max", "origin")}))
     for name, a in unit["anchors"].items():
@@ -66,6 +70,10 @@ for unit_name, unit in report["units"].items():
                           "triangles_unity": unity_tris, "objects": len(unit["objects"]), "anchors": len(unit["anchors"])}
     lines.append("%s: importer %s | max bounds/pivot error %.5f m | triangles blender %d unity %d" % (
         unit_name, {k: imp.get(k) for k in want_importer}, err, unit["triangles"], unity_tris))
+for line in open(tsv, encoding="utf-8"):
+    parts = line.rstrip("\n").split("\t")
+    if len(parts) > 5 and parts[1] == "MATERIAL":
+        lines.append("material %s | %s | %s | %s" % tuple(parts[2:6]))
 print("\n".join(lines))
 print("PASS" if not failures else "FAIL: " + "; ".join(failures[:6]))
 if out_path:

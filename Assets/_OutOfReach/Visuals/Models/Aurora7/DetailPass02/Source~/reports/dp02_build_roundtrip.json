@@ -124,6 +124,51 @@
      ]
     }
    ]
+  },
+  "DP02_CockpitRefine": {
+   "fbx": "Meshes/DP02_CockpitRefine.fbx",
+   "objects_in_file": 6,
+   "checks": [
+    {
+     "object": "DP02_CKR_Cabinets",
+     "ok": true,
+     "triangles": 2444,
+     "expected": 2444
+    },
+    {
+     "object": "DP02_CKR_WorkSurfaceEdge",
+     "ok": true,
+     "triangles": 1876,
+     "expected": 1876
+    },
+    {
+     "object": "DP02_CKR_PanelBezels",
+     "ok": true,
+     "triangles": 5912,
+     "expected": 5912
+    },
+    {
+     "object": "DP02_CKR_SeatSpine_L",
+     "ok": true,
+     "triangles": 704,
+     "expected": 704
+    },
+    {
+     "object": "DP02_CKR_SeatSpine_R",
+     "ok": true,
+     "triangles": 704,
+     "expected": 704
+    },
+    {
+     "anchor": "DP02_CKR_ReviewEye",
+     "ok": true,
+     "point": [
+      0.25,
+      1.65,
+      -1.05
+     ]
+    }
+   ]
   }
  },
  "failures": [],

@@ -1,22 +1,32 @@
 DP02_Cockpit	IMPORTER	guid=1ab9e7e087b6c0d8d6e76e0f3f1c3358	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=15
 DP02_Cockpit	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
-DP02_Cockpit	MESH	DP02_CKP_AccessPanel_AftL	-2.1500,1.0500,2.9015	-1.8100,1.7500,2.9195	-1.9800,0.0000,2.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
-DP02_Cockpit	MESH	DP02_CKP_AccessPanel_AftR	1.8100,1.0500,2.9015	2.1500,1.7500,2.9195	1.9800,0.0000,2.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
-DP02_Cockpit	MESH	DP02_CKP_CrewNotes_L_Z075	-2.9262,1.4330,0.2640	-2.8865,1.7520,1.2720	-2.9265,0.0000,0.7500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2782	10	null;null;null;null;null;null;null;null;null;null;
-DP02_Cockpit	MESH	DP02_CKP_FrameLoom_L_Z000	-2.9325,0.1205,-0.0750	-2.7223,2.5174,0.0750	-2.8040,0.0000,0.0000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
-DP02_Cockpit	MESH	DP02_CKP_FrameLoom_R_Z150	2.7223,0.1205,1.4250	2.9325,2.5174,1.5750	2.8040,0.0000,1.5000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
+DP02_Cockpit	MESH	DP02_CKP_AccessPanel_AftL	-2.1500,1.0500,2.9015	-1.8100,1.7500,2.9195	-1.9800,0.0000,2.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;	zeroArea=0
+DP02_Cockpit	MESH	DP02_CKP_AccessPanel_AftR	1.8100,1.0500,2.9015	2.1500,1.7500,2.9195	1.9800,0.0000,2.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;	zeroArea=0
+DP02_Cockpit	MESH	DP02_CKP_CrewNotes_L_Z075	-2.9262,1.4330,0.2640	-2.8865,1.7520,1.2720	-2.9265,0.0000,0.7500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2782	10	null;null;null;null;null;null;null;null;null;null;	zeroArea=0
+DP02_Cockpit	MESH	DP02_CKP_FrameLoom_L_Z000	-2.9325,0.1205,-0.0750	-2.7223,2.5174,0.0750	-2.8040,0.0000,0.0000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
+DP02_Cockpit	MESH	DP02_CKP_FrameLoom_R_Z150	2.7223,0.1205,1.4250	2.9325,2.5174,1.5750	2.8040,0.0000,1.5000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
 DP02_Cockpit	ANCHOR	DP02_CKP_ReviewEye	0.3000,1.6200,0.9500	0.0000,0.0000,0.0000
+DP02_CockpitRefine	IMPORTER	guid=bdce2296c9d0dcc971c47bc08d6f6919	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=6
+DP02_CockpitRefine	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
+DP02_CockpitRefine	MESH	DP02_CKR_Cabinets	-1.4580,0.0720,-1.6550	1.4580,0.9050,-1.6135	0.0000,0.0000,-1.6200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2444	5	null;null;null;DP02_PaintWorn;DP02_RubberKnurl;	zeroArea=0
+DP02_CockpitRefine	MESH	DP02_CKR_PanelBezels	-1.5505,0.9705,-2.3219	1.5505,1.6051,-2.0301	0.0000,0.0000,-2.1200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	5912	5	null;null;null;null;DP02_PaintWorn;	zeroArea=0
+DP02_CockpitRefine	ANCHOR	DP02_CKR_ReviewEye	0.2500,1.6500,-1.0500	0.0000,0.0000,0.0000
+DP02_CockpitRefine	MESH	DP02_CKR_SeatSpine_L	-1.2135,0.5474,-0.1102	-1.0865,1.2095,0.0330	-1.1500,0.0000,-0.0393	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	704	2	null;null;	zeroArea=0
+DP02_CockpitRefine	MESH	DP02_CKR_SeatSpine_R	1.0865,0.5474,-0.1102	1.2135,1.2095,0.0330	1.1500,0.0000,-0.0393	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	704	2	null;null;	zeroArea=0
+DP02_CockpitRefine	MESH	DP02_CKR_WorkSurfaceEdge	-1.5560,0.9335,-2.3500	1.5560,1.0285,-1.5225	0.0000,0.0000,-1.5250	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1876	4	null;null;null;DP02_PaintWorn;	zeroArea=0
 DP02_Engineering	IMPORTER	guid=c80d985a299a0e664f18c69a85c43e80	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=11
 DP02_Engineering	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
-DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftL	-2.1500,1.0500,10.9015	-1.8100,1.7500,10.9195	-1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
-DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftR	1.8100,1.0500,10.9015	2.1500,1.7500,10.9195	1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
-DP02_Engineering	MESH	DP02_ENG_FrameLoom_L_Z460	-2.3325,0.1205,4.5250	-2.1223,2.5174,4.6750	-2.2040,0.0000,4.6000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
-DP02_Engineering	MESH	DP02_ENG_FrameLoom_R_Z940	2.1223,0.1205,9.3250	2.3325,2.5174,9.4750	2.2040,0.0000,9.4000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
+DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftL	-2.1500,1.0500,10.9015	-1.8100,1.7500,10.9195	-1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;	zeroArea=0
+DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftR	1.8100,1.0500,10.9015	2.1500,1.7500,10.9195	1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;	zeroArea=0
+DP02_Engineering	MESH	DP02_ENG_FrameLoom_L_Z460	-2.3325,0.1205,4.5250	-2.1223,2.5174,4.6750	-2.2040,0.0000,4.6000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
+DP02_Engineering	MESH	DP02_ENG_FrameLoom_R_Z940	2.1223,0.1205,9.3250	2.3325,2.5174,9.4750	2.2040,0.0000,9.4000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
 DP02_Engineering	ANCHOR	DP02_ENG_ReviewEye	0.7500,1.6200,8.5500	0.0000,0.0000,0.0000
 DP02_Habitat	IMPORTER	guid=0eced475c5d912f812cc5bfef69d5f7d	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=18
 DP02_Habitat	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
-DP02_Habitat	MESH	DP02_HAB_CrewKit_L_Z1175	-2.3284,1.3848,11.2365	-2.0988,2.4530,12.2320	-2.3265,0.0000,11.7500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	3626	11	null;null;null;null;null;null;null;null;null;null;null;
-DP02_Habitat	MESH	DP02_HAB_GrowCables_R_Z1536	2.2700,0.1205,15.2510	2.3795,1.8331,15.3965	2.3800,0.0000,15.3550	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2664	7	null;null;null;null;null;null;null;
-DP02_Habitat	MESH	DP02_HAB_GrowPlumbing_R_Z1414	2.0315,0.1205,14.0590	2.3795,1.0378,14.2495	2.3800,0.0000,14.1450	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	5590	7	null;null;null;null;null;null;null;
+DP02_Habitat	MESH	DP02_HAB_CrewKit_L_Z1175	-2.3284,1.3848,11.2365	-2.0988,2.4530,12.2320	-2.3265,0.0000,11.7500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	3626	11	null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
+DP02_Habitat	MESH	DP02_HAB_GrowCables_R_Z1536	2.2700,0.1205,15.2510	2.3795,1.8331,15.3965	2.3800,0.0000,15.3550	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2664	7	null;null;null;null;null;null;null;	zeroArea=0
+DP02_Habitat	MESH	DP02_HAB_GrowPlumbing_R_Z1414	2.0315,0.1205,14.0590	2.3795,1.0378,14.2495	2.3800,0.0000,14.1450	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	5590	7	null;null;null;null;null;null;null;	zeroArea=0
 DP02_Habitat	ANCHOR	DP02_HAB_ReviewEye	-0.9000,1.6200,12.1500	0.0000,0.0000,0.0000
-DP02_Habitat	MESH	DP02_HAB_StrapStow_R_Z1325	2.0414,0.5450,12.5260	2.3260,2.2098,13.9740	2.3265,0.0000,13.2500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7596	12	null;null;null;null;null;null;null;null;null;null;null;null;
+DP02_Habitat	MESH	DP02_HAB_StrapStow_R_Z1325	2.0414,0.5450,12.5260	2.3260,2.2098,13.9740	2.3265,0.0000,13.2500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7596	12	null;null;null;null;null;null;null;null;null;null;null;null;	zeroArea=0
+DP02_MATERIALS	MATERIAL	DP02_PaintWorn	guid=201b36ad8c3cb9cb036df033373cf866	shader=Hidden/InternalErrorShader	textures=DP02_PaintWorn_BaseColor;DP02_PaintWorn_Normal;DP02_PaintWorn_MODS;
+DP02_MATERIALS	MATERIAL	DP02_RubberKnurl	guid=220ed6efb6a15f155a4005aa6ee69b11	shader=Hidden/InternalErrorShader	textures=DP02_Knurl_BaseColor;DP02_Knurl_Normal;DP02_Knurl_MODS;

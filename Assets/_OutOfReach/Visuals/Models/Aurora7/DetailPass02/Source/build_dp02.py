@@ -172,6 +172,9 @@ def all_materials():
     for spec in HB_SPECS:
         folder = os.path.join(HABITAT, "Textures") if "atlas" in spec else SHIP_TEXTURES
         materials[spec["name"]] = build_material(spec["name"], spec, folder)
+    with open(os.path.join(HERE, "dp02_materials.json"), encoding="utf-8") as handle:     # CKP-REFINE material set
+        for spec in json.load(handle)["materials"]:
+            materials[spec["name"]] = build_material(spec["name"], spec, os.path.join(ROOT, "Textures"))
     return materials
 
 
@@ -294,6 +297,26 @@ def detail_models(room_name, decals=None):
 
 
 # ----------------------------------------------------------------------------- build mode
+def scrub_ui_paths():
+    """The factory Shading workspace has a file browser whose directory defaults to the user's Documents folder, and it
+    is saved with the .blend. Overwrite every file-browser directory (longer than any default, so no old bytes survive)
+    and drop the workspaces this file does not need."""
+    neutral = "//" + "_" * 96
+    for screen in bpy.data.screens:
+        for area in screen.areas:
+            for space in area.spaces:
+                params = getattr(space, "params", None) if space.type == "FILE_BROWSER" else None
+                if params is not None:
+                    params.directory = neutral.encode() if isinstance(params.directory, bytes) else neutral
+                    params.filename = "_" * 64
+    for workspace in list(bpy.data.workspaces):
+        if workspace.name != "Layout":
+            try:
+                bpy.data.workspaces.remove(workspace)
+            except (AttributeError, RuntimeError, ReferenceError):
+                pass
+
+
 def build():
     clear_scene()
     decals, _ = atlases()
@@ -343,6 +366,7 @@ def build():
     # saved as a copy (with relative texture paths) so the session stays unsaved and the FBX header does not record
     # this machine's .blend path as Original|ApplicationNativeFile
     bpy.context.preferences.filepaths.save_version = 0
+    scrub_ui_paths()
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(blend_dir, "DP02.blend"), compress=True, relative_remap=True,
                                 copy=True)
     log("saved Source~/DP02.blend before the export")
@@ -466,6 +490,161 @@ def box_distance(p, lo, hi):
     return math.sqrt(sum(c * c for c in d))
 
 
+def surface_points(verts, polys, step=0.003):
+    """Points on every triangle (grid along two edges, spacing <= step) plus its corners, in the input coordinates."""
+    v = np.asarray([tuple(p) for p in verts], dtype=np.float64)
+    out = [v[np.unique(np.asarray(polys, dtype=np.int64).ravel())]]      # only vertices of these triangles
+    for a, b, c in polys:
+        pa, pb, pc = v[a], v[b], v[c]
+        ns = max(1, int(math.ceil(np.linalg.norm(pb - pa) / step)))
+        nt = max(1, int(math.ceil(np.linalg.norm(pc - pa) / step)))
+        if ns == 1 and nt == 1:
+            out.append(((pa + pb + pc) / 3.0)[None, :])
+            continue
+        gs, gt = np.meshgrid(np.arange(ns + 1) / ns, np.arange(nt + 1) / nt)
+        keep = gs + gt <= 1.0 + 1e-9
+        out.append(pa + np.outer(gs[keep], pb - pa) + np.outer(gt[keep], pc - pa))
+    return np.unique(np.round(np.concatenate(out, axis=0), 6), axis=0)
+
+
+def box_distances(points_unity, frame, lo, hi):
+    """Distances of Unity-space points to a box given in the local space of `frame` (4x4, local -> Unity)."""
+    inv = np.linalg.inv(frame)
+    local = points_unity @ inv[:3, :3].T + inv[:3, 3]
+    d = np.maximum(np.maximum(np.asarray(lo) - local, 0.0), local - np.asarray(hi))
+    return np.sqrt((d * d).sum(axis=1))
+
+
+_COCKPIT_DETAIL = []
+
+
+def cockpit_detail_objects(materials, decals):
+    """The delivered DP02 cockpit objects (DP02_Cockpit.fbx clusters), for the CKP-REFINE overlap test."""
+    if not _COCKPIT_DETAIL:
+        collection = bpy.data.collections.new("DP02_check_existing_cockpit")
+        bpy.context.scene.collection.children.link(collection)
+        for name, placed, pivot, cluster in detail_models("Cockpit", decals):
+            _COCKPIT_DETAIL.append(make_object(name, placed, materials, collection, pivot)[0])
+        bpy.context.view_layer.update()
+    return list(_COCKPIT_DETAIL)
+
+
+def refine_context(ship_objects, rail_tree):
+    """Keep-out geometry for CKP-REFINE, from a7_ship.console() / seat() and the V01 anchors (Unity metres)."""
+    import dp02_cockpit_refine as ckr
+    from a7kit import compose as kcompose, front_frame as kfront
+    console = kfront((0.0, 0.0, ckr.CONSOLE_Z), (0, 0, 1))
+    panel = kcompose(console, ckr.PANEL)
+    boxes = [("keyboard_R", console, (0.55, 0.96, 0.06), (0.93, 1.01, 0.22)),
+             ("keyboard_L", console, (-0.93, 0.96, 0.06), (-0.55, 1.01, 0.22)),
+             ("trackball_R", console, (0.41, 0.975, 0.08), (0.51, 1.03, 0.20)),
+             ("trackball_L", console, (-0.51, 0.975, 0.08), (-0.41, 1.03, 0.20)),
+             ("knobs", console, (-0.14, 0.97, 0.14), (0.14, 1.0, 0.18)),
+             ("guarded_switch_rows", console, (-0.50, 0.9705, -0.14), (0.50, 1.01, 0.03)),
+             ("lit_key_block", console, (-0.89, 0.9705, -0.12), (-0.59, 0.995, 0.01)),
+             ("red_switch_body", console, (0.715, 0.9705, -0.10), (0.765, 1.0225, -0.02))]
+    for cx in ckr.DISPLAYS:
+        tag = "%+.2f" % cx
+        boxes += [("display%s_screen_visible" % tag, panel, (cx - 0.32, 0.085, 0.004), (cx + 0.32, 0.475, 0.006)),
+                  ("display%s_bottom_keys" % tag, panel, (cx - 0.30, 0.045, 0.0215), (cx + 0.30, 0.059, 0.0265)),
+                  ("display%s_side_keys_a" % tag, panel, (cx - 0.350, 0.115, 0.0215), (cx - 0.338, 0.425, 0.0265)),
+                  ("display%s_side_keys_b" % tag, panel, (cx + 0.338, 0.115, 0.0215), (cx + 0.350, 0.425, 0.0265))]
+    for cx in ckr.KEY_COLUMNS:
+        boxes.append(("key_column%+.2f_keys" % cx, panel, (cx - 0.0625, 0.08, 0.012), (cx + 0.0625, 0.45, 0.016)))
+    for side, tag in ((-1, "L"), (1, "R")):
+        back = kcompose(ckr.seat_frame(side), ckr.BACK)
+        boxes.append(("seat_%s_grab_bar" % tag, back, (-0.131, 0.649, -0.141), (0.131, 0.671, -0.080)))
+    eye = np.eye(4)
+    volumes = {"seat_occupant_L": (eye, (-1.43, 0.17, -1.00), (-0.87, 1.60, -0.245)),
+               "seat_occupant_R": (eye, (0.87, 0.17, -1.00), (1.43, 1.60, -0.245)),
+               "cockpit_passage": (eye, (-0.80, 0.0, -1.45), (0.80, 2.5, 3.0)),
+               "portal_z3_opening": (eye, (-0.90, 0.0, 2.92), (0.90, 2.5, 3.08))}
+    anchors = {"CockpitConsole": (0.0, 1.1, -1.72), "PlayerSpawn": (0.0, 0.05, 0.8)}
+    rail_v, rail_p = [], []
+    for obj in ship_objects:
+        v, p = world_triangles(obj, {"A7_PaintAmber"})
+        base = len(rail_v)
+        rail_v += v
+        rail_p += [(a + base, b + base, c + base) for a, b, c in p]
+    # In this scene the whole console is tagged TAG_CONTROL, so its three amber handrails are rebuilt here with
+    # a7_ship.handrail() exactly as console() places them (work-surface rail; one rail at each panel end).
+    import a7_ship
+    rails = a7kit.Model("ConsoleRails")
+    a7_ship.handrail(rails, (-1.3, 0.955), (1.3, 0.955), 0.425, console)
+    for sx in (-1, 1):
+        a7_ship.handrail(rails, (sx * 1.44, 0.10), (sx * 1.44, 0.46), 0.0, panel)
+    for v, t, _ in rails.parts["A7_PaintAmber"]:
+        base = len(rail_v)
+        rail_v += [Vector((float(p[0]), float(p[2]), float(p[1]))) for p in v]
+        rail_p += [(int(a) + base, int(b) + base, int(c) + base) for a, b, c in t]
+    used = sorted({i for tri in rail_p for i in tri})
+    remap = {old: new for new, old in enumerate(used)}
+    rail_tree = BVHTree.FromPolygons([rail_v[i] for i in used], [tuple(remap[i] for i in tri) for tri in rail_p],
+                                     all_triangles=True)
+    return {"boxes": boxes, "volumes": volumes, "anchors": anchors, "rail_tree": rail_tree, "rail_v": rail_v,
+            "rail_p": rail_p, "screen_tree": bvh_of(ship_objects, {"A7_Screens"})[0],
+            "definitions": {
+                "rails": "amber handrails (A7_PaintAmber) of the ship and habitat plus the console's three rails rebuilt "
+                         "with a7_ship.handrail() (the check tags the console as a control), sampled on both surfaces at "
+                         "3 mm: nearest refine point to a rail and nearest rail point to the refine mesh",
+                "controls_note": "min_dist_controls_m is the operable-control distance; min_dist_host_console_or_seat_m is "
+                                 "the distance to the host console/seat surfaces (the mount gap)",
+                "corridor_note": "the generic corridor box (|x| < 0.9 from z -3) contains the console itself, so the "
+                                 "console groups read 0 there; the cockpit's clear passage is cockpit_passage",
+                "controls": "operable console parts as boxes from a7_ship.console(): keyboards, trackballs, knobs, the "
+                            "guarded switch rows, the lit key block, the red switch body, the visible screen and bezel "
+                            "keys of every display, both lit-key columns; plus the grab bar of each seat",
+                "screens": "A7_Screens triangles (BVH nearest)",
+                "volumes": "seat occupant boxes (x +-0.28 about each seat, y 0.17-1.60, z -1.00 to -0.245), the cockpit "
+                           "passage (|x| < 0.80 from the console handrail z -1.45 to the portal z 3.0, y < 2.5) and the "
+                           "portal opening at z 3 (1.8 x 2.5 m)",
+                "anchors": "V01 anchors CockpitConsole (0, 1.1, -1.72) and PlayerSpawn (0, 0.05, 0.8)",
+                "sampling": "refine surfaces sampled on a 3 mm grid; box distances are exact for each sample"}}
+
+
+def refine_extras(verts, polys, mine, ctx):
+    pts = surface_points(verts, polys)
+    unity_pts = pts[:, [0, 2, 1]]
+    out = {"samples": int(len(pts))}
+    best = (float("inf"), None)
+    for p in pts:
+        hit = ctx["rail_tree"].find_nearest(Vector(p))
+        if hit[0] is not None and hit[3] < best[0]:
+            best = (hit[3], hit[0])
+    lo, hi = pts.min(axis=0) - 0.3, pts.max(axis=0) + 0.3
+    near = [tri for tri in ctx["rail_p"] if all(lo[i] <= ctx["rail_v"][tri[0]][i] <= hi[i] for i in range(3))]
+    if near:
+        for q in surface_points(ctx["rail_v"], near):
+            hit = mine.find_nearest(Vector(q))
+            if hit[0] is not None and hit[3] < best[0]:
+                best = (hit[3], Vector(q))
+    out["min_dist_rails_sampled_m"] = round(best[0], 4)
+    out["nearest_rail_point_sampled"] = unity(best[1]) if best[1] is not None else None
+    if ctx["screen_tree"] is not None:
+        out["min_dist_screens_m"] = round(min(ctx["screen_tree"].find_nearest(Vector(p))[3] for p in pts), 4)
+    worst, inside = (float("inf"), None), []
+    per_box = {}
+    for name, frame, blo, bhi in ctx["boxes"]:
+        d = box_distances(unity_pts, frame, blo, bhi)
+        per_box[name] = round(float(d.min()), 4)
+        if d.min() < worst[0]:
+            worst = (float(d.min()), name)
+        if (d <= 0.0).any():
+            inside.append(name)
+    out["min_dist_operable_controls_m"] = [round(worst[0], 4), worst[1]]
+    out["controls_penetrated"] = inside
+    out["control_distances_m"] = dict(sorted(per_box.items(), key=lambda kv: kv[1])[:6])
+    out["volumes_penetrated"] = []
+    for name, (frame, blo, bhi) in ctx["volumes"].items():
+        d = box_distances(unity_pts, frame, blo, bhi)
+        out["min_dist_%s_m" % name] = round(float(d.min()), 4)
+        if (d <= 0.0).any():
+            out["volumes_penetrated"].append(name)
+    for name, point in ctx["anchors"].items():
+        out["min_dist_anchor_%s_m" % name] = round(float(np.sqrt(((unity_pts - np.asarray(point)) ** 2).sum(axis=1)).min()), 4)
+    return out
+
+
 def check():
     clear_scene()
     materials = {}
@@ -521,17 +700,25 @@ def check():
                   "mount_gap": "smallest distance from the object to any ship/habitat surface (seated, not floating)",
                   "max_standoff": "largest distance from any vertex of the object to the nearest ship/habitat surface"},
               "rooms": {}}
+    refine = None
     for room_name in ROOMS:
         room_result = {}
         collection_room = bpy.data.collections.new("DP02_check_" + room_name)
         bpy.context.scene.collection.children.link(collection_room)
+        built = []
         for name, placed, pivot, cluster in detail_models(room_name, decals):
             obj, data = make_object(name, placed, materials, collection_room, pivot)
-            bpy.context.view_layer.update()
+            built.append((name, obj, data))
+        bpy.context.view_layer.update()
+        siblings = []
+        if room_name == "CockpitRefine":     # CKP-REFINE: also against the existing DP02 cockpit objects and each other
+            siblings = cockpit_detail_objects(materials, decals) + [o for _, o, _ in built]
+            refine = refine_context(ship_objects, rail_tree)
+        for name, obj, data in built:
             verts, polys = world_triangles(obj)
             mine = BVHTree.FromPolygons(verts, polys, all_triangles=True)
             overlaps = 0
-            for other in ship_objects:
+            for other in ship_objects + [o for o in siblings if o is not obj]:
                 v2, p2 = world_triangles(other)
                 if not p2:
                     continue
@@ -566,9 +753,20 @@ def check():
                 "min_dist_habitat_collider_m": [round(hab_box_d[0], 4), hab_box_d[1]],
                 "min_dist_airlock_door_sweep_m": round(sweep_d, 4),
                 "min_dist_corridor_box_m": round(corridor_d, 4), "min_dist_corridor_centreline_m": round(centre_d, 4)}
+            if room_name == "CockpitRefine":
+                room_result[name]["overlap_checked_against"] = "%d ship/habitat objects, %d DP02 cockpit and CKP-REFINE " \
+                    "objects" % (len(ship_objects), len(siblings) - 1)
+                extra = refine_extras(verts, polys, mine, refine)
+                extra["min_dist_host_console_or_seat_m"] = room_result[name]["min_dist_controls_m"]
+                extra["min_dist_controls_m"] = extra["min_dist_operable_controls_m"][0]
+                extra["min_dist_rails_m"] = extra["min_dist_rails_sampled_m"]
+                extra["nearest_rail_point"] = extra["nearest_rail_point_sampled"]
+                room_result[name].update(extra)
             log(name, room_result[name])
         result["rooms"][room_name] = room_result
     result["ship_anchor_names"] = sorted(anchors)
+    if refine is not None:
+        result["refine_definitions"] = refine["definitions"]
     os.makedirs(REPORTS, exist_ok=True)
     path = os.path.join(REPORTS, "dp02_check.json")
     if os.path.exists(path):
@@ -591,9 +789,22 @@ def render():
         make_object(name, model, materials, collection)
     import_habitat(materials, collection)
     decals, _ = atlases()
+    room_objects = {}
     for room_name in ROOMS:
         for name, placed, pivot, cluster in detail_models(room_name, decals):
-            make_object(name, placed, materials, collection, pivot)
+            room_objects.setdefault(room_name, []).append(make_object(name, placed, materials, collection, pivot)[0])
+    # the console alone, cut from the generated cockpit by triangle centroid, for the isolated CKP-REFINE views
+    cockpit = scene_models["A7_Cockpit"][0]
+    lo, hi = np.array([-1.62, 0.004, -2.50]), np.array([1.62, 1.75, -1.38])
+    alone = a7kit.Model("A7_ConsoleIsolated")
+    for mat, chunks in cockpit.parts.items():
+        for v, t, uv in chunks:
+            centre = v[t].mean(axis=1)
+            keep = np.all((centre >= lo) & (centre <= hi), axis=1)
+            if keep.any():
+                alone.parts.setdefault(mat, []).append((v, t[keep], None if uv is None else uv[keep]))
+    isolated_console = make_object("A7_ConsoleIsolated", alone, materials, collection)[0]
+    isolated_console.hide_render = True
     scene = bpy.context.scene
     scene.render.engine = "CYCLES"
     device = "CPU"
@@ -659,20 +870,60 @@ def render():
     wanted = arg("--views", None)
     if isinstance(wanted, str):
         views = [v for v in views if v["name"] in wanted.split(",")]
+    ship_world = scene.world
+    studio_world = bpy.data.worlds.new("DP02_StudioWorld")
+    studio_world.use_nodes = True
+    studio_world.node_tree.nodes["Background"].inputs[0].default_value = (0.16, 0.165, 0.17, 1.0)
+    studio_world.node_tree.nodes["Background"].inputs[1].default_value = 0.7
+    ship_lights = [o for o in collection.objects if o.type == "LIGHT"]
+    studio = []
+    for name, point, size, energy, target in (("Key", (1.6, 2.6, 0.4), (2.0, 1.4), 900.0, (0.0, 0.9, -1.95)),
+                                              ("Fill", (-2.4, 1.5, -0.6), (1.6, 1.6), 350.0, (0.0, 0.9, -1.95)),
+                                              ("Top", (0.0, 3.4, -1.8), (3.0, 1.0), 450.0, (0.0, 0.0, -1.95)),
+                                              ("Rim", (2.6, 1.8, -3.4), (1.2, 1.2), 300.0, (0.0, 1.0, -1.95))):
+        before = set(collection.objects)
+        area("DP02_Studio" + name, point, size, energy, (1.0, 0.97, 0.93),
+             tuple(np.asarray(target) - np.asarray(point)))
+        studio += [o for o in collection.objects if o not in before]
+    for light in studio:
+        light.hide_render = True
+    base_res = (scene.render.resolution_x, scene.render.resolution_y)
+    console_groups = [o for o in room_objects.get("CockpitRefine", []) if "SeatSpine" not in o.name]
     for review in views:
         room_name = review["name"]
+        isolated = bool(review.get("isolated"))
+        hidden = [o for r in review.get("hide_rooms", []) for o in room_objects.get(r, [])]
+        if isolated:
+            keep = set([isolated_console] + console_groups + studio)
+            hidden = [o for o in collection.objects if o not in keep]
+        for obj in hidden:
+            obj.hide_render = True
+        isolated_console.hide_render = not isolated
+        for light in studio:
+            light.hide_render = not isolated
+        scene.world = studio_world if isolated else ship_world
+        scene.render.resolution_x, scene.render.resolution_y = review.get("res", base_res)
         data = bpy.data.cameras.new("DP02_Cam_" + room_name)
         data.sensor_fit = "HORIZONTAL"
-        data.angle = math.radians(review["fov"])
+        if "ortho" in review:
+            data.type = "ORTHO"
+            data.ortho_scale = review["ortho"]
+        else:
+            data.angle = math.radians(review["fov"])
         data.clip_start = 0.05
         camera = bpy.data.objects.new("DP02_Cam_" + room_name, data)
         camera.location = to_blender_point(review["eye"])
         camera.rotation_euler = (to_blender_point(review["target"]) - camera.location).to_track_quat("-Z", "Y").to_euler()
         collection.objects.link(camera)
         scene.camera = camera
-        scene.render.filepath = os.path.join(out_dir, "DP02_%s.png" % room_name)
+        scene.render.filepath = os.path.join(out_dir, review.get("file", "DP02_%s.png" % room_name))
         bpy.ops.render.render(write_still=True)
-        log("rendered", room_name)
+        for obj in hidden:
+            obj.hide_render = False
+        isolated_console.hide_render = True
+        for light in ship_lights:
+            light.hide_render = False
+        log("rendered", room_name, "->", os.path.basename(scene.render.filepath))
 
 
 if __name__ == "__main__":

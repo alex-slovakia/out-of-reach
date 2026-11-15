@@ -1,0 +1,7 @@
+{
+ "_comment": "CKP-REFINE material set (DetailPass02/Textures, DetailPass02/Materials); same fields as ../../Source/a7_materials.json. Colour is baked into the BaseColor maps, so the tint is white.",
+ "materials": [
+  {"name": "DP02_PaintWorn", "set": "DP02_PaintWorn", "tint": "#FFFFFF", "tiling": 2.0, "normal": 0.6},
+  {"name": "DP02_RubberKnurl", "set": "DP02_Knurl", "tint": "#FFFFFF", "tiling": 16.0, "normal": 1.0}
+ ]
+}

@@ -1,8 +1,12 @@
 {
- "package": "SHIP-DETAIL-02 (AURORA-7 interior detail pass), first bounded package",
+ "package": "SHIP-DETAIL-02 (AURORA-7 interior detail pass), first bounded package plus CKP-REFINE",
  "coordinates": "AURORA-7 ship space: Unity metres, x right, y up (deck y = 0), z along the ship (cockpit at -z); drop each FBX at the ship origin with identity rotation and scale 1",
  "pivot_rule": "each object's pivot is the origin of its mount frame: a point on its host surface at deck level under the cluster; mount_normal points from the host into the room",
- "importer": "Bake Axis Conversion on, file units and scale, global scale 1, no cameras or lights; materials remapped by name onto the existing A7_*/HB_* material assets (see each FBX .meta)",
+ "importer": "Bake Axis Conversion on, file units and scale, global scale 1, no cameras or lights; materials remapped by name onto the existing A7_*/HB_* material assets and the two CKP-REFINE materials DP02_PaintWorn and DP02_RubberKnurl in DetailPass02/Materials (see each FBX .meta)",
+ "new_materials": {
+  "DP02_PaintWorn": "Materials/DP02_PaintWorn.mat, URP Lit, Textures/DP02_PaintWorn_{BaseColor,MODS,Normal}.png (512 px, tiling 2 per metre), MODS = R metallic, G occlusion, A smoothness",
+  "DP02_RubberKnurl": "Materials/DP02_RubberKnurl.mat, URP Lit, Textures/DP02_Knurl_{BaseColor,MODS,Normal}.png (512 px, tiling 16 per metre)"
+ },
  "gameplay": "static dressing only: no colliders, no interactive parts, no new switches or anchors for gameplay; the *_ReviewEye empties mark the preview camera",
  "clearance_definitions": {
   "rails": "all A7_PaintAmber triangles of the ship and habitat (handrails/translation aids; also the amber hatch-land stripe, so the number is conservative)",
@@ -10,6 +14,16 @@
   "overlap": "BVHTree.overlap triangle pairs between each detail object and all ship and habitat geometry, both built in world space from matrix_world @ v.co",
   "mount_gap": "smallest distance from the object to any ship/habitat surface (seated, not floating)",
   "max_standoff": "largest distance from any vertex of the object to the nearest ship/habitat surface"
+ },
+ "cockpit_refine_clearance_definitions": {
+  "rails": "amber handrails (A7_PaintAmber) of the ship and habitat plus the console's three rails rebuilt with a7_ship.handrail() (the check tags the console as a control), sampled on both surfaces at 3 mm: nearest refine point to a rail and nearest rail point to the refine mesh",
+  "controls_note": "min_dist_controls_m is the operable-control distance; min_dist_host_console_or_seat_m is the distance to the host console/seat surfaces (the mount gap)",
+  "corridor_note": "the generic corridor box (|x| < 0.9 from z -3) contains the console itself, so the console groups read 0 there; the cockpit's clear passage is cockpit_passage",
+  "controls": "operable console parts as boxes from a7_ship.console(): keyboards, trackballs, knobs, the guarded switch rows, the lit key block, the red switch body, the visible screen and bezel keys of every display, both lit-key columns; plus the grab bar of each seat",
+  "screens": "A7_Screens triangles (BVH nearest)",
+  "volumes": "seat occupant boxes (x +-0.28 about each seat, y 0.17-1.60, z -1.00 to -0.245), the cockpit passage (|x| < 0.80 from the console handrail z -1.45 to the portal z 3.0, y < 2.5) and the portal opening at z 3 (1.8 x 2.5 m)",
+  "anchors": "V01 anchors CockpitConsole (0, 1.1, -1.72) and PlayerSpawn (0, 0.05, 0.8)",
+  "sampling": "refine surfaces sampled on a 3 mm grid; box distances are exact for each sample"
  },
  "airlock_door_sweep_box": {
   "min": [
@@ -36,7 +50,7 @@
   ],
   "centreline": "x = 0, y = 1.25, z -3 .. 21"
  },
- "total_triangles": 58882,
+ "total_triangles": 70522,
  "rooms": {
   "Engineering": {
    "fbx": "Meshes/DP02_Engineering.fbx",
@@ -949,6 +963,448 @@
     "max_bounds_pivot_err_m": 0.0,
     "triangles_blender": 21094,
     "triangles_unity": 21094,
+    "objects": 5,
+    "anchors": 1
+   },
+   "blender_roundtrip_pass": true
+  },
+  "CockpitRefine": {
+   "fbx": "Meshes/DP02_CockpitRefine.fbx",
+   "triangles": 11640,
+   "materials": [
+    "A7_Aluminum",
+    "A7_AnodizedBlack",
+    "A7_AnodizedClear",
+    "A7_PaintGraphite",
+    "DP02_PaintWorn",
+    "DP02_RubberKnurl"
+   ],
+   "bounds_min": [
+    -1.556,
+    0.072,
+    -2.35
+   ],
+   "bounds_max": [
+    1.556,
+    1.6051,
+    0.033
+   ],
+   "groups": {
+    "DP02_CKR_Cabinets": {
+     "room": "CockpitRefine",
+     "host": "front faces of the three console cabinets (ship z -1.62): seam battens over the two cabinet joints, edge angles on the outer front edges, knurled rubber kick strips at the cabinet feet",
+     "pivot": [
+      0.0,
+      0.0,
+      -1.62
+     ],
+     "mount_normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "bounds_min": [
+      -1.458,
+      0.072,
+      -1.655
+     ],
+     "bounds_max": [
+      1.458,
+      0.905,
+      -1.6135
+     ],
+     "triangles": 2444,
+     "materials": {
+      "A7_Aluminum": 360,
+      "A7_AnodizedBlack": 360,
+      "A7_AnodizedClear": 1400,
+      "DP02_PaintWorn": 192,
+      "DP02_RubberKnurl": 132
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0223,
+      "min_dist_rails_m": 0.1448,
+      "min_dist_controls_m": 0.1296,
+      "min_dist_gameplay_parts_m": 7.166,
+      "min_dist_airlock_door_sweep_m": 18.4835,
+      "min_dist_corridor_box_m": 0.0,
+      "min_dist_corridor_centreline_m": 0.5818,
+      "min_dist_habitat_anchor_m": [
+       14.6452,
+       "SleepEntry"
+      ],
+      "min_dist_habitat_collider_m": [
+       14.1469,
+       "COL_Habitat_Berth"
+      ],
+      "overlap_checked_against": "25 ship/habitat objects, 9 DP02 cockpit and CKP-REFINE objects",
+      "min_dist_rails_sampled_m": 0.1448,
+      "nearest_rail_point_sampled": [
+       -0.5113,
+       0.9504,
+       -1.4792
+      ],
+      "min_dist_operable_controls_m": [
+       0.1296,
+       "keyboard_R"
+      ],
+      "controls_penetrated": [],
+      "control_distances_m": {
+       "keyboard_R": 0.1296,
+       "keyboard_L": 0.1296,
+       "trackball_R": 0.1484,
+       "trackball_L": 0.1484,
+       "guarded_switch_rows": 0.3077,
+       "lit_key_block": 0.3366
+      },
+      "volumes_penetrated": [],
+      "min_dist_seat_occupant_L_m": 0.614,
+      "min_dist_seat_occupant_R_m": 0.614,
+      "min_dist_cockpit_passage_m": 0.1635,
+      "min_dist_portal_z3_opening_m": 4.5335,
+      "min_dist_anchor_CockpitConsole_m": 0.5173,
+      "min_dist_anchor_PlayerSpawn_m": 2.416
+     }
+    },
+    "DP02_CKR_WorkSurfaceEdge": {
+     "room": "CockpitRefine",
+     "host": "console work surface (top y 0.97, crew edge ship z -1.525): J-nosing split around the handrail standoffs, end caps on both ends, guard cheeks on the red switch's base plate",
+     "pivot": [
+      0.0,
+      0.0,
+      -1.525
+     ],
+     "mount_normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "bounds_min": [
+      -1.556,
+      0.9335,
+      -2.35
+     ],
+     "bounds_max": [
+      1.556,
+      1.0285,
+      -1.5225
+     ],
+     "triangles": 1876,
+     "materials": {
+      "A7_Aluminum": 204,
+      "A7_AnodizedBlack": 306,
+      "A7_AnodizedClear": 1190,
+      "DP02_PaintWorn": 176
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0297,
+      "min_dist_rails_m": 0.0237,
+      "min_dist_controls_m": 0.02,
+      "min_dist_gameplay_parts_m": 7.0717,
+      "min_dist_airlock_door_sweep_m": 18.3925,
+      "min_dist_corridor_box_m": 0.0,
+      "min_dist_corridor_centreline_m": 0.2745,
+      "min_dist_habitat_anchor_m": [
+       14.5828,
+       "SleepEntry"
+      ],
+      "min_dist_habitat_collider_m": [
+       14.0529,
+       "COL_Habitat_Berth"
+      ],
+      "overlap_checked_against": "25 ship/habitat objects, 9 DP02 cockpit and CKP-REFINE objects",
+      "min_dist_rails_sampled_m": 0.0237,
+      "nearest_rail_point_sampled": [
+       -1.3143,
+       0.9533,
+       -1.524
+      ],
+      "min_dist_operable_controls_m": [
+       0.02,
+       "red_switch_body"
+      ],
+      "controls_penetrated": [],
+      "control_distances_m": {
+       "red_switch_body": 0.02,
+       "display+0.98_bottom_keys": 0.0462,
+       "keyboard_R": 0.08,
+       "display+0.98_screen_visible": 0.0848,
+       "display+0.98_side_keys_a": 0.108,
+       "key_column+0.49_keys": 0.1573
+      },
+      "volumes_penetrated": [],
+      "min_dist_seat_occupant_L_m": 0.5225,
+      "min_dist_seat_occupant_R_m": 0.5225,
+      "min_dist_cockpit_passage_m": 0.0725,
+      "min_dist_portal_z3_opening_m": 4.4425,
+      "min_dist_anchor_CockpitConsole_m": 0.2068,
+      "min_dist_anchor_PlayerSpawn_m": 2.4865
+     }
+    },
+    "DP02_CKR_PanelBezels": {
+     "room": "CockpitRefine",
+     "host": "instrument panel leaning back 15 degrees (base ship z -2.12): filler strips and quarter-turn fasteners, display and key-column bezel screws, end posts, glare-shield hood lip",
+     "pivot": [
+      0.0,
+      0.0,
+      -2.12
+     ],
+     "mount_normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "bounds_min": [
+      -1.5505,
+      0.9705,
+      -2.3219
+     ],
+     "bounds_max": [
+      1.5505,
+      1.6051,
+      -2.0301
+     ],
+     "triangles": 5912,
+     "materials": {
+      "A7_Aluminum": 540,
+      "A7_AnodizedBlack": 1752,
+      "A7_AnodizedClear": 3080,
+      "A7_PaintGraphite": 144,
+      "DP02_PaintWorn": 396
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0505,
+      "min_dist_rails_m": 0.0157,
+      "min_dist_controls_m": 0.0131,
+      "min_dist_gameplay_parts_m": 7.579,
+      "min_dist_airlock_door_sweep_m": 18.9001,
+      "min_dist_corridor_box_m": 0.0,
+      "min_dist_corridor_centreline_m": 0.2292,
+      "min_dist_habitat_anchor_m": [
+       15.0768,
+       "SleepCamera"
+      ],
+      "min_dist_habitat_collider_m": [
+       14.5602,
+       "COL_Habitat_Berth"
+      ],
+      "overlap_checked_against": "25 ship/habitat objects, 9 DP02 cockpit and CKP-REFINE objects",
+      "min_dist_rails_sampled_m": 0.0157,
+      "nearest_rail_point_sampled": [
+       1.4257,
+       1.0681,
+       -2.1452
+      ],
+      "min_dist_operable_controls_m": [
+       0.0131,
+       "key_column-0.49_keys"
+      ],
+      "controls_penetrated": [],
+      "control_distances_m": {
+       "key_column-0.49_keys": 0.0131,
+       "key_column+0.49_keys": 0.0131,
+       "display-0.98_screen_visible": 0.0202,
+       "display+0.00_screen_visible": 0.0202,
+       "display+0.98_screen_visible": 0.0202,
+       "guarded_switch_rows": 0.022
+      },
+      "volumes_penetrated": [],
+      "min_dist_seat_occupant_L_m": 1.0301,
+      "min_dist_seat_occupant_R_m": 1.0301,
+      "min_dist_cockpit_passage_m": 0.5801,
+      "min_dist_portal_z3_opening_m": 4.9501,
+      "min_dist_anchor_CockpitConsole_m": 0.418,
+      "min_dist_anchor_PlayerSpawn_m": 3.0616
+     }
+    },
+    "DP02_CKR_SeatSpine_L": {
+     "room": "CockpitRefine",
+     "host": "rear face of the commander's seat spine (seat at x -1.15, z -0.45; back reclined 12 degrees)",
+     "pivot": [
+      -1.15,
+      0.0,
+      -0.0393
+     ],
+     "mount_normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "bounds_min": [
+      -1.2135,
+      0.5474,
+      -0.1102
+     ],
+     "bounds_max": [
+      -1.0865,
+      1.2095,
+      0.033
+     ],
+     "triangles": 704,
+     "materials": {
+      "A7_AnodizedBlack": 144,
+      "A7_AnodizedClear": 560
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0035,
+      "min_dist_rails_m": 1.395,
+      "min_dist_controls_m": 0.0957,
+      "min_dist_gameplay_parts_m": 5.5355,
+      "min_dist_airlock_door_sweep_m": 16.8371,
+      "min_dist_corridor_box_m": 0.1865,
+      "min_dist_corridor_centreline_m": 1.0874,
+      "min_dist_habitat_anchor_m": [
+       13.052,
+       "SleepCamera"
+      ],
+      "min_dist_habitat_collider_m": [
+       12.5101,
+       "COL_Habitat_Berth"
+      ],
+      "overlap_checked_against": "25 ship/habitat objects, 9 DP02 cockpit and CKP-REFINE objects",
+      "min_dist_rails_sampled_m": 1.395,
+      "nearest_rail_point_sampled": [
+       -1.2111,
+       0.9504,
+       -1.4508
+      ],
+      "min_dist_operable_controls_m": [
+       0.0957,
+       "seat_L_grab_bar"
+      ],
+      "controls_penetrated": [],
+      "control_distances_m": {
+       "seat_L_grab_bar": 0.0957,
+       "keyboard_R": 1.6784,
+       "trackball_R": 1.7889,
+       "red_switch_body": 1.9342,
+       "guarded_switch_rows": 1.9489,
+       "knobs": 1.9564
+      },
+      "volumes_penetrated": [],
+      "min_dist_seat_occupant_L_m": 0.1348,
+      "min_dist_seat_occupant_R_m": 1.9612,
+      "min_dist_cockpit_passage_m": 0.2865,
+      "min_dist_portal_z3_opening_m": 2.8932,
+      "min_dist_anchor_CockpitConsole_m": 2.0104,
+      "min_dist_anchor_PlayerSpawn_m": 1.5019
+     }
+    },
+    "DP02_CKR_SeatSpine_R": {
+     "room": "CockpitRefine",
+     "host": "rear face of the flight engineer's seat spine (seat at x 1.15, z -0.45)",
+     "pivot": [
+      1.15,
+      0.0,
+      -0.0393
+     ],
+     "mount_normal": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "bounds_min": [
+      1.0865,
+      0.5474,
+      -0.1102
+     ],
+     "bounds_max": [
+      1.2135,
+      1.2095,
+      0.033
+     ],
+     "triangles": 704,
+     "materials": {
+      "A7_AnodizedBlack": 144,
+      "A7_AnodizedClear": 560
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0035,
+      "min_dist_rails_m": 1.395,
+      "min_dist_controls_m": 0.0957,
+      "min_dist_gameplay_parts_m": 6.1762,
+      "min_dist_airlock_door_sweep_m": 16.8371,
+      "min_dist_corridor_box_m": 0.1865,
+      "min_dist_corridor_centreline_m": 1.0874,
+      "min_dist_habitat_anchor_m": [
+       13.3231,
+       "SleepEntry"
+      ],
+      "min_dist_habitat_collider_m": [
+       12.834,
+       "COL_Habitat_Berth"
+      ],
+      "overlap_checked_against": "25 ship/habitat objects, 9 DP02 cockpit and CKP-REFINE objects",
+      "min_dist_rails_sampled_m": 1.395,
+      "nearest_rail_point_sampled": [
+       1.0889,
+       0.9504,
+       -1.4508
+      ],
+      "min_dist_operable_controls_m": [
+       0.0957,
+       "seat_R_grab_bar"
+      ],
+      "controls_penetrated": [],
+      "control_distances_m": {
+       "seat_R_grab_bar": 0.0957,
+       "keyboard_L": 1.6784,
+       "trackball_L": 1.7889,
+       "lit_key_block": 1.8882,
+       "guarded_switch_rows": 1.9489,
+       "knobs": 1.9564
+      },
+      "volumes_penetrated": [],
+      "min_dist_seat_occupant_L_m": 1.9612,
+      "min_dist_seat_occupant_R_m": 0.1348,
+      "min_dist_cockpit_passage_m": 0.2865,
+      "min_dist_portal_z3_opening_m": 2.8932,
+      "min_dist_anchor_CockpitConsole_m": 2.0104,
+      "min_dist_anchor_PlayerSpawn_m": 1.5019
+     }
+    }
+   },
+   "anchors": {
+    "DP02_CKR_ReviewEye": {
+     "point": [
+      0.25,
+      1.65,
+      -1.05
+     ],
+     "forward": [
+      -0.3672,
+      -0.5141,
+      -0.7752
+     ],
+     "role": "review eye of the preview render (not gameplay)"
+    }
+   },
+   "unity_import": {
+    "importer": {
+     "guid": "bdce2296c9d0dcc971c47bc08d6f6919",
+     "bakeAxisConversion": "True",
+     "useFileUnits": "True",
+     "useFileScale": "True",
+     "globalScale": "1",
+     "importCameras": "False",
+     "importLights": "False",
+     "materialImportMode": "ImportViaMaterialDescription",
+     "preserveHierarchy": "True",
+     "externalMaterialMaps": "6"
+    },
+    "max_bounds_pivot_err_m": 0.0,
+    "triangles_blender": 11640,
+    "triangles_unity": 11640,
     "objects": 5,
     "anchors": 1
    },

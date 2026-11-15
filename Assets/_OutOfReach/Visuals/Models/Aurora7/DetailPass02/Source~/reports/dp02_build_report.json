@@ -598,8 +598,196 @@
     "A7_Rubber"
    ],
    "fbx": "Meshes/DP02_Cockpit.fbx"
+  },
+  "DP02_CockpitRefine": {
+   "room": "CockpitRefine",
+   "objects": {
+    "DP02_CKR_Cabinets": {
+     "triangles": 2444,
+     "per_material": {
+      "A7_Aluminum": 360,
+      "A7_AnodizedBlack": 360,
+      "A7_AnodizedClear": 1400,
+      "DP02_PaintWorn": 192,
+      "DP02_RubberKnurl": 132
+     },
+     "bounds_min": [
+      -1.458,
+      0.072,
+      -1.655
+     ],
+     "bounds_max": [
+      1.458,
+      0.905,
+      -1.6135
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      -1.62
+     ],
+     "host": "front faces of the three console cabinets (ship z -1.62): seam battens over the two cabinet joints, edge angles on the outer front edges, knurled rubber kick strips at the cabinet feet",
+     "mount_out": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "DP02_CKR_WorkSurfaceEdge": {
+     "triangles": 1876,
+     "per_material": {
+      "A7_Aluminum": 204,
+      "A7_AnodizedBlack": 306,
+      "A7_AnodizedClear": 1190,
+      "DP02_PaintWorn": 176
+     },
+     "bounds_min": [
+      -1.556,
+      0.9335,
+      -2.35
+     ],
+     "bounds_max": [
+      1.556,
+      1.0285,
+      -1.5225
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      -1.525
+     ],
+     "host": "console work surface (top y 0.97, crew edge ship z -1.525): J-nosing split around the handrail standoffs, end caps on both ends, guard cheeks on the red switch's base plate",
+     "mount_out": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "DP02_CKR_PanelBezels": {
+     "triangles": 5912,
+     "per_material": {
+      "A7_Aluminum": 540,
+      "A7_AnodizedBlack": 1752,
+      "A7_AnodizedClear": 3080,
+      "A7_PaintGraphite": 144,
+      "DP02_PaintWorn": 396
+     },
+     "bounds_min": [
+      -1.5505,
+      0.9705,
+      -2.3219
+     ],
+     "bounds_max": [
+      1.5505,
+      1.6051,
+      -2.0301
+     ],
+     "origin": [
+      0.0,
+      0.0,
+      -2.12
+     ],
+     "host": "instrument panel leaning back 15 degrees (base ship z -2.12): filler strips and quarter-turn fasteners, display and key-column bezel screws, end posts, glare-shield hood lip",
+     "mount_out": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "DP02_CKR_SeatSpine_L": {
+     "triangles": 704,
+     "per_material": {
+      "A7_AnodizedBlack": 144,
+      "A7_AnodizedClear": 560
+     },
+     "bounds_min": [
+      -1.2135,
+      0.5474,
+      -0.1102
+     ],
+     "bounds_max": [
+      -1.0865,
+      1.2095,
+      0.033
+     ],
+     "origin": [
+      -1.15,
+      0.0,
+      -0.0393
+     ],
+     "host": "rear face of the commander's seat spine (seat at x -1.15, z -0.45; back reclined 12 degrees)",
+     "mount_out": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "DP02_CKR_SeatSpine_R": {
+     "triangles": 704,
+     "per_material": {
+      "A7_AnodizedBlack": 144,
+      "A7_AnodizedClear": 560
+     },
+     "bounds_min": [
+      1.0865,
+      0.5474,
+      -0.1102
+     ],
+     "bounds_max": [
+      1.2135,
+      1.2095,
+      0.033
+     ],
+     "origin": [
+      1.15,
+      0.0,
+      -0.0393
+     ],
+     "host": "rear face of the flight engineer's seat spine (seat at x 1.15, z -0.45)",
+     "mount_out": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    }
+   },
+   "anchors": {
+    "DP02_CKR_ReviewEye": {
+     "point": [
+      0.25,
+      1.65,
+      -1.05
+     ],
+     "forward": [
+      -0.3672,
+      -0.5141,
+      -0.7752
+     ],
+     "role": "review eye of the preview render (not gameplay)"
+    }
+   },
+   "bounds_min": [
+    -1.556,
+    0.072,
+    -2.35
+   ],
+   "bounds_max": [
+    1.556,
+    1.6051,
+    0.033
+   ],
+   "triangles": 11640,
+   "materials": [
+    "A7_Aluminum",
+    "A7_AnodizedBlack",
+    "A7_AnodizedClear",
+    "A7_PaintGraphite",
+    "DP02_PaintWorn",
+    "DP02_RubberKnurl"
+   ],
+   "fbx": "Meshes/DP02_CockpitRefine.fbx"
   }
  },
- "total_triangles": 58882,
+ "total_triangles": 70522,
  "convention": "Unity space, metres, y up; objects are placed in AURORA-7 ship coordinates; each pivot is the origin of the cluster's mount frame (host surface, deck level); drop the FBX at the ship origin with identity rotation"
 }
