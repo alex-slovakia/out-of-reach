@@ -178,7 +178,13 @@ namespace OutOfReach.Core
 
             if (state.Phase != GamePhase.Repair)
             {
-                return Fail(CommandFailure.WrongPhase, "The airlock can only be cycled once the ship is stabilized.");
+                // Same gate, truthful reason: before the repairs the ship is not stabilized yet; once the antenna works
+                // (Transmission, Survival, or before the impact) no EVA is needed at all.
+                return Fail(CommandFailure.WrongPhase, systems.Antenna.IsOperational
+                    ? "No EVA is needed: the antenna is operational."
+                    : state.Phase == GamePhase.Emergency
+                        ? "The airlock can only be cycled once the ship is stabilized."
+                        : "Airlock operations are unavailable during this mission stage.");
             }
 
             if (!IsSuitOn)

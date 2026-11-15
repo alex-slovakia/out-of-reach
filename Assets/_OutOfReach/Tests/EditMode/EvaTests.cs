@@ -409,6 +409,33 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
+        public void TheAirlockRefusal_GivesTheTruthfulReasonForTheActualStage()
+        {
+            using (MissionSession emergency = Fixtures.EmergencySession(AuroraMission.ScienceFocusPresetId))
+            {
+                Assert.That(emergency.State.Phase, Is.EqualTo(GamePhase.Emergency));
+                IInteractable early = Get(emergency, InteractionIds.AirlockControls);
+                Assert.That(early.CanInteract, Is.False);
+                Assert.That(early.Prompt, Is.EqualTo("The airlock can only be cycled once the ship is stabilized."), "true before the repairs");
+            }
+
+            using (MissionSession session = Fixtures.StabilizedSession(AuroraMission.ScienceFocusPresetId))
+            {
+                Fixtures.CompleteEva(session);
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Transmission), "repaired, back inside, unsuited");
+                IInteractable controls = Get(session, InteractionIds.AirlockControls);
+                Assert.That(controls.CanInteract, Is.False, "the same gate: no airlock cycle after the repair");
+                Assert.That(controls.Prompt, Is.EqualTo("No EVA is needed: the antenna is operational."));
+                Assert.That(controls.Prompt, Does.Not.Contain("stabilized"), "the ship is stabilized by now");
+
+                CommandResult refused = controls.TryInteract();
+                Assert.That(refused.Succeeded, Is.False);
+                Assert.That(refused.Failure, Is.EqualTo(CommandFailure.WrongPhase), "only the copy changed, not the gate");
+                Assert.That(refused.Explanation, Is.EqualTo("No EVA is needed: the antenna is operational."));
+            }
+        }
+
+        [Test]
         public void EvaInteractions_PromptTheRealRequirementAtEveryStep()
         {
             using (var session = Fixtures.StabilizedSession(AuroraMission.ScienceFocusPresetId))
