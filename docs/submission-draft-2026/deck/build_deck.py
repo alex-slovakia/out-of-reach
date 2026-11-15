@@ -5,8 +5,8 @@ Needs: python-pptx, Pillow, and the Git LFS captures listed in CAPTURES
 (git lfs pull --include "docs/verification/**,docs/playtest-review/**").
 
 Every picture in the deck is a real in-game capture: docs/verification (earlier builds) and deck/captures
-(frames of the native full-mission QA run on the release candidate cf2224d). No AI-generated image is
-used, so no SI watermark is needed on the pictures; the footer still says the project is AI-assisted.
+(frames of the native QA runs on cf2224d and 022138d and of the R20 / R18 lane runs). No AI-generated image
+is used, so no SI watermark is needed on the pictures; the footer still says the project is AI-assisted.
 Swap a capture by editing CAPTURES (e.g. after the final build is recorded).
 
 The deck has exactly 7 slides including the title (the Space Apps limit). Do not add a slide.
@@ -33,22 +33,25 @@ TMP = HERE / ".build"  # ignored scratch for cropped JPEGs (see .gitignore)
 # Switches for the final SHA (see form-fields.md "Switch sentences for the final SHA").
 # The NASA radio countdown is in cf2224d (Audio/LaunchRadio, bound in MissionAudioPresenter.prefab).
 COUNTDOWN_SHIPPED = True
-# Set True only if the visual routine montage (R18) is in the submitted build; cf2224d shows the routine card.
-ROUTINE_MONTAGE_SHIPPED = False
-# Test counts of the release candidate (8665183 = cf2224d code, #7 6900862397). Update for the final SHA.
-TESTS_EDITMODE, TESTS_PLAYMODE = 470, 151
+# The routine montage with live station pictures (R18) is in feature/claude-max-final@5ea2c23.
+# Set False only if it is missing from the submitted build (the plain routine card then shows the same ledger).
+ROUTINE_MONTAGE_SHIPPED = True
+# Floors, not exact counts: 470/151 on 8665183 (#7 6900862397), 483/151 and more on the later lanes.
+# The slide says "more than"; raise the floors only if the final counts are far higher, lower them if they drop.
+TESTS_EDITMODE, TESTS_PLAYMODE = 460, 150
 
 _DECK = "docs/submission-draft-2026/deck/captures/"
 CAPTURES = {
     "title": "docs/verification/i06-land-bootstrap-native-v04/run/07-actual-aurora-return.png",
     "cargo": "docs/verification/i06-hud-cargo-20261115/00-cargo-placards.png",
-    "launch": _DECK + "cf2224d-06-liftoff.png",              # native QA run on cf2224d
-    "eva": _DECK + "cf2224d-20-antenna-work.png",            # native QA run on cf2224d
-    "rescue": _DECK + "cf2224d-60-r42-hard-dock.png",        # native QA run on cf2224d (R42 ending)
+    "launch": _DECK + "022138d-06-liftoff-tower-v03.png",           # native QA run on 022138d (tower V03)
+    "eva": _DECK + "cf2224d-20-antenna-work.png",                   # native QA run on cf2224d
+    "rescue": _DECK + "r20-08-docking-camera-hard-dock-stars.png",  # R42 ending with the R20 star field
     "epic": "docs/verification/i06-earth-terminal-native-v05/Evidence/01-actual-v2-focused.png",
     "death": "docs/verification/i06-player-feedback-20261115/death-verified-1280.png",
     "sources": "docs/verification/i06-player-feedback-20261115/sources-v03-native.png",
-    "hud": _DECK + "cf2224d-27-meal-in-progress.png",        # native QA run on cf2224d
+    "hud": _DECK + "r18-routine-montage-day4.png",                  # R18 routine montage, native run
+    "meal": _DECK + "cf2224d-27-meal-in-progress.png",              # spare: ration pouch, native QA run on cf2224d
 }
 
 # Palette: graphite / amber / cyan (+ red only for danger), matching the game's UI language.
@@ -300,7 +303,7 @@ def slide_loop(prs):
         text(s, x, 2.34, cw - 0.05, 1.0, [([R(desc, 10.5, TXT2)], None, 0, 1.05)])
     shots = [("launch", "Vertical launch from launch complex LC-7", (0.5, 0.5)),
              ("eva", "Spacewalk: the antenna repaired by hand", (0.5, 0.5)),
-             ("rescue", "Day 30: the rescue craft hard-docks on the aft hull camera", (0.5, 0.5))]
+             ("rescue", "Day 30: the rescue craft hard-docks under NASA's Deep Star Maps sky", (0.5, 0.5))]
     pw = (12.13 - 2 * 0.2) / 3
     for i, (key, cap, focus) in enumerate(shots):
         x = 0.6 + i * (pw + 0.2)
@@ -383,8 +386,8 @@ def slide_built(prs):
         ("One authority.", "One mission clock and one ledger in real units (kg, L, kWh, W, ppm, parts); "
                            "spending is all-or-nothing and the visuals only show committed state."),
         ("Data you can check.", "The NASA/JPL snapshot ships offline and is verified by SHA-256 at mission start."),
-        ("Tested.", f"{TESTS_EDITMODE} EditMode and {TESTS_PLAYMODE} PlayMode tests pass on the release candidate, "
-                    "plus scripted full-mission runs, native Unity captures and human playtests."),
+        ("Tested.", f"More than {TESTS_EDITMODE} EditMode and {TESTS_PLAYMODE} PlayMode tests pass on the release "
+                    "candidate, plus scripted full-mission runs, native Unity captures and human playtests."),
         ("Honest fiction.", "AURORA-7, the rescue, prices and time compression are labelled. No NASA logos."),
     ]
     y = 1.86
@@ -393,7 +396,9 @@ def slide_built(prs):
         y += 0.8
     picture(s, "hud", 7.3, 1.86, 5.43, 3.05, focus=(0.5, 0.5))
     text(s, 7.3, 4.97, 5.43, 0.45,
-         [([R("Day 1: warming a ration pouch. The HUD reserves are the same numbers the simulation spends.",
+         [([R("Ordinary days pass over the ship's real ledger: the same numbers the simulation spends."
+              if ROUTINE_MONTAGE_SHIPPED else
+              "The routine card shows the ship's real ledger: the same numbers the simulation spends.",
               11, TXT2)], None, 0, 1.05)])
     rect(s, 0.6, 5.5, 12.13, 1.38, fill=PANEL)
     text(s, 0.82, 5.6, 6, 0.28, [[R("TEAM POLISH ALEX GOATS", 9.5, CYAN, BODY_SEMI, spc=2)]])

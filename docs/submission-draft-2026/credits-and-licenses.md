@@ -10,13 +10,19 @@ What the re-sweep changed:
 - **Not in the tree, removed from every paste block:** the Space Shuttle STS-131 launch sound and the four Freesound recordings (they were auditions only; `git grep -i "freesound\|STS-131" cf2224d -- Assets` finds nothing).
 - **Gaps 1–4 of the first sweep are closed** in the game (section C).
 
+**Second re-sweep, `cf2224d..5ea2c23`** (`feature/claude-max-final`, 15 Nov 2026, 21:05 UTC): no new third-party content. The new attribution files are all original team work:
+- `Visuals/Models/LaunchTowerV03/Provenance/ATTRIBUTION.md` — launch tower V03: "original work generated … by Claude (Anthropic): Blender 3.6 Python and numpy noise. No third-party meshes, textures, photographs, fonts, logos or agency marks."
+- `docs/art-direction/radio-v01/README.md` — handheld radio `Visuals/Props/RadioV01/**`: built from code, "No downloads, no logos"; its tones (crackle bed, key-up blip, squelch tail, chirp) are procedural (`Radio/Runtime/RadioSynth.cs`).
+- `Scripts/Presentation/Radio/Voices/PROVENANCE.md` — `vo23_mc_rescue_lost_dayneutral.wav`: the approved Gemini take VO23 with one sentence cut out by ffmpeg ("No new generated audio"); bound in Bootstrap, **pending Alex's approval**.
+- `Scripts/Presentation/Routine/**` (routine montage) and `Scripts/Presentation/Rescue/RescueEndingSky.cs` (finale stars): code only; the stars are the NASA SVS map already credited, shown at exposure 0.45 instead of the saved 0.15.
+
 Why this matters: the official submission form makes the Team Owner tick *"I confirm that the submitted project represents my team's original work and that all external resources including code, text and images (even if they are open source or freely available) used in the project are listed in the References field … my team has not used any copyrighted materials (i.e., music, images, text, etc.) that we don't have permission to use."* ([Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/), read 15 Nov 2026). Every row below is either licensed for this use or excluded from what we publish.
 
 ---
 
 ## A. Paste-ready credits block
 
-Use it in the public project README, the last slide (short form) and the References field. It matches `cf2224d`; after the final SHA only the lines named in [form-fields.md](form-fields.md) "Switch sentences" can change.
+Use it in the public project README, the last slide (short form) and the References field. It matches `cf2224d` and `5ea2c23` (the second re-sweep added nothing third-party); after the final SHA only the lines named in [form-fields.md](form-fields.md) "Switch sentences" can change.
 
 ```text
 CREDITS — OUT OF REACH (NASA Space Apps Challenge 2026, team Polish Alex Goats)
@@ -68,7 +74,7 @@ Engine: Unity 6000.3.28f1 (Universal Render Pipeline). AURORA-7, its crew and it
 
 ## B. Full inventory
 
-Column **In build** means referenced by the saved `Bootstrap` scene or by a prefab it uses at `cf2224d` (checked by GUID), unless noted.
+Column **In build** means referenced by the saved `Bootstrap` scene or by a prefab it uses at `cf2224d`, re-checked at `5ea2c23` (by GUID), unless noted.
 
 ### B1. Music
 
@@ -92,7 +98,7 @@ Stale text, harmless for the submission (owner of `Audio/Music/**` = Codex): `Au
 
 ### B3. Original synthesized sound (team work, AI-written generators)
 
-UI/alarm SFX `Audio/SFX/` (`finish_audio.py`), airlock cues `Audio/Original/Airlock/` (seed 740317), deck contacts `Audio/Original/DeckContacts/`, launch effects `Audio/Original/LaunchEffects/` (seat belt, hatch latch, ignition ramp, engine vibration, pad roar: "Original mathematical synthesis. No samples, recordings, or external dependencies"), rest/wake accent `Audio/Production/RestWakeV01/`, the startup-card pencil scratch (rendered in memory by `UI/Startup/Runtime/PencilScratchSynth.cs`, nothing stored), the docking clunks and hiss of the rescue ending (`Scripts/Presentation/Rescue/RescueEndingSfx.cs`). No samples or recordings. SI acknowledgement in text: in-game Sources page + README (see [ai-disclosure.md](ai-disclosure.md)).
+UI/alarm SFX `Audio/SFX/` (`finish_audio.py`), airlock cues `Audio/Original/Airlock/` (seed 740317), deck contacts `Audio/Original/DeckContacts/`, launch effects `Audio/Original/LaunchEffects/` (seat belt, hatch latch, ignition ramp, engine vibration, pad roar: "Original mathematical synthesis. No samples, recordings, or external dependencies"), rest/wake accent `Audio/Production/RestWakeV01/`, the startup-card pencil scratch (rendered in memory by `UI/Startup/Runtime/PencilScratchSynth.cs`, nothing stored), the docking clunks and hiss of the rescue ending (`Scripts/Presentation/Rescue/RescueEndingSfx.cs`), the handheld radio's crackle, key-up blip, squelch tail and call chirp (`Scripts/Presentation/Radio/Runtime/RadioSynth.cs`). No samples or recordings. SI acknowledgement in text: in-game Sources page + README (see [ai-disclosure.md](ai-disclosure.md)).
 
 ### B4. Synthetic voices (SI-generated audio)
 
@@ -100,7 +106,8 @@ UI/alarm SFX `Audio/SFX/` (`finish_audio.py`), airlock cues `Audio/Original/Airl
 |---|---|---|---|---|
 | Clean/Radio dialogue vo01–vo12, Dramatic 02/03/05, Departure cues | Google Gemini TTS, models `gemini-3.8-flash-tts` and `gemini-3.8-flash-lite-tts`, stock voices **Orus** and **Kore**; no real person cloned | [Gemini API Additional Terms](https://aistudio.google.com/docs/terms) (Google claims no ownership of outputs; not CC0) | `Audio/Production/AUDIO_HANDOFF.md`, `clean-runtime-selection.json`, `Voices/Dramatic/voice-manifest.json`, `Voices/Departure/provenance.json` | **Yes** (`MissionAudioPresenter.prefab`; the spoken departure numbers were replaced by the NASA countdown) |
 | Story02: **VO24a** "Aurora Seven, rescue crew. We have you in sight…" and **VO24b** "Contact. Capture confirmed. Hard dock…" | Google Gemini TTS, `gemini-3.8-flash-lite-tts`, voice **Orus**; exact approved bytes | same | `Audio/Voices/Story02/approved-voices.json` (cue, model, voice, transcript, duration, SHA-256, approval date), `README.md`, `*.txt` transcripts | **Yes** (bound in Bootstrap by the rescue-ending installer) |
-| Story02: **VO23** "Aurora Seven… Mission Control. The rescue vehicle has crashed…" (day-14 message) | same | same | same manifest (`"runtime_wired": false`) | **Not yet** — file in the tree, no scene or prefab reference at `cf2224d` (switch S1 in [form-fields.md](form-fields.md)). Its text says "mission day thirty-one"; the game's rendezvous is day 30 |
+| Story02: **VO23** "Aurora Seven… Mission Control. The rescue vehicle has crashed…" (day-14 message), original take | same | same | same manifest (`"runtime_wired": false`) | **No** — no scene or prefab reference. Its text says "mission day thirty-one"; the game's rendezvous is day 30 |
+| **VO23, day-neutral cut** (`Scripts/Presentation/Radio/Voices/vo23_mc_rescue_lost_dayneutral.wav`): the same take with the sentence "New rendezvous: mission day thirty-one." removed | Google Gemini TTS (derived; ffmpeg `atrim` + 40 ms crossfade, no new generated audio) | same | `Radio/Voices/PROVENANCE.md` (source and derived SHA-256, cut times, exact command), `*.txt` transcript | **Bound in Bootstrap at `5ea2c23`, pending Alex's approval** (switch S1 in [form-fields.md](form-fields.md)). If rejected, the announcement plays as radio subtitles only |
 
 Rule: SI audio must be acknowledged in descriptive text **and** metadata. Text: the in-game Sources page (`MUSIC & ART` → "Synthetic voices — Google Gemini text-to-speech. Voices Orus and Kore. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants."), the README and the References field. Metadata: the manifests above.
 
@@ -112,7 +119,7 @@ Rule: SI audio must be acknowledged in descriptive text **and** metadata. Text: 
 | Slovakia inset on the same terminal | NASA GIBS / ESDIS, MODIS on Terra, layer `MODIS_Terra_CorrectedReflectance_TrueColor`, 2026-11-14, Terra pass 08:15–08:20 UTC, crop 46.90–50.45 N, 16.30–23.10 E, unmodified bytes (`modis_terra_slovakia_20261114_0815utc.jpg`) | [NASA Earth science data use guidance](https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance) (open, citation requested); [GIBS acknowledgement](https://nasa-gibs.github.io/gibs-api-docs/) | same folder (`ATTRIBUTION.md`, `slovakia-observation-manifest.json`) | **Yes** (inset texture set in `MissionTerminal.prefab`); credited on the terminal and on the Sources page ("Slovakia archive — Terra MODIS · 14 Nov 2026") | "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)." |
 | Slovakia weather readout (MODIS land-surface temperature MOD11, cloud fraction MOD06) | NASA GIBS, same date | same | same folder, `Derivation~/` | **No** in the default mode (shown only in the look-only fallback `staticImageMode`, which is off) | Same acknowledgement if that mode is ever enabled |
 | Mars colour map (recovery cinematic) | NASA 3D Resources, https://science.nasa.gov/3d-resources/mars/ | NASA/JPL media policy | `Visuals/Celestial/RecoveryMars/` (`SOURCE.json`) | **Yes**; credited in Sources | "NASA/Jet Propulsion Laboratory & Caltech; Viking images processed by USGS" |
-| Space skybox | NASA SVS Deep Star Maps 2020, https://svs.gsfc.nasa.gov/4851/ (4096×2048 EXR, unmodified) | [SVS policy](https://svs.gsfc.nasa.gov/help/): public domain unless marked | `Visuals/Environment/NasaDeepSkyV01/` (`NOTICE.txt`) | **Yes** (`NasaDeepSky.mat` referenced by Bootstrap); credited in Sources | "NASA/Goddard Space Flight Center Scientific Visualization Studio; Gaia DR2: ESA/Gaia/DPAC" |
+| Space skybox, also the star field of the rescue finale | NASA SVS Deep Star Maps 2020, https://svs.gsfc.nasa.gov/4851/ (4096×2048 EXR, unmodified file) | [SVS policy](https://svs.gsfc.nasa.gov/help/): public domain unless marked | `Visuals/Environment/NasaDeepSkyV01/` (`NOTICE.txt`, `CELESTIAL_FRAME.md`); `Scripts/Presentation/Rescue/RescueEndingSky.cs` | **Yes** (`NasaDeepSky.mat` referenced by Bootstrap; saved exposure 0.15, raised to 0.45 during the ending and the Mars departure); credited in Sources | "NASA/Goddard Space Flight Center Scientific Visualization Studio; Gaia DR2: ESA/Gaia/DPAC". The Sources line says "Unmodified": true for the file; the exposure is authored. Optional wording if R41 is edited anyway: "Unmodified source image, shown at an artistic exposure." |
 | Earth–Mars ephemeris, 32 daily vectors 14 Nov–15 Dec 2026 | NASA/JPL Horizons API, https://ssd-api.jpl.nasa.gov/doc/horizons.html | US Government work | `docs/data/horizons/`, `Scripts/Simulation/HorizonsEarthMars2026Snapshot.cs` | **Yes** (communications delay, day-14 dispatch) | "Earth–Mars reference ephemeris: NASA/JPL Horizons" |
 | Life-support rates | NASA/TP-2015-218570/REV2 (BVAD), https://ntrs.nasa.gov/citations/20210024855 | US Government work | `Scripts/Simulation/CrewMetabolicAssumptions.cs` | **Yes** | cite in Sources/report |
 | GMAT star catalogue derivative | NASA GMAT, https://github.com/nasa/GMAT @ `b8aec55` | Apache-2.0 (LICENSE + NOTICE shipped) | `Visuals/Space/Stars*.png`, `StreamingAssets/ThirdParty/NASA-GMAT/` | **Not bound** (`DistantStars.mat` has 0 scene/prefab references); the notice still ships in StreamingAssets. `NASA-DATA.md` and `STARFIELD_PROVENANCE.md` now say so (`7303687`) | Keep the NOTICE; list as "used in development" |
@@ -154,7 +161,7 @@ Licence links: Poly Haven https://polyhaven.com/license · ambientCG https://doc
 
 ### B8. Original team work (made with AI tools, see [ai-disclosure.md](ai-disclosure.md))
 
-AURORA-7 ship, props (EPS-2 panel, ARS-1 rack, HGA antenna), astronaut hands, detail pass 02, habitat (berth, galley, grow module, ration labels), ration pouch (GalleyConsumablesV01), land launch site LC-7, surroundings, terrain, launch tower V02, transport, cargo case, WORK/EVA suits and first-person body animation, EVA tether rope V02 (procedural rope textures, meshes built in code), rescue craft V01 (built procedurally at runtime; "no copy of a real vehicle", no insignia), launch FX, land horizon, startup cards (vector drawings in code), all C# code and tests. Each package has its own `LICENSES.md`, `ATTRIBUTION.md`, `README.md` or `PROVENANCE` file. No NASA or agency insignia anywhere; "AURORA-7" and "LC-7" are fictional marks.
+AURORA-7 ship, props (EPS-2 panel, ARS-1 rack, HGA antenna), astronaut hands, detail pass 02, habitat (berth, galley, grow module, ration labels), ration pouch (GalleyConsumablesV01), land launch site LC-7, surroundings, terrain, launch towers V02 and V03, transport, cargo case, WORK/EVA suits and first-person body animation, EVA tether rope V02 (procedural rope textures, meshes built in code), rescue craft V01 (built procedurally at runtime; "no copy of a real vehicle", no insignia), handheld radio V01 (built from code; no downloads, no logos), launch FX, land horizon, startup cards (vector drawings in code), all C# code and tests. Each package has its own `LICENSES.md`, `ATTRIBUTION.md`, `README.md` or `PROVENANCE` file. No NASA or agency insignia anywhere; "AURORA-7" and "LC-7" are fictional marks.
 
 ### B9. Engine and tools (not redistributed except the Unity runtime)
 
@@ -173,7 +180,7 @@ Unity 6000.3.28f1 and its packages (URP 17.3.0, Input System 1.20.1, Timeline 1.
 
 ---
 
-## C. Gaps — state at `cf2224d`
+## C. Gaps — state at `cf2224d` and `5ea2c23` (the Sources page is unchanged between them)
 
 | # | Gap from the first sweep | State |
 |---|---|---|

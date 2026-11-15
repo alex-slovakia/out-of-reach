@@ -8,8 +8,8 @@ Times CET (UTC+1).
 
 | CET | UTC | Gate |
 |---|---|---|
-| 22:30 | 21:30 | Submission pack ready against `cf2224d` (this folder) |
-| **23:00** | **22:00** | **Codex pushes the final build** (final SHA, Windows ZIP, checksum, smoke). **Apoliak decides the demo: slides or video** |
+| 22:30 | 21:30 | Submission pack ready against `feature/claude-max-final@5ea2c23` (this folder) |
+| **23:00** | **22:00** | **Final build** from CLAUDE-MAX's final integration (final SHA, Windows ZIP, checksum, smoke). **Apoliak decides the demo: slides or video** |
 | 23:00–23:15 | 22:00–22:15 | Last pass of the texts on the final SHA (`submit-pack` lane: switch sentences, test counts). Game done by 23:15 |
 | **≈ 23:30** | **≈ 22:30** | **Team Owner submits** |
 | 23:59 | 22:59 | Hard deadline — Universal Event = **Team Owner's** local time (Alexander Kozovy, Slovakia) |
@@ -41,18 +41,19 @@ Do **not** flip `alex-slovakia/out-of-reach` to public: that would publish issue
 
 | Option | What | Owner | Effort |
 |---|---|---|---|
-| **B (fastest, recommended tonight)** | A **Google Drive folder**, "Anyone with the link · Viewer", with: the Windows build ZIP from Codex, `README.pdf` or `README.txt` (from [public-README-draft.md](public-README-draft.md)), the deck PDF, `CREDITS.txt` (block A of the credits file) | Team Owner | ~15 min + upload time (the ZIP is about 530 MB) |
+| **B (fastest, recommended tonight)** | A **Google Drive folder**, "Anyone with the link · Viewer", with: the final Windows build ZIP, `README.pdf` or `README.txt` (from [public-README-draft.md](public-README-draft.md)), the deck PDF, `CREDITS.txt` (block A of the credits file) | Team Owner | ~15 min + upload time (the ZIP is about 530 MB) |
 | A | A **new public GitHub repository** (for example `out-of-reach-space-apps-2026`) with: `README.md` from the public README draft plus 4–6 real captures; `CREDITS.md`; the game source (`Assets/_OutOfReach/**`, `Packages/`, `ProjectSettings/`) **without** `docs/references/`, `docs/art-direction/`, `.local/`; a **Release** with the Windows build ZIP (GitHub allows up to 2 GB per file) | Team Owner (owns the GitHub account) | ~30–45 min |
 
-Build ZIP: use the one Codex names in the final post, check its SHA-256 against that post, and test it once on a PC: unzip, run `OutOfReach.exe` (no admin rights). Windows SmartScreen may warn about an unsigned game: the README says "More info → Run anyway". Leave out any `*_BurstDebugInformation_DoNotShip` folder.
+Build ZIP: use the one named in the final post on #7, check its SHA-256 against that post, and test it once on a PC: unzip, run `OutOfReach.exe` (no admin rights). Windows SmartScreen may warn about an unsigned game: the README says "More info → Run anyway". Leave out any `*_BurstDebugInformation_DoNotShip` folder.
 
 ## Who does what
 
 | # | Item | Owner | When (CET) | Status |
 |---|---|---|---|---|
-| 1 | Final SHA + Windows ZIP + checksum + smoke | Codex | 23:00 | open |
+| 1 | Final SHA + Windows ZIP + checksum + smoke | CLAUDE-MAX (final integration, #7 6901207238) | 23:00 | open |
+| 1a | VO23 spoken day-neutral cut: approve or clear the binding | **Alex** | before the final build | open (texts are true either way) |
 | 2 | Demo decision: slides (A) or video (B) | **Apoliak** | 23:00 | open |
-| 3 | Last pass of the texts on the final SHA (switch sentences S1–S6, test counts, deck rebuild if needed) | `submit-pack` lane | 23:00–23:15 | waits for item 1 |
+| 3 | Last diff pass of the texts on the final SHA (checks A1–A3, switches S1/S5/S7/S8/S9, deck rebuild if needed) | `submit-pack` lane | 23:00–23:15 | waits for item 1 |
 | 4 | Claim check of the final build ([playthrough-checklist.md](playthrough-checklist.md)): QA result from `qa-e2e` plus one human look | `qa-e2e` + Apoliak or Alexander | by 23:15 | open |
 | 5 | Public final-project location (option B or A): build ZIP, README, credits, deck PDF | Team Owner | by 23:25 | open |
 | 6 | Public demo link (deck PDF, or the video if Apoliak approved one) | Team Owner | by 23:25 | open |
