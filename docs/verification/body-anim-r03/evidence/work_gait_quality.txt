@@ -1,0 +1,15 @@
+work leg length 0.855 m
+case | speed m/s | pelvis bob cm | max knee bend deg | worst planted slide mm | planted frames | steps per minute
+forward-carry | 1.5 | 3.1 | 59 | 1.1 | 38 | 130
+forward-walk | 2.5 | 5.0 | 77 | 0.5 | 23 | 158
+forward-sprint | 3.75 | 7.1 | 91 | 0.7 | 19 | 193
+backward | 2.5 | 5.1 | 64 | 0.6 | 31 | 203
+strafe-right | 2.5 | 7.3 | 83 | 0.5 | 25 | 220
+strafe-left | 2.5 | 7.3 | 83 | 0.5 | 25 | 220
+diagonal | 2.5 | 7.3 | 83 | 0.3 | 24 | 197
+back-diagonal | 2.5 | 7.2 | 70 | 0.9 | 62 | 233
+slow | 0.8 | 2.2 | 50 | 0.4 | 52 | 103
+reverse W-S | 2.5 | 7.3 | 69 | 0.9 | 16 | 202
+reverse S-W | 2.5 | 7.3 | 80 | 0.4 | 17 | 158
+reverse A-D | 2.5 | 7.3 | 83 | 0.3 | 10 | 219
+W to D | 2.5 | 7.3 | 84 | 0.7 | 14 | 217

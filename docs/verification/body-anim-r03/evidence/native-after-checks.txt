@@ -1,0 +1,3 @@
+PASS play | Actual Bootstrap body presenter and camera exist.
+PASS practice | body visible in planning
+PASS carry | E succeeds: Carrying water tank.
