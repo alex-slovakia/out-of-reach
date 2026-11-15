@@ -40,6 +40,8 @@ namespace OutOfReach.Composition
         [SerializeField] private ShipLightingPresenter shipLighting;
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
         [SerializeField] private EmbodiedBodyPresenter embodiedBody;
+        // BODY-REST-HOOK: berth body frame beside the habitat SleepCamera (Out of Reach > Avatar > Create berth body frame).
+        [SerializeField] private Transform sleepBodyFrame;
         [SerializeField] private I06MicrogravityBridge microgravityBridge;
         [SerializeField] private I06MicrogravityInputBindings microgravityInput;
         [SerializeField] private BareArmContactPresenter bareArmContacts;
@@ -287,7 +289,7 @@ namespace OutOfReach.Composition
         private bool CanPresentBody() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && modeChosen && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
-            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && (!(boundSession.SurvivalRecovery?.IsResting ?? false) || (embodiedBody && embodiedBody.PresentsRest))
             && runtime.GameState.Phase != GamePhase.Outcome && runtime.GameState.Phase != GamePhase.Report;
 
         private EmbodiedBodyPresenter.BodyArmVisibility BodyArmMask() =>
@@ -624,6 +626,9 @@ namespace OutOfReach.Composition
                 embodiedBody.ConfigureGroundLocomotion(runtime.Player.GetComponent<CharacterController>(),
                     CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting,
                     () => runtime && runtime.GameState.Phase == GamePhase.Planning && !orbitalLocationReached);
+                ISurvivalRecovery recovery = boundSession.SurvivalRecovery;
+                if (recovery != null && sleepBodyFrame)
+                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop);
             }
             if (microgravityBridge && microgravityInput && bareArmContacts)
             {
@@ -634,6 +639,7 @@ namespace OutOfReach.Composition
                 microgravityBridge.HandPushCompleted += OnMicrogravityHandPushCompleted;
                 microgravityInput.Configure(runtime.Player, microgravityBridge, runtime.Player.ViewPivot,
                     runtime.EvaStatus, runtime.GameState, runtime.Clock, MicroSessionCurrent, CanUseMicroContacts);
+                if (embodiedBody) microgravityInput.LegPushPerformed += embodiedBody.PlayLegPush;
             }
             if (antennaRepair && !antennaRepair.ConfigureSession(runtime, astronautHands,
                 antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
@@ -694,6 +700,7 @@ namespace OutOfReach.Composition
                 antennaRepair.WorkCancelled -= OnAntennaWorkCancelled;
                 antennaRepair.ClearBinding();
             }
+            if (microgravityInput && embodiedBody) microgravityInput.LegPushPerformed -= embodiedBody.PlayLegPush;
             if (microgravityInput) microgravityInput.ClearBinding();
             if (microgravityBridge)
             {
