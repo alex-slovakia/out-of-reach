@@ -29,6 +29,7 @@ namespace OutOfReach.Composition
         const float ChordSeconds = .075f;
         int armedFrame;
         float handStrength, footStrength;
+        Vector3 pendingTravel;
 
         /// <summary>Root must suppress decorative L/R and successful-E gestures while true, including refusal/pause.</summary>
         public bool ContactRoutingRequested => armed;
@@ -155,28 +156,36 @@ namespace OutOfReach.Composition
                 if (firstHeld && secondPressed && Time.unscaledTime <= pendingUntil)
                 {
                     handClickPending = false;
-                    DispatchHand(pendingHand, false, true);
+                    DispatchHand(pendingHand, false, true, ReadTravelIntent());
                 }
                 else if (!firstHeld || Time.unscaledTime >= pendingUntil)
                 {
                     handClickPending = false;
-                    DispatchHand(pendingHand, false);
+                    DispatchHand(pendingHand, false, false, pendingTravel);
                 }
                 return true;
             }
             if (!left && !right) return false;
             ContactHand hand = left ? ContactHand.Left : ContactHand.Right;
             if ((left && right) || grip || player.HeldHandhold)
-                DispatchHand(hand, grip && !(left && right), left && right);
+                DispatchHand(hand, grip && !(left && right), left && right, ReadTravelIntent());
             else
             {
                 handClickPending = true; pendingHand = hand;
+                pendingTravel = ReadTravelIntent();
                 pendingUntil = Time.unscaledTime + ChordSeconds;
             }
             return true;
         }
 
-        void DispatchHand(ContactHand hand, bool grip, bool pair = false)
+        Vector3 ReadTravelIntent()
+        {
+            Vector2 move = source.Move;
+            return move.sqrMagnitude > .01f
+                ? player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)) : Vector3.zero;
+        }
+
+        void DispatchHand(ContactHand hand, bool grip, bool pair, Vector3 travel)
         {
             LastRefusal = string.Empty;
             if (player.HeldHandhold)
@@ -191,10 +200,6 @@ namespace OutOfReach.Composition
                 if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
                 return;
             }
-            // Explicit steering is captured once. WASD has no continuous thrust.
-            Vector2 move = source.Move;
-            Vector3 travel = move.sqrMagnitude > .01f
-                ? player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)) : Vector3.zero;
             bool accepted = pair ? bridge.TryPushPair(eye.forward, travel, handStrength)
                 : travel == Vector3.zero ? bridge.TryPush(hand, eye.forward, handStrength)
                     : bridge.TryPushDirected(hand, eye.forward, travel, handStrength);
