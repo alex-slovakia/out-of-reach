@@ -103,7 +103,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Session.SurvivalRecovery.IsResting, Is.True, "its first night begins at once");
             Assert.That(Session.IsPlayerControlAllowed, Is.False, "no walking during the montage");
             harness.Resolver.Refresh();
-            Assert.That(flow.TrySleepInteraction().Succeeded, Is.False, "a second press cannot start a second skip");
+            Assert.That(Session.ChapterFlow.TrySleepInteraction().Succeeded, Is.False, "a second press cannot start a second skip");
             yield return RunUntil(() => !flow.IsRoutineRunning, 60d, "the routine stops");
 
             Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.ReachedChapter), flow.LastRoutineStopText);
