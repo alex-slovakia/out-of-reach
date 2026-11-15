@@ -40,6 +40,45 @@
      ]
     }
    ]
+  },
+  "DP02_Habitat": {
+   "fbx": "Meshes/DP02_Habitat.fbx",
+   "objects_in_file": 5,
+   "checks": [
+    {
+     "object": "DP02_HAB_StrapStow_R_Z1325",
+     "ok": true,
+     "triangles": 7596,
+     "expected": 7596
+    },
+    {
+     "object": "DP02_HAB_CrewKit_L_Z1175",
+     "ok": true,
+     "triangles": 3626,
+     "expected": 3626
+    },
+    {
+     "object": "DP02_HAB_GrowPlumbing_R_Z1414",
+     "ok": true,
+     "triangles": 5590,
+     "expected": 5590
+    },
+    {
+     "object": "DP02_HAB_GrowCables_R_Z1536",
+     "ok": true,
+     "triangles": 2664,
+     "expected": 2664
+    },
+    {
+     "anchor": "DP02_HAB_ReviewEye",
+     "ok": true,
+     "point": [
+      -0.9,
+      1.62,
+      12.15
+     ]
+    }
+   ]
   }
  },
  "failures": [],

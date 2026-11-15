@@ -5,7 +5,7 @@ Procedural detail that makes the ship's rooms look inhabited and mechanically be
 | Room | FBX | Status |
 |---|---|---|
 | Engineering | `Meshes/DP02_Engineering.fbx` | done and checked (round trip, Unity import, clearance) |
-| Crew habitat | `Meshes/DP02_Habitat.fbx` | not started in this checkpoint |
+| Crew habitat | `Meshes/DP02_Habitat.fbx` | done and checked (round trip, Unity import, clearance) |
 | Cockpit | `Meshes/DP02_Cockpit.fbx` | not started in this checkpoint |
 
 `DetailPass02Layout.json` is the placement manifest. It covers only the rooms that are present.
@@ -25,6 +25,16 @@ Procedural detail that makes the ship's rooms look inhabited and mechanically be
 
 Labels are taken from the existing AURORA-7 decal atlas (`A7_Decals`), so they are fictional ship text with no agency marks.
 
+## Crew habitat (19,476 triangles, 18 existing materials: 16 `A7_*` plus `HB_BagQuilt` and `HB_Labels`)
+The habitat room is the integrated storage-room habitat, `../../Habitat/Meshes/A7_Storage_Habitat.fbx`, together with `HB_Habitat_Placed.fbx`. Nothing was placed on or in the existing berth, galley or grow units, apart from the fittings that are mounted on the grow cassette's side faces.
+
+| Object | Host | Triangles | What it is |
+|---|---|---|---|
+| `DP02_HAB_StrapStow_R_Z1325` | Starboard blanket bay at z 13.25, opposite the berth. The host plane is the quilt face plus 3.5 mm, which keeps it clear of the quilt's decals. | 7,596 | **Above the bay handrail:** two canvas soft bags with girth straps and buckles (the ship's `soft_bag`). Two cargo straps with cam buckles cross them and are tied down to D-rings on the edge strips, placed between the snaps. **Below the rail:** three labelled ration pouches (breakfast, meal, snack) and three drink packs with caps, held by blue elastic cords on anchor points, with RATIONS · MEALS and RATIONS · DRINKS placards. |
+| `DP02_HAB_CrewKit_L_Z1175` | Port blanket bay at z 11.75, beside the berth entrance | 3,626 | A spare sleeping bag rolled up (`HB_BagQuilt`, the berth bag's fabric) with two keeper bands. Two tie-down straps with cam buckles hold it between two riveted anchor rails. Below it is a personal board: a hardcover notebook with an elastic closure and a tethered pen on a hook-and-loop patch, a photo card under an elastic strap, and over-ear headphones hung from a hook-and-loop strap, with their cable. |
+| `DP02_HAB_GrowPlumbing_R_Z1414` | Starboard wall strip at z 14.04 to 14.25, between ring frame z 14.0 and the grow cassette's forward side face | 5,590 | Potable supply (blue anodised) and return lines rise from deck-trough grommets. They pass through two twin-pipe clamp blocks on wall brackets, past capped needle valves (lock-wired caps, no levers), to hex unions. Corrugated flex hoses with ferrules run from there to bulkhead fittings on the cassette's side face. A POTABLE placard sits above. |
+| `DP02_HAB_GrowCables_R_Z1536` | Starboard wall strip at z 15.25 to 15.46, between the cassette's aft side face and ring frame z 15.5 | 2,664 | Grow-light feed: two cables run in three cushioned P-clamps on standoffs, with three cable ties, from a trough grommet up to two plug connectors with backshells on the cassette's side face. Connector labels sit beside them. |
+
 ## Kit (`Source/dp02_kit.py`)
 The pieces are functions that are instanced in deliberate clusters; nothing is scattered at random:
 - `ring_band`, `solid_lathe`;
@@ -32,15 +42,21 @@ The pieces are functions that are instanced in deliberate clusters; nothing is s
 - `quarter_turn`, `barrel_hinge`, `junction_box`, `service_panel`;
 - clusters: `frame_loom_cluster`, `access_panel_cluster`.
 
-Every piece keeps a 0.5 mm gap above its host surface. The placements live in `Source/dp02_layout.py`.
+Habitat pieces (`Source/dp02_habitat.py`):
+- straps and stowage: `strap`, `cam_buckle`, `strap_anchor`, `pouch`, `elastic`, `placard`;
+- personal items: `notebook`, `photo`, `headphones`, `rolled_bag`, `wrap_strap`;
+- plumbing: `sweep`, `flex_hose`, `hex_union`, `capped_valve`, `twin_clamp`, `bulkhead_fitting`;
+- clusters: `stowage_cluster`, `crew_kit_cluster`, `grow_plumbing_cluster`, `grow_cable_cluster`.
+
+Every piece keeps a 0.5 mm gap above its host surface. The placements live in `Source/dp02_layout.py`. `Source/hb_labels_map.json` is the UV map of the delivered `HB_Labels` atlas: SHA-256 `47805ca0…` matches `Habitat/Textures/HB_Labels.png`.
 
 ## Rebuild
 From `DetailPass02/`, with Blender 5.3 and Python 3 with numpy:
 ```
-blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering
+blender -b --factory-startup --python Source/build_dp02.py -- --export Engineering,Habitat
 blender -b --factory-startup --python Source/roundtrip_habitat.py -- --out . --report "Source~/reports/dp02_build_report.json"
-blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering --check
-blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering --render
+blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat --check
+blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat --render [--views Habitat]
 python -B Source/make_metas.py
 python -B Source/make_manifest.py
 ```
@@ -61,8 +77,28 @@ python -B Source/make_manifest.py
   - Airlock door sweep: 5.95 m or more. Corridor box (|x| < 0.9, y < 2.5): 0.91 m or more. Corridor centreline: 1.82 m or more.
 - **Preview** (`Previews~/DP02_Engineering.png`): a Cycles render inside the real ship, built by the generator with its textures, from the `DP02_ENG_ReviewEye` anchor.
 
+## Evidence for the crew habitat
+- **Blender round trip:** PASS for both FBX files, 10 checks.
+- **Isolated Unity import:** PASS.
+  - Importer settings are as above, with 18 material remaps.
+  - Unity counts 19,476 triangles, the same as the report.
+  - The maximum bounds and pivot error is 0.0001 m, which comes from the report's 4-decimal rounding.
+  - The first import found 2,400 zero-area hose triangles, which Unity dropped. The rings had collapsed because the sweep reference was parallel to the hose start. This is fixed in `frames_along`, and all clusters now have 0 zero-area triangles.
+- **Clearance and overlap** (the room is the integrated habitat FBX):
+  - Overlap: 0 triangle pairs for all 4 objects.
+  - Mount gap: 4.0 mm for the stowage (host plane 3.5 mm off the quilt) and 1.6 mm for the crew kit (to a quilt decal). The plumbing and cables are at 0.5 mm.
+  - Maximum standoff: 0.289 m (the bags).
+  - Nearest amber handrail: 0.251 m or more.
+  - Nearest control: 1.65 m or more. Nearest habitat anchor: 0.61 m (`GrowTray`).
+  - Habitat colliders: the stowage is 0.27 m from them and the crew kit 0.295 m from `COL_Habitat_Berth`. The fittings and connectors on the cassette's side faces lie 2.5 mm inside the `COL_Habitat_GrowCassette` box, because that box is 3 mm larger than the cassette.
+  - Airlock door sweep: 1.47 m or more. Corridor box: 1.13 m or more. Corridor centreline: 2.07 m or more.
+- **Previews:**
+  - `Previews~/DP02_Habitat.png`, from `DP02_HAB_ReviewEye`;
+  - `Previews~/DP02_HabitatCrewKit.png`;
+  - `Previews~/DP02_HabitatGrowPlumbing.png`.
+
 ## Unfinished
-- Crew habitat: strapped stowage, ration and water packs, berth personal items, and plumbing at the grow module.
 - Cockpit.
 - The contact sheet.
+- The photo on the crew board reuses `photo_hills` from `HB_Labels`. The same picture is one of the three photos inside the berth, because no new atlas was made.
 - Material slots show as `null` in the isolated Unity project only, because the A7 material assets are not in that project. In the game project, `externalObjects` points them at the existing assets. This is not tested in the game project.

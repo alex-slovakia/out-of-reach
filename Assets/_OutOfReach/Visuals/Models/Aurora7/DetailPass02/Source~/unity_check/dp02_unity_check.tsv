@@ -5,3 +5,10 @@ DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftR	1.8100,1.0500,10.9015	2.1500,1.7
 DP02_Engineering	MESH	DP02_ENG_FrameLoom_L_Z460	-2.3325,0.1205,4.5250	-2.1223,2.5174,4.6750	-2.2040,0.0000,4.6000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
 DP02_Engineering	MESH	DP02_ENG_FrameLoom_R_Z940	2.1223,0.1205,9.3250	2.3325,2.5174,9.4750	2.2040,0.0000,9.4000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
 DP02_Engineering	ANCHOR	DP02_ENG_ReviewEye	0.7500,1.6200,8.5500	0.0000,0.0000,0.0000
+DP02_Habitat	IMPORTER	guid=0eced475c5d912f812cc5bfef69d5f7d	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=18
+DP02_Habitat	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
+DP02_Habitat	MESH	DP02_HAB_CrewKit_L_Z1175	-2.3284,1.3848,11.2365	-2.0988,2.4530,12.2320	-2.3265,0.0000,11.7500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	3626	11	null;null;null;null;null;null;null;null;null;null;null;
+DP02_Habitat	MESH	DP02_HAB_GrowCables_R_Z1536	2.2700,0.1205,15.2510	2.3795,1.8331,15.3965	2.3800,0.0000,15.3550	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	2664	7	null;null;null;null;null;null;null;
+DP02_Habitat	MESH	DP02_HAB_GrowPlumbing_R_Z1414	2.0315,0.1205,14.0590	2.3795,1.0378,14.2495	2.3800,0.0000,14.1450	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	5590	7	null;null;null;null;null;null;null;
+DP02_Habitat	ANCHOR	DP02_HAB_ReviewEye	-0.9000,1.6200,12.1500	0.0000,0.0000,0.0000
+DP02_Habitat	MESH	DP02_HAB_StrapStow_R_Z1325	2.0414,0.5450,12.5260	2.3260,2.2098,13.9740	2.3265,0.0000,13.2500	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7596	12	null;null;null;null;null;null;null;null;null;null;null;null;

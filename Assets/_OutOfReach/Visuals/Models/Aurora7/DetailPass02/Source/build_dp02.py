@@ -1,7 +1,7 @@
 """build_dp02 - Blender 5.3 background build of SHIP-DETAIL-02 (AURORA-7 interior detail pass; original work).
 
 Modes (all paths are found relative to this file; nothing machine-specific is stored):
-  build  (default)  one FBX per room in ../Meshes (meshes and anchor empties only), the editable
+  build  (default)  every room into the .blend and the report; one FBX per --export room (default: --rooms) in ../Meshes (meshes and anchor empties only), the editable
                     ../Source~/DP02.blend (relative texture paths, saved before the export) and
                     ../Source~/reports/dp02_build_report.json (triangles, pivots, bounds, materials, anchors).
   --check           rebuilds the real ship from its generator (../../Source) plus the integrated habitat FBX
@@ -50,6 +50,7 @@ def arg(name, default=None):
 
 
 ROOMS = arg("--rooms", ",".join(dp02_layout.ROOMS)).split(",")
+EXPORT = arg("--export", ",".join(ROOMS)).split(",")     # build mode: rooms whose FBX is (re)written
 SAMPLES = int(arg("--samples", 128))
 REPORTS = os.path.join(ROOT, "Source~", "reports")
 HB_SPECS = [  # render/blend specs of the habitat materials that the detail pass reuses (same values as the habitat kit)
@@ -267,11 +268,25 @@ def atlases():
     return decals, screens
 
 
-def detail_models(room_name, decals):
+_CONTEXT = {}
+
+
+def context():
+    """Atlases and the ship's Art (soft bags) shared by the cluster builders."""
+    if not _CONTEXT:
+        import a7_ship
+        decals, screens = atlases()
+        with open(os.path.join(HERE, "hb_labels_map.json"), encoding="utf-8") as handle:
+            hb = json.load(handle)
+        _CONTEXT.update({"decals": decals, "hb": hb, "art": a7_ship.Art(decals, screens, 11)})
+    return _CONTEXT
+
+
+def detail_models(room_name, decals=None):
     """[(name, placed model in ship space, pivot, cluster)] for one room."""
     out = []
     for cluster in dp02_layout.ROOMS[room_name]["clusters"]:
-        local = cluster["build"](decals)
+        local = cluster["build"](context())
         placed = a7kit.Model(cluster["name"])
         placed.instance(local, dp02_layout.frame_of(cluster))
         out.append((cluster["name"], placed, cluster["pivot"], cluster))
@@ -295,7 +310,7 @@ def build():
         with open(report_path, encoding="utf-8") as handle:
             report["units"] = json.load(handle).get("units", {})
     exports = []
-    for room_name in ROOMS:
+    for room_name in dp02_layout.ROOMS:      # every room goes into the .blend; only EXPORT rooms are re-exported
         room = dp02_layout.ROOMS[room_name]
         collection = bpy.data.collections.new(room["fbx"])
         bpy.context.scene.collection.children.link(collection)
@@ -319,7 +334,8 @@ def build():
         info["materials"] = sorted({m for o in info["objects"].values() for m in o["per_material"]})
         info["fbx"] = "Meshes/%s.fbx" % room["fbx"]
         report["units"][room["fbx"]] = info
-        exports.append((objects, os.path.join(ROOT, info["fbx"])))
+        if room_name in EXPORT:
+            exports.append((objects, os.path.join(ROOT, info["fbx"])))
         log(room_name, info["triangles"], "triangles,", len(info["objects"]), "objects,", len(info["materials"]), "materials")
     report["total_triangles"] = sum(u["triangles"] for u in report["units"].values())
     blend_dir = os.path.join(ROOT, "Source~")
@@ -633,8 +649,18 @@ def render():
                  (1.0, 0.92, 0.81))
     out_dir = os.path.join(ROOT, "Previews~")
     os.makedirs(out_dir, exist_ok=True)
+    grow = (2.38 - 0.25, 1.6575 - 0.01, 14.75)
+    area("DP02_GrowLight", grow, (0.84, 0.36), 22.0, (1.0, 0.86, 0.95))
+    views = []
     for room_name in ROOMS:
-        review = dp02_layout.ROOMS[room_name]["review"]
+        review = dict(dp02_layout.ROOMS[room_name]["review"], name=room_name)
+        views.append(review)
+        views += dp02_layout.ROOMS[room_name].get("extra_views", [])
+    wanted = arg("--views", None)
+    if isinstance(wanted, str):
+        views = [v for v in views if v["name"] in wanted.split(",")]
+    for review in views:
+        room_name = review["name"]
         data = bpy.data.cameras.new("DP02_Cam_" + room_name)
         data.sensor_fit = "HORIZONTAL"
         data.angle = math.radians(review["fov"])

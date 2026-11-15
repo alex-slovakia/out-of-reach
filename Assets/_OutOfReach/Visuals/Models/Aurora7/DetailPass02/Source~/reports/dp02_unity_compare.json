@@ -19,6 +19,25 @@
    "triangles_unity": 18312,
    "objects": 4,
    "anchors": 1
+  },
+  "DP02_Habitat": {
+   "importer": {
+    "guid": "0eced475c5d912f812cc5bfef69d5f7d",
+    "bakeAxisConversion": "True",
+    "useFileUnits": "True",
+    "useFileScale": "True",
+    "globalScale": "1",
+    "importCameras": "False",
+    "importLights": "False",
+    "materialImportMode": "ImportViaMaterialDescription",
+    "preserveHierarchy": "True",
+    "externalMaterialMaps": "18"
+   },
+   "max_bounds_pivot_err_m": 0.0001,
+   "triangles_blender": 19476,
+   "triangles_unity": 19476,
+   "objects": 4,
+   "anchors": 1
   }
  },
  "failures": [],
@@ -28,6 +47,12 @@
   "DP02_ENG_AccessPanel_AftL      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
   "DP02_ENG_AccessPanel_AftR      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
   "DP02_ENG_ReviewEye             anchor unity [0.75, 1.62, 8.55] report [0.75, 1.62, 8.55] err 0.00000",
-  "DP02_Engineering: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00000 m | triangles blender 18312 unity 18312"
+  "DP02_Engineering: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00000 m | triangles blender 18312 unity 18312",
+  "DP02_HAB_StrapStow_R_Z1325     tris blender  7596 unity  7596 | bounds/pivot err 0.00000 m | submeshes 12/12 | ok",
+  "DP02_HAB_CrewKit_L_Z1175       tris blender  3626 unity  3626 | bounds/pivot err 0.00000 m | submeshes 11/11 | ok",
+  "DP02_HAB_GrowPlumbing_R_Z1414  tris blender  5590 unity  5590 | bounds/pivot err 0.00010 m | submeshes 7/7 | ok",
+  "DP02_HAB_GrowCables_R_Z1536    tris blender  2664 unity  2664 | bounds/pivot err 0.00000 m | submeshes 7/7 | ok",
+  "DP02_HAB_ReviewEye             anchor unity [-0.9, 1.62, 12.15] report [-0.9, 1.62, 12.15] err 0.00000",
+  "DP02_Habitat: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00010 m | triangles blender 19476 unity 19476"
  ]
 }
