@@ -1,0 +1,280 @@
+// TEMPORARY terrain QA harness (TERRAIN-V03). Never committed: Assets/_TerrainQa is excluded locally.
+// Batch Edit mode entry points: TerrainV03Qa.Dump, TerrainV03Qa.CaptureBefore, TerrainV03Qa.CaptureAfter.
+// Opens the saved Bootstrap, optionally applies the TERRAIN-V03 installer IN MEMORY (scene never saved),
+// enters Play mode, waits for the real Planning bind (marine environment applied) and renders fixed views.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+using Object = UnityEngine.Object;
+
+[InitializeOnLoad]
+public static class TerrainV03Qa
+{
+    const string Key = "OutOfReach.TerrainV03Qa.";
+    public const string Bootstrap = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
+    public static string Output => SessionState.GetString(Key + "out", "");
+    public static string Mode => SessionState.GetString(Key + "mode", "");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+
+    static TerrainV03Qa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+
+    static string Env(string name, string fallback) { string v = Environment.GetEnvironmentVariable(name); return string.IsNullOrEmpty(v) ? fallback : v; }
+
+    static void Begin(string mode)
+    {
+        if (!Application.isBatchMode) throw new InvalidOperationException("Batch mode only.");
+        if (SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null) throw new InvalidOperationException("Real GPU required.");
+        string root = Env("TERRAIN_QA_OUT", Path.GetFullPath("../out-of-reach-terrain3-logs/qa"));
+        string output = Path.Combine(root, DateTime.UtcNow.ToString("yyyyMMddTHHmmss") + "-" + mode);
+        Directory.CreateDirectory(output);
+        SessionState.SetString(Key + "out", output);
+        SessionState.SetString(Key + "mode", mode);
+        SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(double.Parse(Env("TERRAIN_QA_SECONDS", "420"), CultureInfo.InvariantCulture)).ToString("O"));
+        SessionState.SetString(Key + "stage", "begin");
+        Note("mode=" + mode + " gpu=" + SystemInfo.graphicsDeviceName + " api=" + SystemInfo.graphicsDeviceType + " unity=" + Application.unityVersion);
+    }
+
+    public static void Dump()
+    {
+        try
+        {
+            Begin("dump");
+            EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            WriteHierarchy(Path.Combine(Output, "hierarchy.txt"));
+            Finish(true, "dump done");
+        }
+        catch (Exception e) { Finish(false, e.ToString()); }
+    }
+
+    public static void CaptureBefore() => StartCapture("before");
+    public static void CaptureSaved() => StartCapture("installed");
+    public static void CaptureAfter() => StartCapture("after");
+
+    static void StartCapture(string mode)
+    {
+        try
+        {
+            Begin(mode);
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation);
+            ShaderUtil.allowAsyncCompilation = false;
+            EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            if (mode == "after")
+            {
+                // Installer under test, called exactly as root will call it (in memory; Bootstrap is never saved here).
+                Type installer = AppDomain.CurrentDomain.GetAssemblies().Select(a => a.GetType("OutOfReach.Presentation.LaunchLandscape.Editor.LaunchTerrainV03Installer")).FirstOrDefault(t => t != null);
+                if (installer == null) throw new InvalidOperationException("LaunchTerrainV03Installer not compiled.");
+                Transform site = FindSite();
+                object report = installer.GetMethod("Apply", BindingFlags.Public | BindingFlags.Static).Invoke(null, new object[] { site });
+                Note("installer: " + installer.GetProperty("LastReport", BindingFlags.Public | BindingFlags.Static)?.GetValue(null));
+                AssetDatabase.SaveAssets();
+            }
+            if (Env("TERRAIN_QA_DUMP", "0") == "1") WriteHierarchy(Path.Combine(Output, "hierarchy-" + mode + ".txt"));
+            SessionState.SetString(Key + "stage", "entering");
+            EditorApplication.isPlaying = true;
+        }
+        catch (Exception e) { Finish(false, e.ToString()); }
+    }
+
+    public static Transform FindSite()
+    {
+        var all = Resources.FindObjectsOfTypeAll<Transform>().Where(t => t.name == "Launch site - stationary" && t.gameObject.scene.IsValid()).ToArray();
+        if (all.Length != 1) throw new InvalidOperationException("Expected one 'Launch site - stationary', found " + all.Length);
+        return all[0];
+    }
+
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || Stage != "entering") return;
+        try { SessionState.SetString(Key + "stage", "playing"); new GameObject("TERRAIN_V03_QA_UNSAVED").AddComponent<TerrainV03QaDriver>(); }
+        catch (Exception e) { Finish(false, e.ToString()); }
+    }
+
+    static void Watchdog()
+    {
+        if (Stage.Length == 0) return;
+        if (DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime d) && DateTime.UtcNow > d)
+            Finish(false, "watchdog expired at stage " + Stage);
+    }
+
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (Stage.Length == 0 || Output.Length == 0) return;
+        if (type == LogType.Error || type == LogType.Exception || type == LogType.Assert)
+            File.AppendAllText(Path.Combine(Output, "errors.txt"), type + ": " + message + "\n" + stack + "\n");
+    }
+
+    public static void Note(string text) { if (Output.Length > 0) File.AppendAllText(Path.Combine(Output, "notes.txt"), DateTime.UtcNow.ToString("HH:mm:ss.fff") + " " + text + "\n"); }
+
+    public static void Finish(bool pass, string message)
+    {
+        if (Output.Length > 0) File.WriteAllText(Path.Combine(Output, pass ? "PASS.txt" : "FAIL.txt"), message);
+        SessionState.SetString(Key + "stage", "");
+        ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Debug.Log((pass ? "TERRAIN_V03_QA_PASS " : "TERRAIN_V03_QA_FAIL ") + message + " out=" + Output);
+        EditorApplication.Exit(pass ? 0 : 1);
+    }
+
+    public static string PathOf(Transform t) => t.parent ? PathOf(t.parent) + "/" + t.name : t.name;
+
+    static void WriteHierarchy(string file)
+    {
+        var sb = new StringBuilder();
+        var scene = EditorSceneManager.GetActiveScene();
+        Transform site = null;
+        try { site = FindSite(); } catch { }
+        sb.AppendLine("RenderSettings fog=" + RenderSettings.fog + " mode=" + RenderSettings.fogMode + " density=" + RenderSettings.fogDensity + " color=" + RenderSettings.fogColor + " skybox=" + (RenderSettings.skybox ? RenderSettings.skybox.name : "null") + " sun=" + (RenderSettings.sun ? PathOf(RenderSettings.sun.transform) : "null"));
+        foreach (GameObject rootObject in scene.GetRootGameObjects())
+            Walk(rootObject.transform, 0, sb, site);
+        File.WriteAllText(file, sb.ToString());
+    }
+
+    static void Walk(Transform t, int depth, StringBuilder sb, Transform site)
+    {
+        var go = t.gameObject;
+        var line = new StringBuilder();
+        line.Append(new string(' ', depth * 2)).Append(go.activeSelf ? "+ " : "- ").Append(t.name);
+        Vector3 w = t.position;
+        line.Append(" | w=").Append(F(w));
+        if (site && (t == site || t.IsChildOf(site))) line.Append(" s=").Append(F(site.InverseTransformPoint(w)));
+        if (t.localScale != Vector3.one) line.Append(" sc=").Append(F(t.localScale));
+        if (go.layer != 0) line.Append(" L").Append(go.layer);
+        var mf = go.GetComponent<MeshFilter>();
+        var r = go.GetComponent<Renderer>();
+        if (r)
+        {
+            int tris = 0;
+            if (mf && mf.sharedMesh) { var m = mf.sharedMesh; for (int i = 0; i < m.subMeshCount; i++) tris += (int)(m.GetIndexCount(i) / 3); }
+            line.Append(" R[").Append(r.enabled ? "on" : "off").Append(" tris=").Append(tris)
+                .Append(" b=").Append(F(r.bounds.center)).Append("±").Append(F(r.bounds.extents))
+                .Append(" mat=").Append(string.Join(",", r.sharedMaterials.Select(m => m ? m.name + "<" + (m.shader ? m.shader.name : "?") + ">" : "null")))
+                .Append(" mesh=").Append(mf && mf.sharedMesh ? mf.sharedMesh.name + "@" + AssetDatabase.GetAssetPath(mf.sharedMesh) : "-").Append("]");
+        }
+        var cols = go.GetComponents<Collider>();
+        if (cols.Length > 0) line.Append(" C[").Append(string.Join(",", cols.Select(c => c.GetType().Name + (c.enabled ? "" : "(off)")))).Append("]");
+        var comps = go.GetComponents<Component>().Where(c => c && !(c is Transform) && !(c is MeshFilter) && !(c is Renderer) && !(c is Collider)).Select(c => c.GetType().Name).ToArray();
+        if (comps.Length > 0) line.Append(" {").Append(string.Join(",", comps)).Append("}");
+        line.Append(" n=").Append(t.childCount);
+        sb.AppendLine(line.ToString());
+        // Collapse huge homogeneous children lists after 40 entries.
+        int shown = 0;
+        foreach (Transform child in t)
+        {
+            if (shown++ >= 60) { sb.AppendLine(new string(' ', (depth + 1) * 2) + "... " + (t.childCount - 60) + " more"); break; }
+            Walk(child, depth + 1, sb, site);
+        }
+    }
+
+    public static string F(Vector3 v) => v.x.ToString("F1", CultureInfo.InvariantCulture) + "," + v.y.ToString("F1", CultureInfo.InvariantCulture) + "," + v.z.ToString("F1", CultureInfo.InvariantCulture);
+}
+
+[DefaultExecutionOrder(32000)]
+public sealed class TerrainV03QaDriver : MonoBehaviour
+{
+    [Serializable] sealed class View { public string name; public float[] pos; public float[] look; public float fov = 60; public string space = "site"; }
+    [Serializable] sealed class ViewList { public View[] views; }
+
+    Camera view;
+    bool posing;
+    Vector3 posePosition;
+    Quaternion poseRotation;
+    float poseFov;
+
+    IEnumerator Start()
+    {
+        Exception failure = null;
+        IEnumerator routine = Run();
+        while (true)
+        {
+            object current;
+            try { if (!routine.MoveNext()) break; current = routine.Current; }
+            catch (Exception e) { failure = e; break; }
+            yield return current;
+        }
+        TerrainV03Qa.Finish(failure == null, failure == null ? "captures done" : failure.ToString());
+    }
+
+    IEnumerator Run()
+    {
+        double end = Time.realtimeSinceStartupAsDouble + 60;
+        // Real Planning bind: the marine composition applies the launch-site environment (fog on, far clip 10.5 km).
+        while (!(Camera.main && RenderSettings.fog && Camera.main.farClipPlane > 5000))
+        {
+            if (Time.realtimeSinceStartupAsDouble > end) throw new TimeoutException("Planning environment never applied: fog=" + RenderSettings.fog + " far=" + (Camera.main ? Camera.main.farClipPlane : -1));
+            yield return null;
+        }
+        for (int i = 0; i < 30; i++) yield return null;
+        view = Camera.main;
+        Transform site = TerrainV03Qa.FindSite();
+        TerrainV03Qa.Note("env fog=" + RenderSettings.fogMode + " d=" + RenderSettings.fogDensity + " col=" + RenderSettings.fogColor + " sky=" + (RenderSettings.skybox ? RenderSettings.skybox.name : "null")
+            + " camera=" + TerrainV03Qa.PathOf(view.transform) + " at " + TerrainV03Qa.F(view.transform.position) + " far=" + view.farClipPlane + " hdr=" + view.allowHDR + " siteActive=" + site.gameObject.activeInHierarchy
+            + " sun=" + (RenderSettings.sun ? RenderSettings.sun.transform.eulerAngles + " i=" + RenderSettings.sun.intensity : "none"));
+        // The player's own first-person view as the game shows it at Planning start.
+        yield return Capture("00-player-start-view", null);
+        string viewsFile = Environment.GetEnvironmentVariable("TERRAIN_QA_VIEWS");
+        if (string.IsNullOrEmpty(viewsFile) || !File.Exists(viewsFile)) throw new InvalidOperationException("TERRAIN_QA_VIEWS file missing: " + viewsFile);
+        var list = JsonUtility.FromJson<ViewList>(File.ReadAllText(viewsFile));
+        foreach (View v in list.views)
+        {
+            Vector3 p = new Vector3(v.pos[0], v.pos[1], v.pos[2]), l = new Vector3(v.look[0], v.look[1], v.look[2]);
+            if (v.space == "site") { p = site.TransformPoint(p); l = site.TransformPoint(l); }
+            yield return Capture(v.name, new Pose(p, Quaternion.LookRotation(l - p, Vector3.up)), v.fov);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (!posing || !view) return;
+        view.transform.SetPositionAndRotation(posePosition, poseRotation);
+        view.fieldOfView = poseFov;
+    }
+
+    IEnumerator Capture(string name, Pose? pose, float fov = 60)
+    {
+        Transform parent = view.transform.parent;
+        Vector3 lp = view.transform.localPosition; Quaternion lr = view.transform.localRotation; float oldFov = view.fieldOfView;
+        int w = 1600, h = 900;
+        var texture = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+        texture.Create();
+        RenderTexture old = view.targetTexture; float aspect = view.aspect;
+        try
+        {
+            if (pose.HasValue)
+            {
+                view.transform.SetParent(null, true);
+                posePosition = pose.Value.position; poseRotation = pose.Value.rotation; poseFov = fov; posing = true;
+            }
+            view.targetTexture = texture; view.aspect = (float)w / h;
+            for (int i = 0; i < 8; i++) yield return null;
+            var active = RenderTexture.active;
+            var image = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            try
+            {
+                RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, w, h), 0, 0); image.Apply();
+                File.WriteAllBytes(Path.Combine(TerrainV03Qa.Output, name + ".png"), image.EncodeToPNG());
+                TerrainV03Qa.Note("captured " + name + " at " + TerrainV03Qa.F(view.transform.position) + " fwd=" + TerrainV03Qa.F(view.transform.forward) + " fov=" + view.fieldOfView);
+            }
+            finally { RenderTexture.active = active; Destroy(image); }
+        }
+        finally
+        {
+            posing = false;
+            view.targetTexture = old; view.aspect = aspect; view.fieldOfView = oldFov;
+            if (pose.HasValue) { view.transform.SetParent(parent, false); view.transform.localPosition = lp; view.transform.localRotation = lr; }
+            texture.Release(); Destroy(texture);
+        }
+    }
+}
