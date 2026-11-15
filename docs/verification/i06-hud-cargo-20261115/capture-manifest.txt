@@ -1,0 +1,8 @@
+00-cargo-placards.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Planning outcome=None paused=False
+01-water-direction.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+02a-curved-rest-blink.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+02-rest.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+02b-paused-rest.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=True
+03-wake-title-opening.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+04-fully-awake.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False
+05-reduced-wake-title.png | 1280x720 | existing camera + UIDocument; overlay UGUI excluded | phase=Survival outcome=None paused=False

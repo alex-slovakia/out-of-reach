@@ -145,7 +145,8 @@ namespace OutOfReach.Presentation.UI
             Show(alerts, true);
             RefreshNeedGuidance();
             restStop.text = restNotice.Text;
-            Show(restStop, restNotice.IsVisible);
+            Show(restStop, restNotice.IsVisible && recovery != null
+                && recovery.LastRestStop != RestStopReason.Completed && recovery.LastRestStop != RestStopReason.Woken);
 
             bool resting = recovery != null && recovery.IsResting;
             waterLocator.Present(guidanceCamera, waterTarget, !resting);
@@ -338,6 +339,7 @@ namespace OutOfReach.Presentation.UI
                 : "Food & water: galley beside the crew berth.";
             waterGuidance.EnableInClassList("survival-need-urgent", thirsty);
             waterGuidance.EnableInClassList("survival-need-critical", survival.Thirst01 >= .8d);
+            Show(waterGuidance, thirsty);
             foodGuidance.text = hungry
                 ? NeedGuidance(rationAction, "Eat a ration", "Food locker", "galley beside the crew berth") : string.Empty;
             foodGuidance.EnableInClassList("survival-need-urgent", hungry);
@@ -410,6 +412,7 @@ namespace OutOfReach.Presentation.UI
         {
             private readonly VisualElement row;
             private readonly ProgressBar bar;
+            private readonly FlightBoardView.ReserveFill fill;
             private readonly NeedIcon icon;
             private readonly string label;
             public NeedRow(VisualElement parent, string title, string id, bool water)
@@ -422,6 +425,9 @@ namespace OutOfReach.Presentation.UI
                 row.Add(Text(title, "survival-need-label"));
                 bar = new ProgressBar { name = id, lowValue = 0, highValue = 1, title = string.Empty, pickingMode = PickingMode.Ignore };
                 bar.AddToClassList("survival-need-bar");
+                fill = new FlightBoardView.ReserveFill();
+                fill.AddToClassList("reserve-fill");
+                bar.Add(fill);
                 IgnorePicking(bar);
                 row.Add(bar);
                 parent.Add(row);
@@ -431,6 +437,9 @@ namespace OutOfReach.Presentation.UI
             {
                 bool known = SurvivalChapterReadout.ValidNeed(unmetNeed);
                 bar.value = (float)SurvivalChapterReadout.SatisfiedFraction(unmetNeed);
+                Color tint = known && unmetNeed >= .8d ? new Color(1f, .43f, .36f)
+                    : known && unmetNeed >= .5d ? new Color(.96f, .72f, .39f) : new Color(.95f, .94f, .89f);
+                fill.SetTarget(bar.value, known, tint, true);
                 // Presentation attention colours only; these do not define medical or gameplay thresholds.
                 row.EnableInClassList("survival-attention", known && unmetNeed >= .5d && unmetNeed < .8d);
                 row.EnableInClassList("survival-critical", known && unmetNeed >= .8d);

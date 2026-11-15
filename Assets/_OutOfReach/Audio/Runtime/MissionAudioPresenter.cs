@@ -57,6 +57,7 @@ namespace OutOfReach.Presentation.Audio
         private bool dialogueActive;
         private bool presentationPaused;
         private DialogueSubtitle currentSubtitle;
+        private SubtitleSegments subtitleSegments;
 
         public event Action<DialogueSubtitle> SubtitleChanged;
 
@@ -95,6 +96,16 @@ namespace OutOfReach.Presentation.Audio
         {
             if (presentationPaused || AudioListener.pause) return;
             if (dialogueActive && dialogueSource && !dialogueSource.isPlaying) FinishDialogue();
+            if (dialogueActive && dialogueSource && dialogueSource.clip && subtitleSegments != null)
+            {
+                float progress = (float)dialogueSource.timeSamples / Math.Max(1, dialogueSource.clip.samples);
+                string nextText = subtitleSegments.At(progress);
+                if (nextText != currentSubtitle.Text)
+                {
+                    currentSubtitle = new DialogueSubtitle(currentSubtitle.CueId, nextText, nextText.Length > 0);
+                    NotifySubtitle(currentSubtitle);
+                }
+            }
             if (departureMusicActive && (!departureMusicSource || !departureMusicSource.isPlaying))
                 departureMusicActive = false;
             float delta = Time.unscaledDeltaTime;
@@ -134,7 +145,9 @@ namespace OutOfReach.Presentation.Audio
             dialogueSource.Play();
             if (!dialogueSource.isPlaying) return Reject("Dialogue playback did not start.");
             dialogueActive = true;
-            currentSubtitle = new DialogueSubtitle(cueId, subtitleText, !string.IsNullOrEmpty(subtitleText));
+            subtitleSegments = new SubtitleSegments(subtitleText);
+            string firstCaption = subtitleSegments.At(0f);
+            currentSubtitle = new DialogueSubtitle(cueId, firstCaption, firstCaption.Length > 0);
             LastRejection = string.Empty;
             NotifySubtitle(currentSubtitle);
             return true;
@@ -414,6 +427,7 @@ namespace OutOfReach.Presentation.Audio
         {
             if (!dialogueActive) return;
             dialogueActive = false;
+            subtitleSegments = null;
             currentSubtitle = new DialogueSubtitle(currentSubtitle.CueId, currentSubtitle.Text, false);
             NotifySubtitle(currentSubtitle);
         }

@@ -192,21 +192,27 @@ namespace OutOfReach.Presentation.UI
             microgravityTutorial = Element("microgravity-move");
             microgravityTutorial.name = "microgravity-tutorial";
             var handsHint = Element("control-hint-row");
-            handsHint.Add(MousePictogram("left-mouse", true, false));
-            handsHint.Add(MousePictogram("right-mouse", false, true));
+            var handsKeys = Element("control-hint-inputs");
+            handsKeys.Add(MousePictogram("left-mouse", true, false));
+            handsKeys.Add(MousePictogram("right-mouse", false, true));
+            handsHint.Add(handsKeys);
             handsHint.Add(Text("Push / grip", "control-hint-action"));
             microgravityTutorial.Add(handsHint);
             var pushHint = Element("control-hint-row");
-            pushHint.Add(MousePictogram("both-mouse-buttons", true, true));
-            pushHint.Add(Text("/", "control-hint-separator"));
-            pushHint.Add(KeyPictogram("W"));
-            pushHint.Add(Text("+", "control-hint-separator"));
-            pushHint.Add(KeyPictogram("SPACE"));
+            var pushKeys = Element("control-hint-inputs");
+            pushKeys.Add(MousePictogram("both-mouse-buttons", true, true));
+            pushKeys.Add(Text("/", "control-hint-separator"));
+            pushKeys.Add(KeyPictogram("W"));
+            pushKeys.Add(Text("+", "control-hint-separator"));
+            pushKeys.Add(KeyPictogram("SPACE"));
+            pushHint.Add(pushKeys);
             pushHint.Add(Text("Push", "control-hint-action"));
             microgravityTutorial.Add(pushHint);
             var tiltHint = Element("control-hint-row");
-            tiltHint.Add(KeyPictogram("A"));
-            tiltHint.Add(KeyPictogram("D"));
+            var tiltKeys = Element("control-hint-inputs");
+            tiltKeys.Add(KeyPictogram("A"));
+            tiltKeys.Add(KeyPictogram("D"));
+            tiltHint.Add(tiltKeys);
             tiltHint.Add(Text("Tilt", "control-hint-action"));
             microgravityTutorial.Add(tiltHint);
             compression.Add(microgravityTutorial);
@@ -255,7 +261,6 @@ namespace OutOfReach.Presentation.UI
                 tooltip = "Hold Tab to inspect all ship reserves. Click to keep them visible."
             };
             systems.AddToClassList("systems-button");
-            instruments.Add(systems);
             IgnorePicking(hud);
             systems.pickingMode = PickingMode.Position;
             RefreshTelemetry();
@@ -396,7 +401,7 @@ namespace OutOfReach.Presentation.UI
                     break;
                 case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = "Spacewalk (EVA) · Stay attached to the safety line."; break;
                 case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = string.Empty; break;
-                case GamePhase.Survival: phase.text = "Survive until rescue"; objective.text = "Manage your food, water and ship systems."; break;
+                case GamePhase.Survival: phase.text = "Survive until rescue"; objective.text = string.Empty; break;
                 case GamePhase.Outcome:
                 case GamePhase.Report:
                     phase.text = outcome == MissionOutcome.RecoveryPossible ? "Contact restored"
@@ -970,7 +975,7 @@ namespace OutOfReach.Presentation.UI
             public void Advance(float elapsedRealSeconds) => fill.Advance(elapsedRealSeconds);
         }
 
-        private sealed class ReserveFill : VisualElement
+        internal sealed class ReserveFill : VisualElement
         {
             private float displayed, target;
             private bool known;
