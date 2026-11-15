@@ -235,6 +235,7 @@ namespace OutOfReach.Composition
                 FloatActionResult direct = player.TryPushOff(looked.collider, looked.point, looked.normal, strength01);
                 LastCommandResult = direct;
                 if (direct != FloatActionResult.Done) return Refuse("Push refused: " + direct + ".");
+                ShowUnseenPushGesture(looked.point);
                 HandPushCompleted?.Invoke();
                 return true;
             }
@@ -255,8 +256,18 @@ namespace OutOfReach.Composition
             FloatActionResult result = player.TryPushOff(best.collider, best.point, away, strength01);
             LastCommandResult = result;
             if (result != FloatActionResult.Done) return Refuse("Push refused: " + result + ".");
+            ShowUnseenPushGesture(best.point);
             HandPushCompleted?.Invoke();
             return true;
+        }
+
+        // Alex (6896702312): in the EVA suit a push without a contact pose looked like missing hands. The visible glove
+        // on the side of the pushed surface now plays its short press, so the hands visibly work during every push.
+        void ShowUnseenPushGesture(Vector3 surfacePoint)
+        {
+            if (!suit.IsSuitOn || !gloves || !gloves.IsVisible || !player || !player.ViewPivot) return;
+            bool left = Vector3.Dot(surfacePoint - player.ViewPivot.position, player.ViewPivot.right) < 0f;
+            gloves.TryPlayPress(left);
         }
 
         // A surface ahead in the intended direction (its normal facing against it) would send the body back.
