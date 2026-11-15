@@ -22,7 +22,7 @@ Anything saved after 23:59 CET is not judged. The participant certificate appear
 
 ## Eligibility facts already checked (15 Nov 2026, official pages)
 
-- [x] Team **Polish Alex Goats**, Universal Event, challenge **Space Mission Design Game**; Members tab lists **2 members** (Universal Event teams need at least 2): Alexander Kozovy (Team Owner) and Alex Poliak. No new members can be added after submission closes.
+- [x] Team **Polish Alex Goats**, Universal Event, challenge **Space Mission Design Game**; Members tab lists **2 members** (Universal Event teams need at least 2): Alexander Kozovy (Team Owner) and Alex (Apoliak). No new members can be added after submission closes.
 - [x] Project tab exists ("Check back later to see this project take flight") — nothing submitted yet.
 - [ ] The "About the team" text on the public team page says one member is 17. **No image, video or audio of anyone under 18 may appear in the demo or the final project** — keep every team member's face and voice out of the video, the deck and the published files.
 

@@ -186,7 +186,7 @@ SPACE AGENCY PARTNER DATA
 - ESA, "How loud is space?" (https://www.esa.int/ESA_Multimedia/Videos/2020/04/How_loud_is_space/%28lang%29): our rule that sound in vacuum is only heard through the suit, the hull or the radio (reference only).
 
 MUSIC (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)
-- "Titan" by Scott Buckley, https://www.scottbuckley.com.au/library/titan/ : edited excerpt with original added percussion and mastering.
+- "Titan" by Scott Buckley, https://www.scottbuckley.com.au/library/titan/ : edited excerpt with added percussion (synthesized by AI-written code) and mastering.
 - "Cobalt" by Scott Buckley, https://www.scottbuckley.com.au/library/cobalt/ : edited 120-second loop.
 
 3D MODELS, SKIES AND TEXTURES (CC0 1.0)

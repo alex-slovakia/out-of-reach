@@ -31,8 +31,8 @@ Times are positions in the final edit. "Capture" says exactly where in the game 
 
 | # | Edit time | Beat | Capture (in game) | On-screen text (burned in, English) | Fallback |
 |---|---|---|---|---|---|
-| S1 | 0:00.0–0:02.0 | Who we are | From the elevated boarding deck at LC-7, slow look from the tower to the vehicle on the pad (Planning, before touching any crate). | **TEAM POLISH ALEX GOATS** / Alexander Kozovy · Alex Poliak | Any wide shot of the launch site |
-| S2 | 0:02.0–0:05.0 | The challenge, why | First person carrying a crate across the deck; the white mm:ss loading countdown is visible at the top (timed mode, not Practice). | **NASA SPACE APPS 2026 · SPACE MISSION DESIGN GAME** / What if you had to survive your own mission design? | Cargo stacks with their placards (`SECURED CARGO`) |
+| S1 | 0:00.0–0:02.0 | Who we are | From the elevated boarding deck at LC-7, slow look from the tower to the vehicle on the pad (Planning, before touching any crate). | **TEAM POLISH ALEX GOATS** · NASA Space Apps Challenge 2026 (team name only; member names are not required in the video) | Any wide shot of the launch site |
+| S2 | 0:02.0–0:05.0 | The challenge, why | First person carrying a crate across the deck; the white mm:ss loading countdown is visible at the top (timed mode, not Practice). | **CHALLENGE: SPACE MISSION DESIGN GAME** / What if you had to survive your own mission design? | Cargo stacks with their placards (`SECURED CARGO`) |
 | S3 | 0:05.0–0:10.0 | Title + tagline | Departure from the seat: last seconds of the radio countdown, ignition, liftoff (exterior shot from the departure cinematic, 8.5–12 s of the timeline). Title appears at liftoff. | **OUT OF REACH** (large) / The mission you design is the mission you must survive. | If the countdown is not in the build, start the clip at ignition |
 | S4 | 0:10.0–0:13.0 | The accident | "Complete the cockpit check" at the console → the impact: shake, emergency light, damage prompts. | A debris strike. Power 20 %. Life support down. | Interior right after the impact |
 | S5 | 0:13.0–0:16.0 | Engineering trade-off | Aim at the life-support rack until the prompt shows the exact cost (spare parts, kWh); press and show the repaired state. Alternative: the EVA at the antenna with the tether in view. | Every repair is paid from the cargo you packed. | Power repair at the EPS panel |
@@ -42,7 +42,7 @@ Times are positions in the final edit. "Capture" says exactly where in the game 
 | S9 | 0:27.0–0:29.5 | The future | Slow push-in on the cockpit window / Earth terminal; fade to black over the last 0.5 s. | **NEXT:** team mode for four · new destinations · classrooms / small: *Music: "Titan" by Scott Buckley (CC BY 4.0) · NASA/JPL data* | Black card with the same text |
 
 Persistent label, all 29.5 s, bottom-right, small (≈1.5 % of the frame height), 70 % white:
-`Real gameplay · AI-assisted development · details in description`
+`Real gameplay · AI-assisted development`
 
 Safe area: keep all text inside the central 90 % of the frame; the bottom 12 % already holds in-game subtitles, so put the burned-in text in the upper or middle third.
 
@@ -62,13 +62,13 @@ Safe area: keep all text inside the central 90 % of the frame; the bottom 12 % a
 After export, write the metadata without re-encoding (FFmpeg is installed on the team PCs):
 
 ```bash
-ffmpeg -i out-of-reach-demo.mp4 -c copy -metadata title="OUT OF REACH - NASA Space Apps 2026 demo" -metadata artist="Team Polish Alex Goats" -metadata comment="Real gameplay capture. In-game dialogue voices are AI-generated (Google Gemini text-to-speech). The game was developed with AI coding assistants (Claude Code, OpenAI Codex). Music: Titan by Scott Buckley, CC BY 4.0. NASA/JPL Horizons data; Earth image NASA EPIC/NOAA DSCOVR." out-of-reach-demo-final.mp4
+ffmpeg -i out-of-reach-demo.mp4 -c copy -metadata title="OUT OF REACH - NASA Space Apps 2026 demo" -metadata artist="Team Polish Alex Goats" -metadata comment="Real gameplay capture. In-game dialogue voices are AI-generated (Google Gemini text-to-speech). The game was developed with AI coding assistants (Claude Code, OpenAI Codex). Music: Titan by Scott Buckley, CC BY 4.0, edited excerpt; the added percussion layer was synthesized by AI-written code. NASA/JPL Horizons data; Earth image NASA EPIC/NOAA DSCOVR." out-of-reach-demo-final.mp4
 ```
 
 ## Video description (paste into YouTube / Drive)
 
 ```text
-OUT OF REACH — NASA Space Apps Challenge 2026 · Space Mission Design Game · Team Polish Alex Goats (Alexander Kozovy, Alex Poliak)
+OUT OF REACH — NASA Space Apps Challenge 2026 · Space Mission Design Game · Team Polish Alex Goats
 
 The mission you design is the mission you must survive. Pack a fictional Mars research ship within real mass, budget, power and supply limits, then survive the accident your own choices shaped. NASA/JPL Horizons distances set the light-speed radio delay; NASA life-support baseline values drive oxygen, CO2, water and food; the Earth on the cockpit terminal is a real NASA EPIC / NOAA DSCOVR image.
 
@@ -76,7 +76,7 @@ Real gameplay capture from the Windows build.
 
 AI use: the game was developed with AI coding assistants (Claude Code, OpenAI Codex) under the team's direction. In-game dialogue voices are AI-generated with Google Gemini text-to-speech. No AI-generated images or video appear in this demo.
 
-Music: "Titan" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Edited excerpt with added percussion.
+Music: "Titan" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Edited excerpt with added synthesized percussion; the percussion layer was generated by AI-written code.
 NASA data and media: NASA/JPL Horizons; NASA Life Support Baseline Values (BVAD); NASA EPIC Team / NOAA DSCOVR; NASA/GSFC Scientific Visualization Studio Deep Star Maps (Gaia DR2: ESA/Gaia/DPAC). No NASA endorsement implied; AURORA-7 is fictional.
 Full credits: [FINAL PROJECT LINK]
 ```

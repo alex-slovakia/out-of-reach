@@ -220,7 +220,7 @@ def slide_title(prs):
     rect(s, 0.62, 5.52, 0.5, 0.035, fill=CYAN)
     text(s, 0.62, 5.68, 8, 0.3, [[R("TEAM POLISH ALEX GOATS", 11, CYAN, BODY_SEMI, spc=2.5)]])
     text(s, 0.62, 6.0, 9, 0.4, [[R("Alexander Kozovy", 17, TXT, BODY_SEMI), R("  (Team Owner)", 13, TXT2),
-                                  R("   ·   ", 17, MUTED), R("Alex Poliak", 17, TXT, BODY_SEMI)]])
+                                  R("   ·   ", 17, MUTED), R("Alex", 17, TXT, BODY_SEMI), R(" (Apoliak)", 13, TXT2)]])
     text(s, 0.62, 7.0, 9, 0.3, [[R("Universal Event  ·  Unity 6  ·  Windows x64", 9, MUTED)]])
     tw = 2.55
     rect(s, 13.333 - tw - 0.35, 6.95, tw, 0.27, fill=RGBColor(0x0B, 0x0D, 0x10))
@@ -384,7 +384,7 @@ def slide_built(prs):
     members = [
         (0.82, "Alexander Kozovy", "  Team Owner",
          "Creative direction, visuals, UI, audio and integration — with OpenAI Codex"),
-        (6.85, "Alex Poliak", "",
+        (6.85, "Alex", "  Apoliak",
          "Gameplay and simulation, movement, survival chapters and tests — with Claude Code"),
     ]
     for x, name, role, body in members:

@@ -2,7 +2,7 @@
 
 **DRAFTS ONLY. Nothing here was submitted, published, uploaded or shared.** The Team Owner submits. SUBMIT-PACK-02 (15 Nov 2026) supersedes SUBMIT-PACK-01 (`bb4b883`, written for the marine-prologue build).
 
-- **Team** Polish Alex Goats — Alexander Kozovy (Team Owner), Alex Poliak · **Event** Universal Event · **Challenge** [Space Mission Design Game](https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/) · **Team page** https://www.spaceappschallenge.org/2026/find-a-team/polish-alex-goats/
+- **Team** Polish Alex Goats — Alexander Kozovy (Team Owner), Alex (Apoliak) · **Event** Universal Event · **Challenge** [Space Mission Design Game](https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/) · **Team page** https://www.spaceappschallenge.org/2026/find-a-team/polish-alex-goats/
 - **Deadline:** Sun 15 Nov 2026, **23:59 Bratislava = 22:59 UTC** ("Submit for Judging" by the Team Owner). Today's schedule (#7 6895582351): code freeze 21:00 CET, package ready **22:30 CET**, Team Owner submits **by 23:30 CET**; resubmits are allowed until the deadline.
 - **Written for:** `codex/i01-integration` @ `dc9ff8b` plus the Claude lanes running today (#7 6895044220); credits re-swept on the first `claude/integration` SHA `30055e5` (movement, Core chapter loop, tower, body, WORK grip). Fallback lines cover features that may miss the final build.
 

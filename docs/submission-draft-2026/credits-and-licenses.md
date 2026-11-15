@@ -15,7 +15,8 @@ CREDITS — OUT OF REACH (NASA Space Apps Challenge 2026, team Polish Alex Goats
 
 Music
 - "Titan" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0
-  (https://creativecommons.org/licenses/by/4.0/). Edited excerpt; added original percussion and mastering.
+  (https://creativecommons.org/licenses/by/4.0/). Edited excerpt; added percussion synthesized by AI-written
+  code; mastering.
 - "Cobalt" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0. Edited 120-second loop.
 
 NASA and space-agency media (no endorsement implied; no NASA logos or insignia are used)
