@@ -69,6 +69,10 @@ resolve about 1 mm, and a closer stencil z-fights.
 - Player view while carrying the solar canister, level and looking down: stencil facing the player, both gloves closed
   on the two side handles, body-arm reach shortfall 0 (`Previews~/urp_play_carry_solar_*.png`).
 - One still per container in Play mode lighting (`Previews~/urp_play_crate_<Key>.png`).
+- Cycles renders of the final meshes with the shipped textures, made without Unity after the decal re-export:
+  `Previews~/blender_crate_<Key>.png` and `Previews~/blender_rack_assembled.png` (`Source~/render_evidence.py`
+  writes them to `Evidence~/`, which this repository excludes locally, so the committed copies are in `Previews~/`).
+- Short integration checklist: `Source~/HANDOFF.md`.
 
 ## Not verified
 
