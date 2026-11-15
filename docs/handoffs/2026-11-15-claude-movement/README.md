@@ -3,15 +3,19 @@
 ## Latest user decision (supersedes earlier Codex movement ownership)
 The user still finds movement broken and explicitly requests Claude fix it. Codex stops further movement edits/tests now and hands integration/light presentation work to a new chat. No movement completion is claimed. The current mechanics experiment is UNVERIFIED and is not promoted into the user's open Unity checkout.
 
-## Movement behavior to implement and verify
-1. Ground/prologue: familiar WASD walking, readable cargo carrying, reliable collisions.
-2. Microgravity: Space pushes from any reachable floor, wall or ceiling, without requiring W+Space. Nearby contact is selected predictably and shown before acting. No contact => short helpful feedback, no silent failure.
-3. WASD selects camera-relative departure direction while pushing; contact geometry constrains physically possible impulses. Default neutral Space goes away from the contacted surface. Looking sideways at a ceiling must still allow pushing downward.
-4. Unsupported movement preserves inertia. A/D does not create unexplained acceleration. If optional assisted steering is implemented, it must explicitly use suit jets with sensible limits; do not introduce hidden free-flight force.
-5. Proposed unified E grip/release for nearby handles or tether, with contextual HUD; resolve conflicts with existing E repair/boarding/seat interactions centrally. While holding, stabilize and use W/S for hand-over-hand traversal; visible alternating grip, reach, pull and release, no walking along a rope. Current bindings are not claimed to implement this proposal.
-6. Fast, simple, forgiving control: brief buffered press; no repeated pushes from held Space; no stale push after pause/menu/focus loss. Tune speed by actual novice route playtest, not just numerical tests.
-7. Visible hands contact the actual surface before impulse; natural body and legs when looking down in WORK and EVA, no torso/breast/stomach distortion, near-camera intersection or limbs through hull. Capsule, posed mesh and tether-route clearance all need checks.
-8. Acceptance: real user input in both suits; floor/wall/ceiling, neutral Space and A/D, catch/release, rope traversal, pause during reach, rapid repeated input, narrow corners, cargo carrying, full EVA out/repair/return. Record before/after video plus exact revision/logs. Unit tests alone do not prove feel or rig animation.
+## CORRECTED movement contract — latest explicit user clarification
+This REPLACES the earlier Codex control proposal. Do not implement the old Space/WASD/E redesign.
+- Left mouse button: left-hand push, medium force.
+- Right mouse button: right-hand push, medium force.
+- Both mouse buttons together: stronger two-hand push. Show distinct synchronized animation and apply coherent contact impulse, not duplicate accidental events.
+- Preserve W + Space as the user's expected two-hand push combination, prominently explain it in the TOP RIGHT controls hint. Do not replace it with neutral Space only. Validate exact existing behavior with the user if code disagrees; no invented binding changes.
+- Hands AND feet must participate in plausible contact-based push-off. The user has not specified a separate feet-only binding: do not invent one silently. Feet must visibly plant/push where appropriate.
+- Wall and ceiling contacts must be usable and reliable, with visible reach/contact/recoil; no dependency on upward-facing floor support alone.
+- A/D while floating tilts the head/view/body. User explicitly confirmed A/D (not the spoken A/B). This means orientation/lean, NOT lateral thrust. Do not add thrusters or invisible force. Preserve inertial translation.
+- Looking down must show convincing legs and body in BOTH original-reference suits: no distorted belly/breast silhouette or mesh intersecting camera, arms, ship or fixtures.
+- Handles and tether remain requested: natural visible grip and hand-over-hand movement. E grip/release was Codex's earlier proposal, not confirmed in this correction; preserve appropriate existing interactions and coordinate any binding change.
+- Validate left/right/paired/W+Space input and actual animation separately in WORK/EVA, including walls, ceiling, rapid input, pause, narrow spaces and tether route. Tune for quick, simple, satisfying traversal. Tests alone do not establish movement quality.
+- Claude must reply in its own words confirming this corrected contract before its implementation proceeds. The user asked explicitly for that acknowledgement.
 
 ## Ownership and priorities
 - Claude gameplay: movement mechanics + body/hand animations first. Root Codex releases its two composition movement adapters for a coordinated Claude proposal (separate branch; integrator reviews). Avoid two writers on the same file. No merge/promotion without exact-revision checks.
