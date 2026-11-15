@@ -1,0 +1,12 @@
+importer: bakeAxisConversion=True globalScale=1 useFileScale=True preserveHierarchy=True
+instance scale (1.00, 1.00, 1.00) pos (0.00, 0.00, 0.00) euler (0.00, 0.00, 0.00)
+OK   LTV2_TowerFacade tris 38216/38216 maxBoundsDelta_m 0,00004 originDelta_m 0,00000 localEuler (0.00, 0.00, 0.00) lossyScale (1.00, 1.00, 1.00) submeshes 7 materials 7 mats TW_SteelPainted,TW_Galvanized,TW_Grating,TW_OchrePaint,TW_Rubber,TW_HazardStripe,TW_Labels
+     unity bounds min (-3.237, -32.600, -11.915) max (4.615, -0.670, -6.000)
+OK   LTV2_DeckSupport tris 5336/5336 maxBoundsDelta_m 0,00001 originDelta_m 0,00000 localEuler (0.00, 0.00, 0.00) lossyScale (1.00, 1.00, 1.00) submeshes 4 materials 4 mats TW_SteelPainted,TW_Galvanized,TW_Grating,TW_OchrePaint
+     unity bounds min (-4.650, -2.780, -13.550) max (4.650, 0.682, -6.186)
+OK   LTV2_Deluge tris 5588/5588 maxBoundsDelta_m 0,00000 originDelta_m 0,00000 localEuler (0.00, 0.00, 0.00) lossyScale (1.00, 1.00, 1.00) submeshes 4 materials 4 mats TW_PipeRed,TW_Galvanized,TW_SteelPainted,TW_Grating
+     unity bounds min (-3.550, -32.600, -12.550) max (5.750, -0.530, -7.300)
+OK   LTV2_ArmDetail tris 5622/5622 maxBoundsDelta_m 0,00000 originDelta_m 0,00000 localEuler (0.00, 0.00, 0.00) lossyScale (1.00, 1.00, 1.00) submeshes 6 materials 6 mats TW_SteelPainted,TW_Galvanized,TW_Rubber,TW_PipeRed,TW_HazardStripe,TW_Labels
+     unity bounds min (-1.520, -1.270, -7.480) max (1.280, 2.505, -3.025)
+total triangles 54762 expected 54762
+LTV2 IMPORT CHECK PASS

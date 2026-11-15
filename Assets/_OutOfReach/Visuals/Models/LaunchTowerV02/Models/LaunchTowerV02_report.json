@@ -1,0 +1,214 @@
+{
+ "fbx": "LaunchTowerV02.fbx",
+ "objects": {
+  "LTV2_TowerFacade": {
+   "tris": 38216,
+   "verts": 70724,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.2372,
+    -32.6,
+    -11.915
+   ],
+   "bounds_max": [
+    4.615,
+    -0.67,
+    -6.0
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 5080,
+    "TW_Galvanized": 31980,
+    "TW_OchrePaint": 876,
+    "TW_HazardStripe": 48,
+    "TW_PipeRed": 0,
+    "TW_Rubber": 168,
+    "TW_Grating": 36,
+    "TW_Labels": 28
+   }
+  },
+  "LTV2_DeckSupport": {
+   "tris": 5336,
+   "verts": 9810,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -4.65,
+    -2.78,
+    -13.55
+   ],
+   "bounds_max": [
+    4.65,
+    0.682,
+    -6.1861
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 816,
+    "TW_Galvanized": 4112,
+    "TW_OchrePaint": 372,
+    "TW_HazardStripe": 0,
+    "TW_PipeRed": 0,
+    "TW_Rubber": 0,
+    "TW_Grating": 36,
+    "TW_Labels": 0
+   }
+  },
+  "LTV2_Deluge": {
+   "tris": 5588,
+   "verts": 8144,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.55,
+    -32.6,
+    -12.55
+   ],
+   "bounds_max": [
+    5.75,
+    -0.53,
+    -7.3
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 60,
+    "TW_Galvanized": 4180,
+    "TW_OchrePaint": 0,
+    "TW_HazardStripe": 0,
+    "TW_PipeRed": 1324,
+    "TW_Rubber": 0,
+    "TW_Grating": 24,
+    "TW_Labels": 0
+   }
+  },
+  "LTV2_ArmDetail": {
+   "tris": 5622,
+   "verts": 10660,
+   "origin_unity": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "bounds_min": [
+    -1.52,
+    -1.27,
+    -7.48
+   ],
+   "bounds_max": [
+    1.28,
+    2.505,
+    -3.025
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 828,
+    "TW_Galvanized": 3808,
+    "TW_OchrePaint": 0,
+    "TW_HazardStripe": 48,
+    "TW_PipeRed": 36,
+    "TW_Rubber": 900,
+    "TW_Grating": 0,
+    "TW_Labels": 2
+   }
+  }
+ },
+ "materials": [
+  "TW_SteelPainted",
+  "TW_Galvanized",
+  "TW_OchrePaint",
+  "TW_HazardStripe",
+  "TW_PipeRed",
+  "TW_Rubber",
+  "TW_Grating",
+  "TW_Labels"
+ ],
+ "items": [
+  {
+   "name": "LTV2_TowerFacade",
+   "tris": 38216,
+   "verts": 70724,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.2372,
+    -32.6,
+    -11.915
+   ],
+   "bounds_max": [
+    4.615,
+    -0.67,
+    -6.0
+   ]
+  },
+  {
+   "name": "LTV2_DeckSupport",
+   "tris": 5336,
+   "verts": 9810,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -4.65,
+    -2.78,
+    -13.55
+   ],
+   "bounds_max": [
+    4.65,
+    0.682,
+    -6.1861
+   ]
+  },
+  {
+   "name": "LTV2_Deluge",
+   "tris": 5588,
+   "verts": 8144,
+   "origin_unity": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.55,
+    -32.6,
+    -12.55
+   ],
+   "bounds_max": [
+    5.75,
+    -0.53,
+    -7.3
+   ]
+  },
+  {
+   "name": "LTV2_ArmDetail",
+   "tris": 5622,
+   "verts": 10660,
+   "origin_unity": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "bounds_min": [
+    -1.52,
+    -1.27,
+    -7.48
+   ],
+   "bounds_max": [
+    1.28,
+    2.505,
+    -3.025
+   ]
+  }
+ ],
+ "total_tris": 54762
+}
