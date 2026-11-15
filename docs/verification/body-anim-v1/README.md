@@ -17,6 +17,7 @@ These frames are a test harness, not real playback. They are also not visual acc
 | `09_berth_release_aisle.png` | An ordinary wake: unclip the chest, then the hips. At 0.9 s the camera cuts back to the gameplay eye and the body goes with it. |
 | `10_berth_held_aisle.png` | Held: both straps buckled around the actual skin of the torso and arms. |
 | `11_lookdown80_walking_work.png`, `12_lookdown80_walking_eva.png` | First-person look-down at 80 deg while walking. |
+| `13_seat_harness_side.png`, `14_seat_harness_firstperson.png` | Prologue seat harness on the real `TransportLaunch.fbx` chair. The frame matches root's `LeadDepartureAuthoring`: seat body frame at (0, .12, 1.46), yaw 180, seated eye at (0, 1.397, 1.40). Shown on the departure playhead from 0 to 5 s, with root's glance toward the buckle replayed. |
 
 Measured in the same run (`TestResults/rest3.log`):
 
@@ -29,3 +30,9 @@ Measured in the same run (`TestResults/rest3.log`):
   - The nearest skin vertex to SleepCamera is 0.132 m away.
   - 78 skin vertices lie up to 15 mm behind the berth back plane x = -2.380. They are hidden behind the bag.
 - **Release timing:** an ordinary wake takes 1.38 s. A hazard wake (CO2) takes 0.27 s.
+- **Seat harness** (`TestResults/seat4.log`):
+  - It latches at 2.83 s on the playhead.
+  - The nearest skin to the seat eye is 0.077 m away.
+  - Pause holds the pose. A suit on, or `EndDepartureSeat`, releases it at once.
+  - Shoulder-belt webbing sank up to 11 mm into the chest; it now sits 0 mm into the skin.
+  - Not changed: the seated body is upright, while the chair back is reclined about 34 deg. The gap from the back to the chair is 112 mm at the pelvis and 371 mm at the upper back. Reclining the body needs root's SeatCamera to move with the eye.
