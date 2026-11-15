@@ -1,0 +1,109 @@
+{
+  "version": 3,
+  "sample_rate": 48000,
+  "outputs": [
+    {
+      "file": "01-engine-A-turbine-spool.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "36be792824e6be695832bcf0b50661b5e4e2a96e397fb16596a8f8ddfb9b839c",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -18.616856336593628
+    },
+    {
+      "file": "02-engine-B-hull-mass.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "654b2808c6e7c60b6c98b67179f4f4f74bbdff7c07e17e726f0211ca22d31fba",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -16.646984815597534
+    },
+    {
+      "file": "03-shock-A-structural-slam.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "e59fb9609bc1987e906f32d69f6a15785716c01173cc6b3bb2658e1d0e74e15b",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -27.72836923599243
+    },
+    {
+      "file": "04-shock-B-pressure-collapse.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "78d8c15421c10fab8bd3f4b3eb0eec22635c57cd07eb7376cb05abb41cbc1839",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -26.715481281280518
+    },
+    {
+      "file": "05-thruster-A-valve-bursts.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "512bf8addbb05b9f1a28a2cb71e472ff64161892cc75f58bb00d4d1d4260c6ff",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -19.2555034160614
+    },
+    {
+      "file": "06-thruster-B-deep-contact.mp3",
+      "duration_seconds": 6.5,
+      "sha256": "78d0f3a653a86d5894881e6fac325b142cad698b17a629e96f69a7308a7e9e6d",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -18.85693669319153
+    },
+    {
+      "file": "00-comparison-six-variants.mp3",
+      "duration_seconds": 41.5,
+      "sha256": "3375c475f8c24967960d7ed56389c56e122ecc619e78aee83e354c270812a334",
+      "decoded_true_peak_dbfs": -3.5,
+      "pcm_peak_dbfs": -3.4785038232803345,
+      "pcm_rms_dbfs": -19.983381032943726
+    }
+  ],
+  "sources": [
+    {
+      "file": "j79.mp3",
+      "bytes": 3735168,
+      "sha256": "f8d7cb2fb0752ca3c371d60fbef12f9f3520263a5826b40c8573990cd8aae455",
+      "used_in_auditions": true
+    },
+    {
+      "file": "jet.mp3",
+      "bytes": 227808,
+      "sha256": "57594534f5f3805f9a83063d121c0d52b91459764b5ae208954719c2edea3473",
+      "used_in_auditions": true
+    },
+    {
+      "file": "metal.mp3",
+      "bytes": 27264,
+      "sha256": "b518e6e80eadfb2efe8a169fea1cc655ce99b6cd96c9cb1b374a09391aa09f55",
+      "used_in_auditions": true
+    },
+    {
+      "file": "shed.mp3",
+      "bytes": 80359,
+      "sha256": "898e7cc4547d0e9b9d6d8c3f76c06b323c788c3d034391e2b583209fabf4aab9",
+      "used_in_auditions": true
+    },
+    {
+      "file": "launch.mp3",
+      "bytes": 307824,
+      "sha256": "a08ebbedfd34d1d97c941831bd461f8790912cd2c33cabdb662a888e914d4ae7",
+      "used_in_auditions": true
+    },
+    {
+      "file": "sofia.mp3",
+      "bytes": 420253,
+      "sha256": "1f4f49cedaa30eb742116f656f91091b35b9345fbc66ecdb0fbf0358578216cb",
+      "used_in_auditions": false
+    },
+    {
+      "file": "gear.mp3",
+      "bytes": 132684,
+      "sha256": "ffd493f31f859d4e33cf9b481fdeb4dadc08e98631b26841fff5925d663d29d2",
+      "used_in_auditions": false
+    }
+  ],
+  "source_audio_bytes": 4931360,
+  "no_synthesized_noise_or_oscillators": true,
+  "human_listening_approved": false
+}

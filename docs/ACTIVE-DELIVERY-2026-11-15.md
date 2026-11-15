@@ -2,6 +2,10 @@
 
 Integrator: Codex. Worktree `.local/i01-integration`, branch `codex/i01-integration`. User-operated original editor is separate. Target 19:00 CET playable mission; deadline 23:59 CET. These are delivery targets, not evidence of completion.
 
+Latest user steering: Claude is requested to finish its full scope by **16:00 CET** with extra disjoint sessions and efficient model use. New lead resumed, 41% weekly quota remaining, all five requirements ACKed (#6894321886); original lead estimates exceed this requested target and are being replanned (#6894318325/#6894351907). Extra art/Core sessions are not counted as active until actual claims arrive. Boarding bridge means the exterior access bridge to the rocket, not the cockpit.
+
+Audio: Opening Titan v02 received positive user feedback; all v02 SFX rejected. Six recorded-source v03 SFX auditions presented; user selection and runtime integration pending. Surface: photographic Poly Haven foreground vegetation V03, axis correction and new sky are undergoing native acceptance. The older V02 terrain/plant presentation was not accepted by the user.
+
 | Requirement | Owner / current evidence | Remaining acceptance |
 |---|---|---|
 | Correct push/grip/tilt/walking, clipping and two original suits | Claude; ACK #6893731709; later STOPPED #6893836527, no active writers at that checkpoint | Resume ownership, deliver exact commits, integrate and test actual traversal; old ETA withdrawn |
