@@ -16,6 +16,7 @@
     "OutOfReach.Presentation.Motion",
     "OutOfReach.Presentation.Hands",
     "OutOfReach.Presentation.Habitat",
+    "OutOfReach.Presentation.Meal",
     "OutOfReach.MarineOcean",
     "OutOfReach.LaunchFXV03",
     "OutOfReach.Presentation.Cargo",
