@@ -130,5 +130,53 @@ namespace OutOfReach.Player
             float freedom = Mathf.Max(0f, lateralFreedomMetres);
             return offset.sqrMagnitude <= freedom * freedom ? desired : onLine + (offset.normalized * freedom);
         }
+
+        // EVA-TETHER-01: hand-over-hand grip lattice. The rope offers "rungs" (grip stations) every stroke length,
+        // counted from the route start. A glove holds the rung inside the reach band (near, near + stroke] ahead of
+        // the body in the facing sense; it stays fixed on the rope while the body moves past it, so the body's travel
+        // through one stroke is exactly one arm pull. The presentation (EvaTetherClimbMath) uses the same lattice.
+
+        /// <summary>
+        /// The holding rung (route distance) for a body at <paramref name="distance"/> facing
+        /// <paramref name="facingSense"/> (+1 towards the route end, -1 towards the start): the unique rung whose
+        /// distance ahead of the body, measured in the facing sense, lies in (near, near + stroke].
+        /// </summary>
+        public static float HoldingRung(float distance, int facingSense, float strokeMetres, float nearMetres)
+        {
+            float stroke = Mathf.Max(0.05f, strokeMetres);
+            float near = Mathf.Max(0f, nearMetres);
+            float d = float.IsNaN(distance) ? 0f : distance;
+            if (facingSense >= 0)
+            {
+                return (Mathf.Floor((d + near) / stroke) + 1f) * stroke;
+            }
+
+            return (Mathf.Ceil((d - near) / stroke) - 1f) * stroke;
+        }
+
+        /// <summary>
+        /// Phase of the current arm pull in [0, 1): 0 when the leading glove has just closed on its rung at full
+        /// reach, approaching 1 as that glove arrives by the chest and the other glove takes over.
+        /// </summary>
+        public static float HandStrokePhase(float distance, int facingSense, float strokeMetres, float nearMetres)
+        {
+            float stroke = Mathf.Max(0.05f, strokeMetres);
+            float near = Mathf.Max(0f, nearMetres);
+            float d = float.IsNaN(distance) ? 0f : distance;
+            float rung = HoldingRung(d, facingSense, stroke, near);
+            float ahead = facingSense >= 0 ? rung - d : d - rung;
+            return Mathf.Clamp01((near + stroke - ahead) / stroke) % 1f;
+        }
+
+        /// <summary>
+        /// Speed factor through one pull: slowest as the gloves change over (phase 0), fastest mid-pull. Normalized so
+        /// the time-averaged speed over a whole stroke equals the route speed (1 / sqrt(1 - surge^2) scaling).
+        /// </summary>
+        public static float PullSpeedFactor(float phase, float surge)
+        {
+            float a = Mathf.Clamp(surge, 0f, 0.6f);
+            float p = float.IsNaN(phase) ? 0f : phase;
+            return (1f - (a * Mathf.Cos(2f * Mathf.PI * p))) / Mathf.Sqrt(1f - (a * a));
+        }
     }
 }
