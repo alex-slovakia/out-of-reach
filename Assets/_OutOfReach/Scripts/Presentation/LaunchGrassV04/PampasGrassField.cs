@@ -47,6 +47,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 32f;
         [SerializeField, Range(1f, 12f)] private float lodBand = 4f;
         [SerializeField, Range(.05f, 1f)] private float farCountFraction = .1f;
+        [SerializeField, Range(.2f, 1f), Tooltip("Far count scale for a camera at eye level, where nearer grass hides most far cards.")]
+        private float lowCameraFarScale = .5f;
         [Header("Reduced effects")]
         [SerializeField, Range(.1f, 1f)] private float reducedDrawDistance = .65f;
         [Header("Wind (shared globals)")]
@@ -72,6 +74,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private readonly List<MaterialPropertyBlock> blocks = new List<MaterialPropertyBlock>();
         private readonly Plane[] planes = new Plane[6];
         private bool reducedEffects;
+        private float meanGroundY, farFraction;
 
         public int InstanceCount { get; private set; }
         public int ChunkCount => chunks.Length;
@@ -168,6 +171,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             buffer = new GraphicsBuffer(GraphicsBuffer.Target.Structured, g.Instances.Length, 16) { name = "LaunchGrassV04 instances" };
             buffer.SetData(g.Instances);
             chunks = g.Chunks;
+            double ground = 0; foreach (Chunk c in chunks) ground += c.Bounds.min.y;
+            meanGroundY = (float)(ground / chunks.Length);
             nearMesh = PampasGrassMeshes.BuildNearClump();
             farMesh = PampasGrassMeshes.BuildFarCard();
             InstanceCount = g.Instances.Length;
@@ -332,9 +337,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             if ((camera.cullingMask & (1 << gameObject.layer)) == 0) return;
             float maxDistance = Mathf.Min(maxDrawDistance * (reducedEffects ? reducedDrawDistance : 1f), camera.farClipPlane);
             float near = Mathf.Min(nearMeshDistance, maxDistance * .5f);
-            Shader.SetGlobalVector(LodId, new Vector4(near, lodBand, maxDistance, farCountFraction));
-            GeometryUtility.CalculateFrustumPlanes(camera, planes);
             Vector3 eye = camera.transform.position;
+            farFraction = farCountFraction * Mathf.Lerp(lowCameraFarScale, 1f, Mathf.InverseLerp(3f, 20f, eye.y - meanGroundY));
+            Shader.SetGlobalVector(LodId, new Vector4(near, lodBand, maxDistance, farFraction));
+            GeometryUtility.CalculateFrustumPlanes(camera, planes);
             var rp = new RenderParams(material)
             {
                 layer = gameObject.layer, camera = camera, shadowCastingMode = ShadowCastingMode.Off, receiveShadows = true,
@@ -371,7 +377,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         {
             float t = Mathf.Clamp01((d - near) / Mathf.Max(max - near, 1f));
             float e = 1f - t;                                   // same curve as KeepFraction in the shader
-            return Mathf.Lerp(1f, farCountFraction, 1f - e * e);
+            return Mathf.Lerp(1f, farFraction, 1f - e * e);
         }
 
         private void Submit(ref RenderParams rp, ref int used, int chunk, int count, bool card, Mesh mesh)

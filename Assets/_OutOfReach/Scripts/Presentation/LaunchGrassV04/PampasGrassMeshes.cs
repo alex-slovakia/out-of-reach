@@ -111,15 +111,15 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             return b.Build("Pampas clump V04 (near)");
         }
 
-        /// <summary>Far card: three crossed vertical quads, three bend segments each (18 triangles).</summary>
+        /// <summary>Far card: two crossed vertical quads, three bend segments each (12 triangles).</summary>
         public static Mesh BuildFarCard()
         {
             var b = new Builder();
-            for (int q = 0; q < 3; q++)
+            for (int q = 0; q < 2; q++)
             {
-                float az = q * Mathf.PI / 3f;
+                float az = q * Mathf.PI / 2f + .4f;
                 Vector3 side = new Vector3(Mathf.Cos(az), 0, Mathf.Sin(az));
-                b.Ribbon(v => Vector3.up * v, v => .5f, side, 3, PartCard, q / 3f + .1f, 1);
+                b.Ribbon(v => Vector3.up * v, v => .5f, side, 3, PartCard, q / 2f + .1f, 1);
             }
             for (int i = 0; i < b.N.Count; i++) b.N[i] = Vector3.up;
             return b.Build("Pampas clump V04 (far card)");

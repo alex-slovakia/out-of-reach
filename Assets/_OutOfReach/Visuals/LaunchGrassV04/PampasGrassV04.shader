@@ -37,6 +37,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
         Cull Off
         HLSLINCLUDE
         #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         CBUFFER_START(UnityPerMaterial)
         float4 _HeightRange;
         half4 _Olive, _Straw, _Gold, _Plume, _TransTint, _HazeColor, _HazeSunColor, _FarCanopy;
@@ -57,6 +58,9 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             float4 uvPart:TEXCOORD2;   // uv, part id, stem random
             float4 shade:TEXCOORD3;    // height along clump, instance seed, gust wave 0..1, lod weight (0 near .. 1 card)
             float  fog:TEXCOORD4;
+            float4 tint:TEXCOORD5;     // per-instance stem colour, olive flag (vertex stage: keeps the fragment cheap)
+            float4 light:TEXCOORD6;    // back-light, haze amount, sun-ward haze, far blend
+            float3 ambient:TEXCOORD7;
         };
 
         float Hash11(float p){p=frac(p*.1031);p*=p+33.33;p*=p+p;return frac(p);}
@@ -146,6 +150,15 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             o.uvPart=float4(v.uv,v.color.g,v.color.b);
             o.shade=float4(hNorm,seed,wave,LodWeight(d));
             o.fog=ComputeFogFactor(o.positionCS.z);
+            // Per-instance colour and view/sun terms once per vertex: the far cards overdraw heavily.
+            float patchN=Noise(root.xz/31+5.3);
+            float olive=step(Hash11(seed*7.1+.3),_OliveShare*(.6+.8*patchN));
+            o.tint=float4(lerp(_Straw.rgb,_Gold.rgb,saturate(Hash11(seed*3.7)*.7+patchN*.5)),olive);
+            float dv=length(posWS-_WorldSpaceCameraPos);
+            float toSun=dot((posWS-_WorldSpaceCameraPos)/max(dv,1e-3),_MainLightPosition.xyz);
+            o.light=float4(pow(saturate(toSun),5),(1-exp(-dv*_HazeDensity))*saturate(_OOR_LaunchHaze),
+                pow(saturate(toSun*.5+.5),_HazeSunPower),smoothstep(_OOR_GrassLod.z*.22,_OOR_GrassLod.z*.9,dv));
+            o.ambient=SampleSH(float3(0,1,0))*_Ambient;
             return o;
         }
 
@@ -186,10 +199,10 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             float plumeV=saturate((v-(top-.46))/.46);
             float env=.44*pow(saturate(sin(3.14159*pow(plumeV,.7))),.8)*step(v,top)*step(top-.46,v);
             float rel=abs(cu-.5+(plumeV-.5)*.12*(rk-.5))/max(env,1e-3);
-            float fluff=Noise(float2(u*9,v*40)+i.shade.y*5);
+            float fluff=sin(u*31+i.shade.y*40)*sin(v*53+u*7)*.5+.5;
             float plume=(1-smoothstep(.35,1,rel))*(.7+.55*fluff)*step(1e-3,env);
             float stalk=step(abs(cu-.5),max(.05,fwidth(u)*.8))*step(v,top-.4);
-            float base=saturate((.45-v)/.45)*(.6+.6*Noise(float2(uv.x*38,v*9)+i.shade.y*13));
+            float base=saturate((.45-v)/.45)*(.6+.6*(sin(uv.x*83+i.shade.y*50)*sin(v*19+uv.x*11)*.5+.5));
             float cover=max(max(plume,stalk),base)+(dither-.5)*.2;
             return (i.shade.w<dither)?0:cover;                         // cross-fade in from meshes
         }
@@ -205,10 +218,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
         half3 Albedo(Varyings i)
         {
             float seed=i.shade.y; float part=i.uvPart.z; float h=i.shade.x;
-            float patchN=Noise(i.positionWS.xz/31+5.3);
-            float olive=step(Hash11(seed*7.1+.3),_OliveShare*(.6+.8*patchN));
-            half3 stem=lerp(_Straw.rgb,_Gold.rgb,saturate(Hash11(seed*3.7)*.7+patchN*.5));
-            stem=lerp(stem,_Olive.rgb*1.25,olive*.55*(1-h));
+            half3 stem=lerp(i.tint.rgb,_Olive.rgb*1.25,i.tint.a*.55*(1-h));
             half3 col=lerp(_Olive.rgb,stem,smoothstep(0,.55,h));         // olive, shaded bases
             half3 plume=_Plume.rgb*lerp(.86,1.08,Hash11(seed*11.3+i.uvPart.w));
             if(_IsCard<.5) plume*=lerp(.78,1.12,Hash21(float2(floor(PlumeFibre(i.uvPart.xy,i.uvPart.w)),i.uvPart.w*5.3)));
@@ -216,8 +226,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             col=lerp(col,plume,isPlume);
             col*=lerp(.42,1,smoothstep(0,.6,h));                          // self-shadowed thatch at the base
             col*=1+_GustSheen*i.shade.z;
-            float farT=smoothstep(_OOR_GrassLod.z*.22,_OOR_GrassLod.z*.9,length(i.positionWS-_WorldSpaceCameraPos));
-            return lerp(col,_FarCanopy.rgb,farT*.92);
+            return lerp(col,_FarCanopy.rgb,i.light.w*.92);
         }
         ENDHLSL
 
@@ -233,7 +242,6 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
             #pragma multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
             #pragma multi_compile_fog
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
             half4 GrassFragment(Varyings i, bool front:SV_IsFrontFace):SV_Target
             {
@@ -243,26 +251,23 @@ Shader "OutOfReach/Launch Pampas Grass V04"
                 float3 N=normalize(i.normalWS)*(front?1:-1);
                 float part=i.uvPart.z;
                 N=normalize(lerp(N,float3(0,1,0),part>.5?.92:.45));
-                float3 V=normalize(_WorldSpaceCameraPos-i.positionWS);
                 Light light=GetMainLight();
                 float shadow=1;
                 if(_IsCard<.5) shadow=MainLightRealtimeShadow(TransformWorldToShadowCoord(i.positionWS));
                 float ndl=saturate(dot(N,light.direction)*.6+.4);
                 float thin=_IsCard>.5?lerp(.45,1,smoothstep(.5,.8,i.uvPart.y)):(part>.5?1:(part>.2?.35:.55));
-                float back=pow(saturate(dot(-V,light.direction)),5);
-                float rim=pow(1-saturate(abs(dot(normalize(i.normalWS),V))),3)*.35;
+                float back=i.light.x;
+                float rim=0;
+                if(_IsCard<.5) rim=pow(1-saturate(abs(dot(normalize(i.normalWS),normalize(_WorldSpaceCameraPos-i.positionWS)))),3)*.35;
                 float h=i.shade.x;
-                half3 ambient=SampleSH(float3(0,1,0))*_Ambient*lerp(.45,1,h);
+                half3 ambient=i.ambient*lerp(.45,1,h);
                 half3 color=albedo*(light.color*ndl*shadow+ambient);
-                float farT=smoothstep(_OOR_GrassLod.z*.22,_OOR_GrassLod.z*.9,length(i.positionWS-_WorldSpaceCameraPos));
+                float farT=i.light.w;
                 color+=albedo*_TransTint.rgb*light.color*(back*_Translucency+rim*back)*thin*lerp(.3,1,shadow)*smoothstep(.1,.7,h)*(1-.85*farT);
 
                 // Aerial haze: warm and glowing towards the low sun, cooler away from it.
-                float d=length(i.positionWS-_WorldSpaceCameraPos);
-                float haze=(1-exp(-d*_HazeDensity))*saturate(_OOR_LaunchHaze);
-                float sunward=pow(saturate(dot(-V,light.direction)*.5+.5),_HazeSunPower);
-                half3 hazeColor=lerp(_HazeColor.rgb,_HazeSunColor.rgb,sunward)*max(light.color,.35);
-                color=lerp(color,hazeColor,haze);
+                half3 hazeColor=lerp(_HazeColor.rgb,_HazeSunColor.rgb,i.light.z)*max(light.color,.35);
+                color=lerp(color,hazeColor,i.light.y);
                 color=MixFog(color,i.fog);
                 return half4(color,1);
             }
