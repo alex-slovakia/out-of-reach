@@ -42,6 +42,14 @@ namespace OutOfReach.Composition
         [SerializeField] private EmbodiedBodyPresenter embodiedBody;
         // BODY-REST-HOOK: berth body frame beside the habitat SleepCamera (Out of Reach > Avatar > Create berth body frame).
         [SerializeField] private Transform sleepBodyFrame;
+        // CLAUDE-INTEGRATION camera lease (owned by claude/integration while root is paused): the habitat's authored
+        // SleepCamera. Only while Core's rest is active the planning framing pivot is leased so the actual camera sits
+        // there and the BODY-REST-HOOK berth is seen. No controller, collider, input or body authority changes.
+        [SerializeField] private Transform sleepCameraAnchor;
+        private bool restCameraLeased;
+        private Vector3 restLeaseLocalPosition;
+        private Quaternion restLeaseLocalRotation = Quaternion.identity;
+        public bool IsRestCameraLeased => restCameraLeased;
         [SerializeField] private I06MicrogravityBridge microgravityBridge;
         [SerializeField] private I06MicrogravityInputBindings microgravityInput;
         [SerializeField] private BareArmContactPresenter bareArmContacts;
@@ -692,6 +700,7 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            ReleaseRestCamera();
             if (earthTerminal) earthTerminal.ClearBinding();
             if (evaWorkLamp) evaWorkLamp.ClearBinding();
             if (antennaProgress) antennaProgress.ClearBinding();
@@ -1163,7 +1172,51 @@ namespace OutOfReach.Composition
             RefreshSubtitle();
         }
 
-        private void LateUpdate() => RefreshCinematicHud();
+        private void LateUpdate()
+        {
+            UpdateRestCamera();
+            RefreshCinematicHud();
+        }
+
+        // Lease only while the authoritative rest is active and the body is not yet releasing; hand the view back at
+        // once on wake (ordinary or hazard), stop, session replacement, mission end, cinematics or a missing anchor.
+        private bool RestCameraWanted()
+        {
+            if (!attached || !runtime || boundSession == null || !ReferenceEquals(boundSession, runtime.Session)) return false;
+            if (!sleepCameraAnchor || !sleepBodyFrame || !planningFramingPivot || !embodiedBody || !RestEye()) return false;
+            if (!sleepCameraAnchor.gameObject.activeInHierarchy || IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying))
+                return false;
+            GamePhase phase = runtime.GameState.Phase;
+            if (phase == GamePhase.Outcome || phase == GamePhase.Report || runtime.GameState.Outcome == MissionOutcome.Lost) return false;
+            if (!(boundSession.SurvivalRecovery?.IsResting ?? false)) return false;
+            return embodiedBody.RestPhase != RestPhase.Releasing;
+        }
+
+        private Camera RestEye() => presentationCamera ? presentationCamera : Camera.main;
+
+        private void UpdateRestCamera()
+        {
+            if (!RestCameraWanted()) { ReleaseRestCamera(); return; }
+            if (!restCameraLeased)
+            {
+                restLeaseLocalPosition = planningFramingPivot.localPosition;
+                restLeaseLocalRotation = planningFramingPivot.localRotation;
+                restCameraLeased = true;
+            }
+            // Keep every offset below the pivot (departure, cinematic, motion) and land the actual camera on SleepCamera.
+            Transform eye = RestEye().transform;
+            Quaternion relative = Quaternion.Inverse(planningFramingPivot.rotation) * eye.rotation;
+            Vector3 offset = planningFramingPivot.InverseTransformPoint(eye.position);
+            Quaternion rotation = sleepCameraAnchor.rotation * Quaternion.Inverse(relative);
+            planningFramingPivot.SetPositionAndRotation(sleepCameraAnchor.position - rotation * offset, rotation);
+        }
+
+        private void ReleaseRestCamera()
+        {
+            if (!restCameraLeased) return;
+            restCameraLeased = false;
+            if (planningFramingPivot) planningFramingPivot.SetLocalPositionAndRotation(restLeaseLocalPosition, restLeaseLocalRotation);
+        }
 
         private void RefreshCinematicHud()
         {
