@@ -12,11 +12,11 @@
 |---|---|
 | **A build** = release candidate `feature/claude-max-final@5479e87` (ZIP verified) | **this folder**: [form-fields.md](form-fields.md), [deck/…deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf), [final-project-folder/](final-project-folder/) |
 | **B-code build** = `feature/claude-max-final@f6f4f96`: the RC plus the Horizons line and the radiation estimate | **[B-build/](B-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
-| **B-visual build** = `feature/claude-max-final-b` (checked against `05d7a83`): B-code plus the DSN line, the eleven new voice takes, hull V2, capsule V02, terrain and grass, launch effects with the Unity Particle Pack, hold-to-skip | **[B-visual-build/](B-visual-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
+| **B-visual build** = `feature/claude-max-final-b` (checked against `05d7a83`, re-checked on `9de3195` at 22:44 CET): B-code plus the DSN line, the eleven new voice takes, hull V2, capsule V02, terrain and grass, launch effects with the Unity Particle Pack, hold-to-skip | **[B-visual-build/](B-visual-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
 
 Each set folder has a `README.md` listing exactly what its texts add. If the build that ships has other extras than its set, rebuild the set first: `python make_b_build.py --out <folder> --label "<name>" --sha <SHA> <flags>` (about 3 minutes).
 
-**For the B-visual build two things in the game itself are still open** (not in `05d7a83`): the in-game Sources line says "Voices Orus and Kore" although the player's radio lines use the voice **Iapetus**, and the DSN line has no Sources entry yet (Codex `3a28afc` is announced). The texts of the set already name Iapetus and the DSN sites.
+**For the B-visual build one thing in the game itself is still open** (state at `9de3195`): the in-game Sources line says "Voices Orus and Kore" although the player's radio lines use the voice **Iapetus**. The proposed line is on #7 (6901829256). The DSN line has its Sources entry since `ad18b28`. The texts of the set already name Iapetus and the DSN sites.
 
 **Deck PDF, important:** take the PDF from this branch at `feature/submission-pack-02` head, not an older export. Older PDFs (up to `e4f60f1`, including the copy in `F:\.local\out-of-reach-2330-handoff\submission-draft-9bc3c8a`) show the headline font wrongly in browsers, and "2.5" and "8.5" read like "25" and "85". The current PDFs are fixed (`deck/flatten_pdf.py`).
 
