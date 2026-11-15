@@ -41,7 +41,8 @@ Day-14 announcement (VO23, part of R42).
      - **Trigger:** the next use of the cockpit console after the Day-14 call.
      - **Voice:** the day-neutral cut of Codex's approved recording, through a radio band (300–3400 Hz, light
        grit). See "VO23 day-neutral cut" below.
-     - **Subtitles:** exactly the transcript of that cut, in readable chunks timed to the 18.0 s clip.
+     - **Subtitles:** exactly the transcript of that cut, in chunks of at most 52 characters timed to the
+       18.0 s clip.
      - **If the console view takes the camera:** the voice and subtitles continue; the radio model hides.
 
 ## VO23 day-neutral cut (pending Alex's approval)
@@ -96,8 +97,8 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
   - **Day 14:** Core delivers `dispatch.rescue-1-failed` on mission day 14; the binding queues the call; after the
     chapter cards are answered the call plays. The first E on the cockpit console starts the voiced announcement
     at once (the console itself answers "Contact with Earth is already restored").
-  - **Announcement:** the derived clip plays on the radio voice source for 18.33 s; the HUD shows three chunks
-    that, joined, equal the transcript; no date. Escape pauses the voice and the timeline; resume continues;
+  - **Announcement:** the derived clip plays on the radio voice source for 18.33 s; the HUD shows the chunks
+    that, joined in order, equal the transcript (five chunks of at most 52 characters since `01f`); no date. Escape pauses the voice and the timeline; resume continues;
     a second console use replays nothing.
   - **Reduced motion:** switched on for Day 14; the call and the announcement report no sway.
 - See `native-route-checks.txt` for every radio check, `native-route-trace.txt` for what the radio did frame by
@@ -105,7 +106,7 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
 - **Earlier in-memory QA** (old base, original 21.1 s clip, pad-hatch trigger): `native-checks.txt`,
   `native-notes.txt`, driver `RadioQa.cs.txt`, captures `02`–`09` and `zoom-radio-ptt`.
 
-## What the real route taught (fixed in `STORY-RADIO-01d` and `01e`)
+## What the real route taught (fixed in `STORY-RADIO-01d`, `01e` and `01f`)
 
 - **A boarding check that misses its moment is dropped.** The Aurora check waits about 10 s for the arrival
   dialogue. A player who reaches the cockpit check first would have heard "we show you aboard" after the impact.
@@ -114,6 +115,9 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
 - **No slipping between two ship-computer lines.** Other dialogue must have been quiet for 1.5 s.
 - **No old news.** A beat still queued when the routine (R) starts is dropped, and the announcement plays only
   within one simulated day of the message.
+- **Long subtitles ended under the chapter strip.** The "NEXT CHAPTER" strip in the lower right covers the end
+  of a centred subtitle line longer than about 56 characters. Split lines use chunks of at most 52 characters
+  (`STORY-RADIO-01f`); lines longer than 90 characters are split.
 
 ## Honest limits
 
@@ -130,3 +134,16 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
   sound. `vo24a`/`vo24b` belong to the rescue ending (not this lane).
 - **No hand:** no glove holds the radio. It is framed so the hand stays below the screen edge. The radio body
   overlaps the right end of long subtitles; the text stays readable.
+
+## Offered outside this lane (two optional HUD commits)
+
+Found while looking through the whole route; each is one small commit the integrator can take or leave.
+
+- **`3c73b1b` water locator above the subtitle band** (`UI/Runtime/SurvivalWaterLocator.cs`): with the water behind
+  the player the marker covered the subtitle line. Before and after: `captures/hud-before-water-locator-over-subtitle.jpg`,
+  `captures/hud-after-water-locator-above-subtitle.jpg`.
+- **`03d709f` in-flight subtitles end left of the chapter strip** (`UI/Styles/MissionFlightBoard.uss`): the column
+  was 26–74 % of the width, the strip starts at 68 %. Before and after:
+  `captures/hud-before-subtitle-under-chapter-strip.jpg`, `captures/hud-after-subtitle-clear-of-chapter-strip.jpg`.
+- **Release state of the radio (voice unbound, `5479e87`)** verified on the same run: `native-route-*.txt` now hold
+  that run (40 PASS of 41; the announcement is text only, 11.97 s, five chunks).

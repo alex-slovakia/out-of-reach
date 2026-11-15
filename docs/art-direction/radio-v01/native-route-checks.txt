@@ -1,5 +1,5 @@
 PASS [radio: Aurora boarding beat on the real route] RADIO: the installed 'Handheld radio V01' presenter is in the saved Bootstrap
-PASS [radio: Aurora boarding beat on the real route] RADIO: the saved scene binds a clip to cue vo23_mc_rescue_lost_dayneutral
+PASS [radio: Aurora boarding beat on the real route] RADIO: VO23 UNBOUND variant: no clip resolves for cue vo23_mc_rescue_lost_dayneutral (derived WAV removed from the checkout)
 PASS [radio: Aurora boarding beat on the real route] RADIO: the Aurora boarding beat starts by itself after the real departure and transfer (11,9 s after control returned; queued=0 played=[radio.aurora-boarding])
 PASS [radio: Aurora boarding beat on the real route] RADIO: the player keeps control while the boarding beat plays
 PASS [radio: Aurora boarding beat on the real route] RADIO: normal motion: the radio sways (amplitude 1)
@@ -9,13 +9,13 @@ PASS [radio: Aurora boarding beat on the real route] RADIO: the real Escape key 
 PASS [radio: Aurora boarding beat on the real route] RADIO: pause freezes the radio beat (2,47 -> 2,47 s)
 PASS [radio: Aurora boarding beat on the real route] RADIO: resume continues the beat
 PASS [radio: Aurora boarding beat on the real route] RADIO: the player's reply keys the PTT with the amber LED: 'Loud and clear, Control. Aboard and floating. Starting cockpit checks.'
-PASS [radio: Aurora boarding beat on the real route] RADIO: the boarding beat ends by itself (26,4 s after control returned, including the 1.6 s pause check)
+PASS [radio: Aurora boarding beat on the real route] RADIO: the boarding beat ends by itself (26,5 s after control returned, including the 1.6 s pause check)
 PASS [radio: Aurora boarding beat on the real route] RADIO: the radio is lowered and hidden after the beat
 PASS [radio: Aurora boarding beat on the real route] RADIO: control is with the player after the beat
 PASS [radio: Aurora boarding beat on the real route] RADIO: the radio subtitle is cleared ('')
-PASS [radio: day-1 distress call (skip by Enter)] RADIO: the distress call starts by itself when the real transmission begins (19,2 s; queued=0 played=[radio.aurora-boarding,radio.distress-call])
+PASS [radio: day-1 distress call (skip by Enter)] RADIO: the distress call starts by itself when the real transmission begins (19,4 s; queued=0 played=[radio.aurora-boarding,radio.distress-call])
 PASS [radio: day-1 distress call (skip by Enter)] RADIO: the player transmits (PTT, amber LED): 'Mayday, mayday. Earth, this is Aurora. Debris strike. Antenna repaired, crew alive.'
-PASS [radio: day-1 distress call (skip by Enter)] RADIO: the real Enter key skips the beat: the radio lowers and the beat ends in 0,19 s
+PASS [radio: day-1 distress call (skip by Enter)] RADIO: the real Enter key skips the beat: the radio lowers and the beat ends in 0,34 s
 PASS [radio: day-1 distress call (skip by Enter)] RADIO: control stays with the player after the skip
 PASS [radio: day-1 distress call (skip by Enter)] RADIO: the subtitle is cleared after the skip ('')
 SOFT-FAIL [radio: Earth reply beat] RADIO: Earth's reply beat starts by itself after the reply arrives (25,0 s after the contact cinematic; queued=1 played=[radio.aurora-boarding,radio.distress-call,radio.earth-reply-day14])
@@ -27,14 +27,15 @@ PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the call ends by i
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the announcement has not played before the console is used
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the first console use after the call triggers the announcement (interactions +1, result 'Contact with Earth is already restored: the one distress call has been answered.')
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the voiced announcement starts (0,0 s after E; control=True)
-PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the recorded day-neutral vo23 plays on the radio voice source
-PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the line lasts as long as the 17.98 s clip + 0.35 s (18,33 s)
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: VO23 UNBOUND variant: no recorded voice plays, the announcement is subtitles with the radio sound
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: VO23 UNBOUND variant: the line lasts its reading time (11,97 s, expected 11,97 s)
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: reduced motion ON for the announcement (reduced=True sway=0)
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the real Escape key pauses during the announcement (screen None)
-PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: pause stops the voice and freezes the announcement (voice playing False, 2,29 -> 2,29 s)
-PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: resume continues the voice (paused=False voice=True)
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: pause freezes the announcement (voice playing False, 2,29 -> 2,29 s)
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: resume continues the announcement (2,29 -> 3,48 s)
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the announcement plays to its end (skipped=False)
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the voice stops with the beat
-PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the subtitles shown on the HUD, in order, equal the transcript of the derived clip (3 chunks: Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach. | I'm sorry. A second craft is already in transit. Conserve your supplies. | We are not giving up on you.)
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: the subtitles shown on the HUD, in order, equal the day-neutral transcript (5 chunks: Aurora Seven... Mission Control. | The rescue vehicle has crashed. | We lost it on final approach. I'm sorry. | A second craft is already in transit. | Conserve your supplies. We are not giving up on you.)
+PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: every subtitle chunk is at most 52 characters (longest 52)
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: no date is shown
 PASS [radio: Day 14 dispatch rescue-1-failed (day 14)] RADIO: a second console use replays nothing: the announcement plays once (played=[radio.aurora-boarding,radio.distress-call,radio.earth-reply-day14,radio.day14-call,radio.day14-announcement])
