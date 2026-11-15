@@ -104,6 +104,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: A7X_Whipple
     second: {fileID: 2100000, guid: 26c2bfd06c016bb4e8de5bf4dbeda9c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A7X_WindowLight
+    second: {fileID: 2100000, guid: 0bce599ce7ccda94eb9efaf3ebc7315f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

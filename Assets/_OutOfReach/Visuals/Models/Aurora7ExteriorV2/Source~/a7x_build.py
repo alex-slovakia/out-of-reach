@@ -1,7 +1,7 @@
 """AURORA-7 exterior V2: reproducible Blender 3.6 build of the fictional long-duration crew vehicle.
 
 Run (textures first, see a7x_textures.py):
-  blender --background --python a7x_build.py -- [--render] [--no-export]
+  blender --background --python a7x_build.py -- [--render] [--no-export] [--view=<name>] [--lod=0,1,2]
 
 Writes ../Meshes/A7X_Exterior.fbx (three LODs), ../Meshes/A7X_DockAdapter.fbx, a7x_materials.json,
 a7x_report.json, A7X_Exterior.blend and, with --render, ../Evidence~/blender_*.png.
@@ -322,11 +322,14 @@ def foot_restraint(H, r, th, y, yaw=0.0):
     H.box(P @ T(0, 0.035, 0.15), 0.36, 0.05, 0.018, "A7X_Amber")
 
 
-def porthole(H, th, y, r=3.20):
+def porthole(H, th, y, r=3.20, LP=None):
     M = hull_frame(r - 0.03, th, y)
     seg = S(28, 10)
     H.lathe(M, [(0.38, 0.0), (0.38, 0.065), (0.345, 0.095), (0.275, 0.095), (0.255, 0.060)], seg, "A7X_Aluminium")
     H.lathe(M, [(0.255, 0.060), (0.0, 0.060)], seg, "A7X_Glass", uv="p")
+    if LP is not None and LOD < 2:                              # a cabin light seen through the pane
+        up = -1.0 if th > 0 else 1.0
+        LP.box(M @ T(up * 0.10, 0.0612, 0.0), 0.045, 0.002, 0.24, "A7X_WindowLight")
     if LOD == 0:
         for k in range(12):
             a = TAU * k / 12
@@ -455,6 +458,36 @@ def build_details(H, PR, MK, LP):
                     Mf = hull_frame(3.584, thc + rad(a), y)
                     H.lathe(Mf, [(0.028, 0), (0.028, 0.012), (0, 0.012)], 8, "A7X_DarkMetal")
             MK.decal_cyl(3.5852, thc + sgn * rad(4.6), 0.85, 0.07, "srv_dark", sgn, -sgn, nseg=1)
+    # external stowage pallets with replaceable units, aft habitat shoulders
+    if LOD < 2:
+        for sgn in (1, -1):
+            M = hull_frame(3.20, sgn * rad(66), 14.25)
+            H.box(M @ T(0, 0.03, 0), 1.05, 0.06, 1.15, "A7X_Aluminium")
+            H.box(M @ T(-0.27, 0.21, -0.26), 0.44, 0.30, 0.52, "A7X_MLIGold")
+            H.box(M @ T(0.27, 0.19, -0.26), 0.40, 0.26, 0.52, "A7X_PaintWhite")
+            H.box(M @ T(-0.20, 0.16, 0.30), 0.58, 0.20, 0.44, "A7X_Graphite")
+            H.box(M @ T(0.32, 0.14, 0.30), 0.26, 0.16, 0.40, "A7X_DarkMetal")
+            for (bx, bz, bh) in ((-0.27, -0.26, 0.375), (0.27, -0.26, 0.335), (-0.20, 0.30, 0.275)):
+                H.box(M @ T(bx, bh, bz), 0.22, 0.02, 0.03, "A7X_Amber")
+                for e in (-0.10, 0.10):
+                    H.box(M @ T(bx + e, bh - 0.02, bz), 0.02, 0.04, 0.03, "A7X_Amber")
+        # propellant manifold ring on the aft bulkhead with a feed branch to each engine
+        Mb = align_y(Vector((0.0, 21.12, AXC)), YAFT)
+        n = S(48, 16)
+        for i in range(n):
+            a0, a1 = TAU * i / n, TAU * (i + 1) / n
+            PR.cyl(hp(2.66, a0, 21.20), hp(2.66, a1, 21.20), 0.038, 6, "A7X_MLIGold", caps=False)
+        for k in range(4):
+            th = TAU * (k + 0.5) / 4
+            PR.cyl(hp(2.66, th, 21.20), hp(2.2, th, 21.24) + radial(th) * 0.30, 0.03, 6, "A7X_MLIGold")
+        for k in range(8):
+            th = TAU * k / 8 + rad(11)
+            PR.box(frame(hp(2.66, th, 21.16), tangent(th), radial(th)), 0.10, 0.10, 0.09, "A7X_DarkMetal")
+        # blade antennas on the aft rim
+        for th in (rad(30), rad(-30), rad(150), rad(-150)):
+            M = hull_frame(3.0, th, 20.45)
+            H.box(M @ T(0, 0.02, 0), 0.10, 0.04, 0.24, "A7X_DarkMetal")
+            H.box(M @ T(0, 0.15, 0.02), 0.014, 0.24, 0.16, "A7X_PaintWhite")
     # grapple fixture on the habitat
     if LOD < 2:
         for th, y in ((rad(40), 10.05), (rad(-40), 10.05)):
@@ -520,6 +553,9 @@ def build_hull(H, MK, LP, PR):
         outer = [fp(0.09, -3.98), fp(0.91, -3.98), fp(0.91, -2.42), fp(0.09, -2.42)]
         inner = [fp(0.20, -3.82), fp(0.80, -3.82), fp(0.80, -2.58), fp(0.20, -2.58)]
         H.frame_ring(outer, inner, n, 0.075, 0.022, "A7X_DarkMetal", "A7X_Glass")
+        if LOD < 2:                                             # overhead cabin light strip behind the glass
+            LP.quad_out([fp(0.27, -2.78) + n * 0.024, fp(0.73, -2.78) + n * 0.024, fp(0.73, -2.70) + n * 0.024,
+                         fp(0.27, -2.70) + n * 0.024], [(0, 0), (1, 0), (1, 1), (0, 1)], n, "A7X_WindowLight")
     # eyebrow sun shade above the windows
     for k in (-2, -1, 0, 1):
         tha, thb = rad(22.5 * k), rad(22.5 * (k + 1))
@@ -548,7 +584,7 @@ def build_hull(H, MK, LP, PR):
     # portholes just above the array line, both sides
     for sgn in (1, -1):
         for y in (4.85, 6.75, 11.55, 13.45):
-            porthole(H, sgn * rad(79), y)
+            porthole(H, sgn * rad(79), y, LP=LP)
     # handrails: two dorsal and two ventral lines, plus cross-overs
     row_len = (ye - ys) / rows
     for th in (rad(28), rad(-28), rad(152), rad(-152)):
@@ -760,9 +796,10 @@ def build_adapter(D, MK, LP):
     A = T(0, 0, 0)
     seg = S(64, 16)
     D.lathe(A, [(1.61, -0.012), (1.61, 0.20), (1.57, 0.24), (1.34, 0.24)], seg, "A7X_Aluminium")
-    D.lathe(A, [(1.34, 0.24), (1.28, 0.30), (1.28, 3.50)], seg, "A7X_Graphite")
-    for y in (0.95, 1.75):
-        D.ring(A, 1.28, 1.325, y - 0.035, y + 0.035, seg, "A7X_DarkMetal")
+    D.lathe(A, [(1.34, 0.24), (1.285, 0.30), (1.285, 2.4244)], seg, "A7X_Blanket")
+    D.lathe(A, [(1.28, 2.6444), (1.28, 3.50)], seg, "A7X_Graphite")
+    for y in (0.36, 0.95, 1.75, 2.36):
+        D.ring(A, 1.285, 1.325, y - 0.035, y + 0.035, seg, "A7X_DarkMetal")
     D.ring(A, 1.28, 1.39, 2.4244, 2.6444, seg, "A7X_Aluminium")
     D.lathe(A, [(1.28, 3.495), (1.34, 3.51), (1.34, 3.77), (0.97, 3.77)], seg, "A7X_PaintWhite")
     D.lathe(A, [(0.97, 3.77), (0.97, 3.84), (0.75, 3.84), (0.75, 3.30)], seg, "A7X_Rubber")
@@ -812,32 +849,49 @@ def build_adapter(D, MK, LP):
         foot_restraint(D, 1.28, rad(68), 1.38, rad(90))
     MK.decal_ring(1.3425, 3.64, 0.11, "hazard_amber", 3, S(16, 6))
     for sgn in (1, -1):
-        MK.decal_cyl(1.2845, sgn * rad(66), 1.36, 0.15, "dockl", sgn, -sgn, nseg=2)
+        MK.decal_cyl(1.2895, sgn * rad(66), 1.36, 0.15, "dock", sgn, -sgn, nseg=2)
         MK.decal_cyl(1.2845, sgn * rad(66), 3.02, 0.10, "latch", sgn, -sgn, nseg=1)
+    # mating face: seal land, passive hooks, alignment pins
+    D.ring(A, 1.04, 1.062, 3.768, 3.776, seg, "A7X_DarkMetal")
+    if LOD < 2:
+        for k in range(12):
+            a = TAU * (k + 0.5) / 12
+            D.box(frame(hp(1.012, a, 3.782), tangent(a), radial(a)), 0.085, 0.05, 0.03, "A7X_DarkMetal")
+        for k in range(3):
+            a = TAU * k / 3 + rad(15)
+            D.cyl(hp(1.255, a, 3.77), hp(1.255, a, 3.832), 0.024, 8, "A7X_Aluminium")
+        # docking target on the hatch: base plate, stand-off cross
+        D.box(T(0.0, 3.306, 0.42), 0.27, 0.012, 0.27, "A7X_DarkMetal")
+        MK.decal_flat(frame((0.0, 3.3135, 0.42), (-1, 0, 0), (0, 0, 1)), 0.25, "target")
+        D.cyl((0.0, 3.312, 0.42), (0.0, 3.43, 0.42), 0.008, 6, "A7X_Aluminium")
+        D.box(T(0.0, 3.43, 0.42), 0.15, 0.012, 0.014, "A7X_PaintWhite")
+        D.box(T(0.0, 3.43, 0.42), 0.014, 0.012, 0.15, "A7X_PaintWhite")
 
 
 # ----------------------------------------------------------------------------- materials
 MATS = {
-    "A7X_Whipple": dict(tex="Whipple"),
-    "A7X_Blanket": dict(tex="Blanket"),
+    # The orbit sun is 2.25 with no exposure control, so the pale surfaces are tinted down to keep their detail.
+    "A7X_Whipple": dict(tex="Whipple", tint=(0.60, 0.60, 0.60)),
+    "A7X_Blanket": dict(tex="Blanket", tint=(0.58, 0.58, 0.57)),
     "A7X_Graphite": dict(tex="Graphite"),
-    "A7X_Radiator": dict(tex="Radiator"),
+    "A7X_Radiator": dict(tex="Radiator", tint=(0.56, 0.565, 0.58)),
     "A7X_SolarCells": dict(tex="SolarCells"),
     "A7X_SolarBack": dict(tex="SolarBack"),
-    "A7X_MLIGold": dict(tex="MLIGold"),
+    "A7X_MLIGold": dict(tex="MLIGold", smoothScale=0.80),
     "A7X_Engine": dict(tex="Engine"),
     "A7X_Aluminium": dict(tex="Metal", tint=(0.93, 0.94, 0.96)),
     "A7X_Amber": dict(tex="Metal", tint=(1.0, 0.56, 0.11)),
     "A7X_DarkMetal": dict(tex="Metal", tint=(0.13, 0.135, 0.15)),
-    "A7X_PaintWhite": dict(color=(0.70, 0.70, 0.67), smooth=0.42),
+    "A7X_PaintWhite": dict(color=(0.43, 0.43, 0.41), smooth=0.42),
     "A7X_PaintRed": dict(color=(0.48, 0.045, 0.035), smooth=0.45),
     "A7X_PaintAmber": dict(color=(0.78, 0.40, 0.035), smooth=0.45),
     "A7X_Rubber": dict(color=(0.022, 0.022, 0.026), smooth=0.22),
-    "A7X_Glass": dict(color=(0.012, 0.018, 0.026), smooth=0.96, emission=(1.0, 0.55, 0.22), estr=0.07),
-    "A7X_LampRed": dict(color=(0.25, 0.02, 0.02), smooth=0.8, emission=(1.0, 0.07, 0.04), estr=5.0),
-    "A7X_LampCyan": dict(color=(0.02, 0.18, 0.22), smooth=0.8, emission=(0.10, 0.85, 1.0), estr=5.0),
-    "A7X_LampWhite": dict(color=(0.5, 0.5, 0.5), smooth=0.8, emission=(1.0, 0.96, 0.88), estr=7.0),
-    "A7X_LampAmber": dict(color=(0.3, 0.15, 0.02), smooth=0.8, emission=(1.0, 0.55, 0.10), estr=5.0),
+    "A7X_Glass": dict(color=(0.008, 0.012, 0.020), smooth=0.96, emission=(1.0, 0.60, 0.30), estr=0.02),
+    "A7X_WindowLight": dict(color=(0.30, 0.20, 0.10), smooth=0.6, emission=(1.0, 0.68, 0.38), estr=1.5),
+    "A7X_LampRed": dict(color=(0.25, 0.02, 0.02), smooth=0.8, emission=(1.0, 0.03, 0.02), estr=2.6),
+    "A7X_LampCyan": dict(color=(0.02, 0.18, 0.22), smooth=0.8, emission=(0.0, 0.70, 1.0), estr=2.6),
+    "A7X_LampWhite": dict(color=(0.5, 0.5, 0.5), smooth=0.8, emission=(1.0, 0.95, 0.85), estr=4.0),
+    "A7X_LampAmber": dict(color=(0.3, 0.15, 0.02), smooth=0.8, emission=(1.0, 0.42, 0.0), estr=2.6),
     "A7X_Markings": dict(base="A7X_Markings.png", alpha=True, smooth=0.35),
 }
 
@@ -910,7 +964,8 @@ def make_materials():
         e = {"name": name, "tex": spec.get("tex", ""), "baseMap": spec.get("base", ""),
              "tint": list(spec.get("tint", [])), "color": list(spec.get("color", [])),
              "emission": list(spec.get("emission", [])), "estr": spec.get("estr", 0.0),
-             "smooth": spec.get("smooth", 0.5), "metallic": spec.get("metallic", 0.0), "alpha": bool(spec.get("alpha", False))}
+             "smooth": spec.get("smooth", 0.5), "smoothScale": spec.get("smoothScale", 1.0),
+             "metallic": spec.get("metallic", 0.0), "alpha": bool(spec.get("alpha", False))}
         out.append(e)
     with open(os.path.join(HERE, "a7x_materials.json"), "w") as f:
         json.dump({"note": "colours are linear RGB; texture sets are A7X_<tex>_BaseColor/_Normal/_Mask.png; "
@@ -1039,9 +1094,7 @@ VIEWS = {
 
 def render_all():
     scene = bpy.context.scene
-    for lod in (1, 2):
-        for o in bpy.data.collections["LOD%d" % lod].objects:
-            o.hide_render = True
+    lods = [int(v) for a in ARGS if a.startswith("--lod=") for v in a.split("=")[1].split(",")] or [0]
     scene.render.engine = "CYCLES"
     prefs = bpy.context.preferences.addons["cycles"].preferences
     for kind in ("OPTIX", "CUDA"):
@@ -1079,7 +1132,7 @@ def render_all():
         o.rotation_euler = Vector(direction).to_track_quat("-Z", "Y").to_euler()
 
     # Bootstrap orbit light: Unity Euler(26, 220, 0) travels along Unity (-0.578, -0.438, -0.689).
-    sun("Sun", (-0.578, -0.689, -0.438), 5.0, (1.0, 0.96, 0.89))
+    sun("Sun", (-0.578, -0.689, -0.438), 7.0, (1.0, 0.96, 0.89))
     sun("Earthshine", (0.25, 0.35, 0.90), 0.55, (0.45, 0.62, 1.0))
     cam = bpy.data.cameras.new("Cam")
     cam.sensor_fit = "VERTICAL"
@@ -1091,16 +1144,25 @@ def render_all():
     out = os.path.join(ROOT, "Evidence~")
     os.makedirs(out, exist_ok=True)
     only = [a.split("=")[1] for a in ARGS if a.startswith("--view=")]
-    for name, (pos, tgt, fov) in VIEWS.items():
-        if only and name not in only:
-            continue
-        co.location = pos
-        co.rotation_euler = (Vector(tgt) - Vector(pos)).to_track_quat("-Z", "Y").to_euler()
-        cam.angle_y = rad(fov)
-        scene.render.filepath = os.path.join(out, "blender_%s.png" % name)
-        bpy.ops.render.render(write_still=True)
-        print("rendered", name)
-
+    for show in lods:                                              # LOD1 and LOD2 are previewed in one view only
+        for lod in (0, 1, 2):
+            for o in bpy.data.collections["LOD%d" % lod].objects:
+                o.hide_render = lod != show
+        for name, (pos, tgt, fov) in VIEWS.items():
+            if (only and name not in only) or (show and name != "port_quarter"):
+                continue
+            co.location = pos
+            co.rotation_euler = (Vector(tgt) - Vector(pos)).to_track_quat("-Z", "Y").to_euler()
+            cam.angle_y = rad(fov)
+            scene.render.filepath = os.path.join(out, "blender_%s%s.png" % (name, "_lod%d" % show if show else ""))
+            try:
+                bpy.ops.render.render(write_still=True)
+            except RuntimeError as ex:                             # GPU memory exhausted: finish on the CPU
+                print("GPU render failed, retrying on CPU:", ex)
+                scene.cycles.device = "CPU"
+                scene.cycles.samples = 32
+                bpy.ops.render.render(write_still=True)
+            print("rendered", os.path.basename(scene.render.filepath))
 
 if __name__ == "__main__":
     build_all()

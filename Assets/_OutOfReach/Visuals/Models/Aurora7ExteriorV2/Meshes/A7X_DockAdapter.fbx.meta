@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A7X_Blanket
+    second: {fileID: 2100000, guid: 783fb32d2d2da2b4dbfa728368ec57a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: A7X_DarkMetal
     second: {fileID: 2100000, guid: b584b7d57430fcd4f8800ba8b402ccda, type: 2}
   - first:
