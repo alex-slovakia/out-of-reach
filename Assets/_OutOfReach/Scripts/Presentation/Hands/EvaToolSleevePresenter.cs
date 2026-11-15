@@ -51,7 +51,11 @@ namespace OutOfReach.Presentation.Hands
             { Hide(); return false; }
             Vector3 elbow = hands.ToolElbowWorldPosition, wrist = hands.ToolWristWorldPosition;
             Vector3 upper = elbow - shoulder.position;
-            if (!Finite(upper) || Mathf.Abs(upper.magnitude - AstronautHandsPresenter.ToolUpperSleeveMetres) > .002f
+            // The owner keeps the fixed 350 mm sleeve inside its reach and lengthens only this sleeve, by at most
+            // ToolUpperSleeveStretchMetres, when the worksite is just beyond it (P0 #7 6901402393).
+            float upperLength = upper.magnitude;
+            if (!Finite(upper) || upperLength < AstronautHandsPresenter.ToolUpperSleeveMetres - .002f
+                || upperLength > AstronautHandsPresenter.ToolUpperSleeveMetres + AstronautHandsPresenter.ToolUpperSleeveStretchMetres + .002f
                 || Mathf.Abs(Vector3.Distance(elbow, wrist) - AstronautHandsPresenter.ToolForearmMetres) > .002f)
             { hands.EndToolHold(); Hide(); return false; }
             if (hands.IsToolHoldPaused)
@@ -65,7 +69,8 @@ namespace OutOfReach.Presentation.Hands
             Vector3 up = Vector3.ProjectOnPlane(hands.MotionMount.up, upper.normalized);
             if (up.sqrMagnitude < .01f) { hands.EndToolHold(); Hide(); return false; }
             visual.transform.SetPositionAndRotation(shoulder.position, Quaternion.LookRotation(upper, up));
-            visual.transform.localScale = Vector3.one;
+            // 1 inside the fixed reach; up to about 1.17 along the sleeve when it lengthens, so the elbow cover stays on the elbow.
+            visual.transform.localScale = new Vector3(1f, 1f, upperLength / AstronautHandsPresenter.ToolUpperSleeveMetres);
             sleeveRenderer.enabled = true;
             return true;
         }
