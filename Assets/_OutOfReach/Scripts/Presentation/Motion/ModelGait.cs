@@ -44,6 +44,66 @@ namespace OutOfReach.Presentation.Motion
         public static float StrideLength(float speed, float legLength, float lateral01) =>
             StrideLength(speed, legLength) * Mathf.Lerp(1f, .72f, Mathf.Clamp01(lateral01));
 
+        /// <summary>
+        /// Stride for a travel direction in the body frame (x right, z forward): shorter sideways so the legs do not
+        /// cross, and shorter backwards like a careful backward walk. The presenter's phase and the rig's foot placement
+        /// both use this, so the planted feet stay matched to the actual speed (no skating).
+        /// </summary>
+        public static float DirectionalStride(float speed, float legLength, Vector3 direction) =>
+            StrideLength(speed, legLength, Mathf.Abs(direction.x)) * Mathf.Lerp(1f, .78f, Backward01(direction));
+
+        /// <summary>
+        /// R03: the stride actually walked. <see cref="DirectionalStride"/> capped by what the measured leg can reach:
+        /// the body may travel at most <see cref="StanceSpan"/> x <paramref name="maxLead"/> while one foot stands
+        /// (<paramref name="maxLead"/> = how far ahead of the hip the leg lands with a few centimetres of pelvis drop).
+        /// Faster travel then takes quicker steps instead of lunging ones, so the pelvis does not crouch and the IK always
+        /// reaches the planted sole. The presenter's phase and the rig's foot placement both use this value.
+        /// </summary>
+        public static float GaitStride(float speed, float legLength, Vector3 direction, float maxLead, float strideScale)
+        {
+            float v = Mathf.Max(speed, .3f);
+            float stride = DirectionalStride(v, legLength, direction) * strideScale;
+            if (!(maxLead > 0f)) return stride;
+            return Mathf.Max(.2f, Mathf.Min(stride, StanceSpan(direction) * maxLead / GaitStance(speed, legLength, direction, maxLead, strideScale)));
+        }
+
+        /// <summary>
+        /// R03: stance share actually walked. When the natural stride at this speed is longer than the leg can cover
+        /// with a foot on the ground, the foot first spends less of the cycle on the ground (down to
+        /// <see cref="MinimumGaitStance"/>: a light jog with a short flight, which is what a person does at 2.5 m/s);
+        /// only beyond that does <see cref="GaitStride"/> shorten the stride.
+        /// </summary>
+        public static float GaitStance(float speed, float legLength, Vector3 direction, float maxLead, float strideScale)
+        {
+            float v = Mathf.Max(speed, .3f);
+            float stance = Stance(v, direction);
+            if (!(maxLead > 0f)) return stance;
+            float natural = DirectionalStride(v, legLength, direction) * strideScale;
+            return Mathf.Clamp(StanceSpan(direction) * maxLead / Mathf.Max(.05f, natural), Mathf.Min(MinimumGaitStance, stance), stance);
+        }
+
+        public const float MinimumGaitStance = .30f;
+
+        /// <summary>
+        /// Body travel during one stance, in units of the forward landing reach. Forwards the foot lands one reach ahead
+        /// of the hip and trails about 1.2 reaches behind it (the heel rises and the foot rolls over its ball, which is
+        /// how a real leg covers a long step without the pelvis dropping). Backwards there is no such roll; sideways the
+        /// trailing foot cannot cross the leading one.
+        /// </summary>
+        public static float StanceSpan(Vector3 direction) =>
+            Mathf.Lerp(Mathf.Lerp(2.2f, 1.9f, Backward01(direction)), 1.4f, Lateral01(direction));
+
+        /// <summary>0 forward or backward .. 1 straight sideways.</summary>
+        public static float Lateral01(Vector3 direction) =>
+            Mathf.Clamp01(Mathf.Abs(direction.x) / Mathf.Max(1e-4f, new Vector2(direction.x, direction.z).magnitude));
+
+        /// <summary>Stance share for a travel direction: a side shuffle spends less time on each foot than a walk.</summary>
+        public static float Stance(float speed, Vector3 direction) =>
+            Mathf.Lerp(Stance(speed), Mathf.Min(Stance(speed), .40f), Lateral01(direction));
+
+        /// <summary>0 forward or sideways .. 1 straight backwards.</summary>
+        public static float Backward01(Vector3 direction) => Mathf.Clamp01(-direction.z / Mathf.Max(1e-4f, new Vector2(direction.x, direction.z).magnitude));
+
         /// <summary>Fraction of the cycle a foot is on the ground. Stays above .5 in a walk and drops towards a run.</summary>
         public static float Stance(float speed) => Mathf.Clamp(.70f - .085f * speed, .36f, .66f);
 
