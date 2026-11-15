@@ -1,0 +1,34 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+index 2ae6e82..212bd4e 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+@@ -10,6 +10,7 @@ using OutOfReach.Presentation.AirlockPanel;
+ using OutOfReach.Presentation.Audio;
+ using OutOfReach.Presentation.Cinematics;
+ using OutOfReach.Presentation.Cinematics.Preflight;
++using OutOfReach.Presentation.CelestialSky;
+ using OutOfReach.Presentation.Lighting;
+ using OutOfReach.Presentation.Motion;
+ using OutOfReach.Presentation.Hands;
+@@ -702,6 +703,9 @@ namespace OutOfReach.Composition
+             flightBoard.enabled = true;
+             cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
+             cinematics.enabled = true;
++            // Celestial sky: read-only clock selects the daily Horizons Sun sample (optional; absent = day 0).
++            CelestialSkyPresenter celestialSky = FindFirstObjectByType<CelestialSkyPresenter>();
++            if (celestialSky) celestialSky.Configure(runtime.Clock);
+             if (footsteps && runtime.Player)
+                 footsteps.Configure(runtime.Player.GetComponent<CharacterController>(), runtime.GameState,
+                     runtime.Clock, runtime.EvaStatus, CanPresentGroundedStepAudio,
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+index 1a98c31..351ae8b 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+@@ -13,6 +13,7 @@
+     "OutOfReach.Interaction",
+     "OutOfReach.Cinematics",
+     "OutOfReach.Presentation.Lighting",
++    "OutOfReach.Presentation.CelestialSky",
+     "OutOfReach.Presentation.Motion",
+     "OutOfReach.Presentation.Hands",
+     "OutOfReach.Presentation.Habitat",
