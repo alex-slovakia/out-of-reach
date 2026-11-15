@@ -36,6 +36,12 @@
      on day fourteen..."
   4. **Day 14 call:** on the existing Core dispatch `dispatch.rescue-1-failed`. Chirp → "Aurora, Earth. Priority
      traffic. Go to the console, Aurora."
+  5. **Day 14 voiced announcement** (Alex 6896919554: actual audible voice, synced subtitles, once).
+     - **Trigger:** the next use of the cockpit console after the Day-14 call.
+     - **Voice:** Codex's approved recording `Audio/Voices/Story02/vo23_mc_rescue_lost.wav` through a radio band
+       (300–3400 Hz, light grit). Its exact transcript is shown in two readable chunks timed to the 21.1 s
+       recording.
+     - **If the console view takes the camera:** the voice and subtitles continue; the radio model hides.
 
 ## Integrator (one step)
 
@@ -48,10 +54,12 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
 - **Safe:** idempotent; it throws if the collider count would change.
 - **No other edits:** no composition, Core, collider, audio-manifest or asmdef change elsewhere.
 - **Without batch mode:** menu **Tools > OUT OF REACH > Radio V01 - add to open scene (no save)**.
+- **Voice:** the installer binds `vo23` when `Audio/Voices/Story02/vo23_mc_rescue_lost.wav` exists in the checkout.
+  It is in `codex/nasa-2330-candidate`. Its log says `voice=vo23_mc_rescue_lost bound (21.1 s)`.
 
 ## Verified (own worktree, Unity 6000.3.28f1, batch mode, real GPU)
 
-- **EditMode `OutOfReach.Tests.Radio`: 9/9.** They cover:
+- **EditMode `OutOfReach.Tests.Radio`: 11/11.** They cover:
   - line order;
   - PTT and LED for transmit and receive;
   - pause freezes everything;
@@ -59,8 +67,10 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
   - reduced motion;
   - incoming chirp before the raise;
   - abort;
-  - both boarding variants stay in 8–12.5 s.
-- **Native, real saved Bootstrap with the installer applied in memory: 11/11 PASS** (`native-checks.txt`).
+  - both boarding variants stay in 8–12.5 s;
+  - the Day-14 announcement uses cue `vo23` and its length;
+  - long-line subtitle chunks.
+- **Native, real saved Bootstrap with the installer applied in memory: 16/16 PASS** (`native-checks.txt`).
   - The run uses the real Planning bind, real Practice through the UI and the player's own camera with the HUD
     composited.
   - **Pad trigger:** the pad-hatch proximity trigger fires at the real `BoardingThreshold`.
@@ -69,6 +79,8 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
   - **After the beat:** the radio is hidden.
   - **Reduced motion and skip:** reduced motion gives no sway; skip ends the Day-14 call.
   - **No repeats:** each beat plays once.
+  - **Voice:** `vo23` is bound and plays on the radio voice source. A real pause pauses it, and it stops with the
+    beat.
 - **Captures** (`captures/`): the pad call with subtitle, the player transmitting (PTT, amber LED), paused, the
   Day-14 call, the distress call, and a close-up of the radio.
 
@@ -76,8 +88,10 @@ Unity.exe -batchmode -quit -projectPath <checkout> -executeMethod OutOfReach.Pre
 
 - **Arrival trigger:** the default `AuroraArrival` trigger was not driven natively through the full route
   (departure → transfer). Beats 2–4 were started directly in QA. Their Core edges are the existing public states.
-- **No voice yet:** these lines are subtitles plus radio sound. Codex's Story02 voices (vo23 rescue lost,
-  vo24a/b rescue approach and docked) are not wired by this commit.
+- **Voice:** only `vo23` is wired. The other radio lines are subtitles plus radio sound. `vo24a`/`vo24b` (rescue
+  approach and docked) belong to the Day-31 sequence; its owner can call `TryPlay` or play them directly.
+- **Console trigger:** the voiced announcement's console trigger (InteractionResolver.Interacted on
+  `cockpit-console`) is code-reviewed. QA started the beat directly.
 - **No hand:** no glove holds the radio. It is framed so the hand stays below the screen edge.
 - **The P0 startup error on `d901fc5`** ("interior contact rails could not bind") appears in this clone at session
   start. It is not caused by the radio; the QA still passes.

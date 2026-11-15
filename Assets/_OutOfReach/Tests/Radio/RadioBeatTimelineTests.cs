@@ -138,6 +138,31 @@ namespace OutOfReach.Tests.Radio
         }
 
         [Test]
+        public void Day14AnnouncementUsesTheApprovedVoiceCueAndNewDate()
+        {
+            RadioBeat beat = Beat(RadioBeats.Day14Announcement);
+            Assert.AreEqual(RadioBeats.RescueLostCue, beat.Lines[0].CueId);
+            StringAssert.Contains("mission day thirty-one", beat.Lines[0].Text);
+            StringAssert.Contains("crashed", beat.Lines[0].Text);
+            RadioBeat timed = beat.WithVoiceLengths(cue => cue == RadioBeats.RescueLostCue ? 17.5f : (float?)null);
+            Assert.AreEqual(17.85f, timed.Lines[0].Seconds, 1e-4f, "A recorded line lasts as long as its clip");
+            Assert.AreEqual(beat.Lines[0].Seconds, beat.WithVoiceLengths(_ => null).Lines[0].Seconds, "No clip: reading time");
+        }
+
+        [Test]
+        public void LongLinesShowReadableChunksInOrder()
+        {
+            RadioLine line = Beat(RadioBeats.Day14Announcement).Lines[0].WithSeconds(18f);
+            string first = line.SubtitleAt(0f), last = line.SubtitleAt(17.99f);
+            Assert.AreNotEqual(first, last, "A long announcement is split");
+            Assert.LessOrEqual(first.Length, 110);
+            StringAssert.StartsWith("Aurora Seven... Mission Control.", first, "Ellipsis stays inside the sentence");
+            StringAssert.EndsWith("We are not giving up on you.", last);
+            RadioLine shortLine = Beat(RadioBeats.Day14Call).Lines[0];
+            Assert.AreEqual(shortLine.Text, shortLine.SubtitleAt(1f), "Short lines are shown whole");
+        }
+
+        [Test]
         public void AbortEndsImmediately()
         {
             var t = new RadioBeatTimeline();
