@@ -1,0 +1,71 @@
+PASS [opening actual saved Bootstrap] Saved root composition is present.
+PASS [opening actual saved Bootstrap] Saved MissionRuntime is present.
+PASS [opening actual saved Bootstrap] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
+PASS [native actual Bootstrap] Saved composition, runtime, player, resolver, default input and marine bindings exist (startup).
+PASS [menu] Mode menu offers the timed mission: Start timed · 60 s | Practice · no deadline | Quit to desktop
+PASS [menu] A fresh session starts in Planning: Planning
+PASS [menu] Exactly one enabled AudioListener at the menu
+PASS [menu] Mode button visible: Practice
+PASS [menu] Practice choice releases control
+PASS [menu] The mode menu closes after the choice
+PASS [marine boarding W] seat E launches: prompt allows it: 'Begin mission: 546 of 600 kg, 720 of 800 credits'
+PASS [marine boarding W] Single E: seat E launches [cockpit-console] prompt 'Begin mission: 546 of 600 kg, 720 of 800 credits' -> OK 'AURORA-7 launched with 7 equipment line(s).'
+PASS [marine boarding W] Seat E launch succeeded
+PASS [departure] Escape pauses during the departure
+PASS [departure] Departure timeline frozen while paused: 4,00 -> 4,00
+PASS [departure] Mission clock frozen while paused
+PASS [departure] Pause menu shows Resume: Resume | Restart mission | Quit to desktop
+PASS [departure] Resumed after pause
+PASS [departure] Departure + transfer took 36,9 real s
+PASS [arrival] Arrival enters interior float
+PASS [arrival] Arrival is inside the ship
+PASS [arrival] After arrival the phase is Intro (cockpit check pending): Intro
+PASS [arrival] Exactly one enabled AudioListener aboard
+PASS [cockpit check -> impact] cockpit systems check: prompt allows it: 'Run cockpit systems check'
+PASS [cockpit check -> impact] Single E: cockpit systems check [cockpit-console] prompt 'Run cockpit systems check' -> OK 'Cockpit check complete. Impact detected.'
+PASS [cockpit check -> impact] Cockpit check E accepted
+PASS [cockpit check -> impact] The cockpit check triggers the accident
+PASS [cockpit check -> impact] impact cinematic completes in 7,2 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [cockpit check -> impact] Impact ends in Emergency/Repair (Emergency)
+PASS [cockpit check -> impact] Control returns after the impact
+PASS [cockpit check -> impact] Rest hook bound in the saved scene: berth frame AURORA-7 delivered Blender models/I06 authored Storage habitat/Interaction anchor frames - root binds commands/SleepBodyFrame, camera anchor AURORA-7 delivered Blender models/I06 authored Storage habitat/Interaction anchor frames - root binds commands/SleepCamera
+PASS [cockpit check -> impact] Berth sleep target exists
+SOFT-FAIL [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] Real input reaches 'to the berth (A)' (fell back to QA teleport)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] After the QA teleport the target is in focus: survival-sleep (current survival-sleep)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A rest: prompt allows it: 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew'
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] Single E: A rest [survival-sleep] prompt 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew' -> OK 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew'
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: Escape pauses during the approach (Entering@0.82)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: pause freezes the sequence playhead (0,820 -> 0,820)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: pause freezes camera and body (0,0004 m, body 0,0004 m)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: Resume from the real pause menu
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: berth sequence ran (Entering@0.01 Held@4.94 Releasing@9.52 None@12.92)
+SOFT-FAIL [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the actual camera never cuts or pops: max 4,73 m/s (Releasing@2.10 step 0,095 m in 20 ms)
+SOFT-FAIL [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the view never snaps round: max 716 deg/s (Releasing@2.61 step 12,2 deg)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: gameplay input waits while the body is in the berth sequence
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the body held in the berth with both straps buckled
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the body reached the berth frame (0,0000 m)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the view stays in the berth while unbuckling (lease kept through Releasing)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: the unbuckling is seen (straps still drawn early in Releasing)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: lease released after the sequence (Completed)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: pivot restored to its exact previous local pose
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: camera back on the player's own eye (0,000 m, 0,0 deg)
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: normal controls restored after the sequence
+PASS [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] A: no straps or rest pose left over
+PASS [sleep-seq A: move away from the berth with normal controls] A: after the wake the player pushes off and floats away from the berth with real input (2,26 m)
+PASS [sleep-seq B: early wake by a real E during the hold] B rest: prompt allows it: 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew'
+PASS [sleep-seq B: early wake by a real E during the hold] Single E: B rest [survival-sleep] prompt 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew' -> OK 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew'
+PASS [sleep-seq B: early wake by a real E during the hold] B: berth sequence ran (Entering@0.01 Held@3.44 Releasing@7.63 None@7.91)
+SOFT-FAIL [sleep-seq B: early wake by a real E during the hold] B: the actual camera never cuts or pops: max 6,18 m/s (Releasing@0.09 step 0,128 m in 21 ms)
+SOFT-FAIL [sleep-seq B: early wake by a real E during the hold] B: the view never snaps round: max 1700 deg/s (Releasing@0.17 step 26,2 deg)
+PASS [sleep-seq B: early wake by a real E during the hold] B: gameplay input waits while the body is in the berth sequence
+SOFT-FAIL [sleep-seq B: early wake by a real E during the hold] B: a real E during the hold wakes the crew (CarbonDioxideDanger)
+PASS [sleep-seq B: early wake by a real E during the hold] B: lease released after the sequence (CarbonDioxideDanger)
+PASS [sleep-seq B: early wake by a real E during the hold] B: pivot restored to its exact previous local pose
+SOFT-FAIL [sleep-seq B: early wake by a real E during the hold] B: camera back on the player's own eye (1,581 m, 54,8 deg)
+PASS [sleep-seq B: early wake by a real E during the hold] B: normal controls restored after the sequence
+PASS [sleep-seq B: early wake by a real E during the hold] B: no straps or rest pose left over
+SOFT-FAIL [sleep-seq C: hazard wake during the hold (Core StopRest(CarbonDioxideDanger), disclosed)] C rest: prompt allows it: 'No rest now: cabin CO2 is close to the loss limit.'
+SOFT-FAIL [sleep-seq C: hazard wake during the hold (Core StopRest(CarbonDioxideDanger), disclosed)] Single E: C rest [survival-sleep] prompt 'No rest now: cabin CO2 is close to the loss limit.' -> refused 'No rest now: cabin CO2 is close to the loss limit.'
+SOFT-FAIL [sleep-seq D: restart from the real pause menu during the approach] D rest: prompt allows it: 'No rest now: cabin CO2 is close to the loss limit.'
+SOFT-FAIL [sleep-seq D: restart from the real pause menu during the approach] Single E: D rest [survival-sleep] prompt 'No rest now: cabin CO2 is close to the loss limit.' -> refused 'No rest now: cabin CO2 is close to the loss limit.'
+PASS [sleep-seq D: restart from the real pause menu during the approach] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
