@@ -228,6 +228,79 @@ namespace OutOfReach.Tests.BodyAnim
             }
         }
 
+        /// <summary>
+        /// The seated WORK body has no head: from outside the seat eye it must not be drawn while the place of the head
+        /// is in view, the neck stays closed from the seat eye, and everything is restored when the lease ends.
+        /// </summary>
+        [Test]
+        public void SeatedBodyIsNeverDrawnHeadless()
+        {
+            Stage s = Build(false);
+            Transform vehicle = new GameObject("Vehicle").transform;
+            Transform seat = new GameObject("Departure seated WORK body").transform;
+            seat.SetParent(vehicle, false);
+            seat.SetLocalPositionAndRotation(new Vector3(3f, .12f, 2f), Quaternion.Euler(0f, 180f, 0f));
+            Camera view = s.Side; view.tag = "MainCamera"; view.enabled = true; view.fieldOfView = 60f;
+            Assert.AreSame(view, Camera.main, "the test camera must be the main camera");
+            Renderer[] renderers = s.Body.VisualRoot.GetComponentsInChildren<Renderer>(true);
+            EmbodiedBodyPresenter.AllowEditModeDepartureSeat = true;
+            UnityEngine.TestTools.LogAssert.ignoreFailingMessages = true;   // the lease destroys its props with Object.Destroy
+            try
+            {
+                Transform neck = s.Body.GetWorkBone("neck01");
+                Assert.IsTrue(neck, "neck01 joint");
+                Vector3 neckScale = neck.localScale;
+                view.transform.SetPositionAndRotation(seat.TransformPoint(new Vector3(0f, 1.277f, .06f)), seat.rotation);
+                Assert.IsTrue(s.Body.TryBeginDepartureSeat(seat), "seat lease");
+                Assert.IsTrue(s.Body.PresentDepartureSeat(.5f));
+                Assert.Less(neck.localScale.x, neckScale.x * .01f, "neck closed while seated");
+                Vector3 head = neck.position + seat.up * .2f;
+                Debug.Log("[SEAT-HEAD] head point in seat frame " + seat.InverseTransformPoint(head).ToString("F3")
+                          + " seat eye distance " + Vector3.Distance(view.transform.position, head).ToString("F3"));
+
+                // Seat eye, looking ahead, then glancing down at the buckle like the cinematic (lean .13 forward, .105 down).
+                foreach (float pitch in new[] { 0f, 35f, 65f, 80f })
+                {
+                    Vector3 eye = seat.TransformPoint(new Vector3(0f, 1.277f - .105f * pitch / 80f, .06f + .13f * pitch / 80f));
+                    view.transform.SetPositionAndRotation(eye, seat.rotation * Quaternion.Euler(pitch, 0f, 0f));
+                    Assert.IsTrue(s.Body.PresentDepartureSeat(1f + pitch * .01f));
+                    foreach (Renderer r in renderers) Assert.IsFalse(r.forceRenderingOff, "seat eye pitch " + pitch + ": " + r.name + " must be drawn");
+                }
+
+                // Outside, looking at the seat from several sides: nothing of the body or its straps is drawn.
+                renderers = s.Body.VisualRoot.GetComponentsInChildren<Renderer>(true);
+                foreach (Vector3 from in new[] { new Vector3(0f, .5f, 1.6f), new Vector3(1.4f, .4f, .6f), new Vector3(-1.2f, .9f, -.8f), new Vector3(0f, .6f, -1.5f), new Vector3(.3f, .25f, .75f) })
+                {
+                    view.transform.position = head + seat.TransformDirection(from);
+                    view.transform.rotation = Quaternion.LookRotation(seat.TransformPoint(new Vector3(0f, .8f, .1f)) - view.transform.position, Vector3.up);
+                    Assert.IsTrue(s.Body.PresentDepartureSeat(2f));
+                    foreach (Renderer r in renderers) Assert.IsTrue(r.forceRenderingOff, "outside " + from + ": " + r.name + " must not be drawn");
+                }
+
+                // Outside but looking away from the seat: the head place is not in view, so nothing needs hiding.
+                view.transform.SetPositionAndRotation(head + seat.TransformDirection(new Vector3(0f, .3f, 2f)), seat.rotation);
+                Assert.IsTrue(s.Body.PresentDepartureSeat(2.2f));
+                foreach (Renderer r in renderers) Assert.IsFalse(r.forceRenderingOff, "looking away: " + r.name);
+
+                // Back at the seat eye the body returns; ending the lease restores the neck and every renderer.
+                view.transform.SetPositionAndRotation(seat.TransformPoint(new Vector3(0f, 1.277f, .06f)), seat.rotation * Quaternion.Euler(60f, 0f, 0f));
+                Assert.IsTrue(s.Body.PresentDepartureSeat(2.4f));
+                foreach (Renderer r in renderers) Assert.IsFalse(r.forceRenderingOff, "back at the eye: " + r.name);
+                view.transform.position = head + seat.TransformDirection(new Vector3(0f, .5f, 1.6f));
+                view.transform.rotation = Quaternion.LookRotation(head - view.transform.position, Vector3.up);
+                Assert.IsTrue(s.Body.PresentDepartureSeat(2.6f));
+                s.Body.EndDepartureSeat();
+                Assert.IsFalse(s.Body.HasDepartureSeat);
+                foreach (Renderer r in renderers) if (r) Assert.IsFalse(r.forceRenderingOff, "after the lease: " + r.name);
+                Assert.AreEqual(neckScale.x, neck.localScale.x, 1e-5f, "neck restored");
+            }
+            finally
+            {
+                EmbodiedBodyPresenter.AllowEditModeDepartureSeat = false;
+                UnityEngine.TestTools.LogAssert.ignoreFailingMessages = false;
+            }
+        }
+
         private static Texture2D Render(Camera camera, int w, int h)
         {
             var rt = RenderTexture.GetTemporary(w, h, 24, RenderTextureFormat.ARGB32);
