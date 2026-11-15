@@ -11,6 +11,7 @@
     "OutOfReach.Interaction",
     "OutOfReach.Player",
     "OutOfReach.Composition",
+    "OutOfReach.Presentation.Habitat",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

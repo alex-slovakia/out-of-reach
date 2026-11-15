@@ -94,9 +94,13 @@ namespace OutOfReach.Composition.Editor
         private static bool ApplyRestBerth(GameObject[] roots, StringBuilder report)
         {
             var composition = ExactlyOne<I01MissionComposition>(roots);
-            Transform[] cameras = roots.SelectMany(r => r.GetComponentsInChildren<Transform>(true)).Where(t => t.name == "SleepCamera").ToArray();
-            if (cameras.Length != 1) throw new InvalidOperationException("Expected one habitat SleepCamera anchor, found " + cameras.Length);
+            // The habitat FBX also imports an empty named SleepCamera; use root's authored anchor frame (HabitatLayout.json).
+            Transform[] all = roots.SelectMany(r => r.GetComponentsInChildren<Transform>(true)).Where(t => t.name == "SleepCamera").ToArray();
+            Transform[] cameras = all.Where(t => t.parent && t.parent.name == "Interaction anchor frames - root binds commands").ToArray();
+            if (cameras.Length != 1) throw new InvalidOperationException("Expected one authored habitat SleepCamera anchor, found " + cameras.Length
+                + " (" + string.Join("; ", all.Select(Path)) + ")");
             Transform sleepCamera = cameras[0];
+            foreach (Transform other in all.Where(t => t != sleepCamera)) report.AppendLine("ignored imported " + Path(other));
             var serialized = new SerializedObject(composition);
             SerializedProperty bodyProperty = serialized.FindProperty("sleepBodyFrame") ?? throw new InvalidOperationException("No sleepBodyFrame field.");
             SerializedProperty cameraProperty = serialized.FindProperty("sleepCameraAnchor") ?? throw new InvalidOperationException("No sleepCameraAnchor field.");
