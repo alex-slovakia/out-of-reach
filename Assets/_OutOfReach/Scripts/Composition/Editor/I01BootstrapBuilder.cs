@@ -318,6 +318,11 @@ namespace OutOfReach.Composition.Editor
                 MarineDepartureFxPresenter.CalculateAnchor(marine.TransportAnchors), land.DeflectorContactPlane,
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/Exhaust.mat"),
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/IgnitionSteam.mat"));
+            // LAUNCH-FX-V03 (Claude, #7): V03 replaces the old flame/steam rendering; the old presenter stays bound, not presented.
+            var launchFxV03 = (GameObject)PrefabUtility.InstantiatePrefab(
+                Required<GameObject>("Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab"), presentationRoot);
+            marineBindings.ConfigureLaunchFxV03(launchFxV03.GetComponent<OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter>(),
+                land.DeflectorContactPlane, land.PadPlane, land.TrenchExit);
             composition.ConfigureMarine(marineBindings);
             composition.ConfigureDepartureScore(Required<AudioClip>("Assets/_OutOfReach/Audio/Music/titan-departure.wav"));
             composition.ConfigurePreflightTension(presentationRoot.gameObject.AddComponent<PreflightTensionPresenter>(),
