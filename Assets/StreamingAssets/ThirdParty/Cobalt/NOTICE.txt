@@ -1,0 +1,28 @@
+Cobalt by Scott Buckley
+Released under Creative Commons Attribution 4.0 International (CC BY 4.0).
+www.scottbuckley.com.au
+
+Track: https://www.scottbuckley.com.au/library/cobalt/
+Official source MP3: https://www.scottbuckley.com.au/library/wp-content/uploads/2017/11/sb_cobalt.mp3
+Use policy: https://www.scottbuckley.com.au/library/using-this-music/
+License: https://creativecommons.org/licenses/by/4.0/
+Full license text accompanies this notice in LICENSE.txt.
+Verified from the official composer pages on15 November2026.
+
+OUT OF REACH uses an edited120-second instrumental underscore.
+Source excerpt00:45–02:53(128seconds), edited with an8-second raised-cosine,
+equal-gain crossfade from the tail02:45–02:53 into the head00:45–00:53,
+then the unchanged middle00:53–02:45. The wrap itself crosses consecutive
+source samples at02:45. Loudness processing target -18LUFS, -3dBTP,LRA9.
+Output is48kHz stereo16-bit PCM. Edits are by the OUT OF REACH team.
+No composer endorsement is implied.
+
+Original MP3 SHA-256:
+5834a502f3a35407969b81e7e0291a03c808b4464f5b747ca7fb3dc2c0f8c8b4
+Edited WAV SHA-256:
+c9ad3c3db8446e3535f7f3a08a1c8cc230d29f37d0070f51ea50b0b75b048e0b
+
+Source code path: Assets/_OutOfReach/Audio/Music/mx01_isolation.wav
+Original .meta GUID retained; this audio replaces the previous procedural isolation score.
+Alex approved the Cobalt music direction and Titan on15 November2026.
+Resonance was rejected and is not used in the game.

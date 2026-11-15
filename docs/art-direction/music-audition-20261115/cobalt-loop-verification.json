@@ -1,0 +1,38 @@
+{
+  "source_sha256": "5834a502f3a35407969b81e7e0291a03c808b4464f5b747ca7fb3dc2c0f8c8b4",
+  "output_sha256": "c9ad3c3db8446e3535f7f3a08a1c8cc230d29f37d0070f51ea50b0b75b048e0b",
+  "sample_rate_hz": 48000,
+  "channels": 2,
+  "bits": 16,
+  "frames": 5760000,
+  "duration_seconds": 120.0,
+  "source_excerpt_seconds": [
+    45,
+    173
+  ],
+  "crossfade_seconds": 8,
+  "crossfade_curve": "raised-cosine equal-gain, tail165..173 to head45..53; then53..165",
+  "normalization_filter": "loudnorm=I=-18:TP=-3:LRA=9",
+  "additional_scalar_gain": 1.0,
+  "wrap_is_exact_consecutive_source_samples": true,
+  "wrap_step_full_scale_per_channel": [
+    0.003387451171875,
+    -0.00213623046875
+  ],
+  "crossfade_join_step_full_scale_per_channel": [
+    -0.0047607421875,
+    0.00408935546875
+  ],
+  "maximum_abs_pcm": 23200,
+  "clipped_samples": 0,
+  "rms": 0.11289392514983253,
+  "mean_dc_per_channel": [
+    -6.412564780665172e-07,
+    3.4820693299070894e-06
+  ],
+  "verification_limit": "Numerical seam/encoding checks only. Full-loop human listening and Unity import/playback are pending.",
+  "meta_sha256_before_approved_provenance_correction": "74a587f65708cc47a5b22bac6e12dbed16c0cade0c28350120da6fb719a2db5e",
+  "meta_sha256_after_approved_provenance_correction": "4c71817a7249f537108d5cc0c1f74e78565a0a7476d34e5d456cdda8435476e3",
+  "meta_guid_preserved": "d506184100d646deb877ebd447a2eba2",
+  "output_size_bytes": 23040044
+}

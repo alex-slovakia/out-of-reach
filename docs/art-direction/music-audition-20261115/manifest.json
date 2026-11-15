@@ -1,0 +1,96 @@
+{
+  "created_utc": "2026-11-15T09:44:24.962815+00:00",
+  "purpose": "OUT OF REACH direction audition: A/C approved by Alex; B rejected. Cobalt runtime loop prepared separately; in-game validation pending.",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "license_policy": "https://www.scottbuckley.com.au/library/using-this-music/",
+  "artist": "Scott Buckley",
+  "ai_generated": false,
+  "edits": "25s excerpts, loudness target -18 LUFS / -2 dBTP / LRA9, then .7s fade-in and1.5s fade-out;192kbps MP344.1kHz stereo",
+  "tracks": [
+    {
+      "file": "A-cobalt-isolation.mp3",
+      "title": "Cobalt",
+      "artist": "Scott Buckley",
+      "source_page": "https://www.scottbuckley.com.au/library/cobalt/",
+      "download_url": "https://www.scottbuckley.com.au/library/wp-content/uploads/2017/11/sb_cobalt.mp3",
+      "source_sha256": "5834a502f3a35407969b81e7e0291a03c808b4464f5b747ca7fb3dc2c0f8c8b4",
+      "preview_sha256": "32a2509d885d85d38e27f8a31f59dda24e3f3886ea60fb8460d17fff19d56d56",
+      "excerpt_start_seconds": 45,
+      "excerpt_end_seconds": 70,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "25.051429",
+          "size": "602114"
+        }
+      },
+      "user_approval": "approved direction"
+    },
+    {
+      "file": "B-resonance-tension.mp3",
+      "title": "Resonance (No Melody in Backend)",
+      "artist": "Scott Buckley",
+      "source_page": "https://www.scottbuckley.com.au/library/resonance/",
+      "download_url": "https://www.scottbuckley.com.au/library/wp-content/uploads/2018/04/sb_resonance_altmix.mp3",
+      "source_sha256": "a09c0ea14aa6942ed4023dcc95a754108fdba9bca7087853d36ffe0a264c16cb",
+      "preview_sha256": "64f030c7297482d5a554fde090ef9d32717fc46d74ea138cc693f9df9f7ebf35",
+      "excerpt_start_seconds": 35,
+      "excerpt_end_seconds": 60,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "25.051429",
+          "size": "602134"
+        }
+      },
+      "user_approval": "rejected"
+    },
+    {
+      "file": "C-titan-cinematic.mp3",
+      "title": "Titan",
+      "artist": "Scott Buckley",
+      "source_page": "https://www.scottbuckley.com.au/library/titan/",
+      "download_url": null,
+      "source_sha256": "ce6d890556829b17152deb6216ceffa314469c09d858f07d0d302d81f2b48313",
+      "preview_sha256": "81546791972aad954834f8f1e30ddec56c8a043a0d5e41e1ff60ff79513e7f90",
+      "excerpt_start_seconds": 10.9,
+      "excerpt_end_seconds": 35.9,
+      "probe": {
+        "programs": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100",
+            "channels": 2
+          }
+        ],
+        "format": {
+          "duration": "25.051429",
+          "size": "602107"
+        }
+      },
+      "user_approval": "approved direction"
+    }
+  ],
+  "runtime_candidate": {
+    "file": "Assets/_OutOfReach/Audio/Music/mx01_isolation.wav",
+    "verification": "cobalt-loop-verification.json",
+    "notice": "Assets/StreamingAssets/ThirdParty/Cobalt/NOTICE.txt",
+    "status": "prepared; root integration and Unity playback pending"
+  }
+}
