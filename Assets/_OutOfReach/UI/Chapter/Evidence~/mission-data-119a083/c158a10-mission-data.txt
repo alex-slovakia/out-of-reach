@@ -1,0 +1,32 @@
+PASS Chapter loop is enabled in the saved Bootstrap
+PASS MissionChapterPresenter is active in the saved Bootstrap
+md-01-day1-after-impact | mission day 1, sim 582 s | phase Emergency | link Offline | Core 197707975.991 km, 659.483 s | strip shown=True, data shown=True | data='Earth 197,708,000 km · signal 10 min 59 s one way' | source='NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy' | no dose label | strip rect (x:689.14, y:612.00, width:372.00, height:181.71), data rect (x:706.29, y:723.43, width:341.14, height:27.43), source rect (x:706.29, y:752.57, width:341.14, height:32.57)
+PASS md-01-day1-after-impact: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS md-01-day1-after-impact: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS md-01-day1-after-impact: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS md-01-day1-after-impact: the strip stays inside the screen: (x:689.14, y:612.00, width:372.00, height:181.71) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+md-02-day1-after-repairs | mission day 1, sim 3744 s | phase Repair | link Offline | Core 197707975.991 km, 659.483 s | strip shown=True, data shown=True | data='Earth 197,708,000 km · signal 10 min 59 s one way' | source='NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy' | no dose label | strip rect (x:689.14, y:612.00, width:372.00, height:181.71), data rect (x:706.29, y:723.43, width:341.14, height:27.43), source rect (x:706.29, y:752.57, width:341.14, height:32.57)
+PASS md-02-day1-after-repairs: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS md-02-day1-after-repairs: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS md-02-day1-after-repairs: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS md-02-day1-after-repairs: the strip stays inside the screen: (x:689.14, y:612.00, width:372.00, height:181.71) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+FAIL First rest completed through the real berth target (last 'Meal started: thermostabilised, warmed, 8.8 s')
+md-03-day1-after-first-rest | mission day 1, sim 45650 s | phase Repair | link Offline | Core 197707975.991 km, 659.483 s | strip shown=True, data shown=True | data='Earth 197,708,000 km · signal 10 min 59 s one way' | source='NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy' | no dose label | strip rect (x:689.14, y:612.00, width:372.00, height:181.71), data rect (x:706.29, y:723.43, width:341.14, height:27.43), source rect (x:706.29, y:752.57, width:341.14, height:32.57)
+PASS md-03-day1-after-first-rest: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS md-03-day1-after-first-rest: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS md-03-day1-after-first-rest: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS md-03-day1-after-first-rest: the strip stays inside the screen: (x:689.14, y:612.00, width:372.00, height:181.71) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+FAIL R on the chapter strip starts the routine (Core check: 'Secure the sleeping place and complete one rest first.')
+PASS Routine segment stops within 180 real s: None '' chapter=Accident day=1
+md-05-day1-beat | mission day 1, sim 46630 s | phase Repair | link Offline | Core 197707975.991 km, 659.483 s | strip shown=True, data shown=True | data='Earth 197,708,000 km · signal 10 min 59 s one way' | source='NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy' | no dose label | strip rect (x:689.14, y:612.00, width:372.00, height:181.71), data rect (x:706.29, y:723.43, width:341.14, height:27.43), source rect (x:706.29, y:752.57, width:341.14, height:32.57)
+PASS md-05-day1-beat: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS md-05-day1-beat: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS md-05-day1-beat: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS md-05-day1-beat: the strip stays inside the screen: (x:689.14, y:612.00, width:372.00, height:181.71) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+md-06-day1-strip | mission day 1, sim 48487 s | phase Repair | link Offline | Core 197707975.991 km, 659.483 s | strip shown=True, data shown=True | data='Earth 197,708,000 km · signal 10 min 59 s one way' | source='NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy' | no dose label | strip rect (x:689.14, y:612.00, width:372.00, height:181.71), data rect (x:706.29, y:723.43, width:341.14, height:27.43), source rect (x:706.29, y:752.57, width:341.14, height:32.57)
+PASS md-06-day1-strip: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS md-06-day1-strip: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS md-06-day1-strip: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS md-06-day1-strip: the strip stays inside the screen: (x:689.14, y:612.00, width:372.00, height:181.71) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+FAIL The line changed between mission days exactly as Core changed its sample: Earth 197,708,000 km · signal 10 min 59 s one way
+RESULT mission-data checks: 23 PASS / 3 FAIL

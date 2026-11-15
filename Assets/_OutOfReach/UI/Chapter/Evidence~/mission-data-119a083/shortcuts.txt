@@ -1,0 +1,1 @@
+21:09:06.810 [first stored ration before rest MD (R22 precondition)] Ration (MD) try 2: QA teleport to (-1.38, 0.03, 15.36) next to survival-ration after 'Too far from the galley food drawer. Move closer and press E to eat.'

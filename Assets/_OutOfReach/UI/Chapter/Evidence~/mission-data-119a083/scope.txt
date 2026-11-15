@@ -1,0 +1,2 @@
+QA-E2E-01 full mission, scenario=mission-data, chapter=scene, sha=119a083-c3-119a083, gpu=NVIDIA GeForce RTX 4070 Laptop GPU (Direct3D12)
+Actual saved Bootstrap, real virtual keyboard/mouse. Disclosed shortcuts are listed in shortcuts.txt. Every Assets file hash protected.

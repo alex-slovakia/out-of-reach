@@ -1,0 +1,13 @@
+{
+    "pass": false,
+    "message": "QA-E2E-01 mission-data run completed; see soft checks, shortcuts and captures.",
+    "utc": "2026-11-15T21:10:14.2347733Z",
+    "scope": "Actual saved Bootstrap full-mission QA-E2E-01. Images need visual review.",
+    "scenario": "mission-data",
+    "chapter": "scene",
+    "sha": "119a083-c3-119a083",
+    "checks": 73,
+    "softFailures": 1,
+    "gameErrors": 0,
+    "shortcuts": 1
+}
