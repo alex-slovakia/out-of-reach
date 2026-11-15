@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.LaunchVfxMax",
+  "rootNamespace": "OutOfReach.Presentation.LaunchVfxMax",
+  "references": ["OutOfReach.Cinematics"],
+  "autoReferenced": true
+}
