@@ -27,7 +27,16 @@
 .recorder-end-actions .recorder-button:active { color: #ffffff; }
 .recorder-end-elapsed { font-size: 11px; color: #8b9997; letter-spacing: 1.4px; white-space: normal; border-top-width: 1px; border-top-color: rgba(165, 181, 176, 0.16); padding-top: 16px; }
 .recorder-reduced .recorder-end-card, .recorder-reduced .recorder-end-actions .recorder-button { transition-duration: 0s; translate: 0 0; scale: 1 1; }
-.recorder-lost .recorder-end-headline { color: #edc2b7; }
+.recorder-lost { background-color: rgba(7, 8, 10, 0.58); }
+.recorder-lost .recorder-end-hero { max-width: none; align-items: center; }
+.recorder-lost .recorder-end-eyebrow { display: none; }
+.recorder-lost .recorder-end-headline { color: #d85045; font-size: 110px; letter-spacing: 5px; -unity-text-align: middle-center; margin: 0 0 12px 0; white-space: nowrap; }
+.recorder-lost .recorder-end-summary { max-width: 640px; font-size: 20px; -unity-text-align: middle-center; color: #c6c5c0; margin-bottom: 34px; }
+.recorder-lost .recorder-end-actions { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; }
+.recorder-lost .recorder-end-actions .recorder-button { margin: 4px 6px; padding: 8px 12px; border-left-width: 0; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 0); font-size: 18px; -unity-text-align: middle-center; transform-origin: center; }
+.recorder-lost .recorder-end-actions .recorder-primary-action { color: #eee8dc; font-size: 18px; }
+.recorder-lost .recorder-end-actions .recorder-button:hover, .recorder-lost .recorder-end-actions .recorder-button:focus { color: #fff0e9; border-left-width: 0; border-bottom-color: #d85045; translate: 0 0; scale: 1 1; }
+.recorder-lost .recorder-end-elapsed { -unity-text-align: middle-center; }
 .recorder-recovery .recorder-end-headline { color: #e9eee4; }
 .recorder-detail { flex-grow: 1; min-height: 0; min-width: 0; padding: 16px 22px; background-color: rgba(15, 19, 20, 0.92); border-width: 1px; border-color: #48504f; }
 .recorder-detail-navigation { flex-direction: row; align-items: center; flex-shrink: 0; padding-bottom: 10px; }
@@ -132,3 +141,7 @@
 .recorder-compact .recorder-label { flex-basis: auto; margin-right: 0; margin-bottom: 2px; font-size: 17px; }
 .recorder-compact .recorder-value { flex-basis: auto; }
 .recorder-compact .recorder-linked-value { flex-basis: auto; }
+.recorder-lost.recorder-loss-compact .recorder-end-headline { font-size: 68px; letter-spacing: 3px; }
+.recorder-lost.recorder-loss-compact .recorder-end-summary { font-size: 18px; margin-bottom: 22px; }
+.recorder-lost.recorder-compact .recorder-end-headline { font-size: 42px; letter-spacing: 2px; }
+.recorder-lost.recorder-compact .recorder-end-actions { flex-direction: row; align-items: center; }

@@ -234,7 +234,11 @@ namespace OutOfReach.Presentation.UI.Report
             Root.RemoveFromHierarchy();
         }
 
-        private void OnGeometryChanged(GeometryChangedEvent evt) => Root.EnableInClassList("recorder-compact", evt.newRect.width < 600f);
+        private void OnGeometryChanged(GeometryChangedEvent evt)
+        {
+            Root.EnableInClassList("recorder-compact", evt.newRect.width < 600f);
+            Root.EnableInClassList("recorder-loss-compact", evt.newRect.width < 1000f || evt.newRect.height < 600f);
+        }
         private void RegisterFeedback(Button button)
         {
             button.RegisterCallback<PointerEnterEvent>(_ => MenuFeedback(button, false));
@@ -429,7 +433,7 @@ namespace OutOfReach.Presentation.UI.Report
             {
                 case MissionOutcome.Recovered: return "You made it.";
                 case MissionOutcome.RecoveryPossible: return "A voice from Earth.";
-                case MissionOutcome.Lost: return "Out of time.";
+                case MissionOutcome.Lost: return IsRecordedCrewDeath(report) ? "YOU DIED" : "MISSION LOST";
                 default: return "MISSION ENDED";
             }
         }
@@ -448,12 +452,33 @@ namespace OutOfReach.Presentation.UI.Report
             if (report.Outcome == MissionOutcome.Lost)
             {
                 string cause = OutcomeLine(report, "Cause");
+                if (cause.StartsWith("Unmet water demand", StringComparison.Ordinal)) return "You went too long without water.";
+                if (cause.StartsWith("Unmet food demand", StringComparison.Ordinal)) return "You went too long without food.";
+                if (cause.StartsWith("Suit oxygen:", StringComparison.Ordinal)) return "Your suit ran out of oxygen.";
+                if (cause.StartsWith("Oxygen:", StringComparison.Ordinal)) return "The cabin ran out of breathable air.";
+                if (cause.StartsWith("Carbon dioxide:", StringComparison.Ordinal)) return "Carbon dioxide overwhelmed the cabin.";
+                if (cause.StartsWith("Water:", StringComparison.Ordinal)) return "Your water reserves ran out.";
+                if (cause.StartsWith("Food:", StringComparison.Ordinal)) return "Your food reserves ran out.";
+                if (cause.StartsWith("Unrecoverable mission objective:", StringComparison.Ordinal))
+                    return "Not enough spare parts to restore contact. The crew is still alive.";
                 if (!string.IsNullOrWhiteSpace(cause) && cause.Length <= 240) return cause;
                 if (!string.IsNullOrWhiteSpace(report.OutcomeReason) && report.OutcomeReason.Length <= 240)
                     return report.OutcomeReason;
                 return "The mission could not continue. Its recorded cause is in Mission record.";
             }
             return "The mission record contains the recorded outcome.";
+        }
+
+        private static bool IsRecordedCrewDeath(IMissionReport report)
+        {
+            string cause = OutcomeLine(report, "Cause");
+            return cause.StartsWith("Unmet water demand", StringComparison.Ordinal)
+                || cause.StartsWith("Unmet food demand", StringComparison.Ordinal)
+                || cause.StartsWith("Suit oxygen:", StringComparison.Ordinal)
+                || cause.StartsWith("Oxygen:", StringComparison.Ordinal)
+                || cause.StartsWith("Carbon dioxide:", StringComparison.Ordinal)
+                || cause.StartsWith("Water:", StringComparison.Ordinal)
+                || cause.StartsWith("Food:", StringComparison.Ordinal);
         }
 
         private static string OutcomeLine(IMissionReport report, string label)
