@@ -585,12 +585,16 @@ namespace OutOfReach.Composition
             }
             flightBoard.ConfigureEva(runtime.EvaStatus);
             if (survivalUi)
+            {
+                runtime.TryGetInteractable(InteractionIds.DrinkWater, out IInteractable drinkAction);
+                runtime.TryGetInteractable(InteractionIds.ConsumeRation, out IInteractable rationAction);
                 survivalUi.Configure(survivalDocument, survivalStyle, runtime.Survival, runtime.SurvivalRecovery,
                     runtime.GameState, runtime.Clock, CanPresentSurvivalUi,
                     () => session.SurvivalRecovery?.BeaconPoweredAtSimulationSeconds == null
                         ? session.SurvivalRecovery?.ContactAtSimulationSeconds
                             + SurvivalRecovery.BeaconRequestAfterContactDays * MissionCalendar.SecondsPerDay
-                        : null);
+                        : null, drinkAction, rationAction);
+            }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);

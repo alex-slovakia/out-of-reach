@@ -19,18 +19,21 @@ namespace OutOfReach.Presentation.UI
         private ISimulationClock clock;
         private Func<bool> presentationAllowed;
         private Func<double?> readBeaconRequestTime;
+        private IInteractable drinkAction, rationAction;
         private bool subscribed;
         private VisualElement needsHost, detailsHost, restHost, alertsHost, needs, details, rest, alerts;
         private readonly SurvivalRestNotice restNotice = new SurvivalRestNotice();
         private NeedRow hunger, hydration;
         private Label restDay, restTime, restFeedback, recoveryTitle, arrival, beacon, beaconAction, restStop;
+        private Label waterGuidance, foodGuidance;
         private Button wake;
 
         /// <param name="canPresent">Root-owned visibility gate, including menu, terminal and cinematic locks.
         /// Must allow actual rest even if the player's movement control is locked. Null fails closed.</param>
         public void Configure(UIDocument ui, StyleSheet styleSheet, ISurvivalExtension needsService,
             ISurvivalRecovery recoveryService, IGameState gameState, ISimulationClock simulationClock,
-            Func<bool> canPresent, Func<double?> readBeaconRequestTime = null)
+            Func<bool> canPresent, Func<double?> readBeaconRequestTime = null,
+            IInteractable drinkAction = null, IInteractable rationAction = null)
         {
             ClearBinding();
             document = ui;
@@ -41,6 +44,8 @@ namespace OutOfReach.Presentation.UI
             clock = simulationClock;
             presentationAllowed = canPresent;
             this.readBeaconRequestTime = readBeaconRequestTime;
+            this.drinkAction = drinkAction;
+            this.rationAction = rationAction;
             if (isActiveAndEnabled) Subscribe();
             RefreshPresentation();
         }
@@ -54,6 +59,7 @@ namespace OutOfReach.Presentation.UI
             survival = null;
             recovery = null;
             readBeaconRequestTime = null;
+            drinkAction = rationAction = null;
             state = null;
             clock = null;
             presentationAllowed = null;
@@ -104,6 +110,7 @@ namespace OutOfReach.Presentation.UI
             hunger.Set(survival.Hunger01);
             hydration.Set(survival.Thirst01);
             Show(alerts, true);
+            RefreshNeedGuidance();
             restStop.text = restNotice.Text;
             Show(restStop, restNotice.IsVisible);
 
@@ -207,6 +214,12 @@ namespace OutOfReach.Presentation.UI
             // This host stays visible without Tab/Systems; do not overwrite the root's mission objective.
             alerts = Container("survival-alerts", "survival-alerts");
             alerts.styleSheets.Add(sheet);
+            waterGuidance = Text(string.Empty, "survival-need-guidance");
+            waterGuidance.name = "survival-water-guidance";
+            foodGuidance = Text(string.Empty, "survival-need-guidance");
+            foodGuidance.name = "survival-food-guidance";
+            alerts.Add(waterGuidance);
+            alerts.Add(foodGuidance);
             beaconAction = Text("Power the recovery beacon at the cockpit console.", "survival-beacon-action");
             beaconAction.name = "survival-beacon-action";
             beacon = Text(string.Empty, "survival-beacon-window");
@@ -233,6 +246,30 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
+        private void RefreshNeedGuidance()
+        {
+            bool thirsty = SurvivalChapterReadout.ValidNeed(survival.Thirst01) && survival.Thirst01 >= .25d;
+            bool hungry = SurvivalChapterReadout.ValidNeed(survival.Hunger01) && survival.Hunger01 >= .5d;
+            waterGuidance.text = thirsty
+                ? NeedGuidance(drinkAction, "Drink water", "Water dispenser", "galley beside the crew berth")
+                : "Food & water: galley beside the crew berth.";
+            waterGuidance.EnableInClassList("survival-need-urgent", thirsty);
+            waterGuidance.EnableInClassList("survival-need-critical", survival.Thirst01 >= .8d);
+            foodGuidance.text = hungry
+                ? NeedGuidance(rationAction, "Eat a ration", "Food locker", "galley beside the crew berth") : string.Empty;
+            foodGuidance.EnableInClassList("survival-need-urgent", hungry);
+            foodGuidance.EnableInClassList("survival-need-critical", survival.Hunger01 >= .8d);
+            Show(foodGuidance, hungry);
+        }
+
+        private static string NeedGuidance(IInteractable action, string verb, string station, string location)
+        {
+            if (action == null) return station + ": " + location + ".";
+            if (action.CanInteract) return verb + " at the " + station.ToLowerInvariant()
+                + ".\n" + location + " · Look at it and press E when in reach.";
+            return station + ": " + location + ".\n" + action.Prompt;
+        }
+
         private void HideViews()
         {
             Show(needs, false);
@@ -252,6 +289,7 @@ namespace OutOfReach.Presentation.UI
             needsHost = detailsHost = restHost = alertsHost = needs = details = rest = alerts = null;
             hunger = hydration = null;
             restDay = restTime = restFeedback = recoveryTitle = arrival = beacon = beaconAction = restStop = null;
+            waterGuidance = foodGuidance = null;
             wake = null;
         }
 
