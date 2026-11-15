@@ -185,6 +185,7 @@
     margin-top: 7px; padding-top: 6px; font-size: 14px; color: rgb(242, 240, 227);
     border-top-width: 1px; border-top-color: rgba(155, 229, 232, 0.3);
 }
+.chapter-layer .chapter-strip-dsn { margin-top: 1px; font-size: 13px; color: rgb(226, 228, 218); }
 .chapter-layer .chapter-strip-source { margin-top: 1px; font-size: 12px; color: rgb(170, 177, 170); }
 .chapter-layer .chapter-strip-dose { margin-top: 4px; font-size: 12px; color: rgb(207, 216, 212); }
 

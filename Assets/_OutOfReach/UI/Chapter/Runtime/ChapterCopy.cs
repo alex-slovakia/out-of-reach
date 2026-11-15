@@ -425,6 +425,33 @@ namespace OutOfReach.Presentation.UI.Chapter
                   + " mSv/day, NASA MSL RAD cruise measurement)";
         }
 
+        // ---------- MISSION-DATA: Deep Space Network line (DsnVisibility, derived from the Horizons vectors) ----------
+
+        /// <summary>The strip re-reads the DSN geometry once per this many simulated minutes of the mission date.</summary>
+        public const int DsnStepMinutes = 10;
+
+        /// <summary>Said after the calculator's line: it is geometry, not the Deep Space Network's tracking schedule.</summary>
+        public const string DsnLineOfSight = " (line of sight)";
+
+        /// <summary>Start of the mission date's ten-minute step, UTC. The line is the same for the whole step.</summary>
+        public static DateTime DsnStep(DateTime missionDateUtc)
+        {
+            if (missionDateUtc.Kind == DateTimeKind.Local) missionDateUtc = missionDateUtc.ToUniversalTime();
+            long step = TimeSpan.TicksPerMinute * DsnStepMinutes;
+            return new DateTime(missionDateUtc.Ticks - (missionDateUtc.Ticks % step), DateTimeKind.Utc);
+        }
+
+        /// <summary>
+        /// "DSN: Madrid has Mars in view · el. 59° (line of sight)": which Deep Space Network complex has Mars' centre at
+        /// least 10° above its horizon at the mission date (DsnVisibility). Geometry from the committed Horizons vectors
+        /// and Earth's rotation: not the real tracking schedule, and Mars stands in for the ship as in the delay model.
+        /// Empty outside the committed snapshot.
+        /// </summary>
+        public static string DsnLine(DateTime missionDateUtc)
+        {
+            return DsnVisibility.TryDescribe(DsnStep(missionDateUtc), out string line) ? line + DsnLineOfSight : string.Empty;
+        }
+
         public static string Mass(double kg) => Finite(kg) ? kg.ToString("0.0", CultureInfo.InvariantCulture) + " kg" : "—";
         public static string Litres(double litres) => Finite(litres) ? litres.ToString("0.0", CultureInfo.InvariantCulture) + " L" : "—";
         public static string Energy(double kWh) => Finite(kWh) ? kWh.ToString("0.00", CultureInfo.InvariantCulture) + " kWh" : "—";

@@ -47,7 +47,7 @@ namespace OutOfReach.Tests.ChapterUi
             presenter = ui.Presenter;
             presenter.Configure(ui.Document, ui.Style, harness.Runtime.ChapterFlow, harness.Runtime.GameState, harness.Runtime.Clock,
                 harness.Runtime.Resources, harness.Runtime.SurvivalRecovery, harness.Runtime.Survival, () => true);
-            presenter.ConfigureMissionData(harness.Runtime.Communications);
+            presenter.ConfigureMissionData(harness.Runtime.Communications, () => harness.Runtime.Calendar?.NowUtc);
         }
 
         [TearDown]
@@ -145,6 +145,10 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(ui.Shown("chapter-strip-data"), Is.True, "NASA/JPL line " + when);
             Assert.That(ui.Text("chapter-strip-data"), Is.EqualTo(expected), when);
             Assert.That(ui.Text("chapter-strip-source"), Is.EqualTo(ChapterCopy.EarthLineSource(transmitted)), when);
+            string dsn = ChapterCopy.DsnLine(harness.Runtime.Calendar.NowUtc);
+            Assert.That(dsn, Does.StartWith("DSN: ").And.EndsWith("(line of sight)"), "the mission date is inside the snapshot " + when);
+            Assert.That(ui.Shown("chapter-strip-dsn"), Is.True, "DSN line " + when);
+            Assert.That(ui.Text("chapter-strip-dsn"), Is.EqualTo(dsn), "the calculator's line for the real mission date " + when);
             return expected;
         }
 
