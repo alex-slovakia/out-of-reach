@@ -1,0 +1,52 @@
+{
+    "name": "07b-actual-arrival-foot-push",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-15T00:35:54.1765030Z",
+    "mean": 0.09632015228271485,
+    "deviation": 0.16534827649593354,
+    "state": {
+        "phase": "Intro",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": -2.4259538378146318e-8,
+            "y": 0.11407981812953949,
+            "z": 0.5225032567977905
+        },
+        "camera": {
+            "x": -2.4259538378146318e-8,
+            "y": 1.7640798091888428,
+            "z": 0.5225032567977905
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 100.0,
+            "z": 0.0
+        },
+        "progress": 1.0,
+        "stamina": 1.0,
+        "fade": 0.0,
+        "focus": true,
+        "control": true,
+        "grounded": false,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": false,
+        "suspended": false,
+        "drive": true,
+        "floating": true,
+        "inputLease": true,
+        "floatVelocity": {
+            "x": -2.981340330165949e-8,
+            "y": 0.07874999940395355,
+            "z": -0.34102556109428408
+        },
+        "pushes": 1,
+        "contactRefusal": "",
+        "remaining": 0.0,
+        "mass": 546.0
+    }
+}

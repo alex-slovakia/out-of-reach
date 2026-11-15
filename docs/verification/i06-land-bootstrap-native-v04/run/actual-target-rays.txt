@@ -1,0 +1,9 @@
+cargo-bay:oxygen-tank | cargo-bay:oxygen-tank:0.6122;PreflightCargo_Visual:0.7378;COL_RackLeft:0.8165
+cargo-supply:oxygen-tank | cargo-supply:oxygen-tank:1.3484;COL_Cargo rack plinth:1.6852;COL_Deck:1.8888
+cargo-supply:oxygen-tank | cargo-supply:oxygen-tank:1.3484;COL_Cargo rack plinth:1.6852;COL_Deck:1.8888
+cargo-bay:oxygen-tank | cargo-bay:oxygen-tank:0.6165;PreflightCargo_Visual:0.7433;COL_RackLeft:0.8227
+cockpit-console | Gameplay target - cockpit-console:0.6874;COL_Seat:1.0388
+cockpit-console | Gameplay target - cockpit-console:0.6874;COL_Seat:1.0388
+cockpit-console | Gameplay target - cockpit-console:1.8154
+cargo-supply:oxygen-tank | cargo-supply:oxygen-tank:1.3484;COL_Cargo rack plinth:1.6852;COL_Deck:1.8888
+cargo-supply:oxygen-tank | cargo-supply:oxygen-tank:1.3484;COL_Cargo rack plinth:1.6852;COL_Deck:1.8888

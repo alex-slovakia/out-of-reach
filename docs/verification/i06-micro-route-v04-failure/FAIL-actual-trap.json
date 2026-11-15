@@ -1,0 +1,53 @@
+{
+    "stage": "float route to (0.00, 0.00, 3.70)",
+    "phase": "Emergency",
+    "airlock": "InnerOpen",
+    "routerRefusal": "No verified same-surface WORK palm point within the original reach.",
+    "bridgeRefusal": "No verified same-surface WORK palm point within the original reach.",
+    "bareRefusal": "reach.elbowOutside25to175",
+    "bareStage": "None",
+    "held": "",
+    "collisions": "None",
+    "input": "PlayerInputActions",
+    "feet": {
+        "x": 2.3329527378082277,
+        "y": 1.0085135698318482,
+        "z": 1.0414574146270753
+    },
+    "eye": {
+        "x": 2.3329527378082277,
+        "y": 2.6585135459899904,
+        "z": 1.0414574146270753
+    },
+    "velocity": {
+        "x": 0.0,
+        "y": -0.008749696426093579,
+        "z": -0.08749998360872269
+    },
+    "pitch": 0.0,
+    "routeDistance": 0.0,
+    "skinError": NaN,
+    "stamina": 1.0,
+    "floating": true,
+    "onRoute": false,
+    "outside": false,
+    "suited": false,
+    "control": true,
+    "paused": false,
+    "lease": true,
+    "requested": true,
+    "stranded": false,
+    "grounded": false,
+    "realTime": 79.15214230368481,
+    "simulationSeconds": 9302.94946703565,
+    "pushes": 3,
+    "grabs": 0,
+    "releases": 0,
+    "leftRequests": 62,
+    "rightRequests": 65,
+    "footRequests": 1,
+    "refusedRequests": 125,
+    "plainWorkRequests": 22,
+    "cachedRefusalSkips": 12180,
+    "rememberedRefusals": 91
+}

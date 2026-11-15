@@ -1,0 +1,17 @@
+BATCH SETUP: delivered normal OnApplicationFocus(true) to actual player; no private state, control-gate or gravity assignment.
+Deck views rotate only the actual gameplay view at its real supported spawn; no capture camera or ground teleport.
+SETUP TELEPORT | cargo-bay:oxygen-tank | marine local feet=(0.0000, 0.0350, -1.0250)
+SETUP TELEPORT | cargo-supply:oxygen-tank | marine local feet=(-2.6504, 0.0190, -12.0000)
+Waiting for normal Runtime.Update to exhaust the real60-second timer; no Step/Tick/clock modification.
+ACTUAL DEPARTURE CUE Boarding @ 66.858
+ACTUAL DEPARTURE CUE HatchClosing @ 69.849
+ACTUAL DEPARTURE CUE ArmRetracting @ 72.843
+ACTUAL DEPARTURE CUE Acceleration @ 76.444
+ACTUAL DEPARTURE CUE Ascent @ 77.943
+ACTUAL DEPARTURE CUE Exterior @ 85.443
+ACTUAL DEPARTURE CUE LaterAboard @ 88.445
+ACTUAL DEPARTURE END Completed
+ACTUAL PLAYER PUSH (0.000000, 0.078750, -0.341026)
+COCKPIT DRIFT feet=(0.00000, 0.12027, 0.49572) velocity=(0.00000, 0.07875, -0.34103) target=cockpit-console canInteract=True
+BATCH SETUP: delivered normal OnApplicationFocus(true) to actual player; no private state, control-gate or gravity assignment.
+SETUP TELEPORT | cargo-supply:oxygen-tank | marine local feet=(-2.6504, 0.0190, -12.0000)

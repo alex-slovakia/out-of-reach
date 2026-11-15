@@ -264,7 +264,11 @@ namespace OutOfReach.Composition.Editor
                 if (color.a < .999f)
                 {
                     m.SetFloat("_Surface", 1); m.SetFloat("_Blend", 0); m.SetFloat("_ZWrite", 0);
-                    m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha); m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                    // Match URP's Alpha + Preserve Specular canonical blend state so the
+                    // importer does not rewrite glass on every subsequent scene load.
+                    m.SetFloat("_BlendModePreserveSpecular", 1);
+                    m.SetFloat("_SrcBlend", (float)BlendMode.One); m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+                    m.EnableKeyword("_ALPHAPREMULTIPLY_ON");
                     m.SetFloat("_DstBlendAlpha", (float)BlendMode.OneMinusSrcAlpha); m.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
                     m.SetOverrideTag("RenderType", "Transparent"); m.renderQueue = (int)RenderQueue.Transparent; m.SetShaderPassEnabled("ShadowCaster", false);
                 }

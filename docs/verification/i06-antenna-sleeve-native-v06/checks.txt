@@ -1,0 +1,195 @@
+saved scene | PASS Saved scene includes the actual antenna binding, sole hands owner and marine environment owner.
+saved scene | PASS Actual saved Bootstrap; no replacement scene or geometry fixture.
+saved scene | PASS One production AstronautHandsPresenter owner.
+disclosed genuine command setup | PASS Journey starts in actual unchosen Planning.
+disclosed genuine command setup | PASS Disclosed setup uses real valid planner launch, not phase assignment | AURORA-7 launched with 7 equipment line(s).
+disclosed genuine command setup | PASS Disclosed real prologue Skip command
+disclosed genuine command setup | PASS Actual cockpit check | Cockpit check complete. Impact detected.
+disclosed genuine command setup | PASS Real Impact requested in actual AURORA environment.
+disclosed genuine command setup | PASS Disclosed Impact acknowledgement through real presenter
+disclosed genuine command setup | PASS Actual power repair with real costs | power distribution repaired (2 spare parts).
+disclosed genuine command setup | PASS Actual life support repair with real costs | life support repaired (2 spare parts, 1 kWh).
+disclosed genuine command setup | PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+disclosed genuine command setup | PASS Actual depressurization command | Inner hatch sealed. Depressurizing.
+disclosed genuine command setup | PASS Actual pressure duration and resource model | Simulation advanced.
+disclosed genuine command setup | PASS Actual go-outside command | Outside on the tether.
+disclosed genuine command setup | PASS Actual suited EVA route state, no fake mode or player position.
+disclosed genuine command setup | PASS Space work begins after genuine marine/environment and cinematic handoff.
+disclosed genuine command setup | PASS Existing original hands owner is bound and visible before repair.
+real W tether traversal | PASS Saved route includes measured reachable antenna work station.
+real W tether traversal | PASS Actual W traversed the saved route into reachable work station; view steering disclosed.
+actual E, work and pause | PASS Actual nearest resolver target is the available wrapped antenna.
+actual E, work and pause | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+actual E, work and pause | PASS Actual sole-owner settled contact <=2 mm: started settled work
+actual E, work and pause | PASS Composed control is locked only while held tool work owns it.
+actual E, work and pause | PASS Explicit actual shoulder and new separate sleeve are bound to the existing sole hand owner.
+actual E, work and pause | PASS Sleeve reads unique actual EVA upperarm01.R, never WORK or a camera approximation.
+actual E, work and pause | PASS Original full-size forearm has actual320mm rear cap and at least24 authored rim vertices.
+actual E, work and pause | PASS All16 original rigid hand meshes retained; no duplicate avatar/hand mesh.
+actual E, work and pause | PASS Source-pose probe changed no Player or body transform.
+actual E, work and pause | PASS Actual new upper sleeve surface intersects actual posed EVA torso garment; bone reference alone is insufficient.
+actual E, work and pause | PASS Every exact authored frame passes fixed lengths, actual cap enclosure/rays and rigid hand shape checks.
+actual E, work and pause | PASS Initial E and visible work spend no inventory: OxygenKg unchanged.
+actual E, work and pause | PASS Initial E and visible work spend no inventory: WaterLitres unchanged.
+actual E, work and pause | PASS Initial E and visible work spend no inventory: FoodKg unchanged.
+actual E, work and pause | PASS Initial E and visible work spend no inventory: BatteryKWh unchanged.
+actual E, work and pause | PASS Initial E and visible work spend no inventory: SparePartsCount unchanged.
+actual E, work and pause | PASS Antenna remains faulty during real visible work.
+actual E, work and pause | PASS Repeated direct decorator command is rejected while working; no extra transaction.
+actual E, work and pause | PASS Actual camera + UI capture 1280x720: 01-actual-eva-tool-contact
+actual E, work and pause | PASS Actual sole-owner settled contact <=2 mm: after actual contact capture
+actual E, work and pause | PASS At most one real antenna progress row: active work before pause
+actual E, work and pause | PASS Actual progress row visibility=True: active work before pause
+actual E, work and pause | PASS Actual laid-out progress fill and track exist: active work before pause
+actual E, work and pause | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): active work before pause
+actual E, work and pause | PASS Before pause, same-frame passive sleeve already matches the sole owner's current elbow within20micrometres.
+actual E, work and pause | PASS Actual camera + UI capture 1280x720: 02-actual-paused-tool-contact
+actual E, work and pause | PASS Pause retains the visible active tool lease.
+actual E, work and pause | PASS Entire actual upper sleeve freezes from pause entry, including first paused frame; no delayed pose catch-up.
+actual E, work and pause | PASS Actual wrist/tool freeze from before pause, not only after two settling frames.
+actual E, work and pause | PASS Pause freezes actual work and mission clock.
+actual E, work and pause | PASS Pause freezes sampled actual tool motion.
+actual E, work and pause | PASS Pause retains actual world wrist pose despite menu presentation.
+actual E, work and pause | PASS Explicit owner refresh refuses to advance or report a new frame while paused.
+actual E, work and pause | PASS Actual sole-owner settled contact <=2 mm: paused contact
+actual E, work and pause | PASS Paused actual connected sleeve stays visible at frozen shoulder/elbow pose.
+actual E, work and pause | PASS Pause inventory: OxygenKg unchanged.
+actual E, work and pause | PASS Pause inventory: WaterLitres unchanged.
+actual E, work and pause | PASS Pause inventory: FoodKg unchanged.
+actual E, work and pause | PASS Pause inventory: BatteryKWh unchanged.
+actual E, work and pause | PASS Pause inventory: SparePartsCount unchanged.
+actual E, work and pause | PASS At most one real antenna progress row: paused real work
+actual E, work and pause | PASS Actual progress row visibility=False: paused real work
+actual E, work and pause | PASS Resume retains work ownership and its movement lock.
+actual E, work and pause | PASS At most one real antenna progress row: resumed real work
+actual E, work and pause | PASS Actual progress row visibility=True: resumed real work
+actual E, work and pause | PASS Actual laid-out progress fill and track exist: resumed real work
+actual E, work and pause | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): resumed real work
+actual E, work and pause | Actual cancellation: The work was interrupted.
+actual E, work and pause | PASS External view displacement cancels without leaving a hand or control lease.
+actual E, work and pause | PASS Look-away cancelled attempt: OxygenKg unchanged.
+actual E, work and pause | PASS Look-away cancelled attempt: WaterLitres unchanged.
+actual E, work and pause | PASS Look-away cancelled attempt: FoodKg unchanged.
+actual E, work and pause | PASS Look-away cancelled attempt: BatteryKWh unchanged.
+actual E, work and pause | PASS Look-away cancelled attempt: SparePartsCount unchanged.
+focus and source invalidation | PASS Actual nearest resolver target is the available wrapped antenna.
+focus and source invalidation | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+focus and source invalidation | PASS Actual sole-owner settled contact <=2 mm: started settled work
+focus and source invalidation | PASS Composed control is locked only while held tool work owns it.
+focus and source invalidation | Actual cancellation: Focus was lost.
+focus and source invalidation | PASS Focus cancellation: OxygenKg unchanged.
+focus and source invalidation | PASS Focus cancellation: WaterLitres unchanged.
+focus and source invalidation | PASS Focus cancellation: FoodKg unchanged.
+focus and source invalidation | PASS Focus cancellation: BatteryKWh unchanged.
+focus and source invalidation | PASS Focus cancellation: SparePartsCount unchanged.
+focus and source invalidation | PASS Actual nearest resolver target is the available wrapped antenna.
+focus and source invalidation | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+focus and source invalidation | PASS Actual sole-owner settled contact <=2 mm: started settled work
+focus and source invalidation | PASS Composed control is locked only while held tool work owns it.
+focus and source invalidation | Actual cancellation: The work was interrupted.
+focus and source invalidation | PASS Removed source immediately releases sole owner.
+focus and source invalidation | PASS Removed source cancellation: OxygenKg unchanged.
+focus and source invalidation | PASS Removed source cancellation: WaterLitres unchanged.
+focus and source invalidation | PASS Removed source cancellation: FoodKg unchanged.
+focus and source invalidation | PASS Removed source cancellation: BatteryKWh unchanged.
+focus and source invalidation | PASS Removed source cancellation: SparePartsCount unchanged.
+final-frame lost contact | PASS Actual nearest resolver target is the available wrapped antenna.
+final-frame lost contact | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+final-frame lost contact | PASS Actual sole-owner settled contact <=2 mm: started settled work
+final-frame lost contact | PASS Composed control is locked only while held tool work owns it.
+final-frame lost contact | Actual cancellation: The work was interrupted.
+final-frame lost contact | PASS Continuous real visible work samples=1035, maximum actual wrist/frame error=1.01152432E-06m.
+final-frame lost contact | PASS Final Progressed observer revoked actual owner contact; post-event policy prevented repair.
+final-frame lost contact | PASS Final-frame invalidation: OxygenKg unchanged.
+final-frame lost contact | PASS Final-frame invalidation: WaterLitres unchanged.
+final-frame lost contact | PASS Final-frame invalidation: FoodKg unchanged.
+final-frame lost contact | PASS Final-frame invalidation: BatteryKWh unchanged.
+final-frame lost contact | PASS Final-frame invalidation: SparePartsCount unchanged.
+restart while work is active | PASS Actual nearest resolver target is the available wrapped antenna.
+restart while work is active | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+restart while work is active | PASS Actual sole-owner settled contact <=2 mm: started settled work
+restart while work is active | PASS Composed control is locked only while held tool work owns it.
+restart while work is active | PASS Real restart replaces the single domain session while work was active.
+restart while work is active | PASS Restart clears tool lease and visible EVA hands on actual unsuited Planning state.
+restart while work is active | PASS Original physical target rebinds once to the new session decorator.
+restart while work is active | PASS Stale gate cannot restart its old disposed command.
+restart while work is active | PASS Stale callback after restart: OxygenKg unchanged.
+restart while work is active | PASS Stale callback after restart: WaterLitres unchanged.
+restart while work is active | PASS Stale callback after restart: FoodKg unchanged.
+restart while work is active | PASS Stale callback after restart: BatteryKWh unchanged.
+restart while work is active | PASS Stale callback after restart: SparePartsCount unchanged.
+restart while work is active | PASS Refresh refuses an absent/stale lease and actual unsuited state.
+disclosed genuine command setup | PASS Journey starts in actual unchosen Planning.
+disclosed genuine command setup | PASS Disclosed setup uses real valid planner launch, not phase assignment | AURORA-7 launched with 7 equipment line(s).
+disclosed genuine command setup | PASS Disclosed real prologue Skip command
+disclosed genuine command setup | PASS Actual cockpit check | Cockpit check complete. Impact detected.
+disclosed genuine command setup | PASS Real Impact requested in actual AURORA environment.
+disclosed genuine command setup | PASS Disclosed Impact acknowledgement through real presenter
+disclosed genuine command setup | PASS Actual power repair with real costs | power distribution repaired (2 spare parts).
+disclosed genuine command setup | PASS Actual life support repair with real costs | life support repaired (2 spare parts, 1 kWh).
+disclosed genuine command setup | PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+disclosed genuine command setup | PASS Actual depressurization command | Inner hatch sealed. Depressurizing.
+disclosed genuine command setup | PASS Actual pressure duration and resource model | Simulation advanced.
+disclosed genuine command setup | PASS Actual go-outside command | Outside on the tether.
+disclosed genuine command setup | PASS Actual suited EVA route state, no fake mode or player position.
+disclosed genuine command setup | PASS Space work begins after genuine marine/environment and cinematic handoff.
+disclosed genuine command setup | PASS Existing original hands owner is bound and visible before repair.
+real W tether traversal | PASS Saved route includes measured reachable antenna work station.
+real W tether traversal | PASS Actual W traversed the saved route into reachable work station; view steering disclosed.
+actual three-second success | PASS Actual original right hand has16 rigid meshes and real sleeve cap vertices available for projection.
+actual three-second success | PASS Actual nearest resolver target is the available wrapped antenna.
+actual three-second success | PASS Real E starts sole owner tool acquisition and composed movement lock. Rejection=
+actual three-second success | PASS Actual sole-owner settled contact <=2 mm: started settled work
+actual three-second success | PASS Composed control is locked only while held tool work owns it.
+actual three-second success | PASS At most one real antenna progress row: timed actual render 0.013
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 0.013
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 0.013
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 0.013
+actual three-second success | PASS At most one real antenna progress row: timed actual render 0.503
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 0.503
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 0.503
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 0.503
+actual three-second success | PASS At most one real antenna progress row: timed actual render 1.006
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 1.006
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 1.006
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 1.006
+actual three-second success | PASS At most one real antenna progress row: timed actual render 1.503
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 1.503
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 1.503
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 1.503
+actual three-second success | PASS At most one real antenna progress row: timed actual render 2.000
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 2.000
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 2.000
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.000
+actual three-second success | PASS At most one real antenna progress row: timed actual render 2.500
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 2.500
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 2.500
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.500
+actual three-second success | PASS At most one real antenna progress row: timed actual render 2.959
+actual three-second success | PASS Actual progress row visibility=True: timed actual render 2.959
+actual three-second success | PASS Actual laid-out progress fill and track exist: timed actual render 2.959
+actual three-second success | PASS Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.959
+actual three-second success | PASS Continuous real visible work samples=288, maximum actual wrist/frame error=9.83025E-07m.
+actual three-second success | PASS Seven actual rendered work frames cover requested0/.5/1/1.5/2/2.5/~2.95 seconds; actual times recorded.
+actual three-second success | PASS All sampled actual runtime hand vertices preserve calibrated tool-relative geometry within20micrometres; no independent pose writer.
+actual three-second success | Actual runtime sampled 78 of91 authored bins; exact91 art-frame native proof is separate, no invented unsampled runtime frames.
+actual three-second success | PASS All91 exact frames and seven actual camera frames prove the original cap physically enclosed/occluded by new opaque geometry; no FOV/offscreen substitute.
+actual three-second success | PASS One genuine completed timed work publishes exactly one successful real command.
+actual three-second success | PASS Actual domain antenna changed from faulty to repaired.
+actual three-second success | PASS Exactly the authoritative one-time repair cost for OxygenKg; no animation charge.
+actual three-second success | PASS Exactly the authoritative one-time repair cost for WaterLitres; no animation charge.
+actual three-second success | PASS Exactly the authoritative one-time repair cost for FoodKg; no animation charge.
+actual three-second success | PASS Exactly the authoritative one-time repair cost for BatteryKWh; no animation charge.
+actual three-second success | PASS Exactly the authoritative one-time repair cost for SparePartsCount; no animation charge.
+actual three-second success | PASS Success releases hand/movement leases.
+actual three-second success | PASS Completed work hides the temporary upper sleeve.
+actual three-second success | PASS At most one real antenna progress row: completed actual work
+actual three-second success | PASS Actual progress row visibility=False: completed actual work
+actual three-second success | PASS Visible corrected state follows actual repaired Condition01.
+actual three-second success | PASS Actual camera + UI capture 1280x720: 03-actual-eva-repaired-antenna
+actual three-second success | PASS Repeated E after actual repair: OxygenKg unchanged.
+actual three-second success | PASS Repeated E after actual repair: WaterLitres unchanged.
+actual three-second success | PASS Repeated E after actual repair: FoodKg unchanged.
+actual three-second success | PASS Repeated E after actual repair: BatteryKWh unchanged.
+actual three-second success | PASS Repeated E after actual repair: SparePartsCount unchanged.
+actual three-second success | PASS Repeated E did not emit another repair completion.

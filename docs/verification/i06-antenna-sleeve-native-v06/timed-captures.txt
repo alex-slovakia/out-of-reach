@@ -1,0 +1,7 @@
+work-00-requested-0.00s requested=0 actual=0.012953097000718117 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-01-requested-0.50s requested=0.5 actual=0.5029894904233515 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-02-requested-1.00s requested=1 actual=1.0062677909620106 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-03-requested-1.50s requested=1.5 actual=1.503226889949292 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-04-requested-2.00s requested=2 actual=2.0004032841883603 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-05-requested-2.50s requested=2.5 actual=2.500314390752465 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False
+work-06-requested-2.95s requested=2.95 actual=2.9594175949692731 capFrontFacing=False clippedCapVertices=0 viewportMin=(Infinity, Infinity, Infinity) viewportMax=(-Infinity, -Infinity, -Infinity) potentiallyVisible=False

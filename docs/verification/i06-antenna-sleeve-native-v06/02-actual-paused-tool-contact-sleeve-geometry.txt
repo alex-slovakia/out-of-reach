@@ -1,0 +1,6 @@
+Actual rigid sleeve local bounds=Center: (0.00, 0.00, -0.16), Extents: (0.06, 0.06, 0.16)
+world rear cap centre=(3.59, 2.18, 13.32)
+reference shoulder=(3.84, 2.31, 13.39)
+rear cap to reference shoulder metres=0.285859585
+rear cap viewport=(1.07, -0.71, 0.20)
+NOTE: reference shoulder is existing solver reference, not a rendered shoulder claim. No sleeve mesh/stretch changes.

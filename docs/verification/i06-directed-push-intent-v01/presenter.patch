@@ -1,0 +1,79 @@
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
+@@ -90,14 +90,15 @@
+         }
+ 
+         /// <summary>
+-        /// One contact-only directional push. Travel intent is projected onto the actual hit plane, with a bounded
+-        /// outward component. The resulting direction is captured in that surface's local space and dispatched
++        /// One contact-only directional push. Already-away intent is retained; other intent is limited to an
++        /// outward cone, smoothly approaching the normal for nearly inward intent. Direction is captured locally and dispatched
+         /// only after the existing visible skin contact proof. Changing input during anticipation adds no force.
+         /// </summary>
+         public bool TryPushDirected(ContactHand selectedHand, Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01 = .35f)
+         {
+             if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f
+-                || !Finite(desiredTravelWorld) || desiredTravelWorld.sqrMagnitude < .0001f)
++                || !Finite(desiredTravelWorld) || !Finite(desiredTravelWorld.sqrMagnitude)
++                || desiredTravelWorld.sqrMagnitude < .0001f)
+                 return Refuse("Invalid directional push request.");
+             return Begin(selectedHand, HandContactKind.Push, aimDirection, strength01, desiredTravelWorld);
+         }
+@@ -182,19 +183,12 @@
+             // A cylinder axis is an unoriented line. Pick the authored grip hemisphere once,
+             // rather than letting an equivalent +axis/-axis model flip the wrist upside down.
+             if (requestedKind == HandContactKind.Grip) tangent = OrientRailAxisAtRequest(tangent, player.ViewPivot);
++            Vector3 direction = hit.normal;
++            if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f
++                && !TryDirectedPushDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
++                return Refuse("Invalid directional push geometry.");
+             hand = selectedHand; kind = requestedKind; surface = hit.collider;
+             target = Frame(surface, hit.point, hit.normal, tangent, radius);
+-            Vector3 direction = hit.normal;
+-            if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f)
+-            {
+-                Vector3 travelTangent = Vector3.ProjectOnPlane(desiredTravelWorld, hit.normal);
+-                if (travelTangent.sqrMagnitude > .0001f)
+-                {
+-                    float away = Mathf.Clamp(Mathf.Max(.25f, player.Microgravity.MinimumAwayDot + .025f), 0f, 1f);
+-                    direction = hit.normal * away + travelTangent.normalized * Mathf.Sqrt(1f - away * away);
+-                }
+-                // Intent straight into/out of the surface has no tangent: retain an ordinary normal push.
+-            }
+             localPushDirection = surface.transform.InverseTransformVector(direction).normalized;
+             pushStrength = strength; pendingSuited = suit.IsSuitOn; actionSent = false; pending = true;
+             requestStarted = Time.unscaledTime; // Presentation watchdog only; never advances simulation or physics.
+@@ -208,6 +202,33 @@
+                 : "The actual hand pose, arm reach or approach path refused this contact.";
+             CancelOwnedContact();
+             return Refuse(reason);
++        }
++
++        // Pure request-direction math only. Force magnitude and validated contact dispatch remain Player-owned.
++        static bool TryDirectedPushDirection(Vector3 surfaceNormal, Vector3 travelIntent, float minimumAwayDot, out Vector3 direction)
++        {
++            direction = Vector3.zero;
++            float normalSquared = surfaceNormal.sqrMagnitude, intentSquared = travelIntent.sqrMagnitude;
++            if (!Finite(surfaceNormal) || !Finite(travelIntent) || !Finite(minimumAwayDot)
++                || !Finite(normalSquared) || !Finite(intentSquared) || normalSquared < .0001f || intentSquared < .0001f) return false;
++            Vector3 normal = surfaceNormal / Mathf.Sqrt(normalSquared), intent = travelIntent / Mathf.Sqrt(intentSquared);
++            float away = Mathf.Clamp(Mathf.Max(.25f, minimumAwayDot + .025f), 0f, 1f);
++            float outward = Vector3.Dot(intent, normal);
++            if (outward >= away) { direction = intent; return true; }
++            Vector3 tangent = intent - normal * outward;
++            float tangentLength = tangent.magnitude;
++            if (tangentLength == 0f) { direction = normal; return true; }
++            Vector3 tangentDirection = tangent / tangentLength;
++            if (tangentLength >= .25f)
++                direction = normal * away + tangentDirection * Mathf.Sqrt(1f - away * away);
++            else
++            {
++                // A hard .25 cutoff would jump75.52 degrees at the default cone. Blend the angle instead.
++                float ratio = Mathf.Clamp01(tangentLength / .25f);
++                float angle = ratio * ratio * (3f - 2f * ratio) * Mathf.Acos(away);
++                direction = normal * Mathf.Cos(angle) + tangentDirection * Mathf.Sin(angle);
++            }
++            return true;
+         }
+ 
+         bool TryWorkPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, out RaycastHit palmHit)

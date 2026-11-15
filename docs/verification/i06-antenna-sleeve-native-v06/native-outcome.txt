@@ -1,0 +1,2 @@
+ANTENNA_REPAIR_NATIVE_QA_PASS 190 actual saved-scene assertions passed; see disclosed setup and separate art-fit gate. output=C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration\.local/antenna-sleeve-continuity-qa\20261115T002610781Z
+Exit code: 0

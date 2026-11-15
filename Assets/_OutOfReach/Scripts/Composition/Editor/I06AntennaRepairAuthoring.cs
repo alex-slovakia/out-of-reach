@@ -12,7 +12,7 @@ namespace OutOfReach.Composition.Editor
     {
         public const string AssetRoot = "Assets/_OutOfReach/Visuals/Props/AntennaRepair";
         public const string OwnedRootName = "Antenna repair worksite";
-        public static readonly Vector3 ProposedRouteEnd = new Vector3(3.65f, .9f, 13.15f);
+        public static readonly Vector3 ProposedRouteEnd = new Vector3(3.75f, .9f, 13.15f);
         public sealed class Result
         {
             public Transform Root;

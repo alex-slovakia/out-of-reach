@@ -1,0 +1,52 @@
+{
+    "name": "06-actual-exterior-ascent",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-15T00:35:48.1179953Z",
+    "mean": 0.24930480122566224,
+    "deviation": 0.2274009883403778,
+    "state": {
+        "phase": "Intro",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": 0.0,
+            "y": 0.05000000074505806,
+            "z": 0.800000011920929
+        },
+        "camera": {
+            "x": 10016.0,
+            "y": 146.18386840820313,
+            "z": -26.0
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 139.18386840820313,
+            "z": 0.0
+        },
+        "progress": 0.822184145450592,
+        "stamina": 1.0,
+        "fade": 0.0,
+        "focus": true,
+        "control": false,
+        "grounded": true,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": true,
+        "suspended": false,
+        "drive": true,
+        "floating": false,
+        "inputLease": false,
+        "floatVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "pushes": 0,
+        "contactRefusal": "",
+        "remaining": 0.0,
+        "mass": 546.0
+    }
+}

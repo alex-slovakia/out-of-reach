@@ -1,0 +1,825 @@
+{
+    "scope": "Exact91 source sampling through sole owner, then separately actual3second work and GPU captures. Fixed350/320mm view-arm is not the body's242/241mm skeleton.",
+    "frames": [
+        {
+            "frame": 0,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 1,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 2,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 3,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 4,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 5,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 6,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 7,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 8,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 9,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0,
+            "capPlaneMaximum": -0.011483871378004551,
+            "blockers": []
+        },
+        {
+            "frame": 10,
+            "upper": 0.3499999940395355,
+            "lower": 0.31999993324279787,
+            "contact": 0.0,
+            "shapeDrift": 3.4047323538288767e-7,
+            "capPlaneMaximum": -0.011479342356324196,
+            "blockers": []
+        },
+        {
+            "frame": 11,
+            "upper": 0.3500000238418579,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.387371580425679e-7,
+            "capPlaneMaximum": -0.011470100842416287,
+            "blockers": []
+        },
+        {
+            "frame": 12,
+            "upper": 0.3500000536441803,
+            "lower": 0.32000017166137698,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.4590443103988948e-7,
+            "capPlaneMaximum": -0.011467333883047104,
+            "blockers": []
+        },
+        {
+            "frame": 13,
+            "upper": 0.3500002324581146,
+            "lower": 0.31999996304512026,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 2.478508065451024e-7,
+            "capPlaneMaximum": -0.01147946622222662,
+            "blockers": []
+        },
+        {
+            "frame": 14,
+            "upper": 0.3500000238418579,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 2.479837633018178e-7,
+            "capPlaneMaximum": -0.011455198749899865,
+            "blockers": []
+        },
+        {
+            "frame": 15,
+            "upper": 0.34999990463256838,
+            "lower": 0.31999993324279787,
+            "contact": 0.0,
+            "shapeDrift": 2.461915471485554e-7,
+            "capPlaneMaximum": -0.01145188044756651,
+            "blockers": []
+        },
+        {
+            "frame": 16,
+            "upper": 0.35000017285346987,
+            "lower": 0.3199998736381531,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.552979196934757e-7,
+            "capPlaneMaximum": -0.011461359448730946,
+            "blockers": []
+        },
+        {
+            "frame": 17,
+            "upper": 0.3500001132488251,
+            "lower": 0.3199998140335083,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 2.553182980591373e-7,
+            "capPlaneMaximum": -0.011465161107480526,
+            "blockers": []
+        },
+        {
+            "frame": 18,
+            "upper": 0.34999987483024599,
+            "lower": 0.3200000524520874,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.493490225991991e-7,
+            "capPlaneMaximum": -0.011461179703474045,
+            "blockers": []
+        },
+        {
+            "frame": 19,
+            "upper": 0.34999987483024599,
+            "lower": 0.31999993324279787,
+            "contact": 0.0,
+            "shapeDrift": 2.5543377546455306e-7,
+            "capPlaneMaximum": -0.011452213861048222,
+            "blockers": []
+        },
+        {
+            "frame": 20,
+            "upper": 0.3499998450279236,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 9.98994892142946e-7,
+            "capPlaneMaximum": -0.011440341360867024,
+            "blockers": []
+        },
+        {
+            "frame": 21,
+            "upper": 0.34999993443489077,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 9.958835107681808e-7,
+            "capPlaneMaximum": -0.01145081128925085,
+            "blockers": []
+        },
+        {
+            "frame": 22,
+            "upper": 0.3500001132488251,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.6835022026716617e-7,
+            "capPlaneMaximum": -0.01148640550673008,
+            "blockers": []
+        },
+        {
+            "frame": 23,
+            "upper": 0.3500000834465027,
+            "lower": 0.3199997842311859,
+            "contact": 0.0,
+            "shapeDrift": 2.480166756413382e-7,
+            "capPlaneMaximum": -0.011528528295457363,
+            "blockers": []
+        },
+        {
+            "frame": 24,
+            "upper": 0.35000020265579226,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 2.479067973126803e-7,
+            "capPlaneMaximum": -0.01151774451136589,
+            "blockers": []
+        },
+        {
+            "frame": 25,
+            "upper": 0.3500000536441803,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 2.7200266572435796e-7,
+            "capPlaneMaximum": -0.011518205516040326,
+            "blockers": []
+        },
+        {
+            "frame": 26,
+            "upper": 0.35000067949295046,
+            "lower": 0.3200000524520874,
+            "contact": 0.0,
+            "shapeDrift": 3.651259703474352e-7,
+            "capPlaneMaximum": -0.01152217760682106,
+            "blockers": []
+        },
+        {
+            "frame": 27,
+            "upper": 0.34999996423721316,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 2.483000969277782e-7,
+            "capPlaneMaximum": -0.011527935974299908,
+            "blockers": []
+        },
+        {
+            "frame": 28,
+            "upper": 0.3500005006790161,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.496292097475816e-7,
+            "capPlaneMaximum": -0.011536283418536187,
+            "blockers": []
+        },
+        {
+            "frame": 29,
+            "upper": 0.34999972581863406,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 2.505925067453063e-7,
+            "capPlaneMaximum": -0.011544275097548962,
+            "blockers": []
+        },
+        {
+            "frame": 30,
+            "upper": 0.3499997556209564,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 2.5185863705701197e-7,
+            "capPlaneMaximum": -0.01152800302952528,
+            "blockers": []
+        },
+        {
+            "frame": 31,
+            "upper": 0.34999987483024599,
+            "lower": 0.3199998140335083,
+            "contact": 0.0,
+            "shapeDrift": 3.659943672573718e-7,
+            "capPlaneMaximum": -0.01154427882283926,
+            "blockers": []
+        },
+        {
+            "frame": 32,
+            "upper": 0.3499998152256012,
+            "lower": 0.3200000524520874,
+            "contact": 0.0,
+            "shapeDrift": 5.680365120497299e-7,
+            "capPlaneMaximum": -0.011526120826601982,
+            "blockers": []
+        },
+        {
+            "frame": 33,
+            "upper": 0.3499999940395355,
+            "lower": 0.3200000822544098,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.2067805477709046e-7,
+            "capPlaneMaximum": -0.011560069397091866,
+            "blockers": []
+        },
+        {
+            "frame": 34,
+            "upper": 0.35000017285346987,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 3.6312027873464105e-7,
+            "capPlaneMaximum": -0.011616677977144719,
+            "blockers": []
+        },
+        {
+            "frame": 35,
+            "upper": 0.3500000536441803,
+            "lower": 0.31999990344047549,
+            "contact": 0.0,
+            "shapeDrift": 3.6319312357591118e-7,
+            "capPlaneMaximum": -0.011626549996435643,
+            "blockers": []
+        },
+        {
+            "frame": 36,
+            "upper": 0.3499997854232788,
+            "lower": 0.3200001120567322,
+            "contact": 0.0,
+            "shapeDrift": 3.642840624706878e-7,
+            "capPlaneMaximum": -0.011629894375801087,
+            "blockers": []
+        },
+        {
+            "frame": 37,
+            "upper": 0.3500000536441803,
+            "lower": 0.3200001120567322,
+            "contact": 0.0,
+            "shapeDrift": 3.644781259026786e-7,
+            "capPlaneMaximum": -0.011629855260252953,
+            "blockers": []
+        },
+        {
+            "frame": 38,
+            "upper": 0.3499997556209564,
+            "lower": 0.32000017166137698,
+            "contact": 0.0,
+            "shapeDrift": 3.6312027873464105e-7,
+            "capPlaneMaximum": -0.01162881962954998,
+            "blockers": []
+        },
+        {
+            "frame": 39,
+            "upper": 0.3500000536441803,
+            "lower": 0.3199998438358307,
+            "contact": 0.0,
+            "shapeDrift": 3.66945812402264e-7,
+            "capPlaneMaximum": -0.011627071537077427,
+            "blockers": []
+        },
+        {
+            "frame": 40,
+            "upper": 0.34999990463256838,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 2.5005448378578878e-7,
+            "capPlaneMaximum": -0.011627147905528546,
+            "blockers": []
+        },
+        {
+            "frame": 41,
+            "upper": 0.34999990463256838,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 3.225725606625929e-7,
+            "capPlaneMaximum": -0.01162754837423563,
+            "blockers": []
+        },
+        {
+            "frame": 42,
+            "upper": 0.3500000536441803,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.6553907989400616e-7,
+            "capPlaneMaximum": -0.011627926491200924,
+            "blockers": []
+        },
+        {
+            "frame": 43,
+            "upper": 0.34999990463256838,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 2.758790742518613e-7,
+            "capPlaneMaximum": -0.011629471555352211,
+            "blockers": []
+        },
+        {
+            "frame": 44,
+            "upper": 0.3499999940395355,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 3.6432692240850886e-7,
+            "capPlaneMaximum": -0.01163225807249546,
+            "blockers": []
+        },
+        {
+            "frame": 45,
+            "upper": 0.34999996423721316,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 2.4980460011647667e-7,
+            "capPlaneMaximum": -0.011634216643869877,
+            "blockers": []
+        },
+        {
+            "frame": 46,
+            "upper": 0.3499998450279236,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 5.677738386111741e-7,
+            "capPlaneMaximum": -0.011636413633823395,
+            "blockers": []
+        },
+        {
+            "frame": 47,
+            "upper": 0.35000014305114748,
+            "lower": 0.3199998140335083,
+            "contact": 0.0,
+            "shapeDrift": 5.699062626263185e-7,
+            "capPlaneMaximum": -0.011633332818746567,
+            "blockers": []
+        },
+        {
+            "frame": 48,
+            "upper": 0.3500000834465027,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 5.666881861543516e-7,
+            "capPlaneMaximum": -0.011623351834714413,
+            "blockers": []
+        },
+        {
+            "frame": 49,
+            "upper": 0.34999987483024599,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.667191208478471e-7,
+            "capPlaneMaximum": -0.011617329902946949,
+            "blockers": []
+        },
+        {
+            "frame": 50,
+            "upper": 0.3500000536441803,
+            "lower": 0.3199998438358307,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 2.758931998414482e-7,
+            "capPlaneMaximum": -0.011614707298576832,
+            "blockers": []
+        },
+        {
+            "frame": 51,
+            "upper": 0.3500000238418579,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 2.5044278118002696e-7,
+            "capPlaneMaximum": -0.011615097522735596,
+            "blockers": []
+        },
+        {
+            "frame": 52,
+            "upper": 0.3499999940395355,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.001171648975287e-7,
+            "capPlaneMaximum": -0.011617143638432026,
+            "blockers": []
+        },
+        {
+            "frame": 53,
+            "upper": 0.3499997854232788,
+            "lower": 0.32000014185905459,
+            "contact": 0.0,
+            "shapeDrift": 3.684460807562573e-7,
+            "capPlaneMaximum": -0.011615941300988198,
+            "blockers": []
+        },
+        {
+            "frame": 54,
+            "upper": 0.34999993443489077,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 3.7689002851948319e-7,
+            "capPlaneMaximum": -0.011612835340201855,
+            "blockers": []
+        },
+        {
+            "frame": 55,
+            "upper": 0.350000262260437,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 0.0000020798765945073684,
+            "capPlaneMaximum": -0.011617657728493214,
+            "blockers": []
+        },
+        {
+            "frame": 56,
+            "upper": 0.3500000834465027,
+            "lower": 0.3199999928474426,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 0.000001825700110202888,
+            "capPlaneMaximum": -0.01160995289683342,
+            "blockers": []
+        },
+        {
+            "frame": 57,
+            "upper": 0.34999996423721316,
+            "lower": 0.3199998736381531,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 9.735530284160632e-7,
+            "capPlaneMaximum": -0.011556279845535756,
+            "blockers": []
+        },
+        {
+            "frame": 58,
+            "upper": 0.3499998450279236,
+            "lower": 0.320000022649765,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 9.161942102764442e-7,
+            "capPlaneMaximum": -0.011483831331133843,
+            "blockers": []
+        },
+        {
+            "frame": 59,
+            "upper": 0.3500000834465027,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000010421445040265099,
+            "capPlaneMaximum": -0.01147404219955206,
+            "blockers": []
+        },
+        {
+            "frame": 60,
+            "upper": 0.3499999940395355,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000017069402247216204,
+            "capPlaneMaximum": -0.011486970819532872,
+            "blockers": []
+        },
+        {
+            "frame": 61,
+            "upper": 0.3500000238418579,
+            "lower": 0.320000022649765,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 0.000001359935026812309,
+            "capPlaneMaximum": -0.01145936269313097,
+            "blockers": []
+        },
+        {
+            "frame": 62,
+            "upper": 0.3499999940395355,
+            "lower": 0.3199998140335083,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000014694888932353934,
+            "capPlaneMaximum": -0.011519174091517926,
+            "blockers": []
+        },
+        {
+            "frame": 63,
+            "upper": 0.34999987483024599,
+            "lower": 0.3200000524520874,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 0.0000016290887288050727,
+            "capPlaneMaximum": -0.011642588302493096,
+            "blockers": []
+        },
+        {
+            "frame": 64,
+            "upper": 0.35000014305114748,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 6.069937512620527e-7,
+            "capPlaneMaximum": -0.011568324640393258,
+            "blockers": []
+        },
+        {
+            "frame": 65,
+            "upper": 0.34999966621398928,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000017167762962344569,
+            "capPlaneMaximum": -0.011486316099762917,
+            "blockers": []
+        },
+        {
+            "frame": 66,
+            "upper": 0.35000020265579226,
+            "lower": 0.31999993324279787,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000017380948520440143,
+            "capPlaneMaximum": -0.011456632055342198,
+            "blockers": []
+        },
+        {
+            "frame": 67,
+            "upper": 0.3500000238418579,
+            "lower": 0.3200001120567322,
+            "contact": 3.3717478231665157e-7,
+            "shapeDrift": 0.0000010344323300159886,
+            "capPlaneMaximum": -0.011458846740424633,
+            "blockers": []
+        },
+        {
+            "frame": 68,
+            "upper": 0.3500000536441803,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 6.533614964610024e-7,
+            "capPlaneMaximum": -0.011470136232674122,
+            "blockers": []
+        },
+        {
+            "frame": 69,
+            "upper": 0.35000014305114748,
+            "lower": 0.3199999928474426,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000010705027762014652,
+            "capPlaneMaximum": -0.011475898325443268,
+            "blockers": []
+        },
+        {
+            "frame": 70,
+            "upper": 0.34999972581863406,
+            "lower": 0.32000014185905459,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.000001125912035604415,
+            "capPlaneMaximum": -0.011476860381662846,
+            "blockers": []
+        },
+        {
+            "frame": 71,
+            "upper": 0.3499999940395355,
+            "lower": 0.31999993324279787,
+            "contact": 0.0,
+            "shapeDrift": 0.0000012255156889295905,
+            "capPlaneMaximum": -0.011477189138531685,
+            "blockers": []
+        },
+        {
+            "frame": 72,
+            "upper": 0.35000014305114748,
+            "lower": 0.31999993324279787,
+            "contact": 0.0,
+            "shapeDrift": 0.0000013980009043734754,
+            "capPlaneMaximum": -0.0114774564281106,
+            "blockers": []
+        },
+        {
+            "frame": 73,
+            "upper": 0.3500000238418579,
+            "lower": 0.31999990344047549,
+            "contact": 2.384185791015625e-7,
+            "shapeDrift": 0.0000013974212151879329,
+            "capPlaneMaximum": -0.011475900188088417,
+            "blockers": []
+        },
+        {
+            "frame": 74,
+            "upper": 0.3500002324581146,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 0.0000013996587995279697,
+            "capPlaneMaximum": -0.011482033878564835,
+            "blockers": []
+        },
+        {
+            "frame": 75,
+            "upper": 0.34999990463256838,
+            "lower": 0.31999996304512026,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014030481452209643,
+            "capPlaneMaximum": -0.011513474397361279,
+            "blockers": []
+        },
+        {
+            "frame": 76,
+            "upper": 0.34999990463256838,
+            "lower": 0.31999990344047549,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014049911669644644,
+            "capPlaneMaximum": -0.011576899327337742,
+            "blockers": []
+        },
+        {
+            "frame": 77,
+            "upper": 0.35000017285346987,
+            "lower": 0.31999990344047549,
+            "contact": 0.0,
+            "shapeDrift": 0.000001467707647861971,
+            "capPlaneMaximum": -0.011582688428461552,
+            "blockers": []
+        },
+        {
+            "frame": 78,
+            "upper": 0.34999990463256838,
+            "lower": 0.32000014185905459,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014744163081559237,
+            "capPlaneMaximum": -0.011610623449087143,
+            "blockers": []
+        },
+        {
+            "frame": 79,
+            "upper": 0.35000017285346987,
+            "lower": 0.3200000524520874,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014120421383267968,
+            "capPlaneMaximum": -0.011586789041757584,
+            "blockers": []
+        },
+        {
+            "frame": 80,
+            "upper": 0.35000017285346987,
+            "lower": 0.3199998140335083,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014153762322166586,
+            "capPlaneMaximum": -0.011555111967027188,
+            "blockers": []
+        },
+        {
+            "frame": 81,
+            "upper": 0.3500000536441803,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 0.0000014149708249533433,
+            "capPlaneMaximum": -0.0115450294688344,
+            "blockers": []
+        },
+        {
+            "frame": 82,
+            "upper": 0.350000262260437,
+            "lower": 0.3199998736381531,
+            "contact": 0.0,
+            "shapeDrift": 8.02995032245235e-7,
+            "capPlaneMaximum": -0.011546633206307888,
+            "blockers": []
+        },
+        {
+            "frame": 83,
+            "upper": 0.3500000536441803,
+            "lower": 0.3199998736381531,
+            "contact": 0.0,
+            "shapeDrift": 0.0000011298299114059774,
+            "capPlaneMaximum": -0.011549393646419049,
+            "blockers": []
+        },
+        {
+            "frame": 84,
+            "upper": 0.34999990463256838,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 0.0000012818940149372793,
+            "capPlaneMaximum": -0.011529158800840378,
+            "blockers": []
+        },
+        {
+            "frame": 85,
+            "upper": 0.34999996423721316,
+            "lower": 0.320000022649765,
+            "contact": 0.0,
+            "shapeDrift": 7.632552296854556e-7,
+            "capPlaneMaximum": -0.011503431014716626,
+            "blockers": []
+        },
+        {
+            "frame": 86,
+            "upper": 0.34999966621398928,
+            "lower": 0.31999990344047549,
+            "contact": 0.0,
+            "shapeDrift": 0.0000016444614630017896,
+            "capPlaneMaximum": -0.01147492602467537,
+            "blockers": []
+        },
+        {
+            "frame": 87,
+            "upper": 0.3500000536441803,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 0.0000010728448387453682,
+            "capPlaneMaximum": -0.01145489327609539,
+            "blockers": []
+        },
+        {
+            "frame": 88,
+            "upper": 0.3500000238418579,
+            "lower": 0.3199999928474426,
+            "contact": 0.0,
+            "shapeDrift": 0.0000012240442401889596,
+            "capPlaneMaximum": -0.011443166993558407,
+            "blockers": []
+        },
+        {
+            "frame": 89,
+            "upper": 0.34999993443489077,
+            "lower": 0.3200000524520874,
+            "contact": 0.0,
+            "shapeDrift": 0.0000015832511053304189,
+            "capPlaneMaximum": -0.01143777184188366,
+            "blockers": []
+        },
+        {
+            "frame": 90,
+            "upper": 0.3500000536441803,
+            "lower": 0.3200000822544098,
+            "contact": 0.0,
+            "shapeDrift": 9.440988151254714e-7,
+            "capPlaneMaximum": -0.011436342261731625,
+            "blockers": []
+        }
+    ],
+    "shoulderSurfaceCrossing": true
+}

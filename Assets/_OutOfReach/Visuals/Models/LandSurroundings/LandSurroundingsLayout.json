@@ -1,0 +1,333 @@
+{
+  "sourceCommit": "d3cf841",
+  "sourceManifestSha256": "942f295ba3258ee7084e1c4c2a258380806bbc9a97c6eea9ac4c18b3a7f4fd40",
+  "groundY": -36.6,
+  "triangleTotal": 17032,
+  "modules": [
+    {
+      "name": "LSS_GroundBreakup",
+      "triangles": 2400,
+      "min": [
+        -1328.45284,
+        -36.58,
+        -1496.53769
+      ],
+      "max": [
+        1388.54027,
+        -36.16816,
+        1132.4119
+      ],
+      "materials": [
+        "LSS_GrassDry"
+      ]
+    },
+    {
+      "name": "LSS_Scrub",
+      "triangles": 3360,
+      "min": [
+        -833.87529,
+        -36.58,
+        -791.59423
+      ],
+      "max": [
+        888.05902,
+        -34.90057,
+        921.69111
+      ],
+      "materials": [
+        "LSS_Scrub"
+      ]
+    },
+    {
+      "name": "LSS_TreeLines",
+      "triangles": 5230,
+      "min": [
+        -2546.25925,
+        -36.6,
+        -2157.65383
+      ],
+      "max": [
+        2223.97811,
+        -18.60542,
+        2347.63398
+      ],
+      "materials": [
+        "LSS_Canopy"
+      ]
+    },
+    {
+      "name": "LSS_Berms",
+      "triangles": 660,
+      "min": [
+        -626.05424,
+        -36.6,
+        -427.56781
+      ],
+      "max": [
+        568.40622,
+        -32.60664,
+        607.60303
+      ],
+      "materials": [
+        "LSS_GrassDry"
+      ]
+    },
+    {
+      "name": "LSS_Drainage",
+      "triangles": 1548,
+      "min": [
+        -102.03577,
+        -36.9764,
+        -40.2
+      ],
+      "max": [
+        190.2,
+        -35.5,
+        250.2
+      ],
+      "materials": [
+        "A7_PaintGraphite",
+        "LSS_Rock",
+        "LS_Concrete"
+      ]
+    },
+    {
+      "name": "LSS_Fence",
+      "triangles": 2712,
+      "min": [
+        -200.045,
+        -36.6,
+        -200.045
+      ],
+      "max": [
+        200.045,
+        -34.1,
+        330.045
+      ],
+      "materials": [
+        "A7_Aluminum"
+      ]
+    },
+    {
+      "name": "LSS_UtilityPoles",
+      "triangles": 1122,
+      "min": [
+        110.8,
+        -36.6,
+        -910.13856
+      ],
+      "max": [
+        113.2,
+        -25.6,
+        -69.86144
+      ],
+      "materials": [
+        "A7_PaintGraphite",
+        "LS_ConcreteBarrier"
+      ]
+    }
+  ],
+  "anchors": [
+    {
+      "name": "LSS_FenceGate_North",
+      "point": [
+        20.0,
+        -36.6,
+        -200.0
+      ]
+    },
+    {
+      "name": "LSS_FenceCorner_SW",
+      "point": [
+        -200.0,
+        -36.6,
+        330.0
+      ]
+    },
+    {
+      "name": "LSS_FenceCorner_NE",
+      "point": [
+        200.0,
+        -36.6,
+        -200.0
+      ]
+    },
+    {
+      "name": "LSS_PoleLine_North",
+      "point": [
+        112.0,
+        -36.6,
+        -910.0
+      ]
+    },
+    {
+      "name": "LSS_PoleLine_South",
+      "point": [
+        112.0,
+        -36.6,
+        -70.0
+      ]
+    },
+    {
+      "name": "LSS_Drainage_West_Mid",
+      "point": [
+        -100.0,
+        -36.6,
+        105.0
+      ]
+    },
+    {
+      "name": "LSS_Drainage_South_Mid",
+      "point": [
+        119.0,
+        -36.6,
+        150.0
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "LSS_GrassDry",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Materials/LSS_GrassDry.mat",
+      "created": true,
+      "tint": "#B3A577",
+      "tiling": 0.125,
+      "normal": 0.4,
+      "BaseColor": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_BaseColor.png",
+      "Normal": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_Normal.png",
+      "MODS": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_MODS.png"
+    },
+    {
+      "name": "LSS_Scrub",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Materials/LSS_Scrub.mat",
+      "created": true,
+      "tint": "#6F7A45",
+      "tiling": 0.5,
+      "normal": 0.9,
+      "BaseColor": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_BaseColor.png",
+      "Normal": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_Normal.png",
+      "MODS": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_MODS.png"
+    },
+    {
+      "name": "LSS_Canopy",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Materials/LSS_Canopy.mat",
+      "created": true,
+      "tint": "#5A6A40",
+      "tiling": 0.1,
+      "normal": 0.6,
+      "BaseColor": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_BaseColor.png",
+      "Normal": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_Normal.png",
+      "MODS": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Textures/LSS_Vegetation_MODS.png"
+    },
+    {
+      "name": "LSS_Rock",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Materials/LSS_Rock.mat",
+      "created": true,
+      "tint": "#9A958C",
+      "tiling": 0.5,
+      "normal": 1.0,
+      "BaseColor": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_BaseColor.png",
+      "Normal": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_Normal.png",
+      "MODS": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_MODS.png"
+    },
+    {
+      "name": "LS_Concrete",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Materials/LS_Concrete.mat",
+      "created": false,
+      "tint": "#E2E0DA",
+      "tiling": 0.25,
+      "normal": 0.6
+    },
+    {
+      "name": "LS_ConcreteBarrier",
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Materials/LS_ConcreteBarrier.mat",
+      "created": false,
+      "tint": "#EFEDE7",
+      "tiling": 0.5,
+      "normal": 0.5
+    },
+    {
+      "name": "A7_PaintGraphite",
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat",
+      "created": false,
+      "tint": "#2B2B2C",
+      "tiling": 1.0,
+      "normal": 0.35
+    },
+    {
+      "name": "A7_Aluminum",
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+      "created": false,
+      "tint": "#C3C6C9",
+      "tiling": 2.0,
+      "normal": 0.6
+    }
+  ],
+  "files": [
+    {
+      "path": "Models/LSS_LandSurroundings.fbx",
+      "sha256": "632a5c46f22e972fc41cbbbf1058efe2935e2bed68d076078d2bdbe86ce5fff4"
+    },
+    {
+      "path": "Textures/LSS_Vegetation_BaseColor.png",
+      "sha256": "6587111238a4a7211fa186f454b51b084b941acc2aa741d13e86cd8cd763ec25"
+    },
+    {
+      "path": "Textures/LSS_Vegetation_Normal.png",
+      "sha256": "f4ff03507f0e51db1137f65723355a2feccb85d098271b3c8c27659cb9737196"
+    },
+    {
+      "path": "Textures/LSS_Vegetation_MODS.png",
+      "sha256": "98d56c487f6f35d5b9950616fe7c9a30bff4c0ba0074418ef6cfb6c06e05e891"
+    },
+    {
+      "path": "Provenance/ATTRIBUTION.md",
+      "sha256": "2f1cd86efba98b5e5cc24550b903041b97f2f241a3ef23561ce95264aa742fbf"
+    },
+    {
+      "path": "Provenance/lss_manifest.json",
+      "sha256": "942f295ba3258ee7084e1c4c2a258380806bbc9a97c6eea9ac4c18b3a7f4fd40"
+    },
+    {
+      "path": "Provenance/lss_materials.json",
+      "sha256": "a3a009a236cc55c7bd50f694131ac11c9a3fc4f1db1ea0893439db307973119d"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_BaseColor.png",
+      "sha256": "20e593667b8c5a8a71670115e491a5b03df3945fec24361c11d54c2b6a2fdefe",
+      "guid": "840b34f21f8f4fdf93b1f35f59397d2a"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_Normal.png",
+      "sha256": "bd327b76ecfa3fe88aabf20e01e67b96e5474e20d61d0cee029dd12863314e58",
+      "guid": "0f7e1ae37f424286bbf36c469d68f63d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Textures/LS_Concrete_MODS.png",
+      "sha256": "a872a36470b5129160e67c41cf64382268addb61b381d48461bbe845a7f270dc",
+      "guid": "a33db58ae8114e439fa5859161d2baf2"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Materials/LS_Concrete.mat",
+      "sha256": "7f104640fa32158e5b2aa00c866bbf98128b28d73d8e5b5bb3f0232f6fffe632",
+      "guid": "12513581621c4804ea27a5a6e78cc030"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Materials/LS_ConcreteBarrier.mat",
+      "sha256": "ee08b1c3e730f02ef106735ad742215a1ba94ddff407ad3b6c85c03b3fcc6025",
+      "guid": "1460a9e93b89eb149adf70d6a0f3e14f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat",
+      "sha256": "70840a7f6d16f46a522264ecfe6fbdaeed7f94981c56f908c4a7d0ab5727f66c",
+      "guid": "529b8a0350dac33478fefee425e59f2e"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat",
+      "sha256": "a7df31287c0ebf5e399a8e64ceb0688d9432a6aed279348bba603aa73fc6285c",
+      "guid": "11d4eb58858467d4f9ab9b46da292a19"
+    }
+  ]
+}

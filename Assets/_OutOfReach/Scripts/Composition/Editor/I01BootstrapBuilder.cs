@@ -156,6 +156,8 @@ namespace OutOfReach.Composition.Editor
             var land = I06LandSiteAuthoring.Create(marine.SiteRoot);
             var landHorizon = I06LandHorizonAuthoring.Create(marine.SiteRoot, 0f);
             I06LandHorizonAuthoring.Validate(landHorizon, marine.SiteRoot, 0f);
+            var landSurroundings = I06LandSurroundingsAuthoring.Create(marine.SiteRoot);
+            I06LandSurroundingsAuthoring.Validate(landSurroundings, marine.SiteRoot);
             I06LandSiteAuthoring.Validate(land, marine.SiteRoot);
             var cargoStage = I06MarineCargoAuthoring.Create(marine, cameraTransform, font);
             var habitatTargets = new[]
@@ -288,6 +290,9 @@ namespace OutOfReach.Composition.Editor
             var helmetLightView = presentationRoot.gameObject.AddComponent<EvaWorkLampPresenter>();
             helmetLightView.ConfigureViews(helmetLamp, camera);
             composition.ConfigureEvaWorkLamp(helmetLightView);
+            var earthTerminal = I06EarthTerminalAuthoring.Create(deliveredModelRoot, camera,
+                new Vector3(2.662f, 1.60f, 2.25f), Quaternion.Euler(0, 90, 0));
+            composition.ConfigureEarthTerminal(earthTerminal);
             var body = I06BodyAuthoring.Create(presentationRoot, player.transform, camera);
             composition.ConfigureBody(body);
             Transform evaOutfit = body.VisualRoot.GetComponentsInChildren<Transform>(true)
@@ -495,10 +500,19 @@ namespace OutOfReach.Composition.Editor
             ShipVisualAnchors anchors = ExactlyOne<ShipVisualAnchors>(roots);
             ValidateAnchors(anchors);
             var targets = roots.SelectMany(root => root.GetComponentsInChildren<InteractableTarget>(true)).ToArray();
-            if (targets.Length != 28 || runtime.InteractionTargets.Count != 28
+            if (targets.Length != 29 || runtime.InteractionTargets.Count != 28
                 || runtime.InteractionTargets.Distinct().Count() != 28
                 || runtime.InteractionTargets.Any(target => !target || !targets.Contains(target)))
-                throw new InvalidOperationException("C06 requires eight mission, fourteen cargo, five habitat/recovery and one science-salvage target.");
+                throw new InvalidOperationException("C06 requires28 domain targets and one independent presentation-only Earth archive.");
+            var earthTerminal = ExactlyOne<I06EarthTerminalBindings>(roots);
+            if (targets.Count(t => t.InteractionId == I06EarthTerminalBindings.TargetId) != 1
+                || !earthTerminal.Target || !targets.Contains(earthTerminal.Target)
+                || earthTerminal.Target.InteractionId != I06EarthTerminalBindings.TargetId
+                || runtime.InteractionTargets.Contains(earthTerminal.Target)
+                || compositionFields.FindProperty("earthTerminal").objectReferenceValue != earthTerminal
+                || !earthTerminal.DedicatedGloves || earthTerminal.DedicatedGloves.gameObject.activeSelf
+                || !earthTerminal.Terminal || Vector2.Distance(earthTerminal.Terminal.ActiveSizeMetres, new Vector2(.64f,.40f)) > .0001f)
+                throw new InvalidOperationException("The Earth archive must have one separate physical target, dormant dedicated gloves and approved64x40cm screen.");
             var runtimeFields = new SerializedObject(runtime);
             Transform preflightSpawn = runtimeFields.FindProperty("preflightSpawn").objectReferenceValue as Transform;
             Transform planningPivot = compositionFields.FindProperty("planningFramingPivot").objectReferenceValue as Transform;
@@ -519,6 +533,7 @@ namespace OutOfReach.Composition.Editor
                 if (targets.Count(target => target.InteractionId == id) != 1)
                     throw new InvalidOperationException("Missing or duplicated interaction ID: " + id);
             Physics.SyncTransforms();
+            CheckReach(earthTerminal.Target, new Vector3(2.260f, 1.70f, 2.238f), player.transform, solidCasing: true);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.CockpitConsole), new Vector3(0, 1.7f, -.1f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairPower), new Vector3(0, 1.7f, 6.1f), player.transform);
             CheckReach(targets.Single(target => target.InteractionId == InteractionIds.RepairLifeSupport), new Vector3(0, 1.7f, 8.1f), player.transform);
@@ -950,10 +965,11 @@ namespace OutOfReach.Composition.Editor
             CheckReach(target, new Vector3(0, 1.7f, expectedPosition.z), playerRoot);
         }
 
-        private static void CheckReach(InteractableTarget target, Vector3 eye, Transform playerRoot)
+        private static void CheckReach(InteractableTarget target, Vector3 eye, Transform playerRoot, bool solidCasing = false)
         {
             Collider collider = target.GetComponent<Collider>();
-            if (!collider || !collider.isTrigger) throw new InvalidOperationException("Gameplay target must have its own trigger collider.");
+            if (!collider || (solidCasing ? collider.isTrigger || !(collider is BoxCollider) : !collider.isTrigger))
+                throw new InvalidOperationException(solidCasing ? "Earth viewer requires its own solid casing collider." : "Gameplay target must have its own trigger collider.");
             Vector3 direction = (collider.bounds.center - eye).normalized;
             RaycastHit[] hits = Physics.RaycastAll(eye, direction, 2f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
             Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));

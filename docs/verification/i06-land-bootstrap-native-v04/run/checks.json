@@ -1,0 +1,1354 @@
+{
+    "checks": [
+        {
+            "utc": "2026-11-15T00:34:15.6547638Z",
+            "stage": "opening actual saved Bootstrap",
+            "message": "Saved Bootstrap contains actual I06MarineBindings.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:15.6583350Z",
+            "stage": "opening actual saved Bootstrap",
+            "message": "Saved marine bindings reference their actual console and player camera.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:22.3201384Z",
+            "stage": "opening actual saved Bootstrap",
+            "message": "Saved Bootstrap and every pre-existing Assets file retain exact source hashes.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3313586Z",
+            "stage": "native actual Bootstrap",
+            "message": "Probe runs the actual saved Bootstrap, not an alternate fixture.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3353845Z",
+            "stage": "native actual Bootstrap",
+            "message": "Saved runtime enables physical marine boarding and normal frame clock.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3379582Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual PlayerInputActions remains the input source.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3384633Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual opening mode modal blocks control before choice.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3410087Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual marine location is visible with no departure lease during Planning.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3460448Z",
+            "stage": "native actual Bootstrap",
+            "message": "Saved Bootstrap has28 unique actual targets, including14 cargo; no fixture targets added.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3481144Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exactly one actual antenna work adapter owns the intended timed presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3496422Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cockpit-console",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3511603Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: repair-power",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3521698Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: repair-life-support",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3531689Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: suit-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3546782Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: airlock-controls",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3568558Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: eva-exit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3578663Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: eva-return",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3598341Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact antenna target -> actual current-session3s WorkGate -> canonical domain interactable binding.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3623692Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3633691Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3658898Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3674414Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3689563Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3694622Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3721071Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3736147Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3751347Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3766630Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3771700Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3792012Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3807240Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-supply:spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3817323Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: cargo-bay:spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3827329Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: survival-ration",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3842392Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: survival-water",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3857537Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: grow-build",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3867610Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: survival-sleep",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3878999Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: recovery-beacon",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3900161Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exact authoritative target binding: salvage-payload",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3915310Z",
+            "stage": "native actual Bootstrap",
+            "message": "Exactly one real cockpit/seat target is reused.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3925318Z",
+            "stage": "native actual Bootstrap",
+            "message": "Single actual runtime/marine/cargo/hands owners, including after restart.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3965670Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual pinned land kit and passive coastal horizon are active at the prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.3965670Z",
+            "stage": "native actual Bootstrap",
+            "message": "Land kit and horizon share the stationary SiteRoot, outside moving VehicleRoot.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4006584Z",
+            "stage": "native actual Bootstrap",
+            "message": "No active Ocean or LaunchBarge remains in the actual land prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4046879Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual land kit retains exactly11 distinct pinned imported model modules.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4082469Z",
+            "stage": "native actual Bootstrap",
+            "message": "Each pinned land MeshFilter and exact imported sharedMesh retains its opening-session identity.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4123026Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual configured departure FX owns the transient land-contact presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4144604Z",
+            "stage": "native actual Bootstrap",
+            "message": "Steam owner binds the actual stationary land deflector frame.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4159852Z",
+            "stage": "native actual Bootstrap",
+            "message": "Before first visible ignition, no extra land mesh or unexplained steam owner exists.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4185226Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual land kit retains five authored structural MeshColliders.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4205386Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual imported land pad has correct metre bounds and negativeZ center; no stale mirrored axis.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4220468Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual saved passive land horizon uses its persisted mesh at the ground datum, without an invented support collider.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4240983Z",
+            "stage": "native actual Bootstrap",
+            "message": "Original authoritative546 kg default and empty hands; no fixture inventory grant.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4256216Z",
+            "stage": "native actual Bootstrap",
+            "message": "The single real cockpit target has moved to the actual marine seat surface.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.4271366Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual player/camera start at marine location with marine viewing range.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.5929342Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual Start timed UI chooses mode and arms Core deadline.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.5939359Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual composed/domain gate releases control after Timed choice.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.5969347Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual gate remains allowed at grounding readiness: after actual Timed choice",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.5984513Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual capsule grounds without gravity/position edits: after actual Timed choice",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:29.6009957Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual deadline starts near60 seconds and is driven naturally.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.4008455Z",
+            "stage": "native actual Bootstrap",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 01-actual-dock; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.5727956Z",
+            "stage": "actual elevated deck land views",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 01a-land-from-deck-left; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.7176710Z",
+            "stage": "actual elevated deck land views",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 01b-land-from-deck-right; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.8267590Z",
+            "stage": "actual elevated deck land views",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 01c-land-facility-horizon; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.8443775Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual gate remains allowed at grounding readiness: cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.8455694Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual capsule grounds without gravity/position edits: cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.8728371Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved2 m nearest ray resolves cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.9421356Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Exactly one actual keyboard E succeeds: cargo-bay:oxygen-tank | Carrying oxygen tank.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.9431421Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual bay E unloads one oxygen crate.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.9446520Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual gate remains allowed at grounding readiness: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.9466888Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual capsule grounds without gravity/position edits: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:30.9669829Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0087824Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Oxygen tank back on the pallet.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0113099Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual supply E returns that unit; no fake available crate.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0168580Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0356243Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Carrying oxygen tank.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0467646Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual pickup shows the carried case and real two-hand rig.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0472884Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved destination binding points to the real oxygen bay.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.0493473Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Production destination guide is visible while carrying.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.1948939Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 02-actual-carried-cargo; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.2105569Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual gate remains allowed at grounding readiness: before actual W route",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:31.2115631Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual capsule grounds without gravity/position edits: before actual W route",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.6699070Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual oxygen-tank W route: 13.438 m / 6.448 s, matches real speed factor and no side collision.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.6802892Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved2 m nearest ray resolves cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.7011556Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Exactly one actual keyboard E succeeds: cargo-bay:oxygen-tank | Oxygen tank loaded.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.7037154Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Real E stow restores exact original546 kg manifest after continuous loaded walk.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.7047239Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Production held hands and guidance clear after stow.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.7052304Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual gate remains allowed at grounding readiness: before actual W route",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:37.7077492Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual capsule grounds without gravity/position edits: before actual W route",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:38.3964263Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual empty-hands W route: 1.724 m / 0.689 s, matches real speed factor and no side collision.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:38.4316844Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual saved2 m nearest ray resolves cockpit-console",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:38.4343178Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Representative loaded route and actual seat approach finish before the real deadline.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:34:38.5593032Z",
+            "stage": "actual cargo cycle and continuous loaded W approach",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 03-cabin-before-deadline; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3286995Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Observed real timed mode expires at approximately60 wall seconds: 59.881",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3307110Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Actual deadline seals manifest and leaves first-person boarding control, without launching automatically.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3372948Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Actual saved2 m nearest ray resolves cockpit-console",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3938425Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Exactly one actual keyboard E succeeds: cockpit-console | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3953614Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Real seat E launches sealed manifest into Intro.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3963815Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Core teleports the real camera's player ancestor to Aurora while the same camera parent holds the marine world shot.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3968887Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Production departure lease blocks real movement and interaction.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3994143Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Cargo visibility check occurs during actual Intro departure lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.3999245Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4009576Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4029792Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4041109Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4051157Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4051157Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4071347Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Loaded actual aboard case renderers remain active during Intro: spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:29.4081640Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Intro visible aboard cases do not restore held hands or cargo interactions.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:33.7448920Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Actual cabin camera settles at the authored marine seat despite Core relocation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:33.8895114Z",
+            "stage": "full actual60-second deadline then real seat E",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 04-cabin-launch-loaded-cases; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:36.8653992Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Pause holds the pre-ascent world shot instead of restoring a camera offset under Core's relocated player.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.2188645Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Real paused W reaches the action map but cannot move, interact or advance departure/domain time.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.2203736Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Paused actual camera, transport, hatch and arm retain stable world transforms.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.2229161Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Pause emits no duplicate departure cue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.4145318Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 05-actual-paused-departure; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.4313018Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Resume continues from held cabin playhead/world shot without a pause-sized jump.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:37.4324081Z",
+            "stage": "actual departure pause/resume world-shot stability",
+            "message": "Resume retains actual departure control lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9457605Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual timeline reaches exterior camera cut on the same player camera.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9467755Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Cargo visibility check occurs during actual Intro departure lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9482893Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9503156Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9513221Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9528276Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9543682Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9553786Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9568838Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Loaded actual aboard case renderers remain active during Intro: spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:47.9589251Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Intro visible aboard cases do not restore held hands or cargo interactions.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1190007Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 06-actual-exterior-ascent; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1307371Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual pinned land kit and passive coastal horizon are active at the prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1332722Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Land kit and horizon share the stationary SiteRoot, outside moving VehicleRoot.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1357799Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "No active Ocean or LaunchBarge remains in the actual land prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1393006Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual land kit retains exactly11 distinct pinned imported model modules.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1408070Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Each pinned land MeshFilter and exact imported sharedMesh retains its opening-session identity.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1433401Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual configured departure FX owns the transient land-contact presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1453401Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Steam owner binds the actual stationary land deflector frame.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1508247Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Owned steam root retains the exact stationary contact-frame parent: rootParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane expectedParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane rootFlags=DontSave meshExists=True meshId=-11560 asset= readable=False flags=DontSave vertices=153 subMeshes=1 indexCounts=672 topologies=Triangles expectedMaterial=IgnitionSteam expectedShader=OutOfReach/Marine/DepartureVolume",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1533689Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Owned steam mesh exists and remains transient: rootParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane expectedParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane rootFlags=DontSave meshExists=True meshId=-11560 asset= readable=False flags=DontSave vertices=153 subMeshes=1 indexCounts=672 topologies=Triangles expectedMaterial=IgnitionSteam expectedShader=OutOfReach/Marine/DepartureVolume",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1558747Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Owned steam root/mesh keep exact DontSave flags: rootParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane expectedParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane rootFlags=DontSave meshExists=True meshId=-11560 asset= readable=False flags=DontSave vertices=153 subMeshes=1 indexCounts=672 topologies=Triangles expectedMaterial=IgnitionSteam expectedShader=OutOfReach/Marine/DepartureVolume",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1579188Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual uploaded steam mesh metadata proves153 vertices and224 triangles without forbidden CPU readback: rootParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane expectedParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane rootFlags=DontSave meshExists=True meshId=-11560 asset= readable=False flags=DontSave vertices=153 subMeshes=1 indexCounts=672 topologies=Triangles expectedMaterial=IgnitionSteam expectedShader=OutOfReach/Marine/DepartureVolume",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1594294Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual steam asset retains its original volume shader/mode: rootParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane expectedParent=I06 isolated marine prologue/Launch site - stationary/Land launch site - 2f8dd22/Actual deflector contact plane rootFlags=DontSave meshExists=True meshId=-11560 asset= readable=False flags=DontSave vertices=153 subMeshes=1 indexCounts=672 topologies=Triangles expectedMaterial=IgnitionSteam expectedShader=OutOfReach/Marine/DepartureVolume",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1624941Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Every extra land MeshFilter is one of the owner's exact four steam lobes; no unknown extra geometry, material or collider is ignored.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1649999Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual land kit retains five authored structural MeshColliders.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1665693Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual imported land pad has correct metre bounds and negativeZ center; no stale mirrored axis.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1695775Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual saved passive land horizon uses its persisted mesh at the ground datum, without an invented support collider.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:48.1705842Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual land site stays stationary while the real transport ascends.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:49.2464394Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Second exterior image still belongs to the actual departure camera lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:49.3900507Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 06b-actual-land-exterior-ascent; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7758447Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual sequence completes once and transfers once; no skip/cancel/fallback.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7808659Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Every authored departure cue occurs once, including pause/resume.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7818726Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual completed transfer hides marine and restores Intro control/resolver.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7823778Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "The same cockpit target restores its exact saved Aurora parent, pose and scale.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7838975Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Same saved camera chain returns to neutral departure offset above the real Aurora player.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7854143Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual transfer fade completes; hidden marine cargo and all cargo targets stay inactive in Intro.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7874650Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual Aurora sky, ambient mode and fog restore to the binding's captured environment.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7894711Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual ambient colours/intensity/reflection restore exactly after transfer.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7904716Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual camera restores its original Aurora far clip.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:52.7935597Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual sun colour/intensity/rotation restore after transfer.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:53.0753074Z",
+            "stage": "actual exterior shot and completed transfer",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 07-actual-aurora-return; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:53.0913410Z",
+            "stage": "actual arrival float lease and real W+Space floor push",
+            "message": "Root owns the actual interior floating input lease after arrival; no fixture mode entry.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:53.2976836Z",
+            "stage": "actual arrival float lease and real W+Space floor push",
+            "message": "Actual W reaches the map but cannot provide airborne thrust or legacy walking in the zero-drift arrival state.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:53.3137345Z",
+            "stage": "actual arrival float lease and real W+Space floor push",
+            "message": "Exactly one real W+Space edge invokes the root router and Player-validated current foot contact: Done / ",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.0664924Z",
+            "stage": "actual arrival float lease and real W+Space floor push",
+            "message": "Actual capsule displacement and nonzero drift follow the physical foot push; no direct force, transform or velocity assignment.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.1780343Z",
+            "stage": "actual arrival float lease and real W+Space floor push",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 07b-actual-arrival-foot-push; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.1967536Z",
+            "stage": "actual drift into cockpit E resolver reach",
+            "message": "Actual saved2 m nearest ray resolves cockpit-console",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.2250203Z",
+            "stage": "actual drift into cockpit E resolver reach",
+            "message": "Actual cockpit E succeeds once after the continuous physical arrival drift: Cockpit check complete. Impact detected.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.2260259Z",
+            "stage": "actual drift into cockpit E resolver reach",
+            "message": "Restored actual cockpit E starts the real Intro check/impact, proving control handoff beyond a UI flag.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6234151Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual UI restart clears previous session/seal/timer/pause/held state and restores546 kg.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6244220Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Restart returns to actual marine opening mode choice without a stale departure lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6262507Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Restart repositions the single console/player and applies actual marine environment again.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6267712Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Saved Bootstrap has28 unique actual targets, including14 cargo; no fixture targets added.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6293740Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exactly one actual antenna work adapter owns the intended timed presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6298794Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cockpit-console",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6308851Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: repair-power",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6318900Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: repair-life-support",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6334005Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: suit-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6339180Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: airlock-controls",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6349246Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: eva-exit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6359235Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: eva-return",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6369243Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact antenna target -> actual current-session3s WorkGate -> canonical domain interactable binding.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6385220Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6390385Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6400448Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6410499Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:water-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6425558Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6441613Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:food-locker",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6451629Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6466690Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:battery-module",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6477002Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6487098Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:solar-wing",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6487098Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6501822Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:spare-parts-kit",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6501822Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-supply:spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6526083Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: cargo-bay:spectrometer",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6531244Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: survival-ration",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6541321Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: survival-water",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6551308Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: grow-build",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6566369Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: survival-sleep",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6571571Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: recovery-beacon",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6586725Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exact authoritative target binding: salvage-payload",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6596834Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exactly one real cockpit/seat target is reused.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6617186Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Single actual runtime/marine/cargo/hands owners, including after restart.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6627579Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual pinned land kit and passive coastal horizon are active at the prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6627579Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Land kit and horizon share the stationary SiteRoot, outside moving VehicleRoot.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6658093Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "No active Ocean or LaunchBarge remains in the actual land prologue.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6668343Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual land kit retains exactly11 distinct pinned imported model modules.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6683520Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Each pinned land MeshFilter and exact imported sharedMesh retains its opening-session identity.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6693591Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual configured departure FX owns the transient land-contact presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6708656Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Steam owner binds the actual stationary land deflector frame.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6708656Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Before first visible ignition, no extra land mesh or unexplained steam owner exists.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6723803Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual land kit retains five authored structural MeshColliders.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6733867Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual imported land pad has correct metre bounds and negativeZ center; no stale mirrored axis.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6746279Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual saved passive land horizon uses its persisted mesh at the ground datum, without an invented support collider.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6833052Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual restarted Practice UI restores control without a deadline.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6843040Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual gate remains allowed at grounding readiness: restarted actual Practice",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.6848082Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual capsule grounds without gravity/position edits: restarted actual Practice",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8121898Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual1280x720 Bootstrap GPU capture contains spatial variation: 08-restarted-actual-land; visual acceptance remains human review.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8286013Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual gate remains allowed at grounding readiness: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8291267Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual capsule grounds without gravity/position edits: cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8392426Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8525972Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Carrying oxygen tank.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8581713Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Actual saved2 m nearest ray resolves cargo-supply:oxygen-tank",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8710053Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Exactly one actual keyboard E succeeds: cargo-supply:oxygen-tank | Oxygen tank back on the pallet.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:54.8715191Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Fresh actual pickup/return after restart invokes once per E and preserves aboard ledger.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:35:59.7478501Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Saved Bootstrap and every pre-existing Assets file retain exact source hashes.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:36:03.9803076Z",
+            "stage": "actual UI restart and saved scene lifecycle",
+            "message": "Saved Bootstrap and every pre-existing Assets file retain exact source hashes.",
+            "pass": true
+        }
+    ]
+}

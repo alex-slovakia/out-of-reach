@@ -1,0 +1,52 @@
+{
+    "name": "07-actual-aurora-return",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-15T00:35:53.0743023Z",
+    "mean": 0.0886504277586937,
+    "deviation": 0.1518002152442932,
+    "state": {
+        "phase": "Intro",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": 0.0,
+            "y": 0.05000000074505806,
+            "z": 0.800000011920929
+        },
+        "camera": {
+            "x": 0.0,
+            "y": 1.6999999284744263,
+            "z": 0.800000011920929
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 100.0,
+            "z": 0.0
+        },
+        "progress": 1.0,
+        "stamina": 1.0,
+        "fade": 0.0,
+        "focus": true,
+        "control": true,
+        "grounded": true,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": false,
+        "suspended": false,
+        "drive": true,
+        "floating": true,
+        "inputLease": true,
+        "floatVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "pushes": 0,
+        "contactRefusal": "",
+        "remaining": 0.0,
+        "mass": 546.0
+    }
+}

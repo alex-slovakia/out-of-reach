@@ -1,0 +1,6 @@
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08882, -0.81271, 0.12861, 0.56132)
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08882, -0.81271, 0.12861, 0.56132)
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08882, -0.81271, 0.12861, 0.56132)
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08882, -0.81271, 0.12861, 0.56132)
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08882, -0.81271, 0.12861, 0.56132)
+actual E: rejection= sleeveReady=True shoulder=(3.90, 2.33, 13.41) grip=(3.40, 2.37, 13.29) gripRotation=(0.00000, -0.70711, 0.00000, 0.70711) view=(3.75, 2.55, 13.16) viewRotation=(0.08868, -0.81309, 0.12858, 0.56079)

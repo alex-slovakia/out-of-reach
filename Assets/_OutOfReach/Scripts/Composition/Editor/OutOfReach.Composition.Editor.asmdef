@@ -24,9 +24,13 @@
     "OutOfReach.UI",
     "UnityEngine.UI",
     "Unity.RenderPipelines.Core.Runtime",
-    "Unity.RenderPipelines.Universal.Runtime"
+    "Unity.RenderPipelines.Universal.Runtime",
+    "OutOfReach.Terminal",
+    "OutOfReach.Terminal.Editor"
   ],
-  "includePlatforms": ["Editor"],
+  "includePlatforms": [
+    "Editor"
+  ],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,

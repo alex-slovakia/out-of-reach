@@ -1,0 +1,52 @@
+{
+    "name": "08-restarted-actual-land",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-15T00:35:54.8111818Z",
+    "mean": 0.33131253719329836,
+    "deviation": 0.26896533370018008,
+    "state": {
+        "phase": "Planning",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": 10000.0,
+            "y": 100.01899719238281,
+            "z": -12.34000015258789
+        },
+        "camera": {
+            "x": 10000.0,
+            "y": 101.66899871826172,
+            "z": -12.34000015258789
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 100.0,
+            "z": 0.0
+        },
+        "progress": 0.0,
+        "stamina": 1.0,
+        "fade": 0.0,
+        "focus": true,
+        "control": true,
+        "grounded": true,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": false,
+        "suspended": false,
+        "drive": true,
+        "floating": false,
+        "inputLease": false,
+        "floatVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "pushes": 1,
+        "contactRefusal": "",
+        "remaining": 0.0,
+        "mass": 546.0
+    }
+}

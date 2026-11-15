@@ -1,0 +1,1144 @@
+{
+    "checks": [
+        {
+            "utc": "2026-11-15T00:26:18.6724757Z",
+            "stage": "saved scene",
+            "message": "Saved scene includes the actual antenna binding, sole hands owner and marine environment owner.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:18.6780306Z",
+            "stage": "saved scene",
+            "message": "Actual saved Bootstrap; no replacement scene or geometry fixture.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:18.6871423Z",
+            "stage": "saved scene",
+            "message": "One production AstronautHandsPresenter owner.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:18.8381192Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Journey starts in actual unchosen Planning.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:18.8776194Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed setup uses real valid planner launch, not phase assignment | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:18.8832732Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed real prologue Skip command",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.7491080Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.7718334Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Real Impact requested in actual AURORA environment.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.7788231Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed Impact acknowledgement through real presenter",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.8959803Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual power repair with real costs | power distribution repaired (2 spare parts).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.8991812Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual life support repair with real costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9164743Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9255682Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual depressurization command | Inner hatch sealed. Depressurizing.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9291001Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual pressure duration and resource model | Simulation advanced.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9366239Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual go-outside command | Outside on the tether.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9890159Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual suited EVA route state, no fake mode or player position.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9900369Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Space work begins after genuine marine/environment and cinematic handoff.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:19.9971235Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Existing original hands owner is bound and visible before repair.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:20.0088352Z",
+            "stage": "real W tether traversal",
+            "message": "Saved route includes measured reachable antenna work station.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.3143606Z",
+            "stage": "real W tether traversal",
+            "message": "Actual W traversed the saved route into reachable work station; view steering disclosed.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.3798491Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.4233083Z",
+            "stage": "actual E, work and pause",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.5941762Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.5966938Z",
+            "stage": "actual E, work and pause",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.6103468Z",
+            "stage": "actual E, work and pause",
+            "message": "Explicit actual shoulder and new separate sleeve are bound to the existing sole hand owner.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.6184714Z",
+            "stage": "actual E, work and pause",
+            "message": "Sleeve reads unique actual EVA upperarm01.R, never WORK or a camera approximation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.6366395Z",
+            "stage": "actual E, work and pause",
+            "message": "Original full-size forearm has actual320mm rear cap and at least24 authored rim vertices.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:35.6406737Z",
+            "stage": "actual E, work and pause",
+            "message": "All16 original rigid hand meshes retained; no duplicate avatar/hand mesh.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.2754032Z",
+            "stage": "actual E, work and pause",
+            "message": "Source-pose probe changed no Player or body transform.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.2940681Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual new upper sleeve surface intersects actual posed EVA torso garment; bone reference alone is insufficient.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.3001546Z",
+            "stage": "actual E, work and pause",
+            "message": "Every exact authored frame passes fixed lengths, actual cap enclosure/rays and rigid hand shape checks.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6493740Z",
+            "stage": "actual E, work and pause",
+            "message": "Initial E and visible work spend no inventory: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6524007Z",
+            "stage": "actual E, work and pause",
+            "message": "Initial E and visible work spend no inventory: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6624508Z",
+            "stage": "actual E, work and pause",
+            "message": "Initial E and visible work spend no inventory: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6732087Z",
+            "stage": "actual E, work and pause",
+            "message": "Initial E and visible work spend no inventory: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6850020Z",
+            "stage": "actual E, work and pause",
+            "message": "Initial E and visible work spend no inventory: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.6952444Z",
+            "stage": "actual E, work and pause",
+            "message": "Antenna remains faulty during real visible work.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:38.7104269Z",
+            "stage": "actual E, work and pause",
+            "message": "Repeated direct decorator command is rejected while working; no extra transaction.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.6610482Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual camera + UI capture 1280x720: 01-actual-eva-tool-contact",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.6671727Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual sole-owner settled contact <=2 mm: after actual contact capture",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.6758462Z",
+            "stage": "actual E, work and pause",
+            "message": "At most one real antenna progress row: active work before pause",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.6845867Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual progress row visibility=True: active work before pause",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.6942721Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual laid-out progress fill and track exist: active work before pause",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.7055098Z",
+            "stage": "actual E, work and pause",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): active work before pause",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:39.7156368Z",
+            "stage": "actual E, work and pause",
+            "message": "Before pause, same-frame passive sleeve already matches the sole owner's current elbow within20micrometres.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3117571Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual camera + UI capture 1280x720: 02-actual-paused-tool-contact",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3154696Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause retains the visible active tool lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3243381Z",
+            "stage": "actual E, work and pause",
+            "message": "Entire actual upper sleeve freezes from pause entry, including first paused frame; no delayed pose catch-up.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3345927Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual wrist/tool freeze from before pause, not only after two settling frames.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3433618Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause freezes actual work and mission clock.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3524051Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause freezes sampled actual tool motion.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3635025Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause retains actual world wrist pose despite menu presentation.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3731541Z",
+            "stage": "actual E, work and pause",
+            "message": "Explicit owner refresh refuses to advance or report a new frame while paused.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3878748Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual sole-owner settled contact <=2 mm: paused contact",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.3990057Z",
+            "stage": "actual E, work and pause",
+            "message": "Paused actual connected sleeve stays visible at frozen shoulder/elbow pose.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4115847Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause inventory: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4236487Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause inventory: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4358559Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause inventory: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4464745Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause inventory: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4603499Z",
+            "stage": "actual E, work and pause",
+            "message": "Pause inventory: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4750146Z",
+            "stage": "actual E, work and pause",
+            "message": "At most one real antenna progress row: paused real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.4866555Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual progress row visibility=False: paused real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5186220Z",
+            "stage": "actual E, work and pause",
+            "message": "Resume retains work ownership and its movement lock.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5215382Z",
+            "stage": "actual E, work and pause",
+            "message": "At most one real antenna progress row: resumed real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5335215Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual progress row visibility=True: resumed real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5443964Z",
+            "stage": "actual E, work and pause",
+            "message": "Actual laid-out progress fill and track exist: resumed real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5571036Z",
+            "stage": "actual E, work and pause",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): resumed real work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5760365Z",
+            "stage": "actual E, work and pause",
+            "message": "External view displacement cancels without leaving a hand or control lease.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5842374Z",
+            "stage": "actual E, work and pause",
+            "message": "Look-away cancelled attempt: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.5973584Z",
+            "stage": "actual E, work and pause",
+            "message": "Look-away cancelled attempt: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.6091903Z",
+            "stage": "actual E, work and pause",
+            "message": "Look-away cancelled attempt: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.6209741Z",
+            "stage": "actual E, work and pause",
+            "message": "Look-away cancelled attempt: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.6304964Z",
+            "stage": "actual E, work and pause",
+            "message": "Look-away cancelled attempt: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.6499981Z",
+            "stage": "focus and source invalidation",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.6733915Z",
+            "stage": "focus and source invalidation",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.8637959Z",
+            "stage": "focus and source invalidation",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.8658470Z",
+            "stage": "focus and source invalidation",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.8822231Z",
+            "stage": "focus and source invalidation",
+            "message": "Focus cancellation: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.8925867Z",
+            "stage": "focus and source invalidation",
+            "message": "Focus cancellation: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.9066266Z",
+            "stage": "focus and source invalidation",
+            "message": "Focus cancellation: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.9187750Z",
+            "stage": "focus and source invalidation",
+            "message": "Focus cancellation: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.9326411Z",
+            "stage": "focus and source invalidation",
+            "message": "Focus cancellation: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.9561517Z",
+            "stage": "focus and source invalidation",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:40.9786892Z",
+            "stage": "focus and source invalidation",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.1696081Z",
+            "stage": "focus and source invalidation",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.1718277Z",
+            "stage": "focus and source invalidation",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.1922499Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source immediately releases sole owner.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.1998595Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source cancellation: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.2124992Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source cancellation: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.2263658Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source cancellation: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.2385436Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source cancellation: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.2519425Z",
+            "stage": "focus and source invalidation",
+            "message": "Removed source cancellation: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.2757676Z",
+            "stage": "final-frame lost contact",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.3026652Z",
+            "stage": "final-frame lost contact",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.4917594Z",
+            "stage": "final-frame lost contact",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:41.4943217Z",
+            "stage": "final-frame lost contact",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.4915181Z",
+            "stage": "final-frame lost contact",
+            "message": "Continuous real visible work samples=1035, maximum actual wrist/frame error=1.01152432E-06m.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.4991324Z",
+            "stage": "final-frame lost contact",
+            "message": "Final Progressed observer revoked actual owner contact; post-event policy prevented repair.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5070050Z",
+            "stage": "final-frame lost contact",
+            "message": "Final-frame invalidation: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5153711Z",
+            "stage": "final-frame lost contact",
+            "message": "Final-frame invalidation: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5264726Z",
+            "stage": "final-frame lost contact",
+            "message": "Final-frame invalidation: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5357041Z",
+            "stage": "final-frame lost contact",
+            "message": "Final-frame invalidation: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5439307Z",
+            "stage": "final-frame lost contact",
+            "message": "Final-frame invalidation: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5620533Z",
+            "stage": "restart while work is active",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.5852266Z",
+            "stage": "restart while work is active",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.7757279Z",
+            "stage": "restart while work is active",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:44.7782423Z",
+            "stage": "restart while work is active",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1113607Z",
+            "stage": "restart while work is active",
+            "message": "Real restart replaces the single domain session while work was active.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1133826Z",
+            "stage": "restart while work is active",
+            "message": "Restart clears tool lease and visible EVA hands on actual unsuited Planning state.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1255160Z",
+            "stage": "restart while work is active",
+            "message": "Original physical target rebinds once to the new session decorator.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1384495Z",
+            "stage": "restart while work is active",
+            "message": "Stale gate cannot restart its old disposed command.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1502407Z",
+            "stage": "restart while work is active",
+            "message": "Stale callback after restart: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1609894Z",
+            "stage": "restart while work is active",
+            "message": "Stale callback after restart: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1721141Z",
+            "stage": "restart while work is active",
+            "message": "Stale callback after restart: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1828042Z",
+            "stage": "restart while work is active",
+            "message": "Stale callback after restart: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.1939003Z",
+            "stage": "restart while work is active",
+            "message": "Stale callback after restart: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.2050448Z",
+            "stage": "restart while work is active",
+            "message": "Refresh refuses an absent/stale lease and actual unsuited state.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.2211399Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Journey starts in actual unchosen Planning.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.2307209Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed setup uses real valid planner launch, not phase assignment | AURORA-7 launched with 7 equipment line(s).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:45.2408520Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed real prologue Skip command",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0259242Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual cockpit check | Cockpit check complete. Impact detected.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0355108Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Real Impact requested in actual AURORA environment.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0428391Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Disclosed Impact acknowledgement through real presenter",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0657386Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual power repair with real costs | power distribution repaired (2 spare parts).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0682525Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual life support repair with real costs | life support repaired (2 spare parts, 1 kWh).",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0819638Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.0941871Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual depressurization command | Inner hatch sealed. Depressurizing.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1034841Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual pressure duration and resource model | Simulation advanced.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1130849Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual go-outside command | Outside on the tether.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1380692Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Actual suited EVA route state, no fake mode or player position.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1410763Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Space work begins after genuine marine/environment and cinematic handoff.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1511484Z",
+            "stage": "disclosed genuine command setup",
+            "message": "Existing original hands owner is bound and visible before repair.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:26:46.1609448Z",
+            "stage": "real W tether traversal",
+            "message": "Saved route includes measured reachable antenna work station.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.4613972Z",
+            "stage": "real W tether traversal",
+            "message": "Actual W traversed the saved route into reachable work station; view steering disclosed.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.4770686Z",
+            "stage": "actual three-second success",
+            "message": "Actual original right hand has16 rigid meshes and real sleeve cap vertices available for projection.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.5090824Z",
+            "stage": "actual three-second success",
+            "message": "Actual nearest resolver target is the available wrapped antenna.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.5564195Z",
+            "stage": "actual three-second success",
+            "message": "Real E starts sole owner tool acquisition and composed movement lock. Rejection=",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.7478678Z",
+            "stage": "actual three-second success",
+            "message": "Actual sole-owner settled contact <=2 mm: started settled work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.7493818Z",
+            "stage": "actual three-second success",
+            "message": "Composed control is locked only while held tool work owns it.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.8642382Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 0.013",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.8667935Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 0.013",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.8775998Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 0.013",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:01.8866631Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 0.013",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.3971702Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 0.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.4007635Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 0.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.4125591Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 0.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.4241825Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 0.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.9416572Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 1.006",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.9438376Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 1.006",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.9519637Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 1.006",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:02.9605173Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 1.006",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:03.4775390Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 1.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:03.4806009Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 1.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:03.4892877Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 1.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:03.5034087Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 1.503",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.0125581Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 2.000",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.0150826Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 2.000",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.0243209Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 2.000",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.0363392Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.000",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.5471302Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 2.500",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.5501779Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 2.500",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.5614256Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 2.500",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:04.5716779Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.500",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.0545824Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: timed actual render 2.959",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.0561361Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=True: timed actual render 2.959",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.0673237Z",
+            "stage": "actual three-second success",
+            "message": "Actual laid-out progress fill and track exist: timed actual render 2.959",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.0778665Z",
+            "stage": "actual three-second success",
+            "message": "Rendered progress width tracks actual service fraction (one frame/layout allowance): timed actual render 2.959",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.0930312Z",
+            "stage": "actual three-second success",
+            "message": "Continuous real visible work samples=288, maximum actual wrist/frame error=9.83025E-07m.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1379700Z",
+            "stage": "actual three-second success",
+            "message": "Seven actual rendered work frames cover requested0/.5/1/1.5/2/2.5/~2.95 seconds; actual times recorded.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1409924Z",
+            "stage": "actual three-second success",
+            "message": "All sampled actual runtime hand vertices preserve calibrated tool-relative geometry within20micrometres; no independent pose writer.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1517252Z",
+            "stage": "actual three-second success",
+            "message": "All91 exact frames and seven actual camera frames prove the original cap physically enclosed/occluded by new opaque geometry; no FOV/offscreen substitute.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1618135Z",
+            "stage": "actual three-second success",
+            "message": "One genuine completed timed work publishes exactly one successful real command.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1709230Z",
+            "stage": "actual three-second success",
+            "message": "Actual domain antenna changed from faulty to repaired.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1806848Z",
+            "stage": "actual three-second success",
+            "message": "Exactly the authoritative one-time repair cost for OxygenKg; no animation charge.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.1887343Z",
+            "stage": "actual three-second success",
+            "message": "Exactly the authoritative one-time repair cost for WaterLitres; no animation charge.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2000226Z",
+            "stage": "actual three-second success",
+            "message": "Exactly the authoritative one-time repair cost for FoodKg; no animation charge.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2096360Z",
+            "stage": "actual three-second success",
+            "message": "Exactly the authoritative one-time repair cost for BatteryKWh; no animation charge.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2217894Z",
+            "stage": "actual three-second success",
+            "message": "Exactly the authoritative one-time repair cost for SparePartsCount; no animation charge.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2321190Z",
+            "stage": "actual three-second success",
+            "message": "Success releases hand/movement leases.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2423622Z",
+            "stage": "actual three-second success",
+            "message": "Completed work hides the temporary upper sleeve.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2518321Z",
+            "stage": "actual three-second success",
+            "message": "At most one real antenna progress row: completed actual work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2605157Z",
+            "stage": "actual three-second success",
+            "message": "Actual progress row visibility=False: completed actual work",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.2716433Z",
+            "stage": "actual three-second success",
+            "message": "Visible corrected state follows actual repaired Condition01.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.4479190Z",
+            "stage": "actual three-second success",
+            "message": "Actual camera + UI capture 1280x720: 03-actual-eva-repaired-antenna",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.4720061Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E after actual repair: OxygenKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.4750316Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E after actual repair: WaterLitres unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.4831932Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E after actual repair: FoodKg unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.4927998Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E after actual repair: BatteryKWh unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.5024009Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E after actual repair: SparePartsCount unchanged.",
+            "pass": true
+        },
+        {
+            "utc": "2026-11-15T00:27:05.5110289Z",
+            "stage": "actual three-second success",
+            "message": "Repeated E did not emit another repair completion.",
+            "pass": true
+        }
+    ]
+}

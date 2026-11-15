@@ -44,6 +44,7 @@ namespace OutOfReach.Composition
         [SerializeField] private BareArmContactPresenter bareArmContacts;
         [SerializeField] private I06InteriorHandholds interiorHandholds;
         [SerializeField] private I06AntennaRepairBindings antennaRepair;
+        [SerializeField] private I06EarthTerminalBindings earthTerminal;
         [SerializeField] private Transform antennaInteractionOrigin;
         [SerializeField] private AntennaWorkProgressPresenter antennaProgress;
         [SerializeField] private UIDocument antennaProgressDocument;
@@ -150,6 +151,20 @@ namespace OutOfReach.Composition
 
         public void ConfigureBody(EmbodiedBodyPresenter presenter) => embodiedBody = presenter;
         public void ConfigureEvaWorkLamp(EvaWorkLampPresenter presenter) => evaWorkLamp = presenter;
+        public void ConfigureEarthTerminal(I06EarthTerminalBindings value)
+        {
+            if (Application.isPlaying && attached) throw new InvalidOperationException("Configure Earth terminal before binding.");
+            earthTerminal = value;
+        }
+        private bool EarthViewerOwnsInput => earthTerminal && earthTerminal.BlocksPlayerInput;
+        private bool CanPresentEarthViewer() => MicroSessionCurrent() && modeChosen && orbitalLocationReached
+            && !menuPresentationVisible && cinematics && !cinematics.IsPlaying
+            && !IsTransportDeparturePlaying && !(antennaRepair && antennaRepair.BlocksMovement);
+        private void PrepareEarthViewer()
+        {
+            if (microgravityBridge) microgravityBridge.Release();
+            if (embodiedBody) embodiedBody.RefreshPresentation();
+        }
         public void ConfigureAntennaRepair(I06AntennaRepairBindings bindings, Transform interactionOrigin)
         {
             if (Application.isPlaying && attached) throw new InvalidOperationException("Configure antenna work before binding.");
@@ -186,7 +201,7 @@ namespace OutOfReach.Composition
         private bool MicroSessionCurrent() => isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session);
 
-        private bool CanUseMicroContacts() => MicroSessionCurrent() && modeChosen && orbitalLocationReached
+        private bool CanUseMicroContacts() => !EarthViewerOwnsInput && MicroSessionCurrent() && modeChosen && orbitalLocationReached
             && runtime.Player && runtime.Player.ControlAllowed && !runtime.IsPaused && !menuPresentationVisible
             && !runtime.Player.IsOnRoute && !runtime.EvaStatus.IsOutside
             && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
@@ -223,7 +238,7 @@ namespace OutOfReach.Composition
 
         // A pause keeps the body in the actual scene behind the menu. Contact commands
         // use the stricter player-control gate; visibility alone never grants input.
-        private bool CanPresentBody() => isActiveAndEnabled && attached && modeChosen && boundSession != null
+        private bool CanPresentBody() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && modeChosen && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
@@ -238,7 +253,7 @@ namespace OutOfReach.Composition
 
         // This is queried by the visual presenter in LateUpdate, after camera sequences update.
         // Read the real controller's gate; never replace it or introduce another input/movement authority.
-        private bool CanPresentWalkMotion() => isActiveAndEnabled && attached && boundSession != null
+        private bool CanPresentWalkMotion() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && runtime.Player.ControlAllowed && !runtime.Player.IsOnRoute && !runtime.Player.IsFloating
             && cinematics && !cinematics.IsPlaying;
@@ -251,7 +266,7 @@ namespace OutOfReach.Composition
             openingMenuMotionPivot = visualOffset;
         }
 
-        private bool CanPresentOpeningMenuMotion() => isActiveAndEnabled && attached && boundSession != null
+        private bool CanPresentOpeningMenuMotion() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && !IsTransportDeparturePlaying
             && !(antennaRepair && antennaRepair.IsWorking)
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
@@ -311,7 +326,7 @@ namespace OutOfReach.Composition
         }
 
         // EVA is allowed here: these gloves depict an actually worn suit, including its exterior phase.
-        private bool CanPresentHands() => isActiveAndEnabled && attached && boundSession != null
+        private bool CanPresentHands() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && (runtime.Player.ControlAllowed
                 || (antennaRepair && antennaRepair.BlocksMovement && CanPresentAntennaWork()))
@@ -333,7 +348,7 @@ namespace OutOfReach.Composition
             survivalStyle = style;
         }
 
-        private bool CanPresentSurvivalUi() => isActiveAndEnabled && attached && boundSession != null
+        private bool CanPresentSurvivalUi() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && !menuPresentationVisible && cinematics && !cinematics.IsPlaying;
 
@@ -359,7 +374,7 @@ namespace OutOfReach.Composition
             planningControlPlayer.ControlGate = composedControlGate;
         }
 
-        private bool CanUsePlanningControls() => isActiveAndEnabled && attached && boundSession != null
+        private bool CanUsePlanningControls() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && !IsTransportDeparturePlaying
             && !(antennaRepair && antennaRepair.BlocksMovement)
@@ -476,6 +491,7 @@ namespace OutOfReach.Composition
             if (!ReferenceEquals(session, transferredSession)) transferredSession = null;
             modeChosen = runtime.GameState.Phase != GamePhase.Planning || runtime.PlanningDeadline.IsEnabled;
             BindPlanningControlGate();
+            if (earthTerminal) earthTerminal.ConfigureSession(runtime, CanPresentEarthViewer, PrepareEarthViewer);
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
             flightBoard.SetDeparturePresentation(false);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
@@ -581,6 +597,7 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            if (earthTerminal) earthTerminal.ClearBinding();
             if (evaWorkLamp) evaWorkLamp.ClearBinding();
             if (antennaProgress) antennaProgress.ClearBinding();
             if (antennaRepair) antennaRepair.ClearBinding();
@@ -921,6 +938,7 @@ namespace OutOfReach.Composition
         // These are local glove acknowledgements; no target placement, command delay or implied contact.
         private void PresentSuccessfulHandAction()
         {
+            if (EarthViewerOwnsInput) return;
             if (antennaRepair && antennaRepair.IsWorking) return;
             if (microgravityInput && microgravityInput.ContactRoutingRequested) return;
             if (!astronautHands || !interaction || !interaction.CurrentTarget) return;
@@ -967,7 +985,7 @@ namespace OutOfReach.Composition
         private void RefreshCinematicHud()
         {
             if (flightBoard && attached && boundSession != null)
-                flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying));
+                flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying) || EarthViewerOwnsInput);
         }
 
         private void RefreshSubtitle()

@@ -1,0 +1,2 @@
+I06Player_WINDOWS_BUILD_PASS output=C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Builds\I06Player\OutOfReach.exe bytes=578541059 | Player Windows x64, Bootstrap only. Executable launch/playthrough not established by this build.
+Exit code:0

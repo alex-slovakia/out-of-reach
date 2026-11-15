@@ -1,0 +1,357 @@
+{
+  "task": "LAND-BOOTSTRAP-ACCEPTANCE-V04",
+  "run": "20261115T003408587Z",
+  "unity": "6000.3.28f1",
+  "assertions": 225,
+  "nativeExitCode": 0,
+  "pngCount": 13,
+  "scope": "Exact native evidence archive and read-only review, not a new run or full-game claim",
+  "sourcePinsFromRun": [
+    {
+      "path": "Assets/Editor/LandBootstrapNativeQa/LandBootstrapNativeQa.cs",
+      "sha256": "3ef211c9369a5c5cbb9c6ffc66618d6664308a62614ff2ff26da830ba5d62746"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "sha256": "51e10801e89b470b795f14a865b3f5a1e916f895727b7f14eef0d2c72a93eeec"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06LandHorizonAuthoring.cs",
+      "sha256": "f4c72326366b7e51fc5e7937584b3dc562b369c16523787f8a620563aac2343f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06LandSiteAuthoring.cs",
+      "sha256": "57637d16174a7f6dc83136521024b6372dfa8dc9322d148342012e380cdddda0"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06LandSurroundingsAuthoring.cs",
+      "sha256": "3e494a86bf2714c0c5fce721ce8c8228114ba24f710f7d4474b6473fe6bfd094"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MarineBindings.cs",
+      "sha256": "57a7e47625374e50f1464340afe0af07962ef4bd03ff49c36ffdd28c408c9bb6"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Player/FirstPersonController.cs",
+      "sha256": "b6f441a11dada2804db62d010f58e94d4f88f530e0d7b4829155758c72ed1eef"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/LandHorizon/Generated/LandHorizon.mat",
+      "sha256": "468c858dbc5113457b7b64dc097a6dec82d04441ccb162c495edbcd802d2ad54"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/LandHorizon/Generated/LandHorizonSurface.asset",
+      "sha256": "1f9f8186b4fdf7fc2f3ee6e0d0c7a0b21728473da80f07763b18f91ad9113e24"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/LandHorizon/LandHorizon.shader",
+      "sha256": "0e78978c834674c08ecbe6ed285cade37fa1d136ebbe97e772603d9b1dab366d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Marine/FX/MarineDepartureFxEnvelope.cs",
+      "sha256": "3e2e8440938cc0fd056e0ca495b7e14e5aa441e631cfea20a282b6183d5d143d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Marine/FX/MarineDepartureFxMesh.cs",
+      "sha256": "4ac033aa416d2290ea8446f3513d3d0c38d71162beae1e8dd96b510cab5f7e91"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Marine/FX/MarineDepartureFxPresenter.cs",
+      "sha256": "190daa3049c1f80ddfe07bbca710fd566864058544a8c60fb4851c3f7eaa29e2"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandLaunchSite/Models/LS_LandLaunchSite.fbx",
+      "sha256": "cabe9bf64c2996935b4944cbfd9bbe2258739f83c63bdf6f5d5e7f000fe12e6c"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Models/LandSurroundings/Models/LSS_LandSurroundings.fbx",
+      "sha256": "632a5c46f22e972fc41cbbbf1058efe2935e2bed68d076078d2bdbe86ce5fff4"
+    }
+  ],
+  "files": [
+    {
+      "path": "run/01-actual-dock.json",
+      "bytes": 1522,
+      "sha256": "dedcf3e8e982da6062b6579254f57fa025b23de67c50fca5cf951d3847cbfe11",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01-actual-dock.json"
+    },
+    {
+      "path": "run/01-actual-dock.png",
+      "bytes": 821873,
+      "sha256": "5634109a2782472bbc857c96f3e775d77eff0683e39944b8b577755bce72c801",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01-actual-dock.png"
+    },
+    {
+      "path": "run/01a-land-from-deck-left.json",
+      "bytes": 1531,
+      "sha256": "08776dd09cea2a5fcb2c0dda5413a19f4a118563e699a0ed0a476eaa2056086c",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01a-land-from-deck-left.json"
+    },
+    {
+      "path": "run/01a-land-from-deck-left.png",
+      "bytes": 1095253,
+      "sha256": "8f6504cf3afb8e87330d4313ce01c54b26d31150c604dee9914fa5dd4149de0e",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01a-land-from-deck-left.png"
+    },
+    {
+      "path": "run/01b-land-from-deck-right.json",
+      "bytes": 1532,
+      "sha256": "ceb1958796d2d9889f2589eece6ec788f4e17ddc224fb87198c6adf6d8cc9446",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01b-land-from-deck-right.json"
+    },
+    {
+      "path": "run/01b-land-from-deck-right.png",
+      "bytes": 1070805,
+      "sha256": "6bef614dd59472549536aec1a220ef1b6c8c4631ea786a2af6b3e8a720d7f0f3",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01b-land-from-deck-right.png"
+    },
+    {
+      "path": "run/01c-land-facility-horizon.json",
+      "bytes": 1533,
+      "sha256": "6b2611c7a370478770d7f0d7c6ddc117956d488dd4ddd0caabe8701c2d5e75fd",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01c-land-facility-horizon.json"
+    },
+    {
+      "path": "run/01c-land-facility-horizon.png",
+      "bytes": 485759,
+      "sha256": "0a91eb0e05a0318ac4df35bf75df80eece9e883491372ae3d2bd7a08dd0ac3ec",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\01c-land-facility-horizon.png"
+    },
+    {
+      "path": "run/02-actual-carried-cargo.json",
+      "bytes": 1531,
+      "sha256": "77708ba84646803c7f1b271ae57266d58ddefd4b31b2aec59623e49f888a750b",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\02-actual-carried-cargo.json"
+    },
+    {
+      "path": "run/02-actual-carried-cargo.png",
+      "bytes": 1124405,
+      "sha256": "46b5cbc939943b7d6eb754a0a25e5bd9a67e791c6374252db5e4b3b6a8d9f411",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\02-actual-carried-cargo.png"
+    },
+    {
+      "path": "run/03-cabin-before-deadline.json",
+      "bytes": 1546,
+      "sha256": "ad5667c600d490d25ee5684e94cc351a9390122d75dbdd78cca406f8d4d8f10e",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\03-cabin-before-deadline.json"
+    },
+    {
+      "path": "run/03-cabin-before-deadline.png",
+      "bytes": 563743,
+      "sha256": "6b3e3db0a449e007c33e4dfe885b4b2c218e698f49a48ce9722030ab15ef210a",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\03-cabin-before-deadline.png"
+    },
+    {
+      "path": "run/04-cabin-launch-loaded-cases.json",
+      "bytes": 1549,
+      "sha256": "025902abf55469037c75a44436a38f22073c367ef5e5302838be1f437b90aed5",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\04-cabin-launch-loaded-cases.json"
+    },
+    {
+      "path": "run/04-cabin-launch-loaded-cases.png",
+      "bytes": 758954,
+      "sha256": "41e411ced1bb595ec0a82e6b08bd3d03267567b78d75f6a7f88d66ae07acd64b",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\04-cabin-launch-loaded-cases.png"
+    },
+    {
+      "path": "run/05-actual-paused-departure.json",
+      "bytes": 1567,
+      "sha256": "d5c026e166b26f5ad863fa1fb1eeca1cbb90d6d3593d244761c9332136d81d03",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\05-actual-paused-departure.json"
+    },
+    {
+      "path": "run/05-actual-paused-departure.png",
+      "bytes": 717478,
+      "sha256": "b272b2466788d71878f174430c6b1f5e4d1abf8efc36d96994157cc5143deb25",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\05-actual-paused-departure.png"
+    },
+    {
+      "path": "run/06-actual-exterior-ascent.json",
+      "bytes": 1526,
+      "sha256": "6d27581afccddd834aa7c9bbf6bd7c37bbfb5a42ecc199b785555cdbca1b4530",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\06-actual-exterior-ascent.json"
+    },
+    {
+      "path": "run/06-actual-exterior-ascent.png",
+      "bytes": 845417,
+      "sha256": "a495be4713dff5ff507992dc5f0af531aa839185756796998c942c39222bc932",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\06-actual-exterior-ascent.png"
+    },
+    {
+      "path": "run/06b-actual-land-exterior-ascent.json",
+      "bytes": 1530,
+      "sha256": "ff3fa0979ef0d38e8fdef4f2d2535d3196e4ab489c0da2baa36859798533d443",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\06b-actual-land-exterior-ascent.json"
+    },
+    {
+      "path": "run/06b-actual-land-exterior-ascent.png",
+      "bytes": 799068,
+      "sha256": "0a3e40bb9fc96854ccc0a2a0e4d1f808e1ff317a0298c073c9b1ed55102c9cfc",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\06b-actual-land-exterior-ascent.png"
+    },
+    {
+      "path": "run/07-actual-aurora-return.json",
+      "bytes": 1502,
+      "sha256": "03b76a0e01e6853d2ab5bd906b864a1c25b626b1617c110e7cdbc48ab7790402",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\07-actual-aurora-return.json"
+    },
+    {
+      "path": "run/07-actual-aurora-return.png",
+      "bytes": 879517,
+      "sha256": "ebd4435cf74d95d9a7dbd865f7f5966e34c44a286e1ff6f2f593c32043ad9e33",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\07-actual-aurora-return.png"
+    },
+    {
+      "path": "run/07b-actual-arrival-foot-push.json",
+      "bytes": 1601,
+      "sha256": "b50d2176cc0b8f679cc348652e64e7afd839a3499b77b370aa291508afc5d85e",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\07b-actual-arrival-foot-push.json"
+    },
+    {
+      "path": "run/07b-actual-arrival-foot-push.png",
+      "bytes": 845491,
+      "sha256": "0b0beba23ed25ad27797f148bfe365fb929e91546a6ccccecdd1bafb8dd167a6",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\07b-actual-arrival-foot-push.png"
+    },
+    {
+      "path": "run/08-restarted-actual-land.json",
+      "bytes": 1519,
+      "sha256": "76441652f63fd6a0a0a09c55c9ce0c52ea5fb535006849c601839ea3bc1703c3",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\08-restarted-actual-land.json"
+    },
+    {
+      "path": "run/08-restarted-actual-land.png",
+      "bytes": 816782,
+      "sha256": "c7793361c4894b1f03773c1a07e567795655048c269f2638f2b4ca88107b9520",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\08-restarted-actual-land.png"
+    },
+    {
+      "path": "run/actual-arrival-foot-push.json",
+      "bytes": 1098,
+      "sha256": "8dfe16e8131a1ab0d1e42d9570f55f48f5c2aa6ca2e7d45d788d4b5a5397eb14",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\actual-arrival-foot-push.json"
+    },
+    {
+      "path": "run/actual-target-rays.txt",
+      "bytes": 829,
+      "sha256": "56a7ca1650c28015bd72cce7fdc393e502fa8757619188a80a9b020e64bd6285",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\actual-target-rays.txt"
+    },
+    {
+      "path": "run/assets-before.json",
+      "bytes": 417447,
+      "sha256": "c550d0eca870a1d1572d1cdfca587b83c33054119b39502eb75fef8ebf71106d",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\assets-before.json"
+    },
+    {
+      "path": "run/captured-aurora-environment.json",
+      "bytes": 1089,
+      "sha256": "b17c03159d1c4f0d0b0904a9a6721677027eafb8866cdc536cf5be46b97e5a21",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\captured-aurora-environment.json"
+    },
+    {
+      "path": "run/checks.json",
+      "bytes": 61523,
+      "sha256": "fc2e9fc11422dba3b0fa167533fcc4fe8007eab8a6c3005948a58c9cb2bc2db9",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\checks.json"
+    },
+    {
+      "path": "run/checks.jsonl",
+      "bytes": 44849,
+      "sha256": "35c0f4556bf8bda0111bb0dce5f697adcf322596b55a5f9a3d2ce3f738128446",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\checks.jsonl"
+    },
+    {
+      "path": "run/checks.txt",
+      "bytes": 29999,
+      "sha256": "d8feea82303b254f367ddf31c849af90a97f131cb97fc221c349e593e2011982",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\checks.txt"
+    },
+    {
+      "path": "run/controller-trace.txt",
+      "bytes": 176258,
+      "sha256": "d2d9e5fea158ac9e13998319283b1d62d0a0c4ddfdb56a627fcf9beb19659abb",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\controller-trace.txt"
+    },
+    {
+      "path": "run/editor-environment-errors.txt",
+      "bytes": 965,
+      "sha256": "f330373c4c6435ae5883b2548776a0ed0cf7dcf05c199a83bb9085bb96c28c85",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\editor-environment-errors.txt"
+    },
+    {
+      "path": "run/land-fx-mesh-facts.txt",
+      "bytes": 478,
+      "sha256": "37f62e1f6ae85f4f1612d93108b96d1127b61d53509c8f1aa92951e95ba3ae6f",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\land-fx-mesh-facts.txt"
+    },
+    {
+      "path": "run/land-mesh-inventory.txt",
+      "bytes": 9251,
+      "sha256": "9efe13e34787da7c9a9e3d09de12221d6310b0e460ab590024f88c49cd96188d",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\land-mesh-inventory.txt"
+    },
+    {
+      "path": "run/observations.txt",
+      "bytes": 1231,
+      "sha256": "47bc7700ef6f2ad0bdcc292388be456047e237a1569b6cf1506b8ad4eb6596a8",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\observations.txt"
+    },
+    {
+      "path": "run/PASS.txt",
+      "bytes": 213,
+      "sha256": "41d0b44c9a10437c5215907cf06c392e46b4d395cc0018cf9194c447e4b2359e",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\PASS.txt"
+    },
+    {
+      "path": "run/restarted-state.json",
+      "bytes": 1025,
+      "sha256": "db3b01be9b23ff34c9bd63a46c2c0b44bb9da1d840ae92ffdd7447cb200b6144",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\restarted-state.json"
+    },
+    {
+      "path": "run/result.json",
+      "bytes": 446,
+      "sha256": "5df9c64ea9ad6f5bdbcad33203804766dd7767f088ac7c905865665d88d067dd",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\result.json"
+    },
+    {
+      "path": "run/saved-console-baseline.json",
+      "bytes": 509,
+      "sha256": "2091d7bdb48e3855b6fef45b65b7c77f312f3f7efe04f88440dbfb8ff3833355",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\saved-console-baseline.json"
+    },
+    {
+      "path": "run/scope.txt",
+      "bytes": 1353,
+      "sha256": "a1c19daa053df04bf056c6948128ca29260f27765e75b710f6b765e1e12b3e9a",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\scope.txt"
+    },
+    {
+      "path": "run/startup-state.json",
+      "bytes": 1025,
+      "sha256": "1d5125f0fc0b624592b8fc52dd593d151904d1f46bf6724f3f70c4f155b5834d",
+      "source": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\land-bootstrap-native-qa\\20261115T003408587Z\\startup-state.json"
+    },
+    {
+      "path": "STATUS.md",
+      "bytes": 17921,
+      "sha256": "eff84b4f74877e585dec5c27fccb196039c6803ba935ba7836c8069ca8ffa29f"
+    },
+    {
+      "path": "i06-land-bootstrap-native-4.log",
+      "bytes": 36648,
+      "sha256": "2afe2a0e441bc543ecb76c3fa2df463258830c24fae2e4c37dcb80866c852565"
+    },
+    {
+      "path": "i06-land-bootstrap-native-4.log.exitcode",
+      "bytes": 3,
+      "sha256": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7690,
+      "sha256": "fd1bf9acac3e13904c9bee5d590693d997ffc330df1379e630f3712f2a947e59"
+    }
+  ]
+}

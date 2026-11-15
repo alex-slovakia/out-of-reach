@@ -1,0 +1,21 @@
+{
+  "task": "DIRECTED-PUSH-INTENT-01",
+  "baselineSha256": "5ab7c8b49e6ce654271b31e3f9820b9aa3c28c0de4dc4946a9c4b72ec22a6e91",
+  "existingGuid": "64bcbff3d7f5582aacc52fb37d0641c8",
+  "productionScope": [
+    "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs"
+  ],
+  "nativeRun": false,
+  "files": [
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs",
+      "sha256": "af9f5ea27da98e038c03edeee9292f820d0dbb48b0d1d1a7db3fe5352d531dc2",
+      "bytes": 29588
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs.meta",
+      "sha256": "39726444289a214f8357536b909b37d2087e129989ab38a277b9e5e6187d57dc",
+      "bytes": 62
+    }
+  ]
+}

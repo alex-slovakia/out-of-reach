@@ -860,6 +860,10 @@ namespace OutOfReach.Presentation.Hands
             toolWrist.Joint.SetLocalPositionAndRotation(toolWrist.AuthoredPosition,
                 Quaternion.Slerp(toolWrist.GestureStartRotation, Quaternion.Inverse(armRotation) * handRotation, blend));
             ToolHoldReferenceErrorMetres = Vector3.Distance(toolWrist.Joint.TransformPoint(ToolGripCentre), toolGripFrame.position);
+            // Progress may update this rig in Update, and pause may begin before the passive sleeve's
+            // LateUpdate. Commit the same settled frame now so its strict pause guard sees no stale elbow.
+            // This follows the already-applied pose; it advances no animation/work time and writes no bones.
+            if (useToolSleeve && toolSleeveVisual && IsToolHoldSettled) toolSleeveVisual.RefreshVisual();
         }
 
         private static Quaternion ToolFingerRotation(JointBinding joint)

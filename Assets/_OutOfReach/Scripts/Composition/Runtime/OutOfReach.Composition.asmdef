@@ -21,7 +21,8 @@
     "OutOfReach.AirlockPanel",
     "OutOfReach.Audio",
     "OutOfReach.UI",
-    "OutOfReach.UI.Report"
+    "OutOfReach.UI.Report",
+    "OutOfReach.Terminal"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

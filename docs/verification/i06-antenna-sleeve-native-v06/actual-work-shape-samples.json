@@ -1,0 +1,1453 @@
+{
+    "frames": [
+        {
+            "activeSeconds": 0.012953097000718117,
+            "authoredBin": 0,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.11295309700071812,
+            "authoredBin": 3,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.1227219955995679,
+            "authoredBin": 3,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.13125239536166193,
+            "authoredBin": 3,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.13869129111990334,
+            "authoredBin": 4,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.14613859113305809,
+            "authoredBin": 4,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.15299249570816757,
+            "authoredBin": 4,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.1601250920444727,
+            "authoredBin": 4,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.167212896887213,
+            "authoredBin": 5,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.17410349370911719,
+            "authoredBin": 5,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.18155819168314339,
+            "authoredBin": 5,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.1893637966364622,
+            "authoredBin": 5,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.19692269703373317,
+            "authoredBin": 5,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.20511319478973748,
+            "authoredBin": 6,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.21373649397864939,
+            "authoredBin": 6,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2214147959835827,
+            "authoredBin": 6,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2288994969800115,
+            "authoredBin": 6,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2371302930638194,
+            "authoredBin": 7,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2442902917042375,
+            "authoredBin": 7,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.25290479734539986,
+            "authoredBin": 7,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2608017925173044,
+            "authoredBin": 7,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.26913669183850288,
+            "authoredBin": 8,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.2764762965030968,
+            "authoredBin": 8,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.28418169626966119,
+            "authoredBin": 8,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.29280289066955447,
+            "authoredBin": 8,
+            "maximumShapeDrift": 0.0
+        },
+        {
+            "activeSeconds": 0.30250839693471789,
+            "authoredBin": 9,
+            "maximumShapeDrift": 3.4047323538288767e-7
+        },
+        {
+            "activeSeconds": 0.30992369577288628,
+            "authoredBin": 9,
+            "maximumShapeDrift": 3.445150866809854e-7
+        },
+        {
+            "activeSeconds": 0.3175372941419482,
+            "authoredBin": 9,
+            "maximumShapeDrift": 2.4031010070757477e-7
+        },
+        {
+            "activeSeconds": 0.32421389538794756,
+            "authoredBin": 9,
+            "maximumShapeDrift": 2.533539884552738e-7
+        },
+        {
+            "activeSeconds": 0.33207509145140648,
+            "authoredBin": 9,
+            "maximumShapeDrift": 1.1789602183398529e-8
+        },
+        {
+            "activeSeconds": 0.3389272954314947,
+            "authoredBin": 10,
+            "maximumShapeDrift": 2.458973824559507e-7
+        },
+        {
+            "activeSeconds": 0.3469124924391508,
+            "authoredBin": 10,
+            "maximumShapeDrift": 2.1155582174969824e-8
+        },
+        {
+            "activeSeconds": 0.3551592970266938,
+            "authoredBin": 10,
+            "maximumShapeDrift": 2.4215819394157736e-7
+        },
+        {
+            "activeSeconds": 0.3629839926958084,
+            "authoredBin": 10,
+            "maximumShapeDrift": 2.421886335923773e-7
+        },
+        {
+            "activeSeconds": 0.37061509387567639,
+            "authoredBin": 11,
+            "maximumShapeDrift": 3.3786992048590039e-7
+        },
+        {
+            "activeSeconds": 0.378275191783905,
+            "authoredBin": 11,
+            "maximumShapeDrift": 2.421510316708009e-7
+        },
+        {
+            "activeSeconds": 0.38593519749119878,
+            "authoredBin": 11,
+            "maximumShapeDrift": 2.4234722673099898e-7
+        },
+        {
+            "activeSeconds": 0.39495929786935449,
+            "authoredBin": 11,
+            "maximumShapeDrift": 2.4593265379735387e-7
+        },
+        {
+            "activeSeconds": 0.40276669561862946,
+            "authoredBin": 12,
+            "maximumShapeDrift": 1.6344644748755856e-8
+        },
+        {
+            "activeSeconds": 0.41219529546797276,
+            "authoredBin": 12,
+            "maximumShapeDrift": 2.535131216063746e-7
+        },
+        {
+            "activeSeconds": 0.42073759287595749,
+            "authoredBin": 12,
+            "maximumShapeDrift": 3.383890714303561e-7
+        },
+        {
+            "activeSeconds": 0.42762799831107259,
+            "authoredBin": 12,
+            "maximumShapeDrift": 2.3855724862187346e-7
+        },
+        {
+            "activeSeconds": 0.4355322922579944,
+            "authoredBin": 13,
+            "maximumShapeDrift": 1.9317928590112389e-8
+        },
+        {
+            "activeSeconds": 0.4423352967947721,
+            "authoredBin": 13,
+            "maximumShapeDrift": 2.386004211984982e-7
+        },
+        {
+            "activeSeconds": 0.449118594545871,
+            "authoredBin": 13,
+            "maximumShapeDrift": 3.889317312655294e-8
+        },
+        {
+            "activeSeconds": 0.4560128971002996,
+            "authoredBin": 13,
+            "maximumShapeDrift": 3.46775436810276e-7
+        },
+        {
+            "activeSeconds": 0.4631587941199541,
+            "authoredBin": 13,
+            "maximumShapeDrift": 3.3393467901987608e-7
+        },
+        {
+            "activeSeconds": 0.471631795540452,
+            "authoredBin": 14,
+            "maximumShapeDrift": 9.686723387858365e-7
+        },
+        {
+            "activeSeconds": 0.4795983912423253,
+            "authoredBin": 14,
+            "maximumShapeDrift": 2.3199655174721557e-7
+        },
+        {
+            "activeSeconds": 0.4879561927169561,
+            "authoredBin": 14,
+            "maximumShapeDrift": 3.4757209732561025e-7
+        },
+        {
+            "activeSeconds": 0.4950845939107239,
+            "authoredBin": 14,
+            "maximumShapeDrift": 2.3113047120659758e-7
+        },
+        {
+            "activeSeconds": 0.5029894904233515,
+            "authoredBin": 15,
+            "maximumShapeDrift": 2.683243565115845e-7
+        },
+        {
+            "activeSeconds": 0.6029894904233515,
+            "authoredBin": 18,
+            "maximumShapeDrift": 0.0000010193756452281378
+        },
+        {
+            "activeSeconds": 0.6140152907930314,
+            "authoredBin": 18,
+            "maximumShapeDrift": 3.28844237174053e-7
+        },
+        {
+            "activeSeconds": 0.6255062914453446,
+            "authoredBin": 18,
+            "maximumShapeDrift": 0.0000010173214377573459
+        },
+        {
+            "activeSeconds": 0.6361255937255919,
+            "authoredBin": 19,
+            "maximumShapeDrift": 3.322981854125828e-7
+        },
+        {
+            "activeSeconds": 0.645816793013364,
+            "authoredBin": 19,
+            "maximumShapeDrift": 3.2440519248666535e-7
+        },
+        {
+            "activeSeconds": 0.6549380936659872,
+            "authoredBin": 19,
+            "maximumShapeDrift": 3.2560214435761738e-7
+        },
+        {
+            "activeSeconds": 0.6655388942919671,
+            "authoredBin": 19,
+            "maximumShapeDrift": 3.2553688811276518e-7
+        },
+        {
+            "activeSeconds": 0.6755649925209581,
+            "authoredBin": 20,
+            "maximumShapeDrift": 0.0000010280508604409989
+        },
+        {
+            "activeSeconds": 0.686843988765031,
+            "authoredBin": 20,
+            "maximumShapeDrift": 3.2920823400672818e-7
+        },
+        {
+            "activeSeconds": 0.6959900914691388,
+            "authoredBin": 20,
+            "maximumShapeDrift": 3.272058393122279e-7
+        },
+        {
+            "activeSeconds": 0.706881991866976,
+            "authoredBin": 21,
+            "maximumShapeDrift": 3.267635975134908e-7
+        },
+        {
+            "activeSeconds": 0.7177909913472831,
+            "authoredBin": 21,
+            "maximumShapeDrift": 3.229021103834384e-7
+        },
+        {
+            "activeSeconds": 0.7304686916060745,
+            "authoredBin": 21,
+            "maximumShapeDrift": 3.6330771990833457e-7
+        },
+        {
+            "activeSeconds": 0.7412696911953389,
+            "authoredBin": 22,
+            "maximumShapeDrift": 3.1770250075169317e-7
+        },
+        {
+            "activeSeconds": 0.7533357909880578,
+            "authoredBin": 22,
+            "maximumShapeDrift": 3.2220665957538588e-7
+        },
+        {
+            "activeSeconds": 0.7658520893193781,
+            "authoredBin": 22,
+            "maximumShapeDrift": 2.4974730195026498e-7
+        },
+        {
+            "activeSeconds": 0.7760252890177071,
+            "authoredBin": 23,
+            "maximumShapeDrift": 3.227083027468325e-7
+        },
+        {
+            "activeSeconds": 0.7861129942350089,
+            "authoredBin": 23,
+            "maximumShapeDrift": 3.1480357165492025e-7
+        },
+        {
+            "activeSeconds": 0.7966976885683834,
+            "authoredBin": 23,
+            "maximumShapeDrift": 3.147088420973887e-7
+        },
+        {
+            "activeSeconds": 0.8074646883644163,
+            "authoredBin": 24,
+            "maximumShapeDrift": 2.757662400654226e-7
+        },
+        {
+            "activeSeconds": 0.8195483901537954,
+            "authoredBin": 24,
+            "maximumShapeDrift": 2.495457920304034e-7
+        },
+        {
+            "activeSeconds": 0.8307307877577841,
+            "authoredBin": 24,
+            "maximumShapeDrift": 3.133973223157227e-7
+        },
+        {
+            "activeSeconds": 0.8406712918542325,
+            "authoredBin": 25,
+            "maximumShapeDrift": 2.4867534875738786e-7
+        },
+        {
+            "activeSeconds": 0.851666288729757,
+            "authoredBin": 25,
+            "maximumShapeDrift": 2.505448151168821e-7
+        },
+        {
+            "activeSeconds": 0.8605090894736349,
+            "authoredBin": 25,
+            "maximumShapeDrift": 2.51848405241617e-7
+        },
+        {
+            "activeSeconds": 0.8719952928833663,
+            "authoredBin": 26,
+            "maximumShapeDrift": 3.2294207130689758e-7
+        },
+        {
+            "activeSeconds": 0.8811782927252352,
+            "authoredBin": 26,
+            "maximumShapeDrift": 3.1412250223183948e-7
+        },
+        {
+            "activeSeconds": 0.8897873911075294,
+            "authoredBin": 26,
+            "maximumShapeDrift": 2.5163811301354146e-7
+        },
+        {
+            "activeSeconds": 0.8983585930429399,
+            "authoredBin": 26,
+            "maximumShapeDrift": 3.198466060894134e-7
+        },
+        {
+            "activeSeconds": 0.9060074876062572,
+            "authoredBin": 27,
+            "maximumShapeDrift": 2.487869323886116e-7
+        },
+        {
+            "activeSeconds": 0.9147772931493818,
+            "authoredBin": 27,
+            "maximumShapeDrift": 2.483839125488885e-7
+        },
+        {
+            "activeSeconds": 0.9218634891323745,
+            "authoredBin": 27,
+            "maximumShapeDrift": 3.683189504499751e-7
+        },
+        {
+            "activeSeconds": 0.9293120929971337,
+            "authoredBin": 27,
+            "maximumShapeDrift": 3.676082371839584e-7
+        },
+        {
+            "activeSeconds": 0.937013588193804,
+            "authoredBin": 28,
+            "maximumShapeDrift": 2.4838044510033799e-7
+        },
+        {
+            "activeSeconds": 0.9447499898262322,
+            "authoredBin": 28,
+            "maximumShapeDrift": 2.503664688902063e-7
+        },
+        {
+            "activeSeconds": 0.9525198878720402,
+            "authoredBin": 28,
+            "maximumShapeDrift": 2.7406213121139447e-7
+        },
+        {
+            "activeSeconds": 0.9607999900355935,
+            "authoredBin": 28,
+            "maximumShapeDrift": 2.48411879510968e-7
+        },
+        {
+            "activeSeconds": 0.9687203912064433,
+            "authoredBin": 29,
+            "maximumShapeDrift": 2.485026584508887e-7
+        },
+        {
+            "activeSeconds": 0.9759729917161166,
+            "authoredBin": 29,
+            "maximumShapeDrift": 3.7149033005334788e-7
+        },
+        {
+            "activeSeconds": 0.9834357894025743,
+            "authoredBin": 29,
+            "maximumShapeDrift": 3.6660645719166498e-7
+        },
+        {
+            "activeSeconds": 0.9912701931782066,
+            "authoredBin": 29,
+            "maximumShapeDrift": 3.1532249522570057e-7
+        },
+        {
+            "activeSeconds": 0.9989080902189016,
+            "authoredBin": 29,
+            "maximumShapeDrift": 3.157183527946472e-7
+        },
+        {
+            "activeSeconds": 1.0062677909620106,
+            "authoredBin": 30,
+            "maximumShapeDrift": 3.1480908546654975e-7
+        },
+        {
+            "activeSeconds": 1.1062677909620107,
+            "authoredBin": 33,
+            "maximumShapeDrift": 3.154421222006931e-7
+        },
+        {
+            "activeSeconds": 1.1145713903941215,
+            "authoredBin": 33,
+            "maximumShapeDrift": 2.769271532088169e-7
+        },
+        {
+            "activeSeconds": 1.1226113920100034,
+            "authoredBin": 33,
+            "maximumShapeDrift": 2.4962184852483917e-7
+        },
+        {
+            "activeSeconds": 1.1299987926147879,
+            "authoredBin": 33,
+            "maximumShapeDrift": 3.2204914646172258e-7
+        },
+        {
+            "activeSeconds": 1.1374592871405185,
+            "authoredBin": 34,
+            "maximumShapeDrift": 3.2204914646172258e-7
+        },
+        {
+            "activeSeconds": 1.1443964896723629,
+            "authoredBin": 34,
+            "maximumShapeDrift": 2.7733403840102257e-7
+        },
+        {
+            "activeSeconds": 1.1522720923647286,
+            "authoredBin": 34,
+            "maximumShapeDrift": 3.1577192771692355e-7
+        },
+        {
+            "activeSeconds": 1.1605769891291858,
+            "authoredBin": 34,
+            "maximumShapeDrift": 2.5176046847263935e-7
+        },
+        {
+            "activeSeconds": 1.1690439891070129,
+            "authoredBin": 35,
+            "maximumShapeDrift": 3.6936569358658746e-7
+        },
+        {
+            "activeSeconds": 1.176713490113616,
+            "authoredBin": 35,
+            "maximumShapeDrift": 3.224098463761038e-7
+        },
+        {
+            "activeSeconds": 1.1849564893171192,
+            "authoredBin": 35,
+            "maximumShapeDrift": 3.245094717385655e-7
+        },
+        {
+            "activeSeconds": 1.1928262880071999,
+            "authoredBin": 35,
+            "maximumShapeDrift": 2.5107220835707269e-7
+        },
+        {
+            "activeSeconds": 1.2014248922467233,
+            "authoredBin": 36,
+            "maximumShapeDrift": 2.5005448378578878e-7
+        },
+        {
+            "activeSeconds": 1.209231390338391,
+            "authoredBin": 36,
+            "maximumShapeDrift": 3.1930557042869625e-7
+        },
+        {
+            "activeSeconds": 1.2174525919370354,
+            "authoredBin": 36,
+            "maximumShapeDrift": 2.5018451310643288e-7
+        },
+        {
+            "activeSeconds": 1.2242536905221642,
+            "authoredBin": 36,
+            "maximumShapeDrift": 2.515191681595752e-7
+        },
+        {
+            "activeSeconds": 1.2312642915174366,
+            "authoredBin": 36,
+            "maximumShapeDrift": 2.515467656394321e-7
+        },
+        {
+            "activeSeconds": 1.2378717886283995,
+            "authoredBin": 37,
+            "maximumShapeDrift": 3.1541188150185919e-7
+        },
+        {
+            "activeSeconds": 1.245139192044735,
+            "authoredBin": 37,
+            "maximumShapeDrift": 2.7732505714084257e-7
+        },
+        {
+            "activeSeconds": 1.2524896880611778,
+            "authoredBin": 37,
+            "maximumShapeDrift": 2.513467052267515e-7
+        },
+        {
+            "activeSeconds": 1.2600360882468523,
+            "authoredBin": 37,
+            "maximumShapeDrift": 2.5003845394167e-7
+        },
+        {
+            "activeSeconds": 1.2686831901781262,
+            "authoredBin": 38,
+            "maximumShapeDrift": 3.2563980312261267e-7
+        },
+        {
+            "activeSeconds": 1.2755058940500022,
+            "authoredBin": 38,
+            "maximumShapeDrift": 2.5129148184532826e-7
+        },
+        {
+            "activeSeconds": 1.28246028739959,
+            "authoredBin": 38,
+            "maximumShapeDrift": 2.501880942418211e-7
+        },
+        {
+            "activeSeconds": 1.2891894892789425,
+            "authoredBin": 38,
+            "maximumShapeDrift": 2.5107220835707269e-7
+        },
+        {
+            "activeSeconds": 1.2969582888297738,
+            "authoredBin": 38,
+            "maximumShapeDrift": 2.503993812297267e-7
+        },
+        {
+            "activeSeconds": 1.3043663885444404,
+            "authoredBin": 39,
+            "maximumShapeDrift": 2.503478526705294e-7
+        },
+        {
+            "activeSeconds": 1.3117434929125012,
+            "authoredBin": 39,
+            "maximumShapeDrift": 3.2169782571145335e-7
+        },
+        {
+            "activeSeconds": 1.3190392909571529,
+            "authoredBin": 39,
+            "maximumShapeDrift": 3.1829031854613279e-7
+        },
+        {
+            "activeSeconds": 1.326222390588373,
+            "authoredBin": 39,
+            "maximumShapeDrift": 3.1857223348197297e-7
+        },
+        {
+            "activeSeconds": 1.333650288823992,
+            "authoredBin": 40,
+            "maximumShapeDrift": 3.696729038438207e-7
+        },
+        {
+            "activeSeconds": 1.3415707887150348,
+            "authoredBin": 40,
+            "maximumShapeDrift": 3.6935364278178897e-7
+        },
+        {
+            "activeSeconds": 1.3494714905507864,
+            "authoredBin": 40,
+            "maximumShapeDrift": 3.684460807562573e-7
+        },
+        {
+            "activeSeconds": 1.3570832891389729,
+            "authoredBin": 40,
+            "maximumShapeDrift": 2.5005448378578878e-7
+        },
+        {
+            "activeSeconds": 1.3649254871532322,
+            "authoredBin": 40,
+            "maximumShapeDrift": 3.6904620515088029e-7
+        },
+        {
+            "activeSeconds": 1.3719104926101864,
+            "authoredBin": 41,
+            "maximumShapeDrift": 5.692506874765968e-7
+        },
+        {
+            "activeSeconds": 1.3785065880045296,
+            "authoredBin": 41,
+            "maximumShapeDrift": 3.6905882438986739e-7
+        },
+        {
+            "activeSeconds": 1.3860051922500135,
+            "authoredBin": 41,
+            "maximumShapeDrift": 3.2125129223459228e-7
+        },
+        {
+            "activeSeconds": 1.3925388871692122,
+            "authoredBin": 41,
+            "maximumShapeDrift": 2.5005448378578878e-7
+        },
+        {
+            "activeSeconds": 1.4008277903310956,
+            "authoredBin": 42,
+            "maximumShapeDrift": 2.5176046847263935e-7
+        },
+        {
+            "activeSeconds": 1.4083572902716697,
+            "authoredBin": 42,
+            "maximumShapeDrift": 3.702882906964078e-7
+        },
+        {
+            "activeSeconds": 1.416321994457394,
+            "authoredBin": 42,
+            "maximumShapeDrift": 5.694403739653353e-7
+        },
+        {
+            "activeSeconds": 1.4238559940829874,
+            "authoredBin": 42,
+            "maximumShapeDrift": 2.5045477514140659e-7
+        },
+        {
+            "activeSeconds": 1.4316763879731299,
+            "authoredBin": 42,
+            "maximumShapeDrift": 3.151587861793814e-7
+        },
+        {
+            "activeSeconds": 1.4397175937891008,
+            "authoredBin": 43,
+            "maximumShapeDrift": 3.687390517370659e-7
+        },
+        {
+            "activeSeconds": 1.4482580909505488,
+            "authoredBin": 43,
+            "maximumShapeDrift": 3.1577192771692355e-7
+        },
+        {
+            "activeSeconds": 1.4556220930069686,
+            "authoredBin": 43,
+            "maximumShapeDrift": 3.6935364278178897e-7
+        },
+        {
+            "activeSeconds": 1.462851287983358,
+            "authoredBin": 43,
+            "maximumShapeDrift": 2.4997510195134966e-7
+        },
+        {
+            "activeSeconds": 1.4705354927107693,
+            "authoredBin": 44,
+            "maximumShapeDrift": 3.210023180599819e-7
+        },
+        {
+            "activeSeconds": 1.478955489769578,
+            "authoredBin": 44,
+            "maximumShapeDrift": 3.6905882438986739e-7
+        },
+        {
+            "activeSeconds": 1.4865974892862142,
+            "authoredBin": 44,
+            "maximumShapeDrift": 2.5013534354911828e-7
+        },
+        {
+            "activeSeconds": 1.4947943926788868,
+            "authoredBin": 44,
+            "maximumShapeDrift": 3.629195646226435e-7
+        },
+        {
+            "activeSeconds": 1.5032268899492918,
+            "authoredBin": 45,
+            "maximumShapeDrift": 3.159531445362518e-7
+        },
+        {
+            "activeSeconds": 1.6032268899492924,
+            "authoredBin": 48,
+            "maximumShapeDrift": 3.6935364278178897e-7
+        },
+        {
+            "activeSeconds": 1.6145581892691557,
+            "authoredBin": 48,
+            "maximumShapeDrift": 5.700454721591086e-7
+        },
+        {
+            "activeSeconds": 1.624680687766522,
+            "authoredBin": 48,
+            "maximumShapeDrift": 2.51509248982984e-7
+        },
+        {
+            "activeSeconds": 1.6333840890787546,
+            "authoredBin": 49,
+            "maximumShapeDrift": 3.6935364278178897e-7
+        },
+        {
+            "activeSeconds": 1.6421410898678007,
+            "authoredBin": 49,
+            "maximumShapeDrift": 2.7588575335357748e-7
+        },
+        {
+            "activeSeconds": 1.650898289028555,
+            "authoredBin": 49,
+            "maximumShapeDrift": 2.5176046847263935e-7
+        },
+        {
+            "activeSeconds": 1.661540685314685,
+            "authoredBin": 49,
+            "maximumShapeDrift": 3.168334785641491e-7
+        },
+        {
+            "activeSeconds": 1.6698379852809014,
+            "authoredBin": 50,
+            "maximumShapeDrift": 3.684460807562573e-7
+        },
+        {
+            "activeSeconds": 1.6779931868426506,
+            "authoredBin": 50,
+            "maximumShapeDrift": 2.505902330085519e-7
+        },
+        {
+            "activeSeconds": 1.6856857888400559,
+            "authoredBin": 50,
+            "maximumShapeDrift": 5.117702244206157e-7
+        },
+        {
+            "activeSeconds": 1.6940113842487337,
+            "authoredBin": 50,
+            "maximumShapeDrift": 3.228387299714086e-7
+        },
+        {
+            "activeSeconds": 1.7026206884533169,
+            "authoredBin": 51,
+            "maximumShapeDrift": 3.187736297149968e-7
+        },
+        {
+            "activeSeconds": 1.7102536885999143,
+            "authoredBin": 51,
+            "maximumShapeDrift": 3.7245916928441149e-7
+        },
+        {
+            "activeSeconds": 1.7180927834473552,
+            "authoredBin": 51,
+            "maximumShapeDrift": 3.215747881313291e-7
+        },
+        {
+            "activeSeconds": 1.7259792844764888,
+            "authoredBin": 51,
+            "maximumShapeDrift": 3.696729038438207e-7
+        },
+        {
+            "activeSeconds": 1.7336668838746845,
+            "authoredBin": 52,
+            "maximumShapeDrift": 2.522835700347059e-7
+        },
+        {
+            "activeSeconds": 1.7413909841328863,
+            "authoredBin": 52,
+            "maximumShapeDrift": 2.547622557358409e-7
+        },
+        {
+            "activeSeconds": 1.749126188084483,
+            "authoredBin": 52,
+            "maximumShapeDrift": 3.767989937841776e-7
+        },
+        {
+            "activeSeconds": 1.7581535900011658,
+            "authoredBin": 52,
+            "maximumShapeDrift": 3.7619926729348665e-7
+        },
+        {
+            "activeSeconds": 1.76613258626312,
+            "authoredBin": 52,
+            "maximumShapeDrift": 3.229904166346387e-7
+        },
+        {
+            "activeSeconds": 1.774141784384847,
+            "authoredBin": 53,
+            "maximumShapeDrift": 9.349291190119402e-7
+        },
+        {
+            "activeSeconds": 1.7826114842668178,
+            "authoredBin": 53,
+            "maximumShapeDrift": 0.0000013010751445108327
+        },
+        {
+            "activeSeconds": 1.7907481832429769,
+            "authoredBin": 53,
+            "maximumShapeDrift": 0.000001274729925171414
+        },
+        {
+            "activeSeconds": 1.798866486735642,
+            "authoredBin": 53,
+            "maximumShapeDrift": 7.055547825984831e-7
+        },
+        {
+            "activeSeconds": 1.8075056873261933,
+            "authoredBin": 54,
+            "maximumShapeDrift": 0.0000017390573248121655
+        },
+        {
+            "activeSeconds": 1.8164667846634986,
+            "authoredBin": 54,
+            "maximumShapeDrift": 8.925860583985923e-7
+        },
+        {
+            "activeSeconds": 1.8252631850540642,
+            "authoredBin": 54,
+            "maximumShapeDrift": 0.0000013438510677588056
+        },
+        {
+            "activeSeconds": 1.8332384895533325,
+            "authoredBin": 54,
+            "maximumShapeDrift": 0.0000015868940863583703
+        },
+        {
+            "activeSeconds": 1.8409579834900798,
+            "authoredBin": 55,
+            "maximumShapeDrift": 9.952906339094625e-7
+        },
+        {
+            "activeSeconds": 1.8489968861453239,
+            "authoredBin": 55,
+            "maximumShapeDrift": 8.013379897420236e-7
+        },
+        {
+            "activeSeconds": 1.8578662882559003,
+            "authoredBin": 55,
+            "maximumShapeDrift": 0.0000023510826849815204
+        },
+        {
+            "activeSeconds": 1.8654922871850435,
+            "authoredBin": 55,
+            "maximumShapeDrift": 0.000002187823838539771
+        },
+        {
+            "activeSeconds": 1.873719887901098,
+            "authoredBin": 56,
+            "maximumShapeDrift": 0.0000015170127198871342
+        },
+        {
+            "activeSeconds": 1.8810131844133143,
+            "authoredBin": 56,
+            "maximumShapeDrift": 8.688021466696227e-7
+        },
+        {
+            "activeSeconds": 1.8890086846426134,
+            "authoredBin": 56,
+            "maximumShapeDrift": 0.000001297181029258354
+        },
+        {
+            "activeSeconds": 1.896481388807297,
+            "authoredBin": 56,
+            "maximumShapeDrift": 8.24409369215573e-7
+        },
+        {
+            "activeSeconds": 1.904145688842982,
+            "authoredBin": 57,
+            "maximumShapeDrift": 8.899234558157332e-7
+        },
+        {
+            "activeSeconds": 1.9114161889068784,
+            "authoredBin": 57,
+            "maximumShapeDrift": 0.0000011822324950117036
+        },
+        {
+            "activeSeconds": 1.919976187031716,
+            "authoredBin": 57,
+            "maximumShapeDrift": 0.0000011696789670168073
+        },
+        {
+            "activeSeconds": 1.9274277883581817,
+            "authoredBin": 57,
+            "maximumShapeDrift": 9.600062185199932e-7
+        },
+        {
+            "activeSeconds": 1.9362194837071003,
+            "authoredBin": 58,
+            "maximumShapeDrift": 8.69320672336471e-7
+        },
+        {
+            "activeSeconds": 1.9467043831013143,
+            "authoredBin": 58,
+            "maximumShapeDrift": 0.0000010346067256250536
+        },
+        {
+            "activeSeconds": 1.9559359877370298,
+            "authoredBin": 58,
+            "maximumShapeDrift": 9.299081966673839e-7
+        },
+        {
+            "activeSeconds": 1.964043888356537,
+            "authoredBin": 58,
+            "maximumShapeDrift": 9.058451269083889e-7
+        },
+        {
+            "activeSeconds": 1.9724762859754266,
+            "authoredBin": 59,
+            "maximumShapeDrift": 0.0000015035657270345837
+        },
+        {
+            "activeSeconds": 1.980933988559991,
+            "authoredBin": 59,
+            "maximumShapeDrift": 0.000001547756141917489
+        },
+        {
+            "activeSeconds": 1.991468987520784,
+            "authoredBin": 59,
+            "maximumShapeDrift": 8.606228334429034e-7
+        },
+        {
+            "activeSeconds": 2.0004032841883605,
+            "authoredBin": 60,
+            "maximumShapeDrift": 7.428495223393838e-7
+        },
+        {
+            "activeSeconds": 2.1004032841883606,
+            "authoredBin": 63,
+            "maximumShapeDrift": 0.0000010355979611631483
+        },
+        {
+            "activeSeconds": 2.1112190862186259,
+            "authoredBin": 63,
+            "maximumShapeDrift": 0.0000012230417496539304
+        },
+        {
+            "activeSeconds": 2.120451484341175,
+            "authoredBin": 63,
+            "maximumShapeDrift": 0.0000012062107543897583
+        },
+        {
+            "activeSeconds": 2.1290470841340727,
+            "authoredBin": 63,
+            "maximumShapeDrift": 0.000001010893015518377
+        },
+        {
+            "activeSeconds": 2.137951087672264,
+            "authoredBin": 64,
+            "maximumShapeDrift": 9.838078085522284e-7
+        },
+        {
+            "activeSeconds": 2.14846668438986,
+            "authoredBin": 64,
+            "maximumShapeDrift": 0.0000015532003772023018
+        },
+        {
+            "activeSeconds": 2.1570917838253087,
+            "authoredBin": 64,
+            "maximumShapeDrift": 9.745600664246013e-7
+        },
+        {
+            "activeSeconds": 2.165021985303611,
+            "authoredBin": 64,
+            "maximumShapeDrift": 6.149919045128627e-7
+        },
+        {
+            "activeSeconds": 2.172922885511071,
+            "authoredBin": 65,
+            "maximumShapeDrift": 0.0000017746630192050362
+        },
+        {
+            "activeSeconds": 2.1804297873750335,
+            "authoredBin": 65,
+            "maximumShapeDrift": 0.0000018262952607983607
+        },
+        {
+            "activeSeconds": 2.1897637872025377,
+            "authoredBin": 65,
+            "maximumShapeDrift": 0.000001135256638917781
+        },
+        {
+            "activeSeconds": 2.1971285901963717,
+            "authoredBin": 65,
+            "maximumShapeDrift": 8.049829034462164e-7
+        },
+        {
+            "activeSeconds": 2.2052747849375016,
+            "authoredBin": 66,
+            "maximumShapeDrift": 9.753059657668928e-7
+        },
+        {
+            "activeSeconds": 2.212279490195215,
+            "authoredBin": 66,
+            "maximumShapeDrift": 0.0000012447713970686892
+        },
+        {
+            "activeSeconds": 2.220024685841054,
+            "authoredBin": 66,
+            "maximumShapeDrift": 0.0000011482105719551328
+        },
+        {
+            "activeSeconds": 2.227055687922985,
+            "authoredBin": 66,
+            "maximumShapeDrift": 9.899364386001253e-7
+        },
+        {
+            "activeSeconds": 2.2343600885942584,
+            "authoredBin": 67,
+            "maximumShapeDrift": 0.0000014497721849693335
+        },
+        {
+            "activeSeconds": 2.241985187865794,
+            "authoredBin": 67,
+            "maximumShapeDrift": 0.0000010713691835917417
+        },
+        {
+            "activeSeconds": 2.249202485196293,
+            "authoredBin": 67,
+            "maximumShapeDrift": 0.000001147193188444362
+        },
+        {
+            "activeSeconds": 2.2574279885739094,
+            "authoredBin": 67,
+            "maximumShapeDrift": 8.112434670692892e-7
+        },
+        {
+            "activeSeconds": 2.265159791335464,
+            "authoredBin": 67,
+            "maximumShapeDrift": 0.0000010328091093469994
+        },
+        {
+            "activeSeconds": 2.2738877888768918,
+            "authoredBin": 68,
+            "maximumShapeDrift": 8.624193128525803e-7
+        },
+        {
+            "activeSeconds": 2.284285988658667,
+            "authoredBin": 68,
+            "maximumShapeDrift": 0.0000010113795951838256
+        },
+        {
+            "activeSeconds": 2.293081085197628,
+            "authoredBin": 68,
+            "maximumShapeDrift": 0.0000010126539109478472
+        },
+        {
+            "activeSeconds": 2.301649991422892,
+            "authoredBin": 69,
+            "maximumShapeDrift": 0.0000013817318631481613
+        },
+        {
+            "activeSeconds": 2.3097850894555456,
+            "authoredBin": 69,
+            "maximumShapeDrift": 9.427044460608158e-7
+        },
+        {
+            "activeSeconds": 2.3194312909618026,
+            "authoredBin": 69,
+            "maximumShapeDrift": 0.0000010810340427269694
+        },
+        {
+            "activeSeconds": 2.327543485909701,
+            "authoredBin": 69,
+            "maximumShapeDrift": 0.0000015021274748505676
+        },
+        {
+            "activeSeconds": 2.336555291898549,
+            "authoredBin": 70,
+            "maximumShapeDrift": 0.000001069310769707954
+        },
+        {
+            "activeSeconds": 2.3447351884096867,
+            "authoredBin": 70,
+            "maximumShapeDrift": 0.0000015333506553361076
+        },
+        {
+            "activeSeconds": 2.3527622856199748,
+            "authoredBin": 70,
+            "maximumShapeDrift": 0.000001397446908413258
+        },
+        {
+            "activeSeconds": 2.3606157861649996,
+            "authoredBin": 70,
+            "maximumShapeDrift": 8.069258683462977e-7
+        },
+        {
+            "activeSeconds": 2.368582884781063,
+            "authoredBin": 71,
+            "maximumShapeDrift": 0.0000012776120001944947
+        },
+        {
+            "activeSeconds": 2.376488588750363,
+            "authoredBin": 71,
+            "maximumShapeDrift": 0.0000012804326843252057
+        },
+        {
+            "activeSeconds": 2.3843471845611936,
+            "authoredBin": 71,
+            "maximumShapeDrift": 0.0000012703158063231968
+        },
+        {
+            "activeSeconds": 2.39221758581698,
+            "authoredBin": 71,
+            "maximumShapeDrift": 0.0000012868492831330514
+        },
+        {
+            "activeSeconds": 2.3994993884116417,
+            "authoredBin": 71,
+            "maximumShapeDrift": 0.0000010716398719523568
+        },
+        {
+            "activeSeconds": 2.407475586049259,
+            "authoredBin": 72,
+            "maximumShapeDrift": 0.0000013717783531319583
+        },
+        {
+            "activeSeconds": 2.414492288138718,
+            "authoredBin": 72,
+            "maximumShapeDrift": 0.0000013973389059174224
+        },
+        {
+            "activeSeconds": 2.4239216889254755,
+            "authoredBin": 72,
+            "maximumShapeDrift": 0.0000013974122339277529
+        },
+        {
+            "activeSeconds": 2.4314369880594319,
+            "authoredBin": 72,
+            "maximumShapeDrift": 0.000001397595951857511
+        },
+        {
+            "activeSeconds": 2.4396627885289496,
+            "authoredBin": 73,
+            "maximumShapeDrift": 0.0000013966287042421755
+        },
+        {
+            "activeSeconds": 2.4469623845070607,
+            "authoredBin": 73,
+            "maximumShapeDrift": 0.0000014606630429625512
+        },
+        {
+            "activeSeconds": 2.45466458844021,
+            "authoredBin": 73,
+            "maximumShapeDrift": 0.0000014628679991801619
+        },
+        {
+            "activeSeconds": 2.4616441875696188,
+            "authoredBin": 73,
+            "maximumShapeDrift": 0.0000014620815136368038
+        },
+        {
+            "activeSeconds": 2.470053888857365,
+            "authoredBin": 74,
+            "maximumShapeDrift": 0.0000013999480188431335
+        },
+        {
+            "activeSeconds": 2.477043188642711,
+            "authoredBin": 74,
+            "maximumShapeDrift": 0.0000013992346339364304
+        },
+        {
+            "activeSeconds": 2.4846818861551589,
+            "authoredBin": 74,
+            "maximumShapeDrift": 0.0000014623899460275425
+        },
+        {
+            "activeSeconds": 2.492126791272313,
+            "authoredBin": 74,
+            "maximumShapeDrift": 0.0000014007301842866582
+        },
+        {
+            "activeSeconds": 2.500314390752465,
+            "authoredBin": 75,
+            "maximumShapeDrift": 0.0000014007301842866582
+        },
+        {
+            "activeSeconds": 2.600314390752465,
+            "authoredBin": 78,
+            "maximumShapeDrift": 0.000001410274535373901
+        },
+        {
+            "activeSeconds": 2.609820889215917,
+            "authoredBin": 78,
+            "maximumShapeDrift": 0.0000014106656180956634
+        },
+        {
+            "activeSeconds": 2.61866718987003,
+            "authoredBin": 78,
+            "maximumShapeDrift": 0.0000014712137499373057
+        },
+        {
+            "activeSeconds": 2.626776890736074,
+            "authoredBin": 78,
+            "maximumShapeDrift": 0.000001413343966305547
+        },
+        {
+            "activeSeconds": 2.6343400924466557,
+            "authoredBin": 79,
+            "maximumShapeDrift": 0.0000014136065829006839
+        },
+        {
+            "activeSeconds": 2.6416965903714306,
+            "authoredBin": 79,
+            "maximumShapeDrift": 0.0000014147648244033917
+        },
+        {
+            "activeSeconds": 2.6500456904992468,
+            "authoredBin": 79,
+            "maximumShapeDrift": 0.000001474459850214771
+        },
+        {
+            "activeSeconds": 2.657255093939603,
+            "authoredBin": 79,
+            "maximumShapeDrift": 0.0000014157021723804065
+        },
+        {
+            "activeSeconds": 2.6646066954359419,
+            "authoredBin": 79,
+            "maximumShapeDrift": 0.0000014144383158054553
+        },
+        {
+            "activeSeconds": 2.6720759909600027,
+            "authoredBin": 80,
+            "maximumShapeDrift": 0.0000014757169992662967
+        },
+        {
+            "activeSeconds": 2.6791993895545609,
+            "authoredBin": 80,
+            "maximumShapeDrift": 0.0000014155000371829374
+        },
+        {
+            "activeSeconds": 2.6862738937139518,
+            "authoredBin": 80,
+            "maximumShapeDrift": 0.0000014139243376121158
+        },
+        {
+            "activeSeconds": 2.6936028901487596,
+            "authoredBin": 80,
+            "maximumShapeDrift": 0.0000014144383158054553
+        },
+        {
+            "activeSeconds": 2.7014902908355005,
+            "authoredBin": 81,
+            "maximumShapeDrift": 8.577840162615757e-7
+        },
+        {
+            "activeSeconds": 2.7087929904460914,
+            "authoredBin": 81,
+            "maximumShapeDrift": 0.0000015207627939162194
+        },
+        {
+            "activeSeconds": 2.716450289264322,
+            "authoredBin": 81,
+            "maximumShapeDrift": 0.0000012932811159771518
+        },
+        {
+            "activeSeconds": 2.7243128953501589,
+            "authoredBin": 81,
+            "maximumShapeDrift": 8.89699720119097e-7
+        },
+        {
+            "activeSeconds": 2.7316924942657359,
+            "authoredBin": 81,
+            "maximumShapeDrift": 0.000001110169364437752
+        },
+        {
+            "activeSeconds": 2.7395364925265319,
+            "authoredBin": 82,
+            "maximumShapeDrift": 0.0000015102698398550274
+        },
+        {
+            "activeSeconds": 2.74825669489801,
+            "authoredBin": 82,
+            "maximumShapeDrift": 0.0000013903382978242008
+        },
+        {
+            "activeSeconds": 2.7562918918207295,
+            "authoredBin": 82,
+            "maximumShapeDrift": 8.613681643510063e-7
+        },
+        {
+            "activeSeconds": 2.766212491691113,
+            "authoredBin": 82,
+            "maximumShapeDrift": 0.00000115724424176733
+        },
+        {
+            "activeSeconds": 2.7753462925553329,
+            "authoredBin": 83,
+            "maximumShapeDrift": 0.0000013660061313203187
+        },
+        {
+            "activeSeconds": 2.7868568938225515,
+            "authoredBin": 83,
+            "maximumShapeDrift": 0.0000011358978326825309
+        },
+        {
+            "activeSeconds": 2.797627791203559,
+            "authoredBin": 83,
+            "maximumShapeDrift": 0.0000014668374888060499
+        },
+        {
+            "activeSeconds": 2.8063802927732475,
+            "authoredBin": 84,
+            "maximumShapeDrift": 0.0000014838409470030456
+        },
+        {
+            "activeSeconds": 2.8149468958377845,
+            "authoredBin": 84,
+            "maximumShapeDrift": 7.176600433922431e-7
+        },
+        {
+            "activeSeconds": 2.8238536914810545,
+            "authoredBin": 84,
+            "maximumShapeDrift": 0.000001717684085633664
+        },
+        {
+            "activeSeconds": 2.8323828935623176,
+            "authoredBin": 84,
+            "maximumShapeDrift": 9.195154007102246e-7
+        },
+        {
+            "activeSeconds": 2.841072193719447,
+            "authoredBin": 85,
+            "maximumShapeDrift": 0.0000010163352044401109
+        },
+        {
+            "activeSeconds": 2.849452593736351,
+            "authoredBin": 85,
+            "maximumShapeDrift": 8.44121530008124e-7
+        },
+        {
+            "activeSeconds": 2.8593505950644619,
+            "authoredBin": 85,
+            "maximumShapeDrift": 0.0000014541211612595362
+        },
+        {
+            "activeSeconds": 2.869647392444313,
+            "authoredBin": 86,
+            "maximumShapeDrift": 0.0000013971738326290506
+        },
+        {
+            "activeSeconds": 2.8798221940174706,
+            "authoredBin": 86,
+            "maximumShapeDrift": 8.337043482242734e-7
+        },
+        {
+            "activeSeconds": 2.889032093249262,
+            "authoredBin": 86,
+            "maximumShapeDrift": 9.408685741618683e-7
+        },
+        {
+            "activeSeconds": 2.899646393395961,
+            "authoredBin": 86,
+            "maximumShapeDrift": 0.000001499100790169905
+        },
+        {
+            "activeSeconds": 2.909382695704699,
+            "authoredBin": 87,
+            "maximumShapeDrift": 8.049407824728405e-7
+        },
+        {
+            "activeSeconds": 2.9216964928433306,
+            "authoredBin": 87,
+            "maximumShapeDrift": 0.000001252934566764452
+        },
+        {
+            "activeSeconds": 2.9307092972099788,
+            "authoredBin": 87,
+            "maximumShapeDrift": 0.000001135876573243877
+        },
+        {
+            "activeSeconds": 2.9403812926262624,
+            "authoredBin": 88,
+            "maximumShapeDrift": 9.342924727206992e-7
+        },
+        {
+            "activeSeconds": 2.9492755955085165,
+            "authoredBin": 88,
+            "maximumShapeDrift": 0.0000011476978443170083
+        },
+        {
+            "activeSeconds": 2.959417594969273,
+            "authoredBin": 88,
+            "maximumShapeDrift": 9.61106820795976e-7
+        },
+        {
+            "activeSeconds": 3.0,
+            "authoredBin": 90,
+            "maximumShapeDrift": 9.42321719321626e-7
+        }
+    ],
+    "distinctAuthoredBins": 78,
+    "captures": 7,
+    "possibleVisibleCaps": 0,
+    "maximumShapeDrift": 0.0000023510826849815204
+}

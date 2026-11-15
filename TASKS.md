@@ -1,8 +1,8 @@
 # Execution plan and status
 
-## Current checkpoint — 15 November 2026, 01:05 CET
+## Current checkpoint — 15 November 2026, 01:48 CET
 
-The isolated I06 integration now includes land-launch art, enabled physical microgravity, metre-correct standing body, delayed recovery/Mars presentation, two-step Quit, antenna work/lamp and terminal hardware. **Not yet promoted.** Component native evidence and known failures are recorded in [the overnight checkpoint](docs/verification/i06-overnight-checkpoint.md). Whole-ship float traversal, antenna continuous sleeve, terminal scene binding, complete candidate suite/build and second-PC verification remain acceptance gates. Original project stays33f474f. Older checkpoints below are historical.
+The isolated I06 integration includes land-launch art/surroundings, enabled physical microgravity, metre-correct standing body, delayed recovery/Mars presentation, two-step Quit, a verified continuous antenna sleeve and the functional Earth terminal. **Not yet promoted.** Antenna190, land225 and Earth145 native assertions passed in their documented scopes. Earth arm/text and Intro subtitle clearance remain visual issues; the whole-ship float routeV04 still fails. Claude verified91ef61a independently (323 EditMode/91 PlayMode), not the later candidate. [The overnight checkpoint](docs/verification/i06-overnight-checkpoint.md) records exact limits. Complete current suite/build/playthrough and original-project promotion remain gates. Original stays33f474f; no80–90% claim. Older checkpoints below are historical.
 
 ## Current checkpoint — 14 November 2026, 22:35 CET
 

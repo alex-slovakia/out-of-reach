@@ -1,0 +1,52 @@
+{
+    "name": "03-cabin-before-deadline",
+    "scope": "Actual saved Bootstrap camera + active UIDocuments at1280x720. Screen-space-overlay UGUI excluded; its actual fade alpha is recorded.",
+    "utc": "2026-11-15T00:34:38.5582945Z",
+    "mean": 0.08386266231536865,
+    "deviation": 0.09714280068874359,
+    "state": {
+        "phase": "Planning",
+        "held": "",
+        "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+        "input": "PlayerInputActions",
+        "caption": "",
+        "feet": {
+            "x": 10000.0,
+            "y": 100.02999877929688,
+            "z": 0.6052799820899963
+        },
+        "camera": {
+            "x": 10000.0,
+            "y": 101.6791763305664,
+            "z": 0.604368269443512
+        },
+        "vehicle": {
+            "x": 10000.0,
+            "y": 100.0,
+            "z": 0.0
+        },
+        "progress": 0.0,
+        "stamina": 0.8547808527946472,
+        "fade": 0.0,
+        "focus": true,
+        "control": true,
+        "grounded": true,
+        "modeChosen": true,
+        "paused": false,
+        "awaitingBoarding": false,
+        "lease": false,
+        "suspended": false,
+        "drive": true,
+        "floating": false,
+        "inputLease": false,
+        "floatVelocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "pushes": 0,
+        "contactRefusal": "",
+        "remaining": 50.82895426731557,
+        "mass": 546.0
+    }
+}

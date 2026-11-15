@@ -1,0 +1,45 @@
+{
+    "phase": "Intro",
+    "held": "",
+    "cameraParent": "PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift",
+    "input": "PlayerInputActions",
+    "caption": "",
+    "feet": {
+        "x": -2.273788624052031e-8,
+        "y": 0.11006055772304535,
+        "z": 0.5399089455604553
+    },
+    "camera": {
+        "x": -2.273788624052031e-8,
+        "y": 1.7600605487823487,
+        "z": 0.5399089455604553
+    },
+    "vehicle": {
+        "x": 10000.0,
+        "y": 100.0,
+        "z": 0.0
+    },
+    "progress": 1.0,
+    "stamina": 1.0,
+    "fade": 0.0,
+    "focus": true,
+    "control": true,
+    "grounded": false,
+    "modeChosen": true,
+    "paused": false,
+    "awaitingBoarding": false,
+    "lease": false,
+    "suspended": false,
+    "drive": true,
+    "floating": true,
+    "inputLease": true,
+    "floatVelocity": {
+        "x": -2.981340330165949e-8,
+        "y": 0.07874999940395355,
+        "z": -0.34102556109428408
+    },
+    "pushes": 1,
+    "contactRefusal": "",
+    "remaining": 0.0,
+    "mass": 546.0
+}

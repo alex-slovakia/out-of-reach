@@ -1,0 +1,4 @@
+Stage=float route to (0.00, 0.00, 3.70)
+System.InvalidOperationException: No measured approach progress for18s (best=1.130m); total stage remains bounded; goal=(0.00, 0.00, 3.70) feet=(2.33, 1.01, 1.05) velocity=(0.00, -0.01, -0.09) router=No verified same-surface WORK palm point within the original reach. bare=reach.elbowOutside25to175. No teleport/force fallback.
+  at BootstrapMicroRouteV04Driver+<Navigate>d__57.MoveNext () [0x00f44] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\BootstrapMicroRouteV04\BootstrapMicroRouteV04.cs:400 
+  at BootstrapMicroRouteV04Driver+<Start>d__55.MoveNext () [0x0015c] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.local\i01-integration\Assets\Editor\BootstrapMicroRouteV04\BootstrapMicroRouteV04.cs:227 
