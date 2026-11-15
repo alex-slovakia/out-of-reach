@@ -44,12 +44,12 @@ Material:
     - _AlbedoScale: 0.3
     - _Ambient: 0.9
     - _Cutoff: 0.4
-    - _GustSheen: 0.5
+    - _GustSheen: 0.55
     - _HazeDensity: 0.0012
     - _HazeSunPower: 6
     - _OliveShare: 0.3
-    - _RimGlow: 1.4
-    - _Translucency: 0.75
+    - _RimGlow: 1
+    - _Translucency: 1
     m_Colors:
     - _Dry: {r: 0.56, g: 0.4699999, b: 0.27999997, a: 1}
     - _FarCanopy: {r: 0.25999996, g: 0.20999995, b: 0.10999996, a: 1}
@@ -58,8 +58,8 @@ Material:
     - _HazeSunColor: {r: 1, g: 0.8, b: 0.52, a: 1}
     - _HeightRange: {r: 1.05, g: 2.35, b: 0, a: 0}
     - _Olive: {r: 0.15999997, g: 0.14999998, b: 0.059999965, a: 1}
-    - _PlumeTint: {r: 1, g: 0.96999997, b: 0.9, a: 1}
+    - _PlumeTint: {r: 1, g: 0.93, b: 0.78, a: 1}
     - _Straw: {r: 0.35999998, g: 0.28999996, b: 0.13999996, a: 1}
-    - _TransTint: {r: 1, g: 0.86, b: 0.62, a: 1}
+    - _TransTint: {r: 1, g: 0.8, b: 0.52, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

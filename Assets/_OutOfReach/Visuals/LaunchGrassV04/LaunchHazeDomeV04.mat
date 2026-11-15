@@ -27,17 +27,17 @@ Material:
     m_Floats:
     - _BandSharpness: 9
     - _Brightness: 1.2
-    - _Density: 0.42
+    - _Density: 0.16
     - _FallbackDensity: 0.5
     - _GlowPower: 4
-    - _HeightFalloff: 170
+    - _HeightFalloff: 500
     - _MaxOpacity: 0.88
     - _SkyDistance: 30000
     - _SkyOpacity: 0.6
     - _StartDistance: 70
     - _ZTest: 4
     m_Colors:
-    - _GlowColor: {r: 1, g: 0.86, b: 0.65999997, a: 1}
+    - _GlowColor: {r: 1, g: 0.82, b: 0.58, a: 1}
     - _HazeColor: {r: 0.8, g: 0.78999996, b: 0.76, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
