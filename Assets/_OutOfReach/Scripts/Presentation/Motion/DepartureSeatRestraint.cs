@@ -81,9 +81,11 @@ namespace OutOfReach.Presentation.Motion
             HideNeck();
         }
 
-        // The seated body has no head. Seen from the seat eye, the collapsed neck closes the open collar. Seen from
-        // outside (the camera still on its way into the seat), the whole body and its straps are not drawn while the
-        // place where the head would be is in view, so a headless body can never be on screen.
+        // First person only. The seated body has no head, and the departure camera flies from where the player stood
+        // into the seat (and later cuts to exterior shots) while the body already sits there. The body and its straps
+        // are drawn only while the camera is at the seat eye; from anywhere else nothing of them is drawn, so the body
+        // is never seen in third person. At the seat eye the collapsed neck closes the open collar.
+        private const float FirstPersonRadius = .30f;
         private Renderer[] guarded;
         private bool guardHidden;
 
@@ -95,14 +97,9 @@ namespace OutOfReach.Presentation.Motion
             bool hide = false;
             if (view)
             {
-                Vector3 headPoint = neck.position + bodyFrame.up * .2f;
-                Vector3 toHead = headPoint - view.transform.position;
-                float limit = guardHidden ? .45f : .5f;
-                if (toHead.sqrMagnitude > limit * limit && Vector3.Dot(toHead, view.transform.forward) > 0f)
-                {
-                    Vector3 viewport = view.WorldToViewportPoint(headPoint);
-                    hide = viewport.x > -.3f && viewport.x < 1.3f && viewport.y > -.3f && viewport.y < 1.3f;
-                }
+                // Where the head would be; the seat eye is a few centimetres from it.
+                float distance = Vector3.Distance(view.transform.position, neck.position + bodyFrame.up * .2f);
+                hide = distance > (guardHidden ? FirstPersonRadius : FirstPersonRadius + .03f);
             }
             if (hide == guardHidden) return;
             guardHidden = hide;
