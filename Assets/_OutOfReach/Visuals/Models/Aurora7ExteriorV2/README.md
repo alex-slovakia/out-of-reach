@@ -16,18 +16,20 @@ A long-duration crew vehicle on the delivered datum (deck at y = 0, bow at z = -
   quilted off-white thermal blanket held by graphite straps, amber-edged service panels, low-gain antennas,
   star trackers, four reaction-control quads.
 - **Habitat:** pressure shell under 128 MMOD shield panels with gaps, fasteners and stencils; frame rings;
-  eight bolted portholes; amber handrails with cross-overs; articulating foot restraints; grapple fixtures;
-  cable raceways.
+  eight bolted portholes with a cabin light behind the glass; amber handrails with cross-overs; articulating
+  foot restraints; grapple fixtures; cable raceways; two external stowage pallets.
 - **Service module:** graphite barrel with foil-wrapped equipment bays, thermal louvers, two deployable
   radiator wings, the high-gain antenna on a boom with a two-axis gimbal, four aft reaction-control quads,
-  four canted main engines around the docking tunnel, pressurant tanks, docking floodlights.
+  four canted main engines around the docking tunnel, a foil-wrapped propellant manifold with a feed branch to
+  each engine, pressurant tanks, blade antennas, docking floodlights.
 - **Roll-out solar wings:** drive, mast, yoke, root canister, two slit-tube booms, a 7 x 4 m blanket with
   cropped-corner cells on the sun side and the polyimide harness side behind, tip mandrel. Span 24.7 m.
   The blankets face the departure sun (`I06MarineBindings` orbit light, Euler(26, 220, 0)).
 - **Aft docking adapter:** same envelope and mating interface as the reviewed collar: base flange r 1.61,
   barrel r 1.28, mating flange 0.90 to 1.34, contact seal 0.75 to 0.97 ending on the contact plane, four
-  amber latch housings and four cyan alignment lamps in the reviewed positions. The opening stays clear for
-  the capsule's guide lugs.
+  amber latch housings and four cyan alignment lamps in the reviewed positions. The forward barrel is wrapped
+  in a quilted blanket; the hatch, 0.54 m inside the opening, carries a viewport and a docking target. The
+  opening stays clear for the capsule's guide lugs.
 
 The hull is coaxial with the docking adapter (axis at y = 1.28). The delivered hull axis was at y = 1.56, so
 the new hull sits 0.28 m lower; origin, scale and the docking datum are unchanged.
@@ -74,13 +76,49 @@ python Source~/a7x_textures.py
 Then run **Rebuild materials and prefabs** in Unity. The texture script needs numpy and Pillow.
 The generators are deterministic.
 
-## Budgets and limits
+## Triangle counts and bounds
 
-See `Source~/a7x_report.json` (Blender) and `Evidence~/unity_import_report.json` (Unity) for the counts of
-the committed build. The target is under 250,000 triangles for LOD0.
+Blender (`Source~/a7x_report.json`) and Unity 6000.3.28f1 (`Evidence~/unity_import_report.json`) agree on
+every figure below.
+
+| Object | Triangles | Renderers | Bounds min to max (m, Unity axes) |
+|---|---:|---:|---|
+| Hull LOD0 | 50,220 | 8 | (-12.35, -2.95, -5.22) to (12.35, 9.54, 23.03) |
+| Hull LOD1 | 25,530 | 8 | same |
+| Hull LOD2 | 9,804 | 8 | same |
+| Docking adapter (one level) | 7,658 | 3 | (-1.61, -0.33, 21.15) to (1.62, 2.89, 25.00) |
+| **In the orbit shots (LOD0 + adapter)** | **57,878** | 11 | budget: under 250,000 |
+
+LOD0 parts: hull 26,816; propulsion 15,328; antenna 3,004; solar wings 2 x 1,512; lamps 948; radiators 760;
+markings 340. LOD switches at 22 %, 7 % and 0.8 % of screen height. 22 materials, 28 textures (seven at 2048,
+the rest at 1024 or 512).
+
+## What was verified, and what was not
+
+- **Unity 6000.3.28f1, a private Editor on this worktree, batch with graphics, 21:22 CEST:** import settings,
+  materials and prefabs built by the tool; Bootstrap opened in memory and never saved; install validation
+  `PASS` (29 hull renderers, hull ends 1.600 m before the contact plane against the 0.600 m limit, adapter
+  contact face 0.0000 m from the contact plane, no camera, listener or collider in the orbital set); captures
+  of the two authored poses before and after the swap (`Evidence~/unity_*.png`,
+  `Evidence~/unity_install_validation.txt`).
+- **Not verified:** the committed FBX files are a later re-export of the same generator revision. Their
+  triangle counts and bounds equal the Unity report above, but these exact files were not opened in Unity by
+  the author (the machine ran out of memory). Play mode and the departure sequence itself were not run.
+
+## What to check after installing
+
+1. Console line `[A7X] INSTALLED ... VALIDATE PASS`.
+2. Both orbit shots of the departure: the capsule's nose meets the dark contact seal, nothing crosses the
+   capsule's path, and the four cyan lamps and amber latches sit where the old collar had them.
+3. No pink materials. If a material is missing, run **Rebuild materials and prefabs** once.
+4. `LeadDepartureAuthoring.Apply` still reports `VERIFIED existing Bootstrap anchors`.
+
+## Limits
 
 - The vehicle is for the orbital set. It has no collision and is not fitted to the interior or the EVA route
   of the delivered ship.
-- Lamps are emissive meshes; there are no Light components.
-- The antenna reflector rises to about y = 9.5 and the radiators reach y = -2.9, outside the delivered
-  7.2 m height. Width (24.7 m) and the docking datum are kept.
+- Lamps and cabin lights are emissive meshes; there are no Light components.
+- The antenna reflector rises to y = 9.5 and the radiators reach y = -2.9, outside the delivered 7.2 m
+  height. Width (24.7 m) and the docking datum are kept.
+- Opening Unity on a fresh worktree rewrites 17 tracked PolyHaven `*.mat` files; they are not part of this
+  work and were reverted each time.
