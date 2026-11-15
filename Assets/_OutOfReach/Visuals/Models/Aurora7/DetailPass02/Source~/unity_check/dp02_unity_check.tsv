@@ -1,0 +1,7 @@
+DP02_Engineering	IMPORTER	guid=c80d985a299a0e664f18c69a85c43e80	bakeAxisConversion=True	useFileUnits=True	useFileScale=True	globalScale=1	importCameras=False	importLights=False	materialImportMode=ImportViaMaterialDescription	preserveHierarchy=True	externalMaterialMaps=11
+DP02_Engineering	ROOT	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000
+DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftL	-2.1500,1.0500,10.9015	-1.8100,1.7500,10.9195	-1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
+DP02_Engineering	MESH	DP02_ENG_AccessPanel_AftR	1.8100,1.0500,10.9015	2.1500,1.7500,10.9195	1.9800,0.0000,10.9200	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	1778	6	null;null;null;null;null;null;
+DP02_Engineering	MESH	DP02_ENG_FrameLoom_L_Z460	-2.3325,0.1205,4.5250	-2.1223,2.5174,4.6750	-2.2040,0.0000,4.6000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
+DP02_Engineering	MESH	DP02_ENG_FrameLoom_R_Z940	2.1223,0.1205,9.3250	2.3325,2.5174,9.4750	2.2040,0.0000,9.4000	0.0000,0.0000,0.0000	1.0000,1.0000,1.0000	7378	11	null;null;null;null;null;null;null;null;null;null;null;
+DP02_Engineering	ANCHOR	DP02_ENG_ReviewEye	0.7500,1.6200,8.5500	0.0000,0.0000,0.0000

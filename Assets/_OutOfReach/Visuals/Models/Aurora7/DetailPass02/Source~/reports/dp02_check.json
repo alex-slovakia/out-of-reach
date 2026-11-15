@@ -1,0 +1,204 @@
+{
+ "ship_triangles": 297160,
+ "rail_triangles": 15144,
+ "control_triangles": 44900,
+ "door_sweep_box": {
+  "min": [
+   -2.4,
+   0.01,
+   16.87
+  ],
+  "max": [
+   2.4,
+   2.45,
+   21.13
+  ]
+ },
+ "corridor_box": {
+  "min": [
+   -0.9,
+   0.0,
+   -3.0
+  ],
+  "max": [
+   0.9,
+   2.5,
+   21.0
+  ],
+  "centreline": "x = 0, y = 1.25, z -3 .. 21"
+ },
+ "definitions": {
+  "rails": "all A7_PaintAmber triangles of the ship and habitat (handrails/translation aids; also the amber hatch-land stripe, so the number is conservative)",
+  "controls": "a7_ship switch_panel, display, gauge, breaker, console and seat geometry, the separately addressable gameplay parts, ship ANCHORS and the habitat anchors and colliders",
+  "overlap": "BVHTree.overlap triangle pairs between each detail object and all ship and habitat geometry, both built in world space from matrix_world @ v.co",
+  "mount_gap": "smallest distance from the object to any ship/habitat surface (seated, not floating)",
+  "max_standoff": "largest distance from any vertex of the object to the nearest ship/habitat surface"
+ },
+ "rooms": {
+  "Engineering": {
+   "DP02_ENG_FrameLoom_L_Z460": {
+    "triangles": 7378,
+    "overlap_pairs": 0,
+    "mount_gap_m": 0.0005,
+    "mount_point": [
+     -2.2035,
+     0.7036,
+     4.5836
+    ],
+    "max_standoff_m": 0.0874,
+    "min_dist_rails_m": 0.3195,
+    "nearest_rail_point": [
+     -2.297,
+     1.0082,
+     4.9657
+    ],
+    "min_dist_controls_m": 0.1806,
+    "nearest_control_point": [
+     -2.356,
+     2.39,
+     4.477
+    ],
+    "min_dist_gameplay_parts_m": 0.9766,
+    "min_dist_ship_anchor_m": [
+     1.7644,
+     "LightAnchor_PowerCabinetWork"
+    ],
+    "min_dist_habitat_anchor_m": [
+     8.3944,
+     "SleepCamera"
+    ],
+    "min_dist_habitat_collider_m": [
+     7.857,
+     "COL_Habitat_Berth"
+    ],
+    "min_dist_airlock_door_sweep_m": 12.195,
+    "min_dist_corridor_box_m": 1.2223,
+    "min_dist_corridor_centreline_m": 2.1472
+   },
+   "DP02_ENG_FrameLoom_R_Z940": {
+    "triangles": 7378,
+    "overlap_pairs": 0,
+    "mount_gap_m": 0.0005,
+    "mount_point": [
+     2.2035,
+     0.7036,
+     9.4164
+    ],
+    "max_standoff_m": 0.0874,
+    "min_dist_rails_m": 0.3195,
+    "nearest_rail_point": [
+     2.297,
+     1.0082,
+     9.0343
+    ],
+    "min_dist_controls_m": 0.1806,
+    "nearest_control_point": [
+     2.356,
+     2.39,
+     9.523
+    ],
+    "min_dist_gameplay_parts_m": 1.0167,
+    "min_dist_ship_anchor_m": [
+     3.6777,
+     "Antenna_ElevationMount"
+    ],
+    "min_dist_habitat_anchor_m": [
+     5.1951,
+     "SleepEntry"
+    ],
+    "min_dist_habitat_collider_m": [
+     4.777,
+     "COL_Habitat_GrowCassette"
+    ],
+    "min_dist_airlock_door_sweep_m": 7.395,
+    "min_dist_corridor_box_m": 1.2223,
+    "min_dist_corridor_centreline_m": 2.1472
+   },
+   "DP02_ENG_AccessPanel_AftL": {
+    "triangles": 1778,
+    "overlap_pairs": 0,
+    "mount_gap_m": 0.0005,
+    "mount_point": [
+     -1.81,
+     1.732,
+     10.9195
+    ],
+    "max_standoff_m": 0.0185,
+    "min_dist_rails_m": 0.5374,
+    "nearest_rail_point": [
+     -2.2856,
+     1.1154,
+     11.4374
+    ],
+    "min_dist_controls_m": 4.0555,
+    "nearest_control_point": [
+     -1.728,
+     1.608,
+     6.85
+    ],
+    "min_dist_gameplay_parts_m": 4.1454,
+    "min_dist_ship_anchor_m": [
+     4.2249,
+     "LightAnchor_PowerCabinetAlarm"
+    ],
+    "min_dist_habitat_anchor_m": [
+     2.1218,
+     "SleepCamera"
+    ],
+    "min_dist_habitat_collider_m": [
+     1.6075,
+     "COL_Habitat_Berth"
+    ],
+    "min_dist_airlock_door_sweep_m": 5.9505,
+    "min_dist_corridor_box_m": 0.91,
+    "min_dist_corridor_centreline_m": 1.8191
+   },
+   "DP02_ENG_AccessPanel_AftR": {
+    "triangles": 1778,
+    "overlap_pairs": 0,
+    "mount_gap_m": 0.0005,
+    "mount_point": [
+     2.15,
+     1.732,
+     10.9195
+    ],
+    "max_standoff_m": 0.0185,
+    "min_dist_rails_m": 0.1433,
+    "nearest_rail_point": [
+     2.2779,
+     1.732,
+     10.8488
+    ],
+    "min_dist_controls_m": 0.446,
+    "nearest_control_point": [
+     2.348,
+     2.14,
+     10.868
+    ],
+    "min_dist_gameplay_parts_m": 2.563,
+    "min_dist_ship_anchor_m": [
+     2.4241,
+     "Antenna_ServiceSocket"
+    ],
+    "min_dist_habitat_anchor_m": [
+     3.8308,
+     "GrowInteraction"
+    ],
+    "min_dist_habitat_collider_m": [
+     3.3275,
+     "COL_Habitat_GrowCassette"
+    ],
+    "min_dist_airlock_door_sweep_m": 5.9505,
+    "min_dist_corridor_box_m": 0.91,
+    "min_dist_corridor_centreline_m": 1.8191
+   }
+  }
+ },
+ "ship_anchor_names": [
+  "Antenna_ElevationMount",
+  "Antenna_ServiceSocket",
+  "LightAnchor_PowerCabinetAlarm",
+  "LightAnchor_PowerCabinetWork",
+  "LightAnchor_SuitLocker"
+ ]
+}

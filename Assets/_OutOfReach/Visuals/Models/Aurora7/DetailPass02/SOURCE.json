@@ -1,0 +1,19 @@
+{
+ "package": "SHIP-DETAIL-02",
+ "parent_commit": "3cb145a32b03405e9ce94c7110a67460af11872e",
+ "rights": "Original procedural team work made with AI (Claude Opus 5.5) for Apoliak7777's team; see ATTRIBUTION.md. No downloads, scans, photographs, generated images or new packages.",
+ "materials": "No new materials or textures: every slot is an existing A7_* or HB_* material, remapped by name to its existing asset GUID.",
+ "generator": "Source/build_dp02.py with Source/dp02_kit.py and Source/dp02_layout.py, on top of the AURORA-7 generator in ../Source (a7kit.py, a7_ship.py)",
+ "records": [
+  {
+   "path": "Meshes/DP02_Engineering.fbx",
+   "sha256": "9db4189c06867e098f156cd6827051d0dd3c69fc0f06bec7ebc562f4fe71043e",
+   "bytes": 537244
+  },
+  {
+   "path": "Previews~/DP02_Engineering.png",
+   "sha256": "6c6c0473199face5ca478614714a1ee2c1419b14394b729634c47ff5dae4a881",
+   "bytes": 2047510
+  }
+ ]
+}
