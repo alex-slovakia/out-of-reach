@@ -53,6 +53,7 @@ namespace OutOfReach.ModelTools
             public float[] color;
             public float[] emission;
             public float smooth = 0.5f;
+            public float smoothScale = 1f;
             public float metallic;
             public float estr;
             public bool alpha;
@@ -252,7 +253,7 @@ namespace OutOfReach.ModelTools
                 material.SetTexture("_MetallicGlossMap", mask);
                 material.SetTexture("_OcclusionMap", mask);
                 material.SetFloat("_Metallic", 1f);
-                material.SetFloat("_Smoothness", 1f);
+                material.SetFloat("_Smoothness", spec.smoothScale > 0f ? spec.smoothScale : 1f);
                 material.EnableKeyword("_METALLICSPECGLOSSMAP");
                 material.EnableKeyword("_OCCLUSIONMAP");
             }
