@@ -1,0 +1,19 @@
+{
+  "name": "OutOfReach.LaunchFxV03NativeQa.Editor",
+  "references": [
+    "OutOfReach.Composition",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.Cinematics",
+    "OutOfReach.UI",
+    "OutOfReach.LaunchFXV03",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

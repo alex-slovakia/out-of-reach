@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2277333935144941793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8218513694047041947}
+  - component: {fileID: 698846611716368941}
+  m_Layer: 0
+  m_Name: LaunchFX_V03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8218513694047041947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2277333935144941793}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698846611716368941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2277333935144941793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59158fee47474d50b5b341ef76f8549d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutOfReach.LaunchFXV03::OutOfReach.Presentation.LaunchFXV03.LaunchFxV03Presenter
+  plumeMaterial: {fileID: 2100000, guid: aa4e0b226a9f46d49b61d3c05a128fdf, type: 2}
+  cloudMaterial: {fileID: 2100000, guid: 820dbf1030b9737429efcb9957709d18, type: 2}
+  nozzleRadiusMetres: 0.85
+  maximumPlumeMetres: 30
+  cloudOpacity: 0.78
+  vehicleDiameterMetres: 4.7
+  trenchWidthMetres: 6
+  lightIntensity: 60

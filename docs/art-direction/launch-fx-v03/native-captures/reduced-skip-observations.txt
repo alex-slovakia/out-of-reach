@@ -1,0 +1,6 @@
+GPU Intel(R) UHD Graphics | Direct3D12 | mode reduced-skip
+3.574 | bind V03 through ConfigureLaunchFxV03
+3.578 | pad plane local y -32,600 (expect -32.6); deflector world y 63,447; nozzle world (10000.000, 68.600, 0.000) fwd (0.000, -1.000, 0.000); exit (10000.00, 63.40, 72.00)
+3.587 | practice and walk to the seat
+9.082 | reduced effects + skip
+21.248 | CAPTURE t11.6 at playhead 11.702 plume 9.94 m steam 18 light 0.00 paused False

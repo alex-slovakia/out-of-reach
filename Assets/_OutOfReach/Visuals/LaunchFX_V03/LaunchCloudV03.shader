@@ -22,6 +22,7 @@ Shader "OutOfReach/LaunchV03/Cloud"
             #pragma target 3.0
             #pragma multi_compile_fog
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             CBUFFER_START(UnityPerMaterial)
                 float4 _Sample;
                 float4 _ContactGlow;
@@ -54,12 +55,22 @@ Shader "OutOfReach/LaunchV03/Cloud"
                 float edgeFade=saturate((1-radius)*3);
                 float alpha=min(.72,density*edgeFade*i.color.a*_Sample.y);
                 clip(alpha-.002);
-                // Baked-looking internal self shade; no per-particle lights or full-screen distortion.
-                float light=.67+.28*saturate(.5+p.y*.55)+n*.22;
-                float3 color=i.color.rgb*light;
+                // Sun-lit billow: a sphere-impostor normal from the camera-facing quad, lit by the scene's actual
+                // main light (wrapped) and ambient probe, so the cloud has a lit top/sun side and a shaded belly.
+                // Still no per-particle lights, shadows or full-screen distortion.
+                float3 camRight=UNITY_MATRIX_V[0].xyz, camUp=UNITY_MATRIX_V[1].xyz, camBack=UNITY_MATRIX_V[2].xyz;
+                float bulge=sqrt(saturate(1-radius*.92));
+                float3 nrm=normalize(camRight*(p.x+(n-.5)*.35)+camUp*(p.y+(n-.5)*.35)+camBack*bulge);
+                Light sun=GetMainLight();
+                float wrap=saturate(dot(nrm,sun.direction)*.6+.4);
+                // Keep the deluge steam cream: take about half of the sun's tint, all of its intensity.
+                float3 sunCol=lerp(dot(sun.color,float3(.299,.587,.114)).xxx,sun.color,.5);
+                float3 lit=sunCol*wrap*.80+SampleSH(nrm)*.95;
+                float self=.78+.22*n;
+                float3 color=i.color.rgb*lit*self;
                 float3 delta=i.positionWS-_ContactGlow.xyz;
                 float glow=exp(-dot(delta,delta)/max(1,_GlowRadius*_GlowRadius))*_ContactGlow.w;
-                color+=float3(1.55,.43,.055)*glow*(.40+.60*density);
+                color+=float3(2.1,.68,.11)*glow*(.45+.55*density);
                 color=MixFog(color,i.fog);
                 return half4(color,alpha);
             }
