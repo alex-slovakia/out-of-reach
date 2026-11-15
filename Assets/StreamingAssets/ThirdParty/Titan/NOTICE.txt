@@ -2,6 +2,10 @@ Titan by Scott Buckley
 Creative Commons Attribution 4.0 International
 https://creativecommons.org/licenses/by/4.0/
 Source https://www.scottbuckley.com.au/library/titan/
-OUT OF REACH uses an excerpt from 10.9 to 45.4 seconds with fades and gain adjusted.
+OUT OF REACH uses an adapted excerpt as its opening music (loading, launch and ascent):
+continuous source passage 48 to 132 seconds, gradual gain staging, added original low percussion
+and quiet tonal vibration by the OUT OF REACH team, mastering. In game it is faded at the
+section ends; it is not looped.
 Original MP3 SHA-256 ce6d890556829b17152deb6216ceffa314469c09d858f07d0d302d81f2b48313
-Edited PCM SHA-256 f2297648a1f849910d49c639557c5938e993db9f3cb3070fce73a4f58375b0d0
+Adapted PCM master (Assets/_OutOfReach/Audio/Music/titan-departure.wav) SHA-256
+926e994502373d4df7ec499404172c4c67d52a8f2f5c7631a3794ca938fa717c

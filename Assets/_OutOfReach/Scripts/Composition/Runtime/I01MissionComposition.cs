@@ -371,6 +371,12 @@ namespace OutOfReach.Composition
         private bool RequestPreflightPulse()
         {
             if (!CanPresentTimedPreflight() || !audioPresenter || audioPresenter.IsPresentationPaused) return false;
+            if (audioPresenter.OpeningOwnsMusic)
+            {
+                // The approved opening score carries the loading tension; never switch to a mood track over it.
+                preflightMusicOwned = false;
+                return true;
+            }
             MusicMood previous = audioPresenter.CurrentMood;
             if (!audioPresenter.SetMood(MusicMood.Tension, 3f)) return false;
             preflightPreviousMood = previous;
@@ -473,6 +479,7 @@ namespace OutOfReach.Composition
         {
             MaintainMicrogravity();
             UpdateMicrogravityHelp();
+            MaintainOpeningMusic();
             if (rejectionUntil <= 0f && IsAntennaFocused()) RefreshInteractionPrompt();
             if (!departureRestraintCuePlayed && marine && marine.IsSeatedDeparture
                 && embodiedBody && embodiedBody.IsDepartureSeatLatched && audioPresenter)
@@ -497,6 +504,17 @@ namespace OutOfReach.Composition
             var next = dialogueQueue.Peek();
             dialogueSpeaker = next.Value;
             if (audioPresenter.PlayDialogue(next.Key.CleanClip, next.Key.SubtitleText, next.Key.CueId)) dialogueQueue.Dequeue();
+        }
+
+        // AUDIO-OPENING: one owner for the music from loading through the departure. The approved score starts when a
+        // mode is chosen (the menu stays silent) and, once the departure plays, follows its presented playhead.
+        private void MaintainOpeningMusic()
+        {
+            if (!audioPresenter || !attached || boundSession == null || !runtime || audioPresenter.IsPresentationPaused) return;
+            if (departureScore && modeChosen && runtime.GameState.Phase == GamePhase.Planning
+                && audioPresenter.OpeningState == OpeningMusicState.Idle)
+                audioPresenter.BeginOpeningLoading(departureScore);
+            if (marine && marine.IsDeparturePlaying) audioPresenter.TrackOpeningDeparture(marine.PresentedSeconds);
         }
 
         private void Attach()
@@ -851,6 +869,10 @@ namespace OutOfReach.Composition
                 if (!marine.BeginDeparture() && !marine.OwnsPresentation)
                     flightBoard.SetDeparturePresentation(false);
             }
+            // Launch without a departure cutscene: the loading score fades instead of running on under Intro.
+            if (message.Previous == GamePhase.Planning && audioPresenter
+                && audioPresenter.OpeningState == OpeningMusicState.Loading)
+                audioPresenter.EndOpeningDeparture(2f);
             if (preflightTension) preflightTension.RefreshPresentation();
             ApplyPhasePresentation(message.Current, true);
             controls.Refresh();
@@ -863,10 +885,13 @@ namespace OutOfReach.Composition
                 planningFramingPivot.SetPositionAndRotation(planningViewAnchor.position, planningViewAnchor.rotation);
             else if (!IsTransportDeparturePlaying) RestorePlayerFraming();
 
+            // The opening (loading, departure, arrival) owns the music until the mission leaves Intro.
+            if (phase != GamePhase.Planning && phase != GamePhase.Intro) audioPresenter.ReleaseOpeningMusic(.25f);
             switch (phase)
             {
                 case GamePhase.Planning:
-                    audioPresenter.SetMood(MusicMood.Isolation);
+                    // Menu is silent; loading belongs to the approved opening score (MaintainOpeningMusic).
+                    audioPresenter.SetMood(MusicMood.Silent, 0f);
                     break;
                 case GamePhase.Intro:
                     modeChosen = true;
@@ -914,18 +939,16 @@ namespace OutOfReach.Composition
             {
                 case TransportDepartureCue.Boarding:
                     departureRestraintCuePlayed = false;
-                    if (departureScore) audioPresenter.PlayDepartureMusic(departureScore);
-                    PlayDepartureVoice("departure-secure");
+                    // AUDIO-OPENING: the approved score enters on its launch downbeat; the NASA launch radio
+                    // ("Ignition sequence start ... zero" at liftoff) follows the playhead (MaintainOpeningMusic).
+                    // The flight-control voice lines are no longer called: they would talk over the countdown.
+                    if (departureScore)
+                        audioPresenter.BeginOpeningDeparture(departureScore, TransportDepartureTimeline.DurationSeconds);
                     break;
                 case TransportDepartureCue.HatchClosing:
                     audioPresenter.TryPlayDepartureEffectCue("departure-hatch-latch");
-                    PlayDepartureVoice("departure-sealing");
-                    break;
-                case TransportDepartureCue.ArmRetracting:
-                    PlayDepartureVoice("departure-hatch-secured");
                     break;
                 case TransportDepartureCue.Acceleration:
-                    PlayDepartureVoice("departure-ignition");
                     audioPresenter.TryPlayDepartureEffectCue("departure-ignition-ramp");
                     audioPresenter.TryPlayDepartureEffectCue("departure-engine-vibration");
                     break;
@@ -933,23 +956,12 @@ namespace OutOfReach.Composition
                     audioPresenter.StopDepartureEffects();
                     audioPresenter.TryPlayDepartureEffectCue("departure-pad-roar");
                     break;
-                case TransportDepartureCue.Ascent:
-                    PlayDepartureVoice("departure-liftoff");
-                    audioPresenter.TryPlayDepartureEffectCue("departure-liftoff-shock");
-                    break;
+                // Ascent: the user-cancelled departure-liftoff-shock is no longer played.
                 case TransportDepartureCue.UpperAtmosphere:
                     audioPresenter.StopDepartureEffects();
                     break;
-                case TransportDepartureCue.LaterAboard:
-                    audioPresenter.SetMood(MusicMood.Isolation, 1f);
-                    break;
+                // LaterAboard: no mood track; the opening score fades out with the departure (no "elevator music").
             }
-        }
-
-        private void PlayDepartureVoice(string cue)
-        {
-            dialogueSpeaker = "FLIGHT CONTROL";
-            audioPresenter.TryPlayDialogue(cue);
         }
 
         private void OnWakePresentationStarted(int missionDay, RestStopReason reason)
@@ -958,13 +970,16 @@ namespace OutOfReach.Composition
                 audioPresenter.PlaySfx(restWakeCue, .7f);
         }
 
-        private void OnDepartureAudioEnded(TransportDepartureEnd _)
+        private void OnDepartureAudioEnded(TransportDepartureEnd reason)
         {
             departureRestraintCuePlayed = false;
             if (!audioPresenter) return;
             audioPresenter.StopDepartureEffects();
             audioPresenter.StopDialogue();
             audioPresenter.StopDepartureMusic();
+            // Completed: the score has already faded with the last shot. Skip/cancel: short fade, radio stops at once.
+            audioPresenter.EndOpeningDeparture(reason == TransportDepartureEnd.Completed
+                ? .5f : MissionAudioPresenter.OpeningSkipFadeSeconds);
         }
 
         private void OnTransportTransferred()
@@ -1231,7 +1246,8 @@ namespace OutOfReach.Composition
         {
             if (!flightBoard) return;
             if (audioPresenter && audioPresenter.CurrentSubtitle.IsVisible)
-                flightBoard.ShowSubtitle(audioPresenter.CurrentSubtitle.Text, dialogueSpeaker);
+                flightBoard.ShowSubtitle(audioPresenter.CurrentSubtitle.Text,
+                    audioPresenter.CurrentSubtitle.CueId == LaunchRadioCountdown.CueId ? "LAUNCH CONTROL · RADIO" : dialogueSpeaker);
             else if (!string.IsNullOrEmpty(cinematicCaption)) flightBoard.ShowSubtitle(cinematicCaption, "SHIP STATUS");
             else flightBoard.ClearSubtitle();
         }

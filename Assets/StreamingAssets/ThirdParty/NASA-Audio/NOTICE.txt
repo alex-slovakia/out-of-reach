@@ -1,0 +1,10 @@
+Launch radio countdown - credit: NASA
+Apollo 11 launch commentary (NASA public-domain audio). NASA audio is not protected by copyright
+in the United States; see the NASA media usage guidelines. Use does not imply NASA endorsement.
+Source https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3
+(400,398 bytes, SHA-256 9f14d326e95356e096b181c807136dd460f5a30afae02d55135e84d5e3c0a6f0)
+Transcript https://www.nasa.gov/wp-content/uploads/2015/03/apollo-11_day-01-highlights.pdf
+OUT OF REACH uses two unedited passages ("Ignition sequence start ... We have a liftoff." and
+"Tower cleared. We got a roll program."), band-limited to radio quality with a whistle notch and
+compression. The line naming the Apollo 11 mission is omitted; AURORA-7 is fictional.
+Asset: Assets/_OutOfReach/Audio/LaunchRadio/launch-radio-countdown.wav
