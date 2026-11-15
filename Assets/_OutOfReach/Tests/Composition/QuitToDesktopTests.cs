@@ -299,6 +299,7 @@ namespace OutOfReach.Tests.Composition
 
             controls.enabled = true;
             controls.Configure(null);
+            ShowMenu(document);
             Button rebuilt = document.rootVisualElement.Q<Button>(I01SessionControls.QuitButtonName);
             Assert.That(rebuilt.text, Is.EqualTo(I01SessionControls.QuitLabel));
             Submit(rebuilt);
@@ -367,9 +368,21 @@ namespace OutOfReach.Tests.Composition
             controls.ConfigureDocument(document, null);
             owner.SetActive(true);
             controls.Configure(null);
+            ShowMenu(document);
             Assert.That(document.rootVisualElement, Is.Not.Null, "the runtime panel exists");
             Assert.That(document.rootVisualElement.Q<Button>(I01SessionControls.QuitButtonName), Is.Not.Null, "the menu view was built");
             return controls;
+        }
+
+        /// <summary>
+        /// Shows the session menu the way Refresh does for a bound mission. Without a composition Refresh never reveals
+        /// it: since root 044395b a rebuilt menu stays hidden until it is fully bound.
+        /// </summary>
+        private static void ShowMenu(UIDocument document)
+        {
+            VisualElement menu = document.rootVisualElement.Q("i01-mode-pause-overlay");
+            Assert.That(menu, Is.Not.Null, "the session menu exists");
+            menu.style.display = DisplayStyle.Flex;
         }
 
         private static void Submit(VisualElement target)
