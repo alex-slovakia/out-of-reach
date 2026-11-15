@@ -1,0 +1,44 @@
+Unity 6000.3.28f1 batch run on this worktree's own Editor, 15 Nov 2026 21:29-21:31 CEST (final FBX/textures).
+Verbatim builder report (AuroraCapsulesV02Builder.BuildAll):
+
+AURORA_CAPSULES_V02_BUILD OK
+texture CAP_Graphite_BaseColor.png sRGB max 1024
+texture CAP_Graphite_Mask.png linear max 1024
+texture CAP_Graphite_Normal.png normal max 1024
+texture CAP_Kit_BaseColor.png sRGB max 256
+texture CAP_Kit_Emission.png sRGB max 256
+texture CAP_Kit_Mask.png linear max 256
+texture CAP_Metal_BaseColor.png sRGB max 1024
+texture CAP_Metal_Mask.png linear max 1024
+texture CAP_Metal_Normal.png normal max 1024
+texture CT_HeatShield_BaseColor.png sRGB max 2048
+texture CT_HeatShield_Mask.png linear max 2048
+texture CT_HeatShield_Normal.png normal max 2048
+texture CT_Hull_BaseColor.png sRGB max 4096
+texture CT_Hull_Mask.png linear max 4096
+texture CT_Hull_Normal.png normal max 4096
+texture RC_HeatShield_BaseColor.png sRGB max 2048
+texture RC_HeatShield_Mask.png linear max 2048
+texture RC_HeatShield_Normal.png normal max 2048
+texture RC_Hull_BaseColor.png sRGB max 4096
+texture RC_Hull_Mask.png linear max 4096
+texture RC_Hull_Normal.png normal max 4096
+material RC_Hull
+material RC_HeatShield
+material CAP_Metal
+material CAP_Graphite
+material CAP_Kit +emission
+material CT_Hull
+material CT_HeatShield
+model AuroraRescueCraft.fbx: 5 material remaps
+model AuroraCrewTransport.fbx: 5 material remaps
+AuroraRescueCraft CapsuleShell: delivered (-2.577, -2.504, -0.550)..(2.577, 2.622, 5.100) new (-2.542, -2.542, -0.550)..(2.542, 2.541, 5.100) | node rot (270.0, 0.0, 0.0) / (270.0, 0.0, 0.0) scale (1.000, 1.000, 1.000) / (1.000, 1.000, 1.000)
+AuroraRescueCraft Hatch: delivered (-0.035, -0.140, 0.020)..(1.400, 0.235, 2.130) new (-0.046, -0.180, 0.020)..(1.400, 0.127, 2.130) | node rot (270.0, 0.0, 0.0) / (270.0, 0.0, 0.0) scale (1.000, 1.000, 1.000) / (1.000, 1.000, 1.000)
+  nose datum axis z = 5.1000 (delivered 5.1000)
+AuroraCrewTransport CapsuleShell: delivered (-2.577, -2.504, -0.550)..(2.577, 2.622, 5.100) new (-2.542, -2.542, -0.550)..(2.542, 2.541, 5.100) | node rot (270.0, 0.0, 0.0) / (270.0, 0.0, 0.0) scale (1.000, 1.000, 1.000) / (1.000, 1.000, 1.000)
+AuroraCrewTransport Hatch: delivered (-0.035, -0.140, 0.020)..(1.400, 0.235, 2.130) new (-0.046, -0.180, 0.020)..(1.400, 0.127, 2.130) | node rot (270.0, 0.0, 0.0) / (270.0, 0.0, 0.0) scale (1.000, 1.000, 1.000) / (1.000, 1.000, 1.000)
+  nose datum axis z = 5.1000 (delivered 5.1000)
+  RC LOD0/1/2 triangles: 47102 / 24825 / 9547, hatch 2565
+prefab AuroraRescueCraft: all-LOD triangles 84827
+  CT LOD0/1/2 triangles: 31996 / 15782 / 6010, hatch 2565
+prefab AuroraCrewTransport: all-LOD triangles 57141

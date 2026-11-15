@@ -1,0 +1,36 @@
+unity 6000.3.28f1 2026-11-15 21:29:16Z
+delivered shell mesh CapsuleShell (5.153, 5.126, 5.650)
+capture unity_before_ct_hatch_approach.png mean 51.4
+capture unity_before_ct_hatch_side.png mean 84.3
+capture unity_before_ct_quarter.png mean 55.1
+capture unity_before_ct_back.png mean 64.2
+capture unity_before_ct_dock.png mean 93.9
+capture unity_before_ct_studio.png mean 93.0
+capture unity_before_rc_cinematic_start.png mean 5.2
+capture unity_before_rc_cinematic_start_lit.png mean 6.9
+capture unity_before_rc_cinematic_end_lit.png mean 10.5
+capture unity_before_rc_hero.png mean 43.0
+capture unity_before_rc_nose.png mean 41.1
+capture unity_before_rc_aft.png mean 26.3
+capture unity_before_rc_far.png mean 7.5
+  RC LOD0/1/2 triangles: 47102 / 24825 / 9547, hatch 2565
+installed rescue craft on AURORA-7 delivered Blender models/RecoveryArrival - owned visual group/RecoveryArrival_Courier/TransportLaunch/CapsuleShell
+  CT LOD0/1/2 triangles: 31996 / 15782 / 6010, hatch 2565
+installed crew transport on I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell
+  docking datum: shell reaches 0.150 m past DockingPort (required 0.15 +- 0.04): PASS
+  RC LOD0/1/2 triangles: 47102 / 24825 / 9547, hatch 2565
+installed rescue craft on I01 presentation/Recovery cinematic provider/MarsDeparture - later illustrative tableau/MarsDeparture_Courier/TransportLaunch/CapsuleShell
+scene marked dirty, NOT saved. Check it in the viewport, then save yourself.
+
+second install (idempotent):
+RESULT FAIL UnityEngine.MissingReferenceException: The object of type 'UnityEngine.Transform' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+  at UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) [0x0006a] in <de88af24691e4d5d8139304fcf46f698>:0 
+  at UnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) [0x00010] in <de88af24691e4d5d8139304fcf46f698>:0 
+  at UnityEngine.Object.GetName () [0x00006] in <de88af24691e4d5d8139304fcf46f698>:0 
+  at UnityEngine.Object.get_name () [0x00001] in <de88af24691e4d5d8139304fcf46f698>:0 
+  at OutOfReach.Visuals.AuroraCapsulesV02.Editor.AuroraCapsulesV02Installer+<>c.<Targets>b__17_1 (UnityEngine.Transform t) [0x00000] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.claude\worktrees\claude-max-rescue-craft-909b53\Assets\_OutOfReach\Visuals\Models\AuroraCapsulesV02\Editor\AuroraCapsulesV02Installer.cs:190 
+  at System.Linq.Enumerable+WhereArrayIterator`1[TSource].MoveNext () [0x0002c] in <81c5c8bf15b24e768953dea9073a410f>:0 
+  at OutOfReach.Visuals.AuroraCapsulesV02.Editor.AuroraCapsulesV02Installer+<Targets>d__17.MoveNext () [0x00161] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.claude\worktrees\claude-max-rescue-craft-909b53\Assets\_OutOfReach\Visuals\Models\AuroraCapsulesV02\Editor\AuroraCapsulesV02Installer.cs:190 
+  at OutOfReach.Visuals.AuroraCapsulesV02.Editor.AuroraCapsulesV02Installer.Install (UnityEngine.SceneManagement.Scene scene, System.Boolean transport, System.Boolean rescue, System.Boolean serviceModule) [0x00109] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.claude\worktrees\claude-max-rescue-craft-909b53\Assets\_OutOfReach\Visuals\Models\AuroraCapsulesV02\Editor\AuroraCapsulesV02Installer.cs:46 
+  at OutOfReach.Visuals.AuroraCapsulesV02.Editor.AuroraCapsulesV02Evidence.RunBatch () [0x00186] in C:\Users\alexk\Documents\Projects\OUT-OF-REACH-NASA-HACKATHON\.claude\worktrees\claude-max-rescue-craft-909b53\Assets\_OutOfReach\Visuals\Models\AuroraCapsulesV02\Editor\AuroraCapsulesV02Evidence.cs:42 
