@@ -131,8 +131,8 @@ namespace OutOfReach.Tests.PlayMode
             Vector3 start = Position;
             harness.Input.Move = new Vector2(-1f, 0f);
             yield return Frames(40);
-            Assert.That(Player.LeanDegrees, Is.EqualTo(Player.Microgravity.MaxLeanDegrees).Within(1e-3f), "A: full left lean");
-            Assert.That(Player.ViewPivot.localEulerAngles.z, Is.EqualTo(Player.Microgravity.MaxLeanDegrees).Within(0.05f));
+            Assert.That(Player.LeanDegrees, Is.Zero, "A: view stays level (lean removed 15 Nov)");
+            Assert.That(Mathf.DeltaAngle(0f, Player.ViewPivot.localEulerAngles.z), Is.EqualTo(0f).Within(0.05f));
             Assert.That(Vector3.Distance(Position, start), Is.LessThan(1e-4f), "no thrust");
             Assert.That(Player.FloatVelocity, Is.EqualTo(Vector3.zero), "no hidden force");
 
@@ -148,7 +148,7 @@ namespace OutOfReach.Tests.PlayMode
             FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
             harness.Input.Move = new Vector2(1f, 0f);
             yield return Frames(20);
-            Assert.That(Player.LeanDegrees, Is.LessThan(-1f), "D leans right while floating");
+            Assert.That(Player.LeanDegrees, Is.Zero, "D never rolls the view");
 
             Player.ExitFloat();
             yield return Frames(40);
