@@ -1,0 +1,461 @@
+{
+ "asset": "LaunchComplexV01",
+ "frame": "Unity metres, prologue root, identity",
+ "files": {
+  "LC1_LaunchVehicle": {
+   "objects": {
+    "LC1_Vehicle_LOD0": {
+     "tris": 11488,
+     "verts": 6463,
+     "bounds_min": [
+      -2.719,
+      -31.62,
+      -2.719
+     ],
+     "bounds_max": [
+      2.719,
+      -0.55,
+      2.719
+     ],
+     "tris_by_material": {
+      "LC1_Foil": 400,
+      "LC1_Steel": 312,
+      "LC1_HullGraphite": 2226,
+      "LC1_Amber": 720,
+      "LC1_HullWhite": 790,
+      "LC1_Nozzle": 3072,
+      "LC1_Rubber": 152,
+      "LC1_Galvanized": 3456,
+      "LC1_Hazard": 288,
+      "LC1_LampCyan": 72
+     }
+    },
+    "LC1_Vehicle_LOD1": {
+     "tris": 3304,
+     "verts": 2001,
+     "bounds_min": [
+      -2.719,
+      -31.62,
+      -2.719
+     ],
+     "bounds_max": [
+      2.719,
+      -0.55,
+      2.719
+     ],
+     "tris_by_material": {
+      "LC1_Foil": 124,
+      "LC1_Steel": 144,
+      "LC1_HullGraphite": 952,
+      "LC1_Amber": 336,
+      "LC1_HullWhite": 336,
+      "LC1_Nozzle": 1320,
+      "LC1_Rubber": 92
+     }
+    },
+    "LC1_Vehicle_LOD2": {
+     "tris": 544,
+     "verts": 322,
+     "bounds_min": [
+      -2.669,
+      -31.62,
+      -2.669
+     ],
+     "bounds_max": [
+      2.669,
+      -0.55,
+      2.669
+     ],
+     "tris_by_material": {
+      "LC1_Foil": 12,
+      "LC1_Steel": 24,
+      "LC1_HullGraphite": 180,
+      "LC1_Amber": 48,
+      "LC1_HullWhite": 120,
+      "LC1_Nozzle": 160
+     }
+    }
+   },
+   "triangles_by_lod": {
+    "LOD0": 11488,
+    "LOD1": 3304,
+    "LOD2": 544
+   }
+  },
+  "LC1_PadDressing": {
+   "objects": {
+    "LC1_Mount_LOD0": {
+     "tris": 4512,
+     "verts": 2654,
+     "bounds_min": [
+      -5.656,
+      -36.6,
+      -4.64
+     ],
+     "bounds_max": [
+      5.656,
+      -27.62,
+      6.0
+     ],
+     "tris_by_material": {
+      "LC1_Concrete": 36,
+      "LC1_Steel": 252,
+      "LC1_Hazard": 48,
+      "LC1_ConcreteSoot": 60,
+      "LC1_Amber": 952,
+      "LC1_Galvanized": 1032,
+      "LC1_HullGraphite": 72,
+      "LC1_Rubber": 744,
+      "LC1_LampCyan": 24,
+      "LC1_LampRed": 24,
+      "LC1_Red": 1268
+     }
+    },
+    "LC1_Mount_LOD1": {
+     "tris": 1040,
+     "verts": 658,
+     "bounds_min": [
+      -5.656,
+      -36.6,
+      -4.64
+     ],
+     "bounds_max": [
+      5.656,
+      -27.82,
+      6.0
+     ],
+     "tris_by_material": {
+      "LC1_Concrete": 36,
+      "LC1_Steel": 204,
+      "LC1_Hazard": 48,
+      "LC1_ConcreteSoot": 60,
+      "LC1_Amber": 384,
+      "LC1_HullGraphite": 24,
+      "LC1_Red": 260,
+      "LC1_Galvanized": 24
+     }
+    },
+    "LC1_Trench_LOD0": {
+     "tris": 1794,
+     "verts": 1120,
+     "bounds_min": [
+      -4.722,
+      -39.52,
+      -2.97
+     ],
+     "bounds_max": [
+      4.722,
+      -31.407,
+      70.24
+     ],
+     "tris_by_material": {
+      "LC1_Concrete": 384,
+      "LC1_Steel": 108,
+      "LC1_ConcreteSoot": 26,
+      "LC1_Red": 336,
+      "LC1_Galvanized": 652,
+      "LC1_Amber": 288
+     }
+    },
+    "LC1_Trench_LOD1": {
+     "tris": 350,
+     "verts": 236,
+     "bounds_min": [
+      -4.722,
+      -39.52,
+      -2.97
+     ],
+     "bounds_max": [
+      4.722,
+      -31.404,
+      70.0
+     ],
+     "tris_by_material": {
+      "LC1_Concrete": 192,
+      "LC1_Steel": 48,
+      "LC1_ConcreteSoot": 26,
+      "LC1_Galvanized": 12,
+      "LC1_Amber": 72
+     }
+    },
+    "LC1_Deluge_LOD0": {
+     "tris": 4360,
+     "verts": 2750,
+     "bounds_min": [
+      -52.35,
+      -32.6,
+      -44.35
+     ],
+     "bounds_max": [
+      -4.688,
+      26.9,
+      -3.5
+     ],
+     "tris_by_material": {
+      "LC1_Steel": 560,
+      "LC1_Concrete": 192,
+      "LC1_Galvanized": 1820,
+      "LC1_Red": 408,
+      "LC1_HullWhite": 512,
+      "LC1_Amber": 844,
+      "LC1_LampRed": 24
+     }
+    },
+    "LC1_Deluge_LOD1": {
+     "tris": 1336,
+     "verts": 960,
+     "bounds_min": [
+      -52.35,
+      -32.6,
+      -44.35
+     ],
+     "bounds_max": [
+      -4.74,
+      26.9,
+      -3.5
+     ],
+     "tris_by_material": {
+      "LC1_Steel": 352,
+      "LC1_Concrete": 192,
+      "LC1_Galvanized": 288,
+      "LC1_Red": 84,
+      "LC1_HullWhite": 256,
+      "LC1_Amber": 140,
+      "LC1_LampRed": 24
+     }
+    },
+    "LC1_TankFarm_LOD0": {
+     "tris": 6355,
+     "verts": 4045,
+     "bounds_min": [
+      -29.25,
+      -32.6,
+      -49.697
+     ],
+     "bounds_max": [
+      57.3,
+      -11.4,
+      -11.4
+     ],
+     "tris_by_material": {
+      "LC1_HullWhite": 1376,
+      "LC1_Steel": 1600,
+      "LC1_Amber": 960,
+      "LC1_Concrete": 206,
+      "LC1_Galvanized": 1408,
+      "LC1_LampRed": 12,
+      "LC1_HullGraphite": 473,
+      "LC1_Foil": 272,
+      "LC1_LampWarm": 12,
+      "LC1_GlassDark": 12,
+      "LC1_Rubber": 24
+     }
+    },
+    "LC1_TankFarm_LOD1": {
+     "tris": 2324,
+     "verts": 1451,
+     "bounds_min": [
+      -29.25,
+      -32.6,
+      -48.78
+     ],
+     "bounds_max": [
+      57.3,
+      -11.4,
+      -11.4
+     ],
+     "tris_by_material": {
+      "LC1_HullWhite": 496,
+      "LC1_Steel": 970,
+      "LC1_Amber": 92,
+      "LC1_Concrete": 204,
+      "LC1_Galvanized": 428,
+      "LC1_LampRed": 12,
+      "LC1_Foil": 74,
+      "LC1_HullGraphite": 12,
+      "LC1_LampWarm": 12,
+      "LC1_Rubber": 24
+     }
+    },
+    "LC1_FloodTowers_LOD0": {
+     "tris": 4816,
+     "verts": 3192,
+     "bounds_min": [
+      -48.2,
+      -32.6,
+      43.315
+     ],
+     "bounds_max": [
+      48.2,
+      -1.3,
+      47.9
+     ],
+     "tris_by_material": {
+      "LC1_Steel": 2656,
+      "LC1_Concrete": 96,
+      "LC1_Galvanized": 792,
+      "LC1_Amber": 672,
+      "LC1_LampRed": 24,
+      "LC1_HullGraphite": 288,
+      "LC1_LampWarm": 288
+     }
+    },
+    "LC1_FloodTowers_LOD1": {
+     "tris": 1552,
+     "verts": 1016,
+     "bounds_min": [
+      -48.2,
+      -32.6,
+      43.337
+     ],
+     "bounds_max": [
+      48.2,
+      -1.3,
+      47.9
+     ],
+     "tris_by_material": {
+      "LC1_Steel": 928,
+      "LC1_Concrete": 96,
+      "LC1_Galvanized": 24,
+      "LC1_Amber": 192,
+      "LC1_LampRed": 24,
+      "LC1_HullGraphite": 144,
+      "LC1_LampWarm": 144
+     }
+    },
+    "LC1_Lightning_LOD0": {
+     "tris": 9648,
+     "verts": 6112,
+     "bounds_min": [
+      -40.15,
+      -32.6,
+      -28.15
+     ],
+     "bounds_max": [
+      40.15,
+      48.4,
+      32.15
+     ],
+     "tris_by_material": {
+      "LC1_Amber": 4540,
+      "LC1_MarkWhite": 3940,
+      "LC1_Concrete": 192,
+      "LC1_Galvanized": 736,
+      "LC1_HullWhite": 144,
+      "LC1_LampRed": 96
+     }
+    },
+    "LC1_Lightning_LOD1": {
+     "tris": 5608,
+     "verts": 3472,
+     "bounds_min": [
+      -40.15,
+      -32.6,
+      -28.15
+     ],
+     "bounds_max": [
+      40.15,
+      48.4,
+      32.15
+     ],
+     "tris_by_material": {
+      "LC1_Amber": 2670,
+      "LC1_MarkWhite": 2210,
+      "LC1_Concrete": 192,
+      "LC1_Galvanized": 376,
+      "LC1_HullWhite": 64,
+      "LC1_LampRed": 96
+     }
+    },
+    "LC1_Vehicles_LOD0": {
+     "tris": 5512,
+     "verts": 3194,
+     "bounds_min": [
+      -29.208,
+      -32.6,
+      -30.45
+     ],
+     "bounds_max": [
+      41.26,
+      -25.82,
+      24.714
+     ],
+     "tris_by_material": {
+      "LC1_Rubber": 1964,
+      "LC1_Galvanized": 1548,
+      "LC1_Steel": 592,
+      "LC1_HullWhite": 300,
+      "LC1_GlassDark": 104,
+      "LC1_LampWarm": 204,
+      "LC1_Amber": 354,
+      "LC1_Hazard": 72,
+      "LC1_LampCyan": 24,
+      "LC1_Red": 194,
+      "LC1_HullGraphite": 156
+     }
+    },
+    "LC1_Vehicles_LOD1": {
+     "tris": 3236,
+     "verts": 1986,
+     "bounds_min": [
+      -29.208,
+      -32.6,
+      -30.45
+     ],
+     "bounds_max": [
+      41.26,
+      -25.82,
+      24.714
+     ],
+     "tris_by_material": {
+      "LC1_Rubber": 796,
+      "LC1_Galvanized": 800,
+      "LC1_Steel": 568,
+      "LC1_HullWhite": 184,
+      "LC1_GlassDark": 104,
+      "LC1_LampWarm": 204,
+      "LC1_Amber": 262,
+      "LC1_LampCyan": 24,
+      "LC1_Hazard": 24,
+      "LC1_Red": 114,
+      "LC1_HullGraphite": 156
+     }
+    },
+    "LC1_Markings_LOD0": {
+     "tris": 2506,
+     "verts": 1828,
+     "bounds_min": [
+      -31.086,
+      -32.6,
+      -50.963
+     ],
+     "bounds_max": [
+      42.17,
+      -31.5,
+      25.92
+     ],
+     "tris_by_material": {
+      "LC1_Amber": 1022,
+      "LC1_MarkWhite": 156,
+      "LC1_Concrete": 240,
+      "LC1_Hazard": 336,
+      "LC1_HullGraphite": 416,
+      "LC1_LampCyan": 216,
+      "LC1_LampWarm": 120
+     }
+    }
+   },
+   "triangles_by_lod": {
+    "LOD0": 39503,
+    "LOD1": 15446
+   }
+  }
+ },
+ "keep_clear_vertices": {
+  "crew_deck_arm_and_hatch_walkway": 0,
+  "launch_tower_v03_base_and_stairs": 0,
+  "tower_swing_arm_zone": 0,
+  "capsule_volume": 0,
+  "crawlerway_gate_lane": 0
+ }
+}
