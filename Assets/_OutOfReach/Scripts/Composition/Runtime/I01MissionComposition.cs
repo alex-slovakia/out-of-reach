@@ -700,6 +700,8 @@ namespace OutOfReach.Composition
                 chapterUi.Configure(survivalDocument, chapterStyle, runtime.ChapterFlow, runtime.GameState, runtime.Clock,
                     runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
                     () => cinematics && cinematics.ReducedEffects);
+                // MISSION-DATA: the strip repeats Core's NASA/JPL Horizons reference sample (distance, one-way light time).
+                chapterUi.ConfigureMissionData(runtime.Communications);
                 if (survivalUi)
                     survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation
                         || RestBodyEntering());
