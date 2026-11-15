@@ -243,6 +243,7 @@ namespace OutOfReach.Composition
             && !runtime.Player.IsOnRoute && !runtime.EvaStatus.IsOutside
             && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && !(embodiedBody && embodiedBody.RestBlocksControl)
             && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId)
             && runtime.GameState.Outcome == MissionOutcome.None
             && runtime.GameState.Phase != GamePhase.Planning;
@@ -507,6 +508,7 @@ namespace OutOfReach.Composition
             && !(meal && meal.BlocksMovement)
             && domainControlGate != null && domainControlGate()
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && !(embodiedBody && embodiedBody.RestBlocksControl)
             && !(chapterUi && chapterUi.BlocksPlayerControl)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
 
@@ -694,8 +696,11 @@ namespace OutOfReach.Composition
                     runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
                     () => cinematics && cinematics.ReducedEffects);
                 if (survivalUi)
-                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation);
+                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation
+                        || RestBodyEntering());
             }
+            // SLEEP-SEQ: the eyelids wait until the body is in the berth and strapped in, so the approach is seen.
+            if (!chapterUi && survivalUi) survivalUi.ConfigureRestPresentationOwner(RestBodyEntering);
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
@@ -722,7 +727,13 @@ namespace OutOfReach.Composition
                     () => runtime && runtime.GameState.Phase == GamePhase.Planning && !orbitalLocationReached);
                 ISurvivalRecovery recovery = boundSession.SurvivalRecovery;
                 if (recovery != null && sleepBodyFrame)
-                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop);
+                {
+                    // SLEEP-SEQ: hold the berth through the chapter routine and wake at the berth exit (SleepEntry).
+                    MissionSession restSession = boundSession;
+                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop,
+                        () => restSession.ChapterFlow != null && restSession.ChapterFlow.IsRoutineRunning,
+                        habitat ? habitat.GetPresentationAnchor(InteractionIds.SurvivalSleep) : null);
+                }
             }
             if (microgravityBridge && microgravityInput && bareArmContacts)
             {
@@ -1296,40 +1307,52 @@ namespace OutOfReach.Composition
                 return false;
             GamePhase phase = runtime.GameState.Phase;
             if (phase == GamePhase.Outcome || phase == GamePhase.Report || runtime.GameState.Outcome == MissionOutcome.Lost) return false;
-            if (!(boundSession.SurvivalRecovery?.IsResting ?? false)) return false;
-            return embodiedBody.RestPhase != RestPhase.Releasing;
+            // SLEEP-SEQ: the body's berth sequence (approach, straps, hold, wake, unbuckle, float out) owns the view
+            // until it ends; Core's IsResting starts it and its wake ends it, the presenter only plays it out.
+            return embodiedBody.RestPhase != RestPhase.None;
         }
+
+        private bool RestBodyEntering() => embodiedBody && embodiedBody.RestPhase == RestPhase.Entering;
 
         private Camera RestEye() => presentationCamera ? presentationCamera : Camera.main;
 
         private void UpdateRestCamera()
         {
+            // SLEEP-SEQ wake destination: once the view has floated to the berth exit, the real controller moves there
+            // (Teleport + SyncTransforms) before the lease hands the view back, so the player wakes upright in front of
+            // the berth, never back where the rest began. Microgravity: the feet are on the deck, so the float restarts
+            // from that support at zero velocity (no gravity).
+            if (embodiedBody && embodiedBody.RestExitPending && attached && runtime && runtime.Player && boundSession != null
+                && ReferenceEquals(boundSession, runtime.Session) && embodiedBody.TryGetRestExit(out Vector3 exitFeet, out float exitYaw))
+            {
+                runtime.Player.Teleport(exitFeet, exitYaw);
+                Physics.SyncTransforms();
+                embodiedBody.ConfirmRestExit();
+                if (runtime.Player.ControlAllowed) runtime.Player.EnterFloatFromFootSupport();
+            }
             if (!RestCameraWanted()) { ReleaseRestCamera(); return; }
+            // Keep every offset below the pivot (departure, cinematic, motion). The live gameplay eye is where the
+            // camera would be without the lease; the presenter turns it into this frame's view on the berth path
+            // (SLEEP-SEQ), so the view glides from the eye into the berth and back out, never cut.
+            Transform eye = RestEye().transform;
+            Quaternion relative = Quaternion.Inverse(planningFramingPivot.rotation) * eye.rotation;
+            Vector3 offset = planningFramingPivot.InverseTransformPoint(eye.position);
+            Vector3 localPosition = restCameraLeased ? restLeaseLocalPosition : planningFramingPivot.localPosition;
+            Quaternion localRotation = restCameraLeased ? restLeaseLocalRotation : planningFramingPivot.localRotation;
+            Transform parent = planningFramingPivot.parent;
+            Vector3 pivotPosition = parent ? parent.TransformPoint(localPosition) : localPosition;
+            Quaternion pivotRotation = parent ? parent.rotation * localRotation : localRotation;
+            if (!embodiedBody.TryGetRestView(pivotPosition + pivotRotation * offset, pivotRotation * relative,
+                    out Vector3 viewPosition, out Quaternion view))
+            { ReleaseRestCamera(); return; }
             if (!restCameraLeased)
             {
                 restLeaseLocalPosition = planningFramingPivot.localPosition;
                 restLeaseLocalRotation = planningFramingPivot.localRotation;
                 restCameraLeased = true;
             }
-            // Keep every offset below the pivot (departure, cinematic, motion) and land the actual camera on SleepCamera,
-            // looking down at the hands drawing the straps while the body enters, then settling on the buckled body.
-            Transform eye = RestEye().transform;
-            Quaternion relative = Quaternion.Inverse(planningFramingPivot.rotation) * eye.rotation;
-            Vector3 offset = planningFramingPivot.InverseTransformPoint(eye.position);
-            Quaternion view = sleepCameraAnchor.rotation * Quaternion.Euler(RestPitchDegrees(), 0f, 0f);
             Quaternion rotation = view * Quaternion.Inverse(relative);
-            planningFramingPivot.SetPositionAndRotation(sleepCameraAnchor.position - rotation * offset, rotation);
-        }
-
-        private float RestPitchDegrees()
-        {
-            float t = embodiedBody.RestPhaseSeconds;
-            switch (embodiedBody.RestPhase)
-            {
-                case RestPhase.Entering: return 46f * Mathf.SmoothStep(0f, 1f, t / .45f);
-                case RestPhase.Held: return Mathf.Lerp(46f, 18f, Mathf.SmoothStep(0f, 1f, t / 1.2f));
-                default: return 0f;
-            }
+            planningFramingPivot.SetPositionAndRotation(viewPosition - rotation * offset, rotation);
         }
 
         private void ReleaseRestCamera()

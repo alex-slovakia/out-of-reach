@@ -1,0 +1,2 @@
+19:41:14.820 [sleep-seq A: ordinary rest, the whole sequence, a real pause during the approach] Leg 'to the berth (A)' not reached by real input in 16,2 s (floating=True, onRoute=False); QA teleport to (-1.28, 0.03, 13.90) next to survival-sleep
+19:41:39.343 [sleep-seq C: hazard wake during the hold (Core StopRest(CarbonDioxideDanger), disclosed)] C: QA stand-in for a CO2 spike: Core's own SurvivalRecovery.StopRest(RestStopReason.CarbonDioxideDanger) invoked by reflection during the hold (the path a real danger takes).

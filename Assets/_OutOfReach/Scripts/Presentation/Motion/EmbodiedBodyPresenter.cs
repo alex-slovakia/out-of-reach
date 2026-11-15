@@ -73,6 +73,13 @@ namespace OutOfReach.Presentation.Motion
         private DepartureSeatRestraint departureSeat;
         private Func<bool> restQuery;
         private Func<RestStopReason> restReasonQuery;
+        private Func<bool> restHold;
+        private Transform berthExit;
+        // SLEEP-SEQ wake destination: the live camera relative to the player feet (player yaw frame), measured at rest
+        // start; whether the approach starts at the berth exit (a rest begun far away); whether the exit awaits its move.
+        private Vector3 restEyeFromFeet = new Vector3(0f, 1.62f, 0f);
+        private bool restFromExit, exitPending;
+        private float exitPendingSince;
         private Transform berthFrame;
         private ModelRestRig restRig;
         private RestPhase restPhase;
@@ -81,6 +88,12 @@ namespace OutOfReach.Presentation.Motion
         private bool restHazard, forcePoseReset;
         // Where the gameplay camera sits in the body frame during ordinary play, and the body's own eyes in the bag.
         private Vector3 normalCameraLocal = new Vector3(0f, 1.62f, .30f), restEyeLocal = new Vector3(0f, 1.65f, .09f);
+        // SLEEP-SEQ: the camera lease asks for the view each frame (TryGetRestView); the body is placed from that same
+        // view, so camera and body move as one first-person rig into the berth and back out.
+        private BerthApproachPath.View restLive, restFrom, restView;
+        private bool restHasLive, restViewValid, restFromHeld;
+        private float restTurnSign = 1f, approachSeconds = 1.8f, exitStart, exitSeconds = 1.4f, unbuckleSeconds;
+        private float restViewEye, restViewHandover, restFromEye, hazardSeconds = .5f;
 
         /// <summary>
         /// Synchronous lease cancellation before sampling, restoration, hide, clear or disable.
@@ -102,6 +115,75 @@ namespace OutOfReach.Presentation.Motion
         public event Action<RestPhase> RestPhaseChanged;
         /// <summary>True while a berth rest is configured and its frame is live: root keeps the body visible while resting.</summary>
         public bool PresentsRest => restQuery != null && berthFrame && berthFrame.gameObject.activeInHierarchy;
+        /// <summary>
+        /// SLEEP-SEQ: gameplay input waits while the berth sequence owns the body: the approach, straps and hold (Core
+        /// rests anyway) and the ordinary wake (eyes open, unbuckle, float out). A hazard wake hands input back once
+        /// the straps have sprung open (0.25 s); the quick float out to the live eye then finishes under player control.
+        /// </summary>
+        public bool RestBlocksControl => restPhase != RestPhase.None
+            && !(restPhase == RestPhase.Releasing && restHazard && !berthExit && restTime >= BerthApproachPath.HazardControlSeconds);
+
+        /// <summary>
+        /// SLEEP-SEQ camera lease: where the actual camera must be this frame, given the live gameplay eye (where the
+        /// camera would be without the lease). Approach: from the live eye to the berth mouth, turn round, back into the
+        /// bag; straps and hold: the berth eye, looking down at the hands; wake: unbuckle in the berth, then out along
+        /// the same path to the live eye. False when no berth sequence runs: the caller hands the view back.
+        /// </summary>
+        /// <summary>SLEEP-SEQ: the view has floated to the berth exit and waits for the caller to move the real controller there.</summary>
+        public bool RestExitPending => exitPending && restPhase == RestPhase.Releasing;
+
+        /// <summary>The authored berth exit: feet on the deck in front of SleepEntry, upright, facing into the cabin.</summary>
+        public bool TryGetRestExit(out Vector3 feet, out float yaw)
+        {
+            feet = default; yaw = 0f;
+            if (!berthExit || !berthExit.gameObject.activeInHierarchy) return false;
+            Vector3 toBerth = Vector3.ProjectOnPlane(berthExit.forward, Vector3.up);
+            if (toBerth.sqrMagnitude < 1e-6f) return false;
+            toBerth.Normalize();
+            feet = berthExit.position - toBerth * BerthApproachPath.ExitStandOff;
+            // The anchor may sit above the deck (the berth's interaction box): stand the feet on the deck itself, the
+            // nearest solid surface below (never the player's own capsule), so the exit never starts in mid-air.
+            Vector3 origin = new Vector3(feet.x, Mathf.Max(feet.y, berthExit.position.y) + .6f, feet.z);
+            int count = Physics.RaycastNonAlloc(origin, Vector3.down, exitHits, 3.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+            float best = float.PositiveInfinity;
+            for (int i = 0; i < count; i++)
+            {
+                Collider hit = exitHits[i].collider;
+                if (!hit || hit.transform.IsChildOf(playerFeet) || hit.transform.IsChildOf(visualRoot) || exitHits[i].normal.y < .7f) continue;
+                if (exitHits[i].distance < best) { best = exitHits[i].distance; feet.y = exitHits[i].point.y; }
+            }
+            feet += Vector3.up * BerthApproachPath.ExitFeetLift;
+            yaw = Quaternion.LookRotation(-toBerth, Vector3.up).eulerAngles.y;
+            return true;
+        }
+        private readonly RaycastHit[] exitHits = new RaycastHit[12];
+
+        /// <summary>The caller has moved the real controller to the berth exit: the sequence ends now and nothing pops back.</summary>
+        public void ConfirmRestExit()
+        {
+            if (!RestExitPending || notifyingReset) return;
+            EndRest();
+            if (bound && isActiveAndEnabled) Refresh();
+        }
+
+        // The view at the berth exit: the player's own eye over the exit feet, level, facing into the cabin.
+        private BerthApproachPath.View ExitView()
+        {
+            TryGetRestExit(out Vector3 feet, out float yaw);
+            return new BerthApproachPath.View { Position = feet + Quaternion.Euler(0f, yaw, 0f) * restEyeFromFeet, Yaw = yaw };
+        }
+
+        public bool TryGetRestView(Vector3 liveEyePosition, Quaternion liveEyeRotation, out Vector3 position, out Quaternion rotation)
+        {
+            position = liveEyePosition; rotation = liveEyeRotation;
+            if (restPhase == RestPhase.None || restRig == null || !berthFrame) return false;
+            restLive = BerthApproachPath.FromPose(liveEyePosition, liveEyeRotation);
+            restHasLive = true;
+            restView = EvaluateRestView(out restViewEye, out restViewHandover);
+            restViewValid = true;
+            position = restView.Position; rotation = restView.Rotation;
+            return true;
+        }
         public bool IsDepartureSeatLatched => departureSeat != null && departureSeat.IsLatched;
         public Transform VisualRoot => visualRoot;
         public Transform PlayerFeet => playerFeet;
@@ -222,8 +304,14 @@ namespace OutOfReach.Presentation.Motion
         /// lets a hazard wake release within 0.3 s. Entering settles into the bag and draws the chest and hip straps;
         /// Held keeps them buckled; Releasing unclips and hands the body back. Pause freezes it; reset, stale session,
         /// disable or a hidden body release it at once. Never changes the player, controller, resources, input or camera.
+        /// SLEEP-SEQ: <paramref name="holdRest"/> (optional, e.g. the chapter routine) keeps the body in the berth while it
+        /// is true, across the routine's nights and waking hours: one entry, one release. <paramref name="berthExitAnchor"/>
+        /// (optional: root's authored SleepEntry, feet on the deck, forward towards the berth) makes every exit end at the
+        /// berth exit in front of the device: the view floats there, then <see cref="RestExitPending"/> asks the caller to
+        /// move the real controller there (<see cref="TryGetRestExit"/>) and to call <see cref="ConfirmRestExit"/>.
         /// </summary>
-        public void ConfigureRest(Func<bool> isResting, Transform berthBodyFrame, Func<RestStopReason> lastRestStop = null)
+        public void ConfigureRest(Func<bool> isResting, Transform berthBodyFrame, Func<RestStopReason> lastRestStop = null,
+            Func<bool> holdRest = null, Transform berthExitAnchor = null)
         {
             if (!bound || notifyingReset)
                 throw new InvalidOperationException("Bind a body session before configuring the berth rest.");
@@ -233,8 +321,12 @@ namespace OutOfReach.Presentation.Motion
                 || berthBodyFrame.IsChildOf(playerFeet) || berthBodyFrame == playerCamera.transform
                 || berthBodyFrame.IsChildOf(playerCamera.transform) || (berthBodyFrame.lossyScale - Vector3.one).sqrMagnitude > .000001f)
                 throw new ArgumentException("The berth body frame must be a metre-scale scene anchor outside the body, player and camera.");
+            if (berthExitAnchor && (berthExitAnchor == visualRoot || berthExitAnchor.IsChildOf(visualRoot) || berthExitAnchor == playerFeet
+                || berthExitAnchor.IsChildOf(playerFeet) || berthExitAnchor.IsChildOf(playerCamera.transform)))
+                throw new ArgumentException("The berth exit must be a scene anchor outside the body, player and camera.");
             CancelRest();
             restQuery = isResting; restReasonQuery = lastRestStop; berthFrame = berthBodyFrame;
+            restHold = holdRest; berthExit = berthExitAnchor;
             if (isActiveAndEnabled) Refresh();
         }
 
@@ -340,7 +432,7 @@ namespace OutOfReach.Presentation.Motion
             visibleQuery = floatingQuery = null; armsQuery = null;
             groundController = null; groundedQuery = sprintQuery = preflightGaitQuery = null;
             CancelRest();
-            restQuery = null; restReasonQuery = null; berthFrame = null;
+            restQuery = null; restReasonQuery = null; berthFrame = null; restHold = null; berthExit = null;
             DisposeDepartureSeat();
             ResetOwnedVisuals();
             seatedRequested = wasPaused = offsetResetRequested = false;
@@ -636,7 +728,7 @@ namespace OutOfReach.Presentation.Motion
             if (PresentsRest && !seatedRequested)
             {
                 int version = bindingVersion;
-                try { resting = restQuery(); }
+                try { resting = restQuery() || (restHold != null && restHold()); }
                 catch (Exception error) { Debug.LogException(error, this); resting = false; }
                 if (version != bindingVersion || !bound) return true;
             }
@@ -650,17 +742,26 @@ namespace OutOfReach.Presentation.Motion
             if (restPhase == RestPhase.Entering)
             {
                 if (!resting) StartRelease();
-                else if ((restTime += dt) >= ModelRestTimeline.EnterDuration) { restTime = 0f; SetRestPhase(RestPhase.Held); }
+                else if ((restTime += dt) >= EnterSeconds) { restTime = 0f; SetRestPhase(RestPhase.Held); }
             }
             else if (restPhase == RestPhase.Held)
             {
                 if (!resting) StartRelease();
                 else restTime += dt;
             }
-            else if ((restTime += dt) >= (restHazard ? ModelRestTimeline.HazardReleaseDuration : ModelRestTimeline.ReleaseDuration))
+            else if ((restTime += dt) >= ReleaseSeconds)
             {
-                EndRest();
-                return false;
+                // With a berth exit the caller first moves the real controller there (next frame, before the camera lease
+                // hands the view back); a caller that never confirms still gets the body back after half a second.
+                if (berthExit && (!exitPending || restTime - exitPendingSince < .5f))
+                {
+                    if (!exitPending) { exitPending = true; exitPendingSince = restTime; }
+                }
+                else
+                {
+                    EndRest();
+                    return false;
+                }
             }
             if (restPhase == RestPhase.None || restRig == null) return false;
             Outfit selected = activeEva ? eva : work;
@@ -670,12 +771,24 @@ namespace OutOfReach.Presentation.Motion
             return true;
         }
 
+        // SLEEP-SEQ timeline: approach (float in, turn, back into the bag) replaces the old in-place settle; the strap
+        // timeline follows it. Ordinary wake: eyes open, unbuckle in the berth, float out. Hazard: spring out at once.
+        private float EnterSeconds => approachSeconds + ModelRestTimeline.EnterDuration - ModelRestTimeline.SettleEnd;
+        private float StrapTime(float t) => t - approachSeconds + ModelRestTimeline.SettleEnd;
+        private float ReleaseSeconds => restHazard ? hazardSeconds : exitStart + exitSeconds;
+
         private bool BeginRest()
         {
             Outfit outfit = activeEva ? eva : work;
             ModelCache cache = activeEva ? evaCache : workCache;
             Shader lit = FindLit(outfit);
             if (!lit || !outfit.standing || !berthFrame) return false;
+            // A rest that starts far from the berth (the routine, R pressed elsewhere) starts at the berth exit: a cut the
+            // routine montage covers. Without an exit anchor it shows no walk-in through the ship.
+            Vector3 eyeNow = playerCamera.transform.position;
+            Vector3 berthEyeEstimate = berthFrame.TransformPoint(restEyeLocal);
+            bool far = Vector3.Distance(eyeNow, berthEyeEstimate) > BerthApproachPath.MaxPresentDistance;
+            if (far && !TryGetRestExit(out _, out _)) return false;
             NotifyReset();
             ResetGroundMotion(false);
             evaCache.Float?.CancelPush(); workCache.Float?.CancelPush();
@@ -703,6 +816,21 @@ namespace OutOfReach.Presentation.Motion
             }
             restRig = rig;
             restTime = 0f; restHazard = false;
+            // The approach starts at the live eye (the camera is not leased yet), or at the berth exit for a far start,
+            // and turns the shorter way round.
+            Quaternion feetYaw = Quaternion.Euler(0f, playerFeet.eulerAngles.y, 0f);
+            restEyeFromFeet = Quaternion.Inverse(feetYaw) * (eyeNow - playerFeet.position);
+            restEyeFromFeet.x = 0f; // no sideways lean at the exit: Teleport levels the view and clears the lean
+            restFromExit = far; exitPending = false;
+            Vector3 berthEye = berthFrame.TransformPoint(restEyeLocal);
+            Vector3 mouth = BerthApproachPath.Mouth(berthEye, berthFrame.forward);
+            BerthApproachPath.View start = restFromExit ? ExitView() : BerthApproachPath.FromPose(eyeNow, playerCamera.transform.rotation);
+            approachSeconds = BerthApproachPath.ApproachSeconds(start.Position, mouth, berthEye);
+            float turn = Mathf.DeltaAngle(start.Yaw, berthFrame.eulerAngles.y);
+            restTurnSign = turn < 0f ? -1f : 1f;
+            restLive = BerthApproachPath.FromPose(eyeNow, playerCamera.transform.rotation);
+            restHasLive = false; restViewValid = false; restFromHeld = false;
+            restViewEye = restViewHandover = 0f;
             PoseRevision++;
             SetRestPhase(RestPhase.Entering);
             return restPhase == RestPhase.Entering;
@@ -718,6 +846,17 @@ namespace OutOfReach.Presentation.Motion
             }
             restHazard = ModelRestTimeline.IsHazard(reason);
             releaseChest = restRig.ChestClosure; releaseHip = restRig.HipClosure;
+            // The exit starts exactly where the view is now (in the berth, or part-way in on an early wake).
+            restFromHeld = restPhase == RestPhase.Held;
+            restFrom = restViewValid ? restView : BerthApproachPath.FromPose(playerCamera.transform.position, playerCamera.transform.rotation);
+            restFromEye = restViewValid ? restViewEye : RestDockWeight;
+            unbuckleSeconds = releaseChest > .01f || releaseHip > .01f ? BerthApproachPath.UnbuckleSeconds : 0f;
+            exitStart = (restFromHeld ? BerthApproachPath.WakeSeconds : 0f) + unbuckleSeconds;
+            Vector3 berthEye = berthFrame.TransformPoint(restEyeLocal);
+            Vector3 mouthNow = BerthApproachPath.Mouth(berthEye, berthFrame.forward);
+            Vector3 liveNow = restHasLive ? restLive.Position : restFrom.Position;
+            exitSeconds = BerthApproachPath.ExitSeconds(restFrom.Position, mouthNow, liveNow);
+            hazardSeconds = BerthApproachPath.HazardExitSeconds(restFrom.Position, mouthNow, liveNow);
             Outfit outfit = activeEva ? eva : work;
             ModelCache cache = activeEva ? evaCache : workCache;
             restNextPose = seatedRequested ? BodyPose.Seated : floatingQuery() ? BodyPose.Floating : BodyPose.Standing;
@@ -739,6 +878,8 @@ namespace OutOfReach.Presentation.Motion
             restRig = null;
             rig?.Dispose();
             restTime = 0f;
+            restViewValid = restHasLive = false;
+            exitPending = restFromExit = false;
             forcePoseReset = true;
             SetRestPhase(RestPhase.None);
         }
@@ -750,6 +891,8 @@ namespace OutOfReach.Presentation.Motion
             restRig = null;
             rig?.Dispose();
             restTime = 0f;
+            restViewValid = restHasLive = false;
+            exitPending = restFromExit = false;
             if (restPhase == RestPhase.None) return;
             forcePoseReset = true;
             SetRestPhase(RestPhase.None);
@@ -778,35 +921,63 @@ namespace OutOfReach.Presentation.Motion
         {
             float t = restTime, blend, chest, hip, hand = 0f;
             bool onHip = false, atBuckle = false, releasing = restPhase == RestPhase.Releasing;
-            FollowPose(releasing ? restNextPose : pose, out Vector3 followPosition, out Quaternion followRotation);
+            Vector3 followPosition; Quaternion followRotation;
+            if ((releasing || restFromExit) && TryGetRestExit(out Vector3 exitFeet, out float exitYaw))
+            {
+                // This end of the path is the berth exit, not wherever the player last floated.
+                followRotation = Quaternion.Euler(0f, exitYaw, 0f);
+                followPosition = exitFeet + followRotation * GetVisualFeetOffset(releasing ? restNextPose : pose);
+            }
+            else FollowPose(releasing ? restNextPose : pose, out followPosition, out followRotation);
             if (releasing)
             {
                 if (restHazard)
                 {
                     float open = ModelRestTimeline.HazardOpen(t);
-                    chest = releaseChest * open; hip = releaseHip * open; blend = 1f - open;
+                    chest = releaseChest * open; hip = releaseHip * open;
+                    blend = BerthApproachPath.Ease(t / hazardSeconds);
                 }
                 else
                 {
-                    chest = releaseChest * ModelRestTimeline.ReleaseChest(t);
-                    hip = releaseHip * ModelRestTimeline.ReleaseHip(t);
-                    hand = releaseChest > .5f || releaseHip > .5f ? ModelRestTimeline.ReleaseHand(t) : 0f;
-                    onHip = ModelRestTimeline.ReleaseHandOnHip(t) || releaseChest <= .5f;
+                    // Eyes open first (from a hold), then the hand unclips chest and hips; the body leaves the bag after.
+                    float tt = t - (restFromHeld ? BerthApproachPath.WakeSeconds : 0f);
+                    chest = releaseChest * ModelRestTimeline.ReleaseChest(tt);
+                    hip = releaseHip * ModelRestTimeline.ReleaseHip(tt);
+                    hand = releaseChest > .5f || releaseHip > .5f ? ModelRestTimeline.ReleaseHand(tt) : 0f;
+                    onHip = ModelRestTimeline.ReleaseHandOnHip(tt) || releaseChest <= .5f;
                     atBuckle = true;
-                    blend = ModelRestTimeline.Exit(t);
+                    float exit = BerthApproachPath.Ease(Mathf.Clamp01((t - exitStart) / exitSeconds));
+                    blend = BerthApproachPath.Ease(Mathf.InverseLerp(0f, .75f, exit));
                 }
             }
             else
             {
                 bool entering = restPhase == RestPhase.Entering;
-                blend = entering ? ModelRestTimeline.Settle(t) : 1f;
-                chest = entering ? ModelRestTimeline.ChestClose(t) : 1f;
-                hip = entering ? ModelRestTimeline.HipClose(t) : 1f;
-                if (entering) { hand = ModelRestTimeline.EnterHand(t); onHip = ModelRestTimeline.EnterHandOnHip(t); }
+                float st = StrapTime(t);
+                // The limbs settle into the bag pose while the body backs in; the straps follow the approach.
+                blend = entering ? BerthApproachPath.Ease(Mathf.InverseLerp(.35f, 1f, BerthApproachPath.Ease(t / approachSeconds))) : 1f;
+                chest = entering ? ModelRestTimeline.ChestClose(st) : 1f;
+                hip = entering ? ModelRestTimeline.HipClose(st) : 1f;
+                if (entering) { hand = ModelRestTimeline.EnterHand(st); onHip = ModelRestTimeline.EnterHandOnHip(st); }
             }
-            float dock = RestDock(followPosition, followRotation);
-            visualRoot.SetPositionAndRotation(Vector3.Lerp(followPosition, berthFrame.position, dock),
-                Quaternion.Slerp(followRotation, berthFrame.rotation, dock));
+            float dock;
+            if (restViewValid && Vector3.Distance(playerCamera.transform.position, restView.Position) < .12f)
+            {
+                // The camera sits on the leased view: the body is its first-person rig (eyes at the camera, upright,
+                // yaw only), handed over exactly to the follow pose at both ends of the path.
+                Quaternion yaw = Quaternion.Euler(0f, restView.Yaw, 0f);
+                Vector3 root = restView.Position - yaw * Vector3.Lerp(normalCameraLocal, restEyeLocal, restViewEye);
+                visualRoot.SetPositionAndRotation(Vector3.Lerp(root, followPosition, restViewHandover),
+                    Quaternion.Slerp(yaw, followRotation, restViewHandover));
+                dock = restViewEye;
+            }
+            else
+            {
+                // No lease this frame (a camera cut, or no camera move at all): the body goes where the eye actually is.
+                dock = RestDock(followPosition, followRotation);
+                visualRoot.SetPositionAndRotation(Vector3.Lerp(followPosition, berthFrame.position, dock),
+                    Quaternion.Slerp(followRotation, berthFrame.rotation, dock));
+            }
             restRig.Blend(blend);
             // Straps and the strapping hand belong to the berth: shown only with the body in it.
             if (dock < .9f) { chest = hip = hand = 0f; }
@@ -816,6 +987,52 @@ namespace OutOfReach.Presentation.Motion
 
         /// <summary>0 = body at the gameplay eye, 1 = docked in the berth (follows where root's camera actually is).</summary>
         public float RestDockWeight { get; private set; }
+
+        // SLEEP-SEQ view for the current phase and time. eyeBlend: 0 = the gameplay camera offset in the body frame,
+        // 1 = the body's own eyes in the bag. handover: 1 = the body sits exactly on its follow pose (path ends).
+        private BerthApproachPath.View EvaluateRestView(out float eyeBlend, out float handover)
+        {
+            Vector3 berthEye = berthFrame.TransformPoint(restEyeLocal);
+            float berthYaw = berthFrame.eulerAngles.y;
+            Vector3 mouth = BerthApproachPath.Mouth(berthEye, berthFrame.forward);
+            var berth = new BerthApproachPath.View { Position = berthEye, Yaw = berthYaw, Pitch = BerthApproachPath.StrapPitch };
+            float t = restTime;
+            eyeBlend = 1f; handover = 0f;
+            switch (restPhase)
+            {
+                case RestPhase.Entering:
+                {
+                    if (t >= approachSeconds) return berth;
+                    float u = Mathf.Clamp01(t / approachSeconds);
+                    float p = BerthApproachPath.Ease(u);
+                    eyeBlend = BerthApproachPath.Ease(Mathf.InverseLerp(.3f, 1f, p));
+                    handover = 1f - BerthApproachPath.Ease(Mathf.InverseLerp(0f, .15f, p));
+                    return BerthApproachPath.Approach(restFromExit ? ExitView() : restLive, mouth, berthEye, berthYaw, restTurnSign, u);
+                }
+                case RestPhase.Held:
+                    berth.Pitch = Mathf.Lerp(BerthApproachPath.StrapPitch, BerthApproachPath.HeldPitch, BerthApproachPath.Ease(t / 1.2f));
+                    return berth;
+                case RestPhase.Releasing:
+                {
+                    float exitFrom = restHazard ? 0f : exitStart;
+                    float exitDuration = restHazard ? hazardSeconds : exitSeconds;
+                    BerthApproachPath.View from = restFrom;
+                    if (!restHazard && exitStart > 0f)
+                    {
+                        // Eyes open, then the hand unbuckles: the view stays in the berth, looking down at the buckles.
+                        from.Pitch = Mathf.Lerp(restFrom.Pitch, BerthApproachPath.UnbucklePitch, BerthApproachPath.Ease(
+                            Mathf.InverseLerp(restFromHeld ? .1f : 0f, restFromHeld ? BerthApproachPath.WakeSeconds : .3f, t)));
+                        if (t < exitFrom) { eyeBlend = restFromEye; return from; }
+                    }
+                    float e = Mathf.Clamp01((t - exitFrom) / exitDuration);
+                    float q = BerthApproachPath.Ease(e);
+                    eyeBlend = restFromEye * (1f - BerthApproachPath.Ease(Mathf.InverseLerp(0f, .75f, q)));
+                    handover = BerthApproachPath.Ease(Mathf.InverseLerp(.8f, 1f, q));
+                    return BerthApproachPath.Exit(from, berthExit ? ExitView() : restLive, mouth, berthEye, restTurnSign, e);
+                }
+            }
+            return berth;
+        }
 
         private void FollowPose(BodyPose forPose, out Vector3 position, out Quaternion rotation)
         {
