@@ -23,6 +23,7 @@
     "OutOfReach.Audio",
     "OutOfReach.UI",
     "OutOfReach.UI.Report",
+    "OutOfReach.UI.Chapter",
     "OutOfReach.Terminal"
   ],
   "includePlatforms": [],

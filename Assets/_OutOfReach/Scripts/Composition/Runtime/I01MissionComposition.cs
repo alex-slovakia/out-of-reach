@@ -15,6 +15,7 @@ using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.Terminal;
 using OutOfReach.Presentation.UI;
+using OutOfReach.Presentation.UI.Chapter;
 using OutOfReach.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -87,6 +88,8 @@ namespace OutOfReach.Composition
         [SerializeField] private SurvivalChapterPresenter survivalUi;
         [SerializeField] private UIDocument survivalDocument;
         [SerializeField] private StyleSheet survivalStyle;
+        [SerializeField] private MissionChapterPresenter chapterUi;
+        [SerializeField] private StyleSheet chapterStyle;
         private bool menuPresentationVisible;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
@@ -417,6 +420,13 @@ namespace OutOfReach.Composition
             survivalStyle = style;
         }
 
+        /// <summary>CHAPTER-UI-01: beat cards, routine montage, chapter decisions and messages (IMissionChapterFlow only).</summary>
+        public void ConfigureChapterUi(MissionChapterPresenter presenter, StyleSheet style)
+        {
+            chapterUi = presenter;
+            chapterStyle = style;
+        }
+
         private bool CanPresentSurvivalUi() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && !menuPresentationVisible && cinematics && !cinematics.IsPlaying;
@@ -449,6 +459,7 @@ namespace OutOfReach.Composition
             && !(antennaRepair && antennaRepair.BlocksMovement)
             && domainControlGate != null && domainControlGate()
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && !(chapterUi && chapterUi.BlocksPlayerControl)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
 
         private void ReleasePlanningControlGate()
@@ -628,6 +639,15 @@ namespace OutOfReach.Composition
                 survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
                 survivalUi.WakePresentationStarted += OnWakePresentationStarted;
             }
+            if (chapterUi)
+            {
+                // Same document and gate as the survival UI; the chapter flow is null (UI hidden) when the loop is off.
+                chapterUi.Configure(survivalDocument, chapterStyle, runtime.ChapterFlow, runtime.GameState, runtime.Clock,
+                    runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
+                    () => cinematics && cinematics.ReducedEffects);
+                if (survivalUi)
+                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation);
+            }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
@@ -753,6 +773,7 @@ namespace OutOfReach.Composition
                 survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
                 survivalUi.ClearBinding();
             }
+            if (chapterUi) chapterUi.ClearBinding();
             menuPresentationVisible = false;
             if (cargoHands) cargoHands.ClearBinding();
             if (preflightTension) preflightTension.ClearBinding();
