@@ -6,6 +6,17 @@
 - **Deadline:** Sun 15 Nov 2026, **23:59 Bratislava = 22:59 UTC** ("Submit for Judging" by the Team Owner). Tonight: the final build around **23:00 CET**, the game done by **23:15**, the Team Owner submits around **23:30**; resubmits are allowed until the deadline.
 - **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes; the day-14 announcement ships as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202). Alex decided that CLAUDE-MAX does the final integration (#7 6901207238). Every paste block describes only what is in the RC. **If the RC ships, the pack is final as it stands.** If a B build ships (extra NASA data lines, new models), one short diff pass follows (section below).
 
+## Two sets are ready — use the set of the build that ships
+
+| The build that ships (final post on #7) | Use |
+|---|---|
+| **A build** = release candidate `feature/claude-max-final@5479e87` | **this folder**: [form-fields.md](form-fields.md), [deck/…deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf), [final-project-folder/](final-project-folder/) |
+| **B build** = the RC plus the Horizons line and the radiation estimate (checked against `f6f4f96`) | **[B-build/](B-build/)**: its own `form-fields.md`, deck PDF and `final-project-folder/` |
+
+If the final B build has other extras (DSN line, new voices, Particle Pack launch effects, new models), `B-build/` is rebuilt first: `python make_b_build.py --sha <SHA> <flags>`.
+
+**Deck PDF, important:** take the PDF from this branch at `feature/submission-pack-02` head, not an older export. Older PDFs (up to `e4f60f1`, including the copy in `F:\.local\out-of-reach-2330-handoff\submission-draft-9bc3c8a`) show the headline font wrongly in browsers, and "2.5" and "8.5" read like "25" and "85". The current PDFs are fixed (`deck/flatten_pdf.py`).
+
 ## Start here (in this order)
 
 | Step | File | For whom |
@@ -41,7 +52,8 @@
 2. Checks A1–A3 (radio, stars, montage still in) and switches S1, S7, S8, S9, S5, S10 (spoken VO23, Horizons line during play, MSL RAD radiation estimate, DSN complex in view, day-14 console, new models) in [form-fields.md](form-fields.md). The exact sentences for S7 and S8 are already written there.
 3. New NASA sources (MSL RAD, DSN): numbers and URLs only from the lanes' posts and provenance files; check that the in-game Sources page credits them too.
 4. If a paste block changed: `python count_blocks.py form-fields.md` and update the counts above the block.
-5. If the deck changed: `python deck/build_deck.py`, then `powershell -File deck\export_pdf.ps1 -Pptx <full path>.pptx -Pdf <full path>.pdf` (PowerPoint, no window); check that the PDF has 7 pages.
+5. If the deck changed: `python deck/build_deck.py`, then `powershell -File deck\export_pdf.ps1 -Pptx <full path>.pptx -Pdf <full path>.pdf -PngDir <temp folder>` (PowerPoint, no window), then **`python deck/flatten_pdf.py <full path>.pdf <temp folder>`**; check that the PDF has 7 pages. The last step is required: without it browsers draw the headline font wrongly and decimal points nearly vanish ("2.5" reads like "25").
+6. The B-build set next to this one: `python make_b_build.py --sha <SHA> --horizons --rad [--dsn] [--particle] [--models]` rebuilds `B-build/` completely (texts, counts, deck, README.pdf).
 
 ## Official rules, verified on the official site on 15 Nov 2026
 

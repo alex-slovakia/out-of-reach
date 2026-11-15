@@ -2,6 +2,11 @@ WHAT GOES INTO THE PUBLIC "FINAL PROJECT" FOLDER (Team Owner)
 
 This list is for the Team Owner. Do not upload this file itself.
 
+WHICH SET: if the A build ships (release candidate 5479e87), use the files in THIS folder and the deck
+in ../deck/. If the B build ships, use README.pdf, README.txt and CREDITS.txt from
+../B-build/final-project-folder/ and the deck from ../B-build/ instead. Always take the deck PDF from the
+head of the branch feature/submission-pack-02 (older exports draw the headlines wrongly in browsers).
+
 Upload exactly these files to one Google Drive folder:
 
   1. The Windows build ZIP named in the final post on issue #7

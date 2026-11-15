@@ -65,6 +65,8 @@ Already done in the game (no action): the in-game Sources page names the synthet
 
 ## What to copy where (Team Owner)
 
+**First: which build ships?** A build (release candidate `5479e87`) → the files named below. B build → the same file names inside [B-build/](B-build/) (its own `form-fields.md`, deck PDF and `final-project-folder/`). Always take the deck PDF from the head of `feature/submission-pack-02`; older exports draw the headlines wrongly in browsers.
+
 | Form field | Copy from |
 |---|---|
 | Project Name | [form-fields.md](form-fields.md) §1 |

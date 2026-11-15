@@ -80,7 +80,12 @@ def grid_picture() -> str:
 
 
 def main():
-    text = (HERE / "README.txt").read_text(encoding="utf-8")
+    global OUT
+    import sys
+    src = HERE / "README.txt"
+    if len(sys.argv) == 3:  # make_readme_pdf.py <README.txt> <README.pdf>, used by make_b_build.py
+        src, OUT = Path(sys.argv[1]), Path(sys.argv[2])
+    text = src.read_text(encoding="utf-8")
     head, _, rest = text.partition("\n\n")
     title, tagline = head.splitlines()[0], head.splitlines()[1]
     parts = [f"<h1>{html.escape(title)}</h1>", f'<p class="tag">{html.escape(tagline)}</p>']

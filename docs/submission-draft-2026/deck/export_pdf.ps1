@@ -16,7 +16,7 @@ try {
             New-Item -ItemType Directory -Force $PngDir | Out-Null
             foreach ($slide in $pres.Slides) {
                 $out = Join-Path $PngDir ("slide-{0:00}.png" -f $slide.SlideIndex)
-                $slide.Export($out, "PNG", 1600, 900)
+                $slide.Export($out, "PNG", 2560, 1440)
             }
         }
     }

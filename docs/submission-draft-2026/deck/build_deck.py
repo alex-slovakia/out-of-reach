@@ -487,6 +487,19 @@ def main():
         HORIZONS_LINE_SHIPPED = RAD_SHIPPED = DSN_SHIPPED = PARTICLE_PACK_SHIPPED = True
         TMP.mkdir(exist_ok=True)
         OUT = TMP / "preview-b.pptx"
+    # make_b_build.py builds the B deck without touching this file:
+    #   OOR_DECK_FLAGS=horizons,rad[,dsn][,particle]  OOR_DECK_OUT=<path to .pptx>
+    for flag in filter(None, os.environ.get("OOR_DECK_FLAGS", "").split(",")):
+        if flag == "horizons":
+            HORIZONS_LINE_SHIPPED = True
+        elif flag == "rad":
+            RAD_SHIPPED = True
+        elif flag == "dsn":
+            DSN_SHIPPED = True
+        elif flag == "particle":
+            PARTICLE_PACK_SHIPPED = True
+    if os.environ.get("OOR_DECK_OUT"):
+        OUT = Path(os.environ["OOR_DECK_OUT"])
     prs = Presentation()
     prs.slide_width, prs.slide_height = W, H
     for build in (slide_title, slide_challenge, slide_loop, slide_data, slide_learn, slide_built, slide_next):
