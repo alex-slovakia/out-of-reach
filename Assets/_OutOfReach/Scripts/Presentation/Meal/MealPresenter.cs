@@ -236,6 +236,12 @@ namespace OutOfReach.Presentation.Meal
                 Up = Vector3.up,
                 IntoGalley = -drawerFrame.forward,
             };
+            Camera view = eye.GetComponent<Camera>();
+            if (view && !view.orthographic)
+            {
+                result.ViewTanY = Mathf.Tan(view.fieldOfView * .5f * Mathf.Deg2Rad);
+                result.ViewTanX = result.ViewTanY * Mathf.Max(.5f, view.aspect);
+            }
             if (waterFrame)
             {
                 result.Nozzle = waterFrame.TransformPoint(NozzleInWaterFrame);

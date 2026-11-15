@@ -42,6 +42,8 @@ namespace OutOfReach.Presentation.Meal
         /// <summary>Into the galley (the opposite of the drawer's forward), used for insert directions.</summary>
         public Vector3 IntoGalley;
         public Vector3 Up;
+        /// <summary>tan(half vertical field of view) and tan(half horizontal field of view) of the eye; 0 = defaults (68 deg, 16:9).</summary>
+        public float ViewTanY, ViewTanX;
     }
 
     /// <summary>
@@ -54,10 +56,12 @@ namespace OutOfReach.Presentation.Meal
     public sealed class MealChoreography
     {
         // Eye-relative keys (x right, y up, z forward, metres). The assumed mouth is GALLEY-USE-MOTION-01's (0, -0.085, 0.03).
-        public static readonly Vector3 HoldKey = new Vector3(.085f, -.150f, .380f);
-        public static readonly Vector3 OpenKey = new Vector3(.050f, -.125f, .330f);
-        public static readonly Vector3 NearFaceKey = new Vector3(.012f, -.140f, .215f);
-        public static readonly Vector3 BiteKey = new Vector3(.004f, -.118f, .158f);
+        public static readonly Vector3 HoldKey = new Vector3(.085f, -.145f, .345f);
+        public static readonly Vector3 OpenKey = new Vector3(.050f, -.120f, .315f);
+        // Eating stays in view: the opened pouch is raised below the face and brought towards the mouth twice
+        // (GALLEY-USE-MOTION-01's own note: end at "near the face" when the lips would leave the first-person view).
+        public static readonly Vector3 NearFaceKey = new Vector3(.020f, -.095f, .270f);
+        public static readonly Vector3 BiteKey = new Vector3(.010f, -.115f, .215f);
         public static readonly Vector3 MouthKey = new Vector3(0f, -.085f, .030f);
         /// <summary>Right shoulder relative to the eye when no body bone is available (the antenna worksite uses the same).</summary>
         public static readonly Vector3 ShoulderKey = new Vector3(.18f, -.28f, -.08f);
@@ -66,7 +70,7 @@ namespace OutOfReach.Presentation.Meal
         private readonly MealPreparation preparation;
         private readonly bool labelCheck;
         private readonly Pose drawer, drawerOut, hold, open, nearFace, bite, check;
-        private readonly Pose? station, trash;
+        private readonly Pose? station, stationShown, trash;
 
         public MealChoreography(MealStations actual, MealPreparation kind, bool repeatedMenu)
         {
@@ -87,6 +91,8 @@ namespace OutOfReach.Presentation.Meal
             open = FacingEye(eye, actual.EyePosition, OpenKey, -18f);
             nearFace = ToMouth(eye, actual.EyePosition, NearFaceKey);
             bite = ToMouth(eye, actual.EyePosition, BiteKey);
+            float tanY = actual.ViewTanY > 0f ? actual.ViewTanY : Mathf.Tan(34f * Mathf.Deg2Rad);
+            float tanX = actual.ViewTanX > 0f ? actual.ViewTanX : tanY * 16f / 9f;
 
             Vector3 into = actual.IntoGalley.sqrMagnitude > 1e-6f ? actual.IntoGalley.normalized : -drawerForward;
             if (kind == MealPreparation.Rehydrated && actual.Nozzle.HasValue)
@@ -100,13 +106,23 @@ namespace OutOfReach.Presentation.Meal
                 station = new Pose(actual.Warmer.Value + -into * .02f, Quaternion.LookRotation(up, into));
             }
 
+            if (station.HasValue)
+            {
+                // The movement lock freezes the view where E was pressed, and a galley station is usually below it and
+                // beyond arm's reach: present the pouch TOWARDS the real station, on its line of sight when it is in
+                // view, otherwise at the edge of the view in its direction, so the whole preparation stays visible.
+                stationShown = new Pose(TowardsInView(eye, actual.EyePosition, station.Value.position, tanX, tanY), station.Value.rotation);
+            }
             if (actual.Trash.HasValue)
                 trash = new Pose(actual.Trash.Value, Quaternion.LookRotation(up, into));
         }
 
         public MealPreparation Preparation => preparation;
         public Pose Hold => hold;
+        /// <summary>The real station frame (needle or warmer), or null for ready to eat.</summary>
         public Pose? Station => station;
+        /// <summary>Where the pouch is presented towards the station inside the frozen view.</summary>
+        public Pose? StationShown => stationShown;
 
         /// <summary>The pouch frame at a stage and its 0..1 progress.</summary>
         public MealPouchFrame Sample(MealStage stage, double stageProgress)
@@ -180,7 +196,7 @@ namespace OutOfReach.Presentation.Meal
                 return Frame(Blend(hold, check, Bell(s)), false, squeeze * (preparation == MealPreparation.Rehydrated ? dryThickness : 1f), 1f, 1f);
             }
 
-            Pose at = station.Value;
+            Pose at = stationShown ?? station.Value;
             float thickness = preparation == MealPreparation.Rehydrated
                 ? Mathf.Lerp(dryThickness, 1f, Smooth(Mathf.Clamp01((s - .30f) / .45f))) : 1f;
             if (s < .30f) return Frame(Blend(hold, at, Smooth(s / .30f)), false, thickness, 1f, 1f);
@@ -234,14 +250,28 @@ namespace OutOfReach.Presentation.Meal
 
         private static Pose ToMouth(Quaternion eye, Vector3 eyePosition, Vector3 key)
         {
-            // The cut opening (pouch +y) points at the assumed mouth; the label (+z) faces up and away.
+            // The cut opening (pouch +y) tilts towards the assumed mouth and up, so the food shows; the clasped edge
+            // (prop -x) stays on the right, towards the right hand, never across the view.
             Vector3 position = eyePosition + eye * key;
-            Vector3 y = ((eyePosition + eye * MouthKey) - position).normalized;
-            Vector3 x = Vector3.Cross(y, eye * Vector3.up);
-            if (x.sqrMagnitude < 1e-6f) x = eye * Vector3.right;
+            Vector3 toMouth = ((eyePosition + eye * MouthKey) - position).normalized;
+            Vector3 y = (toMouth + (eye * Vector3.up) * .75f).normalized;
+            Vector3 x = Vector3.Cross(eye * Vector3.up, y);
+            if (x.sqrMagnitude < 1e-6f) x = eye * Vector3.left;
             x.Normalize();
             Vector3 z = Vector3.Cross(x, y).normalized;
             return new Pose(position, Quaternion.LookRotation(z, y));
+        }
+
+        /// <summary>A point towards <paramref name="target"/> inside the view: on its line of sight at 0.36 m, kept within the frustum.</summary>
+        public static Vector3 TowardsInView(Quaternion eye, Vector3 eyePosition, Vector3 target, float tanX, float tanY)
+        {
+            const float depth = .36f;
+            Vector3 local = Quaternion.Inverse(eye) * (target - eyePosition);
+            Vector2 slope = local.z > 1e-3f ? new Vector2(local.x / local.z, local.y / local.z) : new Vector2(local.x, local.y) * 1e3f;
+            float limitX = tanX * .78f, limitY = tanY * .72f;
+            float scale = Mathf.Max(1f, Mathf.Max(Mathf.Abs(slope.x) / limitX, Mathf.Abs(slope.y) / limitY));
+            slope /= scale;
+            return eyePosition + eye * new Vector3(slope.x * depth, slope.y * depth, depth);
         }
 
         private static Pose Blend(Pose a, Pose b, float t) => new Pose(Vector3.LerpUnclamped(a.position, b.position, t), Quaternion.Slerp(a.rotation, b.rotation, t));

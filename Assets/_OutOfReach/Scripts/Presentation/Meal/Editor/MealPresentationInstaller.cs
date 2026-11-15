@@ -23,6 +23,13 @@ namespace OutOfReach.Presentation.Meal.Editor
         public const string ScenePath = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
         public const string PouchPath = "Assets/_OutOfReach/Visuals/Props/GalleyConsumablesV01/GC_MealPouch.fbx";
         public const string ClaspPath = "Assets/_OutOfReach/Visuals/Props/GalleyConsumablesV01/WORK_Clasp_Meal_R.json";
+        /// <summary>Label per MealPreparation (ReadyToEat, Warmed, Rehydrated): the same atlas layout, only the meal label differs.</summary>
+        public static readonly string[] LabelPaths =
+        {
+            "Assets/_OutOfReach/Visuals/Props/GalleyConsumablesV01/Materials/GC_Labels_ReadyToEat.mat",
+            "Assets/_OutOfReach/Visuals/Props/GalleyConsumablesV01/Materials/GC_Labels.mat",
+            "Assets/_OutOfReach/Visuals/Props/GalleyConsumablesV01/Materials/GC_Labels_Rehydratable.mat",
+        };
 
         [MenuItem("OUT OF REACH/Integration/Install meal presentation (MEAL-PRES-01)")]
         public static void InstallInActiveScene()
@@ -81,6 +88,14 @@ namespace OutOfReach.Presentation.Meal.Editor
             Set(so, "waterFrame", water);
             Set(so, "pouchModel", pouch);
             Set(so, "claspData", clasp);
+            SerializedProperty labels = so.FindProperty("labelByPreparation") ?? throw new InvalidOperationException("Missing MealPresenter field labelByPreparation");
+            labels.arraySize = LabelPaths.Length;
+            for (int i = 0; i < LabelPaths.Length; i++)
+            {
+                Material label = AssetDatabase.LoadAssetAtPath<Material>(LabelPaths[i]);
+                if (!label) throw new InvalidOperationException("Missing label material " + LabelPaths[i]);
+                labels.GetArrayElementAtIndex(i).objectReferenceValue = label;
+            }
             so.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(presenter);
 

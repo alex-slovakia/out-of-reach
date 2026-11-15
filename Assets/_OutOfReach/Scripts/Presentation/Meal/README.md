@@ -10,16 +10,18 @@ E on the existing `survival-ration` target (the galley ration drawer) starts a m
 | Stage | Real seconds | What the player sees |
 |---|---|---|
 | Take | 1.4 | The right WORK hand reaches into the drawer, clasps a sealed pouch and brings it low into view |
-| Prepare | 0.8–2.8 | **Warmed**: into the food warmer and back · **Rehydrated**: under the water dispenser needle, the dry pouch fills and is kneaded · **Ready to eat**: a squeeze and a look at the label |
+| Prepare | 0.8–2.8 | **Warmed** (MEAL 04 vegetable stew, thermostabilised): held towards the food warmer and back · **Rehydrated** (MEAL 11 rice and beans): towards the water dispenser needle, the dry pouch fills and is kneaded · **Ready to eat** (SNACK 03 fruit and nut mix): a squeeze and a look at the label |
 | Open | 1.0 (1.7 on a repeated menu) | The pouch is cut open (Sealed → Opened in place); from the fourth meal a short, restrained look at the familiar label first |
 | Eat | 2.8 | **First bite = the one real `TryConsumeRation`**, then two bites near the mouth |
 | Stow | 1.0 | Into the wet-trash bag; the hand lets go |
 
-- **Preparation rotation:** the first packaged meal is warmed (the pouch art is labelled "THERMOSTABILISED · EAT WARM"),
-  then rehydrated, then ready to eat, repeating.
+- **Preparation rotation:** the first packaged meal is warmed, then rehydrated, then ready to eat, repeating. Each
+  preparation shows its own label on the same pouch mesh (`GC_Labels`, `GC_Labels_Rehydratable`, `GC_Labels_ReadyToEat`).
 - **Station positions** (needle, warmer, wet trash) are derived from `WaterInteractionSurface` with the habitat kit's own
-  offsets (`MealPresenter.*InWaterFrame`). The arm reaches towards a far station as far as it can; the pouch never
-  leaves the hand.
+  offsets (`MealPresenter.*InWaterFrame`). The movement lock freezes the view where E was pressed, and the warmer and
+  needle sit below it and beyond arm's reach from the drawer. The pouch is therefore presented **towards** the real
+  station: on its line of sight when the station is in view, otherwise at the edge of the view in its direction
+  (`MealChoreography.TowardsInView`). The pouch never leaves the hand.
 - **Too far:** beyond 1.05 m from the drawer the target answers "Too far from the galley food drawer. Move closer and
   press E to eat." and nothing starts.
 
@@ -55,9 +57,10 @@ E on the existing `survival-ration` target (the galley ration drawer) starts a m
 
 ## Limits
 
-- One meal-pouch art for all three preparations (its label reads thermostabilised); the type shows in the motion and the
-  prompt line. No new food art was generated.
+- One meal-pouch mesh for all three preparations. Only the label text differs: the two extra atlases are redrawn by the
+  kit's own label generator with the same layout (`Visuals/Props/GalleyConsumablesV01/Source~/gc_label_variants.py`).
+  No new food model was made. The opened pouch shows the kit's stew surface for every menu.
 - Legacy C06 activates rations only after contact; in chapter mode (`feature/chapter-loop-core`) the same Core command
   is active from day 1 and this presentation needs no change, but the habitat must expose the ration target then.
-- The camera stays where the player looked when E was pressed (the movement lock freezes the view): a far station can be
-  out of view while the hand reaches towards it.
+- The camera stays where the player looked when E was pressed (the movement lock freezes the view): the preparation is
+  shown towards a station that is usually below the view, not touching it; the prompt line names the station.

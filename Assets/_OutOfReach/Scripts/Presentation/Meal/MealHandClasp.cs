@@ -84,9 +84,9 @@ namespace OutOfReach.Presentation.Meal
         private Vector3[] fingerHead = Array.Empty<Vector3>();
         private Quaternion wristBind, pouchBind;
         private Vector3 pouchOrigin;
-        private Quaternion[] baseline = Array.Empty<Quaternion>();
+        private Quaternion[] baseline = Array.Empty<Quaternion>(), lastWritten = Array.Empty<Quaternion>();
         private Transform[] owned = Array.Empty<Transform>();
-        private bool acquired, subscribed;
+        private bool acquired, subscribed, written;
 
         public MealHandClasp(EmbodiedBodyPresenter visibleBody, MealClaspData clasp)
         {
@@ -117,8 +117,13 @@ namespace OutOfReach.Presentation.Meal
             if (!acquired && !Acquire()) return false;
             if (!upper || !fore || !wrist || !modelRoot) { Release(); return false; }
 
-            // Stateless per frame: start from the pose the body presenter sampled, never from last frame's writes.
-            for (int i = 0; i < owned.Length; i++) owned[i].localRotation = baseline[i];
+            // Stateless per frame: start from the pose the body presenter sampled, never from last frame's writes. A writer
+            // that poses these bones every frame (the standing gait) has replaced our last values: take its pose as the rest.
+            for (int i = 0; i < owned.Length; i++)
+            {
+                if (written && owned[i].localRotation != lastWritten[i]) baseline[i] = owned[i].localRotation;
+                owned[i].localRotation = baseline[i];
+            }
 
             // Full-weight solve: the wrist pose that puts the measured clasp on the requested pouch frame.
             Quaternion wristWorld = pouch.rotation * Quaternion.Inverse(pouchBind) * wristBind;
@@ -145,6 +150,8 @@ namespace OutOfReach.Presentation.Meal
                 }
             }
 
+            for (int i = 0; i < owned.Length; i++) lastWritten[i] = owned[i].localRotation;
+            written = true;
             Quaternion actualWrist = wrist.rotation;
             held = new Pose(wrist.position + actualWrist * Quaternion.Inverse(wristBind) * pouchOrigin,
                 actualWrist * Quaternion.Inverse(wristBind) * pouchBind);
@@ -174,6 +181,7 @@ namespace OutOfReach.Presentation.Meal
         {
             if (!Resolve()) return false;
             for (int i = 0; i < owned.Length; i++) baseline[i] = owned[i].localRotation;
+            written = false;
             if (!subscribed) { body.PoseWillReset += OnPoseWillReset; subscribed = true; }
             acquired = true;
             return true;
@@ -219,6 +227,7 @@ namespace OutOfReach.Presentation.Meal
             owned[0] = upper; owned[1] = fore; owned[2] = wrist;
             Array.Copy(fingers, 0, owned, 3, fingers.Length);
             baseline = new Quaternion[owned.Length];
+            lastWritten = new Quaternion[owned.Length];
             return true;
         }
 

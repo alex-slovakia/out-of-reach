@@ -10,3 +10,4 @@
 - **Licence:** the team's own work, for use in the game and its showcase under the project's terms.
 
 - **This Unity copy (MEAL-PRES-01, 15 November 2026):** only `GC_MealPouch.fbx` and `GC_Labels.png` are copied, byte for byte; `source/` stays in the kit on `feature/galley-consumables-v1@12100dd`.
+- **Label variants (MEAL-PRES-01):** `GC_Labels_Rehydratable.png` and `GC_Labels_ReadyToEat.png` are drawn by the same kit's `gc_textures.ration()` and `a7_textures.py` (same fonts, pixels only) through `Source~/gc_label_variants.py`. Generic dish names and lot codes; no brands or agency insignia.

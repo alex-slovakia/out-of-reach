@@ -290,7 +290,9 @@ namespace OutOfReach.Tests.Meal.EditMode
                 Assert.That(path.Sample(MealStage.Open, .9d).Opened, Is.True, "the cut happens while opening");
                 MealPouchFrame bite = path.Sample(MealStage.Eat, .35d);
                 Assert.That(bite.Opened, Is.True);
-                Assert.That(Vector3.Distance(bite.Position, stations.EyePosition), Is.LessThan(.25f), "eaten at the face");
+                Assert.That(Vector3.Distance(bite.Position, stations.EyePosition), Is.LessThan(.28f), "eaten at the face");
+                Vector3 inView = Quaternion.Inverse(stations.EyeRotation) * (bite.Position - stations.EyePosition);
+                Assert.That(Mathf.Abs(inView.y) / inView.z, Is.LessThan(Mathf.Tan(34f * Mathf.Deg2Rad)), "the bite stays in the 68 degree view");
                 MealPouchFrame gone = path.Sample(MealStage.Stow, 1d);
                 Assert.That(gone.Visible, Is.False);
                 Assert.That(gone.HandWeight, Is.EqualTo(0f).Within(1e-4f), "the arm is given back");
@@ -302,6 +304,17 @@ namespace OutOfReach.Tests.Meal.EditMode
                 }
                 if (kind == MealPreparation.Warmed)
                     Assert.That(Vector3.Distance(path.Station.Value.position, stations.Warmer.Value), Is.LessThan(.05f), "at the warmer");
+                if (path.StationShown.HasValue)
+                {
+                    // Presented towards the real station, inside the frozen view (vertical 68 degrees).
+                    Vector3 shown = Quaternion.Inverse(stations.EyeRotation) * (path.StationShown.Value.position - stations.EyePosition);
+                    Vector3 real = Quaternion.Inverse(stations.EyeRotation) * (path.Station.Value.position - stations.EyePosition);
+                    Assert.That(shown.z, Is.GreaterThan(.3f));
+                    Assert.That(Mathf.Abs(shown.y) / shown.z, Is.LessThan(Mathf.Tan(34f * Mathf.Deg2Rad)), kind + " preparation stays in view");
+                    Assert.That(Vector2.Dot(new Vector2(shown.x, shown.y).normalized, new Vector2(real.x, real.y).normalized), Is.GreaterThan(.9f), kind + " towards the station");
+                    MealPouchFrame at = path.Sample(MealStage.Prepare, .5d);
+                    Assert.That(Vector3.Distance(at.Position, path.StationShown.Value.position), Is.LessThan(.01f));
+                }
             }
             Vector3 clamped = MealChoreography.ClampReach(new Vector3(0f, 0f, 2f), Vector3.zero, .6f);
             Assert.That(clamped.magnitude, Is.EqualTo(.6f).Within(1e-5f));

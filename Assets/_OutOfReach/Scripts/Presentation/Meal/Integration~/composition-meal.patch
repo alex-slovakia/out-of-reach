@@ -1,5 +1,5 @@
 diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
-index 92326e6..12c9d2d 100644
+index de263ca..1a0d513 100644
 --- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 +++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 @@ -13,6 +13,7 @@ using OutOfReach.Presentation.Cinematics.Preflight;
@@ -10,7 +10,7 @@ index 92326e6..12c9d2d 100644
  using OutOfReach.Presentation.Terminal;
  using OutOfReach.Presentation.UI;
  using OutOfReach.Simulation;
-@@ -59,6 +60,8 @@ namespace OutOfReach.Composition
+@@ -69,6 +70,8 @@ namespace OutOfReach.Composition
          private bool orbitalLocationReached;
          private MissionSession transferredSession;
          [SerializeField] private I06HabitatBindings habitat;
@@ -19,7 +19,7 @@ index 92326e6..12c9d2d 100644
          [SerializeField] private I06MarineBindings marine;
          [SerializeField] private AudioClip departureScore;
          private bool departureRestraintCuePlayed;
-@@ -168,7 +171,8 @@ namespace OutOfReach.Composition
+@@ -178,7 +181,8 @@ namespace OutOfReach.Composition
          private bool EarthViewerOwnsInput => earthTerminal && earthTerminal.BlocksPlayerInput;
          private bool CanPresentEarthViewer() => MicroSessionCurrent() && modeChosen && orbitalLocationReached
              && !menuPresentationVisible && cinematics && !cinematics.IsPlaying
@@ -29,7 +29,7 @@ index 92326e6..12c9d2d 100644
          private void PrepareEarthViewer()
          {
              if (microgravityBridge) microgravityBridge.Release();
-@@ -279,6 +283,48 @@ namespace OutOfReach.Composition
+@@ -289,6 +293,48 @@ namespace OutOfReach.Composition
                  runtime.Player.ExitFloat(); // Roll back only our new zero-motion entry; never a prior owner's flight.
          }
          public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
@@ -78,7 +78,7 @@ index 92326e6..12c9d2d 100644
          public void ConfigureMarine(I06MarineBindings bindings) => marine = bindings;
          public void ConfigureDepartureScore(AudioClip score) => departureScore = score;
  
-@@ -322,6 +368,7 @@ namespace OutOfReach.Composition
+@@ -332,6 +378,7 @@ namespace OutOfReach.Composition
          private bool CanPresentOpeningMenuMotion() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
              && !IsTransportDeparturePlaying
              && !(antennaRepair && antennaRepair.IsWorking)
@@ -86,7 +86,7 @@ index 92326e6..12c9d2d 100644
              && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
              && runtime.Player && runtime.Player.isActiveAndEnabled && !runtime.Player.ControlAllowed
              && cinematics && !cinematics.IsPlaying;
-@@ -431,6 +478,7 @@ namespace OutOfReach.Composition
+@@ -441,6 +488,7 @@ namespace OutOfReach.Composition
              && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
              && !IsTransportDeparturePlaying
              && !(antennaRepair && antennaRepair.BlocksMovement)
@@ -94,7 +94,7 @@ index 92326e6..12c9d2d 100644
              && domainControlGate != null && domainControlGate()
              && !(boundSession.SurvivalRecovery?.IsResting ?? false)
              && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
-@@ -639,6 +687,15 @@ namespace OutOfReach.Composition
+@@ -653,6 +701,15 @@ namespace OutOfReach.Composition
                  antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
                  throw new InvalidOperationException("The antenna worksite could not bind to the current session.");
              if (antennaRepair) antennaRepair.WorkCancelled += OnAntennaWorkCancelled;
@@ -110,7 +110,7 @@ index 92326e6..12c9d2d 100644
              if (antennaProgress && antennaRepair)
                  antennaProgress.Configure(antennaProgressDocument, () => antennaRepair.IsWorking,
                      () => antennaRepair.Progress01, () => CanPresentAntennaWork() && !menuPresentationVisible,
-@@ -711,6 +768,14 @@ namespace OutOfReach.Composition
+@@ -727,6 +784,14 @@ namespace OutOfReach.Composition
                  marine.DepartureEnded -= OnDepartureAudioEnded;
                  marine.Transferred -= OnTransportTransferred;
              }
@@ -126,7 +126,7 @@ index 92326e6..12c9d2d 100644
              if (embodiedBody) embodiedBody.ClearBinding();
              if (footsteps) footsteps.ClearBinding();
 diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
-index 90adba6..4dc3c7f 100644
+index a4d53a5..e49a4cf 100644
 --- a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
 +++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
 @@ -16,6 +16,7 @@
@@ -135,5 +135,5 @@ index 90adba6..4dc3c7f 100644
      "OutOfReach.Presentation.Habitat",
 +    "OutOfReach.Presentation.Meal",
      "OutOfReach.MarineOcean",
+     "OutOfReach.LaunchFXV03",
      "OutOfReach.Presentation.Cargo",
-     "OutOfReach.AirlockPanel",
