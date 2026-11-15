@@ -1,0 +1,47 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "DP02_Engineering": {
+   "fbx": "Meshes/DP02_Engineering.fbx",
+   "objects_in_file": 5,
+   "checks": [
+    {
+     "object": "DP02_ENG_FrameLoom_L_Z460",
+     "ok": true,
+     "triangles": 7378,
+     "expected": 7378
+    },
+    {
+     "object": "DP02_ENG_FrameLoom_R_Z940",
+     "ok": true,
+     "triangles": 7378,
+     "expected": 7378
+    },
+    {
+     "object": "DP02_ENG_AccessPanel_AftL",
+     "ok": true,
+     "triangles": 1778,
+     "expected": 1778
+    },
+    {
+     "object": "DP02_ENG_AccessPanel_AftR",
+     "ok": true,
+     "triangles": 1778,
+     "expected": 1778
+    },
+    {
+     "anchor": "DP02_ENG_ReviewEye",
+     "ok": true,
+     "point": [
+      0.75,
+      1.62,
+      8.55
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

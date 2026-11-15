@@ -1,0 +1,33 @@
+{
+ "pass": true,
+ "units": {
+  "DP02_Engineering": {
+   "importer": {
+    "guid": "c80d985a299a0e664f18c69a85c43e80",
+    "bakeAxisConversion": "True",
+    "useFileUnits": "True",
+    "useFileScale": "True",
+    "globalScale": "1",
+    "importCameras": "False",
+    "importLights": "False",
+    "materialImportMode": "ImportViaMaterialDescription",
+    "preserveHierarchy": "True",
+    "externalMaterialMaps": "11"
+   },
+   "max_bounds_pivot_err_m": 0.0,
+   "triangles_blender": 18312,
+   "triangles_unity": 18312,
+   "objects": 4,
+   "anchors": 1
+  }
+ },
+ "failures": [],
+ "lines": [
+  "DP02_ENG_FrameLoom_L_Z460      tris blender  7378 unity  7378 | bounds/pivot err 0.00000 m | submeshes 11/11 | ok",
+  "DP02_ENG_FrameLoom_R_Z940      tris blender  7378 unity  7378 | bounds/pivot err 0.00000 m | submeshes 11/11 | ok",
+  "DP02_ENG_AccessPanel_AftL      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
+  "DP02_ENG_AccessPanel_AftR      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
+  "DP02_ENG_ReviewEye             anchor unity [0.75, 1.62, 8.55] report [0.75, 1.62, 8.55] err 0.00000",
+  "DP02_Engineering: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00000 m | triangles blender 18312 unity 18312"
+ ]
+}
