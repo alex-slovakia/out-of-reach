@@ -1,0 +1,370 @@
+{
+ "Water": {
+  "id": "water-tank",
+  "triangles": [
+   3748,
+   2322,
+   1190
+  ],
+  "materials": [
+   "CC2_Graphite",
+   "CC2_Shell_Water",
+   "CC2_Webbing",
+   "CC2_Aluminium",
+   "CC2_RedCap",
+   "CC2_Rubber",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.197,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.1576,
+   0.283
+  ]
+ },
+ "Oxygen": {
+  "id": "oxygen-tank",
+  "triangles": [
+   4906,
+   2856,
+   1944
+  ],
+  "materials": [
+   "CC2_Composite",
+   "CC2_Shell_Oxygen",
+   "CC2_Aluminium",
+   "CC2_Graphite",
+   "CC2_Labels",
+   "CC2_Rubber"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.1351,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.1295,
+   0.2615
+  ]
+ },
+ "Food": {
+  "id": "food-locker",
+  "triangles": [
+   3446,
+   2246,
+   1034
+  ],
+  "materials": [
+   "CC2_Shell_Food",
+   "CC2_Rubber",
+   "CC2_Graphite",
+   "CC2_Aluminium",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.175,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.16,
+   0.296
+  ]
+ },
+ "Battery": {
+  "id": "battery-module",
+  "triangles": [
+   4534,
+   2506,
+   1312
+  ],
+  "materials": [
+   "CC2_Shell_Battery",
+   "CC2_Graphite",
+   "CC2_Aluminium",
+   "CC2_RedCap",
+   "CC2_Rubber",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.1891,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.163,
+   0.263
+  ]
+ },
+ "Solar": {
+  "id": "solar-wing",
+  "triangles": [
+   3834,
+   2222,
+   1378
+  ],
+  "materials": [
+   "CC2_Shell_Solar",
+   "CC2_Aluminium",
+   "CC2_Graphite",
+   "CC2_SolarCell",
+   "CC2_Rubber",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.133,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.1225,
+   0.282
+  ]
+ },
+ "Spares": {
+  "id": "spare-parts-kit",
+  "triangles": [
+   4014,
+   2732,
+   1128
+  ],
+  "materials": [
+   "CC2_Shell_Spares",
+   "CC2_Rubber",
+   "CC2_Graphite",
+   "CC2_Aluminium",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.18,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.1738,
+   0.262
+  ]
+ },
+ "Science": {
+  "id": "spectrometer",
+  "triangles": [
+   5038,
+   3278,
+   1182
+  ],
+  "materials": [
+   "CC2_Shell_Science",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.295,
+   -0.1685,
+   0.0
+  ],
+  "bounds_max": [
+   0.295,
+   0.1685,
+   0.2921
+  ]
+ },
+ "RackFrame": {
+  "id": "rack-frame",
+  "triangles": [
+   2944,
+   2296,
+   864
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Aluminium",
+   "CC2_Labels"
+  ],
+  "bounds_min": [
+   -0.657,
+   -0.37,
+   0.2
+  ],
+  "bounds_max": [
+   0.657,
+   0.3,
+   1.868
+  ]
+ },
+ "RackCell_Water": {
+  "id": "rack-cell:Water",
+  "triangles": [
+   956,
+   832,
+   288
+  ],
+  "materials": [
+   "CC2_Aluminium",
+   "CC2_WebbingAmber",
+   "CC2_RackSteel"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   0.005
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.258
+  ]
+ },
+ "RackCell_Oxygen": {
+  "id": "rack-cell:Oxygen",
+  "triangles": [
+   956,
+   832,
+   288
+  ],
+  "materials": [
+   "CC2_Aluminium",
+   "CC2_WebbingAmber",
+   "CC2_RackSteel"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   0.005
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.267
+  ]
+ },
+ "RackCell_Food": {
+  "id": "rack-cell:Food",
+  "triangles": [
+   1068,
+   944,
+   336
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_WebbingAmber"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   -0.06
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.3025
+  ]
+ },
+ "RackCell_Battery": {
+  "id": "rack-cell:Battery",
+  "triangles": [
+   1164,
+   1008,
+   384
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_WebbingAmber"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   -0.06
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.2695
+  ]
+ },
+ "RackCell_Solar": {
+  "id": "rack-cell:Solar",
+  "triangles": [
+   1132,
+   976,
+   352
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_WebbingAmber"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   -0.06
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.2812
+  ]
+ },
+ "RackCell_Spares": {
+  "id": "rack-cell:Spares",
+  "triangles": [
+   1068,
+   944,
+   336
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_WebbingAmber"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   -0.06
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.263
+  ]
+ },
+ "RackCell_Science": {
+  "id": "rack-cell:Science",
+  "triangles": [
+   1068,
+   944,
+   336
+  ],
+  "materials": [
+   "CC2_RackSteel",
+   "CC2_Rubber",
+   "CC2_Aluminium",
+   "CC2_WebbingAmber"
+  ],
+  "bounds_min": [
+   -0.26,
+   -0.433,
+   -0.06
+  ],
+  "bounds_max": [
+   0.26,
+   0.268,
+   0.299
+  ]
+ }
+}
