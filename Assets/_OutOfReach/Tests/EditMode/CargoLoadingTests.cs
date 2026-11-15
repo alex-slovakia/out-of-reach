@@ -46,7 +46,8 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(cargo.GetSupplyRemaining(AuroraMission.OxygenTank), Is.EqualTo(3));
                 Assert.That(cargo.GetLoaded(AuroraMission.OxygenTank), Is.EqualTo(2), "a crate in hands is not aboard");
                 Assert.That(session.Planner.Draft.TotalMassKg, Is.EqualTo(546d));
-                Assert.That(cargo.CarrySpeedFactor, Is.EqualTo(1d - (30d / 180d)).Within(1e-6));
+                Assert.That(cargo.CarrySpeedFactor, Is.EqualTo(1d - (30d * (1d - CargoLoading.MinimumCarrySpeedFactor)
+                    / CargoLoading.MassForSlowestCarryKg)).Within(1e-6));
                 ICargoLoading view = cargo;
                 Assert.That(view.CarriedEquipmentId, Is.EqualTo(AuroraMission.OxygenTank));
                 Assert.That(view.CarrySpeedFactor, Is.EqualTo(cargo.CarrySpeedFactor));
@@ -268,13 +269,13 @@ namespace OutOfReach.Tests.EditMode
             }
         }
 
-        [TestCase(AuroraMission.SparePartsKit, 25d, 0.8611d)]
-        [TestCase(AuroraMission.OxygenTank, 30d, 0.8333d)]
-        [TestCase(AuroraMission.FoodLocker, 35d, 0.8056d)]
-        [TestCase(AuroraMission.WaterTank, 48d, 0.7333d)]
-        [TestCase(AuroraMission.BatteryModule, 55d, 0.6944d)]
-        [TestCase(AuroraMission.SolarWing, 70d, 0.6111d)]
-        [TestCase(AuroraMission.Spectrometer, 90d, 0.5d)]
+        [TestCase(AuroraMission.SparePartsKit, 25d, 0.9167d)]
+        [TestCase(AuroraMission.OxygenTank, 30d, 0.9d)]
+        [TestCase(AuroraMission.FoodLocker, 35d, 0.8833d)]
+        [TestCase(AuroraMission.WaterTank, 48d, 0.84d)]
+        [TestCase(AuroraMission.BatteryModule, 55d, 0.8167d)]
+        [TestCase(AuroraMission.SolarWing, 70d, 0.7667d)]
+        [TestCase(AuroraMission.Spectrometer, 90d, 0.7d)]
         public void CarrySpeed_FollowsTheAuthoritativeUnitMass(string equipmentId, double massKg, double expectedFactor)
         {
             MissionDefinition definition = AuroraMission.CreateDefinition();
@@ -289,7 +290,7 @@ namespace OutOfReach.Tests.EditMode
             Assert.That(CargoLoading.SpeedFactorForMass(0d), Is.EqualTo(1d));
             Assert.That(CargoLoading.SpeedFactorForMass(-5d), Is.EqualTo(1d));
             Assert.That(CargoLoading.SpeedFactorForMass(double.NaN), Is.EqualTo(1d));
-            Assert.That(CargoLoading.SpeedFactorForMass(500d), Is.EqualTo(0.5d));
+            Assert.That(CargoLoading.SpeedFactorForMass(500d), Is.EqualTo(CargoLoading.MinimumCarrySpeedFactor));
         }
 
         [Test]

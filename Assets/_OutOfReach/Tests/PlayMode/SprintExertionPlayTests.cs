@@ -220,7 +220,8 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(player.IsSprinting, Is.False, "EVA cannot sprint");
             float distance = player.RouteDistanceMetres;
             yield return Frames(50);
-            Assert.That(player.RouteDistanceMetres - distance, Is.EqualTo(0.8f).Within(0.025f), "80% floor at empty");
+            Assert.That(player.RouteDistanceMetres - distance, Is.EqualTo(PlayerExertion.MinimumTraversalFactor).Within(0.025f),
+                "traversal floor at empty");
             Assert.That(Vector3.Distance(player.transform.position, route.PointAt(player.RouteDistanceMetres)), Is.LessThan(0.0001f));
             yield return Frames(400);
             Assert.That(player.IsAtRouteEnd, Is.True);
