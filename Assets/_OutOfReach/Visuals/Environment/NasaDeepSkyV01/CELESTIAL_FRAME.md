@@ -1,18 +1,20 @@
 # Celestial frame of the NASA deep sky (R20 science support)
 
-This note covers how the sky is oriented. Image provenance stays in `docs/art-direction/nasa-deep-sky-20261115/README.md`.
+This note covers how the sky is oriented, the 8K star map, and the real-size Sun and Earth. The 4K image's provenance stays in `docs/art-direction/nasa-deep-sky-20261115/README.md`.
 
 ## What is placed, and what is not
 
 | Item | Type | Source |
 |---|---|---|
-| Star and Milky Way positions | NASA reference data | NASA SVS Deep Star Maps 2020, `starmap_2020_4k.exr`, https://svs.gsfc.nasa.gov/4851/ (Gaia DR2: ESA/Gaia/DPAC). ICRF/J2000 right ascension and declination, equirectangular. |
+| Star and Milky Way positions, brightness, colour | NASA reference data | NASA SVS Deep Star Maps 2020, https://svs.gsfc.nasa.gov/4851/: 1.7 billion stars from Hipparcos-2, Tycho-2 and Gaia DR2 (ESA/Gaia/DPAC). ICRF/J2000 right ascension and declination, equirectangular. The celestial material uses **`starmap_2020_8k.exr`** (8192×4096, 0.044° per texel), source https://svs.gsfc.nasa.gov/vis/a000000/a004800/a004851/starmap_2020_8k.exr, retrieved 2026-11-15T20:09:46Z–20:11:19Z, 130,530,278 bytes, SHA-256 `dc6c4f413e85707a29a25a9451148154554ecca2c996f84fa8f47b65ef9ff7c4`. Source pixels are unmodified. |
 | Sun and Earth directions | NASA/JPL ephemeris | Horizons archive `docs/data/reference-orbits/normalized.json` (SHA-256 `f3f3e5bd…ecaffc`). Daily from 2026-11-14 08:00 UTC to 2026-12-15 08:00 UTC, geometric (`VEC_CORR=NONE`), ICRF / mean ecliptic of J2000, km. Cross-checked against `docs/data/horizons/earth-mars-2026-11-14--2026-12-15.csv` (SHA-256 `694f3606…79e5af`). |
 | Observer | simplified simulation | Mars body centre. This is the same Mars-vicinity proxy that the communications model uses. AURORA-7's real position is fictional. At Mars, moving 10⁶ km shifts the Sun's direction by less than 0.25°. |
 | Ship attitude | fictional, rule-based | The rule (below): the real Sun is placed where the authored scene light comes from, and ecliptic north is kept as close to cabin "up" as possible. No measured attitude exists. |
-| Sun disc, planets in the sky | not drawn | The texture has no Sun, Earth or Mars in it. `CelestialSkyPresenter.WorldDirectionToEarth` gives the true direction for anyone who places a distant Earth point. |
+| Sun disc | NASA data, true size | Angular radius asin(695,700 km / Sun–observer distance). The radius is from the NASA Sun fact sheet in the same archive. It is 0.331° across on day 0 (62 % of the Sun's size seen from Earth) and 0.326° on day 30. Limb darkening uses the linear law with u = 0.6, an approximate visible-band value. Brightness is an HDR art value that saturates to white, like any eye or camera. |
+| Earth | NASA data, true direction and size, estimated brightness | Earth subtends 13.3″ on day 0 and 16.6″ on day 30, well under one pixel, so it is drawn as a point that conserves flux. Its V magnitude uses NASA's Earth V(1,0) = −3.99 (Earth fact sheet), the Horizons distances and a Lambert-sphere phase law: −2.25 on day 0 (phase angle 86.9°, 53 % lit) and −2.11 on day 30. That is about 2× Sirius (V −1.46). Flux is calibrated against Sirius in the same 8K map. The pale blue-white tint is an art choice. |
+| Moon, Mars, other planets | not drawn | The Moon would be about 0.11° from Earth; it needs one more Horizons query. Mars' size depends on the ship's undefined distance to Mars. |
 
-These corrections are left out: stellar proper motion from the Gaia epoch to 2026, annual and planetary aberration (≤ 20″ at Mars), light-time, and parallax of the stars. All of them are far below one texel, which is 0.088° on the 4096-px map.
+These corrections are left out: stellar proper motion from the Gaia epoch to 2026, annual and planetary aberration (≤ 20″ at Mars), light-time, and parallax of the stars. All of them are far below one texel, which is 0.044° on the 8192-px map.
 
 ## 1. Map frame (verified on the pixels)
 
@@ -91,23 +93,26 @@ All values come from `Scripts/Presentation/CelestialSky/Tools~/celestial_sky_tab
 
 ## 5. Runtime behaviour
 
-- `OutOfReach/Skybox/Celestial Panoramic` uses the same sampling, tint, [Gamma] exposure and HDR decode as `Skybox/Panoramic`, with a full quaternion in place of yaw only. It also adds seam-free mip selection at RA 12h. `NasaDeepSky_Celestial.mat` carries q(day 0) as a static fallback. Its texture, tint and 0.15 exposure are the same as `NasaDeepSky.mat`.
+- `OutOfReach/Skybox/Celestial Panoramic` uses the same sampling, tint, [Gamma] exposure and HDR decode as `Skybox/Panoramic`, with a full quaternion in place of yaw only. It also adds seam-free mip selection at RA 12h, the Sun disc, and the Earth point. The Earth point is one pixel in radius, with radiance = flux / solid angle, so its brightness relative to the stars holds at any resolution or field of view.
+- `NasaDeepSky_Celestial.mat` uses the 8K map at exposure **1.0**, which is linear 1.0: the NASA pixel values unscaled before the game's camera grade. It carries the day-0 rotation, Sun and Earth as static fallbacks. `NasaDeepSky.mat` and the 4K map are untouched.
 - `CelestialSkyPresenter` publishes the global `_OorCelestialSkyRotation`. It recomputes q whenever the Sun light rotates (for example, the Earth-orbit lighting change in `I06MarineBindings`) or the day changes. The day index is `floor(ElapsedSimulationSeconds / 86400)` from the read-only `ISimulationClock`, clamped to 0–31, using the last sample at or before that time. This assumes mission T0 is the first Horizons epoch, 2026-11-14 08:00 UTC, which is what `MissionDirector` uses because `AuroraMission` sets no other `MissionEpochAtStartUtc`. This is the same rule as the communications dataset; there is no interpolation, so the step is about 0.46° per day. If no clock is bound, it uses day 0. The presenter writes no state.
 - In the Earth-orbit departure scene the observer should strictly be Earth. The presenter still matches the Sun to the light there, but keeps the Mars-proxy star field. The departure epoch is unspecified, so treat this as a disclosed cinematic simplification.
 
 ## 6. Milky Way visibility (estimate, not a render)
 
-The project is in linear colour space, so the [Gamma] exposure value 0.15 becomes a linear multiplier of 0.0196. Tint × `unity_ColorSpaceDouble` = 0.984 and CinematicGrade adds +0.45 EV (×1.366). ACES is approximated with the Hill RRT+ODT fit; the 2 % contrast, −5 saturation and vignette are ignored. Source luminance is area-weighted from the EXR.
+The project is in linear colour space, so a [Gamma] exposure value e becomes the linear multiplier ((e + 0.055)/1.055)^2.4. That is 0.0196 at the old 0.15 and exactly 1.0 at 1.0. Tint × `unity_ColorSpaceDouble` = 0.984, and CinematicGrade adds +0.45 EV (×1.366). ACES is approximated with the Hill RRT+ODT fit; the 2 % contrast, −5 saturation and vignette are ignored. Source luminance is area-weighted from the EXRs.
 
-| Exposure slider | Linear | MW band (\|b\| < 5°) median | MW band p90 | Dark sky (\|b\| > 40°) | Saturated star |
-|---|---|---|---|---|---|
-| 0.15 (current) | 0.020 | 0 | 0 | 0 | 16 |
-| 0.45 (DeepView) | 0.171 | 3 | 13 | 0 | 108 |
-| **0.60 (proposed)** | 0.319 | 8 | 27 | 0 | 153 |
-| 0.70 | 0.448 | 13 | 37 | 0 | 177 |
+The 8K map stores the diffuse Milky Way at about 1/3.9 of the 4K per-texel value: band median 0.00957 against 0.0374. So it needs more exposure than the 4K map did.
 
-(8-bit sRGB display values.)
+| Map, exposure | Linear | MW band (\|b\| < 5°) median | MW band p90 | Dark sky (\|b\| > 40°) | Saturated star | Star HDR |
+|---|---|---|---|---|---|---|
+| 4K, 0.15 (old) | 0.020 | 0 | 0 | 0 | 16 | 0.03 |
+| 8K, 0.60 | 0.319 | 0 | 4 | 0 | 153 | 0.43 |
+| **8K, 1.00 (committed)** | 1.000 | 5 | 22 | 0 | 219 | 1.34 |
+| 8K, 1.20 | 1.517 | 10 | 34 | 0 | 232 | 2.04 |
 
-**At the current exposure the Milky Way is not visible, and even the brightest stars reach only about 16/255.** This fits the "space has no stars" report in #11. The proposed setting is the menu item *Celestial sky → Apply proposed Milky Way exposure (0.60)*. It changes only the new material. The dark sky stays black, and the brightest stars stay below the 1.25 bloom threshold in HDR (≈ 0.43). Nothing animates, flickers or adapts, so reduced effects need no special case.
+(8-bit sRGB display values. Star HDR is compared against the bloom threshold of 1.25.)
 
-If 0.60 is adopted, the credit text must say the image is **exposure-adjusted**. "Unmodified" may then describe only the source file. These are estimates: confirm with a native Unity 6000.3.28f1 screenshot before stating visibility as fact.
+**At 1.0 the Milky Way is a faint visible band.** The dark sky stays black. Stars are crisp points: one 8K texel is 0.044°, against about 0.063° per pixel at 1080p with the 68° field of view. Only the cores of the brightest stars just cross the bloom threshold. Nothing animates, flickers or adapts, so reduced effects need no special case.
+
+This is a dark-adapted view, not what an eye sees next to a sunlit hull, where the Milky Way would wash out. The credit should say: "source pixels unmodified, shown at native values, oriented to the NASA/JPL Horizons Sun; Sun disc and Earth point computed from NASA data". Confirm all of this with a native Unity 6000.3.28f1 screenshot before stating visibility as fact.

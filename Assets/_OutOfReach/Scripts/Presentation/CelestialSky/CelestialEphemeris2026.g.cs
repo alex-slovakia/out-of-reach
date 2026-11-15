@@ -86,5 +86,113 @@ namespace OutOfReach.Presentation.CelestialSky
             new Vector3(0.912009676f, -0.205224503f, -0.355135544f), // day 30
             new Vector3(0.913936705f, -0.203963837f, -0.350882392f), // day 31
         };
+        /// <summary>Sun angular radius, radians: asin(695700 km / Sun-observer distance).</summary>
+        public static readonly float[] SunAngularRadius =
+        {
+            2.891784802e-03f, // day 0: 0.3314 deg across
+            2.890006995e-03f, // day 1: 0.3312 deg across
+            2.888243942e-03f, // day 2: 0.3310 deg across
+            2.886495695e-03f, // day 3: 0.3308 deg across
+            2.884762303e-03f, // day 4: 0.3306 deg across
+            2.883043817e-03f, // day 5: 0.3304 deg across
+            2.881340285e-03f, // day 6: 0.3302 deg across
+            2.879651752e-03f, // day 7: 0.3300 deg across
+            2.877978267e-03f, // day 8: 0.3298 deg across
+            2.876319872e-03f, // day 9: 0.3296 deg across
+            2.874676613e-03f, // day 10: 0.3294 deg across
+            2.873048533e-03f, // day 11: 0.3292 deg across
+            2.871435673e-03f, // day 12: 0.3290 deg across
+            2.869838075e-03f, // day 13: 0.3289 deg across
+            2.868255778e-03f, // day 14: 0.3287 deg across
+            2.866688823e-03f, // day 15: 0.3285 deg across
+            2.865137248e-03f, // day 16: 0.3283 deg across
+            2.863601090e-03f, // day 17: 0.3281 deg across
+            2.862080385e-03f, // day 18: 0.3280 deg across
+            2.860575170e-03f, // day 19: 0.3278 deg across
+            2.859085480e-03f, // day 20: 0.3276 deg across
+            2.857611348e-03f, // day 21: 0.3275 deg across
+            2.856152809e-03f, // day 22: 0.3273 deg across
+            2.854709894e-03f, // day 23: 0.3271 deg across
+            2.853282636e-03f, // day 24: 0.3270 deg across
+            2.851871065e-03f, // day 25: 0.3268 deg across
+            2.850475212e-03f, // day 26: 0.3266 deg across
+            2.849095106e-03f, // day 27: 0.3265 deg across
+            2.847730777e-03f, // day 28: 0.3263 deg across
+            2.846382252e-03f, // day 29: 0.3262 deg across
+            2.845049559e-03f, // day 30: 0.3260 deg across
+            2.843732724e-03f, // day 31: 0.3259 deg across
+        };
+        /// <summary>Earth V magnitude: NASA V(1,0) -3.99, Horizons distances, Lambert phase law.</summary>
+        public static readonly float[] EarthMagnitudeV =
+        {
+            -2.2534f, // day 0
+            -2.2521f, // day 1
+            -2.2507f, // day 2
+            -2.2491f, // day 3
+            -2.2474f, // day 4
+            -2.2455f, // day 5
+            -2.2433f, // day 6
+            -2.2410f, // day 7
+            -2.2385f, // day 8
+            -2.2358f, // day 9
+            -2.2328f, // day 10
+            -2.2296f, // day 11
+            -2.2262f, // day 12
+            -2.2225f, // day 13
+            -2.2185f, // day 14
+            -2.2142f, // day 15
+            -2.2097f, // day 16
+            -2.2048f, // day 17
+            -2.1997f, // day 18
+            -2.1941f, // day 19
+            -2.1883f, // day 20
+            -2.1821f, // day 21
+            -2.1754f, // day 22
+            -2.1684f, // day 23
+            -2.1610f, // day 24
+            -2.1531f, // day 25
+            -2.1448f, // day 26
+            -2.1360f, // day 27
+            -2.1266f, // day 28
+            -2.1168f, // day 29
+            -2.1064f, // day 30
+            -2.0954f, // day 31
+        };
+        /// <summary>Earth flux in starmap_2020_8k texture units x steradian (Sirius-calibrated).</summary>
+        public static readonly float[] EarthMapFlux =
+        {
+            4.830392043e-05f, // day 0
+            4.824815918e-05f, // day 1
+            4.818547795e-05f, // day 2
+            4.811557460e-05f, // day 3
+            4.803813906e-05f, // day 4
+            4.795285342e-05f, // day 5
+            4.785939206e-05f, // day 6
+            4.775742184e-05f, // day 7
+            4.764660247e-05f, // day 8
+            4.752658680e-05f, // day 9
+            4.739702114e-05f, // day 10
+            4.725754529e-05f, // day 11
+            4.710779220e-05f, // day 12
+            4.694738731e-05f, // day 13
+            4.677594756e-05f, // day 14
+            4.659308048e-05f, // day 15
+            4.639838360e-05f, // day 16
+            4.619144427e-05f, // day 17
+            4.597183996e-05f, // day 18
+            4.573913900e-05f, // day 19
+            4.549290158e-05f, // day 20
+            4.523268097e-05f, // day 21
+            4.495802496e-05f, // day 22
+            4.466847739e-05f, // day 23
+            4.436357979e-05f, // day 24
+            4.404287323e-05f, // day 25
+            4.370590014e-05f, // day 26
+            4.335220631e-05f, // day 27
+            4.298134302e-05f, // day 28
+            4.259286924e-05f, // day 29
+            4.218635399e-05f, // day 30
+            4.176137884e-05f, // day 31
+        };
     }
 }

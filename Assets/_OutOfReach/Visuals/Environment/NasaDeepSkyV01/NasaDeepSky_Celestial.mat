@@ -24,14 +24,18 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 31bb417e371146a18467849c140e4996, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1135da5dc8fa4e988cc13cde073e60ef, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Exposure: 0.15
+    - _Exposure: 1
+    - _SunRadiance: 60
     m_Colors:
+    - _EarthSkyDirection: {r: 0.815142115, g: -0.260348247, b: -0.517457364, a: 0.00004830392043}
+    - _EarthTint: {r: 0.9, g: 1, b: 1.22, a: 0}
     - _SkyRotation: {r: -0.425012484, g: 0.269377633, b: -0.238544697, a: 0.830600088}
+    - _SunSkyDirection: {r: 0.287602568, g: -0.405695695, b: -0.867580409, a: 0.002891784802}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

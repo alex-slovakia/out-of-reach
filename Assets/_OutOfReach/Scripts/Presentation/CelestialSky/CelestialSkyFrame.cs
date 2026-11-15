@@ -69,6 +69,22 @@ namespace OutOfReach.Presentation.CelestialSky
             return new Vector4(q.x, q.y, q.z, q.w);
         }
 
+        /// <summary>Sun for the shader: sky-frame direction (xyz) and true angular radius in radians (w).</summary>
+        public static Vector4 SunShaderVector(int day)
+        {
+            day = Mathf.Clamp(day, 0, SampleCount - 1);
+            Vector3 s = CelestialEphemeris2026.SunFromObserver[day];
+            return new Vector4(s.x, s.y, s.z, CelestialEphemeris2026.SunAngularRadius[day]);
+        }
+
+        /// <summary>Earth for the shader: sky-frame direction (xyz) and flux in 8K-map units x steradian (w).</summary>
+        public static Vector4 EarthShaderVector(int day)
+        {
+            day = Mathf.Clamp(day, 0, SampleCount - 1);
+            Vector3 e = CelestialEphemeris2026.EarthFromObserver[day];
+            return new Vector4(e.x, e.y, e.z, CelestialEphemeris2026.EarthMapFlux[day]);
+        }
+
         private static Quaternion Normalised(Quaternion q)
         {
             float n = Mathf.Sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);

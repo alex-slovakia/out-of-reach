@@ -16,6 +16,8 @@ namespace OutOfReach.Presentation.CelestialSky
     {
         public const string GlobalRotationProperty = "_OorCelestialSkyRotation";
         private static readonly int GlobalRotation = Shader.PropertyToID(GlobalRotationProperty);
+        private static readonly int GlobalSun = Shader.PropertyToID("_OorCelestialSun");
+        private static readonly int GlobalEarth = Shader.PropertyToID("_OorCelestialEarth");
 
         [Tooltip("Directional light acting as the Sun. Empty uses RenderSettings.sun.")]
         [SerializeField] private Light sun;
@@ -63,7 +65,10 @@ namespace OutOfReach.Presentation.CelestialSky
 
         private void OnDisable()
         {
-            Shader.SetGlobalVector(GlobalRotation, Vector4.zero); // Shader falls back to the material's static value.
+            // Shader falls back to the material's static day-0 values.
+            Shader.SetGlobalVector(GlobalRotation, Vector4.zero);
+            Shader.SetGlobalVector(GlobalSun, Vector4.zero);
+            Shader.SetGlobalVector(GlobalEarth, Vector4.zero);
             lastDay = -1;
         }
 
@@ -83,6 +88,8 @@ namespace OutOfReach.Presentation.CelestialSky
             DayIndex = day;
             SkyFromWorld = CelestialSkyFrame.ForDay(day, lightRotation * Vector3.forward);
             Shader.SetGlobalVector(GlobalRotation, CelestialSkyFrame.ToShaderVector(SkyFromWorld));
+            Shader.SetGlobalVector(GlobalSun, CelestialSkyFrame.SunShaderVector(day));
+            Shader.SetGlobalVector(GlobalEarth, CelestialSkyFrame.EarthShaderVector(day));
         }
     }
 }

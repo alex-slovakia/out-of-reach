@@ -1,11 +1,12 @@
 """End-to-end check of the celestial sky chain on the committed NASA SVS EXR, run inside Blender (bundled numpy).
 
-    blender -b --factory-startup --python Assets/_OutOfReach/Scripts/Presentation/CelestialSky/Tools~/verify_sky_chain_blender.py -- <path to starmap_2020_4k.exr>
+    blender -b --factory-startup --python Assets/_OutOfReach/Scripts/Presentation/CelestialSky/Tools~/verify_sky_chain_blender.py -- <path to starmap_2020_8k.exr>
 
 For each reference star it takes the world direction the presenter assigns (inverse material rotation of the
 catalogue RA/Dec), runs it through the exact CelestialPanoramic.shader lookup (quaternion rotate, atan2/acos,
 Unity v = 1 at the image top) and requires a saturated star pixel there. The old unrotated material is the
-negative control. It also checks that the default sunlight direction samples the Horizons Sun position.
+negative control. It also checks that the default sunlight direction samples the Horizons Sun position and
+re-measures Sirius' integrated map flux, the calibration constant behind Earth's brightness.
 Read-only: nothing is written.
 """
 import math
@@ -17,6 +18,7 @@ import numpy as np
 Q = np.array([-0.425012484, 0.269377633, -0.238544697, 0.830600088])  # NasaDeepSky_Celestial.mat _SkyRotation
 SUN_WORLD = np.array([0.679108, 0.559193, -0.475516])                   # -forward of Euler(34, -55, 0)
 SUN_RADEC = (288.340, -23.935)                                          # Horizons, Sun from Mars, day 0
+SIRIUS_MAP_FLUX_8K = 2.326103e-05                                       # celestial_sky_table.py constant
 STARS = {"Sirius": (101.2872, -16.7161), "Canopus": (95.9880, -52.6957), "Arcturus": (213.9153, 19.1824),
          "Vega": (279.2347, 38.7837), "Rigel": (78.6345, -8.2016), "Betelgeuse": (88.7929, 7.4071),
          "Polaris": (37.9529, 89.2641), "Capella": (79.172, 45.998), "Procyon": (114.825, 5.225)}
@@ -66,6 +68,16 @@ sun_ra, sun_dec = ((0.5 - (x + 0.5) / W) * 360) % 360, 90 - (y + 0.5) / H * 180
 sun_error = math.degrees(math.acos(min(1.0, float(sky(sun_ra, sun_dec) @ sky(*SUN_RADEC)))))
 print(f"stars recovered {hits}/{len(STARS)}; unrotated control missed {misses}/{len(STARS)}; "
       f"sunlight samples RA {sun_ra:.2f} Dec {sun_dec:.2f}, {sun_error:.3f} deg from Horizons", flush=True)
+ra, dec = STARS["Sirius"]
+X, Y = int(((0.5 - ra / 360.0) % 1.0) * W), int((90 - dec) / 180 * H)
+R = round(16 * W / 8192)
+yy, xx = np.mgrid[-R - 8:R + 9, -R - 8:R + 9]
+rr = np.hypot(xx, yy)
+cut = lum[Y - R - 8:Y + R + 9, X - R - 8:X + R + 9]
+background = float(np.median(cut[(rr > R + 2) & (rr <= R + 8)]))
+flux = float(((cut - background)[rr <= R]).sum() * (2 * math.pi / W) * (math.pi / H) * math.cos(math.radians(dec)))
+print(f"{W}x{H}; Sirius map flux {flux:.4e} sr (table constant {SIRIUS_MAP_FLUX_8K:.4e})", flush=True)
 ok = hits == len(STARS) and misses == len(STARS) and sun_error < 0.1
+ok = ok and W == 8192 and abs(flux / SIRIUS_MAP_FLUX_8K - 1) < 0.02
 print("CELESTIAL_SKY_CHAIN_PASS" if ok else "CELESTIAL_SKY_CHAIN_FAIL", flush=True)
 sys.exit(0 if ok else 1)

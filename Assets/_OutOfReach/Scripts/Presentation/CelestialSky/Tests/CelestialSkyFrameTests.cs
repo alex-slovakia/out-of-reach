@@ -79,6 +79,27 @@ namespace OutOfReach.Tests.CelestialSky
         }
 
         [Test]
+        public void SunDiscHasItsTrueAngularSizeFromMars()
+        {
+            // 695700 km at 1.61-1.63 AU: 0.326-0.332 deg across (0.533 deg from Earth).
+            foreach (float r in CelestialEphemeris2026.SunAngularRadius)
+                Assert.That(2f * r * Mathf.Rad2Deg, Is.InRange(0.325f, 0.332f));
+            Assert.That(CelestialSkyFrame.SunShaderVector(0).w, Is.EqualTo(CelestialEphemeris2026.SunAngularRadius[0]));
+        }
+
+        [Test]
+        public void EarthIsAnUnresolvedPointBrighterThanSirius()
+        {
+            for (int day = 0; day < CelestialSkyFrame.SampleCount; day++)
+            {
+                Assert.That(CelestialEphemeris2026.EarthMagnitudeV[day], Is.InRange(-2.4f, -1.9f));
+                Assert.That(CelestialEphemeris2026.EarthMapFlux[day], Is.GreaterThan(2.326103e-05f)); // Sirius in the 8K map
+            }
+            Vector4 earth = CelestialSkyFrame.EarthShaderVector(0);
+            AssertClose(CelestialEphemeris2026.EarthFromObserver[0], new Vector3(earth.x, earth.y, earth.z), 1e-6f);
+        }
+
+        [Test]
         public void DayIndexUsesLastSampleAtOrBeforeAndClamps()
         {
             Assert.That(CelestialSkyFrame.DayIndex(double.NaN), Is.EqualTo(0));

@@ -1,6 +1,7 @@
 // Latitude-longitude HDR sky oriented by a full 3D rotation (Unity's built-in Skybox/Panoramic only yaws).
-// Sampling, tint, exposure and HDR decode match Skybox/Panoramic, so with _SkyRotation = identity the image
-// is identical to the built-in material at _Rotation = 0. Lookup frame: +X = RA 0h, +Y = north, +Z = RA 6h.
+// Sampling, tint, exposure and HDR decode match Skybox/Panoramic, so with _SkyRotation = identity and no Sun or
+// Earth the image is identical to the built-in material at _Rotation = 0. Lookup frame: +X = RA 0h, +Y = north,
+// +Z = RA 6h. Adds the Sun at its true angular size and Earth as a flux-conserving point (13-17 arcsec, unresolved).
 Shader "OutOfReach/Skybox/Celestial Panoramic"
 {
     Properties
@@ -9,6 +10,10 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
         [Gamma] _Exposure ("Exposure", Range(0, 8)) = 1.0
         _SkyRotation ("Static sky-from-world quaternion (x, y, z, w)", Vector) = (0, 0, 0, 1)
         [NoScaleOffset] _MainTex ("Spherical (HDR)", 2D) = "grey" {}
+        _SunSkyDirection ("Static Sun: sky-frame direction (xyz), angular radius rad (w; 0 = none)", Vector) = (0, 0, 0, 0)
+        _SunRadiance ("Sun disc HDR radiance (not scaled by Exposure)", Float) = 60
+        _EarthSkyDirection ("Static Earth: sky-frame direction (xyz), map flux in texture units x sr (w; 0 = none)", Vector) = (0, 0, 0, 0)
+        _EarthTint ("Earth colour, linear, luminance 1", Vector) = (0.90, 1.0, 1.22, 0)
     }
 
     SubShader
@@ -30,8 +35,14 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
             half4 _Tint;
             half _Exposure;
             float4 _SkyRotation;
-            // Global from CelestialSkyPresenter; all zeros (never set / presenter disabled) selects _SkyRotation.
+            float4 _SunSkyDirection;
+            float _SunRadiance;
+            float4 _EarthSkyDirection;
+            float4 _EarthTint;
+            // Globals from CelestialSkyPresenter; all zeros (never set / presenter disabled) select the static values.
             float4 _OorCelestialSkyRotation;
+            float4 _OorCelestialSun;
+            float4 _OorCelestialEarth;
 
             struct appdata_t
             {
@@ -50,6 +61,12 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
             {
                 float3 t = 2.0 * cross(q.xyz, v);
                 return v + q.w * t + cross(q.xyz, t);
+            }
+
+            // Angle between unit vectors, accurate for tiny angles (asin of the cross product, not acos of the dot).
+            float AngleBetween(float3 a, float3 b)
+            {
+                return dot(a, b) > 0.0 ? asin(min(length(cross(a, b)), 1.0)) : UNITY_PI * 0.5 + asin(min(-dot(a, b), 1.0));
             }
 
             v2f vert (appdata_t v)
@@ -79,9 +96,32 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
                 if (abs(dxAlt) < abs(dx.x)) dx.x = dxAlt;
                 if (abs(dyAlt) < abs(dy.x)) dy.x = dyAlt;
                 half4 tex = tex2Dgrad(_MainTex, uv, dx, dy);
-                half3 c = DecodeHDR(tex, _MainTex_HDR);
-                c = c * _Tint.rgb * unity_ColorSpaceDouble.rgb;
-                c *= _Exposure;
+                float3 scale = _Tint.rgb * unity_ColorSpaceDouble.rgb * _Exposure;
+                float3 c = DecodeHDR(tex, _MainTex_HDR) * scale;
+
+                // Angular size of this pixel (radians); unit-vector derivatives approximate angle per pixel.
+                float pixelAngle = max(max(length(ddx(d)), length(ddy(d))), 1e-6);
+
+                // Earth: unresolved point, drawn one pixel in radius with radiance = flux / solid angle, so its
+                // brightness relative to the catalogue stars is preserved at any resolution or field of view.
+                float4 earth = _OorCelestialEarth.w > 0.0 ? _OorCelestialEarth : _EarthSkyDirection;
+                if (earth.w > 0.0)
+                {
+                    float rho = pixelAngle;
+                    float cover = saturate((rho - AngleBetween(d, normalize(earth.xyz))) / pixelAngle + 0.5);
+                    c += _EarthTint.rgb * (earth.w / (UNITY_PI * rho * rho)) * cover * scale;
+                }
+
+                // Sun: true angular size (0.33 deg from Mars), linear limb darkening u = 0.6, occludes the stars.
+                float4 sun = _OorCelestialSun.w > 0.0 ? _OorCelestialSun : _SunSkyDirection;
+                if (sun.w > 0.0)
+                {
+                    float theta = AngleBetween(d, normalize(sun.xyz));
+                    float cover = saturate((sun.w - theta) / pixelAngle + 0.5);
+                    float r = saturate(theta / sun.w);
+                    float limb = 1.0 - 0.6 * (1.0 - sqrt(1.0 - r * r));
+                    c = lerp(c, _SunRadiance * limb, cover);
+                }
                 return half4(c, 1);
             }
             ENDCG

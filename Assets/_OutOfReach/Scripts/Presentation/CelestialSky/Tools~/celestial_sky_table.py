@@ -32,6 +32,17 @@ A_G = ((-0.0548755604162154, -0.8734370902348850, -0.4838350155487132),
        (+0.4941094278755837, -0.4448296299600112, +0.7469822444972189),
        (-0.8676661490190047, -0.1980763734312015, +0.4559837761750669))
 DEFAULT_LIGHT_EULER = (34.0, -55.0, 0.0)       # Bootstrap.unity "Sunlight - authored direction"
+AU_KM = 149597870.7                            # IAU 2012 astronomical unit
+EARTH_H = -3.99                                # NASA Earth fact sheet, V-band magnitude V(1,0)
+SIRIUS_V = -1.46                               # Sirius Johnson V (Hipparcos-era catalogues)
+# Sirius in starmap_2020_8k.exr: background-subtracted luminance summed within 16 texels, times texel solid
+# angle (texture value x sr). Measured by Tools~/verify_sky_chain_blender.py, which re-checks it within 2 %.
+SIRIUS_MAP_FLUX_8K = 2.326103e-05
+
+
+def lambert_phase(alpha):
+    """Lambert-sphere phase integral; Earth's real phase curve differs by a few tenths of a magnitude."""
+    return (math.sin(alpha) + (math.pi - alpha) * math.cos(alpha)) / math.pi
 
 
 def sha(p):
@@ -151,7 +162,9 @@ def main(write):
     assert len(rows) == SAMPLES and rows[0]["epoch_utc"] == "2026-11-14T08:00:00Z"
     assert rows[-1]["epoch_utc"] == "2026-12-15T08:00:00Z"
 
+    radius = {b["name"]: b["radiusKm"] for b in orbits["bodies"]}
     sun_dir, earth_dir, worst = [], [], 0.0
+    sun_radius, earth_radius, earth_v, earth_flux = [], [], [], []
     for i in range(SAMPLES):
         e = tuple(body["Earth"][i][k] for k in "xyz")
         m = tuple(body["Mars"][i][k] for k in "xyz")
@@ -159,6 +172,13 @@ def main(write):
         worst = max(worst, math.dist(ecl_to_eq(sub(m, e)), csv_vec))       # frame + obliquity cross-check
         sun_dir.append(eq_to_sky(norm(ecl_to_eq(tuple(-c for c in m)))))   # observer = Mars-centre proxy
         earth_dir.append(eq_to_sky(norm(ecl_to_eq(sub(e, m)))))
+        r_mars, r_earth, delta = math.dist(m, (0, 0, 0)), math.dist(e, (0, 0, 0)), math.dist(e, m)
+        sun_radius.append(math.asin(radius["Sun"] / r_mars))               # angular radius, rad
+        earth_radius.append(math.asin(radius["Earth"] / delta))
+        alpha = math.acos((r_earth ** 2 + delta ** 2 - r_mars ** 2) / (2 * r_earth * delta))  # Sun-Earth-observer
+        v = EARTH_H + 5 * math.log10(r_earth / AU_KM * delta / AU_KM) - 2.5 * math.log10(lambert_phase(alpha))
+        earth_v.append(v)
+        earth_flux.append(SIRIUS_MAP_FLUX_8K * 10 ** (-0.4 * (v - SIRIUS_V)))
     if worst > 0.05:
         sys.exit(f"Ecliptic->ICRF cross-check failed: {worst:.6f} km")
     ecl_north = eq_to_sky(ecl_to_eq((0.0, 0.0, 1.0)))
@@ -175,6 +195,10 @@ def main(write):
               f"Dec {ed:+7.3f} | Sun-Earth elongation {elong:6.2f} deg")
     total = math.degrees(math.acos(dot(sun_dir[0], sun_dir[-1])))
     print(f"Sun drift against the stars, day 0 -> day 31: {total:.3f} deg")
+    for i in (0, 30):
+        print(f"day {i:2d}: Sun disc diameter {2 * math.degrees(sun_radius[i]):.4f} deg | Earth disc "
+              f"{2 * math.degrees(earth_radius[i]) * 3600:.1f} arcsec | Earth V {earth_v[i]:+.2f} "
+              f"({10 ** (-0.4 * (earth_v[i] - SIRIUS_V)):.2f} x Sirius) | map flux {earth_flux[i]:.4e} sr")
 
     light = euler(*DEFAULT_LIGHT_EULER)
     sun_world = tuple(-c for c in quat_rot(light, (0, 0, 1)))
@@ -235,6 +259,18 @@ def main(write):
     lines += [f"            {vec(v)}, // day {i}" for i, v in enumerate(sun_dir)]
     lines += ["        };", "        public static readonly Vector3[] EarthFromObserver =", "        {"]
     lines += [f"            {vec(v)}, // day {i}" for i, v in enumerate(earth_dir)]
+    lines += ["        };",
+              "        /// <summary>Sun angular radius, radians: asin(695700 km / Sun-observer distance).</summary>",
+              "        public static readonly float[] SunAngularRadius =", "        {"]
+    lines += [f"            {r:.9e}f, // day {i}: {2 * math.degrees(r):.4f} deg across" for i, r in enumerate(sun_radius)]
+    lines += ["        };",
+              "        /// <summary>Earth V magnitude: NASA V(1,0) -3.99, Horizons distances, Lambert phase law.</summary>",
+              "        public static readonly float[] EarthMagnitudeV =", "        {"]
+    lines += [f"            {v:.4f}f, // day {i}" for i, v in enumerate(earth_v)]
+    lines += ["        };",
+              "        /// <summary>Earth flux in starmap_2020_8k texture units x steradian (Sirius-calibrated).</summary>",
+              "        public static readonly float[] EarthMapFlux =", "        {"]
+    lines += [f"            {f:.9e}f, // day {i}" for i, f in enumerate(earth_flux)]
     lines += ["        };", "    }", "}", ""]
     text = "\n".join(lines)
     if write:
