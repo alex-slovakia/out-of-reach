@@ -93,6 +93,8 @@ namespace OutOfReach.Tests.PlayMode
             }
             TetheredRoute route = root.AddComponent<TetheredRoute>();
             route.Configure(points, 0.25f, 1f);
+            // EVA-TETHER-01: no pull surge and the shortest grip ramp, so these tests read the stamina speed floor exactly.
+            route.ConfigureHandOverHand(0.5f, 0.14f, 0f, 0.05f, 0.05f);
             return route;
         }
 
@@ -248,6 +250,14 @@ namespace OutOfReach.Tests.PlayMode
             float remaining = player.ExertionRemaining01;
             Assert.That(remaining, Is.LessThan(1f));
             input.Move = Vector2.zero;
+            // EVA-TETHER-01: the holding glove first brakes the body to rest; look-only frames start from rest.
+            for (int i = 0; i < 20 && player.RouteMotionSense != 0; i++)
+            {
+                yield return null;
+            }
+
+            Assert.That(player.RouteMotionSense, Is.EqualTo(0), "the glove brakes the body to rest");
+            remaining = player.ExertionRemaining01;
             input.LookDegrees = new Vector2(50f, 80f);
             Vector3 stopped = player.transform.position;
             yield return Frames(10);

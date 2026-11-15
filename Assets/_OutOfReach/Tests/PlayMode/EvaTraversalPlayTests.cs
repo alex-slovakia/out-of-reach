@@ -14,6 +14,8 @@ namespace OutOfReach.Tests.PlayMode
     /// looking never moves the player, W and S follow the line towards the end the player roughly faces, nothing
     /// jumps at corners or on vertical stretches, and both ends stop the player cleanly. Unlike the full-EVA test,
     /// the view is deliberately NOT aimed along the waypoints.
+    /// EVA-TETHER-01: travel is hand over hand, so each held stretch below starts from rest (grip ramp), surges
+    /// through the pulls and ends with the holding glove braking the body; distances are compared with that model.
     /// </summary>
     public sealed class EvaTraversalPlayTests
     {
@@ -106,14 +108,29 @@ namespace OutOfReach.Tests.PlayMode
             return Vector3.Distance(onLine, harness.Player.transform.position);
         }
 
-        /// <summary>Holds a move input; every frame the feet must be on the line and move at most one frame's route speed.</summary>
+        /// <summary>
+        /// Holds a move input, then releases it and lets the holding glove brake the body to rest. Every frame the
+        /// feet must be on the line and move at most one frame at the peak pull speed (EVA-TETHER-01 surge).
+        /// </summary>
         private IEnumerator Hold(Vector2 move, int frames, Vector3[] points)
         {
-            float maxStep = (harness.Player.ActiveRoute.SpeedMetresPerSecond * FrameSeconds) + OnLineTolerance;
+            TetheredRoute route = harness.Player.ActiveRoute;
+            float maxStep = (route.SpeedMetresPerSecond * RouteMath.PullSpeedFactor(0.5f, route.PullSurge) * FrameSeconds)
+                + OnLineTolerance;
             Vector3 previous = harness.Player.transform.position;
             harness.Input.Move = move;
-            for (int i = 0; i < frames; i++)
+            for (int i = 0; i < frames + 40; i++)
             {
+                if (i == frames)
+                {
+                    harness.Input.Move = Vector2.zero;
+                }
+
+                if (i > frames && harness.Player.RouteMotionSense == 0)
+                {
+                    break;
+                }
+
                 yield return null;
                 Vector3 now = harness.Player.transform.position;
                 Assert.That(Vector3.Distance(now, previous), Is.LessThanOrEqualTo(maxStep), "no jump in frame " + i);
@@ -122,7 +139,20 @@ namespace OutOfReach.Tests.PlayMode
             }
 
             harness.Input.Move = Vector2.zero;
+            Assert.That(harness.Player.RouteMotionSense, Is.EqualTo(0), "the holding glove brakes the body to rest");
         }
+
+        /// <summary>
+        /// Expected travel of one held stretch from rest: the hold time less half the grip ramp, plus half the brake,
+        /// at the route speed (EVA-TETHER-01). The pull surge adds a few centimetres either way.
+        /// </summary>
+        private float Stretch(int frames)
+        {
+            TetheredRoute route = harness.Player.ActiveRoute;
+            return route.SpeedMetresPerSecond * ((frames * FrameSeconds) - (route.GripRampSeconds * 0.5f) + (route.BrakeSeconds * 0.5f));
+        }
+
+        private const float StretchTolerance = 0.1f;
 
         private void Face(Vector3 direction)
         {
@@ -164,8 +194,9 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(harness.Player.PitchDegrees, Is.EqualTo(-harness.Player.MaxPitchDegrees), "looking straight down");
 
             yield return Hold(Forward, 100, points);
+            float first = Stretch(100);
 
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(2f).Within(0.03f), "1 m/s for 2 s");
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(first).Within(StretchTolerance), "about 1 m/s for 2 s, hand over hand");
             Assert.That(harness.Player.transform.position.y, Is.EqualTo(level).Within(1e-4f), "no up or down travel from the view");
 
             harness.Input.QueueLook(0f, 400f);
@@ -173,7 +204,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(harness.Player.PitchDegrees, Is.EqualTo(harness.Player.MaxPitchDegrees), "looking straight up");
             yield return Hold(Forward, 100, points);
 
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(4f).Within(0.05f), "round the corner at 3 m without turning the view");
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(2f * first).Within(2f * StretchTolerance), "round the corner at 3 m without turning the view");
             Assert.That(harness.Player.transform.position.y, Is.EqualTo(level).Within(1e-4f));
             Assert.That(harness.Player.RouteDirection, Is.EqualTo(1));
         }
@@ -185,20 +216,24 @@ namespace OutOfReach.Tests.PlayMode
             Vector3[] points = RepairLoopHarness.RouteWaypoints;
             Face(Vector3.right);
             yield return Hold(Forward, 100, points);
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(2f).Within(0.03f));
+            float expected = Stretch(100);
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(expected).Within(StretchTolerance));
 
             Face(Vector3.left);
             yield return Hold(Forward, 50, points);
+            expected -= Stretch(50);
             Assert.That(harness.Player.RouteDirection, Is.EqualTo(-1), "facing the hatch, W leads back");
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(1f).Within(0.03f));
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(expected).Within(StretchTolerance));
 
             Face(Vector3.forward);
             yield return Hold(Forward, 25, points);
+            expected -= Stretch(25);
             Assert.That(harness.Player.RouteDirection, Is.EqualTo(-1), "looking sideways does not flip the sense");
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(0.5f).Within(0.03f));
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(expected).Within(StretchTolerance));
 
             yield return Hold(Back, 25, points);
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(1f).Within(0.03f), "S moves the other way");
+            expected += Stretch(25);
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(expected).Within(StretchTolerance), "S moves the other way");
         }
 
         [UnityTest]
@@ -237,6 +272,7 @@ namespace OutOfReach.Tests.PlayMode
             Face(Vector3.right);
             yield return Hold(Forward, 25, points);
             float before = harness.Player.RouteDistanceMetres;
+            Assert.That(before, Is.GreaterThan(0.3f), "moved hand over hand before the pause");
 
             harness.Runtime.SetPaused(true);
             harness.Input.Move = Forward;
@@ -246,7 +282,7 @@ namespace OutOfReach.Tests.PlayMode
 
             harness.Runtime.SetPaused(false);
             yield return Hold(Forward, 25, points);
-            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(before + 0.5f).Within(0.03f));
+            Assert.That(harness.Player.RouteDistanceMetres, Is.EqualTo(before + Stretch(25)).Within(StretchTolerance));
         }
     }
 }
