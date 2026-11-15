@@ -4,8 +4,8 @@
  "suit": "WORK",
  "meshes": {
   "A7_SuitV03_WORK_Arm_L": {
-   "verts": 2150,
-   "tris": 4205,
+   "verts": 2152,
+   "tris": 4209,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
@@ -19,7 +19,7 @@
     "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 2150,
+    "verts": 2152,
     "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
@@ -27,19 +27,19 @@
    "bbox": [
     [
      0.107,
-     -0.325,
-     1.005
+     -0.327,
+     0.994
     ],
     [
-     0.525,
+     0.53,
      0.058,
      1.504
     ]
    ]
   },
   "A7_SuitV03_WORK_Arm_R": {
-   "verts": 2150,
-   "tris": 4205,
+   "verts": 2152,
+   "tris": 4209,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
@@ -53,16 +53,16 @@
     "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 2150,
+    "verts": 2152,
     "bad_weight_sum": 88,
     "max_influences": 4,
     "groups": 30
    },
    "bbox": [
     [
-     -0.525,
-     -0.325,
-     1.005
+     -0.53,
+     -0.327,
+     0.994
     ],
     [
      -0.107,
@@ -106,8 +106,8 @@
    ]
   },
   "A7_SuitV03_WORK_TorsoLegs": {
-   "verts": 4554,
-   "tris": 8790,
+   "verts": 4550,
+   "tris": 8782,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
@@ -121,19 +121,19 @@
     "MAT_V03_Skin"
    ],
    "weights": {
-    "verts": 4554,
+    "verts": 4550,
     "bad_weight_sum": 421,
     "max_influences": 4,
     "groups": 37
    },
    "bbox": [
     [
-     -0.323,
+     -0.31,
      -0.213,
      -0.011
     ],
     [
-     0.321,
+     0.309,
      0.111,
      1.52
     ]

@@ -63,7 +63,7 @@ G = np.where(jeans, np.clip(Gj, 0, 1), G)
 Image.fromarray((G * 255).astype(np.uint8)).save(os.path.join(OUT, "cs02_gray.png"))
 print("cs02: masked px", int(mask.sum()), "mean", round(float(G.mean()), 3))
 # EVA variant: bright (mean 0.95) and calmer (0.6 contrast), so a cream tint stays cream
-Ge = np.clip(0.95 + 0.6 * (G - G.mean()), 0, 1)
+Ge = np.clip(0.93 + 0.85 * (G - G.mean()), 0, 1)
 Image.fromarray((Ge * 255).astype(np.uint8)).save(os.path.join(OUT, "cs02_gray_eva.png"))
 
 for name in ("shoes06", "shoes03"):

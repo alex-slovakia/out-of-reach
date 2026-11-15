@@ -467,9 +467,11 @@ def male_tweak(co):
     cb = bump(z, 1.22, 1.32, 1.46, 1.54)
     if ax > 0.10:
         dx += s * 0.008 * cb * min(1.0, (ax - 0.10) / 0.08)
-    # belly flatter (front), strongest just above the belt
+    # belly flat (front), strongest just above the belt; chest slightly forward so it reads broader than the belly
     if y < -0.05:
-        dy += 0.018 * bump(z, 0.92, 1.00, 1.16, 1.27) * min(1.0, (-0.05 - y) / 0.05)
+        dy += 0.026 * bump(z, 0.90, 0.98, 1.18, 1.29) * min(1.0, (-0.05 - y) / 0.05)
+        if ax < 0.15:
+            dy -= 0.006 * bump(z, 1.27, 1.32, 1.40, 1.45) * min(1.0, (-0.05 - y) / 0.05)
     # crotch flatter (front centre)
     if ax < 0.08 and y < -0.04:
         dy += 0.012 * bump(z, 0.76, 0.82, 0.90, 0.95) * (1.0 - ax / 0.08) * min(1.0, (-0.04 - y) / 0.04)

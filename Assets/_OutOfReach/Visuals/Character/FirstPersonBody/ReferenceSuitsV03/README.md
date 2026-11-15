@@ -1,13 +1,13 @@
 # ReferenceSuitsV03 — CHAR-REF-01 (two male characters on the unchanged FitV02 rig)
 
-Branch `feature/reference-suits-v03`, new folder only; nothing existing was edited. **V03c** (after the user's "horrible,
+Branch `feature/reference-suits-v03`, new folder only; nothing existing was edited. **V03d** (= V03c + review fixes: flat belly, straight trousers, 8 % bigger hands, smaller/lower EVA chest panel, 10 % smaller helmet, bigger gloves, slimmer EVA lower legs with chunky boots, waist ring at the waist, stronger cloth relief). **V03c** (after the user's "horrible,
 do it properly" on V03b): the characters are assembled from the official **MakeHuman CC0 system assets** (the same project
 that FitV02's skeleton and body come from), so skin, hair, eyes and cloth are real textured assets instead of flat colours.
 
 | File | Content |
 |---|---|
 | `Meshes/A7_SuitV03_WORK.fbx` | WORK, 32.0 k tris: textured middle-aged male head (skin, eyes, brows, lashes, short dark hair), navy long-sleeve crew-neck tee and charcoal cargo trousers (MakeHuman `male_casualsuit02` retinted, logo and piping removed, side zip cargo pockets with flaps and knee panels added), dark trainers (`shoes06` retinted), bare hands. Renderers `_Head`, `_TorsoLegs`, `_Arm_L`, `_Arm_R`. |
-| `Meshes/A7_SuitV03_EVA.fbx` | EVA, 62.6 k tris: same head behind a bubble visor with gold shade and lamps; bulky cream suit (same cloth textures/normals, inflated) with waist/wrist rings, harness, layer seams, knee pads with bellows, red bands at the knees and on the upper arms, elbow bellows, front/side pockets, thick gloves with gauntlets, cream boots (`shoes03` retinted), two chest hoses; chest control panel with display, PLSS. Renderers `_Head`, `_TorsoLegs`, `_Arm_L`, `_Arm_R`, `_ChestPanel`, `_Plss`, `_Helmet`, `_Visor`. |
+| `Meshes/A7_SuitV03_EVA.fbx` | EVA, 62.4 k tris: same head behind a bubble visor with gold shade and lamps; bulky cream suit (same cloth textures/normals, inflated) with waist/wrist rings, harness, layer seams, knee pads with bellows, red bands at the knees and on the upper arms, elbow bellows, front/side pockets, thick gloves with gauntlets, cream boots (`shoes03` retinted), two chest hoses; chest control panel with display, PLSS. Renderers `_Head`, `_TorsoLegs`, `_Arm_L`, `_Arm_R`, `_ChestPanel`, `_Plss`, `_Helmet`, `_Visor`. |
 | `Materials/` | 26 URP Lit materials (cloth: grayscale texture x tint + normal map; hair/brows/lashes/eyes: alpha cutout; visor: transparent). |
 | `Textures/` | 11 textures (MakeHuman CC0 or derived from them; display texture original). |
 | `Source~/` | Blender 5.3 / Python pipeline: `build_mh.py` (assembly), `mhproxy.py` (MakeHuman .mhclo proxy fitting + default weights), `male_shape.py`, `assemble.py` (renderer split with identical seam normals), `prep_textures.py`, `package2.py`, Unity check `SuitV03Check.cs`, `.blend` sources (image paths blanked). |

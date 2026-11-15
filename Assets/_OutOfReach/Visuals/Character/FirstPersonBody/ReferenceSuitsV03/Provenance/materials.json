@@ -118,7 +118,7 @@
   "alpha_clip": false,
   "transparent": null,
   "emission": null,
-  "normal_strength": 1.3
+  "normal_strength": 1.8
  },
  "MAT_V03_EvaPanel": {
   "base": "#D6D0C3",

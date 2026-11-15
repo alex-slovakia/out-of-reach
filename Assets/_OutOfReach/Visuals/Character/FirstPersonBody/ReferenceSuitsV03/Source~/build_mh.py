@@ -120,7 +120,7 @@ if SUIT == "WORK":
     TRIM = smat("MAT_V03_Trim", "#1B1C1E", 0.6, metal=0.2)
     SHOE = smat("MAT_V03_Shoe", "#4A4E53", 0.85, diffuse=os.path.join(TEX, "shoes06_gray.png"))
 else:
-    CLOTH_A = CLOTH_B = smat("MAT_V03_EvaSuit", "#DCD5C7", 0.9, diffuse=os.path.join(TEX, "cs02_gray_eva.png"), normal=os.path.join(CS, "male_casualsuit02_normal.png"), normal_strength=1.3)
+    CLOTH_A = CLOTH_B = smat("MAT_V03_EvaSuit", "#DCD5C7", 0.9, diffuse=os.path.join(TEX, "cs02_gray_eva.png"), normal=os.path.join(CS, "male_casualsuit02_normal.png"), normal_strength=1.8)
     PANEL = smat("MAT_V03_EvaPanel", "#D6D0C3", 0.9, diffuse=os.path.join(TEX, "cs02_gray_eva.png"), normal=os.path.join(CS, "male_casualsuit02_normal.png"))
     SHOE = smat("MAT_V03_EvaBoot", "#F2EEE6", 0.85, diffuse=os.path.join(TEX, "shoes03_gray.png"))
     STRAP = smat("MAT_V03_EvaStrap", "#4A4D51", 0.88)
@@ -201,7 +201,7 @@ for v in bm.verts:
     isarm = vdom(v).startswith(ARMB)
     if SUIT == "WORK":
         if any(f.material_index == MB for f in v.link_faces) and z < 0.90:      # relaxed straight trouser legs
-            d = 0.004 if z > 0.86 else (0.012 if z > 0.60 else 0.016 + 0.010 * (0.60 - min(z, 0.60)) / 0.45)
+            d = 0.003 if z > 0.86 else (0.006 if z > 0.60 else 0.008 + 0.006 * (0.60 - min(z, 0.60)) / 0.45)
             inward = -sgn(v.co.x) * n.x
             if inward > 0:
                 d *= 1.0 - 0.8 * min(1.0, inward)
@@ -212,7 +212,7 @@ for v in bm.verts:
         elif z > 0.92:
             d = 0.030 if z < 1.44 else max(0.008, 0.030 - 0.022 * (z - 1.44) / 0.06)
         else:
-            d = 0.030 + 0.008 * min(1.0, max(0.0, (z - 0.2) / 0.6))
+            d = 0.022 + 0.012 * min(1.0, max(0.0, (z - 0.2) / 0.6))       # slimmer towards the boots: longer-looking legs
             inward = -sgn(v.co.x) * n.x
             if inward > 0:
                 d *= 1.0 - 0.8 * min(1.0, inward)
@@ -251,7 +251,7 @@ if SUIT == "WORK":
     raise_region(bm, region(0.40, 0.57, {TR}, yhi=-0.06), 0.006, PN)                                           # knee panels
 else:
     SU, PN, ST, ME, RD = 0, slot(suit, PANEL), slot(suit, STRAP), slot(suit, METAL), slot(suit, RED)
-    ZC = (1.512, 1.45, 1.40, 1.36, 1.33, 1.30, 1.18, 1.175, 1.10, 1.095, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72,
+    ZC = (1.512, 1.45, 1.40, 1.36, 1.33, 1.30, 1.18, 1.175, 1.10, 1.095, 1.085, 1.04, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72,
           0.64, 0.60, 0.585, 0.56, 0.55, 0.52, 0.495, 0.47, 0.445, 0.42, 0.365, 0.36, 0.30, 0.25, 0.245)
     for z in ZC:
         cutz(bm, z)
@@ -261,7 +261,7 @@ else:
         cutx(bm, x)
     bm.normal_update()
     S_ = {SU}
-    raise_region(bm, region(0.985, 1.03, S_), 0.008, ME)                                                       # waist ring
+    raise_region(bm, region(1.04, 1.085, S_), 0.008, ME)                                                       # waist ring at the waist
     raise_region(bm, region(1.30, 1.512, S_, xlo=0.06, xhi=0.095, absx=True), 0.007, ST)                      # harness straps
     raise_region(bm, region(0.80, 0.83, S_), 0.006, ST)                                                        # thigh straps
     raise_region(bm, region(0.60, 0.72, S_, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True), 0.010, PN)           # side pockets
@@ -317,9 +317,20 @@ if SUIT == "EVA":
     bm.from_mesh(shoes.data)
     bm.normal_update()
     for v in bm.verts:
-        v.co += v.normal * 0.006
+        v.co += v.normal * 0.012                                                 # chunky EVA boots
     bm.to_mesh(shoes.data)
     bm.free()
+
+# ------------------------------------------------------------------ bigger, natural hands (scaled about the wrist joint)
+bn0 = gname(body)
+for v in body.data.vertices:
+    if not v.groups:
+        continue
+    gnm = bn0[max(v.groups, key=lambda g: g.weight).group]
+    if gnm.startswith(("wrist", "metacarpal", "finger")) and gnm.endswith((".L", ".R")):
+        W0 = arm.data.bones["wrist." + gnm[-1]].head_local
+        v.co = W0 + (v.co - W0) * 1.08
+body.data.update()
 
 # ------------------------------------------------------------------ EVA gloves from the body hands (+ gauntlet cuffs)
 gauntlets = []
@@ -341,7 +352,7 @@ if SUIT == "EVA":
             hv.setdefault(v, Vector())
             hv[v] += f.normal * f.calc_area()
     for v, n in hv.items():
-        v.co += n.normalized() * (0.0065 if bdom(v).startswith("finger") else 0.011)
+        v.co += n.normalized() * (0.009 if bdom(v).startswith("finger") else 0.015)
     for f in hand:
         dom = bdom(max(f.verts, key=lambda v: 0))
         f.material_index = ip if any(bdom(v).startswith("finger") and not bdom(v).startswith("finger1-1") for v in f.verts) else ig
@@ -361,7 +372,7 @@ if SUIT == "EVA":
         s_end = max(p.dot(d) for p in arm_pts)
         ring = [p for p in arm_pts if abs(p.dot(d) - (s_end - 0.03)) < 0.012]
         rs = sorted(((p - W0) - d * (p - W0).dot(d)).length for p in ring)
-        r0 = min(0.064, rs[int(len(rs) * 0.85)] + 0.004) if rs else 0.055
+        r0 = min(0.056, rs[int(len(rs) * 0.85)] + 0.004) if rs else 0.050
         gob = bpy.data.objects.new("gauntlet_" + s, bpy.data.meshes.new("gauntlet_" + s))
         bpy.context.scene.collection.objects.link(gob)
         gob.parent = arm
@@ -370,7 +381,7 @@ if SUIT == "EVA":
             gob.data.materials.append(m)
         gbm = bmesh.new()
         _, uu, ww_ = _frame(d)
-        t0, t1 = s_end - 0.020, s_end + 0.050
+        t0, t1 = s_end - 0.020, s_end + 0.060
         rings_ = []
         for t, r, mi in ((t0, r0 * 0.97, 0), (t0 + 0.010, r0 * 1.02, 0), (t0 + 0.012, r0 * 1.03, 1), (t1 - 0.012, r0 * 0.86, 1), (t1, r0 * 0.80, 1)):
             cpt = W0 + d * (t - W0.dot(d))
@@ -444,28 +455,31 @@ if SUIT == "EVA":
     pb = CHEST_Y - 0.004
     pf = pb - 0.050
     cy = (pb + pf) / 2
-    box(bm, 0, pb - 0.006, 1.275, 0.228, 0.012, 0.162, I(GREYHW), 0.004)
-    box(bm, 0, cy, 1.275, 0.214, 0.050, 0.150, I(PANELHW), 0.009, 3)
-    box(bm, -0.020, pf - 0.002, 1.292, 0.138, 0.006, 0.074, I(DARK), 0.003)
-    uv_quad(bm, [(-0.080, pf - 0.0055, 1.2635), (0.040, pf - 0.0055, 1.2635), (0.040, pf - 0.0055, 1.3205), (-0.080, pf - 0.0055, 1.3205)], I(DISPLAYM))
+    ZP = 1.245                                    # smaller and lower than V03c: less of the first-person view
+    pf = pb - 0.036
+    cy = (pb + pf) / 2
+    box(bm, 0, pb - 0.005, ZP, 0.192, 0.010, 0.136, I(GREYHW), 0.004)
+    box(bm, 0, cy, ZP, 0.180, 0.036, 0.125, I(PANELHW), 0.008, 3)
+    box(bm, -0.016, pf - 0.002, ZP + 0.014, 0.112, 0.006, 0.060, I(DARK), 0.003)
+    uv_quad(bm, [(-0.064, pf - 0.0055, ZP - 0.0085), (0.032, pf - 0.0055, ZP - 0.0085), (0.032, pf - 0.0055, ZP + 0.0365), (-0.064, pf - 0.0055, ZP + 0.0365)], I(DISPLAYM))
     for i in range(2):
         for j in range(3):
-            box(bm, 0.072 + 0.020 * i, pf - 0.004, 1.316 - 0.021 * j, 0.014, 0.008, 0.013, I(STRAP) if (i + j) % 3 else I(RED), 0.002)
-    for x in (-0.075, -0.040, -0.005):
-        cylinder(bm, (x, pf - 0.008, 1.222), (0, 1, 0), 0.0145, 0.016, I(DARK), 18)
-        cylinder(bm, (x, pf - 0.0165, 1.222), (0, 1, 0), 0.007, 0.004, I(METAL), 12)
-    torus(bm, (0.058, pf - 0.006, 1.222), (0, 1, 0), 0.016, 0.0042, I(YELLOW), 24, 8)
-    box(bm, 0.058, pf - 0.006, 1.222, 0.010, 0.010, 0.010, I(METAL), 0.002)
-    for x in (-0.096, 0.096):
-        for z in (1.209, 1.341):
-            cylinder(bm, (x, pf - 0.002, z), (0, 1, 0), 0.004, 0.004, I(METAL), 8)
-    box(bm, 0, pb - 0.020, 1.398, 0.150, 0.042, 0.072, I(PANELHW), 0.008, 3)
-    box(bm, 0, pb - 0.042, 1.425, 0.154, 0.006, 0.026, I(PANELHW), 0.003)
-    box(bm, 0, pb - 0.0425, 1.398, 0.156, 0.005, 0.012, I(STRAP), 0.002)
+            box(bm, 0.060 + 0.017 * i, pf - 0.004, ZP + 0.034 - 0.018 * j, 0.012, 0.007, 0.011, I(STRAP) if (i + j) % 3 else I(RED), 0.002)
+    for x in (-0.062, -0.033, -0.004):
+        cylinder(bm, (x, pf - 0.007, ZP - 0.040), (0, 1, 0), 0.012, 0.014, I(DARK), 18)
+        cylinder(bm, (x, pf - 0.0145, ZP - 0.040), (0, 1, 0), 0.006, 0.004, I(METAL), 12)
+    torus(bm, (0.048, pf - 0.006, ZP - 0.040), (0, 1, 0), 0.0135, 0.0036, I(YELLOW), 24, 8)
+    box(bm, 0.048, pf - 0.006, ZP - 0.040, 0.009, 0.009, 0.009, I(METAL), 0.002)
+    for x in (-0.080, 0.080):
+        for z in (ZP - 0.052, ZP + 0.052):
+            cylinder(bm, (x, pf - 0.002, z), (0, 1, 0), 0.0035, 0.004, I(METAL), 8)
+    box(bm, 0, pb - 0.016, 1.365, 0.128, 0.032, 0.058, I(PANELHW), 0.007, 3)
+    box(bm, 0, pb - 0.033, 1.386, 0.132, 0.005, 0.020, I(PANELHW), 0.003)
+    box(bm, 0, pb - 0.034, 1.365, 0.134, 0.005, 0.010, I(STRAP), 0.002)
     for sx in (1, -1):
         box(bm, sx * 0.0775, CHEST_Y - 0.020, 1.455, 0.034, 0.012, 0.030, I(METAL), 0.003)
-        box(bm, sx * 0.0775, CHEST_Y - 0.018, 1.395, 0.030, 0.010, 0.020, I(STRAP), 0.003)
-        box(bm, sx * 0.112, pf + 0.010, 1.200, 0.020, 0.016, 0.022, I(METAL), 0.003)
+        box(bm, sx * 0.0775, CHEST_Y - 0.018, 1.405, 0.030, 0.010, 0.020, I(STRAP), 0.003)
+        box(bm, sx * 0.096, pf + 0.010, ZP - 0.062, 0.018, 0.014, 0.020, I(METAL), 0.003)
     finalize_part(ob, bm, MS, "spine02")
     bm.free()
     rigid.append(ob)
@@ -473,7 +487,7 @@ if SUIT == "EVA":
     hose_objs = []
     for sx in (1, -1):
         A_ = (lambda a: a) if sx > 0 else (lambda a: 180.0 - a)
-        pts = [Vector((sx * 0.092, pf + 0.012, 1.206)), Vector((sx * 0.100, pf + 0.020, 1.178))]
+        pts = [Vector((sx * 0.096, pf + 0.012, ZP - 0.064)), Vector((sx * 0.104, pf + 0.020, ZP - 0.090))]
         for z, ang, off in ((1.150, -68.0, 0.026), (1.105, -42.0, 0.030), (1.060, -16.0, 0.030), (1.035, 2.0, 0.026)):
             pts.append(surface_point(TLB, z, A_(ang), off))
         hob = bpy.data.objects.new("hose_%d" % sx, bpy.data.meshes.new("hose_%d" % sx))
@@ -537,9 +551,9 @@ if SUIT == "EVA":
     lo = Vector([min(p[i] for p in HV) for i in range(3)])
     hi = Vector([max(p[i] for p in HV) for i in range(3)])
     hc = Vector((0.0, (lo.y + hi.y) / 2 - 0.018, (lo.z + hi.z) / 2 + 0.012))
-    rx = max(0.172, (hi.x - lo.x) / 2 + 0.06)
-    ry = max(0.197, (hi.y - lo.y) / 2 + 0.07)
-    rz = max(0.192, (hi.z - lo.z) / 2 + 0.05)
+    rx = max(0.152, (hi.x - lo.x) / 2 + 0.055)
+    ry = max(0.176, (hi.y - lo.y) / 2 + 0.055)
+    rz = max(0.170, (hi.z - lo.z) / 2 + 0.045)
     log("head bbox", [round(x, 3) for x in lo], [round(x, 3) for x in hi], "helmet", [round(x, 3) for x in hc], round(rx, 3), round(ry, 3), round(rz, 3))
     ZCUT = hc.z - 0.80 * rz
     k = math.sqrt(1 - 0.80 ** 2)
