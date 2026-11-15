@@ -160,8 +160,12 @@ namespace OutOfReach.Composition
         /// count. No force, no animation, no state change.
         /// </summary>
         public bool TrySelectPushSurface(Vector3 aimDirection, ContactHand? preferredHand, out RaycastHit hit, out bool aimed)
+            => TrySelectPushSurface(aimDirection, preferredHand, Vector3.zero, out hit, out aimed);
+
+        /// <summary>As above; with a travel intent, a surface lying ahead in that direction is never chosen.</summary>
+        public bool TrySelectPushSurface(Vector3 aimDirection, ContactHand? preferredHand, Vector3 intent, out RaycastHit hit, out bool aimed)
         {
-            int count = CollectPushCandidates(aimDirection, preferredHand, false);
+            int count = CollectPushCandidates(aimDirection, preferredHand, false, intent);
             hit = count > 0 ? candidates[0].Hit : default;
             aimed = count > 0 && candidates[0].Aimed;
             return count > 0;
@@ -177,7 +181,7 @@ namespace OutOfReach.Composition
         public bool TryPushContext(ContactHand selectedHand, Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
         {
             LastRefusal = string.Empty;
-            int count = CollectPushCandidates(aimDirection, selectedHand, false);
+            int count = CollectPushCandidates(aimDirection, selectedHand, false, desiredTravelWorld);
             if (count == 0) return Refuse(NoSurfaceReason());
             string first = null;
             for (int i = 0; i < count && i < MaxPushAttempts; i++)
@@ -197,7 +201,7 @@ namespace OutOfReach.Composition
         public bool TryPushPairContext(Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
         {
             LastRefusal = string.Empty;
-            int count = CollectPushCandidates(aimDirection, null, true);
+            int count = CollectPushCandidates(aimDirection, null, true, desiredTravelWorld);
             if (count == 0) return Refuse(NoSurfaceReason());
             string first = null;
             for (int i = 0; i < count && i < MaxPushAttempts; i++)
@@ -224,15 +228,28 @@ namespace OutOfReach.Composition
             if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f || !Finite(desiredTravelWorld))
                 return Refuse("Invalid push request.");
             Vector3 origin = player.ViewPivot.position;
+            bool explicitIntent = desiredTravelWorld.sqrMagnitude > .0001f;
+            if (!explicitIntent && Nearest(origin, player.ViewPivot.forward, Reach, out RaycastHit looked) && Pushable(looked.collider))
+            {
+                // No W/S/A/D while looking at a surface in reach: push straight off it, like the visible aimed push.
+                FloatActionResult direct = player.TryPushOff(looked.collider, looked.point, looked.normal, strength01);
+                LastCommandResult = direct;
+                if (direct != FloatActionResult.Done) return Refuse("Push refused: " + direct + ".");
+                HandPushCompleted?.Invoke();
+                return true;
+            }
+            Vector3 intent = explicitIntent ? desiredTravelWorld : player.ViewPivot.forward;
+            Vector3 intentDir = intent.normalized;
             RaycastHit best = default;
-            float bestDistance = float.PositiveInfinity;
+            float bestScore = float.PositiveInfinity;
             foreach (Vector3 direction in SphereDirections)
             {
-                if (!Nearest(origin, direction, Reach, out RaycastHit hit) || !Pushable(hit.collider)) continue;
-                if (hit.distance < bestDistance) { bestDistance = hit.distance; best = hit; }
+                if (!Nearest(origin, direction, Reach, out RaycastHit hit) || !Pushable(hit.collider) || Ahead(hit.normal, intentDir)) continue;
+                // Prefer a surface behind the intended direction (a clean push), then one alongside it (outward cone).
+                float score = hit.distance + (Vector3.Dot(intentDir, hit.normal) >= .25f ? 0f : .35f);
+                if (score < bestScore) { bestScore = score; best = hit; }
             }
-            if (bestDistance == float.PositiveInfinity) return Refuse(NoSurfaceText);
-            Vector3 intent = desiredTravelWorld.sqrMagnitude > .0001f ? desiredTravelWorld : player.ViewPivot.forward;
+            if (bestScore == float.PositiveInfinity) return Refuse(NoSurfaceText);
             if (!MicrogravityLocomotion.TryOutwardDirection(best.normal, intent, player.Microgravity.MinimumAwayDot, out Vector3 away))
                 return Refuse("Invalid push direction.");
             FloatActionResult result = player.TryPushOff(best.collider, best.point, away, strength01);
@@ -241,6 +258,33 @@ namespace OutOfReach.Composition
             HandPushCompleted?.Invoke();
             return true;
         }
+
+        // A surface ahead in the intended direction (its normal facing against it) would send the body back.
+        static bool Ahead(Vector3 normal, Vector3 intentDir) => intentDir != Vector3.zero && Vector3.Dot(intentDir, normal) < -.3f;
+
+        /// <summary>
+        /// MOVE-MECH-03 (Alex: "clicking visible handles does not attach"): grip the aimed registered rail within the
+        /// game's reach even when the short bare arm cannot reach it visibly. The Player verifies the rail, reach and line
+        /// of sight and holds the body as for any grip; a click then pushes off it and Release lets go. No hand pose.
+        /// </summary>
+        public bool TryGrabUnseen(ContactHand selectedHand, Vector3 aimDirection)
+        {
+            LastRefusal = string.Empty; LastCommandResult = null;
+            if (!ModeAllowed()) return Refuse("Contact mode is unavailable.");
+            if (pending || player.HeldHandhold) return Refuse("Release the current contact first.");
+            if (!Finite(aimDirection) || aimDirection.sqrMagnitude < .00001f
+                || !Nearest(player.ViewPivot.position, aimDirection.normalized, Mathf.Max(Reach, player.Microgravity.ReachMetres), out RaycastHit hit)
+                || !player.IsHandhold(hit.collider)) return Refuse("Aim at a handrail within reach.");
+            FloatActionResult result = player.TryGrab(hit.collider, hit.point);
+            LastCommandResult = result;
+            if (result != FloatActionResult.Done) return Refuse("Grip refused: " + result + ".");
+            generation++;
+            hand = selectedHand; kind = HandContactKind.Grip; surface = hit.collider; ownedGrip = hit.collider;
+            pendingSuited = suit.IsSuitOn; actionSent = true; pending = true; unseenGrip = true; requestStarted = Time.unscaledTime;
+            return true;
+        }
+
+        bool unseenGrip;
 
         // 26 world directions: the 6 axes, the 12 edge and the 8 corner diagonals.
         static readonly Vector3[] SphereDirections = BuildSphereDirections();
@@ -281,22 +325,23 @@ namespace OutOfReach.Composition
 
         readonly PushCandidate[] candidates = new PushCandidate[32];
 
-        int CollectPushCandidates(Vector3 aimDirection, ContactHand? preferredHand, bool bothHands)
+        int CollectPushCandidates(Vector3 aimDirection, ContactHand? preferredHand, bool bothHands, Vector3 intent = default)
         {
+            Vector3 intentDir = Finite(intent) && intent.sqrMagnitude > .0001f ? intent.normalized : Vector3.zero;
             if (!bound || !player || !player.ViewPivot) return 0;
             Transform view = player.ViewPivot;
             Vector3 origin = view.position;
             int count = 0;
             if (Finite(aimDirection) && aimDirection.sqrMagnitude > .00001f
                 && Nearest(origin, aimDirection.normalized, Reach, out RaycastHit aimedHit) && Pushable(aimedHit.collider)
-                && ArmCanReach(aimedHit.point, preferredHand, bothHands))
+                && ArmCanReach(aimedHit.point, preferredHand, bothHands) && !Ahead(aimedHit.normal, intentDir))
                 candidates[count++] = new PushCandidate { Hit = aimedHit, Aimed = true, Score = -1f };
             foreach (Vector3 local in ProbeDirections)
             {
                 if (count >= candidates.Length) break;
                 Vector3 direction = view.TransformDirection(local);
                 if (!Nearest(origin, direction, Reach, out RaycastHit hit) || !Pushable(hit.collider)
-                    || !ArmCanReach(hit.point, preferredHand, bothHands)) continue;
+                    || !ArmCanReach(hit.point, preferredHand, bothHands) || Ahead(hit.normal, intentDir)) continue;
                 bool duplicate = false;
                 for (int i = 0; i < count && !duplicate; i++)
                     duplicate = candidates[i].Hit.collider == hit.collider && Vector3.Distance(candidates[i].Hit.point, hit.point) < .05f;
@@ -457,13 +502,14 @@ namespace OutOfReach.Composition
                 phase = state.Phase;
                 CancelOwnedContact();
             }
-            if (pending && (!ModeAllowed() || pendingSuited != suit.IsSuitOn || !VisualLeaseAllowed(hand)
+            if (pending && (!ModeAllowed() || pendingSuited != suit.IsSuitOn || (!unseenGrip && !VisualLeaseAllowed(hand))
                 || (secondPush.Surface && !VisualLeaseAllowed(ContactHand.Right)))) CancelOwnedContact();
         }
         void LateUpdate()
         {
             if (!pending) return;
             if (!ModeAllowed() || pendingSuited != suit.IsSuitOn) { CancelOwnedContact(); return; }
+            if (unseenGrip) { if (!ownedGrip || player.HeldHandhold != ownedGrip) CancelOwnedContact(); return; }
             HandContactStage stage = ContactStageFor(hand);
             if (secondPush.Surface)
             {
@@ -899,7 +945,7 @@ namespace OutOfReach.Composition
             cancelling = true;
             try
             {
-                generation++; pending = false; actionSent = false; surface = null; target = default; localPushDirection = default;
+                generation++; pending = false; actionSent = false; unseenGrip = false; surface = null; target = default; localPushDirection = default;
                 secondPush = default; leftSample = default; leftDirection = default; leftContactFrame = -1;
                 Collider release = ownedGrip; ownedGrip = null;
                 if (bare) bare.CancelImmediately();
