@@ -4,7 +4,7 @@
 
 - **Team** Polish Alex Goats — Alexander Kozovy (Team Owner), Alex Poliak · **Event** Universal Event · **Challenge** [Space Mission Design Game](https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/) · **Team page** https://www.spaceappschallenge.org/2026/find-a-team/polish-alex-goats/
 - **Deadline:** Sun 15 Nov 2026, **23:59 Bratislava = 22:59 UTC** ("Submit for Judging" by the Team Owner). Recommended first submission 22:00 Bratislava; edits and resubmits are allowed until the deadline.
-- **Written for:** `codex/i01-integration` @ `dc9ff8b` plus the Claude lanes running today (#7 6895044220). Fallback lines cover features that may miss the final build.
+- **Written for:** `codex/i01-integration` @ `dc9ff8b` plus the Claude lanes running today (#7 6895044220); credits re-swept on the first `claude/integration` SHA `30055e5` (movement, Core chapter loop, tower, body, WORK grip). Fallback lines cover features that may miss the final build.
 
 ## Start here (in this order)
 
