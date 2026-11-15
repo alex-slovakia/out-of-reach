@@ -79,12 +79,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         {
             if (!Application.isPlaying)
             {
-                if (previewSecondsAfterIgnition >= 0f)
-                {
-                    float t = TransportDepartureTimeline.IgnitionSeconds + previewSecondsAfterIgnition;
-                    Sample(t, false, out float g, out float r, out float w);
-                    volumeWeight = w; Write(g, r, false, Mathf.Lerp(idleHaze, 1f, w));
-                }
+                if (previewSecondsAfterIgnition >= 0f) PreviewAt(previewSecondsAfterIgnition, false);
                 else { volumeWeight = idleVolumeWeight; Write(0f, 0f, false, idleHaze); }
                 return;
             }
@@ -98,6 +93,16 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             volumeWeight = Mathf.MoveTowards(volumeWeight, target, Time.unscaledDeltaTime / blendSeconds);
             if (playing && departure.PresentedSeconds >= TransportDepartureTimeline.UpperAirSeconds) volumeWeight = 0f;
             Write(gust, radius, reduced, Mathf.Lerp(idleHaze, 1f, volumeWeight));
+        }
+
+        /// <summary>Edit-mode preview / evidence capture: presents the look as at `secondsAfterIgnition` on the
+        /// departure playhead (negative = before ignition). Not used by the Play-mode path.</summary>
+        public void PreviewAt(float secondsAfterIgnition, bool reduced)
+        {
+            Sample(TransportDepartureTimeline.IgnitionSeconds + secondsAfterIgnition, reduced, out float g, out float r, out float w);
+            volumeWeight = w;
+            if (field) field.SetReducedEffects(reduced);
+            Write(g, r, reduced, Mathf.Lerp(idleHaze, 1f, w));
         }
 
         /// <summary>Deterministic envelope for a departure time (seconds on the transport playhead).</summary>

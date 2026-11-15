@@ -122,7 +122,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             {
                 float2 rel=root.xz-_OOR_GrassGust.xz; float dist=length(rel)+1e-3; float2 rdir=rel/dist;
                 float frontW=max(_OOR_GrassGustWave.y,1);
-                float front=exp(-pow((dist-_OOR_GrassGustWave.x)/frontW,2));
+                float q=(dist-_OOR_GrassGustWave.x)/frontW; float front=exp(-q*q);
                 float inside=saturate(1-dist/max(_OOR_GrassGustWave.z,1))*saturate((_OOR_GrassGustWave.x-dist)/frontW+1);
                 float push=_OOR_GrassGust.w*(front*1.1+inside*.75);
                 float shiver=sin(t*23+r3*60+dist*.7)*_OOR_GrassGustWave.w*push*(1-reduced);
