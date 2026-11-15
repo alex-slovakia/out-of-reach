@@ -1,4 +1,12 @@
-# Execution plan and status## Current increment — 15 November 2026, presentation and approved musicRuntime `323d926` approved Cobalt isolation loop; `815b932` hydration guidance and labeled cargo colors; `17a2c0a` outcome UI, simplified Sources and NASA true-scale reference. Isolated Unity6000.3.28f1 passed68 scoped checks, exit0. Victory image is a developer UI preview, not a completed win. [Evidence and limits](docs/verification/i06-player-feedback-20261115/README.md). Movement/model work remains Claude-owned and incomplete; Alex reports the other PC was off, estimated30-minute return. New character-sheet cells01–02 rejected; original approved character boards remain canonical. Full route, live acceptance and fresh Windows build remain open.
+# Execution plan and status
+
+## Latest override — Sources without planets
+
+`1eb4b15`: Alex dropped the planet/orbit diagram. Removed the UI/runtime resources, retained NASA source disclosure, replaced the right scrollbar with conditional centered scroll arrows and an unboxed bottom-left Back. Isolated Unity 6000.3.28f1 exited 0 with 68 scoped checks and a native capture. [Evidence](docs/verification/i06-player-feedback-20261115/README.md). Movement remains external Claude scope. Earlier orbit descriptions below are historical.
+
+## Current increment — 15 November 2026, presentation and approved music
+
+Runtime `323d926` approved Cobalt isolation loop; `815b932` hydration guidance and labeled cargo colors; `17a2c0a` outcome UI, simplified Sources and NASA true-scale reference. Isolated Unity6000.3.28f1 passed68 scoped checks, exit0. Victory image is a developer UI preview, not a completed win. [Evidence and limits](docs/verification/i06-player-feedback-20261115/README.md). Movement/model work remains Claude-owned and incomplete; Alex reports the other PC was off, estimated30-minute return. New character-sheet cells01–02 rejected; original approved character boards remain canonical. Full route, live acceptance and fresh Windows build remain open.
 
 ## Current increment — 15 November 2026, death-card UI
 
