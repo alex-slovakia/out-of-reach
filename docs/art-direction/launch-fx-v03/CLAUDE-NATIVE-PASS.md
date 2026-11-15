@@ -30,7 +30,7 @@ The vehicle ascent is untouched: the timeline already climbs 0 → 23 m between 
 
 ## Native verification actually run
 
-Own full clone `C:\Users\alexp\NASA\out-of-reach-launchfx` (never `out-of-reach-verify`), Unity 6000.3.28f1 batch mode
+Own full clone `NASA\out-of-reach-launchfx` (own worktree) (never `out-of-reach-verify`), Unity 6000.3.28f1 batch mode
 **with GPU** (Intel UHD, Direct3D12), the actual saved `Bootstrap.unity`, real Practice UI, real walking and E on the seat,
 the real 34 s departure. Tool: `native-qa/LaunchFxV03NativeQa.cs` + asmdef (copied into `Assets/_LaunchFxQa/Editor/` only
 for the runs). The only non-player step is binding V03 through the patched `I06MarineBindings.ConfigureLaunchFxV03`,
