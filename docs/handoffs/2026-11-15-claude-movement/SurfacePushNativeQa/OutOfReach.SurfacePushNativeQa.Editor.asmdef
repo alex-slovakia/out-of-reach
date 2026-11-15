@@ -1,0 +1,21 @@
+{
+  "name": "OutOfReach.SurfacePushNativeQa.Editor",
+  "references": [
+    "OutOfReach.Composition",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.Presentation.Cargo",
+    "OutOfReach.Presentation.Hands",
+    "OutOfReach.Cinematics",
+    "OutOfReach.MarineOcean",
+    "OutOfReach.UI",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

@@ -1,0 +1,256 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
+index 36ab122..d582faa 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
+@@ -29,10 +29,10 @@ namespace OutOfReach.Composition
+         // Pause help follows the active movement mode and authored contact support.
+         public const string WalkingControlsHint = "WASD move · Shift sprint · Mouse look\nE interact · Tab systems · Esc resume";
+         public const string RouteControlsHint = "W/S move along the tether · Mouse look\nE interact · Tab systems · Esc resume";
+-        public const string FloatingPushHint = "Left/right click a surface in reach: push off\n"
+-            + "Both mouse buttons: push with both hands\n"
+-            + "WASD only aims a push: hold it while clicking\n"
+-            + "Space: foot push, only while your feet touch support";
++        public const string FloatingPushHint = "Space: push off a reachable floor, wall or ceiling\n"
++            + "WASD only aims a push: hold it while pressing Space\n"
++            + "Left/right click a surface in reach: push off\n"
++            + "Both mouse buttons: push with both hands";
+         public const string SuitedRailHint = "Ctrl + click a reachable rail to grip · Click to release";
+         public const string FloatingSystemsHint = "Mouse look · E use equipment · Tab systems · Esc resume";
+ 
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
+index 45a52c9..522502b 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
+@@ -261,7 +261,14 @@ namespace OutOfReach.Composition
+             // Both hands need separate unobstructed spots on the aimed surface.
+             if ((barePush || twoHands) && !TryPalmPoint(selectedHand, hit, barePush, out hit))
+                 return Refuse("No verified palm point on the aimed surface within reach.");
+-            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
++            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal);
++            // A level view's up axis is parallel to the ceiling normal. That is a valid push
++            // surface, not an invalid contact: choose another view axis for the tangent frame.
++            if (tangent.sqrMagnitude < .01f)
++                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal);
++            if (tangent.sqrMagnitude < .01f)
++                tangent = Vector3.ProjectOnPlane(player.ViewPivot.right, hit.normal);
++            tangent.Normalize();
+             if (barePush && Vector3.Dot(hit.normal, Vector3.down) > .95f)
+             {
+                 // One diagonal inward style keeps both palms in view without crossing the midline.
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs
+index 779ff61..ce86331 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs
+@@ -30,6 +30,18 @@ namespace OutOfReach.Composition
+         int armedFrame;
+         float handStrength, footStrength;
+         Vector3 pendingTravel;
++        bool surfacePushQueued;
++        float surfacePushUntil;
++        Vector3 surfacePushTravel;
++        const float SurfacePushBufferSeconds = .4f;
++        static readonly Vector3[] SurfaceProbeDirections =
++        {
++            Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back,
++            new Vector3(1, 1, 1).normalized, new Vector3(-1, 1, 1).normalized,
++            new Vector3(1, -1, 1).normalized, new Vector3(-1, -1, 1).normalized,
++            new Vector3(1, 1, -1).normalized, new Vector3(-1, 1, -1).normalized,
++            new Vector3(1, -1, -1).normalized, new Vector3(-1, -1, -1).normalized,
++        };
+ 
+         /// <summary>Root must suppress decorative L/R and successful-E gestures while true, including refusal/pause.</summary>
+         public bool ContactRoutingRequested => armed;
+@@ -44,7 +56,7 @@ namespace OutOfReach.Composition
+         /// <param name="canContact">Current root policy: excludes cargo, rest, menus, terminal, cinematics and transfers.</param>
+         public void Configure(FirstPersonController actualPlayer, I06MicrogravityBridge contactBridge,
+             Transform unbobbedEye, IEvaStatus evaStatus, IGameState gameState, ISimulationClock simulationClock,
+-            Func<bool> sessionIsCurrent, Func<bool> canContact, float pushStrength01 = .35f, float footStrength01 = .35f)
++            Func<bool> sessionIsCurrent, Func<bool> canContact, float pushStrength01 = .65f, float footStrength01 = .65f)
+         {
+             ClearBinding();
+             if (!actualPlayer || !contactBridge || !unbobbedEye || unbobbedEye != actualPlayer.ViewPivot
+@@ -86,6 +98,7 @@ namespace OutOfReach.Composition
+         {
+             armed = false; faulted = false; permissionWasAllowed = false;
+             leftReady = rightReady = footReady = handClickPending = false;
++            surfacePushQueued = false;
+             if (bridge) bridge.SetContactModeEnabled(false);
+             lease.Release(); source = null;
+         }
+@@ -122,6 +135,7 @@ namespace OutOfReach.Composition
+             {
+                 if (permissionWasAllowed || bridge.IsBusy) bridge.Release();
+                 permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
++                surfacePushQueued = false;
+                 return; // Keep the LMB lease through pause/menu/rest; no resume-click fallback.
+             }
+             permissionWasAllowed = true;
+@@ -133,7 +147,7 @@ namespace OutOfReach.Composition
+                 if (!mouse.leftButton.isPressed) leftReady = true;
+                 if (!mouse.rightButton.isPressed) rightReady = true;
+             }
+-            if (keyboard == null) footReady = false;
++            if (keyboard == null) { footReady = false; surfacePushQueued = false; }
+             else if (!keyboard.spaceKey.isPressed) footReady = true;
+             bool left = mouse != null && leftReady && mouse.leftButton.wasPressedThisFrame;
+             bool right = mouse != null && rightReady && mouse.rightButton.wasPressedThisFrame;
+@@ -141,9 +155,28 @@ namespace OutOfReach.Composition
+             if (left) leftReady = false;
+             if (right) rightReady = false;
+             if (foot) footReady = false;
++            if (foot)
++            {
++                surfacePushQueued = true;
++                surfacePushUntil = Time.unscaledTime + SurfacePushBufferSeconds;
++                surfacePushTravel = ReadTravelIntent();
++            }
+             bool grip = keyboard != null && (keyboard.leftCtrlKey.isPressed || keyboard.rightCtrlKey.isPressed);
+-            if (HandleHandInput(mouse, left, right, grip)) return;
+-            if (foot) DispatchFoot();
++            if (HandleHandInput(mouse, left, right, grip))
++            {
++                // An explicit hand command wins over a simultaneous or buffered Space request.
++                surfacePushQueued = false;
++                return;
++            }
++            if (surfacePushQueued)
++            {
++                if (Time.unscaledTime > surfacePushUntil)
++                {
++                    surfacePushQueued = false;
++                    Refuse("Wait for the current push to finish, then press Space again.");
++                }
++                else if (DispatchSurfacePush(surfacePushTravel)) surfacePushQueued = false;
++            }
+         }
+ 
+         bool HandleHandInput(Mouse mouse, bool left, bool right, bool grip)
+@@ -182,7 +215,7 @@ namespace OutOfReach.Composition
+         {
+             Vector2 move = source.Move;
+             return move.sqrMagnitude > .01f
+-                ? player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)) : Vector3.zero;
++                ? (eye.right * move.x + eye.forward * move.y).normalized : Vector3.zero;
+         }
+ 
+         void DispatchHand(ContactHand hand, bool grip, bool pair, Vector3 travel)
+@@ -206,22 +239,76 @@ namespace OutOfReach.Composition
+             if (!accepted) Refuse(bridge.LastRefusal);
+         }
+ 
+-        void DispatchFoot()
++        // Returns false only while this one press may wait for cooldown/contact return. A held Space
++        // never creates more requests. Actual impulses still come exclusively from verified Player APIs.
++        bool DispatchSurfacePush(Vector3 travel)
+         {
++            if (player.HeldHandhold) { Refuse("Release the rail grip before pushing off."); return true; }
++            if (bridge.IsBusy) return false;
+             LastFootResult = null; LastRefusal = string.Empty;
+-            if (bridge.IsBusy || player.HeldHandhold) { Refuse("Release the hand contact before pushing from foot support."); return; }
+-            Vector2 move = source.Move;
+             Vector3 up = player.transform.up, direction = up;
+-            if (move.sqrMagnitude > .01f)
++            if (travel.sqrMagnitude > .01f)
+             {
+-                Vector3 tangent = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)).normalized;
+-                // Flat-deck tuning: at default MinimumAwayDot=.2 this is .225 upward, .974 tangent.
+-                // Actual Player still proves foot contact and validates the real support normal; slopes may refuse.
+                 float away = Mathf.Clamp(Mathf.Max(.225f, player.Microgravity.MinimumAwayDot + .025f), 0f, 1f);
+-                direction = up * away + tangent * Mathf.Sqrt(1f - away * away);
++                Vector3 tangent = Vector3.ProjectOnPlane(travel, up);
++                direction = Vector3.Dot(travel, up) >= away ? travel
++                    : tangent.sqrMagnitude > .0001f ? up * away + tangent.normalized * Mathf.Sqrt(1f - away * away) : up;
+             }
+             LastFootResult = player.TryPushFromFootContact(direction, footStrength);
+-            if (LastFootResult != FloatActionResult.Done) Refuse("Foot push refused: " + LastFootResult + ".");
++            if (LastFootResult == FloatActionResult.Done) return true;
++            if (LastFootResult == FloatActionResult.Cooldown) return false;
++            if (LastFootResult != FloatActionResult.NoSurface)
++            {
++                Refuse("Push refused: " + LastFootResult + ".");
++                return true;
++            }
++            if (!FindHandPushAim(out Vector3 aim))
++            {
++                Refuse("Move within arm's reach of a wall or ceiling, or touch the floor, to push off.");
++                return true;
++            }
++            // Space at a wall/ceiling uses the SAME visible contact bridge as a hand click. Target
++            // selection grants no force: reach, occlusion, palm pose and Player gates are re-proved.
++            bool accepted = travel == Vector3.zero ? bridge.TryPush(ContactHand.Left, aim, handStrength)
++                : bridge.TryPushDirected(ContactHand.Left, aim, travel, handStrength);
++            if (!accepted)
++                accepted = travel == Vector3.zero ? bridge.TryPush(ContactHand.Right, aim, handStrength)
++                    : bridge.TryPushDirected(ContactHand.Right, aim, travel, handStrength);
++            if (accepted) LastFootResult = null; // Hand command is pending, not a failed floor command.
++            else Refuse(bridge.LastRefusal);
++            return true;
++        }
++
++        bool FindHandPushAim(out Vector3 aim)
++        {
++            aim = Vector3.zero;
++            float reach = Mathf.Min(.8f, player.Microgravity.ReachMetres);
++            if (NearestPushHit(eye.forward, reach, out RaycastHit aimed))
++            {
++                aim = (aimed.point - eye.position).normalized;
++                return true;
++            }
++            float nearest = float.PositiveInfinity;
++            foreach (Vector3 probe in SurfaceProbeDirections)
++                if (NearestPushHit(probe, reach, out RaycastHit hit) && hit.distance < nearest)
++                {
++                    nearest = hit.distance;
++                    aim = (hit.point - eye.position).normalized;
++                }
++            return nearest < float.PositiveInfinity;
++        }
++
++        bool NearestPushHit(Vector3 direction, float reach, out RaycastHit nearest)
++        {
++            nearest = default;
++            int count = Physics.RaycastNonAlloc(eye.position, direction, hits, reach,
++                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
++            if (count == hits.Length) return false;
++            float distance = float.PositiveInfinity;
++            for (int i = 0; i < count; i++)
++                if (!hits[i].collider.transform.IsChildOf(player.transform) && hits[i].distance < distance)
++                { distance = hits[i].distance; nearest = hits[i]; }
++            return distance < float.PositiveInfinity;
+         }
+         bool ModeValid() => player && bridge && bridge.IsBound && eye && eye == player.ViewPivot && player.IsFloating
+             && !player.IsOnRoute && !suit.IsOutside && state.Outcome == MissionOutcome.None
+@@ -240,6 +327,7 @@ namespace OutOfReach.Composition
+         void Fault(string reason)
+         {
+             faulted = true; permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
++            surfacePushQueued = false;
+             if (bridge) bridge.SetContactModeEnabled(false);
+             lease.Release(); source = null; LastRefusal = reason;
+             // Keep requested=true until explicit Disarm so root cannot fall back to decorative click/E gestures.
+diff --git a/Assets/_OutOfReach/Tests/Composition/QuitToDesktopTests.cs b/Assets/_OutOfReach/Tests/Composition/QuitToDesktopTests.cs
+index 94f798b..f190c55 100644
+--- a/Assets/_OutOfReach/Tests/Composition/QuitToDesktopTests.cs
++++ b/Assets/_OutOfReach/Tests/Composition/QuitToDesktopTests.cs
+@@ -107,7 +107,7 @@ namespace OutOfReach.Tests.Composition
+ 
+             Assert.That(hint, Does.Contain("click a surface in reach: push off"));
+             Assert.That(hint, Does.Contain("WASD only aims a push"));
+-            Assert.That(hint, Does.Contain("Space: foot push, only while your feet touch support"));
++            Assert.That(hint, Does.Contain("Space: push off a reachable floor, wall or ceiling"));
+             Assert.That(hint, Does.Contain("E use equipment"));
+             Assert.That(hint, Does.Contain("Esc resume"));
+             Assert.That(hint, Does.Not.Contain("WASD move"));
+diff --git a/Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs b/Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs
+index bc19463..4e27843 100644
+--- a/Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs
++++ b/Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs
+@@ -191,7 +191,7 @@ namespace OutOfReach.Presentation.UI
+             compression.Add(elapsedTime);
+             microgravityTutorial = Element("microgravity-move");
+             microgravityTutorial.name = "microgravity-tutorial";
+-            microgravityTutorial.Add(Text("Move", "microgravity-action"));
++            microgravityTutorial.Add(Text("Space · Push off   WASD · Aim", "microgravity-action"));
+             microgravityTutorial.Add(MousePictogram("left-mouse", true, false));
+             microgravityTutorial.Add(MousePictogram("right-mouse", false, true));
+             microgravityTutorial.Add(MousePictogram("both-mouse-buttons", true, true));

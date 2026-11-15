@@ -1,0 +1,513 @@
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs
+@@ -261,7 +261,14 @@
+             // Both hands need separate unobstructed spots on the aimed surface.
+             if ((barePush || twoHands) && !TryPalmPoint(selectedHand, hit, barePush, out hit))
+                 return Refuse("No verified palm point on the aimed surface within reach.");
+-            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
++            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal);
++            // A level view's up axis is parallel to the ceiling normal. That is a valid push
++            // surface, not an invalid contact: choose another view axis for the tangent frame.
++            if (tangent.sqrMagnitude < .01f)
++                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal);
++            if (tangent.sqrMagnitude < .01f)
++                tangent = Vector3.ProjectOnPlane(player.ViewPivot.right, hit.normal);
++            tangent.Normalize();
+             if (barePush && Vector3.Dot(hit.normal, Vector3.down) > .95f)
+             {
+                 // One diagonal inward style keeps both palms in view without crossing the midline.
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs
+@@ -30,6 +30,18 @@
+         int armedFrame;
+         float handStrength, footStrength;
+         Vector3 pendingTravel;
++        bool surfacePushQueued;
++        float surfacePushUntil;
++        Vector3 surfacePushTravel;
++        const float SurfacePushBufferSeconds = .4f;
++        static readonly Vector3[] SurfaceProbeDirections =
++        {
++            Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back,
++            new Vector3(1, 1, 1).normalized, new Vector3(-1, 1, 1).normalized,
++            new Vector3(1, -1, 1).normalized, new Vector3(-1, -1, 1).normalized,
++            new Vector3(1, 1, -1).normalized, new Vector3(-1, 1, -1).normalized,
++            new Vector3(1, -1, -1).normalized, new Vector3(-1, -1, -1).normalized,
++        };
+ 
+         /// <summary>Root must suppress decorative L/R and successful-E gestures while true, including refusal/pause.</summary>
+         public bool ContactRoutingRequested => armed;
+@@ -44,7 +56,7 @@
+         /// <param name="canContact">Current root policy: excludes cargo, rest, menus, terminal, cinematics and transfers.</param>
+         public void Configure(FirstPersonController actualPlayer, I06MicrogravityBridge contactBridge,
+             Transform unbobbedEye, IEvaStatus evaStatus, IGameState gameState, ISimulationClock simulationClock,
+-            Func<bool> sessionIsCurrent, Func<bool> canContact, float pushStrength01 = .35f, float footStrength01 = .35f)
++            Func<bool> sessionIsCurrent, Func<bool> canContact, float pushStrength01 = .65f, float footStrength01 = .65f)
+         {
+             ClearBinding();
+             if (!actualPlayer || !contactBridge || !unbobbedEye || unbobbedEye != actualPlayer.ViewPivot
+@@ -86,6 +98,7 @@
+         {
+             armed = false; faulted = false; permissionWasAllowed = false;
+             leftReady = rightReady = footReady = handClickPending = false;
++            surfacePushQueued = false;
+             if (bridge) bridge.SetContactModeEnabled(false);
+             lease.Release(); source = null;
+         }
+@@ -122,6 +135,7 @@
+             {
+                 if (permissionWasAllowed || bridge.IsBusy) bridge.Release();
+                 permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
++                surfacePushQueued = false;
+                 return; // Keep the LMB lease through pause/menu/rest; no resume-click fallback.
+             }
+             permissionWasAllowed = true;
+@@ -133,7 +147,7 @@
+                 if (!mouse.leftButton.isPressed) leftReady = true;
+                 if (!mouse.rightButton.isPressed) rightReady = true;
+             }
+-            if (keyboard == null) footReady = false;
++            if (keyboard == null) { footReady = false; surfacePushQueued = false; }
+             else if (!keyboard.spaceKey.isPressed) footReady = true;
+             bool left = mouse != null && leftReady && mouse.leftButton.wasPressedThisFrame;
+             bool right = mouse != null && rightReady && mouse.rightButton.wasPressedThisFrame;
+@@ -141,9 +155,28 @@
+             if (left) leftReady = false;
+             if (right) rightReady = false;
+             if (foot) footReady = false;
++            if (foot)
++            {
++                surfacePushQueued = true;
++                surfacePushUntil = Time.unscaledTime + SurfacePushBufferSeconds;
++                surfacePushTravel = ReadTravelIntent();
++            }
+             bool grip = keyboard != null && (keyboard.leftCtrlKey.isPressed || keyboard.rightCtrlKey.isPressed);
+-            if (HandleHandInput(mouse, left, right, grip)) return;
+-            if (foot) DispatchFoot();
++            if (HandleHandInput(mouse, left, right, grip))
++            {
++                // An explicit hand command wins over a simultaneous or buffered Space request.
++                surfacePushQueued = false;
++                return;
++            }
++            if (surfacePushQueued)
++            {
++                if (Time.unscaledTime > surfacePushUntil)
++                {
++                    surfacePushQueued = false;
++                    Refuse("Wait for the current push to finish, then press Space again.");
++                }
++                else if (DispatchSurfacePush(surfacePushTravel)) surfacePushQueued = false;
++            }
+         }
+ 
+         bool HandleHandInput(Mouse mouse, bool left, bool right, bool grip)
+@@ -182,7 +215,7 @@
+         {
+             Vector2 move = source.Move;
+             return move.sqrMagnitude > .01f
+-                ? player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)) : Vector3.zero;
++                ? (eye.right * move.x + eye.forward * move.y).normalized : Vector3.zero;
+         }
+ 
+         void DispatchHand(ContactHand hand, bool grip, bool pair, Vector3 travel)
+@@ -206,22 +239,76 @@
+             if (!accepted) Refuse(bridge.LastRefusal);
+         }
+ 
+-        void DispatchFoot()
+-        {
++        // Returns false only while this one press may wait for cooldown/contact return. A held Space
++        // never creates more requests. Actual impulses still come exclusively from verified Player APIs.
++        bool DispatchSurfacePush(Vector3 travel)
++        {
++            if (player.HeldHandhold) { Refuse("Release the rail grip before pushing off."); return true; }
++            if (bridge.IsBusy) return false;
+             LastFootResult = null; LastRefusal = string.Empty;
+-            if (bridge.IsBusy || player.HeldHandhold) { Refuse("Release the hand contact before pushing from foot support."); return; }
+-            Vector2 move = source.Move;
+             Vector3 up = player.transform.up, direction = up;
+-            if (move.sqrMagnitude > .01f)
+-            {
+-                Vector3 tangent = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)).normalized;
+-                // Flat-deck tuning: at default MinimumAwayDot=.2 this is .225 upward, .974 tangent.
+-                // Actual Player still proves foot contact and validates the real support normal; slopes may refuse.
++            if (travel.sqrMagnitude > .01f)
++            {
+                 float away = Mathf.Clamp(Mathf.Max(.225f, player.Microgravity.MinimumAwayDot + .025f), 0f, 1f);
+-                direction = up * away + tangent * Mathf.Sqrt(1f - away * away);
++                Vector3 tangent = Vector3.ProjectOnPlane(travel, up);
++                direction = Vector3.Dot(travel, up) >= away ? travel
++                    : tangent.sqrMagnitude > .0001f ? up * away + tangent.normalized * Mathf.Sqrt(1f - away * away) : up;
+             }
+             LastFootResult = player.TryPushFromFootContact(direction, footStrength);
+-            if (LastFootResult != FloatActionResult.Done) Refuse("Foot push refused: " + LastFootResult + ".");
++            if (LastFootResult == FloatActionResult.Done) return true;
++            if (LastFootResult == FloatActionResult.Cooldown) return false;
++            if (LastFootResult != FloatActionResult.NoSurface)
++            {
++                Refuse("Push refused: " + LastFootResult + ".");
++                return true;
++            }
++            if (!FindHandPushAim(out Vector3 aim))
++            {
++                Refuse("Move within arm's reach of a wall or ceiling, or touch the floor, to push off.");
++                return true;
++            }
++            // Space at a wall/ceiling uses the SAME visible contact bridge as a hand click. Target
++            // selection grants no force: reach, occlusion, palm pose and Player gates are re-proved.
++            bool accepted = travel == Vector3.zero ? bridge.TryPush(ContactHand.Left, aim, handStrength)
++                : bridge.TryPushDirected(ContactHand.Left, aim, travel, handStrength);
++            if (!accepted)
++                accepted = travel == Vector3.zero ? bridge.TryPush(ContactHand.Right, aim, handStrength)
++                    : bridge.TryPushDirected(ContactHand.Right, aim, travel, handStrength);
++            if (accepted) LastFootResult = null; // Hand command is pending, not a failed floor command.
++            else Refuse(bridge.LastRefusal);
++            return true;
++        }
++
++        bool FindHandPushAim(out Vector3 aim)
++        {
++            aim = Vector3.zero;
++            float reach = Mathf.Min(.8f, player.Microgravity.ReachMetres);
++            if (NearestPushHit(eye.forward, reach, out RaycastHit aimed))
++            {
++                aim = (aimed.point - eye.position).normalized;
++                return true;
++            }
++            float nearest = float.PositiveInfinity;
++            foreach (Vector3 probe in SurfaceProbeDirections)
++                if (NearestPushHit(probe, reach, out RaycastHit hit) && hit.distance < nearest)
++                {
++                    nearest = hit.distance;
++                    aim = (hit.point - eye.position).normalized;
++                }
++            return nearest < float.PositiveInfinity;
++        }
++
++        bool NearestPushHit(Vector3 direction, float reach, out RaycastHit nearest)
++        {
++            nearest = default;
++            int count = Physics.RaycastNonAlloc(eye.position, direction, hits, reach,
++                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
++            if (count == hits.Length) return false;
++            float distance = float.PositiveInfinity;
++            for (int i = 0; i < count; i++)
++                if (!hits[i].collider.transform.IsChildOf(player.transform) && hits[i].distance < distance)
++                { distance = hits[i].distance; nearest = hits[i]; }
++            return distance < float.PositiveInfinity;
+         }
+         bool ModeValid() => player && bridge && bridge.IsBound && eye && eye == player.ViewPivot && player.IsFloating
+             && !player.IsOnRoute && !suit.IsOutside && state.Outcome == MissionOutcome.None
+@@ -240,6 +327,7 @@
+         void Fault(string reason)
+         {
+             faulted = true; permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
++            surfacePushQueued = false;
+             if (bridge) bridge.SetContactModeEnabled(false);
+             lease.Release(); source = null; LastRefusal = reason;
+             // Keep requested=true until explicit Disarm so root cannot fall back to decorative click/E gestures.
+--- /dev/null
++++ b/Assets/_OutOfReach/Tests/MovementIntegration/OutOfReach.Tests.MovementIntegration.asmdef
+@@ -0,0 +1,26 @@
++{
++  "name": "OutOfReach.Tests.MovementIntegration",
++  "rootNamespace": "OutOfReach.Tests.MovementIntegration",
++  "references": [
++    "UnityEngine.TestRunner",
++    "OutOfReach.Contracts",
++    "OutOfReach.Composition",
++    "OutOfReach.Player",
++    "OutOfReach.Interaction",
++    "OutOfReach.Presentation.Hands",
++    "Unity.InputSystem"
++  ],
++  "includePlatforms": [],
++  "excludePlatforms": [],
++  "allowUnsafeCode": false,
++  "overrideReferences": true,
++  "precompiledReferences": [
++    "nunit.framework.dll"
++  ],
++  "autoReferenced": false,
++  "defineConstraints": [
++    "UNITY_INCLUDE_TESTS"
++  ],
++  "versionDefines": [],
++  "noEngineReferences": false
++}
+--- /dev/null
++++ b/Assets/_OutOfReach/Tests/MovementIntegration/OutOfReach.Tests.MovementIntegration.asmdef.meta
+@@ -0,0 +1,7 @@
++fileFormatVersion: 2
++guid: c664f58dbe8c454f9c9333d02df080ae
++AssemblyDefinitionImporter:
++  externalObjects: {}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+--- /dev/null
++++ b/Assets/_OutOfReach/Tests/MovementIntegration/SurfacePushIntegrationTests.cs
+@@ -0,0 +1,237 @@
++using System;
++using System.Reflection;
++using NUnit.Framework;
++using OutOfReach.Composition;
++using OutOfReach.Contracts;
++using OutOfReach.Player;
++using OutOfReach.Presentation.Hands;
++using UnityEngine;
++using UnityEngine.InputSystem;
++using UnityEngine.InputSystem.LowLevel;
++using Object = UnityEngine.Object;
++
++namespace OutOfReach.Tests.MovementIntegration
++{
++    /// <summary>
++    /// Actual capsule, solid colliders and Input System key edges. Fixture-only read views supply
++    /// phase/suit/pause policy; no simulated impulse or replacement locomotion. Art rigs are omitted:
++    /// hand tests prove surface selection/frame construction, not visible skin contact acceptance.
++    /// </summary>
++    public sealed class SurfacePushIntegrationTests
++    {
++        const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
++        GameObject root;
++        FirstPersonController player;
++        I06MicrogravityBridge bridge;
++        I06MicrogravityInputBindings input;
++        Transform eye;
++        Keyboard keyboard;
++        Mouse mouse;
++        ClockView clock;
++        bool contactAllowed, controlAllowed;
++        int pushCount;
++        float savedTimeScale;
++        InputSettings previousSettings, testSettings;
++        HideFlags previousSettingsFlags;
++
++        [SetUp]
++        public void SetUp()
++        {
++            savedTimeScale = Time.timeScale; Time.timeScale = 1f;
++            // Hidden native test runs have no focused Game View. Match the existing input tests:
++            // route synthetic devices through a temporary clone, never change the project asset.
++            previousSettings = InputSystem.settings; previousSettingsFlags = previousSettings.hideFlags;
++            testSettings = Object.Instantiate(previousSettings);
++            testSettings.hideFlags = HideFlags.HideAndDontSave;
++            testSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
++            testSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
++            previousSettings.hideFlags = HideFlags.None; // Preserve temporary defaults for exact restoration.
++            InputSystem.settings = testSettings;
++            keyboard = InputSystem.AddDevice<Keyboard>(); keyboard.MakeCurrent();
++            mouse = InputSystem.AddDevice<Mouse>(); mouse.MakeCurrent();
++            root = new GameObject("Surface push integration fixture");
++            var rig = new GameObject("Player"); rig.transform.SetParent(root.transform);
++            rig.transform.position = new Vector3(0f, 500.03f, 0f);
++            var capsule = rig.AddComponent<CharacterController>();
++            capsule.height = 1.8f; capsule.radius = .3f; capsule.center = Vector3.up * .9f;
++            capsule.skinWidth = .03f;
++            eye = new GameObject("Unbobbed eye").transform; eye.SetParent(rig.transform);
++            eye.localPosition = Vector3.up * 1.65f;
++            player = rig.AddComponent<FirstPersonController>(); player.Configure(eye, null);
++            player.SendMessage("OnApplicationFocus", true, SendMessageOptions.RequireReceiver);
++            Set(player, "captureCursor", false);
++            contactAllowed = controlAllowed = true;
++            player.ControlGate = () => controlAllowed;
++            player.Pushed += _ => pushCount++;
++            Box("Floor", new Vector3(0, 499.9f, 0), new Vector3(8, .2f, 8));
++            Physics.SyncTransforms();
++            Assert.That(player.EnterFloatFromFootSupport(), Is.EqualTo(FloatActionResult.Done));
++            bridge = root.AddComponent<I06MicrogravityBridge>();
++            var suit = new SuitView(); clock = new ClockView();
++            // Only the adapter/geometry seam is exercised; omitted art assets are never treated as contact proof.
++            Set(bridge, "bound", true); Set(bridge, "player", player); Set(bridge, "suit", suit);
++            input = root.AddComponent<I06MicrogravityInputBindings>();
++            input.Configure(player, bridge, eye, suit, new StateView(), clock, () => true, () => contactAllowed);
++            Assert.That(input.Arm(), Is.True, input.LastRefusal);
++            // The test drives input updates synchronously, after the arming boundary.
++            Set(input, "armedFrame", -1);
++            Keys();
++        }
++
++        [TearDown]
++        public void TearDown()
++        {
++            if (input) input.ClearBinding();
++            if (root) Object.DestroyImmediate(root);
++            if (keyboard != null) InputSystem.RemoveDevice(keyboard);
++            if (mouse != null) InputSystem.RemoveDevice(mouse);
++            if (previousSettings)
++            {
++                InputSystem.settings = previousSettings;
++                previousSettings.hideFlags = previousSettingsFlags;
++            }
++            if (testSettings) Object.DestroyImmediate(testSettings);
++            Time.timeScale = savedTimeScale;
++            Cursor.lockState = CursorLockMode.None; Cursor.visible = true;
++        }
++
++        [TestCase(false)]
++        [TestCase(true)]
++        public void WallAndCeiling_ProduceFiniteTangentFromLevelView(bool ceiling)
++        {
++            Vector3 direction = ceiling ? Vector3.up : Vector3.forward;
++            Collider surface = Box("Contact", eye.position + direction * .4f,
++                ceiling ? new Vector3(2, .1f, 2) : new Vector3(2, 2, .1f));
++            Physics.SyncTransforms();
++            Assert.That(surface.Raycast(new Ray(eye.position, direction), out RaycastHit hit, .8f), Is.True);
++            object[] args = { ContactHand.Left, HandContactKind.Push, hit, Vector3.zero, false, null };
++            Assert.That((bool)typeof(I06MicrogravityBridge).GetMethod("TryBuildContact", Private).Invoke(bridge, args),
++                Is.True, bridge.LastRefusal);
++            object contact = args[5];
++            var target = (HandContactTarget)contact.GetType().GetField("Target").GetValue(contact);
++            Vector3 tangent = surface.transform.TransformVector(target.LocalTangent);
++            Assert.That(tangent.magnitude, Is.EqualTo(1f).Within(.0001f));
++            Assert.That(Mathf.Abs(Vector3.Dot(tangent, hit.normal)), Is.LessThan(.0001f));
++            Assert.That(player.FloatVelocity, Is.EqualTo(Vector3.zero), "constructing a frame grants no impulse");
++        }
++
++        [Test]
++        public void SpaceFindsCeilingWithoutAimingAtIt_AndRejectsTriggerOnlySpace()
++        {
++            Collider ceiling = Box("Ceiling", eye.position + Vector3.up * .4f, new Vector3(2, .1f, 2));
++            Physics.SyncTransforms();
++            object[] args = { Vector3.zero };
++            Assert.That((bool)typeof(I06MicrogravityInputBindings).GetMethod("FindHandPushAim", Private).Invoke(input, args), Is.True);
++            Assert.That(Vector3.Dot((Vector3)args[0], Vector3.up), Is.GreaterThan(.999f));
++            ceiling.isTrigger = true; Physics.SyncTransforms();
++            args[0] = Vector3.zero;
++            Assert.That((bool)typeof(I06MicrogravityInputBindings).GetMethod("FindHandPushAim", Private).Invoke(input, args), Is.False);
++        }
++
++        [Test]
++        public void RepressSpaceDuringCooldown_IsBufferedOnce_HoldingDoesNotRepeat()
++        {
++            Keys(Key.Space);
++            Assert.That(pushCount, Is.EqualTo(1));
++            Assert.That(player.FloatVelocity.magnitude, Is.EqualTo(.65f).Within(.0001f));
++            player.ClearMotion(); Keys(); Keys(Key.Space);
++            Assert.That(pushCount, Is.EqualTo(1), "cooldown still belongs to Player");
++            AdvanceFloat(.36f); Tick();
++            Assert.That(pushCount, Is.EqualTo(2), "one buffered edge survives cooldown");
++            player.ClearMotion(); AdvanceFloat(.4f); Keys(Key.Space); Tick();
++            Assert.That(pushCount, Is.EqualTo(2), "held key must not manufacture another press");
++        }
++
++        [TestCase("pause")]
++        [TestCase("control")]
++        [TestCase("contact")]
++        public void DeniedPolicy_ClearsBufferedPressAndRequiresFreshRelease(string policy)
++        {
++            Keys(Key.Space); player.ClearMotion(); Keys(); Keys(Key.Space);
++            Assert.That(pushCount, Is.EqualTo(1));
++            Gate(policy, false); Tick();
++            Assert.That(player.FloatVelocity, Is.EqualTo(Vector3.zero));
++            Gate(policy, true); AdvanceFloat(.36f); Keys(Key.Space); Tick();
++            Assert.That(pushCount, Is.EqualTo(1), "resuming must not replay a queued or held press");
++            Keys(); Keys(Key.Space);
++            Assert.That(pushCount, Is.EqualTo(2), "a new press after release is valid");
++        }
++
++        [TestCase(Key.A, -1f)]
++        [TestCase(Key.D, 1f)]
++        public void SidewaysIntent_ChangesOnlyAContactPush(Key key, float sign)
++        {
++            Keys(key);
++            Assert.That(player.FloatVelocity, Is.EqualTo(Vector3.zero), "WASD alone supplies no hidden thrust");
++            Keys(key, Key.Space);
++            Assert.That(player.FloatVelocity.x * sign, Is.GreaterThan(.5f));
++            Assert.That(player.FloatVelocity.y, Is.GreaterThan(0f), "push must leave floor support");
++            Vector3 velocity = player.FloatVelocity;
++            Keys(key == Key.A ? Key.D : Key.A);
++            Assert.That(player.FloatVelocity, Is.EqualTo(velocity), "free drift keeps momentum");
++        }
++
++        [Test]
++        public void SpaceAwayFromAllSurfaces_RefusesWithoutImpulse()
++        {
++            // Fixture positioning via the real capsule, with no obstacles above the floor.
++            player.GetComponent<CharacterController>().Move(Vector3.up * 3f);
++            Physics.SyncTransforms();
++            Keys(Key.Space);
++            Assert.That(pushCount, Is.Zero);
++            Assert.That(player.FloatVelocity, Is.EqualTo(Vector3.zero));
++            Assert.That(input.LastFootResult, Is.EqualTo(FloatActionResult.NoSurface));
++            Assert.That(input.LastRefusal, Does.Contain("arm's reach"));
++        }
++
++        void Gate(string policy, bool allowed)
++        {
++            if (policy == "pause") clock.Paused = !allowed;
++            else if (policy == "control") controlAllowed = allowed;
++            else contactAllowed = allowed;
++        }
++        void Keys(params Key[] keys)
++        {
++            InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys));
++            InputSystem.Update();
++            Assert.That(keyboard.spaceKey.isPressed, Is.EqualTo(Array.IndexOf(keys, Key.Space) >= 0),
++                "synthetic Space state must reach the device before testing dispatch");
++            Tick();
++        }
++        void Tick() => typeof(I06MicrogravityInputBindings).GetMethod("Update", Private).Invoke(input, null);
++        void AdvanceFloat(float seconds) => typeof(FirstPersonController).GetMethod("Float", Private).Invoke(player, new object[] { seconds });
++        static void Set(object target, string name, object value) => target.GetType().GetField(name, Private).SetValue(target, value);
++        Collider Box(string name, Vector3 position, Vector3 size)
++        {
++            var go = new GameObject(name); go.transform.SetParent(root.transform); go.transform.position = position;
++            var box = go.AddComponent<BoxCollider>(); box.size = size; return box;
++        }
++        sealed class ClockView : ISimulationClock
++        {
++            public bool Paused;
++            public bool IsPaused => Paused;
++            public double TimeScale => 1d;
++            public double ElapsedSimulationSeconds => 0d;
++        }
++        sealed class StateView : IGameState
++        {
++            public GamePhase Phase => GamePhase.Survival;
++            public MissionOutcome Outcome => MissionOutcome.None;
++            public double ElapsedSimulationSeconds => 0d;
++            public CommandResult TryTransition(GamePhase next) => throw new NotSupportedException();
++            public void AdvanceTime(double seconds) => throw new NotSupportedException();
++        }
++        sealed class SuitView : IEvaStatus
++        {
++            public bool IsSuitOn => true;
++            public bool IsSuitSealed => false;
++            public double SuitOxygenKg => 1d;
++            public double SuitOxygenCapacityKg => 1d;
++            public double SuitOxygenSecondsRemaining => 100d;
++            public bool IsOutside => false;
++            public AirlockState Airlock => AirlockState.InnerOpen;
++            public double AirlockTransitionRemainingSeconds => 0d;
++            public event Action Changed { add { } remove { } }
++        }
++    }
++}
+--- /dev/null
++++ b/Assets/_OutOfReach/Tests/MovementIntegration/SurfacePushIntegrationTests.cs.meta
+@@ -0,0 +1,11 @@
++fileFormatVersion: 2
++guid: 2e219951ff044f5db557490a36e558c7
++MonoImporter:
++  externalObjects: {}
++  serializedVersion: 2
++  defaultReferences: []
++  executionOrder: 0
++  icon: {instanceID: 0}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 
+--- /dev/null
++++ b/Assets/_OutOfReach/Tests/MovementIntegration.meta
+@@ -0,0 +1,8 @@
++fileFormatVersion: 2
++guid: d899ddfb3f98460eaa54afcc300e2abe
++folderAsset: yes
++DefaultImporter:
++  externalObjects: {}
++  userData: 
++  assetBundleName: 
++  assetBundleVariant: 

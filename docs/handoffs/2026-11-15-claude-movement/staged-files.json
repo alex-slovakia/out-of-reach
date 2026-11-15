@@ -1,0 +1,37 @@
+[
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityBridge.cs",
+    "sha256": "0c644c998339822d07d7edd41dd4418b277a3bf677dc9e438d6afeb24ca7f1e4",
+    "new": false
+  },
+  {
+    "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I06MicrogravityInputBindings.cs",
+    "sha256": "709965be635673f4bbd27e18001daa2399e4250e9932f83b72de5fb36be7104b",
+    "new": false
+  },
+  {
+    "path": "Assets/_OutOfReach/Tests/MovementIntegration/OutOfReach.Tests.MovementIntegration.asmdef",
+    "sha256": "9497f0475e3caa79d775cf11cdd4ccbefa656f713f1279e94e04852de16944d9",
+    "new": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Tests/MovementIntegration/OutOfReach.Tests.MovementIntegration.asmdef.meta",
+    "sha256": "4629a2906dd50c37ed890e114b9fa2f171ebcf39b3475ac21afb2299783dbf55",
+    "new": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Tests/MovementIntegration/SurfacePushIntegrationTests.cs",
+    "sha256": "a4ab9f8bcc58804801002c818b6136805eb2803ebab4639789ada1f145092f21",
+    "new": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Tests/MovementIntegration/SurfacePushIntegrationTests.cs.meta",
+    "sha256": "b7e0cf44e473d4f2ba26e0cadfe024d3338a6c7858758a836d1f367c109190e9",
+    "new": true
+  },
+  {
+    "path": "Assets/_OutOfReach/Tests/MovementIntegration.meta",
+    "sha256": "3ba7c6b13432406025024b1eee7d54ef5137a44fdca1aac25d1b0bf223fa255a",
+    "new": true
+  }
+]
