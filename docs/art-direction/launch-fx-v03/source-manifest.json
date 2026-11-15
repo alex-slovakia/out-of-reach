@@ -1,0 +1,38 @@
+{
+  "task": "LAUNCH-FX-V03",
+  "branch": "codex/i01-integration",
+  "commit": "uncommitted; integrator commits exact owned paths",
+  "unity_version": "6000.3.28f1",
+  "urp_version": "17.3.0",
+  "sources_sha256": {
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03.meta": "30bbcf9b3614a2f53b27445c907d5b8c6b7d46bbc96f9764d35845aae940ccf8",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/Editor/LaunchFxV03Authoring.cs": "2d8383dad957a1a265116490b134edc6664bae2be3a7e4deed032d127bd8c240",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/Editor/LaunchFxV03Authoring.cs.meta": "4d1e5c9d471882d1294a1c5e19fe73b7dc60acbfeb6ebacb777ceecc351998e3",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/Editor/OutOfReach.LaunchFXV03.Editor.asmdef": "20b6dd1c4692dfedada57be6fd9ceed2fcf640db36774320cd79375cc849c3fb",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/Editor/OutOfReach.LaunchFXV03.Editor.asmdef.meta": "bf64e33b90238d93255ed4035dfd60830b8e33f3c3d957fb35b25bf968012721",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/Editor.meta": "d3fd21f90397084029ae232370f600886879bad65d1d8be6fac3242b4ba194c8",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/LaunchFxV03Mesh.cs": "a3c207a95aea59c2cb716298ceda5bcc73782fdad4c9b4997944df47154854a9",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/LaunchFxV03Mesh.cs.meta": "192be9233baeac807868c702883f70ed742775784f4dcf92124becfcbff9bafe",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/LaunchFxV03Presenter.cs": "14ab91f3c6073ee397b9db259a5f1fcbd108ee403e45a646eb6bc9cdc3ce9dc1",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/LaunchFxV03Presenter.cs.meta": "44d47fc5365af99fc3af50ea92aa116da4713b00429dfd52bd055587cdefe41f",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/OutOfReach.LaunchFXV03.asmdef": "cfc9a4bb3da1b0a4895d0da1ac371451a9bab7ad152cd6f2c692c9b91de99b79",
+    "Assets/_OutOfReach/Scripts/Presentation/LaunchFXV03/OutOfReach.LaunchFXV03.asmdef.meta": "350f0c5076e97ef8f89fd665bc9c20cc76a325420ffa773f9875a1cdfcb17dd6",
+    "Assets/_OutOfReach/Visuals/LaunchFX_V03.meta": "9b218c24065d013ffe886a6d4b64c5408edddaad45e1613f73fc616a74c9a414",
+    "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchCloudV03.shader": "bb20ac703cbb8f0c3cfa4fbbf7e1b38b18b445878aaa2c436dd889d57b4db6b1",
+    "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchCloudV03.shader.meta": "cdc2703502931c13f7bef6b7db92d0e90ba8236acfb2683f8528d1a9f55d4ea1",
+    "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchPlumeV03.shader": "d74be3c0d1d12211addd83bad57300f72897e7217cd1c4942a878dc2e70c8829",
+    "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchPlumeV03.shader.meta": "5b8ed37f14685d4ff22273b7f75dc5878e9e3e1b682dc3622ccce0c5c57b0f0a"
+  },
+  "runtime_reference_compile": "PASS: exit 0 against installed Unity managed DLLs and current cached OutOfReach.Cinematics.dll",
+  "editor_reference_compile": "PASS: exit 0 against installed UnityEditor managed DLLs and new runtime assembly",
+  "unity_asset_checker": {
+    "errors": 0,
+    "warnings": 48,
+    "issues_in_owned_scope": []
+  },
+  "repository_verifier": "FAIL at checkpoint: missing metadata for concurrently created LaunchSkyV03 folder and rocky_ridge_puresky_2k.hdr, outside this task scope",
+  "nasa_offline_verifier": "PASS: 32 samples; metadata, hashes, vector norms, light times and exact regeneration",
+  "native_import_shader_compile_render_playtest": "NOT RUN by this worker; root holds native integration. No Unity was launched.",
+  "ownership": "No existing runtime/Bootstrap/core/player/model/audio files changed. New runtime, editor builder and two procedural shaders only.",
+  "license": "All new code, mesh and procedural shader patterns are original for OUT OF REACH; no external asset source."
+}

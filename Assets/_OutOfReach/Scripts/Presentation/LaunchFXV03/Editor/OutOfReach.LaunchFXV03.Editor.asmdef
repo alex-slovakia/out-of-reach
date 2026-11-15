@@ -1,0 +1,7 @@
+{
+  "name": "OutOfReach.LaunchFXV03.Editor",
+  "rootNamespace": "OutOfReach.Presentation.LaunchFXV03.Editor",
+  "references": ["OutOfReach.LaunchFXV03"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

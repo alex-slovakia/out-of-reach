@@ -1,0 +1,6 @@
+{
+  "name": "OutOfReach.LaunchFXV03",
+  "rootNamespace": "OutOfReach.Presentation.LaunchFXV03",
+  "references": ["OutOfReach.Cinematics"],
+  "autoReferenced": true
+}
