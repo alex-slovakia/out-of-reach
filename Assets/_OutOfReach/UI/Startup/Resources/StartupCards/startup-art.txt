@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!--
+    PLACEHOLDER startup art: original goat head with a Slovak double cross, gold on black.
+    Drop-in contract for the final artwork: replace this file's contents with the final SVG (keep the file name).
+    Document order = pencil stroke order. A shape with a stroke is traced with that stroke; a shape with only a fill is
+    traced in pencil gold and then filled. After the last stroke, all fills fade in together.
+    Supported: path (all commands incl. arcs), rect, circle, ellipse, line, polyline, polygon, g, transform, viewBox,
+    fill / stroke / stroke-width / opacity / fill-opacity / stroke-opacity / fill-rule. Gradients are not rendered.
+  -->
+  <g stroke="#E8B554" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- horns -->
+    <path fill="#E8B554" d="M158 146 C118 150 74 120 70 64 C70 52 82 50 86 60 C98 98 128 112 170 118 Z"/>
+    <path fill="#E8B554" d="M242 146 C282 150 326 120 330 64 C330 52 318 50 314 60 C302 98 272 112 230 118 Z"/>
+    <!-- ears -->
+    <path fill="#D9A441" d="M148 176 C118 168 92 178 80 196 C106 206 130 204 150 196 Z"/>
+    <path fill="#D9A441" d="M252 176 C282 168 308 178 320 196 C294 206 270 204 250 196 Z"/>
+    <!-- head -->
+    <path fill="#B8842B" d="M200 118 C232 118 252 138 254 170 C256 205 240 240 226 272 C218 290 222 312 214 330 C208 342 192 342 186 330 C178 312 182 290 174 272 C160 240 144 205 146 170 C148 138 168 118 200 118 Z"/>
+    <!-- beard -->
+    <path fill="#D9A441" d="M192 342 C186 360 188 376 200 392 C212 376 214 360 208 342 Z"/>
+    <!-- double cross -->
+    <path fill="#E8B554" d="M194 18 L206 18 L206 36 L228 36 L228 48 L206 48 L206 62 L240 62 L240 74 L206 74 L206 108 L194 108 L194 74 L160 74 L160 62 L194 62 L194 48 L172 48 L172 36 L194 36 Z"/>
+    <!-- eyes with horizontal goat pupils -->
+    <path fill="#0B0B0C" d="M168 188 C178 180 194 182 196 190 C188 198 174 198 168 188 Z"/>
+    <path fill="#0B0B0C" d="M232 188 C222 180 206 182 204 190 C212 198 226 198 232 188 Z"/>
+    <path fill="#E8B554" stroke-width="1.5" d="M176 189 L188 189 L188 192.5 L176 192.5 Z"/>
+    <path fill="#E8B554" stroke-width="1.5" d="M212 189 L224 189 L224 192.5 L212 192.5 Z"/>
+    <!-- nose bridge, nostrils, mouth -->
+    <path fill="none" stroke-width="2" d="M186 205 C188 240 190 270 190 300"/>
+    <path fill="none" stroke-width="2" d="M214 205 C212 240 210 270 210 300"/>
+    <path fill="none" stroke-width="2.5" d="M190 312 C192 307 197 307 198 312"/>
+    <path fill="none" stroke-width="2.5" d="M210 312 C208 307 203 307 202 312"/>
+    <path fill="none" stroke-width="2.5" d="M186 322 Q200 335 214 322"/>
+  </g>
+</svg>
