@@ -1,47 +1,65 @@
-unity=6000.3.28f1 gpu=NVIDIA GeForce RTX 3070 api=Direct3D12 cpu=Intel(R) Core(TM) i7-10700F CPU @ 2.90GHz date=2026-11-15 20:25
+unity=6000.3.28f1 gpu=NVIDIA GeForce RTX 3070 api=Direct3D12 cpu=Intel(R) Core(TM) i7-10700F CPU @ 2.90GHz date=2026-11-15 21:12
 shader Assets/_OutOfReach/Visuals/LaunchGrassV04/PampasGrassV04.shader loaded=True hasError=False messages=0 passes=3 supported=True
 shader Assets/_OutOfReach/Visuals/LaunchGrassV04/LaunchHazeDomeV04.shader loaded=True hasError=False messages=0 passes=1 supported=True
 innerMesh verts=53092 bounds=Center: (0.00, -33.70, 5.00), Extents: (3000.00, 23.32, 2995.00) readable=True
-installer ms=1288 report: field=Launch grass V04 - pampas field instances=510158 chunks=993 nearTris=246 cardTris=12 buildMs=873.5 footprintsCleared=0 departureBound=Departure (stub) gustOrigin=Land pad top plane switchedOff=[Launch grass V03 - dense meadow] collidersChanged=0
-LAUNCH_GRASS_V04_COST instances=510158 chunks=993 nearTris=246 cardTris=12 buildMs=873.5 lastDrawCalls=0 lastNearInstances=0 lastCardInstances=0 lastTriangles=0 reduced=False
+installer ms=838 report: field=Launch grass V04 - pampas field instances=267127 chunks=937 nearTris=382 cardTris=12 buildMs=550.2 footprintsCleared=0 departureBound=Departure (stub) gustOrigin=Land pad top plane switchedOff=[Launch grass V03 - dense meadow] collidersChanged=0
+LAUNCH_GRASS_V04_COST instances=267127 chunks=937 nearTris=382 cardTris=12 buildMs=550.2 lastDrawCalls=0 lastNearInstances=0 lastCardInstances=0 lastTriangles=0 reduced=False
+compilePass OutOfReach/Launch Pampas Grass V04 [UniversalForward] errorsAfter=False messages=0
+compilePass OutOfReach/Launch Pampas Grass V04 [DepthOnly] errorsAfter=False messages=0
+compilePass OutOfReach/Launch Pampas Grass V04 [DepthNormals] errorsAfter=False messages=0
+compilePass OutOfReach/Launch Haze Dome V04 [Haze] errorsAfter=False messages=0
 shellsActiveAfterInstall=False profileComponents=Tonemapping,Bloom,WhiteBalance,ColorAdjustments,SplitToning,FilmGrain,Vignette
-shot 01-eye-level-backlit-towards-sun pos=(150.0, -34.6, 70.0) drawCalls=161 near=2304 cards=32865 tris=961164 gust=0.00 front=0
-shot 02-eye-level-towards-pad pos=(115.0, -34.9, -40.0) drawCalls=143 near=2810 cards=17408 tris=900156 gust=0.00 front=0
-shot 03-elevated-30m-over-field-sunward pos=(60.0, -2.6, -50.0) drawCalls=177 near=0 cards=36867 tris=442404 gust=0.00 front=0
-shot 04-elevated-30m-away-from-sun pos=(-60.0, -2.6, 60.0) drawCalls=188 near=0 cards=40131 tris=481572 gust=0.00 front=0
-shot 05-ground-closeup-plumes pos=(140.0, -34.4, 85.0) drawCalls=177 near=4608 cards=35983 tris=1565364 gust=0.00 front=0
-shot 11-wind-waves-elevated-t0s pos=(70.0, -10.6, -95.0) drawCalls=185 near=1656 cards=37185 tris=853596 gust=0.00 front=0
-shot 11-wind-waves-elevated-t2s pos=(70.0, -10.6, -95.0) drawCalls=185 near=1656 cards=37185 tris=853596 gust=0.00 front=0
-shot 11-wind-waves-elevated-t4s pos=(70.0, -10.6, -95.0) drawCalls=185 near=1656 cards=37185 tris=853596 gust=0.00 front=0
-shot 06-gust-eye-level-t+0.4s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2810 cards=17408 tris=900156 gust=1.00 front=18
-shot 07-gust-aerial-t+0.4s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=21236 tris=254832 gust=1.00 front=18
-shot 06-gust-eye-level-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2810 cards=17408 tris=900156 gust=1.00 front=50
-shot 07-gust-aerial-t+1.2s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=21236 tris=254832 gust=1.00 front=50
-shot 06-gust-eye-level-t+2.4s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2810 cards=17408 tris=900156 gust=1.00 front=92
-shot 07-gust-aerial-t+2.4s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=21236 tris=254832 gust=1.00 front=92
-shot 06-gust-eye-level-t+4.0s pos=(115.0, -34.9, -40.0) drawCalls=143 near=2810 cards=17408 tris=900156 gust=1.00 front=138
-shot 07-gust-aerial-t+4.0s pos=(105.0, 12.0, -105.0) drawCalls=133 near=0 cards=21236 tris=254832 gust=1.00 front=138
-shot 08-reduced-effects-gust-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=47 near=1746 cards=4081 tris=478488 gust=0.50 front=50
-shot 09-reduced-effects-backlit pos=(150.0, -34.6, 70.0) drawCalls=87 near=1432 cards=11374 tris=488760 gust=0.00 front=0
-shot 10-idle-no-launch-grade-backlit pos=(150.0, -34.6, 70.0) drawCalls=161 near=2304 cards=32865 tris=961164 gust=0.00 front=0
+shot 01-eye-level-backlit-towards-sun pos=(150.0, -34.6, 70.0) drawCalls=179 near=3058 cards=29328 tris=1520092 gust=0.00 front=0
+shot 02-eye-level-towards-pad pos=(115.0, -34.9, -40.0) drawCalls=252 near=2127 cards=31800 tris=1194114 gust=0.00 front=0
+shot 03-elevated-30m-over-field-sunward pos=(60.0, -2.6, -50.0) drawCalls=181 near=939 cards=34866 tris=777090 gust=0.00 front=0
+shot 04-elevated-30m-away-from-sun pos=(-60.0, -2.6, 60.0) drawCalls=188 near=596 cards=37878 tris=682208 gust=0.00 front=0
+shot 05-ground-closeup-plumes pos=(140.0, -34.4, 85.0) drawCalls=203 near=3920 cards=33275 tris=1896740 gust=0.00 front=0
+shot 12-platform-25m-sunward pos=(30.0, -7.6, -20.0) drawCalls=221 near=0 cards=40922 tris=491064 gust=0.00 front=0
+shot 13-platform-25m-crosslight pos=(30.0, -7.6, 30.0) drawCalls=240 near=0 cards=38606 tris=463272 gust=0.00 front=0
+shot 14-platform-12m-away-from-sun pos=(-40.0, -20.6, 40.0) drawCalls=202 near=923 cards=36280 tris=787946 gust=0.00 front=0
+shot 11-wind-waves-12m-t0s pos=(45.0, -20.6, 40.0) drawCalls=215 near=1167 cards=38773 tris=911070 gust=0.00 front=0
+shot 11-wind-waves-12m-t2s pos=(45.0, -20.6, 40.0) drawCalls=215 near=1167 cards=38773 tris=911070 gust=0.00 front=0
+shot 11-wind-waves-12m-t4s pos=(45.0, -20.6, 40.0) drawCalls=215 near=1167 cards=38773 tris=911070 gust=0.00 front=0
+shot 06-gust-eye-level-t+0.4s pos=(115.0, -34.9, -40.0) drawCalls=252 near=2127 cards=31800 tris=1194114 gust=1.00 front=18
+shot 07-gust-aerial-t+0.4s pos=(105.0, 12.0, -105.0) drawCalls=234 near=0 cards=44148 tris=529776 gust=1.00 front=18
+shot 06-gust-eye-level-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=252 near=2127 cards=31800 tris=1194114 gust=1.00 front=50
+shot 07-gust-aerial-t+1.2s pos=(105.0, 12.0, -105.0) drawCalls=234 near=0 cards=44148 tris=529776 gust=1.00 front=50
+shot 06-gust-eye-level-t+2.4s pos=(115.0, -34.9, -40.0) drawCalls=252 near=2127 cards=31800 tris=1194114 gust=1.00 front=92
+shot 07-gust-aerial-t+2.4s pos=(105.0, 12.0, -105.0) drawCalls=234 near=0 cards=44148 tris=529776 gust=1.00 front=92
+shot 06-gust-eye-level-t+4.0s pos=(115.0, -34.9, -40.0) drawCalls=252 near=2127 cards=31800 tris=1194114 gust=1.00 front=138
+shot 07-gust-aerial-t+4.0s pos=(105.0, 12.0, -105.0) drawCalls=234 near=0 cards=44148 tris=529776 gust=1.00 front=138
+shot 08-reduced-effects-gust-t+1.2s pos=(115.0, -34.9, -40.0) drawCalls=93 near=1321 cards=6851 tris=586834 gust=0.50 front=50
+shot 09-reduced-effects-backlit pos=(150.0, -34.6, 70.0) drawCalls=133 near=1895 cards=12941 tris=879182 gust=0.00 front=0
+shot 10-idle-eye-level-backlit pos=(150.0, -34.6, 70.0) drawCalls=179 near=3058 cards=29328 tris=1520092 gust=0.00 front=0
+shot 15-idle-platform-25m-sunward pos=(30.0, -7.6, -20.0) drawCalls=221 near=0 cards=40922 tris=491064 gust=0.00 front=0
+shot 16-idle-platform-25m-crosslight pos=(30.0, -7.6, 30.0) drawCalls=240 near=0 cards=38606 tris=463272 gust=0.00 front=0
+shot 17-idle-platform-12m-away-from-sun pos=(-40.0, -20.6, 40.0) drawCalls=202 near=923 cards=36280 tris=787946 gust=0.00 front=0
+depthFogUsed=True
+shot 18-idle-platform-25m-sunward-no-depth-fallback pos=(30.0, -7.6, -20.0) drawCalls=221 near=0 cards=40922 tris=491064 gust=0.00 front=0
+depthFogUsed(after switch off)=False
 --- frame timing: camera.Render + GPU sync (1x1 readback), 1600x900, 6 interleaved rounds x 10 frames; min / median ms ---
 01-eye-level-backlit-towards-sun
-   noGrass 1.96 / 2.94
-   v04 5.16 / 7.52 drawCalls=161 near=2304 cards=32865 tris=961164
-   v04 reduced 4.50 / 5.67 drawCalls=87 near=1432 cards=11374 tris=488760
-   v03 shells 4.91 / 5.84
+   noGrass 2.07 / 2.98
+   v04 5.95 / 7.65 drawCalls=179 near=3058 cards=29328 tris=1520092
+   v04 reduced 4.76 / 6.23 drawCalls=133 near=1895 cards=12941 tris=879182
+   v03 shells 4.92 / 6.04
 02-eye-level-towards-pad
-   noGrass 2.33 / 2.88
-   v04 4.99 / 6.37 drawCalls=143 near=2810 cards=17408 tris=900156
-   v04 reduced 3.61 / 4.57 drawCalls=47 near=1746 cards=4081 tris=478488
-   v03 shells 3.99 / 4.58
-03-elevated-30m-over-field-sunward
-   noGrass 3.43 / 4.04
-   v04 5.92 / 7.35 drawCalls=177 near=0 cards=36867 tris=442404
-   v04 reduced 4.28 / 5.86 drawCalls=81 near=0 cards=11266 tris=135192
-   v03 shells 3.37 / 4.56
+   noGrass 2.59 / 3.39
+   v04 6.68 / 9.70 drawCalls=252 near=2127 cards=31800 tris=1194114
+   v04 reduced 4.31 / 5.92 drawCalls=93 near=1321 cards=6851 tris=586834
+   v03 shells 4.67 / 5.55
 05-ground-closeup-plumes
-   noGrass 3.10 / 3.80
-   v04 7.18 / 8.84 drawCalls=177 near=4608 cards=35983 tris=1565364
-   v04 reduced 5.57 / 6.77 drawCalls=96 near=2864 cards=12877 tris=859068
-   v03 shells 6.38 / 7.05
+   noGrass 2.21 / 3.13
+   v04 6.21 / 7.81 drawCalls=203 near=3920 cards=33275 tris=1896740
+   v04 reduced 4.87 / 6.49 drawCalls=143 near=2436 cards=14453 tris=1103988
+   v03 shells 4.96 / 5.80
+12-platform-25m-sunward
+   noGrass 2.44 / 2.86
+   v04 5.57 / 6.86 drawCalls=221 near=0 cards=40922 tris=491064
+   v04 reduced 4.11 / 5.15 drawCalls=134 near=0 cards=17456 tris=209472
+   v03 shells 2.62 / 3.50
+13-platform-25m-crosslight
+   noGrass 2.68 / 4.00
+   v04 5.70 / 7.64 drawCalls=240 near=0 cards=38606 tris=463272
+   v04 reduced 3.90 / 5.93 drawCalls=101 near=0 cards=11162 tris=133944
+   v03 shells 2.55 / 4.08

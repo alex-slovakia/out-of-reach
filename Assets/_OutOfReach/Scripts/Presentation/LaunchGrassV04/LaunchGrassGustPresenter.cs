@@ -12,7 +12,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
     ///   the pampas field outwards, followed by a sustained push that fades as the vehicle climbs away.
     /// - The launch Volume (warm grade, bloom, light grain) blends in for the departure's exterior launch shots and
     ///   out before the stationary site is switched off at UpperAirSeconds.
-    /// - A camera-centred haze dome adds a warm, sun-ward horizon band (the grass applies matching aerial haze).
+    /// - Launch haze: when the camera has a depth texture, one pass of distance fog with a height falloff over
+    ///   every opaque surface (field, far land, mountains, low sky); otherwise a far horizon dome and the grass's
+    ///   own aerial haze. Drawn only while the launch site (the field) is active.
     /// Pause holds every value. Reduced effects (the departure's ReducedMotion): half gust, no shiver, no grain,
     /// lighter bloom, thinner and shorter grass. No clock, audio, gameplay or simulation authority.
     /// </summary>
@@ -35,16 +37,25 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [Header("Look weights")]
         [SerializeField, Range(0f, 1f), Tooltip("Volume weight outside the departure (walking the site).")]
         private float idleVolumeWeight = 0f;
-        [SerializeField, Range(0f, 1f)] private float idleHaze = .55f;
+        [SerializeField, Range(0f, 1f), Tooltip("Haze outside the departure (walking the site).")]
+        private float idleHaze = .85f;
         [SerializeField, Range(.1f, 5f)] private float blendSeconds = 1.6f;
-        [SerializeField, Range(100f, 6000f)] private float hazeRadius = 2200f;
+        [Header("Haze")]
+        [SerializeField, Tooltip("Distance fog from the camera depth texture when the camera provides one.")]
+        private bool depthFog = true;
+        [SerializeField, Range(100f, 6000f), Tooltip("Radius of the horizon dome used without a depth texture.")]
+        private float fallbackDomeRadius = 2200f;
         [Header("Editor preview (Edit mode only; < 0 = off)")]
         [SerializeField] private float previewSecondsAfterIgnition = -1f;
 
         private static readonly int GustId = Shader.PropertyToID("_OOR_GrassGust");
         private static readonly int GustWaveId = Shader.PropertyToID("_OOR_GrassGustWave");
-        private static readonly int HazeId = Shader.PropertyToID("_OOR_LaunchHaze");
-        private Mesh dome;
+        private static readonly int GrassHazeId = Shader.PropertyToID("_OOR_LaunchHaze");
+        private static readonly int FogId = Shader.PropertyToID("_OOR_LaunchFog");
+        private static readonly int FogGroundId = Shader.PropertyToID("_OOR_LaunchFogGround");
+        private static readonly int ZTestId = Shader.PropertyToID("_ZTest");
+        private Mesh dome, sphere;
+        private Material depthFogMaterial;
         private float volumeWeight;
         private bool reducedApplied, reducedKnown;
         private FilmGrain grain; private Bloom bloom; private float bloomIntensity;
@@ -53,6 +64,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         public float GustFrontRadius { get; private set; }
         public float VolumeWeight => volumeWeight;
         public float Haze { get; private set; }
+        /// <summary>True when the last rendered game/scene camera used the depth fog pass (diagnostics).</summary>
+        public bool LastUsedDepthFog { get; private set; }
+        public bool DepthFog { get => depthFog; set => depthFog = value; }
 
         public void Configure(TransportDeparturePresenter sequence, Transform origin, PampasGrassField grass, Volume volume, Material haze)
         {
@@ -70,9 +84,18 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         {
             RenderPipelineManager.beginCameraRendering -= DrawHaze;
             Shader.SetGlobalVector(GustId, Vector4.zero);
-            Shader.SetGlobalFloat(HazeId, 0f);
+            Shader.SetGlobalFloat(GrassHazeId, 0f);
+            Shader.SetGlobalFloat(FogId, 0f);
             if (launchVolume) launchVolume.weight = 0f;
-            if (dome) { if (Application.isPlaying) Destroy(dome); else DestroyImmediate(dome); dome = null; }
+            Release(ref dome); Release(ref sphere);
+            if (depthFogMaterial) { if (Application.isPlaying) Destroy(depthFogMaterial); else DestroyImmediate(depthFogMaterial); depthFogMaterial = null; }
+        }
+
+        private static void Release(ref Mesh mesh)
+        {
+            if (!mesh) return;
+            if (Application.isPlaying) Destroy(mesh); else DestroyImmediate(mesh);
+            mesh = null;
         }
 
         private void LateUpdate()
@@ -105,6 +128,14 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             Write(g, r, reduced, Mathf.Lerp(idleHaze, 1f, w));
         }
 
+        /// <summary>Edit-mode preview / evidence capture: the look outside a departure (walking the site).</summary>
+        public void PreviewIdle()
+        {
+            volumeWeight = idleVolumeWeight;
+            if (field) field.SetReducedEffects(false);
+            Write(0f, 0f, false, idleHaze);
+        }
+
         /// <summary>Deterministic envelope for a departure time (seconds on the transport playhead).</summary>
         private void Sample(float seconds, bool reduced, out float gust, out float radius, out float lookWeight)
         {
@@ -122,7 +153,6 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             Vector3 o = gustOrigin ? gustOrigin.position : transform.position;
             Shader.SetGlobalVector(GustId, new Vector4(o.x, o.y, o.z, gust));
             Shader.SetGlobalVector(GustWaveId, new Vector4(radius, frontWidth, sustainedReach, reduced ? 0f : flutter));
-            Shader.SetGlobalFloat(HazeId, haze);
             if (launchVolume) launchVolume.weight = volumeWeight;
         }
 
@@ -137,21 +167,53 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             if (bloom) bloom.intensity.value = bloomIntensity * (reduced ? .55f : 1f);
         }
 
+        private static bool HasDepthTexture(Camera camera)
+        {
+            if (camera.TryGetComponent(out UniversalAdditionalCameraData data)) return data.requiresDepthTexture;
+            UniversalRenderPipelineAsset asset = UniversalRenderPipeline.asset;
+            return asset && asset.supportsCameraDepthTexture;
+        }
+
         private void DrawHaze(ScriptableRenderContext context, Camera camera)
         {
-            if (!hazeMaterial || Haze <= .001f || !isActiveAndEnabled) return;
+            if (!isActiveAndEnabled) return;
             if (camera.cameraType != CameraType.Game && camera.cameraType != CameraType.SceneView) return;
-            if (field && !field.isActiveAndEnabled) return;            // site switched off: no launch haze
-            if (!dome) dome = PampasGrassMeshes.BuildDome();
-            float r = Mathf.Min(hazeRadius, camera.farClipPlane * .85f);
+            bool siteActive = !field || field.isActiveAndEnabled;      // site switched off: no launch haze
+            bool useDepth = depthFog && siteActive && hazeMaterial && HasDepthTexture(camera);
+            LastUsedDepthFog = useDepth;
+            // With the depth pass every surface is fogged alike, so the grass must not add its own haze on top.
+            Shader.SetGlobalFloat(GrassHazeId, useDepth || !siteActive ? 0f : Haze);
+            Shader.SetGlobalFloat(FogId, siteActive ? Haze : 0f);
+            float datum = field && field.IsReady ? field.MeanGroundY : gustOrigin ? gustOrigin.position.y : transform.position.y;
+            Shader.SetGlobalVector(FogGroundId, new Vector4(datum, 0f, 0f, 0f));
+            if (!hazeMaterial || !siteActive || Haze <= .001f) return;
             Vector3 eye = camera.transform.position;
-            var rp = new RenderParams(hazeMaterial)
+            Material material; Mesh mesh; float radius;
+            if (useDepth)
+            {
+                if (!depthFogMaterial)
+                {
+                    depthFogMaterial = new Material(hazeMaterial) { name = "Launch haze (depth fog)", hideFlags = HideFlags.DontSave };
+                    depthFogMaterial.EnableKeyword("_DEPTH_FOG");
+                    depthFogMaterial.SetFloat(ZTestId, (float)CompareFunction.Always);
+                }
+                if (!sphere) sphere = PampasGrassMeshes.BuildSphere();
+                material = depthFogMaterial; mesh = sphere;
+                radius = Mathf.Clamp(camera.nearClipPlane * 40f, 2f, camera.farClipPlane * .5f);
+            }
+            else
+            {
+                if (!dome) dome = PampasGrassMeshes.BuildDome();
+                material = hazeMaterial; mesh = dome;
+                radius = Mathf.Min(fallbackDomeRadius, camera.farClipPlane * .85f);
+            }
+            var rp = new RenderParams(material)
             {
                 camera = camera, layer = gameObject.layer, shadowCastingMode = ShadowCastingMode.Off, receiveShadows = false,
                 lightProbeUsage = LightProbeUsage.Off, reflectionProbeUsage = ReflectionProbeUsage.Off,
-                worldBounds = new Bounds(eye, Vector3.one * r * 2.2f),
+                worldBounds = new Bounds(eye, Vector3.one * radius * 2.2f),
             };
-            Graphics.RenderMesh(rp, dome, 0, Matrix4x4.TRS(eye, Quaternion.identity, Vector3.one * r));
+            Graphics.RenderMesh(rp, mesh, 0, Matrix4x4.TRS(eye, Quaternion.identity, Vector3.one * radius));
         }
 
         private static float Smooth(float x) { x = Mathf.Clamp01(x); return x * x * (3f - 2f * x); }

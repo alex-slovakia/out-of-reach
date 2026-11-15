@@ -67,46 +67,48 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             return ((h ^ (h >> 16)) & 0xffffff) / 16777216f;
         }
 
-        /// <summary>Full clump: 11 stalks with crossed feather plumes and 6 arching leaves (~250 triangles).</summary>
+        /// <summary>
+        /// Full clump (~380 triangles): a fountain of 22 arching, drooping leaves and 9 bare stalks of different
+        /// heights, each carrying a seed head as two crossed quads (aspect 1:2, one cell of PampasPlumesV04.png).
+        /// </summary>
         public static Mesh BuildNearClump()
         {
             var b = new Builder();
-            const int stems = 11, leaves = 6;
+            const int stems = 9, leaves = 22;
             for (int i = 0; i < stems; i++)
             {
-                float az = (i + Hash(i, 1) * .7f) / stems * Mathf.PI * 2f;
+                float az = (i + Hash(i, 1) * .8f) / stems * Mathf.PI * 2f;
                 Vector3 outward = new Vector3(Mathf.Cos(az), 0, Mathf.Sin(az));
-                Vector3 baseP = outward * (.02f + .12f * Hash(i, 2));
-                float lean = Mathf.Lerp(.08f, .34f, Hash(i, 3));
-                float height = Mathf.Lerp(.74f, 1f, Hash(i, 4));
+                Vector3 baseP = outward * (.02f + .08f * Hash(i, 2));
+                float lean = Mathf.Lerp(.05f, .34f, Hash(i, 3));
+                float height = i == 0 ? 1f : Mathf.Lerp(.60f, .96f, Hash(i, 4));
                 float rnd = Hash(i, 5);
-                float droop = Mathf.Lerp(.04f, .17f, Hash(i, 6));
-                float stalkTop = .55f;
+                float droop = Mathf.Lerp(.03f, .12f, Hash(i, 6));
+                float headLength = Mathf.Lerp(.30f, .40f, Hash(i, 7));          // in clump heights
+                float stalkTop = 1f - headLength / height;                       // where the head starts along the stem
                 System.Func<float, Vector3> stemCurve = v =>
                 {
                     float y = v * height;
                     return baseP + outward * (lean * v * height + droop * v * v * v) + Vector3.up * (y - droop * .4f * v * v * v);
                 };
                 Vector3 side = Vector3.Cross(Vector3.up, outward).normalized;
-                b.Ribbon(v => stemCurve(v * stalkTop), v => .011f * (1f - .4f * v), side, 3, PartStalk, rnd, 1);
-                // Plume: two crossed ribbons from the stalk top to the tip.
+                b.Ribbon(v => stemCurve(v * (stalkTop + .04f)), v => .008f * (1f - .3f * v), side, 3, PartStalk, rnd, 1);
                 for (int q = 0; q < 2; q++)
                 {
-                    Vector3 plumeSide = q == 0 ? side : outward;
-                    b.Ribbon(v => stemCurve(Mathf.Lerp(stalkTop - .03f, 1f, v)), v => .075f, plumeSide, 3, PartPlume, rnd, 1);
+                    Vector3 headSide = q == 0 ? side : outward;
+                    b.Ribbon(v => stemCurve(Mathf.Lerp(stalkTop, 1f, v)), v => headLength * .25f, headSide, 3, PartPlume, rnd, 1);
                 }
             }
             for (int i = 0; i < leaves; i++)
             {
                 float az = (i + Hash(i, 11)) / leaves * Mathf.PI * 2f;
                 Vector3 outward = new Vector3(Mathf.Cos(az), 0, Mathf.Sin(az));
-                float length = Mathf.Lerp(.42f, .78f, Hash(i, 12));
-                float rise = Mathf.Lerp(.30f, .55f, Hash(i, 13));
-                float reach = Mathf.Lerp(.18f, .42f, Hash(i, 14));
+                float reach = Mathf.Lerp(.26f, .60f, Hash(i, 12));               // horizontal reach of the tip
+                float rise = Mathf.Lerp(.28f, .54f, Hash(i, 13));                // height of the arch
                 Vector3 side = Vector3.Cross(Vector3.up, outward).normalized;
-                // Arching leaf: rises, then droops back down under its own weight.
-                b.Ribbon(v => outward * (reach * v * length / .6f) + Vector3.up * (rise * length / .6f * (v * 1.6f - .9f * v * v)),
-                    v => .024f * (1f - v * v), side, 4, PartLeaf, Hash(i, 15), .55f);
+                // Fountain leaf: climbs steeply, arches over at ~58 % of its length and droops to ~45 % of its peak.
+                b.Ribbon(v => outward * (reach * (.35f * v + .65f * v * v)) + Vector3.up * (rise * (3.46f * v - 3f * v * v)),
+                    v => .02f * (1f - v * v * v), side, 5, PartLeaf, Hash(i, 15), .5f);
             }
             return b.Build("Pampas clump V04 (near)");
         }
@@ -127,14 +129,19 @@ namespace OutOfReach.Presentation.LaunchGrassV04
 
         public static int TriangleCount(Mesh mesh) => mesh ? (int)(mesh.GetIndexCount(0) / 3) : 0;
 
-        /// <summary>Unit inverted hemisphere (radius 1, y >= -0.08) for the haze dome.</summary>
-        public static Mesh BuildDome()
+        /// <summary>Unit sphere around the camera for the depth fog pass (covers the whole screen).</summary>
+        public static Mesh BuildSphere() => BuildDome(-Mathf.PI * .5f, "Launch haze sphere V04");
+
+        /// <summary>Unit hemisphere (radius 1, elevation >= -0.08 rad) for the fallback horizon dome.</summary>
+        public static Mesh BuildDome() => BuildDome(-.08f, "Launch haze dome V04");
+
+        private static Mesh BuildDome(float lowestElevation, string name)
         {
-            const int rings = 12, segments = 48;
+            const int rings = 14, segments = 48;
             var p = new List<Vector3>(); var t = new List<int>();
             for (int r = 0; r <= rings; r++)
             {
-                float el = Mathf.Lerp(-.08f, Mathf.PI * .5f, r / (float)rings);
+                float el = Mathf.Lerp(lowestElevation, Mathf.PI * .5f, r / (float)rings);
                 for (int s = 0; s <= segments; s++)
                 {
                     float az = s / (float)segments * Mathf.PI * 2f;
@@ -147,7 +154,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                     int a = r * (segments + 1) + s, c = a + segments + 1;
                     t.Add(a); t.Add(c); t.Add(a + 1); t.Add(a + 1); t.Add(c); t.Add(c + 1);
                 }
-            var mesh = new Mesh { name = "Launch haze dome V04", hideFlags = HideFlags.DontSave };
+            var mesh = new Mesh { name = name, hideFlags = HideFlags.DontSave };
             mesh.SetVertices(p); mesh.SetTriangles(t, 0); mesh.RecalculateBounds(); mesh.UploadMeshData(true);
             return mesh;
         }

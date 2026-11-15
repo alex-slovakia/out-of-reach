@@ -27,6 +27,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         public const string GrassMaterialPath = Folder + "/PampasGrassV04.mat";
         public const string HazeMaterialPath = Folder + "/LaunchHazeDomeV04.mat";
         public const string ProfilePath = Folder + "/LaunchCinematicV04.asset";
+        public const string PlumeTexturePath = Folder + "/PampasPlumesV04.png";
+        public const string ClumpTexturePath = Folder + "/PampasClumpsV04.png";
         public const string FieldName = "Launch grass V04 - pampas field";
         public const string LookName = "Launch look V04 - grade, haze and thruster gust";
         public const string ShellMeadowName = "Launch grass V03 - dense meadow";
@@ -87,6 +89,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             var collidersBefore = ActiveColliders(scene);
 
             Material grass = EnsureMaterial(GrassMaterialPath, GrassShaderPath);
+            grass.SetTexture("_PlumeTex", EnsureTexture(PlumeTexturePath));
+            grass.SetTexture("_ClumpTex", EnsureTexture(ClumpTexturePath));
             Material haze = EnsureMaterial(HazeMaterialPath, HazeShaderPath);
             VolumeProfile profile = EnsureProfile();
             Vector4[] footprints = Footprints(site, inner);
@@ -170,10 +174,33 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             if (!shader || ShaderUtil.ShaderHasError(shader)) throw new InvalidOperationException("Shader missing or has errors: " + shaderPath);
             var material = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (!material) { material = new Material(shader); AssetDatabase.CreateAsset(material, path); }
+            // The installer owns these materials: every install resets them to the committed shader defaults.
+            var defaults = new Material(shader);
             material.shader = shader;
+            material.CopyPropertiesFromMaterial(defaults);
+            Object.DestroyImmediate(defaults);
             material.enableInstancing = false;
             EditorUtility.SetDirty(material);
             return material;
+        }
+
+        /// <summary>Alpha-tested atlas import: mip-maps that preserve coverage, clamped, sRGB.</summary>
+        private static Texture2D EnsureTexture(string path)
+        {
+            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (!importer) throw new InvalidOperationException("Missing texture: " + path);
+            bool ok = importer.mipmapEnabled && importer.mipMapsPreserveCoverage && Mathf.Abs(importer.alphaTestReferenceValue - .4f) < .001f
+                && importer.wrapMode == TextureWrapMode.Clamp && importer.alphaIsTransparency && importer.sRGBTexture
+                && importer.anisoLevel == 4 && importer.textureCompression == TextureImporterCompression.CompressedHQ;
+            if (!ok)
+            {
+                importer.textureType = TextureImporterType.Default;
+                importer.mipmapEnabled = true; importer.mipMapsPreserveCoverage = true; importer.alphaTestReferenceValue = .4f;
+                importer.wrapMode = TextureWrapMode.Clamp; importer.alphaIsTransparency = true; importer.sRGBTexture = true;
+                importer.anisoLevel = 4; importer.textureCompression = TextureImporterCompression.CompressedHQ;
+                importer.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path) ?? throw new InvalidOperationException("Texture did not import: " + path);
         }
 
         /// <summary>Warm, restrained launch grade over the existing ACES "AURORA restrained film grade" (priority 10).</summary>

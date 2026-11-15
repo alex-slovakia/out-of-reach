@@ -25,7 +25,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [Header("Field (site-local metres)")]
         [SerializeField] private Vector2 centre = new Vector2(0f, 5f);
         [SerializeField, Range(100f, 600f)] private float outerRadius = 430f;
-        [SerializeField, Range(.7f, 3f)] private float spacing = 1.0f;
+        [SerializeField, Range(.7f, 3f)] private float spacing = 1.15f;
         [SerializeField, Range(8f, 64f)] private float chunkSize = 24f;
         [SerializeField, Tooltip("x0, z0, x1, z1 rectangles kept clear, site-local; soft edge of `clearRamp` metres.")]
         private Vector4[] clearAreas =
@@ -43,10 +43,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private float maxSlope = 38f;
         [SerializeField] private int seed = 1977;
         [Header("Distance and LOD (metres)")]
-        [SerializeField, Range(50f, 600f)] private float maxDrawDistance = 340f;
-        [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 32f;
+        [SerializeField, Range(50f, 600f)] private float maxDrawDistance = 440f;
+        [SerializeField, Range(5f, 80f)] private float nearMeshDistance = 40f;
         [SerializeField, Range(1f, 12f)] private float lodBand = 4f;
-        [SerializeField, Range(.05f, 1f)] private float farCountFraction = .1f;
+        [SerializeField, Range(.05f, 1f)] private float farCountFraction = .3f;
         [SerializeField, Range(.2f, 1f), Tooltip("Far count scale for a camera at eye level, where nearer grass hides most far cards.")]
         private float lowCameraFarScale = .5f;
         [Header("Reduced effects")]
@@ -54,9 +54,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         [Header("Wind (shared globals)")]
         [SerializeField] private Vector2 windDirection = new Vector2(.82f, .57f);
         [SerializeField, Range(0f, .6f)] private float swayAngle = .16f;
-        [SerializeField, Range(0f, 1f)] private float gustAngle = .38f;
-        [SerializeField, Range(.5f, 20f)] private float gustSpeed = 6.5f;
-        [SerializeField, Range(4f, 120f)] private float gustWavelength = 34f;
+        [SerializeField, Range(0f, 1f)] private float gustAngle = .62f;
+        [SerializeField, Range(.5f, 20f)] private float gustSpeed = 4.2f;
+        [SerializeField, Range(4f, 120f)] private float gustWavelength = 62f;
 
         private static readonly int InstancesId = Shader.PropertyToID("_OOR_GrassInstances");
         private static readonly int ChunkStartId = Shader.PropertyToID("_ChunkStart");
@@ -83,6 +83,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         public float BuildMilliseconds { get; private set; }
         public bool IsReady => buffer != null && chunks.Length > 0 && material;
         public bool ReducedEffects => reducedEffects;
+        /// <summary>Mean world height of the field's ground (the launch haze uses it as its datum).</summary>
+        public float MeanGroundY => meanGroundY;
         /// <summary>Last frame's draw statistics for the most recent game/scene camera (diagnostics only).</summary>
         public int LastDrawCalls { get; private set; }
         public int LastNearInstances { get; private set; }
@@ -204,6 +206,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 foreach (Vector4 r in clearAreas) keep *= 1f - Box(p, r, clearRamp);
                 foreach (Vector4 r in footprints) keep *= 1f - Box(p, r, 3f);
                 if (keep <= 0f) continue;
+                // Feathered, irregular outer edge instead of a circle.
+                float edgeRadius = (p - centre).magnitude + (ValueNoise(p / 37f + new Vector2(11.3f, 4.1f)) - .5f) * 90f;
+                keep *= 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(outerRadius * .68f, outerRadius, edgeRadius));
                 float n = ValueNoise(p / 41f + new Vector2(seed * .01f, 3.1f)) * .7f + ValueNoise(p / 12f + new Vector2(7.7f, seed * .02f)) * .3f;
                 keep *= Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(clearings - .12f, clearings + .14f, n));
                 if (Hash(i, j, seed + 29) >= keep) continue;
