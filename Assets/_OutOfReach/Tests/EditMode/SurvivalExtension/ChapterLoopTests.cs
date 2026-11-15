@@ -24,9 +24,9 @@ namespace OutOfReach.Tests.EditMode
         }
 
         /// <summary>Launched with the chapter loop and the payload salvage bound, impact acknowledged: day 1, Emergency.</summary>
-        private static MissionSession Accident(bool salvage = true)
+        private static MissionSession Accident(bool salvage = true, string presetId = null)
         {
-            var session = new MissionSession(survivalExtension: true, chapterLoop: true);
+            var session = new MissionSession(startingPresetId: presetId, survivalExtension: true, chapterLoop: true);
             session.EnableFieldModifications(salvage, false);
             Require(session.Planner.TryLaunch());
             Fixtures.TriggerImpact(session);
@@ -294,16 +294,171 @@ namespace OutOfReach.Tests.EditMode
             }
         }
 
+        private static IInteractable Interaction(MissionSession session, string id)
+        {
+            Assert.That(session.Interactions.TryGet(id, out IInteractable interactable), Is.True, id);
+            return interactable;
+        }
+
+        private static bool JournalContains(MissionSession session, string text)
+        {
+            foreach (MissionLogEntry entry in session.Director.Journal.Snapshot())
+            {
+                if (entry.Text.Contains(text))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>The open GrowOrConserve decision gates the routine and refuses every other choice, changing nothing.</summary>
+        private static void AssertGrowOrConserveOpen(MissionSession session)
+        {
+            MissionChapterFlow flow = session.ChapterFlow;
+            Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Consequences), flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
+            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.GrowOrConserve), "never silently completed");
+            Assert.That(flow.ConsequencesResolution, Is.Null);
+            ResourceSnapshot before = session.Resources.Snapshot;
+            CommandResult routine = flow.TryContinueRoutine();
+            Assert.That(routine.Succeeded, Is.False);
+            Assert.That(routine.Explanation, Does.Contain("grow module"));
+            Assert.That(flow.TryChoose(ChapterChoice.PreserveScience).Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet), "no instrument to preserve");
+            Assert.That(flow.TryChoose(ChapterChoice.KeepGrowRunning).Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet));
+            Assert.That(flow.TryChoose(ChapterChoice.AcknowledgeRescueFailure).Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet));
+            Assert.That(flow.CheckChoose(ChapterChoice.ConserveReserves).Succeeded, Is.True, "conserving is always possible");
+            Fixtures.AssertSnapshot(before, session.Resources.Snapshot, 0d);
+            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.GrowOrConserve));
+        }
+
+        /// <summary>The existing paid build target settles the decision; the ledger changes by exactly its cost, once.</summary>
+        private static void BuildThroughTheExistingTarget(MissionSession session)
+        {
+            MissionChapterFlow flow = session.ChapterFlow;
+            IInteractable build = Interaction(session, InteractionIds.BuildGrowModule);
+            Assert.That(build.CanInteract, Is.True, build.Prompt);
+            ResourceSnapshot before = session.Resources.Snapshot;
+            CommandResult built = build.TryInteract();
+            Require(built);
+            ResourceSnapshot after = session.Resources.Snapshot;
+            Assert.That(after.SparePartsCount, Is.EqualTo(before.SparePartsCount - session.Survival.Spec.BuildSpareParts), "the build's own part cost");
+            Assert.That(after.BatteryKWh, Is.EqualTo(before.BatteryKWh - session.Survival.Spec.BuildEnergyKWh).Within(1e-9), "the build's own energy cost");
+            Assert.That(after.FoodKg, Is.EqualTo(before.FoodKg));
+            Assert.That(after.WaterLitres, Is.EqualTo(before.WaterLitres));
+            Assert.That(session.Survival.GrowStage, Is.EqualTo(GrowModuleStage.ReadyToPlant));
+            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.None));
+            Assert.That(flow.ConsequencesResolution, Is.EqualTo("Grow module built"));
+            Assert.That(JournalContains(session, "Day-5 decision: the crew invests"), Is.True);
+            Assert.That(build.TryInteract().Succeeded, Is.False, "a repeated press charges nothing");
+            Fixtures.AssertSnapshot(after, session.Resources.Snapshot, 0d);
+            Assert.That(flow.TryChoose(ChapterChoice.ConserveReserves).Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
+            Assert.That(flow.CheckContinueRoutine().Succeeded, Is.True, flow.CheckContinueRoutine().Explanation);
+        }
+
+        private static void ConserveReserves(MissionSession session)
+        {
+            MissionChapterFlow flow = session.ChapterFlow;
+            ResourceSnapshot before = session.Resources.Snapshot;
+            CommandResult check = flow.CheckChoose(ChapterChoice.ConserveReserves);
+            Require(check);
+            Assert.That(check.Explanation, Does.Contain("spare part"), "the forecast names the kept reserves");
+            Require(flow.TryChoose(ChapterChoice.ConserveReserves));
+            Fixtures.AssertSnapshot(before, session.Resources.Snapshot, 0d);
+            Assert.That(session.Survival.GrowStage, Is.EqualTo(GrowModuleStage.Unbuilt));
+            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.None));
+            Assert.That(flow.ConsequencesResolution, Is.EqualTo("Reserves conserved"));
+            Assert.That(JournalContains(session, "Day-5 decision: the crew conserves its reserves"), Is.True);
+            Assert.That(flow.TryChoose(ChapterChoice.ConserveReserves).Failure, Is.EqualTo(CommandFailure.AlreadyComplete), "decided once");
+            Assert.That(flow.CheckContinueRoutine().Succeeded, Is.True, flow.CheckContinueRoutine().Explanation);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Day5_WithNoSciencePayloadAboard_GrowOrConserveIsARealPaidDecision(bool build)
+        {
+            using (MissionSession session = Accident(presetId: AuroraMission.RedundancyPresetId))
+            {
+                Assert.That(session.Planner.LaunchedConfiguration.HasSciencePayload, Is.False, "the redundancy loadout carries no payload");
+                CompleteAccidentBeat(session);
+                RunRoutine(session);
+                AssertGrowOrConserveOpen(session);
+                Assert.That(session.ChapterFlow.CheckChoose(ChapterChoice.ConserveReserves).Explanation, Does.Contain("alternative"),
+                    "the forecast names the affordable alternative");
+                if (build)
+                {
+                    BuildThroughTheExistingTarget(session);
+                }
+                else
+                {
+                    ConserveReserves(session);
+
+                    // Conserving locks nothing and refunds nothing: a later build still pays its full cost.
+                    int parts = session.Resources.Snapshot.SparePartsCount;
+                    Require(session.Survival.TryBuildGrowModule());
+                    Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(parts - session.Survival.Spec.BuildSpareParts));
+                    Assert.That(session.ChapterFlow.ConsequencesResolution, Is.EqualTo("Reserves conserved"), "the decision stays as taken");
+                }
+
+                RunRoutine(session);
+                Assert.That(session.ChapterFlow.Chapter, Is.EqualTo(MissionChapter.Contact));
+            }
+        }
+
         [Test]
-        public void Day5_WithoutASalvageableInstrument_NoDecisionBlocksTheRoutine()
+        public void Day5_AfterTheInstrumentWasAlreadySalvaged_GrowOrConserveOpens_WithoutASecondCredit()
+        {
+            using (MissionSession session = Accident())
+            {
+                CompleteAccidentBeat(session);
+                IInteractable salvage = Interaction(session, InteractionIds.SalvagePayload);
+                int credit = session.FieldModifications.SalvageablePartsNow;
+                Assert.That(credit, Is.GreaterThan(0));
+                int parts = session.Resources.Snapshot.SparePartsCount;
+                Require(salvage.TryInteract());
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(parts + credit));
+                Assert.That(session.ChapterFlow.PendingDecision, Is.EqualTo(ChapterDecision.None), "no day-5 decision before day 5");
+                int afterSalvage = session.Resources.Snapshot.SparePartsCount;
+
+                RunRoutine(session);
+                Assert.That(session.Resources.Snapshot.SparePartsCount, Is.EqualTo(afterSalvage), "nothing is credited again at the beat");
+                Assert.That(salvage.TryInteract().Succeeded, Is.False, "the instrument is gone");
+                AssertGrowOrConserveOpen(session);
+                BuildThroughTheExistingTarget(session);
+            }
+        }
+
+        [Test]
+        public void Day5_WhenThisShipCannotReachTheInstrument_GrowOrConserveOpens_AndConservingSettlesIt()
         {
             using (MissionSession session = Accident(salvage: false))
             {
+                Assert.That(session.Planner.LaunchedConfiguration.HasSciencePayload, Is.True);
                 CompleteAccidentBeat(session);
                 RunRoutine(session);
-                Assert.That(session.ChapterFlow.Chapter, Is.EqualTo(MissionChapter.Consequences), session.ChapterFlow.LastRoutineStop + ": " + session.ChapterFlow.LastRoutineStopText);
-                Assert.That(session.ChapterFlow.PendingDecision, Is.EqualTo(ChapterDecision.None));
-                Assert.That(session.ChapterFlow.CheckContinueRoutine().Succeeded, Is.True);
+                Assert.That(session.FieldModifications.SalvageablePartsNow, Is.EqualTo(0));
+                AssertGrowOrConserveOpen(session);
+                ConserveReserves(session);
+            }
+        }
+
+        [Test]
+        public void Day5_AGrowModuleBuiltBeforeTheInspection_IsRecordedAsTheTakenDecision_NotSkippedSilently()
+        {
+            using (MissionSession session = Accident(presetId: AuroraMission.RedundancyPresetId))
+            {
+                CompleteAccidentBeat(session);
+                Require(Interaction(session, InteractionIds.BuildGrowModule).TryInteract());
+                int builtDay = MissionCalendar.DayNumberAt(session.Survival.GrowModuleBuiltAtSimulationSeconds.Value);
+                Assert.That(builtDay, Is.LessThan(5));
+                RunRoutine(session);
+                MissionChapterFlow flow = session.ChapterFlow;
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Consequences));
+                Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.None));
+                Assert.That(flow.ConsequencesResolution, Is.EqualTo("Grow module built on mission day " + builtDay));
+                Assert.That(JournalContains(session, "Day-5 decision already taken"), Is.True, "recorded, not silent");
+                Assert.That(flow.TryChoose(ChapterChoice.ConserveReserves).Failure, Is.EqualTo(CommandFailure.AlreadyComplete));
+                Assert.That(flow.CheckContinueRoutine().Succeeded, Is.True);
             }
         }
 

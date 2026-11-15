@@ -148,7 +148,10 @@ namespace OutOfReach.Core
 
         public int Revision { get; private set; }
 
-        /// <summary>The choice that settled the day-5 decision (None until then; salvage via the existing interaction).</summary>
+        /// <summary>
+        /// How the day-5 decision was settled, or null while open: "Science instrument kept", "Science instrument salvaged",
+        /// "Grow module built", "Reserves conserved", or "Grow module built on mission day N" (built by the crew before day 5).
+        /// </summary>
         public string ConsequencesResolution { get; private set; }
 
         /// <summary>The choice taken on day 20, or None.</summary>
@@ -364,6 +367,8 @@ namespace OutOfReach.Core
                     return Ok(survival.GrowStage == GrowModuleStage.Growing
                         ? "Keep the grow module running on the current power plan"
                         : "Keep the current power plan");
+                case ChapterChoice.ConserveReserves:
+                    return Ok(DescribeConserveReserves());
                 default:
                     return Fail(CommandFailure.InvalidInput, "Unknown chapter choice.");
             }
@@ -400,6 +405,13 @@ namespace OutOfReach.Core
                     case ChapterChoice.KeepGrowRunning:
                         FinalDecision = choice;
                         log?.Invoke("Day-20 decision: the crew keeps the current power plan.");
+                        break;
+                    case ChapterChoice.ConserveReserves:
+                        ConsequencesResolution = "Reserves conserved";
+                        ResourceSnapshot kept = resources.Snapshot;
+                        log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                            "Day-5 decision: the crew conserves its reserves ({0} spare part{1}, {2:0.##} kWh) for repairs and the beacon; no grow module is built.",
+                            kept.SparePartsCount, kept.SparePartsCount == 1 ? string.Empty : "s", kept.BatteryKWh));
                         break;
                 }
 
@@ -479,8 +491,69 @@ namespace OutOfReach.Core
             {
                 ConsequencesResolution = "Science instrument salvaged";
                 PendingDecision = ChapterDecision.None;
+                log?.Invoke("Day-5 decision: the crew dismantles the science instrument for spare parts.");
                 Notify();
             }
+        }
+
+        /// <summary>
+        /// After any survival change (the director's hook): the existing paid grow-module build settles an open day-5
+        /// GrowOrConserve decision. Nothing is charged here; the build command already charged its parts and energy.
+        /// </summary>
+        internal void OnSurvivalModified()
+        {
+            if (!disposed && PendingDecision == ChapterDecision.GrowOrConserve && survival.GrowStage != GrowModuleStage.Unbuilt)
+            {
+                ConsequencesResolution = "Grow module built";
+                PendingDecision = ChapterDecision.None;
+                log?.Invoke("Day-5 decision: the crew invests spare parts and battery energy in the grow module.");
+                Notify();
+            }
+        }
+
+        /// <summary>
+        /// Day 5 always asks for a real decision on the actual reserves; it is never skipped:
+        /// <list type="bullet">
+        /// <item>a science payload that this ship can reach and salvage: <see cref="ChapterDecision.ScienceOrSalvage"/>
+        /// (the existing salvage interaction, or <see cref="ChapterChoice.PreserveScience"/>);</item>
+        /// <item>otherwise (no payload aboard, payload already salvaged, or not reachable in this ship):
+        /// <see cref="ChapterDecision.GrowOrConserve"/> (the existing paid grow-module build, or
+        /// <see cref="ChapterChoice.ConserveReserves"/>, which is always available);</item>
+        /// <item>only if both investments were already made by the crew's own earlier commands (instrument salvaged or
+        /// absent, and the grow module built before day 5) is the decision recorded as taken, with the day of that
+        /// command, in <see cref="ConsequencesResolution"/> and the journal.</item>
+        /// </list>
+        /// </summary>
+        private void OpenConsequencesDecision()
+        {
+            if (modifications.SalvageablePartsNow > 0)
+            {
+                PendingDecision = ChapterDecision.ScienceOrSalvage;
+                return;
+            }
+
+            if (survival.GrowStage == GrowModuleStage.Unbuilt)
+            {
+                PendingDecision = ChapterDecision.GrowOrConserve;
+                return;
+            }
+
+            int builtDay = MissionCalendar.DayNumberAt(survival.GrowModuleBuiltAtSimulationSeconds ?? state.ElapsedSimulationSeconds);
+            ConsequencesResolution = string.Format(CultureInfo.InvariantCulture, "Grow module built on mission day {0}", builtDay);
+            log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                "Day-5 decision already taken: the crew built the grow module on mission day {0}, before the inspection.", builtDay));
+        }
+
+        private string DescribeConserveReserves()
+        {
+            ResourceSnapshot now = resources.Snapshot;
+            CommandResult build = survival.CheckBuildGrowModule();
+            return string.Format(CultureInfo.InvariantCulture,
+                "Conserve the reserves: keep {0} spare part{1} and {2:0.##} kWh for repairs and the beacon; no grow module ({3})",
+                now.SparePartsCount, now.SparePartsCount == 1 ? string.Empty : "s", now.BatteryKWh,
+                build.Succeeded
+                    ? "the alternative is the grow module target: " + build.Explanation + ", then planting water, 70 W and a small food supplement later"
+                    : "the grow module cannot be built now: " + build.Explanation);
         }
 
         /// <summary>
@@ -710,18 +783,10 @@ namespace OutOfReach.Core
             switch (next)
             {
                 case MissionChapter.Consequences:
-                    if (modifications.SalvageablePartsNow > 0)
-                    {
-                        PendingDecision = ChapterDecision.ScienceOrSalvage;
-                    }
-                    else
-                    {
-                        ConsequencesResolution = modifications.SciencePayloadSalvaged ? "Science instrument salvaged" : "No science instrument to sacrifice";
-                    }
-
                     log?.Invoke(string.Format(CultureInfo.InvariantCulture,
                         "Mission day {0}: the crew inspects the repairs and the actual reserves. {1}",
                         Calendar(), DescribeReserves()));
+                    OpenConsequencesDecision();
                     break;
                 case MissionChapter.Contact:
                     log?.Invoke(string.Format(CultureInfo.InvariantCulture, state.Phase == GamePhase.Survival
@@ -969,6 +1034,7 @@ namespace OutOfReach.Core
                 case ChapterChoice.AcknowledgeRescueFailure: return ChapterDecision.AcknowledgeRescueFailure;
                 case ChapterChoice.StopGrowForBeacon:
                 case ChapterChoice.KeepGrowRunning: return ChapterDecision.GrowOrBeacon;
+                case ChapterChoice.ConserveReserves: return ChapterDecision.GrowOrConserve;
                 default: return ChapterDecision.None;
             }
         }
@@ -980,6 +1046,7 @@ namespace OutOfReach.Core
                 case ChapterDecision.ScienceOrSalvage: return "keep the science instrument or salvage it for spare parts";
                 case ChapterDecision.AcknowledgeRescueFailure: return "acknowledge Earth's message about the failed rescue";
                 case ChapterDecision.GrowOrBeacon: return "keep the grow module running or shut it down for the beacon";
+                case ChapterDecision.GrowOrConserve: return "build the grow module with spare parts and battery energy, or conserve the reserves";
                 default: return "nothing";
             }
         }

@@ -65,6 +65,9 @@ namespace OutOfReach.Core
         /// <summary>When portion accounting began (chapter mode: end of the impact; legacy: contact), or null.</summary>
         public double? ActivatedAtSimulationSeconds => ChapterMode ? chapterActivatedAt : ContactRestoredAtSimulationSeconds;
 
+        /// <summary>When the one grow module was built, simulation seconds, or null.</summary>
+        public double? GrowModuleBuiltAtSimulationSeconds { get; private set; }
+
         /// <summary>Rations eaten and water portions drunk so far (each one real ledger debit).</summary>
         public int RationsEaten { get; private set; }
         public int DrinksTaken { get; private set; }
@@ -252,6 +255,7 @@ namespace OutOfReach.Core
                 CommandResult spent = resources.TryConsume(buildCost);
                 if (!spent.Succeeded) return spent;
                 GrowStage = GrowModuleStage.ReadyToPlant;
+                GrowModuleBuiltAtSimulationSeconds = state.ElapsedSimulationSeconds;
                 log?.Invoke(check.Explanation + ". One pre-grown seedling kit is available as scenario equipment.");
                 modified?.Invoke();
                 Notify();

@@ -625,7 +625,7 @@ Accident (day 1) -> Consequences (5) -> Contact (9) -> RescueFailed (14) -> Fina
 | Beat | Done when | Decision |
 |---|---|---|
 | Accident | power + life support repaired, >= 1 ration eaten, >= 1 rest completed | - |
-| Consequences | decision settled | `ScienceOrSalvage`: existing `salvage-payload` interaction, or `PreserveScience`. Without a salvageable payload no decision opens yet (CHAPTER-CONTRACT-02 `GrowOrConserve` proposed) |
+| Consequences | decision settled (never skipped) | A payload this ship can salvage: `ScienceOrSalvage` = existing `salvage-payload` interaction or `PreserveScience`. Otherwise (no payload, already salvaged, or not reachable here): `GrowOrConserve` (CHAPTER-CONTRACT-02, b5dc6f8) = existing paid `grow-build` interaction (1 part + 0.2 kWh) or `ConserveReserves` (always available, changes no reserve, locks and refunds nothing). Only a grow module the crew already built before day 5 counts as the taken decision; it is recorded with its day in `ConsequencesResolution` and the journal |
 | Contact | `Phase == Survival` (EVA, antenna, transmission, Earth's reply; may already be done earlier) | - |
 | RescueFailed | dispatch received and `AcknowledgeRescueFailure` chosen | `AcknowledgeRescueFailure` |
 | FinalDecision | decision settled | `GrowOrBeacon`: `StopGrowForBeacon` (only while growing; crop forfeited, no credit or refund) or `KeepGrowRunning` |

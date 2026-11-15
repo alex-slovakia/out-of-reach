@@ -105,7 +105,7 @@ namespace OutOfReach.Core
                 IsLinkPowered,
                 events.DeferDispatch);
             Survival = new SurvivalExtension(survivalExtension, survivalSpec, definition.CrewCount, events, state,
-                resources, clock, cinematics, HasGrowingConditions, RefreshRates, Journal.Record);
+                resources, clock, cinematics, HasGrowingConditions, OnSurvivalModified, Journal.Record);
             SurvivalRecovery = survivalExtension
                 ? new SurvivalRecovery(definition.CrewCount, events, state, resources, clock, cinematics, Survival, Calendar,
                     () => IsBrownout, RefreshRates, Journal.Record, reason => TryEndMission(MissionOutcome.Recovered, reason))
@@ -386,6 +386,13 @@ namespace OutOfReach.Core
             events.CommunicationChanged -= OnCommunicationChanged;
             events.MissionEnded -= OnMissionEnded;
             state.SetTransitionGuard(null);
+        }
+
+        /// <summary>After a survival change (portion accounting started, module built/planted/stopped, crop event).</summary>
+        private void OnSurvivalModified()
+        {
+            RefreshRates();
+            ChapterFlow?.OnSurvivalModified();
         }
 
         /// <summary>After a salvage, a built or an installed cartridge: same model, same rules, immediately.</summary>
