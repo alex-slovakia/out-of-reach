@@ -71,6 +71,10 @@ namespace OutOfReach.Player
         private float speedMultiplier = 1f;
         private float routeDistance;
         private int routeDirection = 1;
+        private TetheredRoute climbRoute;
+        private float routeThrottle;
+        private int routeMotionSense;
+        private float routeSpeed;
         private bool cursorApplied;
         private bool cursorCaptured;
         private bool applicationFocused = true;
@@ -174,6 +178,21 @@ namespace OutOfReach.Player
         public bool IsAtRouteEnd => ActiveRoute != null && routeDistance >= ActiveRoute.LengthMetres - RouteEndToleranceMetres;
 
         public bool IsOnRoute => ActiveRoute != null;
+
+        /// <summary>
+        /// EVA-TETHER-01, read-only: current speed of the body along the route, metres per second (0 at rest). It
+        /// only comes from a glove pulling on a rung (or braking on it); see <see cref="TetheredRoute"/>.
+        /// </summary>
+        public float RouteSpeedMetresPerSecond => ActiveRoute != null ? routeSpeed : 0f;
+
+        /// <summary>Read-only: +1 while the body travels towards the route end, -1 towards the start, 0 at rest.</summary>
+        public int RouteMotionSense => ActiveRoute != null ? routeMotionSense : 0;
+
+        /// <summary>Read-only: pull effort currently applied on the rope, 0 (resting on the rope) to 1.</summary>
+        public float RouteClimbEffort01 => ActiveRoute != null ? routeThrottle : 0f;
+
+        /// <summary>Read-only: phase of the current arm pull in [0, 1) (0 = leading glove at full reach); 0 off the route.</summary>
+        public float RouteStrokePhase => ActiveRoute != null ? ActiveRoute.StrokePhase(routeDistance, routeDirection) : 0f;
 
         /// <summary>Result of the most recent interact press, or null.</summary>
         public CommandResult? LastInteraction { get; private set; }
@@ -295,7 +314,8 @@ namespace OutOfReach.Player
         /// Clips the player to a constrained route: the feet move to its start, gravity and collisions are off, and
         /// until <see cref="ExitRoute"/> or <see cref="Teleport"/> the feet stay on the route line. W and S move along
         /// it towards the end the player roughly faces (heading only; looking up or down never moves the player),
-        /// A and D do nothing, and both ends stop the player.
+        /// A and D do nothing, and both ends stop the player. The travel is hand over hand (EVA-TETHER-01): each pull
+        /// of a gripping glove moves the body; releasing W/S lets the holding glove brake it to rest.
         /// </summary>
         public void EnterRoute(TetheredRoute route)
         {
@@ -311,7 +331,17 @@ namespace OutOfReach.Player
             verticalVelocity = 0f;
             routeDistance = 0f;
             routeDirection = 1;
+            ResetClimb(route);
             transform.position = route.StartPosition;
+        }
+
+        /// <summary>Both gloves at rest on the rope: no pull, no speed.</summary>
+        private void ResetClimb(TetheredRoute route)
+        {
+            climbRoute = route;
+            routeThrottle = 0f;
+            routeMotionSense = 0;
+            routeSpeed = 0f;
         }
 
         /// <summary>
@@ -938,6 +968,13 @@ namespace OutOfReach.Player
         /// jump between segments. The sense of W comes from the body heading compared with the route's heading
         /// (pitch is ignored); inside the dead band the previous sense is kept, so looking sideways or along a
         /// vertical stretch never reverses the player. S always moves the other way.
+        /// <para>
+        /// EVA-TETHER-01, hand over hand: a held W/S grips and pulls. The pull effort ramps up over the route's grip
+        /// ramp and the speed surges through each pull of the stroke lattice (slowest as the gloves change over,
+        /// fastest mid-pull; time-averaged speed = route speed). Releasing or reversing the input first lets the
+        /// holding glove brake the body to rest; only then can it move the other way. An end stops the body at once.
+        /// No thrust and no motion without a held rung: the gloves (presentation) hold the lattice rungs.
+        /// </para>
         /// </summary>
         private float MoveAlongRoute(Vector2 move, float deltaSeconds)
         {
@@ -946,35 +983,70 @@ namespace OutOfReach.Player
                 return 0f;
             }
 
-            float along = Mathf.Clamp(move.y, -1f, 1f);
-            if (Mathf.Abs(along) < RouteInputDeadZone)
+            if (!ReferenceEquals(climbRoute, ActiveRoute))
             {
+                ResetClimb(ActiveRoute);
+            }
+
+            float along = Mathf.Clamp(move.y, -1f, 1f);
+            bool pressed = Mathf.Abs(along) >= RouteInputDeadZone;
+            if (pressed)
+            {
+                Vector3 heading = ActiveRoute.HeadingAt(routeDistance);
+                Vector3 facing = transform.forward;
+                facing.y = 0f;
+                if (heading.sqrMagnitude > 0f && facing.sqrMagnitude > 1e-6f)
+                {
+                    float alignment = Vector3.Dot(facing.normalized, heading);
+                    if (alignment > RouteHeadingDeadBand)
+                    {
+                        routeDirection = 1;
+                    }
+                    else if (alignment < -RouteHeadingDeadBand)
+                    {
+                        routeDirection = -1;
+                    }
+                }
+            }
+
+            int wanted = pressed ? (along > 0f ? routeDirection : -routeDirection) : 0;
+            if (routeMotionSense != 0 && wanted != routeMotionSense)
+            {
+                // Released or reversed: the holding glove brakes the body to rest before anything else.
+                routeThrottle = Mathf.MoveTowards(routeThrottle, 0f, deltaSeconds / ActiveRoute.BrakeSeconds);
+                if (routeThrottle <= 0f)
+                {
+                    routeMotionSense = 0;
+                }
+            }
+            else if (wanted != 0)
+            {
+                routeMotionSense = wanted;
+                routeThrottle = Mathf.MoveTowards(routeThrottle, Mathf.Abs(along), deltaSeconds / ActiveRoute.GripRampSeconds);
+            }
+
+            if (routeMotionSense == 0)
+            {
+                routeSpeed = 0f;
                 return 0f;
             }
 
-            Vector3 heading = ActiveRoute.HeadingAt(routeDistance);
-            Vector3 facing = transform.forward;
-            facing.y = 0f;
-            if (heading.sqrMagnitude > 0f && facing.sqrMagnitude > 1e-6f)
+            float length = ActiveRoute.LengthMetres;
+            float baseSpeed = ActiveRoute.SpeedMetresPerSecond * exertion.TraversalSpeedFactor;
+            float phase = ActiveRoute.StrokePhase(routeDistance, routeDirection);
+            routeSpeed = baseSpeed * routeThrottle * RouteMath.PullSpeedFactor(phase, ActiveRoute.PullSurge);
+            float before = routeDistance;
+            routeDistance = Mathf.Clamp(routeDistance + (routeMotionSense * routeSpeed * deltaSeconds), 0f, length);
+            transform.position = ActiveRoute.PointAt(routeDistance);
+            if ((routeMotionSense > 0 && routeDistance >= length) || (routeMotionSense < 0 && routeDistance <= 0f))
             {
-                float alignment = Vector3.Dot(facing.normalized, heading);
-                if (alignment > RouteHeadingDeadBand)
-                {
-                    routeDirection = 1;
-                }
-                else if (alignment < -RouteHeadingDeadBand)
-                {
-                    routeDirection = -1;
-                }
+                // The end anchor stops the body at once: no bounce and no pull left over.
+                routeThrottle = 0f;
+                routeMotionSense = 0;
+                routeSpeed = 0f;
             }
 
-            float length = ActiveRoute.LengthMetres;
-            float speed = ActiveRoute.SpeedMetresPerSecond * exertion.TraversalSpeedFactor;
-            float before = routeDistance;
-            float step = routeDirection * along * speed * deltaSeconds;
-            routeDistance = Mathf.Clamp(routeDistance + step, 0f, length);
-            transform.position = ActiveRoute.PointAt(routeDistance);
-            return speed > 0f ? Mathf.Clamp01(Mathf.Abs(routeDistance - before) / (speed * deltaSeconds)) : 0f;
+            return baseSpeed > 0f ? Mathf.Clamp01(Mathf.Abs(routeDistance - before) / (baseSpeed * deltaSeconds)) : 0f;
         }
 
         /// <summary>One frame of floating: grip settling, exact drift, collision-aware move, inelastic contacts.</summary>
