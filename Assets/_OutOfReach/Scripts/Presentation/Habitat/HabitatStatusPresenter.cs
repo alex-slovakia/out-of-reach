@@ -12,6 +12,8 @@ namespace OutOfReach.Presentation.Habitat
         [SerializeField] private GameObject seedlings;
         [SerializeField] private TextMesh dayReadout, growReadout;
         private ShipLabelAtlasBinder dayAtlas, growAtlas;
+        // R23: runtime-built mature crop beside the authored seedlings; shown only at Core's HarvestReady stage.
+        private GameObject matureCrop, matureCropFor;
         private ISurvivalExtension survival;
         private ISurvivalRecovery recovery;
         private bool subscribed;
@@ -60,9 +62,13 @@ namespace OutOfReach.Presentation.Habitat
         {
             if (!IsBound || !isActiveAndEnabled) return;
             SetText(dayReadout, dayAtlas, "MISSION DAY " + recovery.MissionDay.ToString(CultureInfo.InvariantCulture));
-            bool liveCrop = survival.Enabled && (survival.GrowStage == GrowModuleStage.Growing
-                || survival.GrowStage == GrowModuleStage.HarvestReady);
-            if (seedlings && seedlings.activeSelf != liveCrop) seedlings.SetActive(liveCrop);
+            bool growing = survival.Enabled && survival.GrowStage == GrowModuleStage.Growing;
+            bool mature = survival.Enabled && survival.GrowStage == GrowModuleStage.HarvestReady;
+            GameObject crop = mature ? MatureCrop() : matureCrop;
+            // Without a buildable mature model the seedlings stay as the HarvestReady fallback (previous behaviour).
+            bool showSeedlings = growing || (mature && !crop);
+            if (seedlings && seedlings.activeSelf != showSeedlings) seedlings.SetActive(showSeedlings);
+            if (crop && crop.activeSelf != mature) crop.SetActive(mature);
             string text = !survival.Enabled ? "GROW CASSETTE\nNOT AVAILABLE" : Describe(survival);
             SetText(growReadout, growAtlas, text);
         }
@@ -85,9 +91,22 @@ namespace OutOfReach.Presentation.Habitat
         }
         private static string Days(double value) => double.IsNaN(value) || double.IsInfinity(value) || value < 0d
             ? "— SIM DAYS" : value.ToString("0.0", CultureInfo.InvariantCulture) + " SIM DAYS";
+        private GameObject MatureCrop()
+        {
+            if (!seedlings) return null;
+            if (matureCropFor != seedlings)
+            {
+                if (matureCrop) Destroy(matureCrop);
+                matureCrop = HabitatMatureCrop.Build(seedlings, transform.up);
+                matureCropFor = seedlings;
+            }
+            return matureCrop;
+        }
+
         private void ResetPresentation()
         {
             if (seedlings) seedlings.SetActive(false);
+            if (matureCrop) matureCrop.SetActive(false);
             SetText(dayReadout, dayAtlas, "MISSION DAY —");
             SetText(growReadout, growAtlas, "GROW STATUS UNAVAILABLE");
         }
