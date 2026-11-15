@@ -1,0 +1,34 @@
+installer: RESCUE_ENDING_INSTALL_PASS root=Rescue ending (RESCUE-ENDING-01) validViews=True pivot=Cinematic offset camera=Player camera blackout=Impact fade vo24a=True vo24b=True composition=bound saved=True
+8,992 | startup attempt 0: practice=True modeChosen=True control=True
+8,994 | == marine boarding W
+14,469 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+49,255 | ACTUAL MARINE TRANSFER
+49,309 | Arrival phase Intro; player at (0.00, 0.05, 0.80)
+49,310 | == SHORTCUT impact and repairs (domain)
+49,329 | domain impact: True Cockpit check complete. Impact detected.
+57,867 | domain power repair: True power distribution repaired (2 spare parts).
+57,869 | domain life-support repair: True life support repaired (2 spare parts, 1 kWh).
+58,838 | == SHORTCUT Core TryEndMission(Recovered); the real ending chain follows
+58,857 | domain end Recovered: True Mission ended: Recovered.
+61,754 | 01-window-approach-far t=3,00 shot=Window caption=[RESCUE CREW · RADIO] Aurora Seven, rescue crew. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+63,354 | 02-window-braking-burn t=4,60 shot=Window caption=[RESCUE CREW · RADIO] We have you in sight. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+63,462 | == pause during the ending (runtime.SetPaused, as the pause menu)
+68,880 | == ending shots
+70,377 | 03-window-floodlight-near t=9,60 shot=Window caption=[RESCUE CREW · RADIO] We're coming alongside. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+73,179 | 04-window-coming-alongside t=12,40 shot=Window caption=[]  voice=vo24a_rescue_approach cam=(0.86, 2.20, -2.42) fov=56
+77,976 | 05-docking-camera-closing t=17,20 shot=DockingCamera caption=[AFT HULL CAMERA] Docking port in view. voice=vo24a_rescue_approach cam=(4.20, 4.60, 22.60) fov=52
+80,504 | 06-docking-camera-contact t=19,55 shot=DockingCamera caption=[AFT HULL CAMERA] Docking port in view. voice=vo24a_rescue_approach cam=(4.20, 4.60, 22.60) fov=52
+82,554 | 07-docking-camera-capture t=21,60 shot=DockingCamera caption=[RESCUE CREW · RADIO] Capture confirmed. voice=vo24b_rescue_docked playing cam=(4.20, 4.60, 22.60) fov=52
+84,403 | 08-docking-camera-hard-dock t=23,45 shot=DockingCamera caption=[RESCUE CREW · RADIO] Hard dock. voice=vo24b_rescue_docked playing cam=(4.20, 4.60, 22.60) fov=52
+88,154 | 09-airlock-latched-pressure t=27,20 shot=Hatch caption=[RESCUE CREW · RADIO] Stay clear while we equalize the hatch. voice=vo24b_rescue_docked playing cam=(0.00, 1.62, 17.60) fov=62
+90,887 | 10-hatch-opening-light t=29,90 shot=Hatch caption=[RESCUE CREW · RADIO] Aurora Seven... you're not alone anymore. voice=vo24b_rescue_docked playing cam=(0.00, 1.62, 17.62) fov=62
+92,993 | 11-hatch-open-light-floods t=31,90 shot=Hatch caption=[RESCUE CREW · RADIO] Aurora Seven... you're not alone anymore. voice=vo24b_rescue_docked cam=(0.00, 1.61, 17.72) fov=62
+96,412 | 12-fade t=35,30 shot=Hatch caption=[SHIP STATUS] RESCUED voice=vo24b_rescue_docked cam=(0.00, 1.59, 17.93) fov=62
+96,489 | == hand-off to MarsDeparture and the report
+98,618 | after rescue: existing presenter playing=True seq=3 caption=LATER · MARS TRANSFER
+111,281 | CINEMATIC 49,33 requested Impact #1
+111,282 | CINEMATIC 57,61 finished Impact #1 skipped=False
+111,282 | CINEMATIC 58,86 requested RecoveryArrival #2
+111,282 | CINEMATIC 98,61 finished RecoveryArrival #2 skipped=False
+111,282 | CINEMATIC 98,61 requested MarsDeparture #3
+111,283 | CINEMATIC 108,61 finished MarsDeparture #3 skipped=False

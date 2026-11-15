@@ -1,0 +1,22 @@
+{
+  "name": "OutOfReach.RescueNativeQa.Editor",
+  "references": [
+    "OutOfReach.Composition",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Simulation",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.Presentation.Rescue",
+    "OutOfReach.Presentation.Rescue.Editor",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Cinematics",
+    "OutOfReach.UI",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

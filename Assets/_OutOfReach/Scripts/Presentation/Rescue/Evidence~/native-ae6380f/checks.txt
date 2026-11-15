@@ -1,0 +1,40 @@
+PASS opening actual saved Bootstrap | Saved root composition is present.
+PASS opening actual saved Bootstrap | Installer bound the composition field (patch applied).
+PASS opening actual saved Bootstrap | The installed rescue presenter is in the re-opened saved scene.
+PASS native actual Bootstrap | Saved marine, cinematics, rescue presenter, camera and default input exist.
+PASS native actual Bootstrap | The composition's rescueEnding field points at the installed presenter.
+PASS native actual Bootstrap | Rescue presenter has valid views and is configured for the session.
+PASS native actual Bootstrap | Actual Practice choice releases ordinary deck controls (startup cards skipped by a real click).
+PASS marine boarding W | Actual interaction ray resolves cockpit-console
+PASS marine boarding W | Single actual E: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS SHORTCUT impact and repairs (domain) | impact: Cockpit check complete. Impact detected.
+PASS SHORTCUT impact and repairs (domain) | power repair: power distribution repaired (2 spare parts).
+PASS SHORTCUT impact and repairs (domain) | life-support repair: life support repaired (2 spare parts, 1 kWh).
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | end Recovered: Mission ended: Recovered.
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | Core is in Outcome/Recovered.
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | Core waits for RecoveryArrival (sequence 2).
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | The rescue presenter plays Core's exact sequence id.
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | The existing cinematic presenter does not also play RecoveryArrival (filtered bus).
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | Player control is held by Core during the ending.
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | Still playing at 01-window-approach-far
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | VO24a plays with the approach.
+PASS SHORTCUT Core TryEndMission(Recovered); the real ending chain follows | Still playing at 02-window-braking-burn
+PASS pause during the ending (runtime.SetPaused, as the pause menu) | Paused: playhead frozen (7,50 -> 7,50).
+PASS pause during the ending (runtime.SetPaused, as the pause menu) | Paused: the voice is paused.
+PASS pause during the ending (runtime.SetPaused, as the pause menu) | Paused: Core still waits for the same request (no timeout).
+PASS pause during the ending (runtime.SetPaused, as the pause menu) | Resumed: the playhead continues.
+PASS ending shots | Still playing at 03-window-floodlight-near
+PASS ending shots | Still playing at 04-window-coming-alongside
+PASS ending shots | Still playing at 05-docking-camera-closing
+PASS ending shots | Still playing at 06-docking-camera-contact
+PASS ending shots | At the visible contact VO24b has not started yet.
+PASS ending shots | Still playing at 07-docking-camera-capture
+PASS ending shots | VO24b plays after the contact.
+PASS ending shots | Still playing at 08-docking-camera-hard-dock
+PASS ending shots | Still playing at 09-airlock-latched-pressure
+PASS ending shots | Still playing at 10-hatch-opening-light
+PASS ending shots | Still playing at 11-hatch-open-light-floods
+PASS ending shots | Still playing at 12-fade
+PASS hand-off to MarsDeparture and the report | RecoveryArrival completed by the presenter's acknowledgement (not skipped, not timed out).
+PASS hand-off to MarsDeparture and the report | Exactly one RecoveryArrival acknowledgement.
+PASS hand-off to MarsDeparture and the report | One active AudioListener.

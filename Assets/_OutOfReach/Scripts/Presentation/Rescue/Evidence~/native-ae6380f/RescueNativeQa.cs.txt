@@ -1,0 +1,366 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using OutOfReach.Composition;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.Rescue;
+using OutOfReach.Presentation.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+// RESCUE-ENDING-01 native QA (Claude rescue writer, temporary, never committed). The actual saved Bootstrap with the
+// rescue installer and the composition patch applied in the writer's own clone. Real Practice UI, marine W boarding,
+// seat E, real departure and arrival. EXPLICIT SHORTCUTS, logged: domain impact + repairs, then Core's own
+// Director.TryEndMission(Recovered) instead of 30 days of play. Everything after that is the real Core ending chain:
+// RecoveryArrival (this presenter) -> MarsDeparture (existing presenter) -> Report. Infrastructure adapted from
+// MealNativeQa (meal writer) which came from the lead's MoveMechNativeQa.
+[InitializeOnLoad]
+public static class RescueNativeQa
+{
+    const string Key = "OutOfReach.RescueNativeQa.";
+    public const string Bootstrap = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
+    public static string Output => SessionState.GetString(Key + "output", "C:/Users/alexp/NASA/_qa/rescue-ending-01/failed-start");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+    static RescueNativeQa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+    public static void Run()
+    {
+        try
+        {
+            if (!Application.isBatchMode || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Start in batch Edit mode only.");
+            if (Application.unityVersion != "6000.3.28f1" || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null)
+                throw new InvalidOperationException("Exact Unity 6000.3.28f1 and a real GPU are required.");
+            string tag = Environment.GetEnvironmentVariable("QA_TAG") ?? "rescue";
+            SessionState.SetString(Key + "output", Path.Combine(Environment.GetEnvironmentVariable("QA_OUT") ?? "C:/Users/alexp/NASA/_qa/rescue-ending-01",
+                DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + "-" + tag).Replace('\\', '/'));
+            Directory.CreateDirectory(Output); SessionState.SetInt(Key + "soft", 0); SessionState.SetString(Key + "errors", "");
+            SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(600).ToString("O", CultureInfo.InvariantCulture));
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation); ShaderUtil.allowAsyncCompilation = false;
+            File.WriteAllText(Path.Combine(Output, "scope.txt"),
+                "Actual saved Bootstrap (rescue installer + composition patch applied in the rescue writer's clone, uncommitted).\n"
+                + "Real Practice UI, marine W boarding, seat E, real departure/arrival. SHORTCUTS: domain impact + repairs, then Core's own "
+                + "Director.TryEndMission(Recovered). After that only the real Core ending chain runs: RecoveryArrival -> MarsDeparture -> Report.\n");
+            SetStage("opening actual saved Bootstrap");
+            Scene scene = EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            Check(Object.FindFirstObjectByType<I01MissionComposition>(), "Saved root composition is present.");
+            OutOfReach.Presentation.Rescue.Editor.RescueEndingInstaller.Install(scene, true, out string report);
+            Note("installer: " + report);
+            Check(report.Contains("composition=bound"), "Installer bound the composition field (patch applied).");
+            scene = EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            Check(Object.FindFirstObjectByType<RescueEndingPresenter>(), "The installed rescue presenter is in the re-opened saved scene.");
+            SetStage("entering"); EditorApplication.isPlaying = true;
+        }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || Stage != "entering") return;
+        try { SetStage("native actual Bootstrap"); new GameObject("RESCUE_NATIVE_QA_UNSAVED").AddComponent<RescueNativeQaDriver>(); }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void Watchdog()
+    {
+        if (Stage.Length == 0) return;
+        if (DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime deadline)
+            && DateTime.UtcNow > deadline) Finish(false, "600-second watchdog expired; see checks and captures.");
+    }
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (Stage.Length == 0 || (type != LogType.Error && type != LogType.Exception && type != LogType.Assert)) return;
+        string entry = type + ": " + message + "\n" + stack + "\n";
+        if (type == LogType.Exception && stack.Contains("UnityEditor.Search") && !stack.Contains("OutOfReach"))
+        { File.AppendAllText(Path.Combine(Output, "editor-environment-errors.txt"), entry); return; }
+        SessionState.SetString(Key + "errors", SessionState.GetString(Key + "errors", "") + entry);
+        File.AppendAllText(Path.Combine(Output, "runtime-errors.txt"), entry);
+    }
+    public static void RequireNoErrors() { string e = SessionState.GetString(Key + "errors", ""); if (e.Length > 0) throw new InvalidOperationException(e); }
+    public static void SetStage(string value) => SessionState.SetString(Key + "stage", value);
+    static void Record(bool ok, string message, string verdict) => File.AppendAllText(Path.Combine(Output, "checks.txt"), verdict + " " + Stage + " | " + message + "\n");
+    public static void Check(bool ok, string message) { Record(ok, message, ok ? "PASS" : "FAIL"); if (!ok) throw new InvalidOperationException(message); }
+    public static bool Soft(bool ok, string message)
+    {
+        Record(ok, message, ok ? "PASS" : "SOFT-FAIL");
+        if (!ok) SessionState.SetInt(Key + "soft", SessionState.GetInt(Key + "soft", 0) + 1);
+        return ok;
+    }
+    public static void Note(string message) => File.AppendAllText(Path.Combine(Output, "observations.txt"), message + "\n");
+    public static void Finish(bool pass, string message)
+    {
+        try { RequireNoErrors(); } catch (Exception error) { pass = false; message += "\n" + error; }
+        int soft = SessionState.GetInt(Key + "soft", 0);
+        SessionState.SetString(Key + "stage", ""); ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Directory.CreateDirectory(Output);
+        bool all = pass && soft == 0;
+        File.WriteAllText(Path.Combine(Output, all ? "PASS.txt" : "FAIL.txt"), message + "\nsoft failures: " + soft);
+        Debug.Log((all ? "RESCUE_NATIVE_QA_PASS " : "RESCUE_NATIVE_QA_FAIL ") + message + " soft=" + soft + " output=" + Output);
+        EditorApplication.Exit(all ? 0 : 1);
+    }
+}
+
+[DefaultExecutionOrder(600)]
+public sealed class RescueNativeQaDriver : MonoBehaviour
+{
+    I01MissionComposition composition;
+    MissionRuntime runtime;
+    FirstPersonController player;
+    InteractionResolver resolver;
+    I06MarineBindings marine;
+    MissionCinematicPresenter cinematics;
+    RescueEndingPresenter rescue;
+    Camera view;
+    UIDocument document;
+    Keyboard keyboard;
+    Mouse mouse;
+    InputSettings originalSettings, qaSettings;
+    HideFlags originalFlags;
+    bool previousBackground;
+    readonly List<InputDevice> disabledDevices = new List<InputDevice>();
+    int interactions, transferred;
+    CommandResult lastInteraction;
+    readonly List<string> cinematicLog = new List<string>();
+    string stage = "startup";
+    MissionSession Session => runtime.Session;
+    PlayerInputActions Input => player.InputSource as PlayerInputActions;
+    static string Output => RescueNativeQa.Output;
+    void Check(bool ok, string message) => RescueNativeQa.Check(ok, message);
+    bool Soft(bool ok, string message) => RescueNativeQa.Soft(ok, message);
+    void Stage(string value) { stage = value; RescueNativeQa.SetStage(value); Note("== " + value); }
+    void Note(string text) => RescueNativeQa.Note(Time.realtimeSinceStartupAsDouble.ToString("F3") + " | " + text);
+
+    IEnumerator Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        previousBackground = Application.runInBackground; Application.runInBackground = true;
+        originalSettings = InputSystem.settings; originalFlags = originalSettings.hideFlags;
+        if (originalFlags == HideFlags.HideAndDontSave) originalSettings.hideFlags = HideFlags.DontSave;
+        qaSettings = Object.Instantiate(originalSettings); qaSettings.hideFlags = HideFlags.DontSave;
+        qaSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        qaSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+        InputSystem.settings = qaSettings;
+        foreach (var device in InputSystem.devices.ToArray())
+            if (device.enabled && (device is Mouse || device is Keyboard || device is Gamepad)) { disabledDevices.Add(device); InputSystem.DisableDevice(device); }
+        keyboard = InputSystem.AddDevice<Keyboard>("Rescue QA keyboard"); mouse = InputSystem.AddDevice<Mouse>("Rescue QA mouse");
+        var stack = new Stack<IEnumerator>(); stack.Push(Exercise()); Exception failed = null;
+        while (stack.Count > 0)
+        {
+            bool more = false; object yielded = null;
+            try { RescueNativeQa.RequireNoErrors(); more = stack.Peek().MoveNext(); if (more) yielded = stack.Peek().Current; }
+            catch (Exception error) { failed = error; }
+            if (failed != null) break;
+            if (!more) { stack.Pop(); continue; }
+            if (yielded is IEnumerator nested) { stack.Push(nested); continue; }
+            yield return yielded;
+        }
+        if (failed != null)
+        {
+            Keys();
+            if (view) yield return Capture("FAIL-actual-state");
+            Cleanup(); RescueNativeQa.Finish(false, "Stage=" + stage + "\n" + failed); yield break;
+        }
+        Cleanup(); RescueNativeQa.Finish(true, "RESCUE-ENDING-01 native ending completed; see checks, observations and captures.");
+    }
+
+    IEnumerator Exercise()
+    {
+        yield return WaitFor(() => Object.FindFirstObjectByType<MissionRuntime>()?.Session != null, 15, "Actual saved session startup");
+        composition = Object.FindFirstObjectByType<I01MissionComposition>(); runtime = composition.Runtime; player = runtime.Player;
+        resolver = player.Interaction; marine = Object.FindFirstObjectByType<I06MarineBindings>();
+        cinematics = Object.FindFirstObjectByType<MissionCinematicPresenter>(); rescue = Object.FindFirstObjectByType<RescueEndingPresenter>();
+        view = Camera.main; document = Object.FindFirstObjectByType<MissionFlightBoard>().GetComponent<UIDocument>();
+        Check(marine && cinematics && rescue && view && Input != null, "Saved marine, cinematics, rescue presenter, camera and default input exist.");
+        var field = typeof(I01MissionComposition).GetField("rescueEnding", BindingFlags.NonPublic | BindingFlags.Instance);
+        Check(field != null && ReferenceEquals(field.GetValue(composition), rescue), "The composition's rescueEnding field points at the installed presenter.");
+        Check(rescue.HasValidViews && rescue.IsConfigured, "Rescue presenter has valid views and is configured for the session.");
+        player.SendMessage("OnApplicationFocus", true, SendMessageOptions.RequireReceiver);
+        resolver.Interacted += OnInteract; marine.Transferred += OnTransferred;
+        runtime.Events.CinematicRequested += r => cinematicLog.Add(Time.realtimeSinceStartup.ToString("F2") + " requested " + r.Cinematic + " #" + r.SequenceId);
+        runtime.Events.CinematicFinished += f => cinematicLog.Add(Time.realtimeSinceStartup.ToString("F2") + " finished " + f.Cinematic + " #" + f.SequenceId + " skipped=" + f.WasSkipped);
+
+        // R01 startup cards (candidate) swallow input until skipped by any button after a 0.35 s grace: skip them with a
+        // real mouse click, then choose Practice through the actual menu.
+        yield return Seconds(1.0);
+        for (int attempt = 0; attempt < 8 && !composition.ModeChosen; attempt++)
+        {
+            InputSystem.QueueStateEvent(mouse, new MouseState().WithButton(UnityEngine.InputSystem.LowLevel.MouseButton.Left, true)); yield return Frames(2);
+            InputSystem.QueueStateEvent(mouse, new MouseState()); yield return Seconds(1.2);
+            var practice = PracticeButton();
+            if (practice != null) { Submit(practice); yield return Frames(4); }
+            Note("startup attempt " + attempt + ": practice=" + (practice != null) + " modeChosen=" + composition.ModeChosen + " control=" + player.ControlAllowed);
+        }
+        yield return WaitFor(() => player.ControlAllowed, 6, "deck control after Practice");
+        Check(composition.ModeChosen && player.ControlAllowed, "Actual Practice choice releases ordinary deck controls (startup cards skipped by a real click).");
+        Stage("marine boarding W");
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, -12)), .13f, 20);
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, .7f)), .13f, 25);
+        yield return Use(Target(InteractionIds.CockpitConsole), true);
+        yield return WaitFor(() => composition.IsTransportDeparturePlaying, 4, "Real seat E starts departure");
+        yield return WaitFor(() => transferred == 1 && !marine.OwnsPresentation && player.ControlAllowed, 45, "Actual complete departure/transfer");
+        Note("Arrival phase " + Session.State.Phase + "; player at " + player.transform.position.ToString("F2"));
+
+        Stage("SHORTCUT impact and repairs (domain)");
+        MissionSession s = Session;
+        if (s.State.Phase == GamePhase.Intro) Req(s.Director.TryCompleteCockpitCheck(), "impact");
+        yield return Settle();
+        if (!s.Systems.Power.IsOperational) Req(s.Systems.Power.TryRepair(s.Resources), "power repair");
+        if (!s.Systems.LifeSupport.IsOperational) Req(s.Systems.LifeSupport.TryRepair(s.Resources), "life-support repair");
+        yield return Settle();
+        yield return Capture("00-cabin-before-the-ending");
+
+        Stage("SHORTCUT Core TryEndMission(Recovered); the real ending chain follows");
+        Req(s.Director.TryEndMission(MissionOutcome.Recovered, "QA shortcut: survived to the rendezvous (rescue ending capture)"), "end Recovered");
+        yield return WaitFor(() => rescue.IsPlaying, 5, "The rescue presenter takes the RecoveryArrival request");
+        Check(s.State.Phase == GamePhase.Outcome && s.State.Outcome == MissionOutcome.Recovered, "Core is in Outcome/Recovered.");
+        Check(s.Cinematics.IsWaiting && s.Cinematics.ActiveCinematic == CinematicId.RecoveryArrival, "Core waits for RecoveryArrival (sequence " + s.Cinematics.ActiveSequenceId + ").");
+        Check(rescue.ActiveSequenceId == s.Cinematics.ActiveSequenceId, "The rescue presenter plays Core's exact sequence id.");
+        Check(!cinematics.IsPlaying, "The existing cinematic presenter does not also play RecoveryArrival (filtered bus).");
+        Check(!player.ControlAllowed, "Player control is held by Core during the ending.");
+
+        AudioSource voice = Private<AudioSource>(rescue, "voiceSource");
+        var shots = new (float t, string name)[]
+        {
+            (3.0f, "01-window-approach-far"), (4.6f, "02-window-braking-burn"), (9.6f, "03-window-floodlight-near"),
+            (12.4f, "04-window-coming-alongside"), (17.2f, "05-docking-camera-closing"), (19.55f, "06-docking-camera-contact"),
+            (21.6f, "07-docking-camera-capture"), (23.45f, "08-docking-camera-hard-dock"), (27.2f, "09-airlock-latched-pressure"),
+            (29.9f, "10-hatch-opening-light"), (31.9f, "11-hatch-open-light-floods"), (35.3f, "12-fade"),
+        };
+        bool pauseChecked = false;
+        foreach (var shot in shots)
+        {
+            if (!pauseChecked && shot.t > 8f)
+            {
+                Stage("pause during the ending (runtime.SetPaused, as the pause menu)");
+                yield return WaitFor(() => rescue.ElapsedSeconds >= 7.5f, 20, "reach 7.5 s");
+                float before = rescue.ElapsedSeconds;
+                bool voicePlaying = voice && voice.isPlaying;
+                runtime.SetPaused(true);
+                yield return Seconds(2.0);
+                Check(rescue.IsPlaying && Mathf.Abs(rescue.ElapsedSeconds - before) < .2f, "Paused: playhead frozen (" + before.ToString("F2") + " -> " + rescue.ElapsedSeconds.ToString("F2") + ").");
+                Soft(!voicePlaying || !voice.isPlaying, "Paused: the voice is paused.");
+                Check(s.Cinematics.IsWaiting, "Paused: Core still waits for the same request (no timeout).");
+                runtime.SetPaused(false);
+                yield return Seconds(.6);
+                Check(rescue.ElapsedSeconds > before + .2f, "Resumed: the playhead continues.");
+                pauseChecked = true;
+                Stage("ending shots");
+            }
+            yield return WaitFor(() => !rescue.IsPlaying || rescue.ElapsedSeconds >= shot.t, 30, "reach " + shot.name);
+            Check(rescue.IsPlaying, "Still playing at " + shot.name);
+            string clip = voice && voice.clip ? voice.clip.name : "none";
+            Note(shot.name + " t=" + rescue.ElapsedSeconds.ToString("F2") + " shot=" + rescue.CurrentShot + " caption=[" + rescue.CurrentSpeaker + "] " + rescue.CurrentCaption.Replace("\n", " / ")
+                + " voice=" + clip + (voice && voice.isPlaying ? " playing" : "") + " cam=" + view.transform.position.ToString("F2") + " fov=" + view.fieldOfView.ToString("F0"));
+            if (shot.name.StartsWith("06")) Check(clip != "vo24b_rescue_docked", "At the visible contact VO24b has not started yet.");
+            if (shot.name.StartsWith("07")) Check(clip == "vo24b_rescue_docked", "VO24b plays after the contact.");
+            if (shot.name.StartsWith("01")) Check(clip == "vo24a_rescue_approach", "VO24a plays with the approach.");
+            yield return Capture(shot.name);
+        }
+
+        Stage("hand-off to MarsDeparture and the report");
+        yield return WaitFor(() => !rescue.IsPlaying, 8, "rescue sequence ends");
+        Check(s.Cinematics.LastCompletion.HasValue && s.Cinematics.LastCompletion.Value.Cinematic == CinematicId.RecoveryArrival
+            && !s.Cinematics.LastCompletion.Value.WasSkipped && !s.Cinematics.LastCompletion.Value.TimedOut
+            || (s.Cinematics.IsWaiting && s.Cinematics.ActiveCinematic == CinematicId.MarsDeparture),
+            "RecoveryArrival completed by the presenter's acknowledgement (not skipped, not timed out).");
+        yield return WaitFor(() => cinematics.IsPlaying || s.State.Phase == GamePhase.Report, 4, "MarsDeparture starts");
+        Note("after rescue: existing presenter playing=" + cinematics.IsPlaying + " seq=" + cinematics.ActiveSequenceId + " caption=" + cinematics.CurrentCaption);
+        if (cinematics.IsPlaying) { yield return Seconds(4); yield return Capture("13-mars-departure-existing"); }
+        yield return WaitFor(() => s.State.Phase == GamePhase.Report, 30, "Report phase");
+        yield return Seconds(2.5);
+        yield return Capture("14-report");
+        Check(cinematicLog.Count(l => l.Contains("finished RecoveryArrival")) == 1, "Exactly one RecoveryArrival acknowledgement.");
+        foreach (string line in cinematicLog) Note("CINEMATIC " + line);
+        Check(Object.FindObjectsByType<AudioListener>(FindObjectsSortMode.None).Count(l => l.isActiveAndEnabled) == 1, "One active AudioListener.");
+    }
+
+    IEnumerator Settle() { for (int i = 0; i < 40 && (Session.Cinematics.IsWaiting); i++) yield return Seconds(.25); yield return Frames(3); }
+    static T Private<T>(object owner, string field) where T : class
+        => owner.GetType().GetField(field, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(owner) as T;
+    void Req(CommandResult result, string step) { Note("domain " + step + ": " + result.Succeeded + " " + result.Explanation); Check(result.Succeeded, step + ": " + result.Explanation); }
+    InteractableTarget Target(string id) => runtime.InteractionTargets.Single(t => t.InteractionId == id);
+    UnityEngine.UIElements.Button PracticeButton() => document.rootVisualElement.Query<UnityEngine.UIElements.Button>().ToList()
+        .FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy && Visible(b));
+    static void Submit(VisualElement e) { e.Focus(); using (var action = NavigationSubmitEvent.GetPooled()) { action.target = e; e.SendEvent(action); } }
+    static bool Visible(VisualElement e) { for (var n = e; n != null; n = n.parent) if (n.resolvedStyle.display == DisplayStyle.None || n.resolvedStyle.visibility != Visibility.Visible) return false; return e?.panel != null; }
+    void Keys(params Key[] keys) { if (keyboard != null && keyboard.added) InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys)); }
+    void OnInteract(CommandResult result) { interactions++; lastInteraction = result; Note("INTERACTION " + result.Succeeded + " " + result.Explanation); }
+    void OnTransferred() { transferred++; Note("ACTUAL MARINE TRANSFER"); }
+    void Cleanup()
+    {
+        Keys();
+        if (resolver) resolver.Interacted -= OnInteract;
+        if (marine) marine.Transferred -= OnTransferred;
+        if (keyboard != null && keyboard.added) InputSystem.RemoveDevice(keyboard); if (mouse != null && mouse.added) InputSystem.RemoveDevice(mouse);
+        foreach (var device in disabledDevices) if (device.added) InputSystem.EnableDevice(device);
+        if (originalSettings) { InputSystem.settings = originalSettings; originalSettings.hideFlags = originalFlags; }
+        if (qaSettings) Object.Destroy(qaSettings);
+        Application.runInBackground = previousBackground;
+    }
+    IEnumerator Aim(Vector3 worldPoint)
+    {
+        double end = Now + 2.5;
+        while (true)
+        {
+            Vector3 delta = worldPoint - player.ViewPivot.position; if (delta.sqrMagnitude < .000001f) yield break;
+            float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, pitch = Mathf.Atan2(delta.y, new Vector2(delta.x, delta.z).magnitude) * Mathf.Rad2Deg;
+            Vector2 degrees = new Vector2(Mathf.DeltaAngle(player.transform.eulerAngles.y, yaw), Mathf.Clamp(pitch, -80f, 80f) - player.PitchDegrees);
+            if (degrees.sqrMagnitude < .04f) break; if (Now > end) { Note("Aim did not converge; remaining=" + degrees); break; }
+            degrees = Vector2.ClampMagnitude(degrees, 70); InputSystem.QueueStateEvent(mouse, new MouseState { delta = degrees / Input.MouseDegreesPerPixel }); yield return null;
+        }
+        InputSystem.QueueStateEvent(mouse, new MouseState()); yield return Frames(1);
+    }
+    IEnumerator WalkTo(Vector3 goal, float radius, double seconds)
+    {
+        double end = Now + seconds;
+        while (Horizontal(goal, player.transform.position) > radius)
+        {
+            if (Now > end) throw new TimeoutException("Actual marine W route stalled at " + player.transform.position);
+            Vector3 flat = goal; flat.y = player.ViewPivot.position.y; yield return Aim(flat); Keys(Key.W); yield return Seconds(.08); Keys(); yield return Frames(1);
+        }
+        Keys();
+    }
+    IEnumerator Use(InteractableTarget target, bool expect)
+    {
+        Keys(); yield return Aim(target.transform.position); yield return Frames(2); resolver.Refresh();
+        Check(resolver.CurrentTarget == target, "Actual interaction ray resolves " + target.InteractionId);
+        int before = interactions; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(2);
+        Check(interactions == before + 1 && lastInteraction.Succeeded == expect, "Single actual E: " + target.InteractionId + " | " + lastInteraction.Explanation);
+    }
+    static double Now => Time.realtimeSinceStartupAsDouble;
+    static float Horizontal(Vector3 a, Vector3 b) => Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+    static IEnumerator Frames(int count) { for (int i = 0; i < count; i++) yield return null; }
+    static IEnumerator Seconds(double seconds) { double end = Now + seconds; while (Now < end) yield return null; }
+    static IEnumerator WaitFor(Func<bool> ready, double seconds, string why) { double end = Now + seconds; while (!ready()) { if (Now > end) throw new TimeoutException(why); yield return null; } }
+    IEnumerator Capture(string name)
+    {
+        var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create(); var old = view.targetTexture; float aspect = view.aspect;
+        var panels = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled && d.panelSettings && d.rootVisualElement?.panel != null).Select(d => d.panelSettings).Distinct().ToArray();
+        var targets = panels.Select(p => p.targetTexture).ToArray(); var clears = panels.Select(p => p.clearColor).ToArray();
+        try
+        {
+            view.targetTexture = texture; view.aspect = 16f / 9; foreach (var panel in panels) { panel.targetTexture = texture; panel.clearColor = false; }
+            yield return Frames(2); var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
+            try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); }
+            finally { RenderTexture.active = active; Object.Destroy(image); }
+        }
+        finally { view.targetTexture = old; view.aspect = aspect; for (int i = 0; i < panels.Length; i++) if (panels[i]) { panels[i].targetTexture = targets[i]; panels[i].clearColor = clears[i]; } texture.Release(); Object.Destroy(texture); }
+    }
+}

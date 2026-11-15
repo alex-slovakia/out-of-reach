@@ -1,0 +1,34 @@
+"""Speech segments of a mono PCM16 WAV: 20 ms RMS envelope, silences >= 0.22 s split segments."""
+import struct
+import sys
+import wave
+
+for path in sys.argv[1:]:
+    with wave.open(path, "rb") as w:
+        rate, n = w.getframerate(), w.getnframes()
+        data = w.readframes(n)
+    samples = struct.unpack("<%dh" % n, data)
+    win = int(rate * 0.02)
+    env = []
+    for i in range(0, n - win, win):
+        chunk = samples[i:i + win]
+        env.append((sum(s * s for s in chunk) / win) ** 0.5)
+    peak = max(env)
+    thr = peak * 0.06
+    voiced = [e > thr for e in env]
+    segs, start, silence = [], None, 0
+    for i, v in enumerate(voiced):
+        if v:
+            if start is None:
+                start = i
+            silence = 0
+        elif start is not None:
+            silence += 1
+            if silence * 0.02 >= 0.22:
+                segs.append((start * 0.02, (i - silence + 1) * 0.02))
+                start, silence = None, 0
+    if start is not None:
+        segs.append((start * 0.02, len(env) * 0.02))
+    print(path.split("/")[-1], "duration %.2f" % (n / rate))
+    for a, b in segs:
+        print("  %.2f - %.2f" % (a, b))

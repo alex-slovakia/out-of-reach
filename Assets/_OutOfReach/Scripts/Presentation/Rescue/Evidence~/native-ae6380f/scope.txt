@@ -1,0 +1,2 @@
+Actual saved Bootstrap (rescue installer + composition patch applied in the rescue writer's clone, uncommitted).
+Real Practice UI, marine W boarding, seat E, real departure/arrival. SHORTCUTS: domain impact + repairs, then Core's own Director.TryEndMission(Recovered). After that only the real Core ending chain runs: RecoveryArrival -> MarsDeparture -> Report.
