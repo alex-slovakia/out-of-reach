@@ -84,22 +84,37 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
 
             try
             {
-                foreach (bool reduced in new[] { false, true })
+                // "" = shipped defaults; "reduced-" = reduced effects; "boost-" = candidate look under review
+                // (sparks and heat shimmer on, stronger lights). The boost pass is evidence only, never a default.
+                var tuning = new SerializedObject(presenter);
+                float plume = tuning.FindProperty("plumeLightIntensity").floatValue;
+                float glow = tuning.FindProperty("cloudGlowIntensity").floatValue;
+                float flash = tuning.FindProperty("flashIntensity").floatValue;
+                bool sparksDefault = tuning.FindProperty("sparks").boolValue, heatDefault = tuning.FindProperty("heatShimmer").boolValue;
+                foreach (string pass in new[] { "", "reduced-", "boost-" })
                 {
+                    bool reduced = pass == "reduced-", boost = pass == "boost-";
+                    tuning.FindProperty("sparks").boolValue = boost || sparksDefault;
+                    tuning.FindProperty("heatShimmer").boolValue = boost || heatDefault;
+                    tuning.FindProperty("plumeLightIntensity").floatValue = boost ? 320f : plume;
+                    tuning.FindProperty("cloudGlowIntensity").floatValue = boost ? 300f : glow;
+                    tuning.FindProperty("flashIntensity").floatValue = boost ? 1200f : flash;
+                    tuning.ApplyModifiedPropertiesWithoutUndo();
                     presenter.PreviewClear();
                     if (v03) launchFx.ResetEffects();
                     float t = TransportDepartureTimeline.IgnitionSeconds - .5f;
                     foreach (float time in Times)
                     {
                         if (reduced && time != 11f && time != 14f) continue;
+                        if (boost && time != 10f && time != 11f && time != 13f) continue;
                         for (; t < time; t += 1f / 30f) Present(t);
                         Present(time);
                         var frame = TransportDepartureTimeline.Evaluate(time, false);
-                        string tag = (reduced ? "reduced-" : "") + "t" + time.ToString("00.0").Replace('.', '_');
+                        string tag = pass + "t" + time.ToString("00.0").Replace('.', '_');
                         // The game's own shot for this playhead (the seat shot is replaced by the pad shot before 9.75 s).
                         GameShot(time, frame, startPosition, startRotation, vehicle, out Vector3 position, out Quaternion rotation, out float fov);
                         Shoot(camera, target, readback, position, rotation, fov, $"{Folder}/V04-game-{tag}.jpg");
-                        if (!reduced)
+                        if (pass.Length == 0)
                         {
                             Vector3 wide = startPosition + startRotation * new Vector3(62f, -23f, -108f);
                             Vector3 look = startPosition + startRotation * new Vector3(0f, -12f + frame.HeightMetres * .5f, 0f);

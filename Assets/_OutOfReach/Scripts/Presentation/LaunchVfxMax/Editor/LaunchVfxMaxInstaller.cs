@@ -40,7 +40,8 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
             var column = Prefab("Smoke & Steam Effects/Prefabs/RocketTrail.prefab", false);
             var deluge = Prefab("Smoke & Steam Effects/Prefabs/Steam.prefab", false);
             var sparks = Prefab("Misc Effects/Prefabs/SparksEffect.prefab", false);
-            var heat = Prefab("Smoke & Steam Effects/Prefabs/HeatDistortion.prefab", false);
+            // The copy under Smoke & Steam Effects points at a material the pack does not ship.
+            var heat = Prefab("Misc Effects/Prefabs/HeatDistortion.prefab", false);
             var steam = Prefab("Smoke & Steam Effects/Prefabs/PressurisedSteam.prefab", false);
 
             var scene = binding.gameObject.scene;
@@ -118,7 +119,10 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
                 .Any(r => r.sharedMaterial && r.sharedMaterial.shader);
             if (valid) return prefab;
             if (required) throw new InvalidOperationException("Import the Unity Particle Pack (Assets/UnityTechnologies/ParticlePack): " + path);
-            Debug.LogWarning("Launch VFX MAX: optional Particle Pack prefab missing, layer skipped: " + path);
+            int renderers = prefab ? prefab.GetComponentsInChildren<ParticleSystemRenderer>(true).Length : 0;
+            int withMaterial = prefab ? prefab.GetComponentsInChildren<ParticleSystemRenderer>(true).Count(r => r.sharedMaterial) : 0;
+            Debug.LogWarning($"Launch VFX MAX: optional Particle Pack prefab unusable, layer skipped: {path} "
+                + $"(loaded: {(bool)prefab}, particle renderers: {renderers}, with a material: {withMaterial})");
             return null;
         }
     }
