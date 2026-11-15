@@ -182,6 +182,18 @@ namespace OutOfReach.Core
         /// <summary>When the last rest ended, simulation seconds, or null before the first rest.</summary>
         public double? LastRestEndedAtSimulationSeconds { get; private set; }
 
+        /// <summary>How long the last ended rest actually lasted, simulation seconds (0 before the first rest).</summary>
+        internal double LastRestDurationSeconds { get; private set; }
+
+        /// <summary>How long the current rest has run, simulation seconds; 0 while awake.</summary>
+        internal double CurrentRestElapsedSeconds => IsResting ? restElapsedSeconds : 0d;
+
+        /// <summary>
+        /// Chapter mode (R22): the berth's extra rules, set by the chapter flow. Called with <see cref="IsResting"/>
+        /// after the ordinary checks passed; returns why the berth may not act now, or null. Null hook = no extra rule.
+        /// </summary>
+        internal Func<bool, string> SleepGate { get; set; }
+
         /// <summary>Food drawn from the ledger while resting, kg per simulated second (BVAD crew-day rate); 0 awake.</summary>
         internal double RestFoodKgPerSecond => IsResting
             ? CrewMetabolicAssumptions.FoodKgPerCrewDay * crewCount / CrewMetabolicAssumptions.SecondsPerDay
@@ -306,14 +318,31 @@ namespace OutOfReach.Core
             return Ok("The crew is awake.");
         }
 
-        /// <summary>The sleep position: begins the longest rest, or wakes the resting crew.</summary>
+        /// <summary>
+        /// The sleep position: begins the longest rest, or wakes the resting crew. In the chapter loop the berth also
+        /// obeys <see cref="SleepGate"/> (R22), so repeated presses can neither chain rests nor cut one short at once.
+        /// </summary>
         public CommandResult CheckSleepInteraction()
         {
-            return IsResting ? CheckWake() : CheckRest(MaximumRestHours);
+            bool resting = IsResting;
+            CommandResult check = resting ? CheckWake() : CheckRest(MaximumRestHours);
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
+            string blocked = SleepGate?.Invoke(resting);
+            return blocked == null ? check : Fail(CommandFailure.PreconditionsNotMet, blocked);
         }
 
         public CommandResult TrySleepInteraction()
         {
+            CommandResult check = CheckSleepInteraction();
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
             return IsResting ? TryWake() : TryBeginRest(MaximumRestHours);
         }
 
@@ -777,6 +806,7 @@ namespace OutOfReach.Core
                 restTargetSeconds = 0d;
                 LastRestStop = reason;
                 LastRestEndedAtSimulationSeconds = state.ElapsedSimulationSeconds;
+                LastRestDurationSeconds = rested;
                 if (reason == RestStopReason.Completed)
                 {
                     CompletedRestCount++;

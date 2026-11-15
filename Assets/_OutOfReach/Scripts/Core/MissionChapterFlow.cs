@@ -43,6 +43,9 @@ namespace OutOfReach.Core
         /// <summary>GAME ASSUMPTION: the in-transit craft asks for the beacon this long before it docks.</summary>
         public const double BeaconRequestBeforeArrivalHours = 10d;
 
+        /// <summary>R22: a second berth press cannot end a rest younger than this (simulated hours; a double press of E).</summary>
+        public const double MinimumRestBeforeWakeHours = 0.5d;
+
         public const int AccidentDay = 1;
         public const int ConsequencesDay = 5;
         public const int ContactDay = 9;
@@ -102,6 +105,7 @@ namespace OutOfReach.Core
             recovery.ChapterMode = true;
             survival.CabinBlocker = DescribeCabinBlock;
             recovery.RuntimeReleased = () => StopRoutine(RoutineStopReason.PlayerCancelled, "the runtime that drives the clock was disabled");
+            recovery.SleepGate = DescribeSleepBlock;
         }
 
         public bool Enabled => true;
@@ -663,6 +667,7 @@ namespace OutOfReach.Core
             running = false;
             survival.CabinBlocker = null;
             recovery.RuntimeReleased = null;
+            recovery.SleepGate = null;
             Changed = null;
         }
 
@@ -907,6 +912,81 @@ namespace OutOfReach.Core
                     RoutineDrinks, RoutineDrinks == 1 ? string.Empty : "s", RoutineRests, RoutineRests == 1 ? string.Empty : "s", LastRoutineStopText));
                 Notify();
             }
+        }
+
+        /// <summary>
+        /// R22, the berth in the chapter loop, on top of the ordinary rest checks (control, danger, beacon). Nothing
+        /// here changes the beats or the routine's pacing; it only stops the berth from being used to skip them:
+        /// - a running routine owns the crew's nights, so the berth neither starts a second rest nor wakes its night;
+        /// - an open decision is answered first, as for the routine;
+        /// - the first rest follows the day-1 order: power and life support repaired, then the first ration;
+        /// - a later rest needs the crew to have been up long enough for the sleep they last had: the routine's own
+        ///   15.5 h waking day after a full 8.5 h night, proportionally less after a short one. Rests can therefore
+        ///   never be chained into a time skip, however often the berth is pressed;
+        /// - a rest that has only just begun is not ended by a second press (a double press of E).
+        /// Returns the reason the berth may not act now, or null.
+        /// </summary>
+        private string DescribeSleepBlock(bool resting)
+        {
+            if (IsRoutineRunning)
+            {
+                return resting
+                    ? "The routine is running: the crew sleeps on its schedule. Press R to stop it before waking them."
+                    : "The routine is running: the crew sleeps on its schedule. Press R to stop it first.";
+            }
+
+            if (resting)
+            {
+                double slept = recovery.CurrentRestElapsedSeconds;
+                return slept < (MinimumRestBeforeWakeHours * Hour) - SurvivalRules.TimeToleranceSeconds
+                    ? "The crew is just settling in to rest; press again in a moment to wake them."
+                    : null;
+            }
+
+            if (PendingDecision != ChapterDecision.None)
+            {
+                return "Decide first: " + DescribeDecision(PendingDecision) + ".";
+            }
+
+            if (Chapter == MissionChapter.Accident && recovery.CompletedRestCount < 1)
+            {
+                if (!systems.Power.IsOperational || !systems.LifeSupport.IsOperational)
+                {
+                    return "Not yet: repair power and life support before the first rest.";
+                }
+
+                if (survival.RationsEaten < 1)
+                {
+                    return "Not yet: eat the first stored ration before the first rest.";
+                }
+            }
+
+            double? woke = recovery.LastRestEndedAtSimulationSeconds;
+            if (!woke.HasValue)
+            {
+                return null;
+            }
+
+            double need = SleepNeedAwakeSeconds(recovery.LastRestDurationSeconds);
+            double awake = state.ElapsedSimulationSeconds - woke.Value;
+            if (awake >= need - SurvivalRules.TimeToleranceSeconds)
+            {
+                return null;
+            }
+
+            return string.Format(CultureInfo.InvariantCulture,
+                "Not tired yet: the crew woke {0} ago after {1} of rest and can sleep again in {2}. Press R to continue the routine.",
+                FormatSpan(awake), FormatSpan(recovery.LastRestDurationSeconds), FormatSpan(need - awake));
+        }
+
+        /// <summary>
+        /// Awake time a crew needs after a rest of <paramref name="restedSeconds"/> before the berth starts the next
+        /// one: the routine's crew day (8.5 h asleep, 15.5 h awake), in proportion to the rest actually taken.
+        /// </summary>
+        public static double SleepNeedAwakeSeconds(double restedSeconds)
+        {
+            double share = Math.Min(1d, Math.Max(0d, restedSeconds) / (SurvivalRecovery.MaximumRestHours * Hour));
+            return share * RoutineAwakeHours * Hour;
         }
 
         private string MissingPrerequisite()
