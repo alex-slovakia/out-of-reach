@@ -184,7 +184,7 @@ def paint_hull(G, W, H, span, variant, pods=(), seed=7):
     n_hi = fbm(H, W, 96 * max(1, H // W), 96 * max(1, W // H), seed + 2, 3)
     if rc:
         tile_rgb = np.array([0.745, 0.742, 0.725], F32)
-        tint_amp, gap_rgb = 0.050, np.array([0.085, 0.082, 0.080], F32)
+        tint_amp, gap_rgb = 0.040, np.array([0.085, 0.082, 0.080], F32)
     else:
         tile_rgb = np.array([0.868, 0.872, 0.868], F32)
         tint_amp, gap_rgb = 0.022, np.array([0.150, 0.158, 0.165], F32)
@@ -257,9 +257,9 @@ def paint_hull(G, W, H, span, variant, pods=(), seed=7):
         smoothn = smoothn * (1.0 - 0.55 * soot)
         # replaced tiles (clean, slightly brighter) and a few scorched ones
         fresh = (tid2 > 0.965) * face
-        burnt = (tid2 < 0.030) * face
+        burnt = (tid2 < 0.022) * face
         for c in range(3):
-            base[..., c] = base[..., c] * (1.0 + 0.16 * fresh * (1 - painted)) * (1.0 - 0.38 * burnt)
+            base[..., c] = base[..., c] * (1.0 + 0.16 * fresh * (1 - painted)) * (1.0 - 0.27 * burnt)
         smoothn = smoothn + 0.12 * fresh
         # micrometeoroid pits
         pit = vnoise(H, W, max(8, H // 6), max(8, W // 6), seed + 9)

@@ -294,6 +294,7 @@ def frame_bars(mb, pf, th0, th1, s0, s1, w, h0, h1, mat, uv=None, r_ref=R_CYL):
 
 # ----------------------------------------------------------------------------- lettering
 _FONT = {}
+_LODK = [1.0]                       # decals sit higher on the far LODs so they never z-fight
 
 
 def text_on(mb, pf, rfun, string, th_c, s_c, cap, uv, h=0.004, res=3, track=1.0):
@@ -340,7 +341,7 @@ def text_on(mb, pf, rfun, string, th_c, s_c, cap, uv, h=0.004, res=3, track=1.0)
     base = len(mb.v)
     for v in bm.verts:
         s = s_c + v.co.y
-        mb.vert(pf(th_c + v.co.x / rfun(s), s, h))
+        mb.vert(pf(th_c + v.co.x / rfun(s), s, h * _LODK[0]))
     for f in bm.faces:
         idx = [base + v.index for v in f.verts]
         if f.normal.z < 0:
@@ -367,7 +368,7 @@ def rcs_pod(mb, pf, fr, th, s, r_loc, L, jets_out):
     patch(mb, pf, th - a, th + a, s - 0.24, s + 0.24, -0.01, 0.055, GRAPH, splits=(S_CYL,))
     if L <= 1:
         patch(mb, pf, th - a * 0.72, th + a * 0.72, s - 0.17, s + 0.17, 0.055, 0.063, METAL)
-        frame_bars(mb, pf, th - a - 0.045 / r_loc, th + a + 0.045 / r_loc, s - 0.285, s + 0.285, 0.020, -0.002, 0.0025, KIT, K('amber'), r_loc)
+        frame_bars(mb, pf, th - a - 0.045 / r_loc, th + a + 0.045 / r_loc, s - 0.285, s + 0.285, 0.020, -0.002, 0.0025 * (1 + L), KIT, K('amber'), r_loc)
     M = fr(th, s, 0.028)
     for (dx, dy) in ((1, 0), (-1, 0), (0, 1), (0, -1)):
         o = M @ Vector((dx * 0.150, dy * 0.185, 0.0))
@@ -395,6 +396,7 @@ def build(variant, L):
         return ((th - TH_U0) / TAU * UREP, s / S_TOT)
 
     sh, dr, sm = MB(), MB(), MB()
+    _LODK[0] = 1.0 + L
     NTH = (128, 64, 32)[L]
     NC = (16, 8, 4)[L]
     jets = []
@@ -461,6 +463,17 @@ def build(variant, L):
 
     # ---- 6 rendezvous windows in a dark surround panel, two side portholes
     patch(sh, hpf, D(62), D(118), 3.02, 3.86, -0.004, 0.005, GRAPH)
+    if L <= 1:
+        frame_bars(sh, hpf, D(62), D(118), 3.02, 3.86, 0.028, -0.004, 0.010, METAL, None, hull_r(3.44))
+    if L == 0:
+        for thd in (64, 77, 90, 103, 116):
+            for sv in (3.05, 3.83):
+                ocyl(sh, hframe(D(thd), sv, 0.005), 0.009, 0.0, 0.004, METAL, None, 6)
+        # star tracker apertures
+        for thd in (200, 340):
+            Mt = hframe(D(thd), 3.62)
+            ocyl(sh, Mt, 0.070, -0.015, 0.022, GRAPH, None, 14)
+            ocyl(sh, Mt, 0.046, 0.022, 0.025, KIT, K('glass'), 14)
     for sgn in (-1, 1):
         M = hframe(HATCH + sgn * D(15.5), 3.44)
         outer = [(-0.25, -0.23), (-0.20, -0.28), (0.20, -0.28), (0.25, -0.23), (0.215, 0.23), (0.165, 0.28), (-0.165, 0.28), (-0.215, 0.23)]
@@ -504,11 +517,17 @@ def build(variant, L):
     obox(sh, M, 0.02, 0.15, -0.18, -0.07, -0.012, 0.040, METAL)
     obox(sh, M, 0.032, 0.138, -0.168, -0.082, 0.040, 0.043, KIT, K('black'))
     if L <= 1:
-        frame_bars(sh, hpf, D(130.5) - 0.03 / R_CYL, D(145.5) + 0.03 / R_CYL, 0.27, 0.95, 0.022, -0.002, 0.0025, KIT, K('amber'))
+        frame_bars(sh, hpf, D(130.5) - 0.03 / R_CYL, D(145.5) + 0.03 / R_CYL, 0.27, 0.95, 0.022, -0.002, 0.0025 * (1 + L), KIT, K('amber'))
     if L == 0:
         for (x, y) in ((-0.29, -0.27), (0.29, -0.27), (0.29, 0.27), (-0.29, 0.27)):
             ocyl(sh, hframe(D(138) + x / R_CYL, 0.61 + y, 0.028), 0.014, 0.0, 0.008, METAL, None, 6)
         text_on(sh, hpf, hull_r, 'UMBILICAL', D(138), 1.035, 0.050, K('marking'), res=2)
+
+    # cable raceway from the shoulder ring to the cone break
+    if L <= 1:
+        patch(sh, hpf, D(168) - 0.05 / R_CYL, D(168) + 0.05 / R_CYL, 0.0, 2.558, 0.0, 0.030, METAL)
+        for zc in (0.22, 0.70, 1.18, 1.66, 2.14):
+            patch(sh, hpf, D(168) - 0.064 / R_CYL, D(168) + 0.064 / R_CYL, zc - 0.022, zc + 0.022, 0.0, 0.037, GRAPH)
 
     # ---- 9 antennas, lamps, forward-bay lids
     for thd in (0, 180):
@@ -546,10 +565,10 @@ def build(variant, L):
     # ---- 10 docking system: deck, tunnel, hard-dock ring with hooks, soft-capture ring with three petals
     ds = sg(96, 24)
     lathe(sh, [(R_TOP, Z_TOP), (0.90, 4.455), (0.80, 4.455)], GRAPH, None, ds)
-    lathe(sh, [(0.80, 4.455), (0.80, 4.78), (0.95, 4.78), (0.95, 4.84), (0.90, 4.84), (0.90, 4.95), (0.70, 4.95), (0.70, 4.90),
-               (0.66, 4.90), (0.66, 5.02), (0.57, 5.02), (0.57, 4.97)], METAL, None, ds)
-    lathe(sh, [(0.57, 4.97), (0.57, 4.60)], GRAPH, None, ds)
-    lathe(sh, [(0.57, 4.60), (0.30, 4.60), (0.30, 4.618), (0.135, 4.618)], METAL, None, ds)
+    lathe(sh, [(0.80, 4.455), (0.80, 4.78), (0.95, 4.78), (0.95, 4.84), (0.90, 4.84), (0.90, 4.95), (0.70, 4.95), (0.70, 4.885),
+               (0.665, 4.885), (0.665, 4.93), (0.565, 4.93), (0.565, 4.90)], METAL, None, ds)
+    lathe(sh, [(0.565, 4.90), (0.565, 4.60)], GRAPH, None, ds)
+    lathe(sh, [(0.565, 4.60), (0.30, 4.60), (0.30, 4.618), (0.135, 4.618)], METAL, None, ds)
     lathe(sh, [(0.135, 4.618), (0.0, 4.618)], KIT, K('glass'), ds)
     for (r0, r1) in ((0.845, 0.865), (0.725, 0.745)):
         lathe(sh, [(r1, 4.95), (r1, 4.955), (r0, 4.955), (r0, 4.95)], KIT, K('seal'), ds)
@@ -569,29 +588,37 @@ def build(variant, L):
             ocyl(sh, upframe(Vector((0.925 * math.cos(th), 0.925 * math.sin(th), 4.84)), th), 0.011, 0.0, 0.006, GRAPH, None, 6)
         for i in range(8):
             th = TAU * (i + 0.5) / 8
-            ocyl(sh, upframe(Vector((0.43 * math.cos(th), 0.43 * math.sin(th), 4.60)), th), 0.014, 0.0, 0.008, GRAPH, None, 6)
+            ocyl(sh, upframe(Vector((0.44 * math.cos(th), 0.44 * math.sin(th), 4.60)), th), 0.014, 0.0, 0.008, GRAPH, None, 6)
         # hatch handle ring and target cross
         lathe(sh, [(0.215 + 0.011 * math.cos(D(a)), 4.652 + 0.011 * math.sin(D(a))) for a in (-90, 0, 90, 180, 270)], KIT, K('yellow'), sg(32, 12))
         for thd in (45, 135, 225, 315):
             ocyl(sh, upframe(Vector((0.215 * math.cos(D(thd)), 0.215 * math.sin(D(thd)), 4.618)), 0), 0.008, 0.0, 0.034, METAL, None, 6)
-    ta = D(47.0)
-    lp = 0.08 / math.sin(ta)
+    # three guide petals: the only parts above the docking datum, tips exactly at z 5.10
+    ta = D(62.0)
+    lp = (5.10 - 4.93 - 0.009 * math.cos(ta)) / math.sin(ta)      # thickness included: top corner at exactly 5.10
     for thd in (90, 210, 330):
         th = D(thd)
         c, s = math.cos(th), math.sin(th)
         T, Rv = Vector((-s, c, 0)), Vector((c, s, 0))
         y = (-Rv * math.cos(ta) + Vector((0, 0, 1)) * math.sin(ta))
-        F = frame(Vector((0.612 * c, 0.612 * s, 5.02)), T, y, T.cross(y))
-        oprism(sh, F, [(-0.175, 0.0), (0.175, 0.0), (0.105, lp), (-0.105, lp)], -0.008, 0.008, METAL, None, bottom=True)
+        F = frame(Vector((0.632 * c, 0.632 * s, 4.93)), T, y, T.cross(y))
+        petal = [(-0.215, 0.0), (0.215, 0.0), (0.150, lp - 0.022), (0.118, lp), (-0.118, lp), (-0.150, lp - 0.022)]
+        oprism(sh, F, petal, -0.009, 0.009, METAL, None, bottom=True)
         if L <= 1:
-            oprism(sh, F, [(-0.120, 0.012), (0.120, 0.012), (0.075, lp - 0.012), (-0.075, lp - 0.012)], -0.012, -0.008, GRAPH, None, bottom=True, top=False)
-            Mr = upframe(Vector((0.615 * c, 0.615 * s, 5.02)), th)
-            obox(sh, Mr, -0.20, -0.14, -0.03, 0.03, 0.0, 0.022, GRAPH)
-            obox(sh, Mr, 0.14, 0.20, -0.03, 0.03, 0.0, 0.022, GRAPH)
+            pad = [(x * 0.74, 0.020 + yy * 0.70) for (x, yy) in petal]
+            oprism(sh, F, pad, 0.009, 0.013, GRAPH, None)
+            oprism(sh, F, pad[::-1], -0.009, -0.013, GRAPH, None)
+            Mr = upframe(Vector((0.615 * c, 0.615 * s, 4.93)), th)
+            for x0 in (-0.235, 0.185):
+                obox(sh, Mr, x0, x0 + 0.05, -0.040, 0.040, 0.0, 0.034, GRAPH, taper=(0.9, 0.8))
+            if L == 0:
+                for x in (-0.11, 0.0, 0.11):
+                    ocyl(sh, F @ Matrix.Translation((x * 0.9, 0.022, 0.013)), 0.008, 0.0, 0.004, METAL, None, 6)
     for thd in (30, 150, 270):
         th = D(thd)
-        Mr = upframe(Vector((0.615 * math.cos(th), 0.615 * math.sin(th), 5.02)), th)
-        obox(sh, Mr, -0.045, 0.045, -0.028, 0.028, 0.0, 0.030, GRAPH, taper=(0.8, 0.8))
+        Mr = upframe(Vector((0.615 * math.cos(th), 0.615 * math.sin(th), 4.93)), th)
+        obox(sh, Mr, -0.060, 0.060, -0.034, 0.034, 0.0, 0.046, GRAPH, taper=(0.8, 0.8))
+        obox(sh, Mr, -0.030, 0.030, -0.010, 0.050, 0.020, 0.058, METAL, bottom=True)
         lathe(sh, [(0.903, 4.872), (0.903, 4.918)], KIT, K('lamp_cyan'), 1, thetas=[th - D(13) + D(26) * i / 6 for i in range(7)])
     for i in range(6):
         th = TAU * i / 6
@@ -706,6 +733,20 @@ def build(variant, L):
         sjets = []
         for thd in (0, 90, 180, 270):
             rcs_pod(sm, spf, lambda t, z, h=0.0: rframe(RS + h, t, z), D(thd), -1.17, RS, L, sjets)
+        lathe(sm, [(0.215, -2.075), (0.46, -2.075), (0.72, -1.995)], GRAPH, None, ss)
+        if L <= 1:
+            for i in range(8):
+                th = TAU * (i + 0.5) / 8
+                c, s = math.cos(th), math.sin(th)
+                Fr = frame(Vector((0, 0, 0)), Vector((c, s, 0)), Vector((0, 0, 1)), Vector((s, -c, 0)))
+                oprism(sm, Fr, [(0.74, -2.045), (2.00, -1.855), (2.00, -1.795), (0.74, -1.985)], -0.016, 0.016, GRAPH, None, bottom=True)
+        for thd in (0, 90, 180, 270):
+            c, s = math.cos(D(thd)), math.sin(D(thd))
+            tk = [(0.33 * math.sin(D(a)), -0.33 * math.cos(D(a))) for a in (0, 20, 40, 60, 80, 100, 118)]
+            lathe(sm, tk, KIT, K('gold'), sg(20, 8), O=Vector((1.22 * c, 1.22 * s, -1.80)))
+            if L <= 1:
+                lathe(sm, [(0.335 * math.sin(D(a)), -0.335 * math.cos(D(a))) for a in (84, 90, 96)], KIT, K('silver'), sg(20, 8),
+                      O=Vector((1.22 * c, 1.22 * s, -1.80)))
         # main engine and four vernier bells
         es = sg(40, 12)
         lathe(sm, [(0.0, -2.03), (0.19, -2.03), (0.25, -2.14), (0.46, -2.52), (0.60, -2.86), (0.625, -2.86)], KIT, K('nozzle_hot'), es)
@@ -880,9 +921,9 @@ def render_views(out_dir, prefix, views, space, res=(1600, 1000)):
     sun.rotation_euler = (D(58), 0, D(200)) if space else (D(52), 0, D(150))
     sc.collection.objects.link(sun)
     fill = bpy.data.objects.new('ACFill', bpy.data.lights.new('ACFill', 'SUN'))
-    fill.data.energy = 0.45 if space else 0.8
+    fill.data.energy = 1.1 if space else 0.8
     fill.data.color = (0.55, 0.70, 1.0)
-    fill.rotation_euler = (D(110), 0, D(20))
+    fill.rotation_euler = (D(118), 0, D(35)) if space else (D(110), 0, D(20))
     sc.collection.objects.link(fill)
     cam = bpy.data.objects.new('ACCam', bpy.data.cameras.new('ACCam'))
     sc.collection.objects.link(cam)
@@ -991,7 +1032,8 @@ def main():
                 views = [('hero', (5.5, 9.0, 3.4), (0, 0, 2.2), 50), ('back', (-7.0, -8.0, 4.6), (0, 0, 2.2), 50),
                          ('hatch_close', (0.9, 5.4, 1.55), (0.0, 2.4, 1.25), 35), ('door_detail', (-1.5, 4.1, 1.5), (-0.25, 2.5, 1.2), 50),
                          ('dock_close', (1.5, 2.2, 6.5), (0, 0, 4.75), 45), ('window_close', (1.6, 4.6, 4.2), (0.2, 1.9, 3.3), 50),
-                         ('umbilical', (-3.6, 3.9, 1.0), (-1.75, 1.9, 0.75), 50)]
+                         ('umbilical', (-3.6, 3.9, 1.0), (-1.75, 1.9, 0.75), 50),
+                         ('door_inside', (0.25, 0.35, 1.35), (0.0, 2.36, 1.15), 24)]
             render_views(prev_dir, fbx_name, views, rc)
         json.dump(report, open(rp, 'w'), indent=1)
     print('[AC2] DONE')
