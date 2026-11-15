@@ -2,6 +2,25 @@ using UnityEngine;
 
 namespace OutOfReach.Presentation.Motion
 {
+    /// <summary>Gait character of one outfit on the shared 164-bone rig.</summary>
+    public readonly struct ModelGaitProfile
+    {
+        public readonly float StrideScale, LiftScale, ArmSwingScale, ArmAbduction, StanceWiden, SwayScale, PelvisYaw, PelvisRoll, Lean;
+
+        public ModelGaitProfile(float strideScale, float liftScale, float armSwingScale, float armAbduction, float stanceWiden,
+            float swayScale, float pelvisYaw, float pelvisRoll, float lean)
+        {
+            StrideScale = strideScale; LiftScale = liftScale; ArmSwingScale = armSwingScale; ArmAbduction = armAbduction;
+            StanceWiden = stanceWiden; SwayScale = swayScale; PelvisYaw = pelvisYaw; PelvisRoll = pelvisRoll; Lean = lean;
+        }
+
+        /// <summary>Shirt and trousers: free arm swing and normal pelvis rotation.</summary>
+        public static readonly ModelGaitProfile Work = new ModelGaitProfile(1f, 1f, 1f, 0f, 0f, 1f, 5f, 3f, 0f);
+
+        /// <summary>Pressure suit: shorter, wider, stiffer steps, arms held off the bulky torso, more side-to-side rock.</summary>
+        public static readonly ModelGaitProfile Eva = new ModelGaitProfile(.9f, .8f, .5f, 10f, .03f, 1.4f, 2.5f, 1.5f, 2f);
+    }
+
     /// <summary>
     /// Pure, allocation-free gait math for the passive first-person body. Everything is expressed in fractions of the
     /// measured leg length so both outfits (same 164-bone rig) share one model. No scene state lives here.
@@ -116,6 +135,30 @@ namespace OutOfReach.Presentation.Motion
             float t = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(12f, 72f, cameraPitchDownDegrees));
             return legLength * .13f * t;
         }
+
+        /// <summary>Quintic ease: zero velocity and acceleration at both ends (a foot leaves and lands without a skid).</summary>
+        public static float Ease(float u)
+        {
+            u = Mathf.Clamp01(u);
+            return u * u * u * (u * (6f * u - 15f) + 10f);
+        }
+
+        /// <summary>Lift profile of one step: zero at both ends, one bump that peaks early (about 44 %).</summary>
+        public static float StepBump(float u)
+        {
+            u = Mathf.Clamp01(u);
+            float b = Mathf.Sin(Mathf.PI * Mathf.Pow(u, .85f));
+            return b * b;
+        }
+
+        /// <summary>Pelvis yaw in degrees for the LEFT foot phase; positive brings the left hip forward (left heel strike).</summary>
+        public static float PelvisYaw(float leftPhase, float amplitude) => amplitude * Mathf.Cos(2f * Mathf.PI * leftPhase);
+
+        /// <summary>Pelvis roll in degrees; positive raises the right hip. The hip of the swinging leg drops.</summary>
+        public static float PelvisRoll(float leftPhase, float amplitude) => -amplitude * Mathf.Sin(2f * Mathf.PI * leftPhase);
+
+        /// <summary>Forward trunk lean in degrees that grows with speed.</summary>
+        public static float ForwardLean(float speed) => Mathf.Lerp(1.5f, 5f, Intensity(speed));
 
         /// <summary>Opposing arm swing amplitude in degrees.</summary>
         public static float ArmSwing(float speed) => Mathf.Lerp(9f, 24f, Intensity(speed) * .6f + .4f * Mathf.InverseLerp(.2f, 2.5f, speed));

@@ -64,7 +64,11 @@ namespace OutOfReach.Presentation.Motion
         private Vector3 previousFeetPosition, gaitDirection;
         private bool hasFeetPosition;
         private float gaitPhase, gaitWeight, gaitSpeed, setback;
-        private bool groundPosed;
+        private bool groundPosed, gaitActive, hasYaw;
+        private Vector3 gaitVelocity;
+        private float yawRate, previousYaw, sinceMoved, ungroundedTime;
+        private ModelGaitGroundProbe groundProbe;
+        private readonly RaycastHit[] groundHits = new RaycastHit[8];
         private float? deltaOverride;
         private DepartureSeatRestraint departureSeat;
 
@@ -370,10 +374,10 @@ namespace OutOfReach.Presentation.Motion
                 {
                     hasFeetPosition = false;
                     // The pause reset still releases presentation leases. Preserve the standing gait frame.
-                    if (reset) ApplyGroundPose();
+                    if (reset) ApplyGroundPose(0f, gaitActive);
                 }
                 else if (trackMovement) UpdateGroundMotion();
-                else if (reset) ApplyGroundPose();
+                else if (reset) ApplyGroundPose(0f, gaitActive);
             }
             wasPaused = paused;
         }
@@ -398,14 +402,22 @@ namespace OutOfReach.Presentation.Motion
             ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
             float elapsed = deltaOverride ?? Time.deltaTime;
             UpdateLookDownSetback(rig, elapsed);
+            float yaw = visualRoot.eulerAngles.y;
+            if (hasYaw && elapsed > 0f && elapsed <= .25f)
+                yawRate = Mathf.Lerp(yawRate, Mathf.DeltaAngle(previousYaw, yaw) / elapsed, 1f - Mathf.Exp(-12f * elapsed));
+            previousYaw = yaw; hasYaw = true;
 
             // AdvancePresentation (tests and frame capture) has no physics step: it trusts the supplied feet motion.
             bool synthetic = deltaOverride.HasValue;
-            bool walkable = groundController.enabled && (synthetic || groundController.isGrounded) && !suit.IsOutside && groundedQuery();
+            // CharacterController.isGrounded flickers on slopes and steps; a short flicker keeps the feet planted.
+            ungroundedTime = synthetic || groundController.isGrounded ? 0f : ungroundedTime + Mathf.Max(0f, elapsed);
+            bool walkable = groundController.enabled && ungroundedTime < .15f && !suit.IsOutside && groundedQuery();
             if (!walkable)
             {
+                // No stepping outside the grounded mode: the feet stay on their standing slots.
                 ResetGait();
-                ApplyGroundPose();
+                rig.ResetFeet();
+                ApplyGroundPose(0f, false);
                 return;
             }
 
@@ -415,40 +427,57 @@ namespace OutOfReach.Presentation.Motion
             if (!hasFeetPosition)
             {
                 hasFeetPosition = true;
-                ApplyGroundPose();
+                ApplyGroundPose(elapsed, false);
                 return;
             }
 
             float distance = displacement.magnitude;
             Vector3 controllerTravel = synthetic ? displacement : Vector3.ProjectOnPlane(groundController.velocity, Vector3.up) * elapsed;
-            // A physics move and the observed feet delta must agree. Reject warps and hitches rather than cycle to catch up.
-            if (elapsed <= 0f || elapsed > .25f || !Finite(displacement) || !Finite(controllerTravel)
-                || distance > .65f || (displacement - controllerTravel).magnitude > .015f + distance * .2f)
+            // A warp or a hitch re-plants the feet at the standing slots instead of cycling to catch up.
+            if (elapsed <= 0f || elapsed > .25f || !Finite(displacement) || !Finite(controllerTravel) || distance > .65f)
             {
                 ResetGait();
-                ApplyGroundPose();
+                rig.ResetFeet();
+                ApplyGroundPose(0f, false);
                 return;
             }
 
-            bool moved = distance > elapsed * .08f && Vector3.Dot(displacement, controllerTravel) > 0f;
-            float previousWeight = gaitWeight;
-            gaitWeight = Mathf.MoveTowards(gaitWeight, moved ? 1f : 0f, elapsed * (moved ? 9f : 11f));
+            // Motion the controller did not make (a push, a carrier) does not drive the gait; planted feet stay put.
+            bool consistent = (displacement - controllerTravel).magnitude <= .015f + distance * .2f;
+            bool moved = consistent && distance > elapsed * .08f && Vector3.Dot(displacement, controllerTravel) > 0f;
+            sinceMoved = moved ? 0f : sinceMoved + elapsed;
+            // A single still frame inside a walk does not end the gait.
+            bool moving = moved || (gaitActive && sinceMoved < .12f);
+            gaitWeight = Mathf.MoveTowards(gaitWeight, moving ? 1f : 0f, elapsed * (moving ? 9f : 7f));
             if (moved)
             {
                 Vector3 nextDirection = Quaternion.Inverse(visualRoot.rotation) * (displacement / distance);
-                gaitDirection = previousWeight <= 0f ? nextDirection
-                    : Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
                 float measured = distance / elapsed;
-                gaitSpeed = previousWeight <= 0f ? measured
-                    : Mathf.Lerp(gaitSpeed, measured, 1f - Mathf.Exp(-10f * elapsed));
-                float stride = ModelGait.StrideLength(gaitSpeed, rig.LegLength, Mathf.Abs(gaitDirection.x));
+                if (!gaitActive)
+                {
+                    gaitDirection = nextDirection;
+                    gaitSpeed = measured;
+                    gaitVelocity = displacement / elapsed;
+                    gaitPhase = rig.StartPhase(ModelGait.Stance(Mathf.Max(gaitSpeed, .3f)));
+                    gaitActive = true;
+                }
+                else
+                {
+                    gaitDirection = Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
+                    gaitSpeed = Mathf.Lerp(gaitSpeed, measured, 1f - Mathf.Exp(-10f * elapsed));
+                    gaitVelocity = Vector3.Lerp(gaitVelocity, displacement / elapsed, 1f - Mathf.Exp(-12f * elapsed));
+                }
+                ModelGaitProfile profile = activeEva ? ModelGaitProfile.Eva : ModelGaitProfile.Work;
+                float stride = ModelGait.StrideLength(Mathf.Max(gaitSpeed, .3f), rig.LegLength, Mathf.Abs(gaitDirection.x)) * profile.StrideScale;
                 gaitPhase = Mathf.Repeat(gaitPhase + distance / stride, 1f);
             }
-            else if (gaitWeight <= 0f)
+            if (!moving)
             {
-                gaitPhase = gaitSpeed = 0f;
+                gaitActive = false;
+                gaitVelocity = Vector3.zero;
+                if (gaitWeight <= 0f) gaitSpeed = 0f;
             }
-            ApplyGroundPose();
+            ApplyGroundPose(elapsed, gaitActive);
         }
 
         private void UpdateFloatingLegs(bool reset, bool paused, bool trackMovement)
@@ -483,32 +512,58 @@ namespace OutOfReach.Presentation.Motion
         {
             gaitWeight = 0f;
             gaitPhase = gaitSpeed = 0f;
-            hasFeetPosition = false;
+            hasFeetPosition = gaitActive = hasYaw = false;
+            gaitVelocity = Vector3.zero;
+            yawRate = sinceMoved = 0f;
         }
 
-        // Poses the grounded rig from the current gait + posture state, or restores the standing sample when idle.
-        private void ApplyGroundPose()
+        // Poses the grounded rig every frame: planted feet, settle and turn steps, gait and the look-down setback.
+        private void ApplyGroundPose(float deltaTime, bool moving)
         {
             ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
-            if (gaitWeight <= 0f && setback < .002f)
-            {
-                if (groundPosed) rig.RestoreStanding();
-                groundPosed = false;
-                return;
-            }
+            groundProbe ??= ProbeGround;
             var frame = new ModelGaitFrame
             {
                 Direction = gaitDirection.sqrMagnitude > 1e-6f ? gaitDirection.normalized : Vector3.forward,
                 Phase = gaitPhase,
                 Speed = gaitSpeed,
                 Weight = gaitWeight,
+                Moving = moving,
+                Velocity = gaitVelocity,
+                YawRate = yawRate,
+                Pivot = playerFeet.position,
+                DeltaTime = deltaTime,
                 Setback = setback,
                 LeftArm = (armMask & BodyArmVisibility.Left) != 0,
-                RightArm = (armMask & BodyArmVisibility.Right) != 0
+                RightArm = (armMask & BodyArmVisibility.Right) != 0,
+                Eva = activeEva,
+                Ground = groundProbe
             };
             rig.Apply(visualRoot, frame);
             groundPosed = true;
         }
+
+        // Nearest walkable surface straight below, ignoring the player capsule, triggers and the body itself.
+        private bool ProbeGround(Vector3 origin, float distance, out float height, out Vector3 normal)
+        {
+            height = 0f; normal = Vector3.up;
+            int count = Physics.RaycastNonAlloc(origin, Vector3.down, groundHits, distance, Physics.DefaultRaycastLayers,
+                QueryTriggerInteraction.Ignore);
+            float best = float.MaxValue;
+            for (int i = 0; i < count; i++)
+            {
+                RaycastHit hit = groundHits[i];
+                Collider surface = hit.collider;
+                if (!surface || surface == groundController || hit.normal.y < .55f || hit.distance >= best) continue;
+                Transform t = surface.transform;
+                if ((playerFeet && (t == playerFeet || t.IsChildOf(playerFeet))) || (visualRoot && t.IsChildOf(visualRoot))) continue;
+                best = hit.distance; height = hit.point.y; normal = hit.normal;
+            }
+            return best < float.MaxValue;
+        }
+
+        /// <summary>Test access to the active outfit grounded rig.</summary>
+        internal ModelGaitRig ActiveGroundRig => (activeEva ? evaCache : workCache)?.Ground;
 
         private void ResetGroundMotion(bool restoreStanding)
         {
@@ -517,6 +572,8 @@ namespace OutOfReach.Presentation.Motion
             groundPosed = false;
             ResetGait();
             setback = 0f;
+            workCache?.Ground?.ResetFeet();
+            evaCache?.Ground?.ResetFeet();
         }
 
         private void FollowFeet()

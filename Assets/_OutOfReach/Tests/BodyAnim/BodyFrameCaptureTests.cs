@@ -161,22 +161,27 @@ namespace OutOfReach.Tests.BodyAnim
                 s.Sprint = speed > 3f;
                 for (int i = 0; i < 90; i++) Step(s, speed, dt, heading);   // reach steady gait
                 var left = new List<Vector3>(); var right = new List<Vector3>();
+                var trackL = new SlideTracker(s, true); var trackR = new SlideTracker(s, false);
                 float stridePeriod = ModelGait.StrideLength(speed, ModelGait.ReferenceLegLength) / speed;
                 int frames = Mathf.RoundToInt(stridePeriod * 2f * 60f);
                 for (int i = 0; i < frames; i++)
                 {
                     Step(s, speed, dt, heading);
                     left.Add(ankleL.position); right.Add(ankleR.position);
+                    trackL.Sample(); trackR.Sample();
                     if (speed == 2.5f && OutDir != null && i % 6 == 0 && i < 6 * 8)
                     {
                         PlaceSide(s); Save(Render(s.Side, 640, 360), tag + "_walk_side_" + (i / 6));
                     }
                 }
                 float slideL = MaxPlantedSlide(left), slideR = MaxPlantedSlide(right);
-                Debug.Log("[BODYANIM] " + tag + " speed " + speed + " planted slide mm L " + slideL * 1000f + " R " + slideR * 1000f
-                          + " cadence " + ModelGait.StepsPerMinute(speed, ModelGait.ReferenceLegLength));
-                Assert.Less(slideL, .012f, tag + " left foot slid at " + speed);
-                Assert.Less(slideR, .012f, tag + " right foot slid at " + speed);
+                Debug.Log("[BODYANIM] " + tag + " speed " + speed + " ankle-window slide mm L " + slideL * 1000f + " R " + slideR * 1000f
+                          + " | planted flat-foot path mm L " + trackL.Worst * 1000f + " R " + trackR.Worst * 1000f
+                          + " | flat frames " + trackL.Samples + "/" + trackR.Samples
+                          + " | cadence " + ModelGait.StepsPerMinute(speed, ModelGait.ReferenceLegLength));
+                Assert.Greater(trackL.Samples + trackR.Samples, 10, "the feet must actually plant");
+                Assert.Less(trackL.Worst, .005f, tag + " planted left foot slid at " + speed);
+                Assert.Less(trackR.Worst, .005f, tag + " planted right foot slid at " + speed);
             }
 
             // Look-down views: standing and walking.
@@ -232,6 +237,166 @@ namespace OutOfReach.Tests.BodyAnim
             Assert.Greater(maxReach, neutral * 1.02f, "legs must extend towards the deck");
             for (int i = 0; i < 20; i++) s.Body.AdvancePresentation(1f / 60f);
             Assert.AreEqual(neutral, (footL.position - hipL.position).magnitude, neutral * .06f, "must return to the floating pose");
+        }
+
+        /// <summary>Path length of the real ankle bone while the rig reports the foot planted and flat.</summary>
+        private sealed class SlideTracker
+        {
+            private readonly ModelGaitRig rig; private readonly Transform bone; private readonly bool left;
+            private bool had; private Vector3 last; private float run;
+            public float Worst; public int Samples;
+            public SlideTracker(Stage s, bool leftFoot)
+            {
+                rig = s.Body.ActiveGroundRig; left = leftFoot;
+                bone = Bone(s, leftFoot ? "foot.L" : "foot.R");
+            }
+            public void Sample()
+            {
+                bool flat = rig.IsPlanted(left) && Mathf.Abs(rig.ShownPitch(left)) < .5f;
+                Vector3 p = bone.position;
+                if (flat && had) { run += new Vector2(p.x - last.x, p.z - last.z).magnitude; Worst = Mathf.Max(Worst, run); Samples++; }
+                else run = 0f;
+                had = flat; last = p;
+            }
+        }
+
+        private static void Turn(Stage s, float degrees) => s.Player.rotation = Quaternion.AngleAxis(degrees, Vector3.up) * s.Player.rotation;
+
+        private static void Shot(Stage s, Camera camera, string name, int w = 640, int h = 360)
+        {
+            if (OutDir != null) Save(Render(camera, w, h), name);
+        }
+
+        private static void PlaceAbove(Stage s)
+        {
+            s.Side.transform.position = s.Player.position + new Vector3(0f, 3.2f, -.3f);
+            s.Side.transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
+        }
+
+        [TestCase(false), TestCase(true)]
+        public void TurningInPlaceStepsInsteadOfSkating(bool eva)
+        {
+            Stage s = Build();
+            s.Suit.On = eva; s.Suit.Raise();
+            Settle(s);
+            string tag = eva ? "eva" : "work";
+            ModelGaitRig rig = s.Body.ActiveGroundRig;
+            var trackL = new SlideTracker(s, true); var trackR = new SlideTracker(s, false);
+            const float dt = 1f / 60f;
+            int steps = 0; bool plantedL = true, plantedR = true; float worstTwist = 0f;
+            SetPitch(s, 70f);
+            for (int i = 0; i < 150; i++)
+            {
+                Turn(s, 120f * dt);
+                s.Body.AdvancePresentation(dt);
+                trackL.Sample(); trackR.Sample();
+                if (plantedL && !rig.IsPlanted(true)) steps++;
+                if (plantedR && !rig.IsPlanted(false)) steps++;
+                plantedL = rig.IsPlanted(true); plantedR = rig.IsPlanted(false);
+                worstTwist = Mathf.Max(worstTwist, Mathf.Abs(rig.YawOffset(true)), Mathf.Abs(rig.YawOffset(false)));
+                if (i % 15 == 7) { PlaceAbove(s); Shot(s, s.Side, tag + "_turn_above_" + (i / 15)); Shot(s, s.Eye, tag + "_turn_eye_" + (i / 15), 480, 270); }
+            }
+            for (int i = 0; i < 90; i++) { s.Body.AdvancePresentation(dt); trackL.Sample(); trackR.Sample(); }
+            Debug.Log("[BODYANIM] " + tag + " turn 180deg: steps " + steps + " planted path mm L " + trackL.Worst * 1000f + " R " + trackR.Worst * 1000f
+                      + " worst foot twist " + worstTwist + " final slot dist L " + rig.SlotDistance(true) + " R " + rig.SlotDistance(false)
+                      + " yaw L " + rig.YawOffset(true) + " R " + rig.YawOffset(false));
+            Assert.GreaterOrEqual(steps, 4, "turning 180 degrees in place needs several steps");
+            Assert.Less(trackL.Worst, .003f, "planted left foot skated while turning");
+            Assert.Less(trackR.Worst, .003f, "planted right foot skated while turning");
+            Assert.Less(worstTwist, 75f, "feet must step before the legs twist too far");
+            Assert.Less(rig.SlotDistance(true), .04f); Assert.Less(rig.SlotDistance(false), .04f);
+            Assert.Less(Mathf.Abs(rig.YawOffset(true)), 10f); Assert.Less(Mathf.Abs(rig.YawOffset(false)), 10f);
+        }
+
+        [TestCase(false), TestCase(true)]
+        public void WalkingACurveKeepsPlantedFeet(bool eva)
+        {
+            Stage s = Build();
+            s.Suit.On = eva; s.Suit.Raise();
+            Settle(s);
+            string tag = eva ? "eva" : "work";
+            var trackL = new SlideTracker(s, true); var trackR = new SlideTracker(s, false);
+            const float dt = 1f / 60f;
+            for (int i = 0; i < 240; i++)
+            {
+                Turn(s, 60f * dt);
+                Step(s, 2.5f, dt, s.Player.forward);
+                if (i > 30) { trackL.Sample(); trackR.Sample(); }
+                if (i % 20 == 10) { PlaceAbove(s); Shot(s, s.Side, tag + "_curve_above_" + (i / 20)); }
+            }
+            Debug.Log("[BODYANIM] " + tag + " curve 60deg/s at 2.5 m/s: planted path mm L " + trackL.Worst * 1000f + " R " + trackR.Worst * 1000f
+                      + " flat frames " + trackL.Samples + "/" + trackR.Samples);
+            Assert.Greater(trackL.Samples + trackR.Samples, 20);
+            Assert.Less(trackL.Worst, .006f, "planted left foot skated in the curve");
+            Assert.Less(trackR.Worst, .006f, "planted right foot skated in the curve");
+        }
+
+        [TestCase(false), TestCase(true)]
+        public void StoppingSettlesTheFeetWithoutSliding(bool eva)
+        {
+            Stage s = Build();
+            s.Suit.On = eva; s.Suit.Raise();
+            Settle(s);
+            string tag = eva ? "eva" : "work";
+            ModelGaitRig rig = s.Body.ActiveGroundRig;
+            const float dt = 1f / 60f;
+            for (int i = 0; i < 100; i++) Step(s, 2.5f, dt, Vector3.forward);
+            var trackL = new SlideTracker(s, true); var trackR = new SlideTracker(s, false);
+            int settleSteps = 0; bool stepping = false; int settledAt = -1;
+            for (int i = 0; i < 90; i++)
+            {
+                s.Body.AdvancePresentation(dt);
+                trackL.Sample(); trackR.Sample();
+                if (rig.IsStepping && !stepping) settleSteps++;
+                stepping = rig.IsStepping;
+                if (settledAt < 0 && !rig.IsStepping && rig.IsPlanted(true) && rig.IsPlanted(false)
+                    && rig.SlotDistance(true) < .04f && rig.SlotDistance(false) < .04f) settledAt = i;
+                if (i % 6 == 0 && i < 48) { PlaceSide(s); Shot(s, s.Side, tag + "_stop_side_" + (i / 6)); }
+            }
+            Debug.Log("[BODYANIM] " + tag + " stop: settle steps " + settleSteps + " settled after s " + (settledAt + 1) * dt
+                      + " planted path mm L " + trackL.Worst * 1000f + " R " + trackR.Worst * 1000f);
+            Assert.GreaterOrEqual(settledAt, 0, "feet must end side by side after a stop");
+            Assert.Less((settledAt + 1) * dt, 1.2f);
+            Assert.Less(trackL.Worst, .003f); Assert.Less(trackR.Worst, .003f);
+        }
+
+        [Test]
+        public void WalkingUpASlopeKeepsSolesOnTheRamp()
+        {
+            Stage s = Build();
+            Settle(s);
+            ModelGaitRig rig = s.Body.ActiveGroundRig;
+            float flatAnkle = (Bone(s, "foot.L").position.y + Bone(s, "foot.R").position.y) * .5f;
+            var ramp = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            ramp.name = "Ramp";
+            Quaternion tilt = Quaternion.Euler(-12f, 0f, 0f);
+            Vector3 n = tilt * Vector3.up;
+            ramp.transform.SetPositionAndRotation(-.5f * n, tilt);
+            ramp.transform.localScale = new Vector3(8f, 1f, 30f);
+            Physics.SyncTransforms();
+            float RampY(Vector3 p) => (-n.x * p.x - n.z * p.z) / n.y;
+            const float dt = 1f / 60f;
+            float worst = 0f; int samples = 0;
+            s.Player.position = new Vector3(0f, RampY(new Vector3(0f, 0f, 1f)), 1f);
+            s.Body.AdvancePresentation(dt);
+            for (int i = 0; i < 150; i++)
+            {
+                Vector3 p = s.Player.position + Vector3.forward * 2.5f * dt;
+                p.y = RampY(p);
+                s.Player.position = p;
+                s.Body.AdvancePresentation(dt);
+                foreach (bool leftFoot in new[] { true, false })
+                {
+                    if (!rig.IsPlanted(leftFoot) || Mathf.Abs(rig.ShownPitch(leftFoot)) > .5f) continue;
+                    Transform foot = Bone(s, leftFoot ? "foot.L" : "foot.R");
+                    float above = foot.position.y - RampY(foot.position);
+                    worst = Mathf.Max(worst, Mathf.Abs(above - flatAnkle)); samples++;
+                }
+                if (i % 25 == 12) { PlaceSide(s); Shot(s, s.Side, "work_ramp_side_" + (i / 25)); }
+            }
+            Debug.Log("[BODYANIM] ramp 12deg: flat ankle height " + flatAnkle + " worst planted ankle height error mm " + worst * 1000f + " samples " + samples);
+            Assert.Greater(samples, 20);
+            Assert.Less(worst, .03f, "planted feet must sit on the ramp, not float above or sink in");
         }
 
         // Horizontal drift of an ankle across stretches where it stays on the ground (within 12 mm of its lowest point).
