@@ -25,7 +25,7 @@ namespace OutOfReach.Presentation.Hands
         private Func<int> readRevision;
         private Func<HandContactSample, bool> validate;
         private int generation;
-        private const float OverheadForwardArc = .12f;
+        private const float OverheadArcArmFraction = .25f;
         // Two leases on the existing left/right skeleton. The solver below runs against one
         // record at a time; paired dispatch waits until BOTH visible poses pass their original proof.
         private sealed class ArmState
@@ -47,6 +47,9 @@ namespace OutOfReach.Presentation.Hands
             public float returnFromBlend;
             public Vector3 lastFinalWrist;
             public Quaternion lastFinalRotation;
+            public bool pushReleased;
+            public Vector3 releasedWristLocal;
+            public Quaternion releasedRotationLocal;
             public Vector3 palmPoint;
             public Vector3 startWrist;
             public Vector3 elbowPole;
@@ -55,7 +58,9 @@ namespace OutOfReach.Presentation.Hands
             public Quaternion palmFrame;
             public Quaternion startWristRotation;
             public bool overheadReach;
-            public float overheadPoleSign;
+            public float overheadFinalRoll;
+            public Quaternion baselineWristParentRotation;
+            public Quaternion overheadTerminalWrist;
             public Quaternion[] baseline = new Quaternion[13];
             public Quaternion[] previousPose = new Quaternion[13];
             public Vector3 diagnosticPoint;
@@ -68,6 +73,7 @@ namespace OutOfReach.Presentation.Hands
             public bool diagnosticHasTarget;
             public bool diagnosticHasWrist;
             public HandContactStage WorkingStage;
+            public float PairHalfSpaceClearance = float.NaN;
             public float ContactErrorMetres = float.NaN;
             public float MinimumHandPlaneClearanceMetres = float.NaN;
             public float PalmPatchPlaneDistanceMetres = float.NaN;
@@ -85,6 +91,7 @@ namespace OutOfReach.Presentation.Hands
             ? leftState.WorkingStage : rightState.WorkingStage;
         public HandContactStage ContactStageFor(ContactHand selected) => StateFor(selected)?.WorkingStage ?? HandContactStage.None;
         public float ContactErrorFor(ContactHand selected) => StateFor(selected)?.ContactErrorMetres ?? float.NaN;
+        public float PairHalfSpaceClearanceFor(ContactHand selected) => StateFor(selected)?.PairHalfSpaceClearance ?? float.NaN;
         private ArmState StateFor(ContactHand selected) => selected == ContactHand.Left ? leftState
             : selected == ContactHand.Right ? rightState : null;
         private BareRailGripLease grip { get => Current.grip; set => Current.grip = value; }
@@ -112,7 +119,7 @@ namespace OutOfReach.Presentation.Hands
         private Quaternion palmFrame { get => Current.palmFrame; set => Current.palmFrame = value; }
         private Quaternion startWristRotation { get => Current.startWristRotation; set => Current.startWristRotation = value; }
         private bool overheadReach { get => Current.overheadReach; set => Current.overheadReach = value; }
-        private float overheadPoleSign { get => Current.overheadPoleSign; set => Current.overheadPoleSign = value; }
+        private float overheadFinalRoll { get => Current.overheadFinalRoll; set => Current.overheadFinalRoll = value; }
         private Quaternion[] baseline { get => Current.baseline; set => Current.baseline = value; }
         private Quaternion[] previousPose { get => Current.previousPose; set => Current.previousPose = value; }
         private Vector3 diagnosticPoint { get => Current.diagnosticPoint; set => Current.diagnosticPoint = value; }
@@ -152,6 +159,20 @@ namespace OutOfReach.Presentation.Hands
             leaseAllowed = isWorkArmLeaseAllowed; readRevision = currentBodyPoseRevision; validate = validateActualContact;
         }
 
+        /// <summary>Read-only dimensions of the explicitly bound arm, with no model-name lookup.</summary>
+        public bool TryGetPushGeometry(ContactHand selected, out Vector3 shoulder, out float upperArmMetres,
+            out float forearmMetres, out float reachDuration)
+        {
+            shoulder = default; upperArmMetres = forearmMetres = reachDuration = 0f;
+            BareArmContactRig rig = selected == ContactHand.Left ? left : selected == ContactHand.Right ? right : null;
+            if (rig == null || !rig.IsUsable) return false;
+            shoulder = rig.Upper.position; upperArmMetres = Vector3.Distance(rig.Upper.position, rig.Lower.position);
+            forearmMetres = Vector3.Distance(rig.Lower.position, rig.Wrist.position);
+            reachDuration = Mathf.Clamp(reachSeconds, .15f, .25f);
+            return FiniteVector(shoulder) && Finite(upperArmMetres) && Finite(forearmMetres)
+                && upperArmMetres > .001f && forearmMetres > .001f && Finite(reachDuration);
+        }
+
         /// <summary>Bare Grip is intentionally unavailable until a real authored/calibrated bare-hand curl is delivered.</summary>
         public bool TryReachPush(ContactHand requestedHand, HandContactTarget actualSurface,
             Func<HandContactSample, bool> tryPushAtContact)
@@ -186,6 +207,7 @@ namespace OutOfReach.Presentation.Hands
             palmPoint = calibration.LocalPoint; palmFrame = calibration.LocalFrame;
             startWrist = active.Upper.parent.InverseTransformPoint(active.Wrist.position);
             startWristRotation = Quaternion.Inverse(active.Upper.parent.rotation) * active.Wrist.rotation;
+            Current.baselineWristParentRotation = Quaternion.Inverse(active.Upper.parent.rotation) * active.Wrist.parent.rotation;
             elbowPole = active.Upper.parent.InverseTransformVector(active.Lower.position - active.Upper.position);
             previousPoint = actualSurface.Surface ? actualSurface.Surface.TransformPoint(actualSurface.LocalPoint) : Vector3.zero;
             previousEye = eye.position;
@@ -195,12 +217,9 @@ namespace OutOfReach.Presentation.Hands
             overheadReach = Vector3.Dot(sample.Normal, Vector3.down) > .95f;
             if (overheadReach)
             {
-                // Choose the outward bend once; do not let a camera turn flip the elbow midway.
-                Vector3 middle = Vector3.Lerp(active.Wrist.position, point, .5f) + sample.Tangent * OverheadForwardArc;
-                Vector3 axis = (middle - active.Upper.position).normalized;
-                Vector3 pole = Vector3.ProjectOnPlane(active.Lower.position - active.Upper.position, axis);
-                Vector3 outward = eye.right * (hand == ContactHand.Left ? -1f : 1f);
-                overheadPoleSign = Vector3.Dot(Vector3.Cross(axis, pole), outward) >= 0f ? 1f : -1f;
+                if (!TryOverheadFinalRoll(point, rotation, out float finalRoll)) { Forget(); return false; }
+                overheadFinalRoll = finalRoll;
+                if (!TryOverheadTerminalWrist(point, rotation)) { Forget(); return false; }
             }
             lastSample = sample; lastFinalWrist = point; lastFinalRotation = rotation; lastBlend = 0f;
             action = tryPushAtContact; elapsed = 0f; WorkingStage = HandContactStage.Reaching;
@@ -220,6 +239,9 @@ namespace OutOfReach.Presentation.Hands
             if (!PreparePush(ContactHand.Right, rightTarget, onContact) || token != generation)
             { CancelImmediately(); return false; }
             pairedPush = true; pairAction = onContact;
+            bool separated = true;
+            Both(() => { if (!MeasurePairHalfSpace()) separated = false; });
+            if (!separated) { CancelImmediately(); return false; }
             return true;
         }
 
@@ -240,7 +262,7 @@ namespace OutOfReach.Presentation.Hands
                 if (!proven || token != generation) return;
                 proven = TryTarget(out HandContactSample fresh, out _, out _) && MeasureSkin(fresh)
                     && ContactErrorMetres <= .003f && PalmPatchPlaneDistanceMetres <= .003f
-                    && MinimumHandPlaneClearanceMetres >= -PlaneTolerance;
+                    && MinimumHandPlaneClearanceMetres >= -PlaneTolerance && MeasurePairHalfSpace();
                 if (proven) lastSample = fresh;
             });
             if (token != generation) return;
@@ -258,7 +280,9 @@ namespace OutOfReach.Presentation.Hands
                 accepted = callback(rightState.lastSample);
             }
             catch (Exception error) { Debug.LogException(error, this); accepted = false; }
-            if (token == generation && !accepted) CancelContact();
+            if (token != generation) return;
+            if (!accepted) CancelContact();
+            else Both(ReleaseAcceptedPush);
         }
 
         public Vector3 OrientGripAxis(ContactHand selected, Vector3 axis, Vector3 normal)
@@ -429,6 +453,17 @@ namespace OutOfReach.Presentation.Hands
             Both(CancelOneContact);
         }
 
+        // The real contact frame is retained for this render. Once Player accepted its impulse,
+        // the hand is free: its return endpoint follows the body, while the original real surface
+        // remains the unchanged collision/skin-clearance reference for every waypoint.
+        private void ReleaseAcceptedPush()
+        {
+            if (active == null || WorkingStage != HandContactStage.PushContact) return;
+            Current.releasedWristLocal = active.Upper.parent.InverseTransformPoint(lastFinalWrist);
+            Current.releasedRotationLocal = Quaternion.Inverse(active.Upper.parent.rotation) * lastFinalRotation;
+            Current.pushReleased = true;
+        }
+
         private void CancelOneContact()
         {
             if (active == null || WorkingStage == HandContactStage.None || WorkingStage == HandContactStage.Returning) return;
@@ -449,7 +484,7 @@ namespace OutOfReach.Presentation.Hands
             calibration?.Dispose(); calibration = null;
             grip?.Dispose(); grip = null; readHeldGrip = null; gripClose = gripReturnClose = gripAxialDegrees = 0f;
             generation++; active = null; action = null; target = default;
-            WorkingStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN; overheadReach = false; overheadPoleSign = 0f;
+            WorkingStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN; overheadReach = false; Current.pushReleased = false;
             MinimumHandPlaneClearanceMetres = PalmPatchPlaneDistanceMetres = float.NaN;
             MeasuredWaypointCorrectionMetres = 0f; SafeSolveAttempts = 0; lastBlend = returnFromBlend = 0f;
         }
@@ -481,12 +516,18 @@ namespace OutOfReach.Presentation.Hands
             if (dt > .1f) dt = 0f;
             elapsed += dt;
             if (grip != null) { TickGrip(); return; }
+            // Do not pin the palm back to the wall after its accepted push moves the body away.
+            if (Current.pushReleased && WorkingStage == HandContactStage.PushContact) CancelOneContact();
             if (WorkingStage == HandContactStage.Returning)
             {
                 float t = Mathf.Clamp01(elapsed / Mathf.Clamp(returnSeconds, .15f, .35f));
                 // Reverse the same measured path; direct quaternion return can sweep fingers through a wall.
                 float reverse = returnFromBlend * (1f - Mathf.SmoothStep(0f, 1f, t));
-                if (!TryApplySafePose(reverse, lastFinalWrist, lastFinalRotation, lastSample))
+                Vector3 returnWrist = Current.pushReleased
+                    ? active.Upper.parent.TransformPoint(Current.releasedWristLocal) : lastFinalWrist;
+                Quaternion returnRotation = Current.pushReleased
+                    ? active.Upper.parent.rotation * Current.releasedRotationLocal : lastFinalRotation;
+                if (!TryApplySafePose(reverse, returnWrist, returnRotation, lastSample))
                 { CancelImmediately(); return; }
                 if (t >= 1f) { Restore(baseline, 1f); Forget(); }
                 return;
@@ -511,6 +552,7 @@ namespace OutOfReach.Presentation.Hands
             catch (Exception error) { Debug.LogException(error, this); accepted = false; }
             if (token != generation) return;
             if (!accepted) CancelContact();
+            else ReleaseAcceptedPush();
         }
 
         private void Restore(Quaternion[] from, float blend)
@@ -541,17 +583,46 @@ namespace OutOfReach.Presentation.Hands
             return true;
         }
 
+        private bool MeasurePairHalfSpace()
+        {
+            if (calibration == null || active == null || left == null || right == null
+                || !left.Upper || !right.Upper) return RefuseDiagnostic("pair.missingActualArmGeometry");
+            Vector3 across = right.Upper.position - left.Upper.position;
+            if (across.sqrMagnitude < .04f) return RefuseDiagnostic("pair.degenerateShoulderAxis");
+            across.Normalize();
+            Vector3 middle = (left.Upper.position + right.Upper.position) * .5f;
+            float side = hand == ContactHand.Left ? -1f : 1f;
+            float minimum = float.PositiveInfinity;
+            // MeasureSkin has just baked this exact pose. Use ALL arm vertices, including sleeves
+            // and fingers, rather than only the rigid palm support patch or broad renderer bounds.
+            Matrix4x4 matrix = active.Renderer.transform.localToWorldMatrix;
+            foreach (Vector3 vertex in calibration.Vertices)
+                minimum = Mathf.Min(minimum, Vector3.Dot(matrix.MultiplyPoint3x4(vertex) - middle, across) * side);
+            Current.PairHalfSpaceClearance = minimum;
+            return (Finite(minimum) && minimum >= .005f) || RefuseDiagnostic("pair.armCrosses5mmHalfSpace");
+        }
+
         private bool TryApplySafePose(float blend, Vector3 finalWrist, Quaternion finalRotation, HandContactSample sample)
         {
             diagnosticBlend = blend;
             if (active == null || calibration == null) return RefuseDiagnostic("solve.missingActiveRigOrCalibration");
+            if (overheadReach && !TryOverheadTerminalWrist(finalWrist, finalRotation)) return false;
             CapturePose(previousPose);
             Vector3 currentWrist = active.Wrist.position;
             Vector3 desired = Vector3.Lerp(active.Upper.parent.TransformPoint(startWrist), finalWrist, blend);
             // A real wrist path around the chest, with unchanged start/end/contact point. Every waypoint
             // still proves reach, scene clearance and the complete current skinned-hand plane envelope.
-            if (overheadReach) desired += sample.Tangent * (OverheadForwardArc * Mathf.Sin(Mathf.PI * blend));
-            Quaternion rotation = Quaternion.Slerp(active.Upper.parent.rotation * startWristRotation, finalRotation, blend);
+            if (overheadReach)
+            {
+                float armSpan = Vector3.Distance(active.Upper.position, active.Lower.position)
+                    + Vector3.Distance(active.Lower.position, active.Wrist.position);
+                Vector3 outward = eye.right * (hand == ContactHand.Left ? -1f : 1f);
+                desired += outward * (armSpan * OverheadArcArmFraction * Mathf.Sin(Mathf.PI * blend));
+            }
+            // Overhead wrist interpolation is local only; a second world-space interpolation
+            // creates a different orientation path as the elbow turns beneath it.
+            Quaternion rotation = overheadReach ? finalRotation
+                : Quaternion.Slerp(active.Upper.parent.rotation * startWristRotation, finalRotation, blend);
             float correction = 0f; int token = generation;
             for (int attempt = 0; attempt < 4; attempt++)
             {
@@ -573,7 +644,13 @@ namespace OutOfReach.Presentation.Hands
                 if (!SolveArm(waypoint, rotation, blend)) break;
                 if (!MeasureSkin(sample)) { RefuseDiagnostic("solve.skinMeasurementFailed"); break; }
                 SafeSolveAttempts = attempt + 1; MeasuredWaypointCorrectionMetres = correction;
-                if (MinimumHandPlaneClearanceMetres >= -PlaneTolerance) return true;
+                if (MinimumHandPlaneClearanceMetres >= -PlaneTolerance)
+                {
+                    // No frame may pose a paired hand/sleeve across the anatomical dividing plane.
+                    // The previous safe pose is restored below before Unity renders a failed trial.
+                    if (pairedPush && !MeasurePairHalfSpace()) break;
+                    return true;
+                }
                 // Only the measured intermediate skin violation moves this waypoint. The actual palm
                 // support point remains the endpoint; large endpoint stand-off cannot pass its residual gate.
                 correction += -MinimumHandPlaneClearanceMetres + PlaneTolerance;
@@ -642,6 +719,55 @@ namespace OutOfReach.Presentation.Hands
             return reachable || RefuseDiagnostic("reach.elbowOutside25to175");
         }
 
+        private Vector3 NaturalOverheadPole(Vector3 direction)
+        {
+            Vector3 outward = eye.right * (hand == ContactHand.Left ? -1f : 1f);
+            Vector3 forward = Vector3.ProjectOnPlane(eye.forward, Vector3.up).normalized;
+            return Vector3.ProjectOnPlane(Vector3.down + outward * 1.6f - forward * 1.5f, direction).normalized;
+        }
+
+        private bool TryOverheadEndpoint(Vector3 wrist, out Quaternion unrolledParent, out Vector3 axis)
+        {
+            unrolledParent = Quaternion.identity; axis = Vector3.zero;
+            if (!CanReach(wrist)) return false;
+            Transform root = active.Upper.parent;
+            Vector3 shoulder = active.Upper.position, direction = (wrist - shoulder).normalized;
+            Vector3 baselineElbow = shoulder + root.TransformVector(elbowPole);
+            Vector3 baselineWrist = root.TransformPoint(startWrist);
+            float a = Vector3.Distance(shoulder, baselineElbow), b = Vector3.Distance(baselineElbow, baselineWrist);
+            float distance = Vector3.Distance(shoulder, wrist);
+            Vector3 pole = NaturalOverheadPole(direction);
+            if (pole.sqrMagnitude < .99f) return RefuseDiagnostic("solve.degenerateNaturalElbowPole");
+            float along = (a * a - b * b + distance * distance) / (2f * distance);
+            Vector3 elbow = shoulder + direction * along + pole * Mathf.Sqrt(Mathf.Max(0f, a * a - along * along));
+            Quaternion upper = Quaternion.FromToRotation(baselineElbow - shoulder, elbow - shoulder);
+            Vector3 rotatedWrist = shoulder + upper * (baselineWrist - shoulder);
+            Quaternion lower = Quaternion.FromToRotation(rotatedWrist - elbow, wrist - elbow);
+            unrolledParent = lower * upper * root.rotation * Current.baselineWristParentRotation;
+            axis = (wrist - elbow).normalized;
+            return true;
+        }
+
+        private bool TryOverheadFinalRoll(Vector3 wrist, Quaternion rotation, out float roll)
+        {
+            roll = 0f;
+            if (!TryOverheadEndpoint(wrist, out Quaternion parent, out Vector3 axis)) return false;
+            Quaternion delta = rotation * Quaternion.Inverse(parent * baseline[2]);
+            float twist = 2f * Mathf.Atan2(Vector3.Dot(new Vector3(delta.x, delta.y, delta.z), axis), delta.w) * Mathf.Rad2Deg;
+            roll = Mathf.Clamp(Mathf.DeltaAngle(0f, twist), -75f, 75f);
+            return Finite(roll) || RefuseDiagnostic("solve.nonFiniteFinalTwist");
+        }
+
+        private bool TryOverheadTerminalWrist(Vector3 wrist, Quaternion rotation)
+        {
+            if (!TryOverheadEndpoint(wrist, out Quaternion parent, out Vector3 axis)) return false;
+            parent = Quaternion.AngleAxis(overheadFinalRoll, axis) * parent;
+            Quaternion terminal = Quaternion.Inverse(parent) * rotation;
+            if (Quaternion.Angle(terminal, baseline[2]) > 80f) return RefuseDiagnostic("solve.terminalWristOver80");
+            Current.overheadTerminalWrist = terminal;
+            return true;
+        }
+
         private bool SolveArm(Vector3 wrist, Quaternion rotation, float blend)
         {
             if (!CanReach(wrist)) return false;
@@ -650,7 +776,14 @@ namespace OutOfReach.Presentation.Hands
             float b = Vector3.Distance(active.Lower.position, active.Wrist.position), d = Vector3.Distance(shoulder, wrist);
             Vector3 pole = Vector3.ProjectOnPlane(active.Upper.parent.TransformVector(elbowPole), direction).normalized;
             if (pole.sqrMagnitude < .99f) return RefuseDiagnostic("solve.degenerateElbowPole");
-            if (overheadReach) pole = Quaternion.AngleAxis(overheadPoleSign * 180f * blend, direction) * pole;
+            if (overheadReach)
+            {
+                Vector3 naturalPole = NaturalOverheadPole(direction);
+                if (naturalPole.sqrMagnitude < .99f) return RefuseDiagnostic("solve.degenerateNaturalElbowPole");
+                // Keep the elbow below and outside its own palm while the fingers angle inward.
+                // The actual terminal wrist and all intermediate skin still pass strict limits.
+                pole = Vector3.Slerp(pole, naturalPole, Mathf.SmoothStep(0f, 1f, blend)).normalized;
+            }
             float along = (a * a - b * b + d * d) / (2f * d);
             Vector3 elbow = shoulder + direction * along + pole * Mathf.Sqrt(Mathf.Max(0f, a * a - along * along));
             active.Upper.rotation = Quaternion.FromToRotation(active.Lower.position - shoulder, elbow - shoulder) * active.Upper.rotation;
@@ -660,20 +793,17 @@ namespace OutOfReach.Presentation.Hands
             Vector3 currentNormal = Vector3.ProjectOnPlane(active.Wrist.rotation * (palmFrame * Vector3.up), axis);
             Vector3 desiredNormal = Vector3.ProjectOnPlane(rotation * (palmFrame * Vector3.up), axis);
             if (overheadReach)
-            {
-                // Continuous bounded pronation avoids the +/-180 SignedAngle branch flipping a
-                // clamped forearm by150 degrees near full reach. The old wall solve stays unchanged.
-                active.Lower.rotation = Quaternion.AngleAxis(-overheadPoleSign * 75f * blend, axis) * active.Lower.rotation;
-            }
+                active.Lower.rotation = Quaternion.AngleAxis(overheadFinalRoll * blend, axis) * active.Lower.rotation;
             else if (currentNormal.sqrMagnitude > .01f && desiredNormal.sqrMagnitude > .01f)
             {
                 float roll = Mathf.Clamp(Vector3.SignedAngle(currentNormal, desiredNormal, axis), -75f, 75f);
                 active.Lower.rotation = Quaternion.AngleAxis(roll, axis) * active.Lower.rotation;
             }
             Quaternion wristLocal = Quaternion.Inverse(active.Wrist.parent.rotation) * rotation;
-            // Keep articulation local while lifting: an independent world-space wrist slerp over-twists
-            // the folded arm. At full contact this is the exact original required palm orientation.
-            if (overheadReach) wristLocal = Quaternion.Slerp(baseline[2], wristLocal, Mathf.Pow(blend, 6f));
+            // Interpolate toward the ENDPOINT local wrist, not a fixed world palm converted against
+            // each intermediate forearm. The latter crosses180 degrees and flips its shortest arc.
+            // Recomputed endpoint geometry keeps exact contact while the real shoulder drifts.
+            if (overheadReach) wristLocal = Quaternion.Slerp(baseline[2], Current.overheadTerminalWrist, blend);
             diagnosticWristAngle = Quaternion.Angle(wristLocal, baseline[2]);
             if (diagnosticWristAngle > 80f) { RefuseDiagnostic("solve.wristOver80"); Restore(baseline, 1f); return false; }
             active.Wrist.localRotation = wristLocal;

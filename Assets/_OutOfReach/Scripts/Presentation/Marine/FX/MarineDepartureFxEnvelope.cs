@@ -8,7 +8,7 @@ namespace OutOfReach.Presentation.MarineOcean.FX
         public const float IgnitionSeconds = 9f;
         public const float LiftoffSeconds = 10.5f;
         public const float EndSeconds = 22f;
-        public const int SteamLobes = 16;
+        public const int SteamLobes = 40;
         public const float MaximumPlumeLength = 31f;
 
         public readonly struct Frame
@@ -42,11 +42,26 @@ namespace OutOfReach.Presentation.MarineOcean.FX
         {
             if (reducedEffects || lobe < 0 || lobe >= SteamLobes || !Finite(activeSeconds)) return default;
             int wave = lobe / 8;
-            float age = activeSeconds - (9.03f + wave * .9f + (lobe % 8) * .036f);
-            if (age < 0 || age >= 5.3f) return default;
-            // Two ground-hugging bursts. They stay at the pad as the engine climbs.
-            float opacity = (wave == 0 ? .56f : .64f) * Smooth(age / .35f) * (1f - Smooth((age - 2.3f) / 3f));
+            float age = activeSeconds - (9.03f + (wave == 0 ? 0f : .12f + (wave - 1) * .42f) + (lobe % 8) * .045f);
+            float lifetime = wave == 0 ? 6.8f : 10.0f;
+            if (age < 0 || age >= lifetime) return default;
+            // Dust settles early; the heavier directed steam cloud remains at the stationary trench.
+            float opacity = (wave == 0 ? .62f : .92f) * Smooth(age / .45f)
+                * (1f - Smooth((age - (wave == 0 ? 2.8f : 5f)) / (wave == 0 ? 4f : 5f)));
             return new SteamFrame(age, opacity);
+        }
+
+        /// <summary>Visible dust front driven by acoustic onset; stylized dust travel, not sound propagation speed.</summary>
+        public static float PressureOpacity(float seconds,bool reducedEffects)
+        {
+            if(reducedEffects||!Finite(seconds))return 0;
+            float age=seconds-LiftoffSeconds;if(age<0||age>=3.4f)return 0;
+            return .63f*Smooth(age/.13f)*(1f-Smooth((age-.6f)/2.8f));
+        }
+        public static float DelugeOpacity(float seconds,bool reducedEffects)
+        {
+            if(!Finite(seconds))return 0;
+            return (reducedEffects?.13f:.88f)*Smooth((seconds-8.8f)/.5f)*(1f-Smooth((seconds-16f)/1.5f));
         }
 
         /// <summary>Analytic clipping against root's actual solid deck plane, not a physics/flight model.</summary>

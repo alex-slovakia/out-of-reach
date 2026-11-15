@@ -263,7 +263,13 @@ namespace OutOfReach.Composition
                 return Refuse("No verified palm point on the aimed surface within reach.");
             Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
             if (barePush && Vector3.Dot(hit.normal, Vector3.down) > .95f)
-                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal).normalized;
+            {
+                // One diagonal inward style keeps both palms in view without crossing the midline.
+                Vector3 inward = Vector3.ProjectOnPlane(player.ViewPivot.right
+                    * (selectedHand == ContactHand.Left ? 1f : -1f), hit.normal).normalized;
+                Vector3 forward = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal).normalized;
+                tangent = (inward * .8660254f + forward * .5f).normalized;
+            }
             float radius = 0f;
             if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
                 return Refuse("Grip needs a registered 12–17mm straight capsule rail.");
@@ -313,7 +319,18 @@ namespace OutOfReach.Composition
             palmHit = default;
             Vector3 across = Vector3.ProjectOnPlane(player.ViewPivot.right, aimedHit.normal);
             if (across.sqrMagnitude < .01f) return false;
-            Vector3 proposed = aimedHit.point + across.normalized * (selectedHand == ContactHand.Left ? -.06f : .06f);
+            across.Normalize();
+            float halfSpacing = .06f;
+            if (work)
+            {
+                if (!bare.TryGetPushGeometry(selectedHand, out Vector3 shoulder, out float upperArm,
+                    out float forearm, out _)) return false;
+                // Shoulder-width contact zones keep thumbs, fingers and sleeves apart. Their exact
+                // same-surface rays and complete posed arm envelopes still have to pass below.
+                halfSpacing = Mathf.Abs(Vector3.Dot(shoulder - player.ViewPivot.position, across)) + (upperArm + forearm) * .125f;
+            }
+            float side = selectedHand == ContactHand.Left ? -1f : 1f;
+            Vector3 proposed = aimedHit.point + across * (side * halfSpacing);
             // At the ceiling the reticle can be 30cm ahead while the real shoulder-to-wrist chain is
             // only48cm. Select a nearby natural palm placement on that SAME aimed plane; the existing
             // re-ray, whole-skin solver, wrist limit and Player validation still decide whether it is real.
@@ -324,11 +341,25 @@ namespace OutOfReach.Composition
                 heading.Normalize();
                 Vector3 eyeOnPlane = player.ViewPivot.position - aimedHit.normal
                     * Vector3.Dot(player.ViewPivot.position - aimedHit.point, aimedHit.normal);
-                float ahead = Vector3.Dot(aimedHit.point - eyeOnPlane, heading);
-                Vector3 naturalPoint = eyeOnPlane + heading * Mathf.Clamp(ahead, .03f, .13f)
-                    + across.normalized * (selectedHand == ContactHand.Left ? -.06f : .06f);
+                if (!bare.TryGetPushGeometry(selectedHand, out _, out float upperArm, out float forearm,
+                    out float reachDuration)) return false;
+                // The same body-relative landing point is used at every look pitch. It leaves a
+                // bent elbow with the actual side-facing palm, and scales with the bound arm.
+                float armSpan = upperArm + forearm;
+                halfSpacing = armSpan * .33f;
+                Vector3 naturalPoint = eyeOnPlane + heading * (armSpan * .135f)
+                    + across * (side * halfSpacing);
+                // Anticipate only drift away from this forward ceiling patch, during REAL reach
+                // seconds. Approaching motion already increases reach margin and needs no lead.
+                Vector3 drift = Vector3.ProjectOnPlane(player.FloatVelocity, aimedHit.normal) * reachDuration;
+                Vector3 anticipated = naturalPoint + drift;
+                Vector3 aimedZone = aimedHit.point + across * (side * halfSpacing);
+                if (Finite(drift) && Vector3.Dot(drift, heading) < -.0001f
+                    && Vector3.Distance(anticipated, aimedZone) <= .25f
+                    && player.ViewPivot.InverseTransformPoint(anticipated).z >= .10f)
+                    naturalPoint = anticipated;
                 // This does not search around an edge or rescue an unrelated distant aim.
-                if (Vector3.Distance(naturalPoint, proposed) > .25f) return false;
+                if (Vector3.Distance(naturalPoint, aimedZone) > .25f) return false;
                 proposed = naturalPoint;
             }
             Vector3 delta = proposed - player.ViewPivot.position;
@@ -581,9 +612,17 @@ namespace OutOfReach.Composition
             }
             finally { cancelling = false; }
         }
-        BareArmContactRig WorkArm(string side, SkinnedMeshRenderer skin) => new BareArmContactRig(
-            body.GetWorkBone("upperarm01." + side), body.GetWorkBone("lowerarm01." + side), body.GetWorkBone("wrist." + side),
-            body.GetWorkBone("finger2-1." + side), body.GetWorkBone("finger3-1." + side), body.GetWorkBone("finger5-1." + side), body.GetWorkBone("finger1-1." + side), skin);
+        BareArmContactRig WorkArm(string side, SkinnedMeshRenderer skin)
+        {
+            // These are profile semantic roles; GetWorkBone resolves explicit relative paths when bound.
+            var fingers = new Transform[15];
+            for (int digit = 0; digit < 5; digit++) for (int joint = 0; joint < 3; joint++)
+                fingers[digit * 3 + joint] = body.GetWorkBone("finger" + (digit + 1) + "-" + (joint + 1) + "." + side);
+            ContactHand selected = side == "L" ? ContactHand.Left : ContactHand.Right;
+            return new BareArmContactRig(selected, body.GetWorkBone("upperarm01." + side),
+                body.GetWorkBone("lowerarm01." + side), body.GetWorkBone("wrist." + side), fingers, skin,
+                selected == ContactHand.Left ? body.WorkLeftPalmSubmeshes : body.WorkRightPalmSubmeshes);
+        }
         bool ValidSurface(Collider c) => c && c.enabled && c.gameObject.activeInHierarchy && !c.isTrigger && !Owned(c);
         bool Owned(Collider c) => c && player && (c.transform == player.transform || c.transform.IsChildOf(player.transform));
         static HandContactTarget Frame(Collider collider, Vector3 point, Vector3 normal, Vector3 tangent, float radius) =>

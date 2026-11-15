@@ -3,7 +3,7 @@ Shader "OutOfReach/Marine/DepartureVolume"
     Properties
     {
         _Mode("Volume mode: exhaust0 steam1", Float) = 0
-        [HideInInspector] _DstBlend("Destination blend", Float) = 1
+        [HideInInspector] _DstBlend("Legacy blend value (unused)", Float) = 10
         _HotColor("Hot core", Color) = (1.6,1.25,0.8,1)
         _TailColor("Outer exhaust", Color) = (0.7,0.29,0.09,1)
         _SteamColor("Steam", Color) = (0.55,0.60,0.62,1)
@@ -11,12 +11,13 @@ Shader "OutOfReach/Marine/DepartureVolume"
     }
     SubShader
     {
-        Tags { "RenderPipeline"="UniversalPipeline" "Queue"="Transparent+10" "RenderType"="Transparent" }
+        Tags { "RenderPipeline"="UniversalPipeline" "Queue"="Transparent+10" "RenderType"="Transparent" "DisableBatching"="True" }
         Pass
         {
             Name "DepartureVolume"
             Tags { "LightMode"="SRPDefaultUnlit" }
-            Blend One [_DstBlend]
+            // Every owned volume is premultiplied; material/MPB values cannot restore additive stacking.
+            Blend One OneMinusSrcAlpha
             ZWrite Off
             ZTest LEqual
             Cull Back
@@ -43,11 +44,20 @@ Shader "OutOfReach/Marine/DepartureVolume"
                 Varyings output;float3 p=input.positionOS.xyz;float t=_FxParameters.x*_FxParameters.z;
                 if (_Mode<.5)
                 {
-                    float profile=lerp(1.0,.10,p.z)*(.95+.14*sin(p.z*3.14159));
-                    float wander=(Noise3(float3(p.xy*1.6,p.z*6-t*3.5))-.5)*.30*_FxParameters.z;
+                    float profile=lerp(.78,.025,pow(saturate(p.z),1.15));
+                    profile*=1+.13*sin(p.z*58-t*1.3+p.x*2.7)*smoothstep(.04,.18,p.z);
+                    float wander=(Noise3(float3(p.xy*2.6+_FxParameters.w,p.z*8-t*3.5))-.5)*.68*_FxParameters.z;
                     p.xy*=profile*(1+wander);
+                    // Two independent, nozzle-anchored wakes; no extra draw or noise octave.
+                    float bend=smoothstep(.02,.30,p.z)*(1-p.z)*.13*_FxParameters.z;
+                    p.xy+=float2(sin(p.z*17-t*3+_FxParameters.w),cos(p.z*23-t*4+_FxParameters.w))*bend;
                 }
-                else p*=1+(Noise3(p*2.3+float3(t*.18,_FxParameters.w,t*.11))-.5)*.12*_FxParameters.z;
+                else if(_Mode>1.5&&_Mode<2.5)
+                {
+                    float spray=lerp(.55,2.5,saturate(p.z));
+                    p.xy*=spray*(1+.14*sin(p.z*31-t*13+_FxParameters.w)*_FxParameters.z);
+                }
+                else p*=1+(Noise3(p*2.3+float3(t*.18,_FxParameters.w,t*.11))-.5)*.30*_FxParameters.z;
                 output.positionWS=TransformObjectToWorld(p); output.positionCS=TransformWorldToHClip(output.positionWS);
                 output.normalWS=TransformObjectToWorldNormal(input.normalOS);output.local=p;output.uv=input.uv;return output;
             }
@@ -62,20 +72,46 @@ Shader "OutOfReach/Marine/DepartureVolume"
                     float noise=Noise3(float3(cos(angle)*2,sin(angle)*2,along*11-time*6));
                     float fine=Noise3(float3(cos(angle)*4+7,sin(angle)*4+3,along*23-time*9));
                     float detailAA=saturate(1-fwidth(along*23)*.8);
-                    float turbulence=lerp(.64,.30+.60*noise+.20*fine,detailAA);
-                    float tail=1-smoothstep(.62,1,along);
-                    float edge=smoothstep(.08,.85,facing);
-                    float heat=lerp(.65,1,pow(saturate(1-along),2))*turbulence;
-                    float strength=saturate(_FxParameters.y)*tail*edge*heat;
-                    float3 color=lerp(_HotColor.rgb,_TailColor.rgb,smoothstep(.015,.60,along));
-                    return half4(color*strength,0); // restrained additive volume, never an opaque screen veil
+                    // Broad compression cells, advected small turbulence, no full-frame strobe.
+                    float cells=.5+.5*cos(along*58.0-2.8*noise+sin(angle*3+along*12)*1.4);
+                    cells=lerp(.5,cells,saturate(1-fwidth(along*58.0)));
+                    float bands=lerp(.38,1.0,pow(cells,3.0));
+                    float turbulence=lerp(.72,.28+.90*noise+.15*fine,detailAA);
+                    float tail=1-smoothstep(.48+.12*noise,.98,along);
+                    float edge=pow(smoothstep(.04,.88,facing),1.5);
+                    float flicker=1+.045*sin(time*18.1)+.025*sin(time*27.7);
+                    float strength=saturate(_FxParameters.y)*tail*edge*turbulence*flicker;
+                    float tongues=pow(saturate(.5+.5*sin(angle*3+along*21+noise*4)),3.0);
+                    float hot=saturate(pow(saturate(1-along),2.0)*.65+bands*.25+tongues*.20);
+                    float3 color=lerp(_TailColor.rgb,_HotColor.rgb,hot);
+                    // Attenuate the bright sky instead of summing two HDR columns over it.
+                    float alpha=min(.97,strength*1.90);
+                    color=min(color,float3(2.4,2.1,1.6))*lerp(.42,1.0,bands);
+                    return half4(color*alpha,alpha);
                 }
-                float noise=Noise3(input.local*2.6+float3(time*.13,_FxParameters.w,time*.08));
+                if(_Mode>1.5&&_Mode<2.5)
+                {
+                    float grain=Noise3(float3(input.uv.x*17,input.uv.y*48-time*21,_FxParameters.w));
+                    float edge=smoothstep(.02,.75,facing);
+                    float fade=(1-smoothstep(.62,1,input.uv.y))*smoothstep(0,.04,input.uv.y);
+                    float alpha=saturate(_FxParameters.y)*edge*fade*lerp(.28,1,grain);
+                    return half4(_SteamColor.rgb*alpha,alpha);
+                }
+                float noise=Noise3(input.local*1.7+float3(time*.13,_FxParameters.w,time*.08));
+                float fine=Noise3(input.local*6.5+float3(-time*.18,7+_FxParameters.w,time*.12));
                 float aa=max(.025,fwidth(noise)*1.5);
-                float density=smoothstep(.27-aa,.72+aa,noise);
-                float edge=smoothstep(.02,.6,facing);
-                float alpha=min(.47,saturate(_FxParameters.y))*density*edge;
-                return half4(_SteamColor.rgb*alpha,alpha); // premultiplied ground cloud
+                float ridge=smoothstep(.28-aa,.69+aa,noise*.78+fine*.22);
+                float density=lerp(.48,1.0,ridge);
+                float edge=pow(smoothstep(.015,.68,facing),1.3);
+                float alpha=min(.94,saturate(_FxParameters.y))*density*edge;
+                // Soft internal shading keeps white steam readable against the bright sky.
+                // Artistic self-shadow approximation, not a volumetric light simulation.
+                float sun=saturate(dot(normalize(input.normalWS),normalize(float3(-.4,.8,-.3)))*.5+.5);
+                // Broad shaded folds with smaller curls: same two samples, no raymarch or extra octave.
+                float shade=lerp(.35,1.10,ridge)*lerp(.60,1.0,sun);
+                shade*=lerp(.68,1.0,smoothstep(-.65,.45,input.local.y));
+                float rim=.035*pow(1-facing,2.0);
+                return half4(_SteamColor.rgb*(shade+rim)*alpha,alpha); // premultiplied cloud
             }
             ENDHLSL
         }

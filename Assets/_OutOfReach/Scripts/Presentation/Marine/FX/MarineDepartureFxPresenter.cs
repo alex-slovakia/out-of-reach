@@ -16,7 +16,13 @@ namespace OutOfReach.Presentation.MarineOcean.FX
         private MeshRenderer exhaust, exhaustCore;
         private Light ignitionLight;
         private readonly MeshRenderer[] steam = new MeshRenderer[MarineDepartureFxEnvelope.SteamLobes];
-        private Mesh plumeMesh, steamMesh;
+        private Mesh plumeMesh, steamMesh, pressureMesh;
+        private MeshRenderer pressureFront;
+        private readonly MeshRenderer[] delugeJets = new MeshRenderer[6];
+        private readonly MeshRenderer[] delugeNozzles = new MeshRenderer[6];
+        private readonly MeshRenderer[] delugeManifolds = new MeshRenderer[2];
+        private Material delugeHardwareMaterial;
+        private static readonly int ModeId = Shader.PropertyToID("_Mode");
         private MaterialPropertyBlock properties;
         private bool bound, hasSample;
         private float heldSeconds;
@@ -104,14 +110,15 @@ namespace OutOfReach.Presentation.MarineOcean.FX
             EnsureGeometry();
             float length = ClipToDeck(frame.LengthMetres);
             PresentedPlumeLength = length;
-            PresentFlame(exhaust, frame, length, frame.RadiusMetres, new Color(1.85f, .72f, .19f), new Color(1.31f, .32f, .06f));
-            PresentFlame(exhaustCore, frame, length * .60f, frame.RadiusMetres * .44f,
-                new Color(2.80f, 1.65f, .71f), new Color(1.62f, .61f, .18f));
+            PresentFlame(exhaust, frame, length, frame.RadiusMetres, new Color(1.65f, .79f, .16f), new Color(.92f, .18f, .018f));
+            PresentFlame(exhaustCore, frame, length * .58f, frame.RadiusMetres * .22f,
+                new Color(2.30f, 1.95f, 1.40f), new Color(1.24f, .52f, .065f));
 
             // A bounded local pool of flame light sells ignition before the engine clears the pad.
             float shine = frame.Intensity * (1f - Mathf.SmoothStep(0f, 1f, (activeSeconds - 10.65f) / 2.1f));
             ignitionLight.enabled = exhaust.enabled && !reducedEffects && shine > .01f;
             ignitionLight.intensity = 26f * shine;
+            PresentDelugeAndPressure(activeSeconds, reducedEffects);
             VisibleSteamLobes = 0;
             for (int i = 0; i < steam.Length; i++)
             {
@@ -120,16 +127,66 @@ namespace OutOfReach.Presentation.MarineOcean.FX
                 if (!f.Visible) continue;
                 VisibleSteamLobes++;
                 int wave = i / 8;
-                float angle = (i % 8) * Mathf.PI * .25f + wave * .38f + .25f;
-                float travel = 1.2f + f.Age * (3.8f + wave * .45f);
-                // Slower on the upwind side, with soft catch-up and clear space at the nozzle.
-                steam[i].transform.localPosition = new Vector3(Mathf.Cos(angle) * travel + f.Age * .42f,
-                    1.15f + f.Age * (.72f + wave * .11f), Mathf.Sin(angle) * travel);
-                steam[i].transform.localScale = new Vector3(3.3f + f.Age * 1.20f, 1.3f + f.Age * .52f, 3.3f + f.Age * 1.15f);
+                int lane = i % 8;
+                float angle = lane * Mathf.PI * .25f + .25f;
+                if (wave == 0)
+                {
+                    // Grounded tan dust stays separate from the wet trench cloud.
+                    float travel = 3f + f.Age * 5.2f;
+                    float height = .55f + f.Age * .17f;
+                    steam[i].transform.localPosition = new Vector3(Mathf.Cos(angle) * travel,
+                        height * 1.48f + .08f, Mathf.Sin(angle) * travel);
+                    steam[i].transform.localScale = new Vector3(4.8f + f.Age * 1.6f,
+                        height, 4.5f + f.Age * 1.4f);
+                }
+                else
+                {
+                    // Four finite staggered banks: dense low channel, rolling flanks and rising crowns.
+                    // Deterministic irregular spacing prevents all lobes becoming one smooth ellipsoid.
+                    float age = f.Age;
+                    float jitter = Mathf.Sin(i * 2.39996f);
+                    float travel = 1.5f + lane * 2.3f + age * (4.3f + .38f * lane) + (wave == 4 ? 3f : 0f);
+                    float spread = (2.2f + age * .85f) * (wave == 1 ? .55f : wave == 4 ? .30f : 1.65f);
+                    float side = wave == 2 ? -1f : wave == 3 ? 1f : (lane % 2 == 0 ? -1f : 1f);
+                    float height = (wave == 4 ? 2.8f : 1.5f) + age * (wave == 4 ? .88f : .60f);
+                    float width = (2.5f + age * .85f) * (1f + .16f * jitter);
+                    steam[i].transform.localPosition = new Vector3(side * spread + jitter,
+                        height * 1.48f + .12f + (wave == 4 ? age * .55f : 0f), travel);
+                    steam[i].transform.localScale = new Vector3(width, height,
+                        (3f + age * 1.10f) * (1f - .12f * jitter));
+                    steam[i].transform.localRotation = Quaternion.Euler(0, i * 47f, 0);
+                }
                 properties.Clear();
-                properties.SetVector(ParametersId, new Vector4(activeSeconds, f.Opacity, 1f, i * 1.731f));
-                properties.SetColor(DustColorId, wave == 0 ? new Color(.67f, .59f, .49f) : new Color(.88f, .85f, .78f));
+                properties.SetVector(ParametersId, new Vector4(activeSeconds, f.Opacity, reducedEffects ? 0f : 1f, i * 1.731f));
+                properties.SetColor(DustColorId, wave == 0 ? new Color(.52f, .36f, .19f) : new Color(.87f, .89f, .90f));
                 steam[i].SetPropertyBlock(properties);
+            }
+        }
+
+        private void PresentDelugeAndPressure(float seconds,bool reducedEffects)
+        {
+            float wash=MarineDepartureFxEnvelope.DelugeOpacity(seconds,reducedEffects);
+            for(int i=0;i<delugeJets.Length;i++)
+            {
+                delugeNozzles[i].enabled=true;
+                delugeJets[i].enabled=wash>.001f;
+                if(!delugeJets[i].enabled)continue;
+                properties.Clear();properties.SetFloat(ModeId,2);
+                properties.SetVector(ParametersId,new Vector4(seconds,wash,reducedEffects?0:1,i*1.71f));
+                properties.SetColor(DustColorId,new Color(.91f,.96f,1f));delugeJets[i].SetPropertyBlock(properties);
+            }
+            foreach(var pipe in delugeManifolds)pipe.enabled=true;
+            float strength=MarineDepartureFxEnvelope.PressureOpacity(seconds,reducedEffects);
+            pressureFront.enabled=strength>.001f;
+            if(pressureFront.enabled)
+            {
+                float age=Mathf.Clamp(seconds-MarineDepartureFxEnvelope.LiftoffSeconds,0,3.4f);
+                float radius=3f+age*14f;
+                pressureFront.transform.localPosition=new Vector3(0,.72f,0);
+                pressureFront.transform.localScale=new Vector3(radius,.52f,radius);
+                properties.Clear();properties.SetFloat(ModeId,3);
+                properties.SetVector(ParametersId,new Vector4(seconds,strength,1,29));
+                properties.SetColor(DustColorId,new Color(.61f,.43f,.24f));pressureFront.SetPropertyBlock(properties);
             }
         }
 
@@ -139,7 +196,7 @@ namespace OutOfReach.Presentation.MarineOcean.FX
             volume.enabled = length > .02f;
             volume.transform.localScale = new Vector3(radius, radius, Mathf.Max(.001f, length));
             properties.Clear();
-            properties.SetVector(ParametersId, new Vector4(frame.Seconds, frame.Intensity, frame.Motion, 0f));
+            properties.SetVector(ParametersId, new Vector4(frame.Seconds, frame.Intensity, frame.Motion, volume == exhaustCore ? 13.7f : 1.2f));
             properties.SetColor(HotColorId, hot);
             properties.SetColor(TailColorId, tail);
             volume.SetPropertyBlock(properties);
@@ -152,13 +209,18 @@ namespace OutOfReach.Presentation.MarineOcean.FX
             HideRenderers(); hasSample = false; heldSeconds = 0;
             if (exhaust) exhaust.SetPropertyBlock(null);
             if (exhaustCore) exhaustCore.SetPropertyBlock(null);
+            if (pressureFront) pressureFront.SetPropertyBlock(null);
+            foreach(var jet in delugeJets) if(jet)jet.SetPropertyBlock(null);
             for (int i = 0; i < steam.Length; i++) if (steam[i]) steam[i].SetPropertyBlock(null);
         }
 
         public void ClearBinding()
         {
             ResetEffects(); bound = false;
-            Release(exhaustRoot); Release(steamRoot); Release(plumeMesh); Release(steamMesh);
+            Release(exhaustRoot); Release(steamRoot); Release(plumeMesh); Release(steamMesh); Release(pressureMesh); Release(delugeHardwareMaterial);
+            pressureMesh=null;pressureFront=null;delugeHardwareMaterial=null;
+            for(int i=0;i<delugeJets.Length;i++){delugeJets[i]=null;delugeNozzles[i]=null;}
+            for(int i=0;i<delugeManifolds.Length;i++)delugeManifolds[i]=null;
             exhaustRoot = steamRoot = null; plumeMesh = steamMesh = null; exhaust = exhaustCore = null;
             ignitionLight = null;
             dustPlane = null;
@@ -186,6 +248,10 @@ namespace OutOfReach.Presentation.MarineOcean.FX
             if (exhaust) exhaust.enabled = false;
             if (exhaustCore) exhaustCore.enabled = false;
             if (ignitionLight) ignitionLight.enabled = false;
+            if(pressureFront)pressureFront.enabled=false;
+            foreach(var jet in delugeJets)if(jet)jet.enabled=false;
+            foreach(var nozzleHead in delugeNozzles)if(nozzleHead)nozzleHead.enabled=false;
+            foreach(var pipe in delugeManifolds)if(pipe)pipe.enabled=false;
             for (int i = 0; i < steam.Length; i++) if (steam[i]) steam[i].enabled = false;
             PresentedPlumeLength = 0; VisibleSteamLobes = 0;
         }
@@ -209,6 +275,36 @@ namespace OutOfReach.Presentation.MarineOcean.FX
             ignitionLight.enabled = false;
             for (int i = 0; i < steam.Length; i++)
                 steam[i] = Renderer(OwnedRoot("Ignition lobe " + i, steamRoot.transform), steamMesh, steamMaterial);
+            pressureMesh=MarineDepartureFxMesh.CreatePressureFront();
+            pressureFront=Renderer(OwnedRoot("Pad pressure dust front",steamRoot.transform),pressureMesh,steamMaterial);
+            Shader lit=Shader.Find("Universal Render Pipeline/Lit");
+            if(!lit)throw new InvalidOperationException("Existing URP Lit shader required for original deluge hardware.");
+            delugeHardwareMaterial=new Material(lit){name="Original deluge dark steel - transient",hideFlags=HideFlags.DontSave};
+            delugeHardwareMaterial.SetColor("_BaseColor",new Color(.12f,.15f,.17f));
+            delugeHardwareMaterial.SetFloat("_Metallic",.7f);delugeHardwareMaterial.SetFloat("_Smoothness",.48f);
+            for(int side=0;side<2;side++)
+            {
+                // Fixed authored fictional slot manifolds, just beyond existing x +/-3 m trench lips.
+                float sign=side==0?-1:1;
+                delugeManifolds[side]=Renderer(OwnedRoot("Deluge stationary manifold "+side,steamRoot.transform),plumeMesh,delugeHardwareMaterial);
+                // Downstream z>5.2 clears the existing mount pedestals (end z4.6).
+                delugeManifolds[side].transform.localPosition=new Vector3(sign*3.35f,.16f,5.2f);
+                delugeManifolds[side].transform.localScale=new Vector3(.13f,.13f,4.5f);
+                for(int j=0;j<3;j++)
+                {
+                    int index=side*3+j;
+                    Vector3 riserBase=new Vector3(sign*3.35f,.16f,5.7f+j*1.4f);
+                    Vector3 origin=riserBase+Vector3.up*.89f; // 1.05m above apron, clears actual x=+/-3 lip.
+                    Vector3 destination=new Vector3(sign*.3f,-2.5f,5.8f+j*.4f),delta=destination-origin;
+                    var rotation=Quaternion.LookRotation(delta.normalized,Vector3.up);
+                    delugeNozzles[index]=Renderer(OwnedRoot("Deluge fixed nozzle "+index,steamRoot.transform),plumeMesh,delugeHardwareMaterial);
+                    delugeNozzles[index].transform.SetLocalPositionAndRotation(riserBase,Quaternion.LookRotation(Vector3.up,Vector3.forward));
+                    delugeNozzles[index].transform.localScale=new Vector3(.16f,.16f,.89f);
+                    delugeJets[index]=Renderer(OwnedRoot("Deluge water jet "+index,steamRoot.transform),plumeMesh,steamMaterial);
+                    delugeJets[index].transform.SetLocalPositionAndRotation(origin+delta.normalized*.08f,rotation);
+                    delugeJets[index].transform.localScale=new Vector3(.30f,.30f,delta.magnitude-.08f);
+                }
+            }
         }
         private static GameObject OwnedRoot(string name, Transform parent)
         {

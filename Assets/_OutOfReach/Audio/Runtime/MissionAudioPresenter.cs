@@ -225,6 +225,8 @@ namespace OutOfReach.Presentation.Audio
         }
 
         /// <summary>Plays a timed transport effect through the pause-aware, dialogue-ducked cabin source.</summary>
+        private bool departureAtmosphericMix;
+
         public bool TryPlayDepartureEffectCue(string cueId)
         {
             if (!CanPlay() || !TryFindSfx(cueId, out SfxCueBinding match) || !PrepareClip(match.Clip)) return false;
@@ -232,6 +234,8 @@ namespace OutOfReach.Presentation.Audio
             EnsureSources();
             if (!departureCabinSource)
                 departureCabinSource = MakeSource("Departure launch effects", false, sfxOutput, 56);
+            ApplyVolumes();
+            if(cueId=="departure-pad-roar")departureAtmosphericMix=true;
             ApplyVolumes();
             departureCabinSource.PlayOneShot(match.Clip, Safe01(match.Volume));
             LastRejection = string.Empty;
@@ -241,6 +245,7 @@ namespace OutOfReach.Presentation.Audio
         public void StopDepartureEffects()
         {
             if (departureCabinSource) departureCabinSource.Stop();
+            departureAtmosphericMix=false;
         }
 
         /// <summary>Plays the selected departure score once, at a PCM offset, independently of mission mood.</summary>
@@ -485,7 +490,10 @@ namespace OutOfReach.Presentation.Audio
             float master = Safe01(masterVolume);
             if (dialogueSource) dialogueSource.volume = master * Safe01(dialogueVolume);
             if (sfxSource) sfxSource.volume = master * Safe01(sfxVolume);
-            if (departureCabinSource) departureCabinSource.volume = master * Safe01(sfxVolume) * duckGain;
+            // Atmospheric roar/shock keep body beneath dialogue, capped at -4 dB duck floor.
+            // Cabin effects and the user-approved full departure score retain their existing ducking.
+            if (departureCabinSource) departureCabinSource.volume = master * Safe01(sfxVolume)
+                * (departureAtmosphericMix ? Mathf.Max(duckGain,.631f) : duckGain);
             float scoreLevel = master * Safe01(musicVolume) * duckGain;
             if (departureMusicSource) departureMusicSource.volume = scoreLevel * Safe01(departureMusicTrim);
             float backgroundScoreLevel = departureMusicActive ? 0f : scoreLevel * Safe01(backgroundScoreTrim);

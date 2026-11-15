@@ -35,10 +35,11 @@ namespace OutOfReach.Presentation.Hands
                 if (w.weight1 > best) { best = w.weight1; b = w.boneIndex1; }
                 if (w.weight2 > best) { best = w.weight2; b = w.boneIndex2; }
                 if (w.weight3 > best) b = w.boneIndex3;
-                string name = b >= 0 && b < bones.Length && bones[b] ? bones[b].name : string.Empty;
-                region[i] = name.StartsWith("wrist.", StringComparison.Ordinal) || name.StartsWith("metacarpal", StringComparison.Ordinal) ? 0 : -1;
-                for (int digit = 1; digit <= 5; digit++)
-                    if (name.StartsWith("finger" + digit + "-", StringComparison.Ordinal)) region[i] = digit;
+                Transform bone = b >= 0 && b < bones.Length ? bones[b] : null;
+                region[i] = bone && (bone == rig.Wrist || bone.IsChildOf(rig.Wrist)) ? 0 : -1;
+                for (int digit = 0; digit < 5; digit++)
+                    if (bone && (bone == rig.Fingers[digit * 3] || bone.IsChildOf(rig.Fingers[digit * 3])))
+                        region[i] = digit + 1;
             }
             bake = new Mesh { name = "WORK rail grip - actual skin measurement" };
         }

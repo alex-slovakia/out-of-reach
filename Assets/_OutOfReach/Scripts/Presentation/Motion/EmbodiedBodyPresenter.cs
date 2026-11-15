@@ -13,6 +13,14 @@ namespace OutOfReach.Presentation.Motion
         public enum BodyPose { Standing, Floating, Seated }
 
         [Serializable]
+        public struct SemanticBinding
+        {
+            public string role;
+            public string path;
+            public SemanticBinding(string semanticRole, string relativePath) { role = semanticRole; path = relativePath; }
+        }
+
+        [Serializable]
         public sealed class Outfit
         {
             public Transform modelRoot;
@@ -22,6 +30,11 @@ namespace OutOfReach.Presentation.Motion
             public AnimationClip standing;
             public AnimationClip floating;
             public AnimationClip seated;
+            // Null/empty preserves the original strict unique-name cache for existing serialized scenes/callers.
+            public SemanticBinding[] semanticBindings;
+            // Null means the legacy material discovery adapter; explicit profile bindings supply nonempty indices.
+            public int[] leftPalmSubmeshes;
+            public int[] rightPalmSubmeshes;
         }
 
         [SerializeField] private Transform visualRoot;
@@ -38,7 +51,7 @@ namespace OutOfReach.Presentation.Motion
         private Func<bool> visibleQuery, floatingQuery;
         private Func<BodyArmVisibility> armsQuery;
         private CharacterController groundController;
-        private Func<bool> groundedQuery, sprintQuery;
+        private Func<bool> groundedQuery, sprintQuery, preflightGaitQuery;
         private ModelCache workCache, evaCache;
         private Vector3 authoredRootPosition, authoredRootScale;
         private Quaternion authoredRootRotation;
@@ -72,10 +85,23 @@ namespace OutOfReach.Presentation.Motion
         public Vector3 FeetVisualOffset => feetVisualOffset;
         public SkinnedMeshRenderer WorkLeftArmRenderer => work.leftArm;
         public SkinnedMeshRenderer WorkRightArmRenderer => work.rightArm;
+        public IReadOnlyList<int> WorkLeftPalmSubmeshes => PalmMembership(work.leftPalmSubmeshes);
+        public IReadOnlyList<int> WorkRightPalmSubmeshes => PalmMembership(work.rightPalmSubmeshes);
+        private IReadOnlyList<int> PalmMembership(int[] indices)
+        {
+            // Unity loads newly added array fields in old scenes as empty arrays, not only null.
+            // Only unmapped legacy outfits may use material-based discovery; mapped profiles must supply membership.
+            bool legacy = work.semanticBindings == null || work.semanticBindings.Length == 0;
+            return legacy && (indices == null || indices.Length == 0) ? null : indices ?? Array.Empty<int>();
+        }
         public Transform WorkLeftWrist => GetWorkBone("wrist.L");
         public Transform WorkRightWrist => GetWorkBone("wrist.R");
         public Transform WorkLeftUpperArm => GetWorkBone("upperarm01.L");
         public Transform WorkRightUpperArm => GetWorkBone("upperarm01.R");
+
+        /// <summary>Resolved EVA semantic alias; available before visibility/session binding for explicit composition.</summary>
+        public Transform GetEvaBone(string semanticRole) => evaCache != null && semanticRole != null
+            && evaCache.Nodes.TryGetValue(semanticRole, out Transform node) ? node : null;
 
         public Transform GetWorkBone(string boneName) => workCache != null && boneName != null
             && workCache.Nodes.TryGetValue(boneName, out Transform node) ? node : null;
@@ -142,23 +168,25 @@ namespace OutOfReach.Presentation.Motion
 
         /// <summary>
         /// Optional grounded presentation. The session owner supplies the sole controller, its grounded mode
-        /// permission and its accepted sprint state. Call after ConfigureSession on every session binding.
+        /// permission and its accepted sprint state. The optional preflight policy only selects WORK gait art.
+        /// Call after ConfigureSession on every session binding.
         /// </summary>
         public void ConfigureGroundLocomotion(CharacterController controller, Func<bool> groundedModeAllowed,
-            Func<bool> isSprinting)
+            Func<bool> isSprinting, Func<bool> usePreflightGait = null)
         {
             if (!bound || notifyingReset)
                 throw new InvalidOperationException("Bind a body session before configuring grounded presentation.");
             if (!controller || controller.transform != playerFeet || groundedModeAllowed == null || isSprinting == null)
                 throw new ArgumentException("Grounded presentation needs the bound player controller and both mode callbacks.");
-            workCache.PrepareGroundRig();
-            evaCache.PrepareGroundRig();
+            workCache.PrepareGroundRig(usePreflightGait != null);
+            evaCache.PrepareGroundRig(false);
             ResetGroundMotion(true);
             if (visible && pose == BodyPose.Standing)
                 (activeEva ? evaCache : workCache).Ground.CaptureStanding(visualRoot);
             groundController = controller;
             groundedQuery = groundedModeAllowed;
             sprintQuery = isSprinting;
+            preflightGaitQuery = usePreflightGait;
         }
 
         /// <summary>Explicit visual pose request only. Never seats, teleports, rests or changes the player.</summary>
@@ -247,7 +275,7 @@ namespace OutOfReach.Presentation.Motion
             Unsubscribe();
             bound = false; suit = null; clock = null;
             visibleQuery = floatingQuery = null; armsQuery = null;
-            groundController = null; groundedQuery = sprintQuery = null;
+            groundController = null; groundedQuery = sprintQuery = preflightGaitQuery = null;
             DisposeDepartureSeat();
             ResetOwnedVisuals();
             seatedRequested = wasPaused = offsetResetRequested = false;
@@ -386,7 +414,7 @@ namespace OutOfReach.Presentation.Motion
                     : Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
                 sprintWeight = Mathf.MoveTowards(sprintWeight, sprintQuery() ? 1f : 0f, elapsed * 8f);
                 walkingPace = Mathf.MoveTowards(walkingPace, Mathf.Clamp01(distance / (elapsed * 2.5f)), elapsed * 7f);
-                gaitPhase = Mathf.Repeat(gaitPhase + distance / (2f * StepLengthMetres()), 1f);
+                gaitPhase = Mathf.Repeat(gaitPhase + distance / (2f * StepLengthMetres(UsePreflightGait())), 1f);
             }
             if (gaitWeight > 0f) ApplyGroundPose();
             else
@@ -396,10 +424,16 @@ namespace OutOfReach.Presentation.Motion
             }
         }
 
-        private float StepLengthMetres()
+        private bool UsePreflightGait() => !activeEva && (preflightGaitQuery?.Invoke() ?? false);
+
+        private float StepLengthMetres(bool preflight)
         {
-            float forwardStep = Mathf.Lerp(Mathf.Lerp(.40f, .72f, walkingPace), .92f, sprintWeight);
-            float sideStep = Mathf.Lerp(Mathf.Lerp(.34f, .49f, walkingPace), .60f, sprintWeight);
+            float forwardStep = preflight
+                ? Mathf.Lerp(Mathf.Lerp(.49f, .82f, walkingPace), 1.00f, sprintWeight)
+                : Mathf.Lerp(Mathf.Lerp(.40f, .72f, walkingPace), .92f, sprintWeight);
+            float sideStep = preflight
+                ? Mathf.Lerp(Mathf.Lerp(.41f, .59f, walkingPace), .68f, sprintWeight)
+                : Mathf.Lerp(Mathf.Lerp(.34f, .49f, walkingPace), .60f, sprintWeight);
             return Mathf.Lerp(forwardStep, sideStep, Mathf.Abs(gaitDirection.x));
         }
 
@@ -407,11 +441,15 @@ namespace OutOfReach.Presentation.Motion
         {
             GroundRig rig = (activeEva ? evaCache : workCache).Ground;
             float running = sprintWeight;
-            float stepLength = StepLengthMetres();
-            float footLift = Mathf.Lerp(Mathf.Lerp(.06f, .125f, walkingPace), .23f, running);
-            float stance = Mathf.Lerp(.60f, .46f, running);
+            bool preflight = UsePreflightGait();
+            float stepLength = StepLengthMetres(preflight);
+            float footLift = preflight
+                ? Mathf.Lerp(Mathf.Lerp(.025f, .063f, walkingPace), .117f, running)
+                : Mathf.Lerp(Mathf.Lerp(.06f, .125f, walkingPace), .23f, running);
+            float stance = preflight ? Mathf.Lerp(.512f, .40f, running) : Mathf.Lerp(.60f, .46f, running);
             float weight = Mathf.SmoothStep(0f, 1f, gaitWeight);
-            rig.Apply(visualRoot, gaitDirection, gaitPhase, stepLength, footLift, stance, weight);
+            rig.Apply(visualRoot, gaitDirection, gaitPhase, stepLength, footLift, stance, weight,
+                preflight, running, armMask == BodyArmVisibility.Both);
         }
 
         private void ResetGroundMotion(bool restoreStanding)
@@ -509,10 +547,50 @@ namespace OutOfReach.Presentation.Motion
             foreach (AnimationClip clip in new[] { outfit.standing, outfit.floating, outfit.seated })
                 if (clip.legacy || clip.humanMotion || clip.length <= 0f)
                     throw new InvalidOperationException("Use the reviewed non-Humanoid Generic held clips.");
-            var cache = new ModelCache(outfit.modelRoot);
+            var cache = new ModelCache(outfit.modelRoot, outfit.semanticBindings);
             foreach (string name in new[] { "CharacterRoot", "upperarm01.L", "upperarm01.R", "lowerarm01.L", "lowerarm01.R", "wrist.L", "wrist.R" })
                 if (!cache.Nodes.ContainsKey(name)) throw new InvalidOperationException("Body is missing imported joint " + name);
             return cache;
+        }
+
+        /// <summary>Resolve complete semantic aliases. No global leaf-name fallback in mapped mode.</summary>
+        public static Dictionary<string, Transform> ResolveSemanticBindings(Transform root, SemanticBinding[] bindings)
+        {
+            if (!root || bindings == null || bindings.Length == 0)
+                throw new ArgumentException("Supply explicit avatar semantic bindings and their model root.");
+            var result = new Dictionary<string, Transform>(StringComparer.Ordinal);
+            foreach (SemanticBinding binding in bindings)
+            {
+                if (string.IsNullOrWhiteSpace(binding.role) || binding.role != binding.role.Trim())
+                    throw new InvalidOperationException("Avatar semantic role must be nonempty without surrounding whitespace.");
+                if (!result.TryAdd(binding.role, ResolveModelPath(root, binding.path)))
+                    throw new InvalidOperationException("Duplicate avatar semantic role " + binding.role);
+            }
+            return result;
+        }
+
+        /// <summary>Exact slash-separated relative path. Empty means root; ambiguous siblings are rejected.</summary>
+        public static Transform ResolveModelPath(Transform root, string path)
+        {
+            if (!root || path == null) throw new ArgumentException("Supply a model root and an explicit relative path.");
+            if (path.Length == 0) return root;
+            Transform current = root;
+            foreach (string segment in path.Split('/'))
+            {
+                if (segment.Length == 0 || segment == "." || segment == ".." || segment.IndexOf('\\') >= 0)
+                    throw new InvalidOperationException("Malformed avatar relative path " + path);
+                Transform next = null;
+                for (int i = 0; i < current.childCount; i++)
+                {
+                    Transform child = current.GetChild(i);
+                    if (!string.Equals(child.name, segment, StringComparison.Ordinal)) continue;
+                    if (next) throw new InvalidOperationException("Ambiguous avatar path " + path);
+                    next = child;
+                }
+                if (!next) throw new InvalidOperationException("Missing avatar path " + path);
+                current = next;
+            }
+            return current;
         }
 
         private sealed class ModelCache
@@ -522,14 +600,17 @@ namespace OutOfReach.Presentation.Motion
             private readonly Transform[] transforms;
             private readonly Vector3[] positions, scales;
             private readonly Quaternion[] rotations;
-            public ModelCache(Transform root)
+            public ModelCache(Transform root, SemanticBinding[] bindings)
             {
                 transforms = root.GetComponentsInChildren<Transform>(true);
+                bool mapped = bindings != null && bindings.Length > 0;
+                if (mapped)
+                    foreach (var entry in ResolveSemanticBindings(root, bindings)) Nodes.Add(entry.Key, entry.Value);
                 positions = new Vector3[transforms.Length]; scales = new Vector3[transforms.Length]; rotations = new Quaternion[transforms.Length];
                 for (int i = 0; i < transforms.Length; i++)
                 {
                     Transform t = transforms[i];
-                    if (!Nodes.TryAdd(t.name, t)) throw new InvalidOperationException("Duplicate body node name " + t.name);
+                    if (!mapped && !Nodes.TryAdd(t.name, t)) throw new InvalidOperationException("Duplicate body node name " + t.name);
                     positions[i] = t.localPosition; rotations[i] = t.localRotation; scales[i] = t.localScale;
                 }
             }
@@ -543,9 +624,10 @@ namespace OutOfReach.Presentation.Motion
                     }
             }
 
-            public void PrepareGroundRig()
+            public void PrepareGroundRig(bool prepareArms)
             {
                 if (Ground == null) Ground = new GroundRig(Nodes);
+                if (prepareArms) Ground.PrepareArms(Nodes);
             }
         }
 
@@ -553,6 +635,8 @@ namespace OutOfReach.Presentation.Motion
         {
             private readonly Transform hips;
             private readonly GroundLeg left, right;
+            private GroundArm leftArm, rightArm;
+            private bool armsPosed;
             private Vector3 standingHipsPosition;
 
             public GroundRig(Dictionary<string, Transform> nodes)
@@ -569,6 +653,16 @@ namespace OutOfReach.Presentation.Motion
                 standingHipsPosition = hips.localPosition;
                 left.CaptureStanding(reference);
                 right.CaptureStanding(reference);
+                leftArm?.CaptureStanding();
+                rightArm?.CaptureStanding();
+                armsPosed = false;
+            }
+
+            public void PrepareArms(Dictionary<string, Transform> nodes)
+            {
+                if (leftArm != null) return;
+                leftArm = new GroundArm(nodes, "L");
+                rightArm = new GroundArm(nodes, "R");
             }
 
             public void RestoreStanding()
@@ -576,30 +670,89 @@ namespace OutOfReach.Presentation.Motion
                 hips.localPosition = standingHipsPosition;
                 left.RestoreStanding();
                 right.RestoreStanding();
+                if (armsPosed)
+                {
+                    leftArm.RestoreStanding();
+                    rightArm.RestoreStanding();
+                    armsPosed = false;
+                }
             }
 
             public void Apply(Transform reference, Vector3 direction, float phase,
-                float stepLength, float footLift, float stance, float weight)
+                float stepLength, float footLift, float stance, float weight, bool preflight, float running, bool ownsBothArms)
             {
                 RestoreStanding();
-                Vector3 leftTarget = left.FootTarget(direction, phase, stepLength, footLift, stance, weight, out float leftPitch);
-                Vector3 rightTarget = right.FootTarget(direction, Mathf.Repeat(phase + .5f, 1f),
-                    stepLength, footLift, stance, weight, out float rightPitch);
+                float rightPhase = Mathf.Repeat(phase + .5f, 1f);
+                Vector3 leftTarget = left.FootTarget(direction, phase, stepLength, footLift, stance, weight, preflight, out float leftPitch);
+                Vector3 rightTarget = right.FootTarget(direction, rightPhase,
+                    stepLength, footLift, stance, weight, preflight, out float rightPitch);
 
                 leftTarget = reference.TransformPoint(leftTarget);
                 rightTarget = reference.TransformPoint(rightTarget);
-                // A longer stride lowers the visual hips only as far as needed to preserve the support foot.
-                float drop = Mathf.Max(.021f * weight,
-                    Mathf.Max(left.DropToReach(leftTarget), right.DropToReach(rightTarget)));
+                float leftDrop = left.DropToReach(leftTarget), rightDrop = right.DropToReach(rightTarget);
+                // Blend the reach envelope at the transfer between feet. It always stays above each
+                // leg's reach minimum, so pelvis easing cannot pull a planted sole off the deck.
+                float drop = preflight
+                    ? SmoothHigher(.027f * weight, SmoothHigher(leftDrop, rightDrop, .024f * weight), .024f * weight)
+                    : Mathf.Max(.021f * weight, Mathf.Max(leftDrop, rightDrop));
                 hips.position -= Vector3.up * Mathf.Min(.18f, drop);
-                left.Pose(reference, leftTarget, leftPitch, weight);
-                right.Pose(reference, rightTarget, rightPitch, weight);
+                left.Pose(reference, leftTarget, leftPitch, weight, preflight);
+                right.Pose(reference, rightTarget, rightPitch, weight, preflight);
+                // WORK arm skin only. Cargo/EVA or contact owners keep their existing renderer/motion lease.
+                if (preflight && ownsBothArms && leftArm != null && Mathf.Abs(direction.z) > .01f)
+                {
+                    leftArm.Apply(reference.right, phase, direction.z, running, weight);
+                    rightArm.Apply(reference.right, rightPhase, direction.z, running, weight);
+                    armsPosed = true;
+                }
+            }
+
+            private static float SmoothHigher(float a, float b, float width)
+            {
+                float overlap = Mathf.Max(0f, width - Mathf.Abs(a - b));
+                return Mathf.Max(a, b) + (width > 0f ? overlap * overlap / (4f * width) : 0f);
             }
 
             public static Transform Find(Dictionary<string, Transform> nodes, string name)
             {
                 if (nodes.TryGetValue(name, out Transform bone)) return bone;
                 throw new InvalidOperationException("Grounded body is missing imported joint " + name);
+            }
+        }
+
+        private sealed class GroundArm
+        {
+            private readonly Transform upper, forearm;
+            private Quaternion upperIdle, forearmIdle;
+
+            public GroundArm(Dictionary<string, Transform> nodes, string suffix)
+            {
+                upper = GroundRig.Find(nodes, "upperarm01." + suffix);
+                forearm = GroundRig.Find(nodes, "lowerarm01." + suffix);
+                if (!forearm.IsChildOf(upper)) throw new InvalidOperationException("Invalid grounded body arm chain.");
+            }
+
+            public void CaptureStanding()
+            {
+                upperIdle = upper.localRotation;
+                forearmIdle = forearm.localRotation;
+            }
+
+            public void RestoreStanding()
+            {
+                upper.localRotation = upperIdle;
+                forearm.localRotation = forearmIdle;
+            }
+
+            public void Apply(Vector3 pitchAxis, float legPhase, float forwardTravel, float running, float weight)
+            {
+                // The same-side arm moves back as its foot leads. Forearm flex increases on the
+                // forward swing, with hands and fingers staying in the sampled WORK standing shape.
+                float swing = Mathf.Cos(2f * Mathf.PI * (legPhase - .045f)) * Mathf.Sign(forwardTravel);
+                float gain = Mathf.Abs(forwardTravel) * weight;
+                upper.rotation = Quaternion.AngleAxis(swing * Mathf.Lerp(12f, 19f, running) * gain, pitchAxis) * upper.rotation;
+                float bend = Mathf.Lerp(2f, Mathf.Lerp(9f, 15f, running), .5f * (1f - swing));
+                forearm.rotation = Quaternion.AngleAxis(-bend * gain, pitchAxis) * forearm.rotation;
             }
         }
 
@@ -643,7 +796,7 @@ namespace OutOfReach.Presentation.Motion
             }
 
             public Vector3 FootTarget(Vector3 direction, float phase, float stepLength, float lift,
-                float stance, float weight, out float pitch)
+                float stance, float weight, bool preflight, out float pitch)
             {
                 float stanceReach = stepLength * stance;
                 float foreAft, height = 0f;
@@ -658,15 +811,18 @@ namespace OutOfReach.Presentation.Motion
                     float swing = (phase - stance) / (1f - stance);
                     float liftShape = 4f * swing * (1f - swing);
                     height = lift * liftShape * liftShape;
-                    pitch = 13f * Mathf.Sin(2f * Mathf.PI * swing) * liftShape * liftShape * weight;
+                    pitch = (preflight ? 7f : 13f) * Mathf.Sin(2f * Mathf.PI * swing) * liftShape * liftShape * weight;
                     // Match the horizontal tangent at lift-off and touchdown so the ankle does not snap.
                     float stanceTangent = -2f * stepLength * (1f - stance);
+                    // Localize the velocity match near the support boundary. Otherwise the longer
+                    // swing drives the shoe too far back before it rises, forcing the hips down.
+                    float tangentWindow = preflight ? (1f - liftShape) * (1f - liftShape) : 1f;
                     foreAft = Mathf.LerpUnclamped(-stanceReach, stanceReach, swing * swing * (3f - 2f * swing))
-                        + stanceTangent * swing * (1f - swing) * (1f - 2f * swing);
+                        + stanceTangent * swing * (1f - swing) * (1f - 2f * swing) * tangentWindow;
                 }
 
                 Vector3 target = standingAnkle + (direction * foreAft + Vector3.up * height) * weight;
-                target.x += side * .06f * Mathf.Abs(direction.x) * weight;
+                target.x += side * (preflight ? .035f : .06f) * Mathf.Abs(direction.x) * weight;
                 // Keep the inside edge of a strafe from crossing the other boot.
                 target.x = side * Mathf.Max(.092f, side * target.x);
                 return target;
@@ -680,7 +836,7 @@ namespace OutOfReach.Presentation.Motion
                 return Mathf.Max(0f, offset.y - Mathf.Sqrt(Mathf.Max(0f, heightSquared)));
             }
 
-            public void Pose(Transform reference, Vector3 target, float pitch, float weight)
+            public void Pose(Transform reference, Vector3 target, float pitch, float weight, bool preflight)
             {
                 Vector3 hip = Thigh.position;
                 Vector3 toAnkle = target - hip;
@@ -689,7 +845,8 @@ namespace OutOfReach.Presentation.Motion
                     thighLength + shinLength - .001f);
                 float kneeAlong = (thighLength * thighLength - shinLength * shinLength + length * length) / (2f * length);
                 float kneeOut = Mathf.Sqrt(Mathf.Max(0f, thighLength * thighLength - kneeAlong * kneeAlong));
-                Vector3 localPole = Vector3.Slerp(standingKneePole, new Vector3(side * .35f, 0f, 1f).normalized, weight);
+                Vector3 localPole = Vector3.Slerp(standingKneePole,
+                    new Vector3(side * (preflight ? .07f : .35f), 0f, 1f).normalized, weight);
                 Vector3 kneePole = Vector3.ProjectOnPlane(reference.TransformDirection(localPole), axis).normalized;
                 Vector3 knee = hip + axis * kneeAlong + kneePole * kneeOut;
                 Vector3 reachableAnkle = hip + axis * length;

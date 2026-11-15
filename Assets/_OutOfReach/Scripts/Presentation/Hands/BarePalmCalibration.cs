@@ -9,12 +9,16 @@ namespace OutOfReach.Presentation.Hands
     {
         public readonly Transform Upper, Lower, Wrist, Index, Middle, Little, Thumb;
         public readonly SkinnedMeshRenderer Renderer;
+        public readonly ContactHand Hand;
+        internal readonly int[] SkinSubmeshes;
         internal readonly Transform[] Fingers = new Transform[15];
         public BareArmContactRig(Transform upper, Transform lower, Transform wrist, Transform index,
             Transform middle, Transform little, Transform thumb, SkinnedMeshRenderer renderer)
         {
             Upper = upper; Lower = lower; Wrist = wrist; Index = index; Middle = middle;
             Little = little; Thumb = thumb; Renderer = renderer;
+            Hand = wrist && wrist.name.EndsWith(".L", StringComparison.Ordinal) ? ContactHand.Left : ContactHand.Right;
+            SkinSubmeshes = LegacySkinSubmeshes(renderer);
             if (!wrist) return;
             string side = wrist.name.EndsWith(".L", StringComparison.Ordinal) ? ".L" : ".R";
             Transform[] nodes = wrist.GetComponentsInChildren<Transform>(true);
@@ -24,6 +28,51 @@ namespace OutOfReach.Presentation.Hands
                 foreach (Transform node in nodes) if (node.name == name) Fingers[digit * 3 + joint] = node;
             }
         }
+        /// <summary>Explicit semantic mapping; fingers are thumb through little, proximal through distal.
+        /// Null skin membership retains only the legacy material adapter; profiles provide explicit indices.</summary>
+        public BareArmContactRig(ContactHand hand, Transform upper, Transform lower, Transform wrist,
+            IReadOnlyList<Transform> fingers, SkinnedMeshRenderer renderer, IReadOnlyList<int> skinSubmeshes)
+        {
+            if (hand != ContactHand.Left && hand != ContactHand.Right)
+                throw new ArgumentException("A mapped arm needs an explicit left/right hand.");
+            if (fingers == null || fingers.Count != 15)
+                throw new ArgumentException("Map all fifteen finger joints in semantic digit/joint order.");
+            Hand = hand; Upper = upper; Lower = lower; Wrist = wrist; Renderer = renderer;
+            var unique = new HashSet<Transform>();
+            for (int i = 0; i < Fingers.Length; i++)
+            {
+                if (!fingers[i] || !unique.Add(fingers[i]))
+                    throw new ArgumentException("Mapped finger joints must be present and distinct.");
+                Fingers[i] = fingers[i];
+            }
+            Thumb = Fingers[0]; Index = Fingers[3]; Middle = Fingers[6]; Little = Fingers[12];
+            if (skinSubmeshes == null) SkinSubmeshes = LegacySkinSubmeshes(renderer);
+            else
+            {
+                if (!renderer || !renderer.sharedMesh || skinSubmeshes.Count == 0)
+                    throw new ArgumentException("Explicit palm membership needs a mesh and nonempty skin submeshes.");
+                SkinSubmeshes = new int[skinSubmeshes.Count];
+                var uniqueSubmeshes = new HashSet<int>();
+                for (int i = 0; i < SkinSubmeshes.Length; i++)
+                {
+                    int submesh = skinSubmeshes[i];
+                    if (submesh < 0 || submesh >= renderer.sharedMesh.subMeshCount || !uniqueSubmeshes.Add(submesh))
+                        throw new ArgumentException("Mapped skin submeshes must be distinct and inside the bound mesh.");
+                    SkinSubmeshes[i] = submesh;
+                }
+            }
+        }
+
+        static int[] LegacySkinSubmeshes(SkinnedMeshRenderer renderer)
+        {
+            var found = new List<int>();
+            if (!renderer || !renderer.sharedMesh) return found.ToArray();
+            Material[] materials = renderer.sharedMaterials;
+            for (int sub = 0; sub < renderer.sharedMesh.subMeshCount; sub++)
+                if (sub < materials.Length && materials[sub] && materials[sub].name == "MAT_Cabin_BareHands") found.Add(sub);
+            return found.ToArray();
+        }
+
         internal bool IsUsable
         {
             get
@@ -31,6 +80,9 @@ namespace OutOfReach.Presentation.Hands
                 if (!Upper || !Lower || !Wrist || !Index || !Middle || !Little || !Thumb || !Renderer
                     || !Lower.IsChildOf(Upper) || !Wrist.IsChildOf(Lower)
                     || (Wrist.lossyScale - Vector3.one).sqrMagnitude > .000001f) return false;
+                if (!Renderer.sharedMesh || SkinSubmeshes == null || SkinSubmeshes.Length == 0) return false;
+                foreach (int submesh in SkinSubmeshes)
+                    if (submesh < 0 || submesh >= Renderer.sharedMesh.subMeshCount) return false;
                 for (int i = 0; i < Fingers.Length; i++)
                     if (!Fingers[i] || !Fingers[i].IsChildOf(Wrist)
                         || (i % 3 != 0 && !Fingers[i].IsChildOf(Fingers[i - 1]))) return false;
@@ -81,9 +133,8 @@ namespace OutOfReach.Presentation.Hands
 
     internal static class BarePalmCalibration
     {
-        // Material identifies the entire bare skin, including its forearm/wrist blend. Weight thresholds
+        // Explicit submesh membership covers the entire bare skin, including its forearm/wrist blend. Weight thresholds
         // restrict the rigid support search ONLY, never the final plane-clearance check.
-        const string SkinMaterial = "MAT_Cabin_BareHands";
         internal static bool TryMeasure(BareArmContactRig rig, out BarePalmContactPose pose)
         {
             pose = null;
@@ -120,10 +171,9 @@ namespace OutOfReach.Presentation.Hands
                 var vertices = new List<Vector3>(bake.vertexCount); bake.GetVertices(vertices);
                 Vector3[] normals = bake.normals; Mesh source = rig.Renderer.sharedMesh;
                 if (source.vertexCount != vertices.Count || normals.Length != vertices.Count) return false;
-                var skin = new bool[vertices.Count]; Material[] materials = rig.Renderer.sharedMaterials;
-                for (int sub = 0; sub < source.subMeshCount; sub++)
-                    if (sub < materials.Length && materials[sub] && materials[sub].name == SkinMaterial)
-                        foreach (int index in source.GetIndices(sub)) skin[index] = true;
+                var skin = new bool[vertices.Count];
+                foreach (int sub in rig.SkinSubmeshes)
+                    foreach (int index in source.GetIndices(sub)) skin[index] = true;
                 var allSkin = new List<int>();
                 for (int i = 0; i < skin.Length; i++) if (skin[i]) allSkin.Add(i);
                 if (allSkin.Count < 100) return false;

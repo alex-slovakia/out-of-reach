@@ -612,7 +612,8 @@ namespace OutOfReach.Composition
                     () => runtime && runtime.Player && runtime.Player.IsFloating, BodyArmMask);
                 RefreshStandingBodyFit();
                 embodiedBody.ConfigureGroundLocomotion(runtime.Player.GetComponent<CharacterController>(),
-                    CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting);
+                    CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting,
+                    () => runtime && runtime.GameState.Phase == GamePhase.Planning && !orbitalLocationReached);
             }
             if (microgravityBridge && microgravityInput && bareArmContacts)
             {

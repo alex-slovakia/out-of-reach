@@ -18217,6 +18217,347 @@ MonoBehaviour:
     standing: {fileID: -607397482657942246, guid: 8db69f764d194664abb54aa64c6ae7c6, type: 3}
     floating: {fileID: -607397482657942246, guid: 804cae3fe9e040d2a0e159a69c456194, type: 3}
     seated: {fileID: -6387666291347190967, guid: 9c58535f78518e144a3c707198f27fc2, type: 3}
+    semanticBindings:
+    - role: A7_BodyFit02_WORK
+      path: 
+    - role: A7_ContinuousBody_Rig
+      path: A7_ContinuousBody_Rig
+    - role: CharacterRoot
+      path: A7_ContinuousBody_Rig/CharacterRoot
+    - role: root
+      path: A7_ContinuousBody_Rig/CharacterRoot/root
+    - role: pelvis.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L
+    - role: upperleg01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L
+    - role: upperleg02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L
+    - role: lowerleg01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L
+    - role: lowerleg02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L
+    - role: foot.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L
+    - role: toe1-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe1-1.L
+    - role: toe1-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe1-1.L/toe1-2.L
+    - role: toe2-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L
+    - role: toe2-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L/toe2-2.L
+    - role: toe2-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L/toe2-2.L/toe2-3.L
+    - role: toe3-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L
+    - role: toe3-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L/toe3-2.L
+    - role: toe3-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L/toe3-2.L/toe3-3.L
+    - role: toe4-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L
+    - role: toe4-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L/toe4-2.L
+    - role: toe4-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L/toe4-2.L/toe4-3.L
+    - role: toe5-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L
+    - role: toe5-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L/toe5-2.L
+    - role: toe5-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L/toe5-2.L/toe5-3.L
+    - role: pelvis.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R
+    - role: upperleg01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R
+    - role: upperleg02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R
+    - role: lowerleg01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R
+    - role: lowerleg02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R
+    - role: foot.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R
+    - role: toe1-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe1-1.R
+    - role: toe1-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe1-1.R/toe1-2.R
+    - role: toe2-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R
+    - role: toe2-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R/toe2-2.R
+    - role: toe2-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R/toe2-2.R/toe2-3.R
+    - role: toe3-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R
+    - role: toe3-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R/toe3-2.R
+    - role: toe3-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R/toe3-2.R/toe3-3.R
+    - role: toe4-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R
+    - role: toe4-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R/toe4-2.R
+    - role: toe4-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R/toe4-2.R/toe4-3.R
+    - role: toe5-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R
+    - role: toe5-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R/toe5-2.R
+    - role: toe5-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R/toe5-2.R/toe5-3.R
+    - role: spine05
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05
+    - role: spine04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04
+    - role: spine03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03
+    - role: spine02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02
+    - role: breast.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/breast.L
+    - role: breast.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/breast.R
+    - role: spine01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01
+    - role: clavicle.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L
+    - role: shoulder01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L
+    - role: upperarm01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L
+    - role: upperarm02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L
+    - role: lowerarm01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L
+    - role: lowerarm02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L
+    - role: wrist.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L
+    - role: finger1-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L
+    - role: finger1-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L
+    - role: finger1-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L/finger1-3.L
+    - role: metacarpal1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L
+    - role: finger2-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L
+    - role: finger2-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L
+    - role: finger2-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L/finger2-3.L
+    - role: metacarpal2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L
+    - role: finger3-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L
+    - role: finger3-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L
+    - role: finger3-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L/finger3-3.L
+    - role: metacarpal3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L
+    - role: finger4-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L
+    - role: finger4-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L
+    - role: finger4-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L/finger4-3.L
+    - role: metacarpal4.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L
+    - role: finger5-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L
+    - role: finger5-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L
+    - role: finger5-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L/finger5-3.L
+    - role: clavicle.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R
+    - role: shoulder01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R
+    - role: upperarm01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R
+    - role: upperarm02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R
+    - role: lowerarm01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R
+    - role: lowerarm02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R
+    - role: wrist.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R
+    - role: finger1-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R
+    - role: finger1-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R
+    - role: finger1-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R/finger1-3.R
+    - role: metacarpal1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R
+    - role: finger2-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R
+    - role: finger2-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R
+    - role: finger2-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R/finger2-3.R
+    - role: metacarpal2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R
+    - role: finger3-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R
+    - role: finger3-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R
+    - role: finger3-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R/finger3-3.R
+    - role: metacarpal3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R
+    - role: finger4-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R
+    - role: finger4-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R
+    - role: finger4-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R/finger4-3.R
+    - role: metacarpal4.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R
+    - role: finger5-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R
+    - role: finger5-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R
+    - role: finger5-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R/finger5-3.R
+    - role: neck01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01
+    - role: neck02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02
+    - role: neck03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03
+    - role: head
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head
+    - role: jaw
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw
+    - role: special04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04
+    - role: oris02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02
+    - role: oris01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02/oris01
+    - role: oris06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L
+    - role: oris07.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L/oris07.L
+    - role: oris06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R
+    - role: oris07.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R/oris07.R
+    - role: tongue00
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00
+    - role: tongue01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01
+    - role: tongue02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02
+    - role: tongue03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03
+    - role: tongue04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue04
+    - role: tongue07.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.L
+    - role: tongue07.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.R
+    - role: tongue06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.L
+    - role: tongue06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.R
+    - role: tongue05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.L
+    - role: tongue05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.R
+    - role: levator02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L
+    - role: levator03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L
+    - role: levator04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L
+    - role: levator05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L/levator05.L
+    - role: levator02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R
+    - role: levator03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R
+    - role: levator04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R
+    - role: levator05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R/levator05.R
+    - role: special01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01
+    - role: oris04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L
+    - role: oris03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L/oris03.L
+    - role: oris04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R
+    - role: oris03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R/oris03.R
+    - role: oris06
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06
+    - role: oris05
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06/oris05
+    - role: special03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03
+    - role: levator06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.L
+    - role: levator06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.R
+    - role: special06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L
+    - role: special05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L
+    - role: eye.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/eye.L
+    - role: orbicularis03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis03.L
+    - role: orbicularis04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis04.L
+    - role: special06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R
+    - role: special05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R
+    - role: eye.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/eye.R
+    - role: orbicularis03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis03.R
+    - role: orbicularis04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis04.R
+    - role: temporalis01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L
+    - role: oculi02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L
+    - role: oculi01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L/oculi01.L
+    - role: temporalis01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R
+    - role: oculi02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R
+    - role: oculi01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R/oculi01.R
+    - role: temporalis02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L
+    - role: risorius02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L
+    - role: risorius03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L/risorius03.L
+    - role: temporalis02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R
+    - role: risorius02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R
+    - role: risorius03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R/risorius03.R
+    - role: A7_WORK_Arm_L
+      path: A7_WORK_Arm_L
+    - role: A7_WORK_Arm_R
+      path: A7_WORK_Arm_R
+    - role: A7_WORK_TorsoLegs
+      path: A7_WORK_TorsoLegs
+    leftPalmSubmeshes: 01000000
+    rightPalmSubmeshes: 01000000
   eva:
     modelRoot: {fileID: 748836200}
     torsoLegs: {fileID: 748836201}
@@ -18225,6 +18566,347 @@ MonoBehaviour:
     standing: {fileID: -607397482657942246, guid: 8db69f764d194664abb54aa64c6ae7c6, type: 3}
     floating: {fileID: -607397482657942246, guid: 804cae3fe9e040d2a0e159a69c456194, type: 3}
     seated: {fileID: -6387666291347190967, guid: 13464d225f45b2648859569aa6c40c38, type: 3}
+    semanticBindings:
+    - role: A7_BodyFit02_EVA
+      path: 
+    - role: A7_ContinuousBody_Rig
+      path: A7_ContinuousBody_Rig
+    - role: CharacterRoot
+      path: A7_ContinuousBody_Rig/CharacterRoot
+    - role: root
+      path: A7_ContinuousBody_Rig/CharacterRoot/root
+    - role: pelvis.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L
+    - role: upperleg01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L
+    - role: upperleg02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L
+    - role: lowerleg01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L
+    - role: lowerleg02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L
+    - role: foot.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L
+    - role: toe1-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe1-1.L
+    - role: toe1-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe1-1.L/toe1-2.L
+    - role: toe2-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L
+    - role: toe2-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L/toe2-2.L
+    - role: toe2-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe2-1.L/toe2-2.L/toe2-3.L
+    - role: toe3-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L
+    - role: toe3-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L/toe3-2.L
+    - role: toe3-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe3-1.L/toe3-2.L/toe3-3.L
+    - role: toe4-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L
+    - role: toe4-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L/toe4-2.L
+    - role: toe4-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe4-1.L/toe4-2.L/toe4-3.L
+    - role: toe5-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L
+    - role: toe5-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L/toe5-2.L
+    - role: toe5-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe5-1.L/toe5-2.L/toe5-3.L
+    - role: pelvis.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R
+    - role: upperleg01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R
+    - role: upperleg02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R
+    - role: lowerleg01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R
+    - role: lowerleg02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R
+    - role: foot.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R
+    - role: toe1-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe1-1.R
+    - role: toe1-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe1-1.R/toe1-2.R
+    - role: toe2-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R
+    - role: toe2-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R/toe2-2.R
+    - role: toe2-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe2-1.R/toe2-2.R/toe2-3.R
+    - role: toe3-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R
+    - role: toe3-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R/toe3-2.R
+    - role: toe3-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe3-1.R/toe3-2.R/toe3-3.R
+    - role: toe4-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R
+    - role: toe4-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R/toe4-2.R
+    - role: toe4-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe4-1.R/toe4-2.R/toe4-3.R
+    - role: toe5-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R
+    - role: toe5-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R/toe5-2.R
+    - role: toe5-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe5-1.R/toe5-2.R/toe5-3.R
+    - role: spine05
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05
+    - role: spine04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04
+    - role: spine03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03
+    - role: spine02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02
+    - role: breast.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/breast.L
+    - role: breast.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/breast.R
+    - role: spine01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01
+    - role: clavicle.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L
+    - role: shoulder01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L
+    - role: upperarm01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L
+    - role: upperarm02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L
+    - role: lowerarm01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L
+    - role: lowerarm02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L
+    - role: wrist.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L
+    - role: finger1-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L
+    - role: finger1-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L
+    - role: finger1-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L/finger1-3.L
+    - role: metacarpal1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L
+    - role: finger2-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L
+    - role: finger2-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L
+    - role: finger2-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L/finger2-3.L
+    - role: metacarpal2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L
+    - role: finger3-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L
+    - role: finger3-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L
+    - role: finger3-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L/finger3-3.L
+    - role: metacarpal3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L
+    - role: finger4-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L
+    - role: finger4-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L
+    - role: finger4-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L/finger4-3.L
+    - role: metacarpal4.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L
+    - role: finger5-1.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L
+    - role: finger5-2.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L
+    - role: finger5-3.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L/finger5-3.L
+    - role: clavicle.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R
+    - role: shoulder01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R
+    - role: upperarm01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R
+    - role: upperarm02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R
+    - role: lowerarm01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R
+    - role: lowerarm02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R
+    - role: wrist.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R
+    - role: finger1-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R
+    - role: finger1-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R
+    - role: finger1-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R/finger1-3.R
+    - role: metacarpal1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R
+    - role: finger2-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R
+    - role: finger2-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R
+    - role: finger2-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R/finger2-3.R
+    - role: metacarpal2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R
+    - role: finger3-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R
+    - role: finger3-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R
+    - role: finger3-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R/finger3-3.R
+    - role: metacarpal3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R
+    - role: finger4-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R
+    - role: finger4-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R
+    - role: finger4-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R/finger4-3.R
+    - role: metacarpal4.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R
+    - role: finger5-1.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R
+    - role: finger5-2.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R
+    - role: finger5-3.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R/finger5-3.R
+    - role: neck01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01
+    - role: neck02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02
+    - role: neck03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03
+    - role: head
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head
+    - role: jaw
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw
+    - role: special04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04
+    - role: oris02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02
+    - role: oris01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02/oris01
+    - role: oris06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L
+    - role: oris07.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L/oris07.L
+    - role: oris06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R
+    - role: oris07.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R/oris07.R
+    - role: tongue00
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00
+    - role: tongue01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01
+    - role: tongue02
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02
+    - role: tongue03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03
+    - role: tongue04
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue04
+    - role: tongue07.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.L
+    - role: tongue07.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.R
+    - role: tongue06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.L
+    - role: tongue06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.R
+    - role: tongue05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.L
+    - role: tongue05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.R
+    - role: levator02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L
+    - role: levator03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L
+    - role: levator04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L
+    - role: levator05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L/levator05.L
+    - role: levator02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R
+    - role: levator03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R
+    - role: levator04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R
+    - role: levator05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R/levator05.R
+    - role: special01
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01
+    - role: oris04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L
+    - role: oris03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L/oris03.L
+    - role: oris04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R
+    - role: oris03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R/oris03.R
+    - role: oris06
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06
+    - role: oris05
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06/oris05
+    - role: special03
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03
+    - role: levator06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.L
+    - role: levator06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.R
+    - role: special06.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L
+    - role: special05.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L
+    - role: eye.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/eye.L
+    - role: orbicularis03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis03.L
+    - role: orbicularis04.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis04.L
+    - role: special06.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R
+    - role: special05.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R
+    - role: eye.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/eye.R
+    - role: orbicularis03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis03.R
+    - role: orbicularis04.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis04.R
+    - role: temporalis01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L
+    - role: oculi02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L
+    - role: oculi01.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L/oculi01.L
+    - role: temporalis01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R
+    - role: oculi02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R
+    - role: oculi01.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R/oculi01.R
+    - role: temporalis02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L
+    - role: risorius02.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L
+    - role: risorius03.L
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L/risorius03.L
+    - role: temporalis02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R
+    - role: risorius02.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R
+    - role: risorius03.R
+      path: A7_ContinuousBody_Rig/CharacterRoot/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R/risorius03.R
+    - role: A7_EVA_Arm_L
+      path: A7_EVA_Arm_L
+    - role: A7_EVA_Arm_R
+      path: A7_EVA_Arm_R
+    - role: A7_EVA_TorsoLegs
+      path: A7_EVA_TorsoLegs
+    leftPalmSubmeshes: 
+    rightPalmSubmeshes: 
 --- !u!1 &421642790
 GameObject:
   m_ObjectHideFlags: 0

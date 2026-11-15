@@ -18,6 +18,8 @@ namespace OutOfReach.Composition.Editor
         public const string EvaPath = AssetRoot + "/Meshes/A7_BodyFit02_EVA.fbx";
         public const string FloatPath = "Assets/_OutOfReach/Visuals/Character/FirstPersonBody/FloatNeutralV04/Animations/BODY_FloatNeutral_V04.fbx";
         public const string StandingPath = "Assets/_OutOfReach/Visuals/Character/FirstPersonBody/StandingIdleV02/Animations/BODY_StandIdle_V02.fbx";
+        public const string CompatibilityProfilePath = AssetRoot + "/Profiles/A7FitV02.asset";
+        public const string SelectionPath = AssetRoot + "/Profiles/AvatarSelection.asset";
         private const string NormalPath = AssetRoot + "/Textures/Body_Weave_Normal.png";
         private static readonly string[] PoseNames = { "BODY_StandRelaxed", "BODY_FloatNeutral", "BODY_SeatedFit" };
 
@@ -44,6 +46,14 @@ namespace OutOfReach.Composition.Editor
         public static EmbodiedBodyPresenter Create(Transform presentationParent, Transform playerFeet, Camera playerCamera)
         {
             RequireEditMode();
+            return Create(presentationParent, playerFeet, playerCamera, GetOrCreateSelection().Profile);
+        }
+
+        /// <summary>Explicit profile overload. Never changes model import settings or the selected profile.</summary>
+        public static EmbodiedBodyPresenter Create(Transform presentationParent, Transform playerFeet, Camera playerCamera,
+            AvatarPresentationProfile profile)
+        {
+            RequireEditMode();
             if (!presentationParent || !playerFeet || !playerCamera || EditorUtility.IsPersistent(presentationParent)
                 || EditorUtility.IsPersistent(playerFeet) || EditorUtility.IsPersistent(playerCamera))
                 throw new ArgumentException("Supply existing scene presentation parent, sole player feet and camera.");
@@ -51,20 +61,17 @@ namespace OutOfReach.Composition.Editor
                 throw new ArgumentException("Body parent must not inherit camera pitch or visual bob.");
             if (presentationParent.Find(HostName) || presentationParent.Find(VisualName))
                 throw new InvalidOperationException("Body scope already exists; root must explicitly remove/rebuild its owned instance.");
-            PrepareAssets();
+            AvatarPresentationProfileValidator.Validate(profile);
             var host = new GameObject(HostName); host.transform.SetParent(presentationParent, false);
             var visuals = new GameObject(VisualName); visuals.transform.SetParent(presentationParent, false);
             try
             {
-                var work = CreateOutfit(WorkPath, "WORK", visuals.transform);
-                var eva = CreateOutfit(EvaPath, "EVA", visuals.transform);
+                var work = CreateOutfit(profile.Work, "WORK", visuals.transform);
+                var eva = CreateOutfit(profile.Eva, "EVA", visuals.transform);
                 var presenter = host.AddComponent<EmbodiedBodyPresenter>();
-                presenter.ConfigureScene(visuals.transform, playerFeet, playerCamera, work, eva, new Vector3(0f, 0f, -.330f));
-                // Centered, source-measured V04 neutral pose: the torso/legs fit the
-                // actual capsule and relaxed hands start behind a nearby wall.
-                // Standing uses the reviewed unit-correct V02 fit; seated retains its original setback.
-                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, new Vector3(0f, 0f, -.197f));
-                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, Vector3.zero);
+                presenter.ConfigureScene(visuals.transform, playerFeet, playerCamera, work, eva, profile.SeatedOffset);
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, profile.StandingOffset);
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, profile.FloatingOffset);
                 ValidateScene(presenter);
                 EditorUtility.SetDirty(presenter);
                 return presenter;
@@ -97,35 +104,183 @@ namespace OutOfReach.Composition.Editor
                     throw new InvalidOperationException("Automatic body Animator writing must be disabled.");
         }
 
-        private static EmbodiedBodyPresenter.Outfit CreateOutfit(string path, string variant, Transform parent)
+        /// <summary>Root executeMethod: create/validate profile assets before starting any read-only scene hash test.</summary>
+        [MenuItem("Out of Reach/Avatar/Initialize compatibility profile assets")]
+        public static void InitializeAvatarProfiles()
         {
-            GameObject asset = AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            if (!asset) throw new InvalidOperationException("Missing imported body " + path);
-            GameObject model = (GameObject)PrefabUtility.InstantiatePrefab(asset, parent);
+            RequireEditMode();
+            AvatarPresentationProfile compatibility = GetOrCreateCompatibilityProfile();
+            AvatarPresentationProfileValidator.Validate(compatibility);
+            AvatarPresentationSelection selected = GetOrCreateSelection();
+            AvatarPresentationProfileValidator.Validate(selected.Profile);
+            Debug.Log("Avatar profile assets ready. Existing scene instances were not changed. Selection: " + SelectionPath, selected);
+        }
+
+        /// <summary>Root executeMethod: add mappings to matching existing instances, without replacing any scene reference.</summary>
+        [MenuItem("Out of Reach/Avatar/Bind selected profile to existing matching body")]
+        public static void BindSelectedProfileToExistingBody()
+        {
+            RequireEditMode();
+            var selected = AssetDatabase.LoadAssetAtPath<AvatarPresentationSelection>(SelectionPath);
+            if (!selected || !selected.Profile) throw new InvalidOperationException("Initialize and choose the avatar selection asset first.");
+            var bodies = Object.FindObjectsByType<EmbodiedBodyPresenter>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                .Where(b => b.gameObject.scene.IsValid() && b.gameObject.scene.isLoaded && !EditorUtility.IsPersistent(b)).ToArray();
+            if (bodies.Length != 1) throw new InvalidOperationException("Load exactly one root-owned scene body before adding its profile bindings.");
+            BindProfileToExistingBody(bodies[0], selected.Profile);
+        }
+
+        public static void BindProfileToExistingBody(EmbodiedBodyPresenter presenter, AvatarPresentationProfile profile)
+        {
+            RequireEditMode();
+            if (!presenter || EditorUtility.IsPersistent(presenter) || presenter.IsBound)
+                throw new InvalidOperationException("Bind only an existing, unbound Edit-mode scene presenter.");
+            AvatarPresentationProfileValidator.Validate(profile);
+            var serialized = new SerializedObject(presenter);
+            var work = MatchExistingOutfit(serialized.FindProperty("work"), profile.Work, true);
+            var eva = MatchExistingOutfit(serialized.FindProperty("eva"), profile.Eva, false);
+            if ((presenter.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing) - profile.StandingOffset).sqrMagnitude > 1e-10f
+                || (presenter.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating) - profile.FloatingOffset).sqrMagnitude > 1e-10f
+                || (presenter.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Seated) - profile.SeatedOffset).sqrMagnitude > 1e-10f)
+                throw new InvalidOperationException("Existing visual fit differs from profile. Reconcile it explicitly; mapping-only activation does not change fit.");
+            Undo.IncrementCurrentGroup(); int group = Undo.GetCurrentGroup();
+            Undo.SetCurrentGroupName("Bind existing avatar profile mappings");
+            Undo.RecordObjects(new Object[] { presenter, work.torsoLegs, work.leftArm, work.rightArm,
+                eva.torsoLegs, eva.leftArm, eva.rightArm }, "Bind existing avatar profile mappings");
+            try
+            {
+                presenter.ConfigureScene(presenter.VisualRoot, presenter.PlayerFeet, presenter.PlayerCamera,
+                    work, eva, profile.SeatedOffset);
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, profile.StandingOffset);
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, profile.FloatingOffset);
+                ValidateScene(presenter);
+                EditorUtility.SetDirty(presenter);
+                UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(presenter.gameObject.scene);
+                Undo.CollapseUndoOperations(group);
+                Debug.Log("Existing avatar mappings bound with all scene object references preserved. Root must explicitly save and run native acceptance.", presenter);
+            }
+            catch { Undo.RevertAllDownToGroup(group); throw; }
+        }
+
+        private static EmbodiedBodyPresenter.Outfit MatchExistingOutfit(SerializedProperty old,
+            AvatarPresentationProfile.OutfitDefinition definition, bool bareHands)
+        {
+            Transform instance = old?.FindPropertyRelative("modelRoot").objectReferenceValue as Transform;
+            if (!instance || PrefabUtility.GetCorrespondingObjectFromOriginalSource(instance.gameObject) != definition.model)
+                throw new InvalidOperationException("Mapping-only activation requires the same original model asset. A different model needs an explicit root-owned body rebuild.");
+            var resolved = AvatarPresentationResolver.Resolve(definition, instance, bareHands);
+            if (old.FindPropertyRelative("torsoLegs").objectReferenceValue != resolved.torsoLegs
+                || old.FindPropertyRelative("leftArm").objectReferenceValue != resolved.leftArm
+                || old.FindPropertyRelative("rightArm").objectReferenceValue != resolved.rightArm
+                || old.FindPropertyRelative("standing").objectReferenceValue != resolved.standing
+                || old.FindPropertyRelative("floating").objectReferenceValue != resolved.floating
+                || old.FindPropertyRelative("seated").objectReferenceValue != resolved.seated)
+                throw new InvalidOperationException("Mapping-only activation cannot replace existing skin or animation references.");
+            MatchExistingSkin(resolved.torsoLegs, definition.torsoLegs, definition.model.transform);
+            MatchExistingSkin(resolved.leftArm, definition.leftArm, definition.model.transform);
+            MatchExistingSkin(resolved.rightArm, definition.rightArm, definition.model.transform);
+            return resolved;
+        }
+
+        private static void MatchExistingSkin(SkinnedMeshRenderer skin, AvatarPresentationProfile.SkinRole role, Transform source)
+        {
+            var expected = EmbodiedBodyPresenter.ResolveModelPath(source, role.path).GetComponent<SkinnedMeshRenderer>();
+            if (!expected || skin.sharedMesh != expected.sharedMesh || !skin.sharedMaterials.SequenceEqual(role.materials))
+                throw new InvalidOperationException("Mapping-only activation cannot replace existing mesh or material references.");
+        }
+
+        public static AvatarPresentationSelection GetOrCreateSelection()
+        {
+            RequireEditMode();
+            var selected = AssetDatabase.LoadAssetAtPath<AvatarPresentationSelection>(SelectionPath);
+            if (selected)
+            {
+                if (!selected.Profile) throw new InvalidOperationException("Choose an explicit avatar profile in " + SelectionPath);
+                return selected;
+            }
+            AvatarPresentationProfile compatibility = GetOrCreateCompatibilityProfile();
+            selected = ScriptableObject.CreateInstance<AvatarPresentationSelection>();
+            selected.SetInitialProfile(compatibility);
+            AssetDatabase.CreateAsset(selected, SelectionPath);
+            AssetDatabase.SaveAssetIfDirty(selected);
+            return selected;
+        }
+
+        /// <summary>Generate once from the current reviewed assets; never overwrite a user's profile mapping.</summary>
+        public static AvatarPresentationProfile GetOrCreateCompatibilityProfile()
+        {
+            RequireEditMode();
+            var existing = AssetDatabase.LoadAssetAtPath<AvatarPresentationProfile>(CompatibilityProfilePath);
+            if (existing) return existing;
+            PrepareAssets();
+            EnsureFolder(AssetRoot + "/Profiles");
+            var profile = ScriptableObject.CreateInstance<AvatarPresentationProfile>();
+            try
+            {
+                FillCompatibility(profile.Work, WorkPath, "WORK"); FillCompatibility(profile.Eva, EvaPath, "EVA");
+                AvatarPresentationProfileValidator.Validate(profile);
+                AssetDatabase.CreateAsset(profile, CompatibilityProfilePath);
+                AssetDatabase.SaveAssetIfDirty(profile);
+                return profile;
+            }
+            catch { if (!EditorUtility.IsPersistent(profile)) Object.DestroyImmediate(profile); throw; }
+        }
+
+        private static void FillCompatibility(AvatarPresentationProfile.OutfitDefinition definition, string path, string variant)
+        {
+            definition.model = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (!definition.model) throw new InvalidOperationException("Missing imported compatibility body " + path);
+            Transform root = definition.model.transform;
+            Transform[] nodes = root.GetComponentsInChildren<Transform>(true);
+            if (nodes.GroupBy(t => t.name, StringComparer.Ordinal).Any(g => g.Count() != 1))
+                throw new InvalidOperationException("Compatibility generator expects the original unique-name rig; manually map a replacement profile.");
+            definition.bones = nodes.Select(t => new EmbodiedBodyPresenter.SemanticBinding(t.name,
+                AnimationUtility.CalculateTransformPath(t, root))).ToArray();
+            SkinnedMeshRenderer[] skins = root.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+            FillRole(definition.torsoLegs, ExactlyOne(skins, "A7_" + variant + "_TorsoLegs"), root);
+            FillRole(definition.leftArm, ExactlyOne(skins, "A7_" + variant + "_Arm_L"), root);
+            FillRole(definition.rightArm, ExactlyOne(skins, "A7_" + variant + "_Arm_R"), root);
+            definition.standing = Clip(StandingPath, "BODY_StandIdle_V02");
+            definition.floating = Clip(FloatPath, "BODY_FloatNeutral_V04"); definition.seated = Clip(path, PoseNames[2]);
+            var curves = new[] { definition.standing, definition.floating, definition.seated }
+                .SelectMany(AnimationUtility.GetCurveBindings).ToArray();
+            definition.translationPaths = curves.Where(c => c.propertyName.StartsWith("m_LocalPosition.", StringComparison.Ordinal))
+                .Select(c => c.path).Distinct(StringComparer.Ordinal).OrderBy(p => p, StringComparer.Ordinal).ToArray();
+            definition.scalePaths = curves.Where(c => c.propertyName.StartsWith("m_LocalScale.", StringComparison.Ordinal))
+                .Select(c => c.path).Distinct(StringComparer.Ordinal).OrderBy(p => p, StringComparer.Ordinal).ToArray();
+        }
+
+        private static void FillRole(AvatarPresentationProfile.SkinRole role, SkinnedMeshRenderer skin, Transform root)
+        {
+            role.path = AnimationUtility.CalculateTransformPath(skin.transform, root);
+            role.materials = skin.sharedMaterials.Select(m => ResolveMaterial(m ? m.name : string.Empty)).ToArray();
+            // One-time compatibility mapping only. Replacement profiles choose indices explicitly, independent of names.
+            role.palmSubmeshes = role.materials.Select((m, i) => new { Material = m, Index = i })
+                .Where(x => x.Material.name == "MAT_Cabin_BareHands").Select(x => x.Index).ToArray();
+        }
+
+        private static EmbodiedBodyPresenter.Outfit CreateOutfit(AvatarPresentationProfile.OutfitDefinition definition,
+            string variant, Transform parent)
+        {
+            GameObject model = (GameObject)PrefabUtility.InstantiatePrefab(definition.model, parent);
             model.name = "Body " + variant + " - Generic held poses";
-            // Preserve the imported model's local bind/axis transforms. Only the outer visual wrapper follows feet.
+            // Preserve imported bind/axis transforms; only the outer wrapper follows authoritative feet.
             foreach (Transform node in model.GetComponentsInChildren<Transform>(true)) node.gameObject.layer = 2;
             foreach (Animator animator in model.GetComponentsInChildren<Animator>(true))
             {
                 animator.runtimeAnimatorController = null; animator.applyRootMotion = false;
                 animator.enabled = false; PrefabUtility.RecordPrefabInstancePropertyModifications(animator);
             }
-            SkinnedMeshRenderer[] skins = model.GetComponentsInChildren<SkinnedMeshRenderer>(true);
-            foreach (SkinnedMeshRenderer skin in skins)
-            {
-                Material[] mapped = skin.sharedMaterials.Select(m => ResolveMaterial(m ? m.name : string.Empty)).ToArray();
-                skin.sharedMaterials = mapped; skin.enabled = false; skin.updateWhenOffscreen = true;
-                skin.shadowCastingMode = ShadowCastingMode.Off; skin.receiveShadows = true;
-                PrefabUtility.RecordPrefabInstancePropertyModifications(skin);
-            }
-            return new EmbodiedBodyPresenter.Outfit
-            {
-                modelRoot = model.transform,
-                torsoLegs = ExactlyOne(skins, "A7_" + variant + "_TorsoLegs"),
-                leftArm = ExactlyOne(skins, "A7_" + variant + "_Arm_L"),
-                rightArm = ExactlyOne(skins, "A7_" + variant + "_Arm_R"),
-                standing = Clip(StandingPath, "BODY_StandIdle_V02"), floating = Clip(FloatPath, "BODY_FloatNeutral_V04"), seated = Clip(path, PoseNames[2])
-            };
+            var outfit = AvatarPresentationResolver.Resolve(definition, model.transform, variant == "WORK");
+            ConfigureSkin(outfit.torsoLegs, definition.torsoLegs); ConfigureSkin(outfit.leftArm, definition.leftArm);
+            ConfigureSkin(outfit.rightArm, definition.rightArm);
+            return outfit;
+        }
+
+        private static void ConfigureSkin(SkinnedMeshRenderer skin, AvatarPresentationProfile.SkinRole role)
+        {
+            skin.sharedMaterials = (Material[])role.materials.Clone(); skin.enabled = false; skin.updateWhenOffscreen = true;
+            skin.shadowCastingMode = ShadowCastingMode.Off; skin.receiveShadows = true;
+            PrefabUtility.RecordPrefabInstancePropertyModifications(skin);
         }
 
         private static void ConfigureStandingClip()

@@ -295,10 +295,8 @@ namespace OutOfReach.Composition.Editor
             composition.ConfigureEarthTerminal(earthTerminal);
             var body = I06BodyAuthoring.Create(presentationRoot, player.transform, camera);
             composition.ConfigureBody(body);
-            Transform evaOutfit = body.VisualRoot.GetComponentsInChildren<Transform>(true)
-                .Single(t => t.name == "Body EVA - Generic held poses");
-            Transform toolShoulder = evaOutfit.GetComponentsInChildren<Transform>(true)
-                .Single(t => t.name == "upperarm01.R");
+            Transform toolShoulder = body.GetEvaBone("upperarm01.R");
+            if (!toolShoulder) throw new InvalidOperationException("Avatar profile is missing the EVA tool shoulder role.");
             var toolSleeve = Child("EVA tool upper sleeve", hands.MotionMount).gameObject.AddComponent<EvaToolSleevePresenter>();
             toolSleeve.Configure(hands, toolShoulder, Required<Material>(
                 "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/Materials/AH_AstronautHands.mat"));
