@@ -1,0 +1,14 @@
+{
+    "name": "OutOfReach.AuroraCapsulesV02.Runtime",
+    "rootNamespace": "OutOfReach.Visuals.AuroraCapsulesV02",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

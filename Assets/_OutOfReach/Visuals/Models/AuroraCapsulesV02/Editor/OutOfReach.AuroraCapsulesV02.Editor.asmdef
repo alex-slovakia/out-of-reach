@@ -1,7 +1,9 @@
 {
     "name": "OutOfReach.AuroraCapsulesV02.Editor",
     "rootNamespace": "OutOfReach.Visuals.AuroraCapsulesV02.Editor",
-    "references": [],
+    "references": [
+        "OutOfReach.AuroraCapsulesV02.Runtime"
+    ],
     "includePlatforms": [
         "Editor"
     ],

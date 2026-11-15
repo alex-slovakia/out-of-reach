@@ -1,0 +1,20 @@
+hatch frame rotation in scene: (0.0, 160.0, 0.0)
+dresser rule, aisle view, hatch shut: hide=True
+arm renderers: AccessArm (off), LTV2_ArmDetail (off), LTV3_AccessArm
+dresser rule, view outside on the arm, hatch shut: hide=False
+dresser rule, aisle view, hatch open 160: hide=False
+== RIGHT OF DOOR  x -1.25..-0.60, y 0..2.6, z -2.45..-1.6
+  I06 isolated marine prologue/Transport vehicle - root controls launch/Hatch control +Y 0 closed to 160 open/Hatch/Hatch_LOD1 (AC2) | mesh Hatch_LOD1 | verts in box 198 | vehicle-frame bounds (-0.77, 0.01, -2.52)..(0.70, 2.14, -2.22) | mats CT_Hull,CAP_Graphite,CAP_Metal,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell/CapsuleShell_LOD2 (AC2) | mesh CapsuleShell_LOD2 | verts in box 94 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/Hatch control +Y 0 closed to 160 open/Hatch | mesh Hatch_LOD0 | verts in box 292 | vehicle-frame bounds (-0.77, 0.01, -2.53)..(0.70, 2.14, -2.22) | mats CT_Hull,CAP_Graphite,CAP_Metal,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell | mesh CapsuleShell_LOD0 | verts in box 545 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell/CapsuleShell_LOD1 (AC2) | mesh CapsuleShell_LOD1 | verts in box 197 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleInterior | mesh CapsuleInterior | verts in box 367 | vehicle-frame bounds (-2.38, 0.00, -2.30)..(2.38, 2.51, 2.38) | mats TL_Interior,TL_Labels
+== DOOR AREA  x -1.3..1.3, y 0..2.6, z -2.6..-1.6
+  I06 isolated marine prologue/Transport vehicle - root controls launch/Hatch control +Y 0 closed to 160 open/Hatch/Hatch_LOD1 (AC2) | mesh Hatch_LOD1 | verts in box 1020 | vehicle-frame bounds (-0.77, 0.01, -2.52)..(0.70, 2.14, -2.22) | mats CT_Hull,CAP_Graphite,CAP_Metal,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell/CapsuleShell_LOD2 (AC2) | mesh CapsuleShell_LOD2 | verts in box 415 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/Hatch control +Y 0 closed to 160 open/Hatch | mesh Hatch_LOD0 | verts in box 3219 | vehicle-frame bounds (-0.77, 0.01, -2.53)..(0.70, 2.14, -2.22) | mats CT_Hull,CAP_Graphite,CAP_Metal,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell | mesh CapsuleShell_LOD0 | verts in box 1805 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted/LTV3_AccessArm | mesh LTV3_AccessArm | verts in box 12 | vehicle-frame bounds (-1.36, -0.62, -7.36)..(1.38, 2.72, -2.56) | mats LT3_Grating,LT3_Galvanized,LT3_Hazard,LT3_SteelGraphite,LT3_SafetyAmber,LT3_LampWarm,LT3_WhiteRoom,LT3_GlassDark,LT3_LampCyan,LT3_Rubber,LT3_WarningRed,LT3_LampRed
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleShell/CapsuleShell_LOD1 (AC2) | mesh CapsuleShell_LOD1 | verts in box 681 | vehicle-frame bounds (-2.54, -0.55, -2.54)..(2.54, 5.10, 2.54) | mats CT_HeatShield,CAP_Metal,CT_Hull,CAP_Graphite,CAP_Kit
+  I06 isolated marine prologue/Transport vehicle - root controls launch/CapsuleInterior | mesh CapsuleInterior | verts in box 579 | vehicle-frame bounds (-2.38, 0.00, -2.30)..(2.38, 2.51, 2.38) | mats TL_Interior,TL_Labels
