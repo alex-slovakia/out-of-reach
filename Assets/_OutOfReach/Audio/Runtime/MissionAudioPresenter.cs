@@ -5,6 +5,53 @@ using UnityEngine.Audio;
 
 namespace OutOfReach.Presentation.Audio
 {
+    /// <summary>Who owns the music during the opening (menu, loading, departure, arrival).</summary>
+    public enum OpeningMusicState
+    {
+        /// <summary>No opening program; mood tracks behave as before.</summary>
+        Idle,
+        /// <summary>Planning after a mode was chosen: the approved score plays from 0 s, then rests before its launch section.</summary>
+        Loading,
+        /// <summary>The departure cutscene: score and launch radio follow the departure playhead.</summary>
+        Departure,
+        /// <summary>After the departure: the score has ended or is fading and no mood track may return until released.</summary>
+        Held
+    }
+
+    /// <summary>
+    /// The NASA launch radio countdown (`Audio/LaunchRadio`). Times are seconds in the radio clip; the clip starts at
+    /// <see cref="DepartureStartSeconds"/> on the departure playhead. Measured from the waveform, see that README.
+    /// </summary>
+    public static class LaunchRadioCountdown
+    {
+        public const string CueId = "launch-radio-countdown";
+        public const float DepartureStartSeconds = 1.82f;
+        /// <summary>Radio-clip time of the onset of "zero" (departure 10.40 s, vehicle moves at 10.5 s).</summary>
+        public const float ZeroRadioSeconds = 8.58f;
+
+        private static readonly float[] Starts = { .05f, 2.54f, 3.47f, 4.49f, 5.38f, 6.47f, 7.44f, 8.58f, 9.44f, 11.37f, 12.44f, 14.48f, 16.03f };
+        private static readonly float[] Ends = { 2.54f, 3.47f, 4.49f, 5.38f, 6.47f, 7.44f, 8.58f, 9.44f, 11.37f, 12.44f, 13.66f, 15.90f, 17.50f };
+        private static readonly string[] Texts =
+        {
+            "Ignition sequence start.", "Six.", "Five.", "Four.", "Three.", "Two.", "One.", "Zero.",
+            "All engines running.", "Liftoff!", "We have a liftoff.", "Tower cleared.", "We got a roll program."
+        };
+
+        public static int CaptionCount => Texts.Length;
+        public static float CaptionStart(int index) => Starts[index];
+        public static float CaptionEnd(int index) => Ends[index];
+        public static string CaptionText(int index) => Texts[index];
+
+        /// <summary>The caption to show at a radio-clip time, or an empty string between transmissions.</summary>
+        public static string CaptionAt(float radioSeconds)
+        {
+            if (float.IsNaN(radioSeconds) || float.IsInfinity(radioSeconds)) return string.Empty;
+            for (int i = Texts.Length - 1; i >= 0; i--)
+                if (radioSeconds >= Starts[i]) return radioSeconds < Ends[i] ? Texts[i] : string.Empty;
+            return string.Empty;
+        }
+    }
+
     /// <summary>
     /// Owns local playback, crossfades, music ducking and subtitles. It never publishes domain events,
     /// evaluates resource thresholds, chooses an outcome, advances signal time or creates an AudioListener.
@@ -12,6 +59,19 @@ namespace OutOfReach.Presentation.Audio
     [DisallowMultipleComponent]
     public sealed class MissionAudioPresenter : MonoBehaviour
     {
+        /// <summary>Score seconds at departure 0 s: the 49.91 s downbeat that opens the score's launch section.</summary>
+        public const float OpeningDepartureScoreSeconds = 49.90f;
+        /// <summary>A loading score still playing at this position fades out so the launch section stays unused.</summary>
+        public const float OpeningLoadingRestSeconds = 47.40f;
+        public const float OpeningLoadingFadeInSeconds = 2f;
+        public const float OpeningLoadingRestFadeSeconds = 2.5f;
+        public const float OpeningDepartureEntranceSeconds = .12f;
+        public const float OpeningCrossfadeOutSeconds = 1.5f;
+        public const float OpeningEndFadeSeconds = 3.5f;
+        public const float OpeningSkipFadeSeconds = .6f;
+        /// <summary>Score/radio drift from the departure playhead that is corrected (a stalled frame, not normal jitter).</summary>
+        public const float OpeningDriftToleranceSeconds = .30f;
+
         [Header("Explicitly selected clean dialogue and unchanged SFX")]
         [SerializeField] private DialogueCueBinding[] dialogueCues = Array.Empty<DialogueCueBinding>();
         [SerializeField] private SfxCueBinding[] sfxCues = Array.Empty<SfxCueBinding>();
@@ -22,6 +82,12 @@ namespace OutOfReach.Presentation.Audio
         [SerializeField] private AudioClip emergencyMusic;
         [SerializeField] private AudioClip recoveryMusic; // Optional: old three-mood configurations remain valid.
         [Min(0)] [SerializeField] private float defaultCrossfadeSeconds = 1.25f;
+
+        [Header("Opening program: NASA launch radio heard over the approved opening score")]
+        [SerializeField] private AudioClip launchRadio;
+        [Range(-40, 0)] [SerializeField] private float launchRadioDuckDb = -5f;
+        [Range(0, 1)] [SerializeField] private float launchRadioVolume = 1f;
+        [Min(.05f)] [SerializeField] private float moodReturnSeconds = 2.5f;
 
         [Header("Presentation mix")]
         [Range(0, 1)] [SerializeField] private float masterVolume = 1f;
@@ -59,15 +125,50 @@ namespace OutOfReach.Presentation.Audio
         private DialogueSubtitle currentSubtitle;
         private SubtitleSegments subtitleSegments;
 
+        // Opening program. Two score channels let a loading position fade out while the departure enters.
+        private readonly AudioSource[] openingSources = new AudioSource[2];
+        private readonly float[] openingGain = new float[2];
+        private readonly float[] openingFadeFrom = new float[2];
+        private readonly float[] openingFadeTo = new float[2];
+        private readonly float[] openingFadeElapsed = new float[2];
+        private readonly float[] openingFadeDuration = new float[2];
+        private int openingCurrent = -1;
+        private AudioClip openingScore;
+        private float departureDurationSeconds;
+        private float departurePlayhead;
+        private float lastDriftCorrection = -10f;
+        private AudioSource launchRadioSource;
+        private bool radioActive;
+        private bool radioStarted;
+        private bool radioFinished;
+        private float backgroundGate = 1f;
+        private float backgroundGateReturnSeconds = 2.5f;
+
         public event Action<DialogueSubtitle> SubtitleChanged;
 
-        public bool IsDialoguePlaying => dialogueActive;
-        public string ActiveCueId => dialogueActive ? currentSubtitle.CueId : string.Empty;
+        /// <summary>True while a dialogue line or the launch radio is speaking; queued lines wait for both.</summary>
+        public bool IsDialoguePlaying => dialogueActive || radioActive;
+        public string ActiveCueId => dialogueActive ? currentSubtitle.CueId : radioActive ? LaunchRadioCountdown.CueId : string.Empty;
         public bool IsPresentationPaused => presentationPaused;
         /// <summary>The requested presentation mood, including while its crossfade is in progress.</summary>
         public MusicMood CurrentMood { get; private set; } = MusicMood.Silent;
         public DialogueSubtitle CurrentSubtitle => currentSubtitle;
         public string LastRejection { get; private set; } = string.Empty;
+
+        public OpeningMusicState OpeningState { get; private set; } = OpeningMusicState.Idle;
+        /// <summary>While true, mood tracks stay silent: the opening score (or its deliberate silence) owns the music.</summary>
+        public bool OpeningOwnsMusic => OpeningState != OpeningMusicState.Idle;
+        public bool IsLaunchRadioPlaying => radioActive;
+        public AudioClip LaunchRadioClip => launchRadio;
+        public int OpeningDriftCorrections { get; private set; }
+        /// <summary>Score position of the channel that carries the opening timeline, or -1 when none is playing.</summary>
+        public float OpeningScoreSeconds => openingCurrent >= 0 && openingSources[openingCurrent]
+            && openingSources[openingCurrent].clip && (openingSources[openingCurrent].isPlaying || presentationPaused)
+            ? openingSources[openingCurrent].time : -1f;
+        /// <summary>Current output gain of the opening score (0 when silent). For diagnostics and tests.</summary>
+        public float OpeningScoreLevel => openingCurrent >= 0 && openingSources[openingCurrent] ? openingSources[openingCurrent].volume : 0f;
+        /// <summary>Mood tracks' current gate (0 while the opening owns the music, 1 when they may be heard).</summary>
+        public float MoodGate => backgroundGate;
 
         private void OnEnable()
         {
@@ -106,10 +207,21 @@ namespace OutOfReach.Presentation.Audio
                     NotifySubtitle(currentSubtitle);
                 }
             }
+            if (radioActive && (!launchRadioSource || !launchRadioSource.isPlaying))
+            {
+                radioActive = false;
+                radioFinished = true;
+            }
+            UpdateRadioCaption();
             if (departureMusicActive && (!departureMusicSource || !departureMusicSource.isPlaying))
                 departureMusicActive = false;
             float delta = Time.unscaledDeltaTime;
             if (!Finite(delta) || delta < 0) return;
+
+            AdvanceOpening(delta);
+            float gateTarget = departureMusicActive || OpeningOwnsMusic ? 0f : 1f;
+            float gateSeconds = gateTarget < backgroundGate ? .5f : Positive(backgroundGateReturnSeconds, 2.5f);
+            backgroundGate = Mathf.MoveTowards(backgroundGate, gateTarget, delta / gateSeconds);
 
             fadeElapsed = Mathf.Min(fadeElapsed + delta, fadeDuration);
             float blend = fadeDuration <= 0 ? 1f : Mathf.SmoothStep(0, 1, fadeElapsed / fadeDuration);
@@ -124,8 +236,10 @@ namespace OutOfReach.Presentation.Audio
                 }
             }
 
-            float duckTarget = dialogueActive ? Mathf.Pow(10, SafeDuckDb() / 20f) : 1f;
-            float seconds = dialogueActive ? Positive(duckAttackSeconds, .08f) : Positive(duckReleaseSeconds, .65f);
+            float duckTarget = Mathf.Min(dialogueActive ? Mathf.Pow(10, SafeDuckDb() / 20f) : 1f,
+                radioActive ? Mathf.Pow(10, SafeRadioDuckDb() / 20f) : 1f);
+            bool ducking = duckTarget < duckGain;
+            float seconds = ducking ? Positive(duckAttackSeconds, .08f) : Positive(duckReleaseSeconds, .65f);
             duckGain = Mathf.Lerp(duckGain, duckTarget, 1f - Mathf.Exp(-delta / seconds));
             ApplyVolumes();
         }
@@ -261,7 +375,8 @@ namespace OutOfReach.Presentation.Audio
             departureAtmosphericMix=false;
         }
 
-        /// <summary>Plays the selected departure score once, at a PCM offset, independently of mission mood.</summary>
+        /// <summary>Legacy: plays a departure score once, at a PCM offset, independently of mission mood.
+        /// The opening program (<see cref="BeginOpeningDeparture"/>) replaces it for the I01 departure.</summary>
         public bool PlayDepartureMusic(AudioClip clip, float startSeconds = 0f)
         {
             if (!CanPlay() || !PrepareClip(clip)) return false;
@@ -288,6 +403,145 @@ namespace OutOfReach.Presentation.Audio
         {
             if (departureMusicSource) departureMusicSource.Stop();
             departureMusicActive = false;
+            ApplyVolumes();
+        }
+
+        /// <summary>Explicit NASA launch radio clip (the prefab assigns it; composition may override before play).</summary>
+        public void ConfigureLaunchRadio(AudioClip radio)
+        {
+            if (OpeningState == OpeningMusicState.Departure) StopLaunchRadio(true);
+            launchRadio = radio;
+        }
+
+        /// <summary>
+        /// Loading has begun (a mode was chosen in Planning). Starts the approved score from 0 s with a fade-in and
+        /// silences mood tracks. Idempotent for the same score; never interrupts a departure.
+        /// </summary>
+        public bool BeginOpeningLoading(AudioClip score)
+        {
+            if (!CanPlay() || !PrepareClip(score)) return false;
+            if (OpeningState == OpeningMusicState.Loading && openingScore == score) { LastRejection = string.Empty; return true; }
+            if (OpeningState == OpeningMusicState.Departure || OpeningState == OpeningMusicState.Held)
+                return Reject("The opening score belongs to this launch; a restart begins a new opening.");
+            if (score.length <= OpeningDepartureScoreSeconds)
+                return Reject("The opening score must be longer than its departure position.");
+            EnsureSources();
+            StopOpeningSources();
+            StopLaunchRadio(true);
+            openingScore = score;
+            if (!StartOpeningChannel(0, 0f, OpeningLoadingFadeInSeconds)) return false;
+            OpeningState = OpeningMusicState.Loading;
+            ApplyVolumes();
+            LastRejection = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// The departure cutscene began (seat). The score enters at <see cref="OpeningDepartureScoreSeconds"/> on its
+        /// own channel while an audible loading position fades out under it. From now on
+        /// <see cref="TrackOpeningDeparture"/> keeps score and radio on the departure playhead.
+        /// </summary>
+        public bool BeginOpeningDeparture(AudioClip score, float durationSeconds)
+        {
+            if (!CanPlay() || !PrepareClip(score)) return false;
+            if (!Finite(durationSeconds) || durationSeconds <= 0) return Reject("Departure duration must be positive.");
+            if (score.length <= OpeningDepartureScoreSeconds)
+                return Reject("The opening score must be longer than its departure position.");
+            if (OpeningState == OpeningMusicState.Departure && openingScore == score)
+                return Reject("The departure score is already playing.");
+            EnsureSources();
+            StopLaunchRadio(true);
+            // The launch section always enters on its downbeat; any audible loading position fades out under it.
+            for (int i = 0; i < openingSources.Length; i++)
+                if (openingSources[i] && openingSources[i].isPlaying) SetOpeningFade(i, 0f, OpeningCrossfadeOutSeconds);
+            int next = openingCurrent == 0 ? 1 : 0;
+            openingScore = score;
+            if (!StartOpeningChannel(next, OpeningDepartureScoreSeconds, OpeningDepartureEntranceSeconds))
+            {
+                OpeningState = OpeningMusicState.Held;
+                return false;
+            }
+            departureDurationSeconds = durationSeconds;
+            departurePlayhead = 0f;
+            radioStarted = radioFinished = false;
+            OpeningState = OpeningMusicState.Departure;
+            ApplyVolumes();
+            LastRejection = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Call every frame while the departure plays, with its presented playhead. Starts the launch radio at
+        /// <see cref="LaunchRadioCountdown.DepartureStartSeconds"/> and corrects score/radio drift after stalled frames.
+        /// Paused presentation is never advanced or corrected.
+        /// </summary>
+        public void TrackOpeningDeparture(float departureSeconds)
+        {
+            if (OpeningState != OpeningMusicState.Departure || presentationPaused || AudioListener.pause) return;
+            if (!Finite(departureSeconds) || departureSeconds < 0) return;
+            departurePlayhead = departureSeconds;
+            bool mayCorrect = Time.unscaledTime - lastDriftCorrection >= .5f;
+            if (openingCurrent >= 0 && openingScore)
+            {
+                AudioSource score = openingSources[openingCurrent];
+                float expected = OpeningDepartureScoreSeconds + departureSeconds;
+                if (expected < openingScore.length - .05f)
+                {
+                    if (!score.isPlaying)
+                    {
+                        score.clip = openingScore;
+                        score.timeSamples = SampleAt(openingScore, expected);
+                        score.Play();
+                    }
+                    else if (mayCorrect && Mathf.Abs(score.time - expected) > OpeningDriftToleranceSeconds)
+                    {
+                        score.timeSamples = SampleAt(openingScore, expected);
+                        lastDriftCorrection = Time.unscaledTime;
+                        OpeningDriftCorrections++;
+                    }
+                }
+            }
+            TrackLaunchRadio(departureSeconds - LaunchRadioCountdown.DepartureStartSeconds, mayCorrect);
+            ApplyVolumes();
+        }
+
+        /// <summary>The departure ended (completed, skipped or cancelled). The radio stops; the score fades out and the
+        /// opening keeps the music silent until <see cref="ReleaseOpeningMusic"/>.</summary>
+        public void EndOpeningDeparture(float fadeSeconds)
+        {
+            if (OpeningState != OpeningMusicState.Departure && OpeningState != OpeningMusicState.Loading) return;
+            StopLaunchRadio(true);
+            float endFactor = OpeningState == OpeningMusicState.Departure ? DepartureEndFactor() : 1f;
+            for (int i = 0; i < openingSources.Length; i++)
+            {
+                if (!openingSources[i] || !openingSources[i].isPlaying) continue;
+                openingGain[i] *= endFactor;
+                SetOpeningFade(i, 0f, Math.Max(.05f, Nonnegative(fadeSeconds, OpeningSkipFadeSeconds)));
+            }
+            OpeningState = OpeningMusicState.Held;
+            ApplyVolumes();
+        }
+
+        /// <summary>The mission left the opening (e.g. a new phase). Mood tracks may return over the given fade.</summary>
+        public void ReleaseOpeningMusic(float moodFadeInSeconds = -1f)
+        {
+            if (OpeningState == OpeningMusicState.Idle) return;
+            StopLaunchRadio(true);
+            for (int i = 0; i < openingSources.Length; i++)
+                if (openingSources[i] && openingSources[i].isPlaying && openingGain[i] > 0f) SetOpeningFade(i, 0f, .5f);
+            backgroundGateReturnSeconds = moodFadeInSeconds < 0 ? Positive(moodReturnSeconds, 2.5f) : Math.Max(.05f, moodFadeInSeconds);
+            OpeningState = OpeningMusicState.Idle;
+            ApplyVolumes();
+        }
+
+        /// <summary>Stops the opening score and radio immediately (restart). Mood tracks return with a fade.</summary>
+        public void CancelOpening()
+        {
+            StopOpeningSources();
+            StopLaunchRadio(true);
+            if (OpeningState != OpeningMusicState.Idle) backgroundGateReturnSeconds = Positive(moodReturnSeconds, 2.5f);
+            OpeningState = OpeningMusicState.Idle;
+            openingScore = null;
             ApplyVolumes();
         }
 
@@ -338,6 +592,8 @@ namespace OutOfReach.Presentation.Audio
             PauseSource(sfxSource, paused);
             PauseSource(departureCabinSource, paused);
             PauseSource(departureMusicSource, paused);
+            PauseSource(launchRadioSource, paused);
+            foreach (AudioSource source in openingSources) PauseSource(source, paused);
             foreach (AudioSource source in musicSources) PauseSource(source, paused);
         }
 
@@ -348,6 +604,7 @@ namespace OutOfReach.Presentation.Audio
             if (sfxSource) sfxSource.Stop();
             StopDepartureEffects();
             StopDepartureMusic();
+            CancelOpening();
             if (menuSource) menuSource.Stop();
             for (int i = 0; i < musicSources.Length; i++)
             {
@@ -358,6 +615,7 @@ namespace OutOfReach.Presentation.Audio
             CurrentMood = MusicMood.Silent;
             fadeElapsed = fadeDuration = 0;
             duckGain = 1f;
+            backgroundGate = 1f;
             ApplyVolumes();
         }
 
@@ -407,6 +665,131 @@ namespace OutOfReach.Presentation.Audio
             }
             reason = string.Empty;
             return true;
+        }
+
+        private void AdvanceOpening(float delta)
+        {
+            for (int i = 0; i < openingSources.Length; i++)
+            {
+                if (openingFadeDuration[i] > 0f)
+                {
+                    openingFadeElapsed[i] = Mathf.Min(openingFadeElapsed[i] + delta, openingFadeDuration[i]);
+                    float blend = Mathf.SmoothStep(0f, 1f, openingFadeElapsed[i] / openingFadeDuration[i]);
+                    openingGain[i] = Mathf.Lerp(openingFadeFrom[i], openingFadeTo[i], blend);
+                    if (openingFadeElapsed[i] >= openingFadeDuration[i])
+                    {
+                        openingFadeDuration[i] = 0f;
+                        openingGain[i] = openingFadeTo[i];
+                    }
+                }
+                if (openingGain[i] <= 0f && openingFadeDuration[i] <= 0f && openingSources[i] && openingSources[i].isPlaying)
+                {
+                    openingSources[i].Stop();
+                    if (i == openingCurrent && OpeningState != OpeningMusicState.Departure) openingCurrent = -1;
+                }
+            }
+            if (OpeningState != OpeningMusicState.Loading || openingCurrent < 0) return;
+            AudioSource loading = openingSources[openingCurrent];
+            if (loading && loading.isPlaying && loading.time >= OpeningLoadingRestSeconds && openingFadeTo[openingCurrent] > 0f)
+                SetOpeningFade(openingCurrent, 0f, OpeningLoadingRestFadeSeconds); // Rest before the launch section.
+            else if (loading && !loading.isPlaying && !presentationPaused) openingCurrent = -1; // Clip reached its end.
+        }
+
+        private void TrackLaunchRadio(float radioSeconds, bool mayCorrect)
+        {
+            if (!launchRadio || radioFinished || radioSeconds < 0f) return;
+            if (radioSeconds >= launchRadio.length)
+            {
+                StopLaunchRadio(false);
+                radioFinished = true;
+                return;
+            }
+            if (!radioStarted)
+            {
+                if (!PrepareClip(launchRadio)) return;
+                if (!launchRadioSource) launchRadioSource = MakeSource("Launch radio countdown", false, dialogueOutput, 24);
+                launchRadioSource.clip = launchRadio;
+                launchRadioSource.timeSamples = SampleAt(launchRadio, radioSeconds);
+                launchRadioSource.Play();
+                radioStarted = true;
+                radioActive = launchRadioSource.isPlaying;
+                return;
+            }
+            if (radioActive && mayCorrect && Mathf.Abs(launchRadioSource.time - radioSeconds) > OpeningDriftToleranceSeconds)
+            {
+                launchRadioSource.timeSamples = SampleAt(launchRadio, radioSeconds);
+                lastDriftCorrection = Time.unscaledTime;
+                OpeningDriftCorrections++;
+            }
+        }
+
+        private void StopLaunchRadio(bool reset)
+        {
+            if (launchRadioSource) launchRadioSource.Stop();
+            radioActive = false;
+            if (reset) radioStarted = radioFinished = false;
+            if (currentSubtitle.CueId == LaunchRadioCountdown.CueId && currentSubtitle.IsVisible)
+            {
+                currentSubtitle = new DialogueSubtitle(LaunchRadioCountdown.CueId, currentSubtitle.Text, false);
+                NotifySubtitle(currentSubtitle);
+            }
+        }
+
+        // The radio's captions use the subtitle line only while no dialogue line owns it.
+        private void UpdateRadioCaption()
+        {
+            if (dialogueActive) return;
+            string text = radioActive && launchRadioSource ? LaunchRadioCountdown.CaptionAt(launchRadioSource.time) : string.Empty;
+            bool visible = text.Length > 0;
+            bool radioOwnsLine = currentSubtitle.CueId == LaunchRadioCountdown.CueId;
+            if (!radioOwnsLine && !visible) return;
+            if (radioOwnsLine && currentSubtitle.IsVisible == visible && (!visible || currentSubtitle.Text == text)) return;
+            currentSubtitle = new DialogueSubtitle(LaunchRadioCountdown.CueId, visible ? text : currentSubtitle.Text, visible);
+            NotifySubtitle(currentSubtitle);
+        }
+
+        private bool StartOpeningChannel(int index, float seconds, float fadeInSeconds)
+        {
+            if (!openingSources[index]) openingSources[index] = MakeSource("Opening score " + (index == 0 ? "A" : "B"), false, musicOutput, 90);
+            AudioSource source = openingSources[index];
+            source.Stop();
+            source.clip = openingScore;
+            source.timeSamples = SampleAt(openingScore, seconds);
+            openingGain[index] = 0f;
+            SetOpeningFade(index, 1f, fadeInSeconds);
+            source.volume = 0f;
+            source.Play();
+            if (!source.isPlaying) { openingCurrent = -1; return Reject("Opening score playback did not start."); }
+            openingCurrent = index;
+            return true;
+        }
+
+        private void SetOpeningFade(int index, float target, float seconds)
+        {
+            openingFadeFrom[index] = openingGain[index];
+            openingFadeTo[index] = target;
+            openingFadeElapsed[index] = 0f;
+            openingFadeDuration[index] = Math.Max(0f, seconds);
+            if (openingFadeDuration[index] <= 0f) openingGain[index] = target;
+        }
+
+        private void StopOpeningSources()
+        {
+            for (int i = 0; i < openingSources.Length; i++)
+            {
+                if (openingSources[i]) openingSources[i].Stop();
+                openingGain[i] = openingFadeFrom[i] = openingFadeTo[i] = 0f;
+                openingFadeElapsed[i] = openingFadeDuration[i] = 0f;
+            }
+            openingCurrent = -1;
+            departurePlayhead = 0f;
+        }
+
+        private float DepartureEndFactor()
+        {
+            if (departureDurationSeconds <= 0f) return 1f;
+            float remaining = departureDurationSeconds - departurePlayhead;
+            return Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(remaining / OpeningEndFadeSeconds));
         }
 
         private bool CanPlay()
@@ -504,16 +887,24 @@ namespace OutOfReach.Presentation.Audio
             float master = Safe01(masterVolume);
             if (dialogueSource) dialogueSource.volume = master * Safe01(dialogueVolume);
             if (sfxSource) sfxSource.volume = master * Safe01(sfxVolume);
+            if (launchRadioSource) launchRadioSource.volume = master * Safe01(dialogueVolume) * Safe01(launchRadioVolume);
             // Atmospheric roar/shock keep body beneath dialogue, capped at -4 dB duck floor.
             // Cabin effects and the user-approved full departure score retain their existing ducking.
             if (departureCabinSource) departureCabinSource.volume = master * Safe01(sfxVolume)
                 * (departureAtmosphericMix ? Mathf.Max(duckGain,.631f) : duckGain);
             float scoreLevel = master * Safe01(musicVolume) * duckGain;
             if (departureMusicSource) departureMusicSource.volume = scoreLevel * Safe01(departureMusicTrim);
-            float backgroundScoreLevel = departureMusicActive ? 0f : scoreLevel * Safe01(backgroundScoreTrim);
+            float endFactor = OpeningState == OpeningMusicState.Departure ? DepartureEndFactor() : 1f;
+            for (int i = 0; i < openingSources.Length; i++)
+                if (openingSources[i]) openingSources[i].volume = scoreLevel * Safe01(departureMusicTrim) * Mathf.Clamp01(openingGain[i])
+                    * (i == openingCurrent ? endFactor : 1f);
+            float backgroundScoreLevel = scoreLevel * Safe01(backgroundScoreTrim) * Mathf.Clamp01(backgroundGate);
             for (int i = 0; i < musicSources.Length; i++)
                 if (musicSources[i]) musicSources[i].volume = backgroundScoreLevel * musicWeights[i];
         }
+
+        private static int SampleAt(AudioClip clip, float seconds) =>
+            Math.Max(0, Math.Min(clip.samples - 1, (int)((double)seconds * clip.frequency)));
 
         private static void PauseSource(AudioSource source, bool paused)
         {
@@ -524,6 +915,7 @@ namespace OutOfReach.Presentation.Audio
 
         private bool Reject(string reason) { LastRejection = reason; return false; }
         private float SafeDuckDb() => Finite(dialogueMusicDuckDb) ? Mathf.Clamp(dialogueMusicDuckDb, -40, 0) : -8;
+        private float SafeRadioDuckDb() => Finite(launchRadioDuckDb) ? Mathf.Clamp(launchRadioDuckDb, -40, 0) : -5;
         private static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
         private static float Safe01(float value) => Finite(value) ? Mathf.Clamp01(value) : 0;
         private static float Positive(float value, float fallback) => Finite(value) && value > 0 ? value : fallback;

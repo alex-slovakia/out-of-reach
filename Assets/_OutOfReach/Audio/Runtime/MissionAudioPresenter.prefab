@@ -105,6 +105,10 @@ MonoBehaviour:
   emergencyMusic: {fileID: 8300000, guid: b0a36cc7d366482fba52397a1822171b, type: 3}
   recoveryMusic: {fileID: 8300000, guid: 3d2e2d22c1fe7ecba2ab76ee24e8839f, type: 3}
   defaultCrossfadeSeconds: 1.25
+  launchRadio: {fileID: 8300000, guid: 31aa38c1f8ac43de8ea1b5fe71441dd7, type: 3}
+  launchRadioDuckDb: -5
+  launchRadioVolume: 1
+  moodReturnSeconds: 2.5
   masterVolume: 1
   dialogueVolume: 1
   musicVolume: 0.8

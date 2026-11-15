@@ -1,0 +1,166 @@
+{
+  "asset": "Assets/_OutOfReach/Audio/LaunchRadio/launch-radio-countdown.wav",
+  "source": {
+    "url": "https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3",
+    "bytes": 400398,
+    "sha256": "9f14d326e95356e096b181c807136dd460f5a30afae02d55135e84d5e3c0a6f0",
+    "decoded_seconds": 24.8163,
+    "transcript": "https://www.nasa.gov/wp-content/uploads/2015/03/apollo-11_day-01-highlights.pdf",
+    "credit": "NASA",
+    "rights": "NASA audio; not protected by copyright in the United States (NASA media usage guidelines). Credit NASA. No NASA endorsement is implied."
+  },
+  "starts_at_departure_seconds": 1.82,
+  "duration_seconds": 17.66,
+  "alignment": {
+    "zero_onset_source": 8.66,
+    "zero_departure_seconds": 10.4,
+    "ignition_departure_seconds": 9.0,
+    "liftoff_departure_seconds": 10.5,
+    "climb_cut_departure_seconds": 13.25,
+    "orbit_departure_seconds": 22.0,
+    "tower_onset_source": 21.42,
+    "tower_departure_seconds": 16.3
+  },
+  "segments": [
+    {
+      "segment": "A ignition-sequence-start .. we-have-a-liftoff",
+      "source_seconds": [
+        0.08,
+        13.8
+      ],
+      "radio_clip_seconds": [
+        0.0,
+        13.72
+      ],
+      "departure_seconds": [
+        1.82,
+        15.54
+      ]
+    },
+    {
+      "segment": "B tower-cleared .. we-got-a-roll-program",
+      "source_seconds": [
+        21.36,
+        24.6
+      ],
+      "radio_clip_seconds": [
+        14.42,
+        17.66
+      ],
+      "departure_seconds": [
+        16.24,
+        19.48
+      ]
+    }
+  ],
+  "omitted": [
+    {
+      "source_seconds": [
+        0.0,
+        0.08
+      ],
+      "content": "silence before the first word"
+    },
+    {
+      "source_seconds": [
+        13.8,
+        21.36
+      ],
+      "content": "'32 minutes past the hour. Liftoff on Apollo 11.' and crowd noise (names Apollo 11)"
+    },
+    {
+      "source_seconds": [
+        24.6,
+        24.76
+      ],
+      "content": "fade-out tail"
+    }
+  ],
+  "words": [
+    {
+      "text": "Ignition sequence start.",
+      "source_onset": 0.13,
+      "departure_seconds": 1.87,
+      "radio_clip_seconds": 0.05
+    },
+    {
+      "text": "Six.",
+      "source_onset": 2.62,
+      "departure_seconds": 4.36,
+      "radio_clip_seconds": 2.54
+    },
+    {
+      "text": "Five.",
+      "source_onset": 3.55,
+      "departure_seconds": 5.29,
+      "radio_clip_seconds": 3.47
+    },
+    {
+      "text": "Four.",
+      "source_onset": 4.57,
+      "departure_seconds": 6.31,
+      "radio_clip_seconds": 4.49
+    },
+    {
+      "text": "Three.",
+      "source_onset": 5.46,
+      "departure_seconds": 7.2,
+      "radio_clip_seconds": 5.38
+    },
+    {
+      "text": "Two.",
+      "source_onset": 6.55,
+      "departure_seconds": 8.29,
+      "radio_clip_seconds": 6.47
+    },
+    {
+      "text": "One.",
+      "source_onset": 7.52,
+      "departure_seconds": 9.26,
+      "radio_clip_seconds": 7.44
+    },
+    {
+      "text": "Zero.",
+      "source_onset": 8.66,
+      "departure_seconds": 10.4,
+      "radio_clip_seconds": 8.58
+    },
+    {
+      "text": "All engines running.",
+      "source_onset": 9.52,
+      "departure_seconds": 11.26,
+      "radio_clip_seconds": 9.44
+    },
+    {
+      "text": "Liftoff!",
+      "source_onset": 11.45,
+      "departure_seconds": 13.19,
+      "radio_clip_seconds": 11.37
+    },
+    {
+      "text": "We have a liftoff.",
+      "source_onset": 12.52,
+      "departure_seconds": 14.26,
+      "radio_clip_seconds": 12.44
+    },
+    {
+      "text": "Tower cleared.",
+      "source_onset": 21.42,
+      "departure_seconds": 16.3,
+      "radio_clip_seconds": 14.48
+    },
+    {
+      "text": "We got a roll program.",
+      "source_onset": 22.97,
+      "departure_seconds": 17.85,
+      "radio_clip_seconds": 16.03
+    }
+  ],
+  "not_in_source": "The official file starts at 'Ignition sequence start'. Spoken 12, 11, 10, 9, 8 and 7 are not in it.",
+  "processing": "highpass=f=280:poles=2,highpass=f=280:poles=2,lowpass=f=3500:poles=2,lowpass=f=3500:poles=2,equalizer=f=2079.5:t=q:w=18:g=-24,equalizer=f=1800:t=q:w=1.2:g=2.5,acompressor=threshold=0.08:ratio=3:attack=6:release=140:makeup=1.6:knee=4",
+  "integrated_lufs": -18.0,
+  "peak_dbfs": -5.7,
+  "sample_rate": 48000,
+  "channels": 1,
+  "sha256": "178e801cdaef02070516d12b0462b1575240d2009f5169367828ac7a7802c253"
+}
