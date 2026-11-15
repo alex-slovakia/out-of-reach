@@ -24,7 +24,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
     [DefaultExecutionOrder(650), DisallowMultipleComponent]
     public sealed class LaunchVfxMaxPresenter : MonoBehaviour
     {
-        public const string Version = "LAUNCH-VFX-MAX-V02";
+        public const string Version = "LAUNCH-VFX-MAX-V04";
         private const float StepSeconds = 1f / 30f;
         private const float MaximumCatchUpSeconds = 3f;
         private const float PlumeFadeSeconds = 21.1f;
@@ -43,10 +43,11 @@ namespace OutOfReach.Presentation.LaunchVfxMax
         [SerializeField, Range(0f, 1500f)] private float flashIntensity = 700f;
         [SerializeField, Range(0f, 400f)] private float plumeLightIntensity = 120f;
         [SerializeField, Range(0f, 400f)] private float cloudGlowIntensity = 100f;
-        [SerializeField] private bool sparks = true, heatShimmer = true, trenchJet = true, groundShockwave = true, publishThrusterGust = false;
+        // Sparks and heat shimmer have not been through a render yet, so they ship off; switch them on to try them.
+        [SerializeField] private bool sparks = false, heatShimmer = false, trenchJet = false, groundShockwave = true, publishThrusterGust = false;
         [SerializeField] private Color smokeTint = new Color(.70f, .67f, .62f, .9f);
-        [SerializeField] private Color billowTint = new Color(.82f, .78f, .72f, .92f);
-        [SerializeField] private Color dustTint = new Color(.58f, .51f, .41f, .85f);
+        [SerializeField] private Color billowTint = new Color(.84f, .80f, .74f, .78f);
+        [SerializeField] private Color dustTint = new Color(.62f, .55f, .45f, .55f);
         [SerializeField] private Color steamTint = new Color(.95f, .95f, .93f, .85f);
         [SerializeField] private Color lightColour = new Color(1f, .58f, .26f);
 
@@ -157,7 +158,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
         private static float Flash(float seconds)
         {
             float age = seconds - TransportDepartureTimeline.IgnitionSeconds;
-            return age < 0f ? 0f : Smooth(age / .04f) * Mathf.Exp(-age * 5f);
+            return age < 0f ? 0f : Smooth(age / .04f) * Mathf.Exp(-age * 2.4f);
         }
 
         /// <summary>A short pulse after ignition that drives the deluge burst and the dust front.</summary>
@@ -184,6 +185,9 @@ namespace OutOfReach.Presentation.LaunchVfxMax
             float contact = GroundContact(seconds);
             float climb = Climb(seconds);
             float budget = reduced ? .25f : 1f;
+            var now = TransportDepartureTimeline.Evaluate(seconds, false);
+            float altitude = now.AtmosphereBlend;
+            float climbSpeed = Mathf.Max(0f, (TransportDepartureTimeline.Evaluate(seconds + .05f, false).HeightMetres - now.HeightMetres) / .05f);
             Vector3 down = nozzle.forward;
             Vector3 exit = nozzle.position + down * 1.2f;
             Vector3 columnSource = nozzle.position + down * Mathf.Lerp(6f, 18f, climb);
@@ -200,10 +204,17 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                     {
                         Aim(layer.Emitter, exit, down);
                         bool flame = layer.Kind == Kind.Flame;
-                        float grow = Mathf.Lerp(.55f, 1f, climb) * fireScale;
+                        float grow = Mathf.Lerp(.85f, 1.2f, climb) * fireScale * (1f + 1.2f * altitude);
                         var main = system.main;
-                        main.startSpeed = flame ? Range(14f * grow, 30f * grow) : Range(18f * grow, 34f * grow);
-                        main.startSize = flame ? Range(2.6f * grow, 5.8f * grow) : Range(.14f, .34f);
+                        float fast = flame ? 32f * grow : 34f * grow, slow = flame ? 16f * grow : 18f * grow;
+                        float reach = ClipDistance(exit, down);
+                        if (reach < float.PositiveInfinity)
+                        {
+                            float cap = Mathf.Max(2f, reach / (flame ? .9f : 1.2f));
+                            fast = Mathf.Min(fast, cap); slow = Mathf.Min(slow, cap * .6f);
+                        }
+                        main.startSpeed = Range(slow, fast);
+                        main.startSize = flame ? Range(3.4f * grow, 7f * grow) : Range(.14f, .34f);
                         rate = layer.BaseRate * thrust * (1f + 2.5f * flash);
                         break;
                     }
@@ -217,7 +228,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                         var main = system.main;
                         main.startSize = Range(9f * smokeScale, 18f * smokeScale);
                         bool climbing = seconds >= TransportDepartureTimeline.LiftoffSeconds - .3f;
-                        rate = climbing ? layer.BaseRate * thrust * Mathf.Lerp(.7f, 1f, climb) : 0f;
+                        rate = climbing ? Mathf.Min(layer.BaseRate * thrust * Mathf.Lerp(.7f, 1f, climb) * (1f + climbSpeed / 25f), 90f) : 0f;
                         break;
                     }
                     case Kind.Billow:
@@ -229,7 +240,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                         rate = layer.BaseRate * (Pulse(seconds, DelugeStart, 2.2f) + .25f * contact * thrust);
                         break;
                     case Kind.Shock:
-                        rate = groundShockwave && !reduced ? layer.BaseRate * dustScale * Pulse(seconds, TransportDepartureTimeline.IgnitionSeconds + .05f, .9f) : 0f;
+                        rate = groundShockwave && !reduced ? layer.BaseRate * dustScale * Pulse(seconds, TransportDepartureTimeline.IgnitionSeconds + .4f, 1.1f) : 0f;
                         break;
                     case Kind.Dust:
                     case Kind.Debris:
@@ -303,7 +314,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
 
             // Jet: turbulent fire and embers follow the nozzle (positions re-aimed every step).
             AddInstance(flamePrefab, "FlameStream", Kind.Flame, nozzle.position, nozzle.forward, ++seed,
-                life: Range(.45f, .8f), cone: 6f, radius: 1.0f, rate: 95f, capacity: 260, gravity: -.05f, tint: null);
+                life: Range(.5f, .9f), cone: 6f, radius: 1.2f, rate: 150f, capacity: 340, gravity: -.05f, tint: null);
             AddInstance(flamePrefab, "FireEmbers", Kind.Embers, nozzle.position, nozzle.forward, ++seed,
                 life: Range(.6f, 1.2f), cone: 14f, radius: 1.0f, rate: 120f, capacity: 260, gravity: .3f, tint: null);
             // Embers and sparks raining off the bells.
@@ -317,14 +328,19 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 life: Range(12f, 16f), cone: 40f, radius: 2.6f, rate: 20f, capacity: 300, gravity: -.01f, tint: smokeTint,
                 speed: Range(1.5f, 4.5f), drift: new Vector3(1.2f, .25f, .35f), limit: 6f, dampen: .03f);
 
-            // Exhaust billows rolling out of the trench: both ways along the ground and down the trench.
+            // Exhaust billows rolling out of the trench: both ways along the ground and down the trench. Each
+            // direction is a low horizontal fan of narrow cones, so the cloud hugs the ground instead of ballooning.
             Vector3[] billowDirections = { side, -side, flow };
             foreach (var d in billowDirections)
             {
-                Vector3 aim = (d + Vector3.up * .07f).normalized;
-                AddInstance(billowPrefab, "SmokeEffect", Kind.Billow, footprint + d * 4f + Vector3.up * 1.2f, aim, ++seed,
-                    life: Range(8f, 15f), cone: 24f, radius: 3.2f, rate: 11f, capacity: 170, gravity: -.025f, tint: billowTint,
-                    speed: Range(12f, 22f), size: Range(10f, 22f), limit: 2.2f, dampen: .03f, drift: new Vector3(.4f, .1f, 0f));
+                Vector3 across = Vector3.Cross(Vector3.up, d);
+                for (int fan = -1; fan <= 1; fan += 2)
+                {
+                    Vector3 aim = (d + across * (fan * .45f) + Vector3.up * .03f).normalized;
+                    AddInstance(billowPrefab, "SmokeEffect", Kind.Billow, footprint + d * 5f + Vector3.up * 2.5f, aim, ++seed,
+                        life: Range(8f, 15f), cone: 16f, radius: 3f, rate: 7f, capacity: 110, gravity: -.012f, tint: billowTint,
+                        speed: Range(8f, 15f), size: Range(18f, 34f), limit: 1.6f, dampen: .03f, drift: new Vector3(.3f, .08f, 0f));
+                }
             }
 
             // Deluge: white steam flashing up off the pad at ignition.
@@ -333,16 +349,17 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 Vector3 aim = (Vector3.up * .8f + side * (sign * .6f)).normalized;
                 AddInstance(delugePrefab, "Steam", Kind.Deluge, footprint + side * (sign * 3f) + Vector3.up * .8f, aim, ++seed,
                     life: Range(4f, 7f), cone: 38f, radius: 3f, rate: 34f, capacity: 110, gravity: -.06f, tint: steamTint,
-                    speed: Range(6f, 14f), size: Range(6f, 12f), limit: 3f, dampen: .05f);
+                    speed: Range(6f, 14f), size: Range(9f, 16f), limit: 3f, dampen: .05f);
             }
 
-            // Dust front racing out across the pad and grass, decelerating hard (irregular arcs, not a crisp ring).
+            // Dust front racing out across the pad and grass, decelerating hard within ~20 m (irregular arcs, not a
+            // crisp ring). It uses the lit smoke sprite: the pack's DustStorm sprite reads as flat discs up close.
             Vector3[] shockDirections = { side, -side, flow, -flow };
             foreach (var d in shockDirections)
             {
-                AddInstance(dustPrefab, "DustStorm", Kind.Shock, footprint + d * 3f + Vector3.up * .4f, (d + Vector3.up * .04f).normalized, ++seed,
-                    life: Range(2.5f, 4.5f), cone: 48f, radius: 2.5f, rate: 70f, capacity: 70, gravity: -.01f, tint: dustTint,
-                    speed: Range(30f, 48f), size: Range(4f, 8f), limit: 3f, dampen: .05f);
+                AddInstance(billowPrefab, "SmokeEffect", Kind.Shock, footprint + d * 3f + Vector3.up * 1.2f, (d + Vector3.up * .02f).normalized, ++seed,
+                    life: Range(2f, 3.2f), cone: 38f, radius: 2.5f, rate: 60f, capacity: 60, gravity: 0f, tint: dustTint,
+                    speed: Range(22f, 34f), size: Range(8f, 14f), limit: 2f, dampen: .07f);
             }
 
             // Flank sand and rock debris kicked up while the jet reaches the deflector.
@@ -351,15 +368,9 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 Vector3 dir = (side * sign + flow * .25f).normalized;
                 Vector3 aim = (dir + Vector3.up * .16f).normalized;
                 Vector3 at = footprint + dir * 5f + Vector3.up * .6f;
-                AddInstance(dustPrefab, "DustStorm", Kind.Dust, at, aim, ++seed,
-                    life: Range(3f, 5f), cone: 28f, radius: 2.6f, rate: 18f, capacity: 90, gravity: -.02f, tint: dustTint,
-                    speed: Range(9f, 17f), size: Range(5f, 9f), limit: 4f, dampen: .05f);
                 AddInstance(dustPrefab, "RockDebris", Kind.Debris, at, (dir + Vector3.up * .5f).normalized, ++seed,
-                    life: Range(1.2f, 2f), cone: 30f, radius: 2f, rate: 10f, capacity: 40, gravity: 1f, tint: null,
-                    speed: Range(10f, 18f), size: Range(.25f, .7f));
-                AddInstance(dustPrefab, "SandParticles", Kind.Sand, at, aim, ++seed,
-                    life: Range(.8f, 1.4f), cone: 24f, radius: 2.4f, rate: 110f, capacity: 160, gravity: .4f, tint: dustTint,
-                    speed: Range(14f, 22f), size: Range(.1f, .24f));
+                    life: Range(1f, 1.6f), cone: 30f, radius: 2f, rate: 10f, capacity: 40, gravity: 1.5f, tint: null,
+                    speed: Range(8f, 14f), size: Range(.25f, .7f));
             }
 
             // Sparks off the deflector impingement point, thrown up and out.
@@ -471,6 +482,8 @@ namespace OutOfReach.Presentation.LaunchVfxMax
             main.gravityModifier = gravity;
             main.maxParticles = capacity;
             if (tint.HasValue) main.startColor = tint.Value;
+            // The climbing column recycles its oldest puffs so the trail never stalls at full capacity.
+            if (kind == Kind.Smoke) main.ringBufferMode = ParticleSystemRingBufferMode.PauseUntilReplaced;
 
             var emission = chosen.emission;
             emission.enabled = false;
@@ -525,8 +538,10 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 bool big = kind == Kind.Smoke || kind == Kind.Billow || kind == Kind.Deluge || kind == Kind.Shock
                     || kind == Kind.Dust || kind == Kind.Steam;
                 renderer.maxParticleSize = big ? 2f : 1f;
+                // Velocity-stretched pack sprites read as flat ellipses at this scale; clouds are plain billboards.
+                if (big) renderer.renderMode = ParticleSystemRenderMode.Billboard;
                 // Sparks, embers and grit stay at least a couple of pixels wide from the distant launch cameras.
-                if (kind == Kind.Embers || kind == Kind.Rain || kind == Kind.Sparks || kind == Kind.Sand || kind == Kind.Debris)
+                if (kind == Kind.Embers || kind == Kind.Rain || kind == Kind.Sparks)
                     renderer.minParticleSize = .002f;
                 renderer.shadowCastingMode = ShadowCastingMode.Off; renderer.receiveShadows = false;
                 renderer.sortMode = ParticleSystemSortMode.Distance;
@@ -572,6 +587,16 @@ namespace OutOfReach.Presentation.LaunchVfxMax
         }
 
         // ---------- helpers ----------
+
+        /// <summary>Free jet length from the nozzle exit to the solid deflector plane; infinite without one.</summary>
+        private float ClipDistance(Vector3 origin, Vector3 direction)
+        {
+            if (!deflector) return float.PositiveInfinity;
+            float dot = Vector3.Dot(direction, deflector.up);
+            if (dot >= -.1f) return float.PositiveInfinity;
+            float distance = Vector3.Dot(deflector.position - origin, deflector.up) / dot;
+            return Finite(distance) && distance > 0f ? distance : .5f;
+        }
 
         private static void Aim(Transform emitter, Vector3 position, Vector3 direction)
         {

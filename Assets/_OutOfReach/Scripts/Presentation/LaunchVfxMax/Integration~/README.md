@@ -1,77 +1,72 @@
-# LAUNCH-VFX-MAX-V01: Particle Pack launch sequence
+# LAUNCH-VFX-MAX-V04: Particle Pack launch sequence
 
-Branch `feature/claude-max-launch-vfx`, cut from `origin/codex/nasa-2330-staging`.
+Branch `feature/claude-max-launch-vfx`, based on `feature/claude-max-final@5479e87`.
 
 This is presentation only. It reads `TransportDeparturePresenter.PresentedSeconds`, `IsPlaying`, `IsSuspended` and `ReducedMotion`, plus the authored anchors on `I06MarineBindings`. It writes nothing back: no clock, flight, camera, audio or gameplay authority.
 
-## What it adds and what it leaves alone
+## What it adds
 
-| Beat (departure s) | Layer | Pack source |
+All layers are sampled from the departure playhead (ignition at 9.0 s, exterior pad shot from 9.75 s, liftoff at 10.5 s).
+
+| Departure s | Layer | Pack source |
 |---|---|---|
-| 9.00 ignition | Amber flash light (about 0.5 s decay) plus a fire burst | none (light) / `FlameStream` |
-| 9.0–21.8 | Turbulent fire and embers in the jet. Size and speed grow with thrust and climb. | `FlameStream` › FlameStream, FireEmbers |
-| 9.0–about 14 (until about 26 m of climb) | Dust clouds, sand and rock debris thrown sideways along the **two deflector flanks** (no radial ring; the user cancelled shockwaves) | `DustStorm` › DustStorm, SandParticles, RockDebris |
-| 9.0–about 14 | Sparks thrown up and out from the deflector impingement point | `SparksEffect` |
-| 9.1–about 14 | Heat shimmer rising off the pad. Only if the active URP asset has the opaque texture on (PC_RPAsset yes, Mobile_RPAsset no). | `HeatDistortion` |
-| 9.35–about 14 | Pressurised steam venting from the real `launchTrenchExit` along the flow | `PressurisedSteam` |
-| 10.2–21.8 | **Lingering smoke column.** World-space smoke shed by the climbing nozzle that stays where it was born, 9–13 s life. | `RocketTrail` › Smoke |
-| 9.0–21.8 | Point light following the plume, with Perlin flicker | none |
+| 8.55–10.75, then a trickle | White deluge steam bursting up off the pad | `Steam` |
+| 9.0 onward | Ignition flash (decays over about a second) and a flickering light that follows the plume | none (lights) |
+| 9.0 until about 26 m of climb | Warm light under the clouds at the pad | none (light) |
+| 9.0–21.8 | Jet fire and embers. They grow with thrust, widen with altitude and stop at the deflector plane while the vehicle is on the pad. | `FlameStream` › FlameStream, FireEmbers |
+| 9.0–21.8, thinning to a trickle above about 26 m of climb | Exhaust billows rolling out both ways along the ground and down the trench: low fans, 8–15 s life, decelerating | `SmokeEffect` |
+| 9.4–10.5 | Dust front racing out about 20 m across the pad, then stalling | `SmokeEffect` |
+| 9.0 until about 26 m of climb | Rock debris off the two deflector flanks | `DustStorm` › RockDebris |
+| 10.2–21.8 | Smoke column shed by the climbing nozzle; it stays in the world and drifts | `SmokeEffect` |
 
-These are **kept or not duplicated**:
+Off by default (toggles on the component):
 
-- **LaunchFxV03:** the plume mesh, the trench steam billows and the pad bounce light stay as they are. Their envelopes (fade at 21.1 s, ground contact fading by about 26 m) are matched exactly.
-- **Camera shake:** already in `TransportDeparturePresenter.AddCameraVibration`, and zero with reduced motion. No new hook is needed.
-- **Grass flattening:** `LaunchGrassGustPresenter` (grass V04, `feature/claude-max-grass`) already writes `_OOR_GrassGust` from the same playhead. That lane stays the only writer.
-- **Alex's uncommitted `ParticleLaunchPreview`** (`FlameStream` ×3, `SmokeEffect` ×3, `GroundFog`) is **superseded**. It doubled V03's trench steam. The installer deactivates it by type name and does not delete it.
+- `sparks`: the pack's `SparksEffect` prefab loads without a material in this project, so the installer skips it and the toggle has nothing to show.
+- `heatShimmer`: rendered once in the comparison pass with no visible difference; needs the URP opaque texture.
+- `trenchJet`: rendered only in the first two passes, never judged on its own.
+- `publishThrusterGust`: writes the `_ThrusterGust` global (pad xyz, strength). No shader on this base reads it; grass V04 writes its own `_OOR_GrassGust`.
+- `groundShockwave` is on. An earlier user decision recorded in LaunchFxV03 cancelled radial bursts, and this request asked for the dust front again, so it is one switch.
 
-**Reduced effects** (`departure.ReducedMotion`): emission and capacity run at 25%. There is no flash spike, no flicker, no sparks, no debris and no heat shimmer, and the plume light runs at half intensity.
+## What it leaves alone
 
-**Determinism:** fixed seeds and fixed 1/30 s sub-steps driven only by the playhead. Pausing holds every particle. Rewinding or a skip clears the particles and replays up to 3 s.
+- **LaunchFxV03** stays: plume mesh, trench steam and pad light. The flat wide puff heading for the trench outlet in the frames is V03's own steam, not a layer from this folder.
+- **Camera shake** is already in `TransportDeparturePresenter` and is zero with reduced motion.
+- **Alex's uncommitted `ParticleLaunchPreview`** is deactivated by the installer (matched by type name), not deleted.
 
-**Budget:** about 2,000 particles at the full-effects peak (the sum of the capacities). `LiveParticleCount` exposes the live figure.
+**Reduced effects** (`ReducedMotion`): emission and capacity at 25%, no flash, no flicker, no dust front, no debris, lights at 45%. Rendered: 115–151 live particles.
 
-## Install (coordinator, in Alex's project, which has the Particle Pack)
+**Safety:** every pack reference is null-checked. On any exception the presenter logs one warning and switches itself off; the launch continues. Fixed seeds and fixed 1/30 s steps; pausing holds every particle; a rewind or skip clears and replays up to 3 s.
 
-1. Merge or cherry-pick this branch. The pack must exist at `Assets/UnityTechnologies/ParticlePack/` (untracked Asset Store content; never committed).
-2. Open `Assets/_OutOfReach/Scenes/Bootstrap.unity` and wait for the compile.
-3. Run the menu item **Out of Reach › Launch › Install Launch VFX MAX (Particle Pack)**.
-   - Expect the console line `LAUNCH_VFX_MAX_INSTALLED LAUNCH-VFX-MAX-V01 … Retired ParticleLaunchPreview owners: N`.
-   - The installer saves the scene. It adds one root object, `Launch VFX MAX — Particle Pack (sampled, no authority)`, and deactivates the preview object if one exists.
-4. Undo the change with **Out of Reach › Launch › Remove Launch VFX MAX**, or delete that one object.
+**Cost:** 590–725 live particles at full effects in the rendered replay (table in `Evidence~/V04-evidence.txt`). Frame time was not measured.
 
-Safety:
+## Install (in Alex's project, which has the Particle Pack)
 
-- Every pack reference is null-checked. If the pack is missing, the presenter quietly renders nothing. The required prefabs are FlameStream, RocketTrail and DustStorm; Sparks, Heat and Steam are optional.
-- The assembly `OutOfReach.LaunchVfxMax` depends only on `OutOfReach.Cinematics`.
+1. Merge the branch. The pack must exist at `Assets/UnityTechnologies/ParticlePack/` (untracked Asset Store content, never committed).
+2. Open `Assets/_OutOfReach/Scenes/Bootstrap.unity`.
+3. Run **Out of Reach › Launch › Install Launch VFX MAX (Particle Pack)**. It adds one root object, `Launch VFX MAX — Particle Pack (sampled, no authority)`, and saves the scene. Expect `LAUNCH_VFX_MAX_INSTALLED LAUNCH-VFX-MAX-V04 …` in the console.
+4. To undo: **Out of Reach › Launch › Remove Launch VFX MAX**.
 
-## Tuning live (Play mode, on the component)
+Without step 3 nothing changes in the game.
 
-- Scale fire, smoke and dust with `fireScale`, `smokeScale` and `dustScale` (0–2).
-- Set the light with `flashIntensity` and `plumeLightIntensity`.
-- Toggle layers with `sparks`, `heatShimmer` and `trenchJet`.
-- Set the palette with `smokeTint`, `dustTint`, `steamTint` and `lightColour` (graphite and amber by default).
+## Tuning (on the component, also live in Play mode)
 
-## Render to run (not run here: no Editor slot was available)
+`fireScale`, `smokeScale`, `billowScale`, `dustScale` (0–2); `flashIntensity`, `plumeLightIntensity`, `cloudGlowIntensity`; the tints; the toggles above.
 
-1. Enter Play mode, then start the departure. Use the same path as LaunchFxV03 acceptance, so that `TransportDeparturePresenter.IsPlaying` is true.
-2. Capture the Game view at departure seconds:
-   - **9.05:** flash and seat-shot exterior light.
-   - **9.9:** pad shot at ignition. Check the flank dust, sparks and shimmer.
-   - **11.0:** liftoff. Check the fire, the trench jet and the start of the column.
-   - **13.0:** end of the pad shot.
-   - **15.5:** climb shot. Check that the column lingers below the vehicle.
-   - **19.0:** upper air.
-3. Repeat 9.9 and 11.0 with reduced motion on.
-4. Things to check:
-   - No pink materials.
-   - No radial ring at the pad.
-   - Dust reads tan or graphite, not white.
-   - The fire sits inside the V03 envelope rather than replacing it.
-   - The column stays put in the world while the camera tracks the vehicle.
+## Evidence
+
+`Evidence~/` holds 24 frames from **Out of Reach › Launch › Render Launch VFX MAX evidence (scene not saved)**, run in batch mode on this branch with the real LFS assets:
+
+- `V04-game-t*.jpg`: the game's own pad, climb and upper-air shots at departure seconds 9.3, 10, 11, 12, 13, 14, 15.5, 17 and 19.
+- `V04-wide-t*.jpg`: a fixed wide camera at the same times.
+- `V04-game-reduced-t*.jpg`: reduced effects at 11 and 14 s.
+- `V04-game-boost-t*.jpg`: a comparison pass (sparks and heat on, lights about 2.7× stronger). It is not the default and looks the same as the default frames.
+
+How the frames are made: an edit-mode replay. The harness opens Bootstrap, installs without saving, moves the vehicle with the same formula as `TransportDeparturePresenter`, drives LaunchFxV03 and this presenter step by step, and renders with a copy of the player camera. It is not a Play-mode capture: camera shake, the departure's sky change above 17.5 s, UI and audio are absent.
 
 ## Verification actually run
 
-- Roslyn compile, using Unity 6000.3.28f1 `csc.dll` with the reference set from Alex's `Library/Bee` `OutOfReach.LaunchFXV03.rsp` and `OutOfReach.Composition.Editor.rsp`:
-  - `OutOfReach.LaunchVfxMax.dll` built with 0 errors.
-  - `OutOfReach.LaunchVfxMax.Editor.dll` built with 0 errors.
-- **Not run:** a Unity import, Play mode, renders, the installer on Bootstrap, or a player build.
+- Unity 6000.3.28f1 batch mode on this branch compiled the whole project with these sources: 0 compiler errors (`OutOfReach.LaunchVfxMax.dll` and its Editor assembly built by Bee).
+- The installer ran on Bootstrap inside that batch run with save off.
+- Three render passes were inspected. The first showed scattered puffs and discs over the pad camera from the pack's DustStorm sprites; those layers were replaced. The third pass (this revision, real assets) shows one cohesive steam and exhaust cloud at the pad and a clean upper-air shot.
+
+**Not run:** Play mode, the installer saving the real Bootstrap in Alex's project, a player build, a frame-time measurement.
