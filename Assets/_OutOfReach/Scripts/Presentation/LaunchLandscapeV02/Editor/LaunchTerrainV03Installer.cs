@@ -27,6 +27,17 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
         private const int SectorCount = 16;
         private static readonly Vector2 Centre = new Vector2(0f, 5f);
 
+        // Dense meadow (Alex's golden/olive grass reference, #7 6895376530): shell grass over the near field.
+        public const string GrassGroupName = "Launch grass V03 - dense meadow";
+        public const string GrassFolder = "Assets/_OutOfReach/Visuals/LaunchVegetationV03";
+        public const string GrassShaderPath = GrassFolder + "/GrassShellsV03.shader";
+        public const string GrassMaterialPath = GrassFolder + "/GrassShellsV03.mat";
+        public const string GrassMeshFolder = GrassFolder + "/Generated";
+        public const int ShellLayers = 24;
+        public const float ShellHeight = .95f;
+        public const float ShellRadius = 440f;
+        private const int GrassSectorCount = 8;
+
         /// <summary>Site-relative paths that are switched off (replaced or clutter). Nothing is deleted.</summary>
         public static readonly string[] DeactivatedPaths =
         {
@@ -96,12 +107,29 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
             List<Ring> rings = BuildRings(boundary);
             BuildMesh(rings, boundary, out List<Vector3> vertices, out List<Vector3> normals, out List<int> triangles);
             Mesh[] sectors = SaveSectors(vertices, normals, triangles);
+            Material grass = PrepareGrassMaterial(site);
+            Mesh[] shells = SaveGrassShells(inner, site, out long shellTriangles);
 
             Transform previous = site.Find(GroupName);
+            Transform previousGrass = site.Find(GrassGroupName);
             var group = new GameObject(GroupName);
             group.transform.SetParent(site, false);
+            var grassGroup = new GameObject(GrassGroupName);
+            grassGroup.transform.SetParent(site, false);
             try
             {
+                foreach (Mesh shell in shells)
+                {
+                    var go = new GameObject(shell.name);
+                    go.transform.SetParent(grassGroup.transform, false);
+                    go.AddComponent<MeshFilter>().sharedMesh = shell;
+                    var renderer = go.AddComponent<MeshRenderer>();
+                    renderer.sharedMaterial = grass;
+                    renderer.shadowCastingMode = ShadowCastingMode.Off;
+                    renderer.receiveShadows = true;
+                    renderer.lightProbeUsage = LightProbeUsage.Off;
+                    renderer.reflectionProbeUsage = ReflectionProbeUsage.Off;
+                }
                 for (int s = 0; s < sectors.Length; s++)
                 {
                     var go = new GameObject(sectors[s].name);
@@ -129,22 +157,25 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
                                 throw new InvalidOperationException("Decorative rock " + child.name + " has an enabled collider; not touching it.");
                             child.gameObject.SetActive(false); switchedOff.Add("Curated CC0 service details/" + child.name);
                         }
-                if (group.GetComponentsInChildren<Collider>(true).Length != 0 || group.GetComponentsInChildren<MonoBehaviour>(true).Length != 0)
-                    throw new InvalidOperationException("The far land must be passive geometry only.");
+                if (group.GetComponentsInChildren<Collider>(true).Length != 0 || group.GetComponentsInChildren<MonoBehaviour>(true).Length != 0
+                    || grassGroup.GetComponentsInChildren<Collider>(true).Length != 0 || grassGroup.GetComponentsInChildren<MonoBehaviour>(true).Length != 0)
+                    throw new InvalidOperationException("The far land and the meadow must be passive geometry only.");
                 if (!collidersBefore.SequenceEqual(ColliderState(site)))
                     throw new InvalidOperationException("Installer changed the set of active gameplay colliders.");
                 if (previous) Object.DestroyImmediate(previous.gameObject);
+                if (previousGrass) Object.DestroyImmediate(previousGrass.gameObject);
                 long farTriangles = sectors.Sum(m => (long)m.GetIndexCount(0) / 3);
                 float maxHeight = vertices.Max(v => v.y) - Datum;
                 LastReport = "farTriangles=" + farTriangles + " farVertices=" + vertices.Count + " sectors=" + sectors.Length
                     + " seamVertices=" + boundary.Points.Count + " maxHeightAboveDatum=" + maxHeight.ToString("F0")
                     + " outerRadius=" + rings[rings.Count - 1].Radius.ToString("F0")
-                    + " innerMaterial=" + ground.name + " deactivated=" + switchedOff.Count + " [" + string.Join("; ", switchedOff) + "]"
+                    + " innerMaterial=" + ground.name + " meadowShells=" + ShellLayers + "x" + shells.Length + " meadowTriangles=" + shellTriangles
+                    + " deactivated=" + switchedOff.Count + " [" + string.Join("; ", switchedOff) + "]"
                     + " collidersChanged=0";
                 Debug.Log("LAUNCH_TERRAIN_V03_READY " + LastReport);
                 return group;
             }
-            catch { Object.DestroyImmediate(group); throw; }
+            catch { Object.DestroyImmediate(group); Object.DestroyImmediate(grassGroup); throw; }
         }
 
         // ---------- material ----------
@@ -173,9 +204,9 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
         /// <summary>sRGB palette and tuning of the V03 ground; the material is the single source for root.</summary>
         public static readonly KeyValuePair<string, Color>[] Palette =
         {
-            new KeyValuePair<string, Color>("_GrassDry", new Color(.61f, .57f, .43f)),
-            new KeyValuePair<string, Color>("_GrassGreen", new Color(.44f, .48f, .30f)),
-            new KeyValuePair<string, Color>("_GrassLush", new Color(.33f, .40f, .22f)),
+            new KeyValuePair<string, Color>("_GrassDry", new Color(.72f, .60f, .36f)),
+            new KeyValuePair<string, Color>("_GrassGreen", new Color(.55f, .52f, .30f)),
+            new KeyValuePair<string, Color>("_GrassLush", new Color(.44f, .45f, .24f)),
             new KeyValuePair<string, Color>("_Scrub", new Color(.30f, .31f, .19f)),
             new KeyValuePair<string, Color>("_Rock", new Color(.58f, .45f, .34f)),
             new KeyValuePair<string, Color>("_RockDark", new Color(.35f, .28f, .23f)),
@@ -189,7 +220,7 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
             new KeyValuePair<string, float>("_GreenAmount", .5f),
             new KeyValuePair<string, float>("_HazeDensity", .00009f),
             new KeyValuePair<string, float>("_HazeFloor", 1400f),
-            new KeyValuePair<string, float>("_Sheen", .25f),
+            new KeyValuePair<string, float>("_Sheen", .55f),
         };
 
         private static void Bind(Material material, string property, string file)
@@ -198,6 +229,242 @@ namespace OutOfReach.Presentation.LaunchLandscape.Editor
             var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(GroundTextures + file);
             if (!texture) throw new InvalidOperationException("Missing licensed ambientCG texture " + GroundTextures + file);
             material.SetTexture(property, texture);
+        }
+
+        // ---------- dense meadow ----------
+
+        /// <summary>sRGB colours and tuning of the shell grass (golden/olive reference).</summary>
+        public static readonly KeyValuePair<string, Color>[] GrassPalette =
+        {
+            new KeyValuePair<string, Color>("_BladeBase", new Color(.25f, .21f, .12f)),
+            new KeyValuePair<string, Color>("_BladeMid", new Color(.56f, .46f, .25f)),
+            new KeyValuePair<string, Color>("_BladeTip", new Color(.83f, .68f, .40f)),
+            new KeyValuePair<string, Color>("_BladeOlive", new Color(.47f, .47f, .25f)),
+            new KeyValuePair<string, Color>("_HazeColor", new Color(.42f, .48f, .58f)),
+            new KeyValuePair<string, Color>("_HazeSunColor", new Color(.85f, .80f, .72f)),
+        };
+        public static readonly KeyValuePair<string, float>[] GrassScalars =
+        {
+            new KeyValuePair<string, float>("_OliveAmount", .35f),
+            new KeyValuePair<string, float>("_Translucency", 2.0f),
+            new KeyValuePair<string, float>("_WindStrength", .16f),
+            new KeyValuePair<string, float>("_ShellRange", 46f),
+            new KeyValuePair<string, float>("_HazeDensity", .00009f),
+            new KeyValuePair<string, float>("_HazeFloor", 1400f),
+        };
+
+        private static Material PrepareGrassMaterial(Transform site)
+        {
+            Shader shader = AssetDatabase.LoadAssetAtPath<Shader>(GrassShaderPath);
+            if (!shader || ShaderUtil.ShaderHasError(shader))
+                throw new InvalidOperationException("Launch Grass Shells V03 shader is missing or has compile errors.");
+            Material material = AssetDatabase.LoadAssetAtPath<Material>(GrassMaterialPath);
+            if (!material) { material = new Material(shader) { name = "GrassShellsV03" }; AssetDatabase.CreateAsset(material, GrassMaterialPath); }
+            material.shader = shader;
+            material.SetVector("_SiteOriginWS", site.position);
+            material.SetFloat("_DatumY", Datum);
+            material.SetFloat("_ShellHeight", ShellHeight);
+            material.SetVector("_WindDir", new Vector4(.82f, .57f, 0, 0));
+            material.SetVector("_OuterFade", new Vector4(ShellRadius - 110f, ShellRadius - 10f, 0, 0));
+            foreach (var entry in GrassPalette) material.SetColor(entry.Key, entry.Value);
+            foreach (var entry in GrassScalars) material.SetFloat(entry.Key, entry.Value);
+            material.renderQueue = (int)RenderQueue.AlphaTest;
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        private static bool InsideRect(Vector3 p, float x0, float x1, float z0, float z1) => p.x >= x0 && p.x <= x1 && p.z >= z0 && p.z <= z1;
+
+        /// <summary>Distance from the site centre to the apron footprint edge along an angle.</summary>
+        private static float ApronRadius(float angle)
+        {
+            float c = Mathf.Abs(Mathf.Cos(angle)), s = Mathf.Abs(Mathf.Sin(angle));
+            return Mathf.Min(c > 1e-5f ? 72f / c : float.MaxValue, s > 1e-5f ? 67f / s : float.MaxValue);
+        }
+
+        /// <summary>
+        /// Shell base grid: rings that start on the apron edge and widen to ShellRadius, spacing 3.5 m near the apron
+        /// growing to 14 m, zipped by angle; heights and normals are sampled from the real LT_TerrainInner mesh.
+        /// </summary>
+        private static void BuildShellBase(MeshFilter inner, Transform site, out Vector3[] sitePos, out Vector3[] siteNrm, out int[] tri)
+        {
+            var sampler = new SurfaceSampler(inner, site, ShellRadius + 120f);
+            var rings = new List<Vector3[]>();
+            float d = 0f;
+            while (true)
+            {
+                float spacing = Mathf.Clamp(3.5f + .035f * d, 3.5f, 14f);
+                int count = Mathf.Max(96, Mathf.RoundToInt(Mathf.PI * 2f * (80f + d) / spacing));
+                var ring = new Vector3[count];
+                for (int j = 0; j < count; j++)
+                {
+                    float a = -Mathf.PI + (j + .5f) * Mathf.PI * 2f / count;
+                    float r = ApronRadius(a) + d;
+                    ring[j] = new Vector3(Centre.x + Mathf.Cos(a) * r, Datum, Centre.y + Mathf.Sin(a) * r);
+                }
+                rings.Add(ring);
+                if (d >= ShellRadius - 60f) break;
+                d += spacing;
+            }
+            var positions = new List<Vector3>(); var normals = new List<Vector3>(); var triangles = new List<int>();
+            var start = new int[rings.Count];
+            for (int k = 0; k < rings.Count; k++)
+            {
+                start[k] = positions.Count;
+                foreach (Vector3 p in rings[k])
+                {
+                    if (sampler.Sample(new Vector2(p.x, p.z), out float y, out Vector3 n)) { positions.Add(new Vector3(p.x, y, p.z)); normals.Add(n); }
+                    else { positions.Add(p); normals.Add(Vector3.up); }
+                }
+            }
+            for (int k = 0; k + 1 < rings.Count; k++)
+            {
+                var a = new Vector3[rings[k].Length]; var b = new Vector3[rings[k + 1].Length];
+                for (int i = 0; i < a.Length; i++) a[i] = positions[start[k] + i];
+                for (int i = 0; i < b.Length; i++) b[i] = positions[start[k + 1] + i];
+                Zip(a, start[k], b, start[k + 1], triangles);
+            }
+            sitePos = positions.ToArray(); siteNrm = normals.ToArray(); tri = triangles.ToArray();
+        }
+
+        /// <summary>Height and smooth normal of the actual near terrain (site space), bucketed in 12 m cells.</summary>
+        private sealed class SurfaceSampler
+        {
+            private const float Cell = 12f;
+            private readonly Vector3[] p; private readonly Vector3[] n;
+            private readonly Dictionary<long, List<int>> cells = new Dictionary<long, List<int>>();
+            private readonly int[] tri;
+            public SurfaceSampler(MeshFilter inner, Transform site, float radius)
+            {
+                Mesh mesh = inner.sharedMesh;
+                Matrix4x4 toSite = site.worldToLocalMatrix * inner.transform.localToWorldMatrix;
+                p = mesh.vertices.Select(v => toSite.MultiplyPoint3x4(v)).ToArray();
+                Vector3[] normals = mesh.normals;
+                n = normals != null && normals.Length == p.Length ? normals.Select(v => toSite.MultiplyVector(v).normalized).ToArray() : p.Select(_ => Vector3.up).ToArray();
+                tri = mesh.triangles;
+                for (int i = 0; i < tri.Length; i += 3)
+                {
+                    Vector3 a = p[tri[i]], b = p[tri[i + 1]], c = p[tri[i + 2]];
+                    if (Flat((a + b + c) / 3f).magnitude > radius) continue;
+                    int x0 = Mathf.FloorToInt(Mathf.Min(a.x, b.x, c.x) / Cell), x1 = Mathf.FloorToInt(Mathf.Max(a.x, b.x, c.x) / Cell);
+                    int z0 = Mathf.FloorToInt(Mathf.Min(a.z, b.z, c.z) / Cell), z1 = Mathf.FloorToInt(Mathf.Max(a.z, b.z, c.z) / Cell);
+                    for (int x = x0; x <= x1; x++)
+                        for (int z = z0; z <= z1; z++)
+                        {
+                            long key = ((long)x << 32) ^ (uint)z;
+                            if (!cells.TryGetValue(key, out var list)) { list = new List<int>(); cells.Add(key, list); }
+                            list.Add(i);
+                        }
+                }
+            }
+            public bool Sample(Vector2 q, out float y, out Vector3 normal)
+            {
+                y = 0; normal = Vector3.up;
+                long key = ((long)Mathf.FloorToInt(q.x / Cell) << 32) ^ (uint)Mathf.FloorToInt(q.y / Cell);
+                if (!cells.TryGetValue(key, out var list)) return false;
+                bool found = false; float best = float.NegativeInfinity;
+                foreach (int i in list)
+                {
+                    Vector3 a = p[tri[i]], b = p[tri[i + 1]], c = p[tri[i + 2]];
+                    float den = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+                    if (Mathf.Abs(den) < 1e-7f) continue;
+                    float wa = ((b.z - c.z) * (q.x - c.x) + (c.x - b.x) * (q.y - c.z)) / den;
+                    float wb = ((c.z - a.z) * (q.x - c.x) + (a.x - c.x) * (q.y - c.z)) / den;
+                    float wc = 1 - wa - wb;
+                    if (wa < -1e-4f || wb < -1e-4f || wc < -1e-4f) continue;
+                    float h = wa * a.y + wb * b.y + wc * c.y;
+                    if (h > best) { best = h; found = true; normal = (n[tri[i]] * wa + n[tri[i + 1]] * wb + n[tri[i + 2]] * wc).normalized; }
+                }
+                y = best;
+                return found;
+            }
+        }
+
+        /// <summary>
+        /// Raises the shell base grid into ShellLayers layers (UV0.x = layer height fraction), split into angular
+        /// sectors. Triangles wholly on the crawlerway or in the plume corridor are left out; the shader decides coverage.
+        /// </summary>
+        private static Mesh[] SaveGrassShells(MeshFilter inner, Transform site, out long triangleCount)
+        {
+            BuildShellBase(inner, site, out Vector3[] sitePos, out Vector3[] siteNrm, out int[] tri);
+            var sectorTris = new List<int>[GrassSectorCount];
+            for (int s = 0; s < GrassSectorCount; s++) sectorTris[s] = new List<int>();
+            for (int i = 0; i < tri.Length; i += 3)
+            {
+                Vector3 a = sitePos[tri[i]], b = sitePos[tri[i + 1]], c = sitePos[tri[i + 2]];
+                Vector3 centroid = (a + b + c) / 3f;
+                if (Flat(centroid).magnitude > ShellRadius) continue;
+                bool road = InsideRect(a, -24, 24, -915, -55) && InsideRect(b, -24, 24, -915, -55) && InsideRect(c, -24, 24, -915, -55);
+                bool plume = InsideRect(a, -30, 30, 62, 335) && InsideRect(b, -30, 30, 62, 335) && InsideRect(c, -30, 30, 62, 335);
+                if (road || plume) continue;
+                int sector = Mathf.Clamp((int)((AngleOf(centroid) + Mathf.PI) / (Mathf.PI * 2f) * GrassSectorCount), 0, GrassSectorCount - 1);
+                sectorTris[sector].Add(tri[i]); sectorTris[sector].Add(tri[i + 1]); sectorTris[sector].Add(tri[i + 2]);
+            }
+            EnsureFolder(GrassMeshFolder);
+            var result = new Mesh[GrassSectorCount];
+            triangleCount = 0;
+            for (int s = 0; s < GrassSectorCount; s++)
+            {
+                var remap = new Dictionary<int, int>();
+                var used = new List<int>();
+                foreach (int index in sectorTris[s]) if (!remap.ContainsKey(index)) { remap.Add(index, used.Count); used.Add(index); }
+                var packed = new List<ShellVertex>(used.Count * ShellLayers);
+                var indices = new List<int>(sectorTris[s].Count * ShellLayers);
+                Vector3 min = Vector3.positiveInfinity, max = Vector3.negativeInfinity;
+                for (int layer = 1; layer <= ShellLayers; layer++)
+                {
+                    float t = layer / (float)ShellLayers;
+                    int baseIndex = packed.Count;
+                    foreach (int index in used)
+                    {
+                        Vector3 p = sitePos[index] + Vector3.up * (t * ShellHeight);
+                        Vector3 n = siteNrm[index];
+                        packed.Add(new ShellVertex
+                        {
+                            Position = p,
+                            Nx = (short)Mathf.RoundToInt(Mathf.Clamp(n.x, -1, 1) * 32767f),
+                            Ny = (short)Mathf.RoundToInt(Mathf.Clamp(n.y, -1, 1) * 32767f),
+                            Nz = (short)Mathf.RoundToInt(Mathf.Clamp(n.z, -1, 1) * 32767f),
+                            U = Mathf.FloatToHalf(t), V = 0,
+                        });
+                        min = Vector3.Min(min, p); max = Vector3.Max(max, p);
+                    }
+                    foreach (int index in sectorTris[s]) indices.Add(baseIndex + remap[index]);
+                }
+                string name = "Grass shells V03 sector " + s.ToString("00");
+                string path = GrassMeshFolder + "/" + name + ".asset";
+                Mesh mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
+                bool created = !mesh;
+                if (created) mesh = new Mesh();
+                mesh.Clear();
+                mesh.name = name;
+                mesh.SetVertexBufferParams(packed.Count,
+                    new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
+                    new VertexAttributeDescriptor(VertexAttribute.Normal, VertexAttributeFormat.SNorm16, 4),
+                    new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float16, 2));
+                mesh.SetVertexBufferData(packed, 0, 0, packed.Count, 0, MeshUpdateFlags.DontValidateIndices | MeshUpdateFlags.DontRecalculateBounds);
+                IndexFormat format = packed.Count > 65535 ? IndexFormat.UInt32 : IndexFormat.UInt16;
+                mesh.SetIndexBufferParams(indices.Count, format);
+                if (format == IndexFormat.UInt16) mesh.SetIndexBufferData(indices.Select(i => (ushort)i).ToArray(), 0, 0, indices.Count, MeshUpdateFlags.DontRecalculateBounds);
+                else mesh.SetIndexBufferData(indices, 0, 0, indices.Count, MeshUpdateFlags.DontRecalculateBounds);
+                var bounds = packed.Count > 0 ? new Bounds((min + max) * .5f, max - min) : new Bounds();
+                mesh.subMeshCount = 1;
+                mesh.SetSubMesh(0, new SubMeshDescriptor(0, indices.Count) { bounds = bounds, firstVertex = 0, vertexCount = packed.Count }, MeshUpdateFlags.DontRecalculateBounds);
+                mesh.bounds = bounds;
+                mesh.UploadMeshData(false);
+                if (created) AssetDatabase.CreateAsset(mesh, path); else EditorUtility.SetDirty(mesh);
+                result[s] = mesh;
+                triangleCount += indices.Count / 3;
+            }
+            return result;
+        }
+
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        private struct ShellVertex
+        {
+            public Vector3 Position;
+            public short Nx, Ny, Nz, Nw;
+            public ushort U, V;
         }
 
         // ---------- colliders ----------
