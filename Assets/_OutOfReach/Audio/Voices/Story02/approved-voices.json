@@ -1,0 +1,57 @@
+{
+  "status": "User-approved assets, presentation binding still required by Claude.",
+  "known_date_conflict": "vo23 says day31; current aec862b MissionChapterFlow.RendezvousDay is30. User cancelled schedule rewrite. Do not change Core silently; resolve this before runtime use.",
+  "clips": [
+    {
+      "cue": "vo23_mc_rescue_lost",
+      "binding": "dispatch.rescue-1-failed",
+      "file": "vo23_mc_rescue_lost.wav",
+      "sha256": "806b2c29fd0eb3bb7b4676fb7183af5b253de6e613f089b3c4384c8d38876303",
+      "duration_seconds": 21.08,
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "voice": "Orus",
+      "model": "gemini-3.8-flash-lite-tts",
+      "transcript": "Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach. I'm sorry. A second craft is already in transit. New rendezvous: mission day thirty-one. Conserve your supplies. We are not giving up on you.",
+      "user_approved": true,
+      "approval_date": "2026-11-15",
+      "approved_exact_source_bytes": true,
+      "runtime_wired": false
+    },
+    {
+      "cue": "vo24a_rescue_approach",
+      "binding": "rescue approach begins",
+      "file": "vo24a_rescue_approach.wav",
+      "sha256": "dc5bb8d6c1f9de1788511827d3c77cdb2082ff8a759bbe9934b696f296737337",
+      "duration_seconds": 10.28,
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "voice": "Orus",
+      "model": "gemini-3.8-flash-lite-tts",
+      "transcript": "Aurora Seven, rescue crew. We have you in sight. You've held on long enough. We're coming alongside. Stand by for docking.",
+      "user_approved": true,
+      "approval_date": "2026-11-15",
+      "approved_exact_source_bytes": true,
+      "runtime_wired": false
+    },
+    {
+      "cue": "vo24b_rescue_docked",
+      "binding": "actual visible docking capture/latch",
+      "file": "vo24b_rescue_docked.wav",
+      "sha256": "30f206bc7a58bf88ba34f9a130cd07683e54349aaf66b449556bd7d9dc9476d1",
+      "duration_seconds": 12.16,
+      "sample_rate": 24000,
+      "channels": 1,
+      "sample_width": 2,
+      "voice": "Orus",
+      "model": "gemini-3.8-flash-lite-tts",
+      "transcript": "Contact. Capture confirmed. Hard dock. Stay clear while we equalize the hatch. Aurora Seven... you're not alone anymore.",
+      "user_approved": true,
+      "approval_date": "2026-11-15",
+      "approved_exact_source_bytes": true,
+      "runtime_wired": false
+    }
+  ]
+}
