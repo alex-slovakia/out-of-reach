@@ -5,9 +5,12 @@ using NUnit.Framework;
 using OutOfReach.Composition.Editor;
 using OutOfReach.Contracts;
 using OutOfReach.Presentation.Motion;
+using OutOfReach.Presentation.Motion.Editor;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace OutOfReach.Tests.BodyAnim
 {
@@ -37,7 +40,8 @@ namespace OutOfReach.Tests.BodyAnim
 
         private sealed class Clock : ISimulationClock
         {
-            public bool IsPaused => false;
+            public bool Paused;
+            public bool IsPaused => Paused;
             public double TimeScale => 1;
             public double ElapsedSimulationSeconds => 0;
         }
@@ -50,6 +54,9 @@ namespace OutOfReach.Tests.BodyAnim
             public EmbodiedBodyPresenter Body;
             public CharacterController Controller;
             public bool Sprint;
+            public readonly Clock Clock = new Clock();
+            public bool Visible = true, Resting;
+            public RestStopReason LastStop;
             public bool Floating;
         }
 
@@ -76,7 +83,7 @@ namespace OutOfReach.Tests.BodyAnim
             stage.Body = I06BodyAuthoring.Create(parent, player.transform, stage.Eye);
             foreach (SkinnedMeshRenderer r in stage.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             { r.forceMatrixRecalculationPerRender = true; r.updateWhenOffscreen = true; }
-            stage.Body.ConfigureSession(stage.Suit, new Clock(), () => true, () => stage.Floating, () => EmbodiedBodyPresenter.BodyArmVisibility.Both);
+            stage.Body.ConfigureSession(stage.Suit, stage.Clock, () => stage.Visible, () => stage.Floating, () => EmbodiedBodyPresenter.BodyArmVisibility.Both);
             stage.Body.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, new Vector3(0f, 0f, -.285f));
             stage.Body.ConfigureGroundLocomotion(stage.Controller, () => true, () => stage.Sprint);
             return stage;
@@ -122,10 +129,11 @@ namespace OutOfReach.Tests.BodyAnim
         private static Transform Bone(Stage s, string name) => s.Body.GetVisibleBone(name);
 
         /// <summary>Smallest distance from the eye to any vertex of the visible body skins, in metres.</summary>
-        private static float NearestBodyVertex(Stage s)
+        private static float NearestBodyVertex(Stage s) => NearestBodyVertex(s, s.Eye.transform.position);
+
+        private static float NearestBodyVertex(Stage s, Vector3 eye)
         {
             float best = float.MaxValue;
-            Vector3 eye = s.Eye.transform.position;
             var mesh = new Mesh();
             foreach (SkinnedMeshRenderer r in s.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(false))
             {
@@ -397,6 +405,211 @@ namespace OutOfReach.Tests.BodyAnim
             Debug.Log("[BODYANIM] ramp 12deg: flat ankle height " + flatAnkle + " worst planted ankle height error mm " + worst * 1000f + " samples " + samples);
             Assert.Greater(samples, 20);
             Assert.Less(worst, .03f, "planted feet must sit on the ramp, not float above or sink in");
+        }
+
+        [Serializable] private sealed class HabitatAnchor { public string name; public float[] point; public float[] forward; }
+        [Serializable] private sealed class HabitatBox { public string name; public float[] centre; public float[] size; }
+        [Serializable] private sealed class HabitatLayoutData { public HabitatAnchor[] anchors; public HabitatBox[] colliders; }
+        private const string HabitatRoot = "Assets/_OutOfReach/Visuals/Models/Habitat";
+
+        private sealed class Berth
+        {
+            public Transform Frame;
+            public Vector3 CameraPosition, CameraForward, EntryPoint, EntryForward, EyeLocal;
+            public Bounds BerthBox;
+            public Camera Eye, Aisle;
+            public readonly List<RestPhase> Phases = new List<RestPhase>();
+        }
+
+        private static Vector3 V(float[] a) => new Vector3(a[0], a[1], a[2]);
+
+        // The real habitat model and its authored anchors (HabitatLayout.json), the frame from the authoring helper.
+        private static Berth BuildBerth(Stage s)
+        {
+            var layout = JsonUtility.FromJson<HabitatLayoutData>(AssetDatabase.LoadAssetAtPath<TextAsset>(HabitatRoot + "/HabitatLayout.json").text);
+            var b = new Berth();
+            foreach (HabitatAnchor a in layout.anchors)
+            {
+                if (a.name == "SleepCamera") { b.CameraPosition = V(a.point); b.CameraForward = V(a.forward); }
+                if (a.name == "SleepEntry") { b.EntryPoint = V(a.point); b.EntryForward = V(a.forward); }
+            }
+            foreach (HabitatBox c in layout.colliders) if (c.name == "COL_Habitat_Berth") b.BerthBox = new Bounds(V(c.centre), V(c.size));
+            var habitat = AssetDatabase.LoadAssetAtPath<GameObject>(HabitatRoot + "/Meshes/HB_Habitat_Placed.fbx");
+            Assert.IsTrue(habitat, "habitat model");
+            var placed = (GameObject)Object.Instantiate(habitat);
+            placed.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            foreach (Renderer r in placed.GetComponentsInChildren<Renderer>(true))
+                foreach (Material m in r.sharedMaterials)
+                    if (m && m.name.StartsWith("HB_BagQuilt"))
+                        Debug.Log("[BODYANIM] berth bag renderer " + r.name + " bounds centre " + r.bounds.center.ToString("F3") + " size " + r.bounds.size.ToString("F3"));
+            var lamp = new GameObject("Berth lamp").AddComponent<Light>();
+            lamp.type = LightType.Point; lamp.range = 5f; lamp.intensity = 2.5f;
+            lamp.transform.position = b.CameraPosition + b.CameraForward * .9f + Vector3.up * .2f;
+            b.EyeLocal = ModelGaitBerthAuthoring.MeasureEyeLocal();
+            Pose pose = ModelGaitBerthAuthoring.BodyFrameForCamera(b.CameraPosition, b.CameraForward, Vector3.up, b.EyeLocal);
+            b.Frame = new GameObject("SleepBodyFrame").transform;
+            b.Frame.SetPositionAndRotation(pose.position, pose.rotation);
+            b.Eye = s.Eye;   // the presenter's own (sole) camera: root moves it, the body follows the eye
+            b.Aisle = new GameObject("Aisle view").AddComponent<Camera>();
+            b.Aisle.fieldOfView = 42f; b.Aisle.enabled = false;
+            b.Aisle.transform.position = b.CameraPosition + b.CameraForward * 2.4f + new Vector3(0f, -.5f, .35f);
+            b.Aisle.transform.rotation = Quaternion.LookRotation(pose.position + Vector3.up * .95f - b.Aisle.transform.position, Vector3.up);
+            s.Floating = true;
+            s.Player.SetPositionAndRotation(b.EntryPoint, Quaternion.LookRotation(b.EntryForward, Vector3.up));
+            s.Body.ConfigureRest(() => s.Resting, b.Frame, () => s.LastStop);
+            s.Body.RestPhaseChanged += phase => b.Phases.Add(phase);
+            Physics.SyncTransforms();
+            for (int i = 0; i < 8; i++) s.Body.AdvancePresentation(1f / 60f);
+            return b;
+        }
+
+        // Root's camera: cut to the authored SleepCamera (pitched down to watch the straps) and back to the gameplay eye.
+        private static void CameraToBerth(Stage s, Berth b, float pitch = 50f) =>
+            s.Eye.transform.SetPositionAndRotation(b.CameraPosition, Quaternion.LookRotation(b.CameraForward, Vector3.up) * Quaternion.Euler(pitch, 0f, 0f));
+
+        private static void CameraHome(Stage s) => s.Eye.transform.SetLocalPositionAndRotation(new Vector3(0f, 1.62f, 0f), Quaternion.identity);
+
+        private static float MinBodyX(Stage s)
+        {
+            float min = float.MaxValue;
+            var mesh = new Mesh();
+            foreach (SkinnedMeshRenderer r in s.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(false))
+            {
+                if (!r.enabled) continue;
+                r.BakeMesh(mesh, true);
+                Matrix4x4 m = Matrix4x4.TRS(r.transform.position, r.transform.rotation, Vector3.one);
+                foreach (Vector3 v in mesh.vertices) min = Mathf.Min(min, m.MultiplyPoint3x4(v).x);
+            }
+            Object.DestroyImmediate(mesh);
+            return min;
+        }
+
+        private static int VerticesBehind(Stage s, float planeX)
+        {
+            int count = 0;
+            var mesh = new Mesh();
+            foreach (SkinnedMeshRenderer r in s.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(false))
+            {
+                if (!r.enabled) continue;
+                r.BakeMesh(mesh, true);
+                Matrix4x4 m = Matrix4x4.TRS(r.transform.position, r.transform.rotation, Vector3.one);
+                foreach (Vector3 v in mesh.vertices) if (m.MultiplyPoint3x4(v).x < planeX) count++;
+            }
+            Object.DestroyImmediate(mesh);
+            return count;
+        }
+
+        private static void RunUntil(Stage s, RestPhase phase, int maxFrames, Action<int> each = null)
+        {
+            for (int i = 0; i < maxFrames && s.Body.RestPhase != phase; i++) { s.Body.AdvancePresentation(1f / 60f); each?.Invoke(i); }
+        }
+
+        [Test]
+        public void BerthRestEntersStrapsHoldsAndReleasesOnTheRealHabitat()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            Assert.IsTrue(s.Body.PresentsRest);
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Shot(s, b.Aisle, "rest_aisle_before");
+            s.Resting = true;
+            CameraToBerth(s, b);
+            s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(RestPhase.Entering, s.Body.RestPhase);
+            Assert.Greater(s.Body.RestDockWeight, .99f, "a camera cut into the berth docks the body at once");
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, b.Frame.position), .01f, "no walk-in in front of the eye");
+            Assert.Greater(NearestBodyVertex(s, s.Eye.transform.position), .05f);
+            bool pausedChecked = false;
+            RunUntil(s, RestPhase.Held, 400, i =>
+            {
+                if (i == 75 && !pausedChecked)
+                {
+                    pausedChecked = true;
+                    float before = s.Body.RestPhaseSeconds;
+                    s.Clock.Paused = true;
+                    for (int k = 0; k < 30; k++) s.Body.AdvancePresentation(1f / 60f);
+                    Assert.AreEqual(before, s.Body.RestPhaseSeconds, 1e-6f, "pause must freeze the rest playhead");
+                    Assert.AreEqual(RestPhase.Entering, s.Body.RestPhase);
+                    s.Clock.Paused = false;
+                }
+                if (i % 12 == 0) { Shot(s, b.Eye, "rest_eye_enter_" + (i / 12), 480, 270); Shot(s, b.Aisle, "rest_aisle_enter_" + (i / 12)); }
+            });
+            Assert.IsTrue(pausedChecked);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase, "the strap sequence must finish");
+            Transform restraint = s.Body.VisualRoot.Find("Berth restraint");
+            Assert.IsTrue(restraint && restraint.gameObject.activeSelf, "visible buckled straps");
+            for (int i = 0; i < 30; i++) s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase);
+            Shot(s, b.Eye, "rest_eye_held", 960, 540); Shot(s, b.Aisle, "rest_aisle_held", 960, 540);
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, b.Frame.position), 1e-4f, "body on the berth frame");
+            float near = NearestBodyVertex(s, b.CameraPosition);
+            int behindWall = VerticesBehind(s, b.BerthBox.min.x);
+            Debug.Log("[BODYANIM] berth: deepest skin vertex behind the berth back plane " + (b.BerthBox.min.x - MinBodyX(s)) * 1000f + " mm");
+            Debug.Log("[BODYANIM] berth: eye offset " + b.EyeLocal.ToString("F4") + " frame " + b.Frame.position.ToString("F4")
+                      + " yaw " + b.Frame.eulerAngles.y.ToString("F1") + " berth box " + b.BerthBox.min.ToString("F3") + ".." + b.BerthBox.max.ToString("F3")
+                      + " nearest body vertex to SleepCamera " + near + " m, skin vertices behind the berth back plane " + behindWall);
+            Assert.Greater(near, .05f, "no skin may cross the berth camera's near plane");
+
+            s.Resting = false; s.LastStop = RestStopReason.Woken;
+            Shot(s, b.Eye, "rest_eye_wake_start", 480, 270);
+            int frames = 0;
+            bool cameraHome = false;
+            RunUntil(s, RestPhase.None, 300, i =>
+            {
+                frames = i + 1;
+                // Root cuts back to the gameplay eye once the straps are open (here at 0.9 s).
+                if (!cameraHome && i >= 54) { cameraHome = true; CameraHome(s); }
+                if (i % 10 == 0) { Shot(s, b.Eye, "rest_eye_release_" + (i / 10), 480, 270); Shot(s, b.Aisle, "rest_aisle_release_" + (i / 10)); }
+            });
+            Debug.Log("[BODYANIM] berth ordinary wake: released in " + frames / 60f + " s; phases " + string.Join(",", b.Phases));
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.That(frames / 60f, Is.InRange(1.2f, 1.5f), "ordinary unstrap and exit");
+            Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"), "props must be gone");
+            CollectionAssert.AreEqual(new[] { RestPhase.Entering, RestPhase.Held, RestPhase.Releasing, RestPhase.None }, b.Phases);
+            s.Body.AdvancePresentation(1f / 60f);
+            Assert.IsTrue(s.Body.IsVisible);
+            Assert.AreEqual(EmbodiedBodyPresenter.BodyPose.Floating, s.Body.CurrentPose);
+            Vector3 expected = s.Player.position + s.Player.rotation * s.Body.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating);
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, expected), .01f, "presentation pose restored at the player");
+        }
+
+        [Test]
+        public void HazardWakeReleasesWithinAQuarterSecond()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            s.Resting = true;
+            CameraToBerth(s, b);
+            RunUntil(s, RestPhase.Held, 400);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase);
+            s.Resting = false; s.LastStop = RestStopReason.CarbonDioxideDanger;
+            CameraHome(s);
+            int frames = 0;
+            RunUntil(s, RestPhase.None, 120, i => frames = i + 1);
+            Debug.Log("[BODYANIM] berth hazard wake (CO2): released in " + frames / 60f + " s");
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.LessOrEqual(frames / 60f, .3f, "hazard release must take at most 0.3 s");
+        }
+
+        [Test]
+        public void HiddenBodyOrClearedBindingReleasesAtOnce()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            s.Resting = true;
+            CameraToBerth(s, b);
+            for (int i = 0; i < 100; i++) s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(RestPhase.Entering, s.Body.RestPhase);
+            s.Visible = false;
+            s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase, "a hidden body releases in the same frame");
+            Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"));
+            s.Visible = true;
+            RunUntil(s, RestPhase.Held, 400);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase, "the rest presentation resumes while Core still rests");
+            s.Body.ClearBinding();
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase, "a cleared binding releases at once");
+            Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"));
         }
 
         // Horizontal drift of an ankle across stretches where it stays on the ground (within 12 mm of its lowest point).

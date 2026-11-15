@@ -71,6 +71,16 @@ namespace OutOfReach.Presentation.Motion
         private readonly RaycastHit[] groundHits = new RaycastHit[8];
         private float? deltaOverride;
         private DepartureSeatRestraint departureSeat;
+        private Func<bool> restQuery;
+        private Func<RestStopReason> restReasonQuery;
+        private Transform berthFrame;
+        private ModelRestRig restRig;
+        private RestPhase restPhase;
+        private BodyPose restNextPose;
+        private float restTime, releaseChest, releaseHip;
+        private bool restHazard, forcePoseReset;
+        // Where the gameplay camera sits in the body frame during ordinary play, and the body's own eyes in the bag.
+        private Vector3 normalCameraLocal = new Vector3(0f, 1.62f, .30f), restEyeLocal = new Vector3(0f, 1.65f, .09f);
 
         /// <summary>
         /// Synchronous lease cancellation before sampling, restoration, hide, clear or disable.
@@ -84,6 +94,14 @@ namespace OutOfReach.Presentation.Motion
         public BodyPose CurrentPose => pose;
         public BodyArmVisibility VisibleArms => visible ? armMask : BodyArmVisibility.None;
         public bool HasDepartureSeat => departureSeat != null;
+        /// <summary>Berth rest presentation phase; None outside a rest. Core's IsResting stays the authority.</summary>
+        public RestPhase RestPhase => restPhase;
+        /// <summary>Seconds into the current rest phase (frozen while paused).</summary>
+        public float RestPhaseSeconds => restTime;
+        /// <summary>Raised on every rest phase change, including the immediate release on reset, stale session or disable.</summary>
+        public event Action<RestPhase> RestPhaseChanged;
+        /// <summary>True while a berth rest is configured and its frame is live: root keeps the body visible while resting.</summary>
+        public bool PresentsRest => restQuery != null && berthFrame && berthFrame.gameObject.activeInHierarchy;
         public bool IsDepartureSeatLatched => departureSeat != null && departureSeat.IsLatched;
         public Transform VisualRoot => visualRoot;
         public Transform PlayerFeet => playerFeet;
@@ -196,6 +214,30 @@ namespace OutOfReach.Presentation.Motion
             preflightGaitQuery = usePreflightGait;
         }
 
+        /// <summary>
+        /// BODY-REST-HOOK (root ACK #7 6895081311). Call after ConfigureSession on every session binding.
+        /// <paramref name="isResting"/> is Core's authoritative ISurvivalRecovery.IsResting. <paramref name="berthBodyFrame"/>
+        /// is the body origin in the bag: +Y towards the head, +Z out of the chest into the aisle, +X body right, metre
+        /// scale, outside the body, player and camera. <paramref name="lastRestStop"/> (ISurvivalRecovery.LastRestStop)
+        /// lets a hazard wake release within 0.3 s. Entering settles into the bag and draws the chest and hip straps;
+        /// Held keeps them buckled; Releasing unclips and hands the body back. Pause freezes it; reset, stale session,
+        /// disable or a hidden body release it at once. Never changes the player, controller, resources, input or camera.
+        /// </summary>
+        public void ConfigureRest(Func<bool> isResting, Transform berthBodyFrame, Func<RestStopReason> lastRestStop = null)
+        {
+            if (!bound || notifyingReset)
+                throw new InvalidOperationException("Bind a body session before configuring the berth rest.");
+            if (isResting == null || !berthBodyFrame)
+                throw new ArgumentException("The berth rest needs Core's IsResting and a berth body frame.");
+            if (berthBodyFrame == visualRoot || berthBodyFrame.IsChildOf(visualRoot) || berthBodyFrame == playerFeet
+                || berthBodyFrame.IsChildOf(playerFeet) || berthBodyFrame == playerCamera.transform
+                || berthBodyFrame.IsChildOf(playerCamera.transform) || (berthBodyFrame.lossyScale - Vector3.one).sqrMagnitude > .000001f)
+                throw new ArgumentException("The berth body frame must be a metre-scale scene anchor outside the body, player and camera.");
+            CancelRest();
+            restQuery = isResting; restReasonQuery = lastRestStop; berthFrame = berthBodyFrame;
+            if (isActiveAndEnabled) Refresh();
+        }
+
         /// <summary>Explicit visual pose request only. Never seats, teleports, rests or changes the player.</summary>
         public void SetSeatedPose(bool seated)
         {
@@ -294,6 +336,8 @@ namespace OutOfReach.Presentation.Motion
             bound = false; suit = null; clock = null;
             visibleQuery = floatingQuery = null; armsQuery = null;
             groundController = null; groundedQuery = sprintQuery = preflightGaitQuery = null;
+            CancelRest();
+            restQuery = null; restReasonQuery = null; berthFrame = null;
             DisposeDepartureSeat();
             ResetOwnedVisuals();
             seatedRequested = wasPaused = offsetResetRequested = false;
@@ -330,24 +374,29 @@ namespace OutOfReach.Presentation.Motion
             int version = bindingVersion;
             bool permitted = visibleQuery();
             if (version != bindingVersion || !bound) return;
-            if (!permitted) { if (visible) ResetOwnedVisuals(); return; }
+            if (!permitted) { CancelRest(); if (visible) ResetOwnedVisuals(); return; }
             bool paused = clock.IsPaused;
             bool nextEva = suit.IsSuitOn;
             BodyPose nextPose = seatedRequested ? BodyPose.Seated : floatingQuery() ? BodyPose.Floating : BodyPose.Standing;
             if (version != bindingVersion || !bound) return;
             BodyArmVisibility nextArms = armsQuery() & BodyArmVisibility.Both;
             if (version != bindingVersion || !bound) return;
+            // Berth rest: Core's IsResting drives a presentation that owns the body until it hands it back.
+            if (visible && nextEva == activeEva && RestOwnsBody(paused, trackMovement, nextArms)) { wasPaused = paused; return; }
+            if (restPhase != RestPhase.None) CancelRest();
+            if (version != bindingVersion || !bound) return;
             // Existing pose/position freezes while paused. Outfit safety and visibility still reconcile.
             if (paused && visible && nextEva == activeEva) nextPose = pose;
             bool wasVisible = visible;
             bool poseChanged = !visible || nextEva != activeEva || nextPose != pose;
-            bool reset = poseChanged || nextArms != armMask
+            bool reset = poseChanged || nextArms != armMask || forcePoseReset
                 || (paused && !wasPaused) || (offsetResetRequested && !paused);
             if (reset)
             {
                 NotifyReset();
                 HideRenderers();
-                if (poseChanged || offsetResetRequested && !paused) ResetGroundMotion(false);
+                if (poseChanged || forcePoseReset || offsetResetRequested && !paused) ResetGroundMotion(false);
+                forcePoseReset = false;
                 workCache.Restore(); evaCache.Restore();
                 groundPosed = false;
                 Outfit selected = nextEva ? eva : work;
@@ -367,6 +416,7 @@ namespace OutOfReach.Presentation.Motion
                 if (!paused) offsetResetRequested = false;
             }
             if (!paused || !wasVisible) FollowFeet();
+            if (!paused) normalCameraLocal = Quaternion.Inverse(visualRoot.rotation) * (playerCamera.transform.position - visualRoot.position);
             if (pose == BodyPose.Floating) UpdateFloatingLegs(reset, paused, trackMovement);
             if (pose == BodyPose.Standing && groundController)
             {
@@ -576,6 +626,209 @@ namespace OutOfReach.Presentation.Motion
             evaCache?.Ground?.ResetFeet();
         }
 
+        // Returns true while the berth rest presents the body this frame (the normal pose flow is skipped).
+        private bool RestOwnsBody(bool paused, bool trackMovement, BodyArmVisibility nextArms)
+        {
+            bool resting = false;
+            if (PresentsRest && !seatedRequested)
+            {
+                int version = bindingVersion;
+                try { resting = restQuery(); }
+                catch (Exception error) { Debug.LogException(error, this); resting = false; }
+                if (version != bindingVersion || !bound) return true;
+            }
+            if (restPhase == RestPhase.None)
+            {
+                if (!resting || paused || !BeginRest()) return false;
+            }
+            else if (!PresentsRest || seatedRequested) { CancelRest(); return false; }
+
+            float dt = paused || !trackMovement ? 0f : Mathf.Clamp(deltaOverride ?? Time.unscaledDeltaTime, 0f, .1f);
+            if (restPhase == RestPhase.Entering)
+            {
+                if (!resting) StartRelease();
+                else if ((restTime += dt) >= ModelRestTimeline.EnterDuration) { restTime = 0f; SetRestPhase(RestPhase.Held); }
+            }
+            else if (restPhase == RestPhase.Held)
+            {
+                if (!resting) StartRelease();
+                else restTime += dt;
+            }
+            else if ((restTime += dt) >= (restHazard ? ModelRestTimeline.HazardReleaseDuration : ModelRestTimeline.ReleaseDuration))
+            {
+                EndRest();
+                return false;
+            }
+            if (restPhase == RestPhase.None || restRig == null) return false;
+            Outfit selected = activeEva ? eva : work;
+            selected.leftArm.enabled = (nextArms & BodyArmVisibility.Left) != 0;
+            selected.rightArm.enabled = (nextArms & BodyArmVisibility.Right) != 0;
+            ApplyRestPose();
+            return true;
+        }
+
+        private bool BeginRest()
+        {
+            Outfit outfit = activeEva ? eva : work;
+            ModelCache cache = activeEva ? evaCache : workCache;
+            Shader lit = FindLit(outfit);
+            if (!lit || !outfit.standing || !berthFrame) return false;
+            NotifyReset();
+            ResetGroundMotion(false);
+            evaCache.Float?.CancelPush(); workCache.Float?.CancelPush();
+            Vector3 fromPosition = visualRoot.position;
+            Quaternion fromRotation = visualRoot.rotation;
+            var rig = new ModelRestRig(cache.Transforms, cache.Nodes, visualRoot, lit);
+            try
+            {
+                // From whatever the body shows now to the held standing sample, settled in the bag.
+                rig.CaptureFrom();
+                cache.Restore();
+                outfit.standing.SampleAnimation(outfit.modelRoot.gameObject, 0f);
+                visualRoot.SetPositionAndRotation(berthFrame.position, berthFrame.rotation);
+                rig.CaptureTo();
+                rig.Measure(visualRoot, new[] { outfit.torsoLegs, outfit.leftArm, outfit.rightArm }, cache.Nodes);
+                if (cache.Nodes.TryGetValue("eye.L", out Transform eyeLeft) && cache.Nodes.TryGetValue("eye.R", out Transform eyeRight))
+                    restEyeLocal = visualRoot.InverseTransformPoint((eyeLeft.position + eyeRight.position) * .5f);
+                rig.Blend(0f);
+                visualRoot.SetPositionAndRotation(fromPosition, fromRotation);
+            }
+            catch
+            {
+                rig.Dispose();
+                throw;
+            }
+            restRig = rig;
+            restTime = 0f; restHazard = false;
+            PoseRevision++;
+            SetRestPhase(RestPhase.Entering);
+            return restPhase == RestPhase.Entering;
+        }
+
+        private void StartRelease()
+        {
+            RestStopReason reason = RestStopReason.None;
+            if (restReasonQuery != null)
+            {
+                try { reason = restReasonQuery(); }
+                catch (Exception error) { Debug.LogException(error, this); }
+            }
+            restHazard = ModelRestTimeline.IsHazard(reason);
+            releaseChest = restRig.ChestClosure; releaseHip = restRig.HipClosure;
+            Outfit outfit = activeEva ? eva : work;
+            ModelCache cache = activeEva ? evaCache : workCache;
+            restNextPose = seatedRequested ? BodyPose.Seated : floatingQuery() ? BodyPose.Floating : BodyPose.Standing;
+            // From the bag pose on screen to the pose the body returns to.
+            restRig.CaptureFrom();
+            cache.Restore();
+            AnimationClip next = restNextPose == BodyPose.Floating ? outfit.floating
+                : restNextPose == BodyPose.Seated ? outfit.seated : outfit.standing;
+            next.SampleAnimation(outfit.modelRoot.gameObject, 0f);
+            restRig.CaptureTo();
+            restRig.Blend(0f);
+            restTime = 0f;
+            SetRestPhase(RestPhase.Releasing);
+        }
+
+        private void EndRest()
+        {
+            ModelRestRig rig = restRig;
+            restRig = null;
+            rig?.Dispose();
+            restTime = 0f;
+            forcePoseReset = true;
+            SetRestPhase(RestPhase.None);
+        }
+
+        // Immediate release (reset, stale session, disable, hidden body): straps and hand gone at once.
+        private void CancelRest()
+        {
+            ModelRestRig rig = restRig;
+            restRig = null;
+            rig?.Dispose();
+            restTime = 0f;
+            if (restPhase == RestPhase.None) return;
+            forcePoseReset = true;
+            SetRestPhase(RestPhase.None);
+        }
+
+        private void SetRestPhase(RestPhase next)
+        {
+            if (restPhase == next) return;
+            restPhase = next;
+            try { RestPhaseChanged?.Invoke(next); }
+            catch (Exception error) { Debug.LogException(error, this); }
+        }
+
+        // How far the actual camera has moved from the gameplay eye to the berth eye. The body goes where the eye is:
+        // a camera cut into the berth docks it at once, a camera move carries it along; it never floats in front of the eye.
+        private float RestDock(Vector3 followPosition, Quaternion followRotation)
+        {
+            Vector3 eye = playerCamera.transform.position;
+            float toBerth = Vector3.Distance(eye, berthFrame.TransformPoint(restEyeLocal));
+            float toPlayer = Vector3.Distance(eye, followPosition + followRotation * normalCameraLocal);
+            float sum = toBerth + toPlayer;
+            return sum < 1e-4f ? 1f : Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(.15f, .85f, toPlayer / sum));
+        }
+
+        private void ApplyRestPose()
+        {
+            float t = restTime, blend, chest, hip, hand = 0f;
+            bool onHip = false, atBuckle = false, releasing = restPhase == RestPhase.Releasing;
+            FollowPose(releasing ? restNextPose : pose, out Vector3 followPosition, out Quaternion followRotation);
+            if (releasing)
+            {
+                if (restHazard)
+                {
+                    float open = ModelRestTimeline.HazardOpen(t);
+                    chest = releaseChest * open; hip = releaseHip * open; blend = 1f - open;
+                }
+                else
+                {
+                    chest = releaseChest * ModelRestTimeline.ReleaseChest(t);
+                    hip = releaseHip * ModelRestTimeline.ReleaseHip(t);
+                    hand = releaseChest > .5f || releaseHip > .5f ? ModelRestTimeline.ReleaseHand(t) : 0f;
+                    onHip = ModelRestTimeline.ReleaseHandOnHip(t) || releaseChest <= .5f;
+                    atBuckle = true;
+                    blend = ModelRestTimeline.Exit(t);
+                }
+            }
+            else
+            {
+                bool entering = restPhase == RestPhase.Entering;
+                blend = entering ? ModelRestTimeline.Settle(t) : 1f;
+                chest = entering ? ModelRestTimeline.ChestClose(t) : 1f;
+                hip = entering ? ModelRestTimeline.HipClose(t) : 1f;
+                if (entering) { hand = ModelRestTimeline.EnterHand(t); onHip = ModelRestTimeline.EnterHandOnHip(t); }
+            }
+            float dock = RestDock(followPosition, followRotation);
+            visualRoot.SetPositionAndRotation(Vector3.Lerp(followPosition, berthFrame.position, dock),
+                Quaternion.Slerp(followRotation, berthFrame.rotation, dock));
+            restRig.Blend(blend);
+            // Straps and the strapping hand belong to the berth: shown only with the body in it.
+            if (dock < .9f) { chest = hip = hand = 0f; }
+            restRig.Present(visualRoot, chest, hip, hand, onHip, atBuckle);
+            RestDockWeight = dock;
+        }
+
+        /// <summary>0 = body at the gameplay eye, 1 = docked in the berth (follows where root's camera actually is).</summary>
+        public float RestDockWeight { get; private set; }
+
+        private void FollowPose(BodyPose forPose, out Vector3 position, out Quaternion rotation)
+        {
+            Vector3 forward = Vector3.ProjectOnPlane(playerFeet.forward, Vector3.up);
+            rotation = forward.sqrMagnitude < 1e-8f ? visualRoot.rotation : Quaternion.LookRotation(forward.normalized, Vector3.up);
+            position = playerFeet.position + rotation * GetVisualFeetOffset(forPose);
+        }
+
+        private static Shader FindLit(Outfit outfit)
+        {
+            if (outfit.torsoLegs)
+                foreach (Material material in outfit.torsoLegs.sharedMaterials)
+                    if (material && material.shader && material.shader.name == "Universal Render Pipeline/Lit") return material.shader;
+            return Shader.Find("Universal Render Pipeline/Lit");
+        }
+
         private void FollowFeet()
         {
             Vector3 forward = Vector3.ProjectOnPlane(playerFeet.forward, Vector3.up);
@@ -595,6 +848,7 @@ namespace OutOfReach.Presentation.Motion
 
         private void ResetOwnedVisuals()
         {
+            CancelRest();
             if (cached)
             {
                 NotifyReset();
@@ -722,6 +976,7 @@ namespace OutOfReach.Presentation.Motion
                 catch (InvalidOperationException) { Float = null; }   // a rig without leg joints just has no float legs
             }
             private readonly Transform[] transforms;
+            public Transform[] Transforms => transforms;
             private readonly Vector3[] positions, scales;
             private readonly Quaternion[] rotations;
             public ModelCache(Transform root, SemanticBinding[] bindings)

@@ -7,7 +7,8 @@
     "OutOfReach.Contracts",
     "OutOfReach.Presentation.Motion",
     "OutOfReach.Composition",
-    "OutOfReach.Composition.Editor"
+    "OutOfReach.Composition.Editor",
+    "OutOfReach.Presentation.Motion.Editor"
   ],
   "includePlatforms": [
     "Editor"

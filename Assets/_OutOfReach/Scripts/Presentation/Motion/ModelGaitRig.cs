@@ -361,6 +361,14 @@ namespace OutOfReach.Presentation.Motion
                     throw new InvalidOperationException("Invalid grounded body leg chain for side " + suffix);
             }
 
+            /// <summary>Any two-bone chain (for example upper arm, forearm, wrist) solved like a leg.</summary>
+            public Leg(Transform upper, Transform middle, Transform end, float sideSign)
+            {
+                Thigh = upper; shin = middle; ankle = end; side = sideSign;
+                if (!Thigh || !shin || !ankle || !shin.IsChildOf(Thigh) || !ankle.IsChildOf(shin))
+                    throw new InvalidOperationException("Invalid two-bone limb chain.");
+            }
+
             public Vector3 StandingLocal(ModelGaitProfile profile) => standingAnkle + new Vector3(side * profile.StanceWiden, 0f, 0f);
 
             public void CaptureStanding(Transform reference)
