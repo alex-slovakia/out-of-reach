@@ -71,7 +71,7 @@ namespace OutOfReach.Presentation.Radio
         private object boundSession;
         private CommunicationState? lastComms;
         private string lastDispatchId;
-        private bool sawPlanning, subtitleShown, audioPaused;
+        private bool sawPlanning, subtitleShown, audioPaused, wasRoutine;
         private string shownText;
         private float reassertAt, swayClock, lastOtherDialogueAt = float.NegativeInfinity;
         private GameObject instance;
@@ -155,6 +155,12 @@ namespace OutOfReach.Presentation.Radio
             if (!ReferenceEquals(boundSession, runtime.Session)) Reset(runtime.Session);
             bool paused = runtime.IsPaused;
             if (audioPresenter && audioPresenter.IsDialoguePlaying) lastOtherDialogueAt = Time.unscaledTime;
+            // The routine lets days pass: a beat that has not started when it begins missed its moment (no old news
+            // days later). Beats queued after this edge, such as the Day-14 call that stops the routine, stay.
+            IMissionChapterFlow chapters = runtime.ChapterFlow;
+            bool routine = chapters != null && chapters.Enabled && chapters.IsRoutineRunning;
+            if (routine && !wasRoutine) queue.Clear();
+            wasRoutine = routine;
             DetectTriggers();
             if (!timeline.IsActive) TryStartNext(paused);
             if (!timeline.IsActive) return;
@@ -229,7 +235,7 @@ namespace OutOfReach.Presentation.Radio
             queue.Clear();
             played.Clear();
             boundSession = session;
-            sawPlanning = false;
+            sawPlanning = false; wasRoutine = false;
             lastComms = session != null ? runtime.Communications?.State : null;
             lastDispatchId = session != null ? CurrentDispatch()?.Id : null;
             if (instance) instance.SetActive(false);
