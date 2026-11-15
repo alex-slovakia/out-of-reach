@@ -1,0 +1,2 @@
+21:44:17.211 [repair LifeSupport] Leg 'to repair-life-support (MD), try 2' not reached by real input in 16,7 s (floating=True, onRoute=False); QA teleport to (1.47, 0.03, 9.10) next to repair-life-support
+21:44:29.226 [first stored ration before rest MD (R22 precondition)] Ration (MD) try 2: QA teleport to (-1.38, 0.03, 15.36) next to survival-ration after 'Too far from the galley food drawer. Move closer and press E to eat.'

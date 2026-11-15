@@ -1,0 +1,81 @@
+PASS [opening actual saved Bootstrap] Saved root composition is present.
+PASS [opening actual saved Bootstrap] Saved MissionRuntime is present.
+PASS [opening actual saved Bootstrap] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
+PASS [native actual Bootstrap] Saved composition, runtime, player, resolver, default input and marine bindings exist (startup).
+PASS [menu] Mode menu offers the timed mission: Start timed · 60 s | Practice · no deadline | Quit to desktop
+PASS [menu] A fresh session starts in Planning: Planning
+PASS [menu] Exactly one enabled AudioListener at the menu
+PASS [menu] Mode button visible: Practice
+PASS [menu] Practice choice releases control
+PASS [menu] The mode menu closes after the choice
+PASS [marine boarding W] seat E launches: prompt allows it: 'Begin mission: 546 of 600 kg, 720 of 800 credits'
+PASS [marine boarding W] Single E: seat E launches [cockpit-console] prompt 'Begin mission: 546 of 600 kg, 720 of 800 credits' -> OK 'AURORA-7 launched with 7 equipment line(s).'
+PASS [marine boarding W] Seat E launch succeeded
+PASS [departure] Escape pauses during the departure
+PASS [departure] Departure timeline frozen while paused: 4,00 -> 4,00
+PASS [departure] Mission clock frozen while paused
+PASS [departure] Pause menu shows Resume: Resume | Restart mission | Quit to desktop
+PASS [departure] Resumed after pause
+PASS [departure] Departure + transfer took 37,0 real s
+PASS [arrival] Arrival enters interior float
+PASS [arrival] Arrival is inside the ship
+PASS [arrival] After arrival the phase is Intro (cockpit check pending): Intro
+PASS [arrival] Exactly one enabled AudioListener aboard
+PASS [cockpit check -> impact] cockpit systems check: prompt allows it: 'Run cockpit systems check'
+PASS [cockpit check -> impact] Single E: cockpit systems check [cockpit-console] prompt 'Run cockpit systems check' -> OK 'Cockpit check complete. Impact detected.'
+PASS [cockpit check -> impact] Cockpit check E accepted
+PASS [cockpit check -> impact] The cockpit check triggers the accident
+PASS [cockpit check -> impact] impact cinematic completes in 7,2 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [cockpit check -> impact] Impact ends in Emergency/Repair (Emergency)
+PASS [cockpit check -> impact] Control returns after the impact
+PASS [cockpit check -> impact] [mission-data] Chapter loop is enabled in the saved Bootstrap
+PASS [cockpit check -> impact] [mission-data] MissionChapterPresenter is active in the saved Bootstrap
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: the strip stays inside the screen: (x:689.14, y:555.43, width:372.00, height:238.29) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: radiation estimate equals mission days x 1.8 mSv/day (clock 0.013 mSv): 'Radiation since Day 1 ≈ 0.0 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)'
+PASS [cockpit check -> impact] [mission-data] md-01-day1-after-impact: DSN line equals DsnVisibility for the mission date 2026-11-14 08:10 UTC: 'DSN: Madrid has Mars in view · el. 57° (line of sight)' vs 'DSN: Madrid has Mars in view · el. 57° (line of sight)'
+PASS [repair Power] repair Power: prompt allows it: 'Repair power distribution: 2 spare parts.'
+PASS [repair Power] Single E: repair Power [repair-power] prompt 'Repair power distribution: 2 spare parts.' -> OK 'power distribution repaired (2 spare parts).'
+PASS [repair Power] Power repaired (condition 1,00)
+PASS [repair Power] Power: a repeated E charges nothing more
+SOFT-FAIL [repair LifeSupport] repair LifeSupport: aim resolves repair-life-support (current none)
+SOFT-FAIL [repair LifeSupport] LifeSupport repaired (condition 0,00)
+PASS [repair LifeSupport] LifeSupport: a repeated E charges nothing more
+SOFT-FAIL [repair LifeSupport] Both interior repairs complete
+PASS [repair LifeSupport] [mission-data] Power repaired through its real panel before the first rest (condition 1.00)
+SOFT-FAIL [repair LifeSupport] Real input reaches 'to repair-life-support (MD), try 2' (fell back to QA teleport)
+PASS [repair LifeSupport] After the QA teleport the target is in focus: repair-life-support (current repair-life-support)
+PASS [repair LifeSupport] [mission-data] LifeSupport repaired through its real panel before the first rest (condition 1.00)
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: the strip stays inside the screen: (x:689.14, y:555.43, width:372.00, height:238.29) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: radiation estimate equals mission days x 1.8 mSv/day (clock 0.332 mSv): 'Radiation since Day 1 ≈ 0.3 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)'
+PASS [repair LifeSupport] [mission-data] md-02-day1-after-repairs: DSN line equals DsnVisibility for the mission date 2026-11-14 12:25 UTC: 'DSN: Goldstone + Madrid have Mars in view (line of sight)' vs 'DSN: Goldstone + Madrid have Mars in view (line of sight)'
+PASS [first stored ration before rest MD (R22 precondition)] First stored ration eaten through its real target before rest MD (rations 1, last 'Meal started: thermostabilised, warmed, 8.8 s')
+SOFT-FAIL [mission-data: first rest through the real berth] first sleep (MD, try 1): aim resolves survival-sleep (current none)
+PASS [mission-data: first rest through the real berth] [mission-data] First rest completed through the real berth target (last 'Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew')
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: strip text equals Core's formatted sample: 'Earth 197,708,000 km · signal 10 min 59 s one way' vs Core 'Earth 197,708,000 km · signal 10 min 59 s one way'
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: the strip stays inside the screen: (x:689.14, y:536.57, width:372.00, height:257.14) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: radiation estimate equals mission days x 1.8 mSv/day (clock 1.156 mSv): 'Radiation since Day 1 ≈ 1.2 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)'
+PASS [mission-data: first rest through the real berth] [mission-data] md-03-day1-after-first-rest: DSN line equals DsnVisibility for the mission date 2026-11-14 23:24 UTC: 'DSN: Canberra has Mars in view · el. 24° (line of sight)' vs 'DSN: Canberra has Mars in view · el. 24° (line of sight)'
+PASS [mission-data: routine by R to the next chapter] [mission-data] R on the chapter strip starts the routine (Core check: 'Routine days until the inspection of the repairs and reserves on mission day 5: 3 d 16 h of meals, checks and ordinary sleep')
+PASS [mission-data: routine by R to the next chapter] [mission-data] Routine segment stops within 180 real s: ReachedChapter 'reached the inspection of the repairs and reserves' chapter=Consequences day=5
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: strip text equals Core's formatted sample: 'Earth 192,594,000 km · signal 10 min 42 s one way' vs Core 'Earth 192,594,000 km · signal 10 min 42 s one way'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: the strip stays inside the screen: (x:689.14, y:555.43, width:372.00, height:238.29) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: radiation estimate equals mission days x 1.8 mSv/day (clock 7.808 mSv): 'Radiation since Day 1 ≈ 7.8 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-05-day5-beat: DSN line equals DsnVisibility for the mission date 2026-11-18 16:06 UTC: 'DSN: Goldstone + Canberra have Mars in view (line of sight)' vs 'DSN: Goldstone + Canberra have Mars in view (line of sight)'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: the NASA/JPL line is visible on the strip (strip shown=True)
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: strip text equals Core's formatted sample: 'Earth 192,594,000 km · signal 10 min 42 s one way' vs Core 'Earth 192,594,000 km · signal 10 min 42 s one way'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: the source label says what the number is: 'NASA/JPL Horizons · today's Earth–Mars range, used as a Mars-vicinity proxy'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: the strip stays inside the screen: (x:689.14, y:555.43, width:372.00, height:238.29) in (x:0.00, y:0.00, width:1097.14, height:822.86)
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: radiation estimate equals mission days x 1.8 mSv/day (clock 7.853 mSv): 'Radiation since Day 1 ≈ 7.9 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)'
+PASS [mission-data: routine by R to the next chapter] [mission-data] md-06-day5-strip: DSN line equals DsnVisibility for the mission date 2026-11-18 16:42 UTC: 'DSN: Goldstone + Canberra have Mars in view (line of sight)' vs 'DSN: Goldstone + Canberra have Mars in view (line of sight)'
+PASS [mission-data: routine by R to the next chapter] [mission-data] The line changed between mission days exactly as Core changed its sample: Earth 197,708,000 km · signal 10 min 59 s one way -> Earth 192,594,000 km · signal 10 min 42 s one way
+PASS [mission-data: routine by R to the next chapter] [mission-data] The DSN line followed the mission date: DSN: Madrid has Mars in view · el. 57° (line of sight) -> DSN: Goldstone + Madrid have Mars in view (line of sight) -> DSN: Canberra has Mars in view · el. 24° (line of sight) -> DSN: Goldstone + Canberra have Mars in view (line of sight)
