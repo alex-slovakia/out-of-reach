@@ -107,7 +107,7 @@ namespace OutOfReach.Tests.Composition
 
             Assert.That(hint, Does.Contain("click a surface in reach: push off"));
             Assert.That(hint, Does.Contain("Hold W + Space: push off"));
-            Assert.That(hint, Does.Contain("A/D: lean"));
+            Assert.That(hint, Does.Contain("A/D: tap or hold to side-step"));
             Assert.That(hint, Does.Contain("E use equipment"));
             Assert.That(hint, Does.Contain("Esc resume"));
             Assert.That(hint, Does.Not.Contain("WASD move"));

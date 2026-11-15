@@ -327,7 +327,7 @@ namespace OutOfReach.Presentation.UI
             rows.Add(new PauseControlRow("Push off a surface in reach",
                 Merge(One(PauseGlyph.Mouse(true, false)), One(PauseGlyph.Mouse(false, true)))));
             rows.Add(new PauseControlRow("Push with both hands", One(PauseGlyph.Mouse(true, true))));
-            rows.Add(new PauseControlRow("Lean · tap or hold to side-step",
+            rows.Add(new PauseControlRow("Side-step · tap or hold",
                 Merge(One(MovePart(bindings, 1, "A")), One(MovePart(bindings, 3, "D")))));
             if (railGrip)
                 rows.Add(new PauseControlRow("Grip a reachable rail · click again to push off",

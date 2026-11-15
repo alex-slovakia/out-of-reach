@@ -35,7 +35,7 @@ namespace OutOfReach.Composition
         public const string FloatingPushHint = "Hold W + Space: push off (legs on the deck, hands near walls)\n"
             + "Left/right click a surface in reach: push off with that hand\n"
             + "Both mouse buttons: strong two-hand push\n"
-            + "A/D: lean · tap or hold to side-step off a nearby surface";
+            + "A/D: tap or hold to side-step off a nearby surface";
         public const string SuitedRailHint = "Click a reachable rail to grab it · Click again to push off it";
         public const string FloatingSystemsHint = "Mouse look · E use equipment · Tab systems · Esc resume";
 
