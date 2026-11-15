@@ -32,7 +32,7 @@ namespace OutOfReach.Presentation.UI
         private readonly Button systems;
         private bool systemsPinned, systemsHeld, showingPlanning, evaContext, co2NeedsAttention;
         private readonly VisualElement interactionPrompt, subtitleOverlay;
-        private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText;
+        private readonly Label interactionKey, interactionText, subtitleSpeaker, subtitleText, microgravityHelp;
         private readonly Label[] planningResources, hudResources;
         private readonly ResourceGauge oxygenGauge, waterGauge, foodGauge, batteryGauge, co2Gauge, suitGauge;
         private readonly ResourceGauge exertionGauge;
@@ -243,6 +243,11 @@ namespace OutOfReach.Presentation.UI
             IgnorePicking(interactionPrompt);
             ClearInteractionPrompt();
 
+            microgravityHelp = Text(string.Empty, "microgravity-help");
+            microgravityHelp.pickingMode = PickingMode.Ignore;
+            hud.Add(microgravityHelp);
+            SetVisible(microgravityHelp, false);
+
             subtitleOverlay = Element("subtitle-overlay");
             root.Add(subtitleOverlay);
             var subtitleBox = Element("subtitle-box");
@@ -344,6 +349,9 @@ namespace OutOfReach.Presentation.UI
         }
 
         public void SetPhase(GamePhase current, MissionOutcome outcome)
+            => SetPhase(current, outcome, false);
+
+        public void SetPhase(GamePhase current, MissionOutcome outcome, bool interiorRepairsComplete)
         {
             root.EnableInClassList("report-visible", current == GamePhase.Report);
             root.EnableInClassList("intro-active", current == GamePhase.Intro);
@@ -361,7 +369,10 @@ namespace OutOfReach.Presentation.UI
                 case GamePhase.Planning: phase.text = "Mission preparation"; objective.text = string.Empty; break;
                 case GamePhase.Intro: phase.text = "Complete the cockpit check"; objective.text = "You are Houston, aboard Aurora-7."; break;
                 case GamePhase.Emergency: phase.text = "Restore power"; objective.text = string.Empty; break;
-                case GamePhase.Repair: phase.text = "Restore power and life support"; objective.text = string.Empty; break;
+                case GamePhase.Repair:
+                    phase.text = interiorRepairsComplete ? "Prepare for a spacewalk" : "Restore power and life support";
+                    objective.text = interiorRepairsComplete ? "Put on the suit, then cycle the airlock." : string.Empty;
+                    break;
                 case GamePhase.Eva: phase.text = "Repair the antenna"; objective.text = "Spacewalk (EVA) · Stay attached to the safety line."; break;
                 case GamePhase.Transmission: phase.text = "Restore contact with Earth"; objective.text = string.Empty; break;
                 case GamePhase.Survival: phase.text = "Survive until rescue"; objective.text = "Manage your food, water and ship systems."; break;
@@ -528,6 +539,13 @@ namespace OutOfReach.Presentation.UI
         {
             SetVisible(interactionPrompt, false);
             interactionText.text = string.Empty;
+        }
+
+        public void SetMicrogravityHelp(string text)
+        {
+            if (microgravityHelp.text == text) return;
+            microgravityHelp.text = text;
+            SetVisible(microgravityHelp, !string.IsNullOrEmpty(text));
         }
 
         public void ShowSubtitle(string text, string speakerLabel)

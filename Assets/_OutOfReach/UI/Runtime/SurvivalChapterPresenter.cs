@@ -18,6 +18,7 @@ namespace OutOfReach.Presentation.UI
         private IGameState state;
         private ISimulationClock clock;
         private Func<bool> presentationAllowed;
+        private Func<double?> readBeaconRequestTime;
         private bool subscribed;
         private VisualElement needsHost, detailsHost, restHost, alertsHost, needs, details, rest, alerts;
         private readonly SurvivalRestNotice restNotice = new SurvivalRestNotice();
@@ -29,7 +30,7 @@ namespace OutOfReach.Presentation.UI
         /// Must allow actual rest even if the player's movement control is locked. Null fails closed.</param>
         public void Configure(UIDocument ui, StyleSheet styleSheet, ISurvivalExtension needsService,
             ISurvivalRecovery recoveryService, IGameState gameState, ISimulationClock simulationClock,
-            Func<bool> canPresent)
+            Func<bool> canPresent, Func<double?> readBeaconRequestTime = null)
         {
             ClearBinding();
             document = ui;
@@ -39,6 +40,7 @@ namespace OutOfReach.Presentation.UI
             state = gameState;
             clock = simulationClock;
             presentationAllowed = canPresent;
+            this.readBeaconRequestTime = readBeaconRequestTime;
             if (isActiveAndEnabled) Subscribe();
             RefreshPresentation();
         }
@@ -51,6 +53,7 @@ namespace OutOfReach.Presentation.UI
             sheet = null;
             survival = null;
             recovery = null;
+            readBeaconRequestTime = null;
             state = null;
             clock = null;
             presentationAllowed = null;
@@ -123,8 +126,12 @@ namespace OutOfReach.Presentation.UI
             // The existing expanded-telemetry parent owns Tab/pinned visibility. No second detail toggle/input.
             Show(details, recovery != null);
             bool beaconRequested = recovery != null && recovery.Stage == RecoveryStage.BeaconRequested;
-            Show(beaconAction, beaconRequested);
-            Show(beacon, beaconRequested);
+            double untilRequest = recovery?.Stage == RecoveryStage.Inbound
+                ? (readBeaconRequestTime?.Invoke() ?? double.PositiveInfinity) - clock.ElapsedSimulationSeconds
+                : double.PositiveInfinity;
+            bool approachWindow = untilRequest > 0d && untilRequest <= 18d * 3600d;
+            Show(beaconAction, beaconRequested || approachWindow);
+            Show(beacon, beaconRequested || approachWindow);
             if (recovery == null) return;
             recoveryTitle.text = SurvivalChapterReadout.StageLabel(recovery.Stage);
             arrival.text = recovery.ArrivalAtSimulationSeconds.HasValue
@@ -133,9 +140,17 @@ namespace OutOfReach.Presentation.UI
             Show(arrival, recovery.Stage != RecoveryStage.Arrived);
             double? ends = recovery.BeaconWindowEndsAtSimulationSeconds;
             if (beaconRequested)
+            {
+                beaconAction.text = "Power the recovery beacon at the cockpit console.";
                 beacon.text = ends.HasValue
                     ? SurvivalChapterReadout.BeaconWindow(ends.Value, clock.ElapsedSimulationSeconds)
                     : "Beacon window unavailable";
+            }
+            else if (approachWindow)
+            {
+                beaconAction.text = "Head to the cockpit for the recovery beacon.";
+                beacon.text = "Beacon opens in " + SurvivalChapterReadout.Remaining(untilRequest) + " (simulated)";
+            }
         }
 
         private bool EnsureViews()

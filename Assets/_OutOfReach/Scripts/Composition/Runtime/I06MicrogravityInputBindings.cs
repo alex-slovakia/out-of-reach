@@ -154,7 +154,7 @@ namespace OutOfReach.Composition
             Vector3 travel = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y));
             bool accepted = directed
                 ? bridge.TryPushDirected(hand, eye.forward, travel, handStrength)
-                : suit.IsSuitOn && PreferRailGrip()
+                : (suit.IsSuitOn || bridge.WorkGripAvailable) && PreferRailGrip()
                     ? bridge.TryGrab(hand, eye.forward) : bridge.TryPush(hand, eye.forward, handStrength);
             if (!accepted) Refuse(bridge.LastRefusal); // No decorative press and no second action after refusal.
         }

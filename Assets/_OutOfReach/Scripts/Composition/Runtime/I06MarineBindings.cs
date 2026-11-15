@@ -34,6 +34,9 @@ namespace OutOfReach.Composition
         private Color ambientLight, ambientSky, ambientEquator, ambientGround;
         private float ambientIntensity, reflectionIntensity, cameraFar, sunIntensity;
         private bool fog, environmentCaptured, bound, lease, finishing, suppressEnd;
+        private FogMode fogMode;
+        private Color fogColor;
+        private float fogDensity, fogStart, fogEnd;
         private Light sun;
         private Color sunColor;
         private Quaternion sunRotation;
@@ -144,18 +147,22 @@ namespace OutOfReach.Composition
             ambientEquator = RenderSettings.ambientEquatorColor; ambientGround = RenderSettings.ambientGroundColor;
             ambientIntensity = RenderSettings.ambientIntensity; reflectionIntensity = RenderSettings.reflectionIntensity;
             fog = RenderSettings.fog; cameraFar = playerCamera.farClipPlane; sun = RenderSettings.sun;
+            fogMode = RenderSettings.fogMode; fogColor = RenderSettings.fogColor;
+            fogDensity = RenderSettings.fogDensity; fogStart = RenderSettings.fogStartDistance; fogEnd = RenderSettings.fogEndDistance;
             if (sun) { sunColor = sun.color; sunIntensity = sun.intensity; sunRotation = sun.transform.rotation; }
             environmentCaptured = true;
         }
         private void ApplyMarineEnvironment()
         {
-            RenderSettings.skybox = marineSky; RenderSettings.fog = false;
+            RenderSettings.skybox = marineSky;
+            RenderSettings.fog = true; RenderSettings.fogMode = FogMode.ExponentialSquared;
+            RenderSettings.fogColor = new Color(.60f, .68f, .74f); RenderSettings.fogDensity = .00045f;
             RenderSettings.ambientMode = AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(.29f, .36f, .43f);
-            RenderSettings.ambientEquatorColor = new Color(.20f, .24f, .27f);
-            RenderSettings.ambientGroundColor = new Color(.12f, .13f, .14f);
+            RenderSettings.ambientSkyColor = new Color(.45f, .54f, .63f);
+            RenderSettings.ambientEquatorColor = new Color(.34f, .39f, .43f);
+            RenderSettings.ambientGroundColor = new Color(.22f, .24f, .22f);
             RenderSettings.ambientIntensity = 1; RenderSettings.reflectionIntensity = .45f;
-            if (sun) { sun.color = new Color(1, .82f, .61f); sun.intensity = 1.8f; sun.transform.rotation = Quaternion.Euler(16, -48, 0); }
+            if (sun) { sun.color = new Color(1, .93f, .82f); sun.intensity = 2f; sun.transform.rotation = Quaternion.Euler(28, -48, 0); }
             playerCamera.farClipPlane = 5000;
         }
         private void RestoreEnvironment()
@@ -166,8 +173,11 @@ namespace OutOfReach.Composition
             RenderSettings.ambientEquatorColor = ambientEquator; RenderSettings.ambientGroundColor = ambientGround;
             RenderSettings.ambientIntensity = ambientIntensity; RenderSettings.reflectionIntensity = reflectionIntensity;
             RenderSettings.fog = fog;
+            RenderSettings.fogMode = fogMode; RenderSettings.fogColor = fogColor;
+            RenderSettings.fogDensity = fogDensity; RenderSettings.fogStartDistance = fogStart; RenderSettings.fogEndDistance = fogEnd;
             if (playerCamera) playerCamera.farClipPlane = cameraFar;
             if (sun) { sun.color = sunColor; sun.intensity = sunIntensity; sun.transform.rotation = sunRotation; }
+            environmentCaptured = false; // Transfer consumes the lease; later Unbind must not overwrite ship-owned changes.
         }
         private void RestoreConsole()
         {

@@ -15,6 +15,10 @@ namespace OutOfReach.Composition
     [DisallowMultipleComponent, DefaultExecutionOrder(300)]
     public sealed class I06MicrogravityBridge : MonoBehaviour
     {
+        [SerializeField] BareRailGripPose workGripPose;
+        public bool WorkGripAvailable => bound && workGripPose && workGripPose.IsValid && bare && bare.GripPoseConfigured;
+        public void ConfigureWorkGripPose(BareRailGripPose pose)
+        { CancelOwnedContact(); workGripPose = pose; if (bare) bare.ConfigureGripPose(pose); }
         const float WristPadding = .01f, PointTolerance = .004f;
         readonly RaycastHit[] hits = new RaycastHit[64];
         readonly Collider[] overlaps = new Collider[64];
@@ -27,6 +31,7 @@ namespace OutOfReach.Composition
         ISimulationClock clock;
         Func<bool> rootPolicy;
         bool bound, armed, pending, pendingSuited, actionSent, cancelling;
+        bool gripReturning;
         int generation, bindingGeneration;
         GamePhase phase;
         ContactHand hand;
@@ -66,6 +71,7 @@ namespace OutOfReach.Composition
             {
                 bare.Configure(WorkArm("L", body.WorkLeftArmRenderer), WorkArm("R", body.WorkRightArmRenderer),
                     player.ViewPivot, clock, WorkLeaseAllowed, ReadPoseRevision, ValidateContact);
+                bare.ConfigureGripPose(workGripPose);
                 gloves.ConfigureContacts(player.ViewPivot, GloveLeaseAllowed, ValidateContact);
                 body.PoseWillReset += OnPoseWillReset;
                 suit.Changed += OnSuitChanged;
@@ -111,6 +117,14 @@ namespace OutOfReach.Composition
         {
             bool held = player && ownedGrip && player.HeldHandhold == ownedGrip;
             bool floating = player && player.IsFloating;
+            if (pending && !pendingSuited && kind == HandContactKind.Grip && bare
+                && bare.ContactStage == HandContactStage.Holding && ModeAllowed())
+            {
+                Collider released = ownedGrip; ownedGrip = null;
+                if (player && released && player.HeldHandhold == released) player.Release();
+                bare.CancelContact(); requestStarted = Time.unscaledTime;
+                return held ? FloatActionResult.Done : floating ? FloatActionResult.NotHolding : FloatActionResult.NotFloating;
+            }
             CancelOwnedContact();
             return held ? FloatActionResult.Done : floating ? FloatActionResult.NotHolding : FloatActionResult.NotFloating;
         }
@@ -151,6 +165,8 @@ namespace OutOfReach.Composition
             if (!pending) return;
             if (!ModeAllowed() || pendingSuited != suit.IsSuitOn) { CancelOwnedContact(); return; }
             HandContactStage stage = pendingSuited ? gloves.ContactStage : bare.ContactStage;
+            if (!pendingSuited && kind == HandContactKind.Grip && stage == HandContactStage.Returning && !gripReturning)
+            { gripReturning = true; requestStarted = Time.unscaledTime; }
             if (stage == HandContactStage.None || (ownedGrip && stage != HandContactStage.Holding)
                 || (stage != HandContactStage.Holding && Time.unscaledTime - requestStarted > 1.5f)) CancelOwnedContact();
         }
@@ -162,7 +178,8 @@ namespace OutOfReach.Composition
             if (pending || player.HeldHandhold) return Refuse("Release the current contact first.");
             if (selectedHand != ContactHand.Left && selectedHand != ContactHand.Right) return Refuse("Invalid hand.");
             if (!VisualLeaseAllowed(selectedHand)) return Refuse("Selected arm does not have the visual lease.");
-            if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn) return Refuse("Bare-hand grip has no authored pose.");
+            if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn && !WorkGripAvailable)
+                return Refuse("Bare-hand grip needs the verified authored 15mm pose asset.");
             if (!Finite(aimDirection) || aimDirection.sqrMagnitude < .00001f
                 || !Nearest(player.ViewPivot.position, aimDirection.normalized, Reach, out RaycastHit hit))
                 return Refuse("No unobstructed solid surface within reach.");
@@ -179,10 +196,13 @@ namespace OutOfReach.Composition
             float radius = 0f;
             if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
                 return Refuse("Grip needs a registered 12â€“17mm straight capsule rail.");
+            if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn && Mathf.Abs(radius - .015f) > .00001f)
+                return Refuse("Authored bare-hand grip supports exactly15mm radius rails.");
             if (tangent.sqrMagnitude < .99f) return Refuse("No stable contact frame.");
             // A cylinder axis is an unoriented line. Pick the authored grip hemisphere once,
             // rather than letting an equivalent +axis/-axis model flip the wrist upside down.
-            if (requestedKind == HandContactKind.Grip) tangent = OrientRailAxisAtRequest(tangent, player.ViewPivot);
+            if (requestedKind == HandContactKind.Grip) tangent = suit.IsSuitOn
+                ? OrientRailAxisAtRequest(tangent, player.ViewPivot) : bare.OrientGripAxis(selectedHand, tangent, hit.normal);
             Vector3 direction = hit.normal;
             if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f
                 && !TryDirectedPushDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
@@ -190,12 +210,13 @@ namespace OutOfReach.Composition
             hand = selectedHand; kind = requestedKind; surface = hit.collider;
             target = Frame(surface, hit.point, hit.normal, tangent, radius);
             localPushDirection = surface.transform.InverseTransformVector(direction).normalized;
-            pushStrength = strength; pendingSuited = suit.IsSuitOn; actionSent = false; pending = true;
+            pushStrength = strength; pendingSuited = suit.IsSuitOn; actionSent = false; pending = true; gripReturning = false;
             requestStarted = Time.unscaledTime; // Presentation watchdog only; never advances simulation or physics.
             generation++;
             bool accepted = pendingSuited
                 ? gloves.TryReachContact(hand, kind, target, AtContact, kind == HandContactKind.Grip ? ReadHeld : (Func<HandContactTarget?>)null)
-                : bare.TryReachPush(hand, target, AtContact);
+                : kind == HandContactKind.Grip ? bare.TryReachGrip(hand, target, AtContact, ReadHeld)
+                    : bare.TryReachPush(hand, target, AtContact);
             if (accepted) return true;
             string reason = !pendingSuited && bare && !string.IsNullOrEmpty(bare.LastRefusalReason)
                 ? "WORK contact: " + (string.IsNullOrEmpty(bare.LastRefusalDiagnostic) ? bare.LastRefusalReason : bare.LastRefusalDiagnostic)
@@ -237,6 +258,23 @@ namespace OutOfReach.Composition
             Vector3 across = Vector3.ProjectOnPlane(player.ViewPivot.right, aimedHit.normal);
             if (across.sqrMagnitude < .01f) return false;
             Vector3 proposed = aimedHit.point + across.normalized * (selectedHand == ContactHand.Left ? -.06f : .06f);
+            // At the ceiling the reticle can be 30cm ahead while the real shoulder-to-wrist chain is
+            // only48cm. Select a nearby natural palm placement on that SAME aimed plane; the existing
+            // re-ray, whole-skin solver, wrist limit and Player validation still decide whether it is real.
+            if (Vector3.Dot(aimedHit.normal, Vector3.down) > .95f)
+            {
+                Vector3 heading = Vector3.ProjectOnPlane(player.ViewPivot.forward, aimedHit.normal);
+                if (heading.sqrMagnitude < .0001f) return false;
+                heading.Normalize();
+                Vector3 eyeOnPlane = player.ViewPivot.position - aimedHit.normal
+                    * Vector3.Dot(player.ViewPivot.position - aimedHit.point, aimedHit.normal);
+                float ahead = Vector3.Dot(aimedHit.point - eyeOnPlane, heading);
+                Vector3 naturalPoint = eyeOnPlane + heading * Mathf.Clamp(ahead, .03f, .13f)
+                    + across.normalized * (selectedHand == ContactHand.Left ? -.06f : .06f);
+                // This does not search around an edge or rescue an unrelated distant aim.
+                if (Vector3.Distance(naturalPoint, proposed) > .25f) return false;
+                proposed = naturalPoint;
+            }
             Vector3 delta = proposed - player.ViewPivot.position;
             float distance = delta.magnitude;
             if (!Finite(proposed) || distance < .001f || distance > Reach

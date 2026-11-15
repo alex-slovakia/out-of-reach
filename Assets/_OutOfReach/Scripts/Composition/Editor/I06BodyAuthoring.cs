@@ -63,7 +63,7 @@ namespace OutOfReach.Composition.Editor
                 // Centered, source-measured V04 neutral pose: the torso/legs fit the
                 // actual capsule and relaxed hands start behind a nearby wall.
                 // Standing uses the reviewed unit-correct V02 fit; seated retains its original setback.
-                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, new Vector3(0f, 0f, -.197f));
+                presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing, new Vector3(0f, 0f, -.285f));
                 presenter.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating, Vector3.zero);
                 ValidateScene(presenter);
                 EditorUtility.SetDirty(presenter);

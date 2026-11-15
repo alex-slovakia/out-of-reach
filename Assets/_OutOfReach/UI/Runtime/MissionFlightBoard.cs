@@ -38,7 +38,9 @@ namespace OutOfReach.Presentation.UI
         private string subtitleSpeaker = string.Empty;
         private string interactionPrompt = string.Empty;
         private bool interactionAvailable;
+        private string microgravityHelp = string.Empty;
         private Func<float> readExertionRemaining;
+        private Func<bool> readInteriorSystemsOperational;
         private Func<string> readPlanningInstruction;
         public void ConfigurePlanningInstruction(Func<string> readInstruction) => readPlanningInstruction = readInstruction;
 
@@ -76,6 +78,11 @@ namespace OutOfReach.Presentation.UI
 
         public void Configure(IMissionPlanner missionPlanner, IResourceSystem resourceSystem,
             IGameState gameState, IMissionEventBus eventBus)
+            => Configure(missionPlanner, resourceSystem, gameState, eventBus, null);
+
+        /// <summary>Optional read-only operational status supplied by the composition owner; UI defines no repair threshold.</summary>
+        public void Configure(IMissionPlanner missionPlanner, IResourceSystem resourceSystem,
+            IGameState gameState, IMissionEventBus eventBus, Func<bool> readInteriorSystemsOperational)
         {
             if (disposed) throw new ObjectDisposedException(nameof(MissionFlightBoard));
             if (missionPlanner == null) throw new ArgumentNullException(nameof(missionPlanner));
@@ -101,6 +108,7 @@ namespace OutOfReach.Presentation.UI
             resources = resourceSystem;
             state = gameState;
             events = eventBus;
+            this.readInteriorSystemsOperational = readInteriorSystemsOperational;
             commandExplanation = string.Empty;
             ClearSubtitle();
             ClearInteractionPrompt();
@@ -202,6 +210,13 @@ namespace OutOfReach.Presentation.UI
             view?.ClearInteractionPrompt();
         }
 
+        public void SetMicrogravityHelp(string text)
+        {
+            if (disposed) return;
+            microgravityHelp = text ?? string.Empty;
+            view?.SetMicrogravityHelp(microgravityHelp);
+        }
+
         private void LateUpdate()
         {
             // These interfaces have no change events. Read Core's values after its frame update;
@@ -259,6 +274,7 @@ namespace OutOfReach.Presentation.UI
             evaStatus = null;
             cargoLoading = null;
             readExertionRemaining = null;
+            readInteriorSystemsOperational = null;
             physicalPlanning = false;
             departurePresentation = false;
             physicalTerminalPresentation = false;
@@ -304,6 +320,7 @@ namespace OutOfReach.Presentation.UI
             if (subscribed || events == null || !isActiveAndEnabled || disposed) return;
             events.PhaseChanged += OnPhaseChanged;
             events.ResourceChanged += OnResourceChanged;
+            events.SystemConditionChanged += OnSystemConditionChanged;
             events.MissionEnded += OnMissionEnded;
             subscribed = true;
         }
@@ -315,6 +332,7 @@ namespace OutOfReach.Presentation.UI
             if (!subscribed) return;
             events.PhaseChanged -= OnPhaseChanged;
             events.ResourceChanged -= OnResourceChanged;
+            events.SystemConditionChanged -= OnSystemConditionChanged;
             events.MissionEnded -= OnMissionEnded;
             subscribed = false;
         }
@@ -371,9 +389,10 @@ namespace OutOfReach.Presentation.UI
             }
 
             bool planning = state.Phase == GamePhase.Planning;
+            view.SetMicrogravityHelp(microgravityHelp);
             view.SetPhysicalPlanning(physicalPlanning);
             view.ShowPlanning(planning);
-            view.SetPhase(state.Phase, state.Outcome);
+            RefreshObjective();
             if (planning)
             {
                 // Draft is a fresh authoritative snapshot after each command. Do not retain it as state.
@@ -458,6 +477,21 @@ namespace OutOfReach.Presentation.UI
         {
             if (view != null && state != null && state.Phase != GamePhase.Planning)
                 view.SetHudResources(message.Snapshot);
+        }
+
+        private void RefreshObjective()
+        {
+            if (view == null || state == null) return;
+            bool repairsComplete = state.Phase == GamePhase.Repair && state.Outcome == MissionOutcome.None
+                && readInteriorSystemsOperational != null && readInteriorSystemsOperational();
+            view.SetPhase(state.Phase, state.Outcome, repairsComplete);
+        }
+
+        private void OnSystemConditionChanged(SystemConditionChanged message)
+        {
+            if (disposed || !isActiveAndEnabled || !subscribed || state == null || state.Phase != GamePhase.Repair) return;
+            if (message.SystemId == ShipSystemId.Power || message.SystemId == ShipSystemId.LifeSupport)
+                RefreshObjective();
         }
 
         private void OnMissionEnded(MissionEnded message)

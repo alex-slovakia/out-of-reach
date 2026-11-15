@@ -10,6 +10,18 @@ namespace OutOfReach.Presentation.Hands
     {
         [SerializeField, Range(.15f, .25f)] private float reachSeconds = .20f;
         [SerializeField, Range(.15f, .35f)] private float returnSeconds = .24f;
+        [SerializeField] private BareRailGripPose gripPose;
+        private BareRailGripLease grip;
+        private Func<HandContactTarget?> readHeldGrip;
+        private float gripClose, gripReturnClose;
+        private float gripAxialDegrees;
+        public float GripAxialRotationDegrees => grip != null ? gripAxialDegrees : 0f;
+        public bool GripPoseConfigured => gripPose && gripPose.IsValid;
+        public int GripMeasuredVertexCount => grip != null ? grip.VertexCount : 0;
+        public float GripMinimumClearanceMetres => grip != null ? grip.MinimumClearance : float.NaN;
+        public float GripMaximumRegionGapMetres => grip != null ? grip.MaximumRegionGap : float.NaN;
+        public float GripRegionGapMetres(int region) => grip != null && region >= 0 && region < 6 ? grip.RegionGap(region) : float.NaN;
+        public void ConfigureGripPose(BareRailGripPose pose) { CancelImmediately(); gripPose = pose; }
         private BareArmContactRig left, right, active;
         private Transform eye;
         private ISimulationClock clock;
@@ -102,18 +114,163 @@ namespace OutOfReach.Presentation.Hands
             return true;
         }
 
+        public Vector3 OrientGripAxis(ContactHand selected, Vector3 axis, Vector3 normal)
+        {
+            BareArmContactRig rig = selected == ContactHand.Left ? left : right;
+            if (!GripPoseConfigured || rig == null || !rig.IsUsable) return axis;
+            var pose = gripPose.For(selected);
+            Quaternion inverse = Quaternion.Inverse(Quaternion.LookRotation(pose.railAxis, pose.palmNormal));
+            Quaternion a = Quaternion.LookRotation(axis, -normal) * inverse;
+            Quaternion b = Quaternion.LookRotation(-axis, -normal) * inverse;
+            return Quaternion.Angle(rig.Wrist.rotation, b) < Quaternion.Angle(rig.Wrist.rotation, a) ? -axis : axis;
+        }
+
+        /// <summary>Starts one real bare rail grip. Physics can run only after the whole authored close and skin proof.</summary>
+        public bool TryReachGrip(ContactHand requestedHand, HandContactTarget actualSurface,
+            Func<HandContactSample, bool> tryGrabAtContact, Func<HandContactTarget?> heldPoint)
+        {
+            LastRefusalReason = LastRefusalDiagnostic = string.Empty;
+            if (!isActiveAndEnabled || clock == null || clock.IsPaused || ContactStage != HandContactStage.None
+                || !GripPoseConfigured || tryGrabAtContact == null || heldPoint == null
+                || (requestedHand != ContactHand.Left && requestedHand != ContactHand.Right)
+                || !leaseAllowed(requestedHand) || Mathf.Abs(actualSurface.GripRadiusMetres - .015f) > .00001f)
+                return RefuseDiagnostic("grip.requestOrPoseUnavailable");
+            active = requestedHand == ContactHand.Left ? left : right; hand = requestedHand;
+            if (active == null || !active.IsUsable || !active.Renderer.enabled || !active.Renderer.gameObject.activeInHierarchy)
+            { RefuseDiagnostic("grip.rigUnavailable"); Forget(); return false; }
+            poseRevision = readRevision(); target = actualSurface; CapturePose(baseline);
+            try { grip = new BareRailGripLease(active, gripPose.For(hand)); }
+            catch (ArgumentException) { RefuseDiagnostic("grip.skinOrPoseUnavailable"); Forget(); return false; }
+            palmFrame = Quaternion.LookRotation(grip.Pose.railAxis, grip.Pose.palmNormal);
+            palmPoint = grip.Pose.railPoint - grip.Pose.palmNormal * actualSurface.GripRadiusMetres;
+            startWrist = active.Upper.parent.InverseTransformPoint(active.Wrist.position);
+            startWristRotation = Quaternion.Inverse(active.Upper.parent.rotation) * active.Wrist.rotation;
+            elbowPole = active.Upper.parent.InverseTransformVector(active.Lower.position - active.Upper.position);
+            previousPoint = actualSurface.Surface ? actualSurface.Surface.TransformPoint(actualSurface.LocalPoint) : Vector3.zero;
+            previousEye = eye.position; overheadReach = false;
+            if (!TryTarget(out HandContactSample sample, out Vector3 point, out Quaternion rotation)
+                || !grip.Measure(sample) || grip.MinimumClearance < -PlaneTolerance)
+            { if (string.IsNullOrEmpty(LastRefusalReason)) RefuseDiagnostic("grip.startingSkinIntersectsRail"); Forget(); return false; }
+            // A cylinder has real rotational freedom around its axis. Pick one bounded anatomical
+            // endpoint now; never change that choice during reach/hold/return or dispatch physics here.
+            if (!SelectGripAxialPose() || !TryTarget(out sample, out point, out rotation)) { Forget(); return false; }
+            lastSample = sample; lastFinalWrist = point; lastFinalRotation = rotation;
+            action = tryGrabAtContact; readHeldGrip = heldPoint; gripClose = lastBlend = elapsed = 0f;
+            ContactStage = HandContactStage.Reaching; return true;
+        }
+
+        bool SelectGripAxialPose()
+        {
+            bool found = false; float bestAngle = 0f, bestWrist = float.PositiveInfinity;
+            int token = generation;
+            try
+            {
+                // Same actual centre and authored fingers; finite search only chooses cylinder roll.
+                // Every candidate uses original reach/elbow/wrist/path and complete native skin gates.
+                for (int degrees = -90; degrees <= 90; degrees += 15)
+                {
+                    Restore(baseline, 1f); grip.Restore(); gripAxialDegrees = degrees;
+                    if (!TryTarget(out HandContactSample sample, out Vector3 wrist, out Quaternion rotation))
+                    { if (generation != token || grip == null) return false; continue; }
+                    diagnosticBlend = 1f;
+                    grip.Apply(1f, 1f);
+                    if (!SolveArm(wrist, rotation, 1f) || !grip.Measure(sample)
+                        || grip.MinimumClearance < -PlaneTolerance || grip.MaximumRegionGap > .002f
+                        || grip.AxisError > .003f || grip.AxisAlignment < .999f) continue;
+                    float bend = Quaternion.Angle(active.Wrist.localRotation, baseline[2]);
+                    if (bend < bestWrist - .01f || (Mathf.Abs(bend - bestWrist) <= .01f && Mathf.Abs(degrees) < Mathf.Abs(bestAngle)))
+                    { found = true; bestWrist = bend; bestAngle = degrees; }
+                }
+            }
+            finally { Restore(baseline, 1f); grip?.Restore(); }
+            if (generation != token || grip == null) return false;
+            if (!found) return RefuseDiagnostic("grip.noFeasibleAxialPose");
+            gripAxialDegrees = bestAngle; diagnosticBlend = 0f;
+            LastRefusalReason = LastRefusalDiagnostic = string.Empty;
+            return true;
+        }
+
+        void TickGrip()
+        {
+            if (ContactStage == HandContactStage.Holding)
+            {
+                int token = generation; HandContactTarget? held;
+                try { held = readHeldGrip?.Invoke(); }
+                catch (Exception error) { Debug.LogException(error, this); held = null; }
+                if (token != generation || grip == null) return;
+                if (!held.HasValue || held.Value.Surface != target.Surface) { CancelContact(); return; }
+                target = held.Value;
+            }
+            if (!TryTarget(out HandContactSample sample, out Vector3 wrist, out Quaternion rotation))
+            { CancelImmediately(); return; }
+            float arm, close;
+            if (ContactStage == HandContactStage.Returning)
+            {
+                float openingSeconds = gripReturnClose * BareRailGripPose.Duration;
+                close = openingSeconds > 0f ? gripReturnClose * (1f - Mathf.Clamp01(elapsed / openingSeconds)) : 0f;
+                float retract = Mathf.Clamp01((elapsed - openingSeconds) / Mathf.Clamp(returnSeconds, .15f, .35f));
+                arm = returnFromBlend * (1f - Mathf.SmoothStep(0f, 1f, retract));
+                if (!TryApplyGripPose(arm, close, wrist, rotation, sample)) { CancelImmediately(); return; }
+                gripClose = close;
+                if (retract >= 1f) { Restore(baseline, 1f); grip.Restore(); Forget(); }
+                return;
+            }
+            arm = ContactStage == HandContactStage.Holding ? 1f : Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / reachSeconds));
+            close = ContactStage == HandContactStage.Holding ? 1f : Mathf.Clamp01((elapsed - reachSeconds) / BareRailGripPose.Duration);
+            if (!TryApplyGripPose(arm, close, wrist, rotation, sample)) { CancelImmediately(); return; }
+            gripClose = close; lastBlend = arm; lastSample = sample; lastFinalWrist = wrist; lastFinalRotation = rotation;
+            if (close < 1f) return;
+            if (ContactErrorMetres > .003f || grip.MaximumRegionGap > .002f
+                || grip.MinimumClearance < -PlaneTolerance || grip.AxisAlignment < .999f)
+            { RefuseDiagnostic("grip.closedSkinOrAxisNotProven"); CancelContact(); return; }
+            if (ContactStage == HandContactStage.Holding) return;
+            var callback = action; action = null; int generationBefore = generation;
+            ContactStage = HandContactStage.Holding; elapsed = 0f;
+            bool accepted;
+            try { accepted = callback != null && callback(sample); }
+            catch (Exception error) { Debug.LogException(error, this); accepted = false; }
+            if (generationBefore != generation) return;
+            if (!accepted) CancelContact();
+        }
+
+        bool TryApplyGripPose(float arm, float close, Vector3 finalWrist, Quaternion finalRotation, HandContactSample sample)
+        {
+            diagnosticBlend = arm;
+            CapturePose(previousPose); grip.CapturePrevious();
+            Vector3 current = active.Wrist.position;
+            Vector3 wrist = Vector3.Lerp(active.Upper.parent.TransformPoint(startWrist), finalWrist, arm);
+            Quaternion rotation = Quaternion.Slerp(active.Upper.parent.rotation * startWristRotation, finalRotation, arm);
+            var path = new HandContactSample(hand, HandContactKind.Grip, target, sample.Point, sample.Normal, sample.Tangent, current, wrist);
+            int token = generation; bool valid;
+            try { valid = validate(path); }
+            catch (Exception error) { Debug.LogException(error, this); valid = false; }
+            if (token != generation || grip == null) return false;
+            if (!valid || readRevision() != poseRevision) return RefuseDiagnostic("grip.authorityOrWristPathRejected");
+            Restore(baseline, 1f); grip.Apply(arm, close);
+            if (!SolveArm(wrist, rotation, arm) || !grip.Measure(sample) || grip.MinimumClearance < -PlaneTolerance)
+            {
+                Restore(previousPose, 0f); grip.RestorePrevious();
+                if (string.IsNullOrEmpty(LastRefusalReason)) RefuseDiagnostic("grip.actualSkinIntersectsRail");
+                return false;
+            }
+            ContactErrorMetres = grip.AxisError;
+            MinimumHandPlaneClearanceMetres = grip.MinimumClearance;
+            PalmPatchPlaneDistanceMetres = grip.MaximumRegionGap;
+            return true;
+        }
+
         /// <summary>Synchronous lease return before the body owner samples, hides or restores its own skeleton.</summary>
         public void CancelImmediately()
         {
             if (active != null && ContactStage != HandContactStage.None && readRevision != null && readRevision() == poseRevision)
-                Restore(baseline, 1f);
+            { Restore(baseline, 1f); grip?.Restore(); }
             Forget();
         }
 
         public void CancelContact()
         {
             if (active == null || ContactStage == HandContactStage.None || ContactStage == HandContactStage.Returning) return;
-            returnFromBlend = lastBlend;
+            returnFromBlend = lastBlend; gripReturnClose = gripClose;
             generation++; action = null; elapsed = 0f;
             ContactErrorMetres = float.NaN; ContactStage = HandContactStage.Returning;
         }
@@ -128,6 +285,7 @@ namespace OutOfReach.Presentation.Hands
         private void Forget()
         {
             calibration?.Dispose(); calibration = null;
+            grip?.Dispose(); grip = null; readHeldGrip = null; gripClose = gripReturnClose = gripAxialDegrees = 0f;
             generation++; active = null; action = null; target = default;
             ContactStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN; overheadReach = false; overheadPoleSign = 0f;
             MinimumHandPlaneClearanceMetres = PalmPatchPlaneDistanceMetres = float.NaN;
@@ -147,6 +305,7 @@ namespace OutOfReach.Presentation.Hands
             // Revalidate the real target/lease below while holding the animation at its prior time.
             if (dt > .1f) dt = 0f;
             elapsed += dt;
+            if (grip != null) { TickGrip(); return; }
             if (ContactStage == HandContactStage.Returning)
             {
                 float t = Mathf.Clamp01(elapsed / Mathf.Clamp(returnSeconds, .15f, .35f));
@@ -272,9 +431,16 @@ namespace OutOfReach.Presentation.Hands
             if (Vector3.Distance(previousPoint, p) > .12f) return RefuseDiagnostic("target.surfaceMovedOver0.12");
             if (Vector3.Distance(previousEye, eye.position) > .25f) return RefuseDiagnostic("target.eyeMovedOver0.25");
             rotation = Quaternion.LookRotation(tangent, -n) * Quaternion.Inverse(palmFrame);
-            wrist = p - rotation * palmPoint;
+            if (grip != null)
+            {
+                rotation = Quaternion.AngleAxis(gripAxialDegrees, tangent) * rotation;
+                // The centre stays on the REAL cylinder axis as the hand rotates around it. The
+                // near-face ray normal remains unchanged; it is not an artificial palm-plane normal.
+                wrist = p - n * target.GripRadiusMetres - rotation * grip.Pose.railPoint;
+            }
+            else wrist = p - rotation * palmPoint;
             if (!CanReach(wrist)) return false;
-            sample = new HandContactSample(hand, HandContactKind.Push, target, p, n, tangent, active.Wrist.position, wrist);
+            sample = new HandContactSample(hand, grip != null ? HandContactKind.Grip : HandContactKind.Push, target, p, n, tangent, active.Wrist.position, wrist);
             int token = generation;
             try
             {

@@ -51,6 +51,9 @@ namespace OutOfReach.Composition
         [SerializeField] private UIDocument antennaProgressDocument;
         [SerializeField] private Font antennaProgressFont;
         [SerializeField] private EvaWorkLampPresenter evaWorkLamp;
+        private const float MicrogravityHelpSeconds = 20f;
+        private const string MicrogravityHelp = "MICROGRAVITY\nAim at a nearby wall, floor or ceiling.\nLeft / right click · Push off with that hand\nSpace · Push off the floor with your feet\nHold WASD while pushing to steer.";
+        private float microgravityHelpRemaining;
         private bool orbitalLocationReached;
         private MissionSession transferredSession;
         [SerializeField] private I06HabitatBindings habitat;
@@ -222,6 +225,18 @@ namespace OutOfReach.Composition
             && runtime.GameState.Outcome == MissionOutcome.None
             && runtime.GameState.Phase != GamePhase.Planning;
 
+        private void UpdateMicrogravityHelp()
+        {
+            if (!flightBoard) return;
+            if (microgravityHelpRemaining > 0f && microgravityInput && microgravityInput.HasInputLease
+                && CanUseMicroContacts())
+            {
+                flightBoard.SetMicrogravityHelp(MicrogravityHelp);
+                microgravityHelpRemaining -= Time.unscaledDeltaTime;
+            }
+            else flightBoard.SetMicrogravityHelp(null);
+        }
+
         private void MaintainMicrogravity()
         {
             if (!microgravityInput || !microgravityBridge || !microgravityBridge.IsBound || !MicroSessionCurrent()) return;
@@ -260,7 +275,7 @@ namespace OutOfReach.Composition
             (cargoHands && cargoHands.IsVisible) || (astronautHands && astronautHands.IsVisible)
                 ? EmbodiedBodyPresenter.BodyArmVisibility.None : EmbodiedBodyPresenter.BodyArmVisibility.Both;
 
-        private bool CanPresentGroundedStepAudio() => CanPresentWalkMotion() && modeChosen
+        private bool CanPresentGroundedStepAudio() => !orbitalLocationReached && CanPresentWalkMotion() && modeChosen
             && !menuPresentationVisible && !(boundSession.SurvivalRecovery?.IsResting ?? false);
 
         // This is queried by the visual presenter in LateUpdate, after camera sequences update.
@@ -421,6 +436,7 @@ namespace OutOfReach.Composition
         private void Update()
         {
             MaintainMicrogravity();
+            UpdateMicrogravityHelp();
             if (astronautHands && CanPresentHands() && runtime && !runtime.IsPaused
                 && !(microgravityInput && microgravityInput.ContactRoutingRequested)
                 && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId))
@@ -498,6 +514,7 @@ namespace OutOfReach.Composition
             UnbindSession();
             boundSession = session;
             boundEvents = runtime.Events;
+            microgravityHelpRemaining = MicrogravityHelpSeconds;
             orbitalLocationReached = ReferenceEquals(session, transferredSession)
                 || (!marine && runtime.GameState.Phase != GamePhase.Planning);
             if (!ReferenceEquals(session, transferredSession)) transferredSession = null;
@@ -508,7 +525,8 @@ namespace OutOfReach.Composition
                 earthTerminal.ConfigureSession(runtime, CanPresentEarthViewer, PrepareEarthViewer);
                 earthTerminal.Terminal.ConfigureReach(ReadActualTerminalReach);
             }
-            flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
+            flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents,
+                () => session.Systems.Power.IsOperational && session.Systems.LifeSupport.IsOperational);
             flightBoard.SetDeparturePresentation(false);
             flightBoard.SetPhysicalTerminalPresentation(false);
             flightBoard.ConfigureTiming(runtime.Clock, runtime.PlanningDeadline);
@@ -535,7 +553,11 @@ namespace OutOfReach.Composition
             flightBoard.ConfigureEva(runtime.EvaStatus);
             if (survivalUi)
                 survivalUi.Configure(survivalDocument, survivalStyle, runtime.Survival, runtime.SurvivalRecovery,
-                    runtime.GameState, runtime.Clock, CanPresentSurvivalUi);
+                    runtime.GameState, runtime.Clock, CanPresentSurvivalUi,
+                    () => session.SurvivalRecovery?.BeaconPoweredAtSimulationSeconds == null
+                        ? session.SurvivalRecovery?.ContactAtSimulationSeconds
+                            + SurvivalRecovery.BeaconRequestAfterContactDays * MissionCalendar.SecondsPerDay
+                        : null);
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
@@ -553,8 +575,12 @@ namespace OutOfReach.Composition
                     ? runtime.Player.RouteDistanceMetres : float.NaN);
             }
             if (embodiedBody)
+            {
                 embodiedBody.ConfigureSession(runtime.EvaStatus, runtime.Clock, CanPresentBody,
                     () => runtime && runtime.Player && runtime.Player.IsFloating, BodyArmMask);
+                embodiedBody.ConfigureGroundLocomotion(runtime.Player.GetComponent<CharacterController>(),
+                    CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting);
+            }
             if (microgravityBridge && microgravityInput && bareArmContacts)
             {
                 if (!interiorHandholds || !interiorHandholds.Bind(runtime.Player))
@@ -622,6 +648,7 @@ namespace OutOfReach.Composition
             if (microgravityBridge) microgravityBridge.Clear();
             if (interiorHandholds) interiorHandholds.Unbind();
             orbitalLocationReached = false;
+            if (flightBoard) flightBoard.SetMicrogravityHelp(null);
             if (marine)
             {
                 marine.Unbind();
