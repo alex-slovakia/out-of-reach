@@ -61,7 +61,7 @@ namespace OutOfReach.Presentation.Terminal
             "Poprad / Tatras   +1.0 C     0 %\n"+
             "Kosice               +2.8 C     0 %\n"+
             "Whole image cloud fraction 28 %.\n"+
-            "Ground skin temp, not air. No wind or rain data.";
+            "Skin temp of ground, not air. No wind/rain.";
         private const string StaticWeatherPending="WEATHER READOUT\nAvailable after the Terra pass ends\n(2026-11-14 08:20 UTC).";
         private static readonly DateTime ObservationUtc = new DateTime(2026,11,11,11,1,17,DateTimeKind.Utc);
         private static readonly int ObservationId=Shader.PropertyToID("_Observation");
