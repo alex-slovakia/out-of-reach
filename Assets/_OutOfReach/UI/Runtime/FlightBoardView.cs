@@ -191,12 +191,26 @@ namespace OutOfReach.Presentation.UI
             compression.Add(elapsedTime);
             microgravityTutorial = Element("microgravity-move");
             microgravityTutorial.name = "microgravity-tutorial";
-            microgravityTutorial.Add(Text("Move", "microgravity-action"));
-            microgravityTutorial.Add(MousePictogram("left-mouse", true, false));
-            microgravityTutorial.Add(MousePictogram("right-mouse", false, true));
-            microgravityTutorial.Add(MousePictogram("both-mouse-buttons", true, true));
+            var handsHint = Element("control-hint-row");
+            handsHint.Add(MousePictogram("left-mouse", true, false));
+            handsHint.Add(MousePictogram("right-mouse", false, true));
+            handsHint.Add(Text("Push / grip", "control-hint-action"));
+            microgravityTutorial.Add(handsHint);
+            var pushHint = Element("control-hint-row");
+            pushHint.Add(MousePictogram("both-mouse-buttons", true, true));
+            pushHint.Add(Text("/", "control-hint-separator"));
+            pushHint.Add(KeyPictogram("W"));
+            pushHint.Add(Text("+", "control-hint-separator"));
+            pushHint.Add(KeyPictogram("SPACE"));
+            pushHint.Add(Text("Push", "control-hint-action"));
+            microgravityTutorial.Add(pushHint);
+            var tiltHint = Element("control-hint-row");
+            tiltHint.Add(KeyPictogram("A"));
+            tiltHint.Add(KeyPictogram("D"));
+            tiltHint.Add(Text("Tilt", "control-hint-action"));
+            microgravityTutorial.Add(tiltHint);
             compression.Add(microgravityTutorial);
-            railPrompt = Text("Ctrl + click · Grip this rail", "microgravity-rail-prompt");
+            railPrompt = Text("Handhold in reach", "microgravity-rail-prompt");
             compression.Add(railPrompt);
             SetVisible(microgravityTutorial, false);
             SetVisible(railPrompt, false);
@@ -572,14 +586,23 @@ namespace OutOfReach.Presentation.UI
             subtitleSpeaker.text = string.Empty;
         }
 
-        private static VisualElement MousePictogram(string name, bool left, bool right)
+        private static VisualElement KeyPictogram(string key)
+        {
+            var cap = Text(key, "control-key");
+            cap.name = "control-key-" + key.ToLowerInvariant();
+            if (key == "SPACE") cap.AddToClassList("control-key-wide");
+            cap.pickingMode = PickingMode.Ignore;
+            return cap;
+        }
+
+        internal static VisualElement MousePictogram(string name, bool left, bool right)
         {
             var element = Element("mouse-pictogram");
             element.name = name;
             element.generateVisualContent += context =>
             {
                 var painter = context.painter2D;
-                painter.fillColor = new Color32(232, 172, 97, 255);
+                painter.fillColor = new Color32(238, 237, 225, 235);
                 painter.BeginPath();
                 if (left)
                 {
@@ -610,8 +633,12 @@ namespace OutOfReach.Presentation.UI
                 painter.LineTo(new Vector2(21, 10));
                 painter.QuadraticCurveTo(new Vector2(21, 2), new Vector2(12, 2));
                 painter.ClosePath();
+                painter.Stroke();
+                painter.BeginPath();
                 painter.MoveTo(new Vector2(3, 13));
                 painter.LineTo(new Vector2(21, 13));
+                painter.Stroke();
+                painter.BeginPath();
                 painter.MoveTo(new Vector2(12, 2));
                 painter.LineTo(new Vector2(12, 13));
                 painter.Stroke();

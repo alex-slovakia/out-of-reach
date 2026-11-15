@@ -15,8 +15,11 @@
 .survival-rest { position: absolute; left: 0; right: 0; bottom: 16%; align-items: center; color: rgb(242, 240, 227); }
 .survival-rest-day { font-size: 22px; letter-spacing: 2px; margin-bottom: 5px; }
 .survival-rest-time { font-size: 14px; margin-bottom: 10px; }
-.survival-rest .survival-wake { min-width: 86px; height: 30px; margin: 0; padding: 3px 18px; font-size: 14px; border-radius: 0; border-width: 1px; border-color: rgba(242, 240, 227, 0.5); background-color: rgba(15, 17, 17, 0.65); color: rgb(242, 240, 227); }
-.survival-rest .survival-wake:hover, .survival-rest .survival-wake:focus { border-color: rgb(245, 188, 116); background-color: rgba(25, 28, 27, 0.9); }
+.survival-rest .survival-wake { position: absolute; bottom: 12%; min-width: 132px; height: 44px; margin: 0; padding: 6px 14px; flex-direction: row; align-items: center; justify-content: center; border-radius: 0; border-width: 0; background-color: rgba(0, 0, 0, 0); color: rgb(242, 240, 227); opacity: 0.72; }
+.survival-rest .survival-wake:hover, .survival-rest .survival-wake:focus { opacity: 1; background-color: rgba(0, 0, 0, 0); }
+.survival-rest .survival-wake:focus { border-bottom-width: 1px; border-bottom-color: rgb(242, 240, 227); }
+.survival-wake .mouse-pictogram { width: 24px; height: 29px; flex-shrink: 0; margin-right: 11px; }
+.survival-wake-copy { font-size: 16px; letter-spacing: 1px; }
 .survival-rest .survival-wake:disabled { opacity: 0.45; }
 .survival-rest-feedback { max-width: 330px; font-size: 13px; margin-top: 7px; white-space: normal; -unity-text-align: middle-center; }
 .survival-recovery-detail { margin-top: 10px; max-width: 362px; }
@@ -37,9 +40,9 @@
 .survival-presentation-layer, .survival-rest-eyes, .survival-water-locator { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
 .survival-presentation-layer { -unity-font-definition: url("../Typography/SourceSans3-Regular.otf"); }
 .survival-water-distance { position: absolute; width: 170px; font-size: 13px; letter-spacing: 1px; color: rgb(155, 229, 232); white-space: normal; -unity-text-align: upper-center; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95); }
-.survival-presentation-layer .survival-rest { top: 22%; bottom: auto; justify-content: flex-start; }
+.survival-presentation-layer .survival-rest { top: 0; bottom: 0; justify-content: flex-start; }
+.survival-rest-heading { position: absolute; top: 22%; left: 0; right: 0; align-items: center; }
 .survival-presentation-layer .survival-rest-day { font-size: 88px; letter-spacing: 7px; margin-bottom: 12px; -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); }
 .survival-presentation-layer .survival-rest-time { color: rgb(180, 191, 190); margin-bottom: 18px; }
-.survival-presentation-layer .survival-wake { min-width: 104px; height: 40px; font-size: 16px; border-color: rgba(207, 220, 216, 0.45); }
 .survival-wake-title { position: absolute; left: 0; top: 22%; right: 0; bottom: auto; align-items: center; justify-content: flex-start; }
 .survival-wake-day { font-size: 88px; letter-spacing: 7px; color: rgb(242, 240, 227); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); -unity-text-align: middle-center; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65); }

@@ -34,6 +34,10 @@ Published to Claude in [issue #7 comment 6893693954](https://github.com/alex-slo
 - Suggested efficient routing: strongest available Claude model for movement/rig diagnosis and final review; Sonnet-class authoring for bounded tower/props/VFX, small model for inventories/docs only. Claude must confirm actual available models and quota; do not launch many expensive sessions blindly.
 
 ## Confirmed Claude status (snapshot, not live telemetry)
+Latest gameplay ACK: [6893731709](https://github.com/alex-slovakia/out-of-reach/issues/7#issuecomment-6893731709), 11:37 UTC, confirms ALL corrected movement, contextual grip, slopes, clipping and both-suit walking. Two disjoint Claude writers: mechanics/Player + released composition adapters, and body/EmbodiedBodyPresenter + ModelGait. Body estimate 13:30 UTC / 14:30 CET; mechanics estimate 14:30 UTC / 15:30 CET, conditional on remaining quota. [6893771476](https://github.com/alex-slovakia/out-of-reach/issues/7#issuecomment-6893771476), 11:40 UTC, queues actual rest/prologue restraint after gait/fit. These are commitments/estimates, not delivered or integrated code.
+
+Alex subsequently approved the [complete chapter loop](../../APPROVED-CHAPTER-LOOP-2026-11-15.md). Root requested exact delivery scope by 15:00 CET and a minimal coordinated pacing API in [6893821535](https://github.com/alex-slovakia/out-of-reach/issues/7#issuecomment-6893821535). No response to that newer request is yet recorded here. Prior pending-ACK statements above are historical and superseded by the gameplay ACK.
+
 Issue #7 comments 6893572400 and 6893569129, 11:22 UTC: gameplay ONLINE (self-reported Opus 5.5), 95% USED / 5% remaining, reset 17:59:58 UTC = 18:59:58 CET. Gameplay was working on body fit/gait, estimated first review 13:30 UTC / 14:30 CET. Art DP02 cockpit ETA 12:15 UTC / 13:15 CET. These are their estimates, not completion guarantees. Notify user only on new confirmed state. The earlier before-14:00 target is not a reliable promise.
 
 ## Delivered baseline

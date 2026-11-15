@@ -30,7 +30,7 @@ namespace OutOfReach.Presentation.UI
         {
             if (canPresent) elapsed += Mathf.Clamp(seconds, 0f, .1f);
             Closure01 = resting ? (reduced ? Ease(elapsed / 2f) : DrowsyClosure(elapsed))
-                : wakeFrom * (1f - Ease(elapsed / 1.2f));
+                : wakeFrom * (1f - Ease(elapsed / (reduced ? 1.2f : 1.6f)));
             EnableInClassList("survival-hidden", !canPresent || Closure01 <= .0001f);
             MarkDirtyRepaint();
         }
@@ -44,11 +44,12 @@ namespace OutOfReach.Presentation.UI
 
         private static float DrowsyClosure(float t)
         {
-            if (t < .75f) return .78f * Ease(t / .75f);
-            if (t < 1.35f) return Mathf.Lerp(.78f, .10f, Ease((t - .75f) / .60f));
-            if (t < 2.15f) return Mathf.Lerp(.10f, .94f, Ease((t - 1.35f) / .80f));
-            if (t < 2.85f) return Mathf.Lerp(.94f, .22f, Ease((t - 2.15f) / .70f));
-            return Mathf.Lerp(.22f, 1f, Ease((t - 2.85f) / 1.15f));
+            if (t < .24f) return .92f * Ease(t / .24f);
+            if (t < .70f) return Mathf.Lerp(.92f, .04f, Ease((t - .24f) / .46f));
+            if (t < 1.60f) return Mathf.Lerp(.04f, .12f, Ease((t - .70f) / .90f));
+            if (t < 2.10f) return Mathf.Lerp(.12f, .80f, Ease((t - 1.60f) / .50f));
+            if (t < 2.60f) return Mathf.Lerp(.80f, .25f, Ease((t - 2.10f) / .50f));
+            return Mathf.Lerp(.25f, 1f, Ease((t - 2.60f) / 1.50f));
         }
 
         private static float Ease(float t) { t = Mathf.Clamp01(t); return t * t * (3f - 2f * t); }
@@ -58,27 +59,31 @@ namespace OutOfReach.Presentation.UI
             float w = contentRect.width, h = contentRect.height;
             if (w < 1f || h < 1f || Closure01 <= 0f) return;
             Painter2D p = context.painter2D;
-            if (reduced)
+            if (reduced || Closure01 >= .999f)
             {
-                p.fillColor = new Color(.006f, .008f, .009f, Closure01);
+                p.fillColor = new Color(.003f, .004f, .005f, reduced ? Closure01 : 1f);
                 p.BeginPath(); p.MoveTo(Vector2.zero); p.LineTo(new Vector2(w, 0));
                 p.LineTo(new Vector2(w, h)); p.LineTo(new Vector2(0, h)); p.ClosePath(); p.Fill();
                 return;
             }
-            float edge = h * .5f * Closure01;
-            float curve = h * .14f * Mathf.Sin(Mathf.PI * Closure01);
-            for (int layer = 3; layer >= 0; layer--)
+            float lens = Mathf.Sin(Mathf.PI * Closure01);
+            float upper = h * .58f * Closure01;
+            float lower = h * (1f - .42f * Closure01);
+            float curve = h * .24f * lens;
+            float softness = h * .045f * lens;
+            for (int layer = 18; layer >= 0; layer--)
             {
-                float feather = layer * 3f * Mathf.Sin(Mathf.PI * Closure01);
-                p.fillColor = new Color(.006f, .008f, .009f, layer == 0 ? 1f : .10f);
-                float corner = edge + curve + feather, control = edge - curve / 3f + feather;
+                float feather = softness * layer / 18f;
+                p.fillColor = new Color(.003f, .004f, .005f, layer == 0 ? 1f : .085f);
                 p.BeginPath(); p.MoveTo(Vector2.zero); p.LineTo(new Vector2(w, 0));
-                p.LineTo(new Vector2(w, corner));
-                p.BezierCurveTo(new Vector2(w * .66f, control), new Vector2(w * .34f, control), new Vector2(0, corner));
+                p.LineTo(new Vector2(w, upper + curve * .88f + feather));
+                p.BezierCurveTo(new Vector2(w * .70f, upper - curve * .40f + feather),
+                    new Vector2(w * .28f, upper - curve * .30f + feather), new Vector2(0, upper + curve + feather));
                 p.ClosePath(); p.Fill();
                 p.BeginPath(); p.MoveTo(new Vector2(0, h)); p.LineTo(new Vector2(w, h));
-                p.LineTo(new Vector2(w, h - corner));
-                p.BezierCurveTo(new Vector2(w * .66f, h - control), new Vector2(w * .34f, h - control), new Vector2(0, h - corner));
+                p.LineTo(new Vector2(w, lower - curve * .75f - feather));
+                p.BezierCurveTo(new Vector2(w * .68f, lower + curve * .27f - feather),
+                    new Vector2(w * .32f, lower + curve * .34f - feather), new Vector2(0, lower - curve * .82f - feather));
                 p.ClosePath(); p.Fill();
             }
         }

@@ -238,10 +238,14 @@ namespace OutOfReach.Presentation.UI
             restDay = Text(string.Empty, "survival-rest-day");
             restDay.name = "survival-rest-day";
             restTime = Text(string.Empty, "survival-rest-time");
-            rest.Add(restDay);
-            rest.Add(restTime);
-            wake = new Button(OnWake) { name = "survival-wake", text = "Wake", pickingMode = PickingMode.Position };
+            var restHeading = Container("survival-rest-heading", "survival-rest-heading");
+            restHeading.Add(restDay);
+            restHeading.Add(restTime);
+            rest.Add(restHeading);
+            wake = new Button(OnWake) { name = "survival-wake", tooltip = "Wake up", pickingMode = PickingMode.Position };
             wake.AddToClassList("survival-wake");
+            wake.Add(FlightBoardView.MousePictogram("wake-mouse", true, false));
+            wake.Add(Text("Wake up", "survival-wake-copy"));
             rest.Add(wake);
             restFeedback = Text(string.Empty, "survival-rest-feedback");
             Show(restFeedback, false);
