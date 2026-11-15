@@ -54,6 +54,8 @@ namespace OutOfReach.Presentation.Radio
         [SerializeField] private Vector3 hiddenEuler = new Vector3(40f, -32f, 20f);
         [SerializeField] private Vector3 pttPressOffset = new Vector3(.0022f, 0f, 0f);
 
+        /// <summary>Other dialogue must have been quiet this long before a radio beat starts.</summary>
+        private const float DialogueSettleSeconds = 1.5f;
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
         private static readonly Color LedAmber = new Color(1f, .55f, .08f) * 4.5f;
         private static readonly Color LedCyan = new Color(.15f, .85f, 1f) * 3f;
@@ -71,7 +73,7 @@ namespace OutOfReach.Presentation.Radio
         private string lastDispatchId;
         private bool sawPlanning, subtitleShown, audioPaused;
         private string shownText;
-        private float reassertAt, swayClock;
+        private float reassertAt, swayClock, lastOtherDialogueAt = float.NegativeInfinity;
         private GameObject instance;
         private Transform ptt;
         private Renderer led;
@@ -152,6 +154,7 @@ namespace OutOfReach.Presentation.Radio
             if (!runtime || runtime.Session == null || runtime.GameState == null) { Reset(null); return; }
             if (!ReferenceEquals(boundSession, runtime.Session)) Reset(runtime.Session);
             bool paused = runtime.IsPaused;
+            if (audioPresenter && audioPresenter.IsDialoguePlaying) lastOtherDialogueAt = Time.unscaledTime;
             DetectTriggers();
             if (!timeline.IsActive) TryStartNext(paused);
             if (!timeline.IsActive) return;
@@ -180,7 +183,19 @@ namespace OutOfReach.Presentation.Radio
         {
             if (!resolver || !played.Contains(RadioBeats.Day14Call) || played.Contains(RadioBeats.Day14Announcement)) return;
             InteractableTarget target = resolver.CurrentTarget;
-            if (target && target.InteractionId == InteractionIds.CockpitConsole) TryPlay(RadioBeats.Day14Announcement);
+            if (!target || target.InteractionId != InteractionIds.CockpitConsole) return;
+            // The announcement belongs to the day of the message: a console use days later must not play old news.
+            MissionDispatch? dispatch = CurrentDispatch();
+            if (!dispatch.HasValue || BeatFor(dispatch.Value) != RadioBeats.Day14Call || runtime.GameState == null
+                || !RadioBeats.IsAnnouncementFresh(dispatch.Value.ReceivedAtSimulationSeconds, runtime.GameState.ElapsedSimulationSeconds)) return;
+            TryPlay(RadioBeats.Day14Announcement);
+        }
+
+        private string BeatFor(MissionDispatch dispatch)
+        {
+            foreach (RadioDispatchBinding binding in dispatchBeats)
+                if (binding != null && string.Equals(binding.contentId, dispatch.ContentId, StringComparison.Ordinal)) return binding.beatId;
+            return null;
         }
 
         private void Bind()
@@ -267,9 +282,14 @@ namespace OutOfReach.Presentation.Radio
             if (queue.Count == 0 || paused) return;
             var player = runtime.Player;
             if (!RadioBeats.TryGet(queue.Peek(), out RadioBeat beat)) { queue.Dequeue(); return; }
+            if (RadioBeats.IsStale(beat.Id, runtime.GameState.Phase)) { queue.Dequeue(); return; }   // missed its moment
             if (!view || !player || (!player.ControlAllowed && !VoiceOnlyAllowed(beat))) return;
             if (cinematics && cinematics.IsPlaying) return;
-            if (audioPresenter && audioPresenter.IsDialoguePlaying) return;   // never talk over the ship computer or Earth
+            // Chapter cards come in a row with short gaps of control: wait until the pending decision is answered.
+            IMissionChapterFlow flow = runtime.ChapterFlow;
+            if (flow != null && flow.Enabled && flow.PendingDecision != ChapterDecision.None) return;
+            // Never talk over the ship computer or Earth, and do not slip into the short gap between two of their lines.
+            if (audioPresenter && (audioPresenter.IsDialoguePlaying || Time.unscaledTime - lastOtherDialogueAt < DialogueSettleSeconds)) return;
             queue.Dequeue();
             timeline.Start(beat.WithVoiceLengths(ClipSeconds), cinematics && cinematics.ReducedEffects);
             lastPhase = RadioPhase.Idle; lastLine = -1; swayClock = 0f;

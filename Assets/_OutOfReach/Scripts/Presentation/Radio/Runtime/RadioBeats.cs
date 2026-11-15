@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OutOfReach.Contracts;
 
 namespace OutOfReach.Presentation.Radio
 {
@@ -141,6 +142,24 @@ namespace OutOfReach.Presentation.Radio
                     + "I'm sorry. A second craft is already in transit. "
                     + "Conserve your supplies. We are not giving up on you.", RadioLineKind.Receive, RescueLostCue)),
         };
+
+        /// <summary>The Day-14 announcement belongs to the day of the message: one simulated day after its receipt.</summary>
+        public const double AnnouncementWindowSeconds = 86400d;
+
+        /// <summary>
+        /// A boarding radio check that could not start before the mission moved on is stale and is dropped instead
+        /// of played late: "we show you aboard" must never follow the impact. Other beats do not go stale here.
+        /// </summary>
+        public static bool IsStale(string beatId, GamePhase phase)
+        {
+            if (beatId == AuroraBoarding) return phase != GamePhase.Intro;
+            if (beatId == PadBoarding) return phase != GamePhase.Planning;
+            return false;
+        }
+
+        /// <summary>True while a console use may still play the announcement of a message received at that time.</summary>
+        public static bool IsAnnouncementFresh(double receivedAtSimulationSeconds, double nowSimulationSeconds)
+            => nowSimulationSeconds - receivedAtSimulationSeconds <= AnnouncementWindowSeconds;
 
         public static IEnumerable<string> Ids => Beats.Keys;
 

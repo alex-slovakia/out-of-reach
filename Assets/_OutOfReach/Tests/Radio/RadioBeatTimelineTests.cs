@@ -1,5 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
+using OutOfReach.Contracts;
 using OutOfReach.Presentation.Radio;
 
 namespace OutOfReach.Tests.Radio
@@ -155,6 +156,30 @@ namespace OutOfReach.Tests.Radio
             RadioBeat timed = beat.WithVoiceLengths(cue => cue == RadioBeats.RescueLostCue ? 17.5f : (float?)null);
             Assert.AreEqual(17.85f, timed.Lines[0].Seconds, 1e-4f, "A recorded line lasts as long as its clip");
             Assert.AreEqual(beat.Lines[0].Seconds, beat.WithVoiceLengths(_ => null).Lines[0].Seconds, "No clip: reading time");
+        }
+
+        [Test]
+        public void BoardingCheckIsStaleOnceTheMissionMovedOn()
+        {
+            Assert.IsFalse(RadioBeats.IsStale(RadioBeats.AuroraBoarding, GamePhase.Intro), "Aboard, before the cockpit check");
+            Assert.IsFalse(RadioBeats.IsStale(RadioBeats.PadBoarding, GamePhase.Planning), "On the pad");
+            Assert.IsTrue(RadioBeats.IsStale(RadioBeats.PadBoarding, GamePhase.Intro), "The pad check never plays after liftoff");
+            foreach (GamePhase later in new[] { GamePhase.Emergency, GamePhase.Repair, GamePhase.Eva, GamePhase.Transmission, GamePhase.Survival, GamePhase.Outcome, GamePhase.Report })
+                Assert.IsTrue(RadioBeats.IsStale(RadioBeats.AuroraBoarding, later), "'We show you aboard' never plays in " + later);
+            foreach (string id in new[] { RadioBeats.DistressCall, RadioBeats.EarthReplyDay14, RadioBeats.Day14Call, RadioBeats.Day14Announcement })
+                foreach (GamePhase phase in (GamePhase[])System.Enum.GetValues(typeof(GamePhase)))
+                    Assert.IsFalse(RadioBeats.IsStale(id, phase), id + " in " + phase);
+        }
+
+        [Test]
+        public void AnnouncementBelongsToTheDayOfTheMessage()
+        {
+            const double received = 14 * 86400d;
+            Assert.IsTrue(RadioBeats.IsAnnouncementFresh(received, received), "Right after the message");
+            Assert.IsTrue(RadioBeats.IsAnnouncementFresh(received, received + 2 * 3600d), "Two hours later");
+            Assert.IsTrue(RadioBeats.IsAnnouncementFresh(received, received + RadioBeats.AnnouncementWindowSeconds));
+            Assert.IsFalse(RadioBeats.IsAnnouncementFresh(received, received + RadioBeats.AnnouncementWindowSeconds + 1d), "The next day it is old news");
+            Assert.IsFalse(RadioBeats.IsAnnouncementFresh(received, 30 * 86400d), "Never at the day-30 rendezvous");
         }
 
         [Test]
