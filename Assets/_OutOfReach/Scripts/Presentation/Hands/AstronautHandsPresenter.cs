@@ -12,7 +12,7 @@ namespace OutOfReach.Presentation.Hands
     /// </summary>
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(140)]
-    public sealed class AstronautHandsPresenter : MonoBehaviour
+    public sealed partial class AstronautHandsPresenter : MonoBehaviour
     {
         [SerializeField] private Transform modelRoot;
         [Tooltip("Dedicated parent below the first-person camera. Only an explicitly bound motion presenter may animate it.")]
@@ -163,6 +163,7 @@ namespace OutOfReach.Presentation.Hands
         {
             ForgetToolHold();
             ForgetContact();
+            ForgetTetherClimb();
             gesture = Gesture.None;
             gestureElapsed = gestureBlend = 0f;
             ResetTravelSample();
@@ -172,7 +173,7 @@ namespace OutOfReach.Presentation.Hands
         private bool TryStartGesture(Gesture requested, bool left)
         {
             RefreshPresentation();
-            if (!IsVisible || clock.IsPaused || toolHoldActive || ContactStage != HandContactStage.None
+            if (!IsVisible || clock.IsPaused || toolHoldActive || ContactStage != HandContactStage.None || tetherActive
                 || (IsGesturePlaying && !(requested == Gesture.Press && gesture == Gesture.Grip)))
                 return false; // Press may smoothly replace a glove flex; no queue or delayed feedback.
             foreach (JointBinding binding in bindings)
@@ -246,6 +247,7 @@ namespace OutOfReach.Presentation.Hands
         {
             ForgetToolHold();
             ForgetContact();
+            ForgetTetherClimb();
             contactOrigin = null;
             contactModeAllowed = null;
             validateContact = null;
@@ -274,6 +276,7 @@ namespace OutOfReach.Presentation.Hands
             if (!IsVisible || clock.IsPaused) return; // Keep the last visible pose; never advance while paused.
             if (toolHoldActive) { AdvanceToolHold(Time.unscaledDeltaTime); return; }
             if (ContactStage != HandContactStage.None) { AdvanceContacts(Time.unscaledDeltaTime); return; }
+            if (AdvanceTetherClimb(Time.unscaledDeltaTime)) return; // EVA-TETHER-01: gloves on the rope.
             SampleRouteTravel();
             AdvanceGesture(Time.unscaledDeltaTime);
         }

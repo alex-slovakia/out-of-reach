@@ -93,6 +93,8 @@ namespace OutOfReach.Tests.PlayMode
             }
             TetheredRoute route = root.AddComponent<TetheredRoute>();
             route.Configure(points, 0.25f, 1f);
+            // EVA-TETHER-01: no pull surge and the shortest grip ramp, so these tests read the stamina speed floor exactly.
+            route.ConfigureHandOverHand(0.5f, 0.14f, 0f, 0.05f, 0.05f);
             return route;
         }
 
