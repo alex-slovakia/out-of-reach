@@ -3,7 +3,7 @@ import math
 from mathutils import Vector
 from tw_kit import *
 from tw_layout import *
-from tw_truss import LX, LZ, CZ, LEG, Y0, LEVELS_Y, Y_TOP_LEG
+from tw_truss import LX, LZ, CZ, LEG, Y0, LEVELS_Y, Y_TOP_LEG, Y_TOP_LEG_FRONT
 
 AXES = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
 
@@ -259,14 +259,14 @@ def build_arm(o):
         o.member((0.98, yc - 0.06, zz), (xc, yc - 0.06, zz), 0.05, 0.05, GALV)   # brackets to the arm side
     o.aabb((xc - 0.14, yc - 0.12, z0 - 0.12), (xc + 0.14, yc + 0.16, z0 + 0.12), PAINT)
     o.aabb((xc - 0.14, yc - 0.12, z1 - 0.12), (xc + 0.14, yc + 0.16, z1 + 0.12), PAINT)
-    # --- fluid lines on -x: red + galvanised with clamps and a coupling ---
-    xl = -1.12
-    o.tube((xl, 0.02, z0 + 0.05), (xl, 0.02, z1 - 0.25), 0.04, GALV, seg=10)
-    o.tube((xl, 0.14, z0 + 0.05), (xl, 0.14, z1 - 0.25), 0.032, RED, seg=10)
-    o.tube((xl, 0.02, z1 - 0.25), (xl, 0.02, z1 - 0.05), 0.055, HAZARD, seg=10)
+    # --- fluid lines on +x above the energy chain (keeps the -x side clear of the deck rails when the arm retracts) ---
+    xl = 1.14
+    o.tube((xl, 0.34, z0 + 0.05), (xl, 0.34, z1 - 0.25), 0.04, GALV, seg=10)
+    o.tube((xl, 0.48, z0 + 0.05), (xl, 0.48, z1 - 0.25), 0.032, RED, seg=10)
+    o.tube((xl, 0.34, z1 - 0.25), (xl, 0.34, z1 - 0.05), 0.055, HAZARD, seg=10)
     for z in [z0 + 0.4 + 0.75 * i for i in range(5)]:
-        o.member((-0.98, 0.07, z), (xl, 0.07, z), 0.05, 0.05, GALV)
-        o.aabb((xl - 0.06, -0.03, z - 0.025), (xl + 0.06, 0.19, z + 0.025), GALV)
+        o.member((0.98, 0.4, z), (xl, 0.4, z), 0.05, 0.05, GALV)
+        o.aabb((xl - 0.06, 0.28, z - 0.025), (xl + 0.06, 0.55, z + 0.025), GALV)
     # --- crew-connection hood (portal around the arm head), boot rings and sill ---
     zh0, zh1 = -3.55, -3.17
     for s in (-1, 1):

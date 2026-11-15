@@ -4,11 +4,8 @@ from mathutils import Vector
 from tw_kit import *
 from tw_layout import *
 
-LX, LZ, CZ = 2.15, 2.2, SHAFT_CZ
-LEG = 0.18
 Y0 = PAD_Y
 LEVELS_Y = [Y0 + 0.5] + [Y0 + 3.0 * k for k in range(1, 11)]     # ring levels, top = -2.6
-Y_TOP_LEG = -0.67                                                  # leg tops under the deck girders
 FACES = [  # name, outward normal, tangent, offset from tower axis, half length
     ('+x', (1, 0, 0), (0, 0, 1), LX, LZ),
     ('-x', (-1, 0, 0), (0, 0, 1), LX, LZ),
@@ -43,7 +40,8 @@ def build_truss(o):
     leg_pos = [(sx * LX, CZ + sz * LZ) for sx in (-1, 1) for sz in (-1, 1)]
     # legs, base plates, anchor bolts, splices
     for (x, z) in leg_pos:
-        o.member((x, Y0 + 0.03, z), (x, Y_TOP_LEG, z), LEG, LEG, PAINT, up=(1, 0, 0))
+        ytl = Y_TOP_LEG if z < CZ else Y_TOP_LEG_FRONT      # rocket-side legs stop below the retracting arm's swept volume
+        o.member((x, Y0 + 0.03, z), (x, ytl, z), LEG, LEG, PAINT, up=(1, 0, 0))
         o.aabb((x - 0.3, Y0, z - 0.3), (x + 0.3, Y0 + 0.04, z + 0.3), PAINT)
         for ax in (-1, 1):
             for az in (-1, 1):
@@ -66,7 +64,7 @@ def build_truss(o):
                     for iy in range(-3, 4):
                         o.bolt(c + t * (ix * 0.075) + Vector((0, iy * 0.12, 0)) + n * 0.008, n, 0.014, 0.01)
         # seat plate under the deck girders
-        o.aabb((x - 0.25, Y_TOP_LEG - 0.03, z - 0.25), (x + 0.25, Y_TOP_LEG, z + 0.25), GALV)
+        o.aabb((x - 0.25, ytl - 0.03, z - 0.25), (x + 0.25, ytl, z + 0.25), GALV)
     # ring beams, diagonals, gussets
     for fi, f in enumerate(FACES):
         half = f[4]

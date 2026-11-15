@@ -20,3 +20,8 @@ DECK_X, DECK_Z0, DECK_Z1 = 4.0, -12.9, -6.9
 ARM_PIVOT = (-0.9, 0.0, -6.9)
 ARM_X, ARM_Z0, ARM_Z1 = 0.98, -6.9, -2.48
 HATCH_PIVOT = (-0.72, 0.0, -2.4)
+
+# facade geometry shared by the builder and make_anchors.py
+LX, LZ, CZ = 2.15, 2.2, SHAFT_CZ      # leg centres: x +-LX, z CZ +- LZ
+LEG = 0.18
+Y_TOP_LEG, Y_TOP_LEG_FRONT = -0.67, -1.45
