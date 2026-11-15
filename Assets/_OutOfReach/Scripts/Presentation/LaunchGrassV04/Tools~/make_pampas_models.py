@@ -73,7 +73,7 @@ def rotate(v, axis, angle):
     return Matrix.Rotation(angle, 3, axis) @ v
 
 
-def leaf(b, rng, az, r0, pitch0, length, bend_deg, w0, twist, segs, creased, rnd, wind, origin=None):
+def leaf(b, rng, az, r0, pitch0, length, bend_deg, w0, twist, segs, creased, rnd, wind, origin=None, floor=.004):
     pts = []
     p = Vector((math.cos(az) * r0, math.sin(az) * r0, 0))
     if origin is not None:
@@ -86,7 +86,7 @@ def leaf(b, rng, az, r0, pitch0, length, bend_deg, w0, twist, segs, creased, rnd
         d = Vector((math.cos(a) * math.cos(pitch), math.sin(a) * math.cos(pitch), math.sin(pitch)))
         pts.append(p.copy())
         p = p + d * (length / segs)
-        p.z = max(p.z, .004 + .004 * s)                       # hanging tips rest on the ground
+        p.z = max(p.z, floor + .004 * s)                      # hanging tips rest on the ground
     out = Vector((math.cos(az), math.sin(az), 0))
     tang, sides = frames(pts, out.cross(Z))
     roll0 = math.radians(rng.uniform(-25, 25))
@@ -237,17 +237,19 @@ def clump(seed, lod):
              .011 * (1.0 if detailed else 1.75), math.radians(rng.uniform(-160, 160)),
              5 if detailed else 3, detailed, rng.uniform(.86, 1.0), .6)
     # ---- ground cover: mats, litter (dead leaves lying flat) and short understory grass around the clump ----
-    ground_mat(b, rng, .66, .010, 0, rng.uniform(.25, .6))
+    ground_mat(b, rng, .66, .046, 0, rng.uniform(.25, .6))
     if detailed:
-        ground_mat(b, rng, .50, .022, 1, rng.uniform(.4, .8))
+        ground_mat(b, rng, .50, .060, 1, rng.uniform(.4, .8))
     for i in range(36 if detailed else 14):
         az = rng.uniform(0, math.tau)
         heading = az + rng.uniform(-.9, .9)
         r0 = rng.uniform(.04, .5)
-        start = Vector((math.cos(az) * r0, math.sin(az) * r0, rng.uniform(.004, .02)))
+        # The field sinks every clump 4 cm into the ground, so the ground cover is modeled 5-8 % of the
+        # clump height up: above the soil for every clump height, a few centimetres at most.
+        start = Vector((math.cos(az) * r0, math.sin(az) * r0, rng.uniform(.05, .075)))
         leaf(b, rng, heading, 0.0, rng.uniform(1, 8), rng.uniform(.3, .62), rng.uniform(5, 30),
              rng.uniform(.017, .027) * (1.0 if detailed else 1.5), math.radians(rng.uniform(-40, 40)),
-             3 if detailed else 2, False, rng.uniform(.3, 1.0), .12, origin=start)
+             3 if detailed else 2, False, rng.uniform(.3, 1.0), .12, origin=start, floor=.048)
     for i in range(30 if detailed else 10):
         az = rng.uniform(0, math.tau)
         r = .20 + .62 * rng.random() ** .8

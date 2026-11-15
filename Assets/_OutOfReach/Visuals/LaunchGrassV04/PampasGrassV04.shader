@@ -28,19 +28,19 @@ Shader "OutOfReach/Launch Pampas Grass V04"
         [NoScaleOffset]_ClumpTex("Whole clumps atlas (2 x 2)",2D)="white"{}
         [NoScaleOffset]_TopTex("Clumps from above atlas (2 x 2)",2D)="white"{}
         _AlbedoScale("Texture albedo scale",Range(0,1))=0.3
-        _PlumeTint("Seed head tint",Color)=(1.0,0.97,0.90,1)
+        _PlumeTint("Seed head tint",Color)=(1.0,0.93,0.78,1)
         _HeightRange("Clump height min, max (m)",Vector)=(1.05,2.35,0,0)
         _Olive("Leaf bases (olive)",Color)=(0.16,0.15,0.06,1)
         _Straw("Leaves and culms (straw)",Color)=(0.36,0.29,0.14,1)
         _Gold("Leaves and culms (golden amber)",Color)=(0.44,0.31,0.13,1)
         _Dry("Dry leaves (bleached straw)",Color)=(0.56,0.47,0.28,1)
         _OliveShare("Share of greener clumps",Range(0,1))=0.3
-        _Translucency("Back-light through seed heads",Range(0,4))=0.75
-        _RimGlow("Back-lit glow on wispy edges",Range(0,4))=1.4
-        _TransTint("Back-light tint",Color)=(1.0,0.86,0.62,1)
+        _Translucency("Back-light through seed heads",Range(0,4))=1.0
+        _RimGlow("Back-lit glow on wispy edges",Range(0,4))=1.0
+        _TransTint("Back-light tint",Color)=(1.0,0.80,0.52,1)
         _FarCanopy("Canopy colour at the draw-distance edge (matches the ground shader)",Color)=(0.26,0.21,0.11,1)
         _Ambient("Ambient scale",Range(0,2))=0.9
-        _GustSheen("Light/dark contrast of the rolling wind waves",Range(0,1))=0.5
+        _GustSheen("Light/dark contrast of the rolling wind waves",Range(0,1))=0.55
         _HazeDensity("Own aerial haze per metre (no-depth fallback)",Float)=0.0012
         _HazeColor("Haze away from the sun",Color)=(0.62,0.58,0.52,1)
         _HazeSunColor("Haze towards the sun",Color)=(1.0,0.80,0.52,1)
@@ -247,7 +247,7 @@ Shader "OutOfReach/Launch Pampas Grass V04"
                         col=lerp(col,_Dry.rgb,max(step(.85,rnd)*.85,smoothstep(.8,1,along)*.5));
                         col*=.86+.28*abs(i.uvPart.x-.5);                     // lighter edges, darker midrib
                     }
-                    s=half4(col*lerp(.42,1,smoothstep(0,.35,h)),1);
+                    s=half4(col*lerp(.32,1,smoothstep(0,.4,h)),1);
                     head=0;
                 }
                 if(Hidden(i,dither)) s.a=0;
@@ -324,14 +324,14 @@ Shader "OutOfReach/Launch Pampas Grass V04"
                 float ndl=saturate(dot(N,light.direction)*.6+.4);
                 float volume=lerp(.5,1,saturate(dot(N,light.direction)*.5+.5));   // fluffy: never black on the far side
                 ndl=lerp(ndl,max(volume,.55+.45*i.fog.y),head);
-                float thin=card>.5?lerp(.5,1,head):(head>.5?1:(part>.2?.35:.55));
+                float thin=card>.5?lerp(.5,1,head):(head>.5?1:(part>.2?.5:.8));
                 float back=i.light.x;
                 float rim=0;
-                if(card<.5 && part<.2) rim=pow(1-saturate(abs(dot(N,normalize(_WorldSpaceCameraPos-i.positionWS)))),3)*.35;
+                if(card<.5 && part<.2) rim=pow(1-saturate(abs(dot(N,normalize(_WorldSpaceCameraPos-i.positionWS)))),3)*.6;
                 // Wispy edges (low coverage) transmit the most light: a glowing rim when the sun is behind them.
                 float edge=saturate((1-s.a)*2.4)*head;
                 float h=i.shade.x;
-                half3 ambient=i.ambient.rgb*lerp(.45,1,h);
+                half3 ambient=i.ambient.rgb*lerp(.34,1,h);
                 half3 color=s.rgb*(light.color*ndl*shadow+ambient);
                 color+=s.rgb*_TransTint.rgb*light.color*(back*(_Translucency+edge*_RimGlow)+rim*back)*thin*lerp(.3,1,shadow)
                     *smoothstep(.1,.6,h)*(1-.7*i.light.w);

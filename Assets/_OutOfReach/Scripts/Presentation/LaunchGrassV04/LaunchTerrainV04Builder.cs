@@ -118,9 +118,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         // along the regional grain, half-width across it, seed. None inside the kept sector towards -Z.
         private static readonly float[,] Knolls =
         {
-            { 1250f, 205f, 150f, 520f, 250f, 1f }, { 1700f, 160f, 210f, 760f, 320f, 2f }, { 1500f, 118f, 130f, 480f, 240f, 3f },
+            { 1250f, 205f, 185f, 520f, 250f, 1f }, { 1700f, 160f, 230f, 760f, 320f, 2f }, { 1500f, 118f, 175f, 480f, 240f, 3f },
             { 2300f, 135f, 260f, 900f, 400f, 4f }, { 1900f, 232f, 170f, 640f, 290f, 5f }, { 2600f, 15f, 220f, 820f, 370f, 6f },
-            { 3000f, 60f, 240f, 900f, 410f, 7f }, { 2450f, 318f, 190f, 700f, 320f, 8f }, { 2100f, 185f, 120f, 560f, 260f, 9f },
+            { 3000f, 60f, 240f, 900f, 410f, 7f }, { 2450f, 318f, 210f, 700f, 320f, 8f }, { 2100f, 185f, 140f, 560f, 260f, 9f },
+            { 2000f, 338f, 200f, 700f, 320f, 10f }, { 1650f, 52f, 170f, 600f, 280f, 11f }, { 2700f, 290f, 240f, 880f, 400f, 12f },
         };
         private const float GrainCos = .8192f, GrainSin = .5736f;      // regional grain: ridges trend 35 degrees from +X towards +Z
         private const float BasinX = 900f, BasinZ = 300f;              // the basin's centre lies east of the site: hills are closer in the west
@@ -133,7 +134,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             float wz = Z + Bi(Fbm(X / 700f + 3f, Z / 700f + 77f, 2, 22)) * 130f;
             const float u0 = .2496f, u1 = .9683f;                      // downstream axis: north-north-east to south-south-west
             float a = wx * u0 + wz * u1, b = wx * u1 - wz * u0;
-            float centre = 1150f + 330f * Mathf.Sin(a / 900f + 1.3f) + 140f * Mathf.Sin(a / 370f + .4f);
+            float centre = 980f + 300f * Mathf.Sin(a / 900f + 1.3f) + 130f * Mathf.Sin(a / 370f + .4f);
             return Mathf.Abs(b - centre);
         }
 
@@ -148,7 +149,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             float swell = Bi(Fbm(ax / 2300f + 3.1f, az / 950f + 7.7f, 4, 11));
             float crest = 1f - Mathf.Abs(Bi(Fbm(ax / 1500f + 9.3f, az / 520f + 1.9f, 3, 12)));
             crest = Mathf.Pow(Mathf.Clamp01((crest - .68f) / .32f), 1.4f);
-            float h = 16f * swell * S(600f, 2400f, r) + 30f * crest * S(900f, 2600f, r)
+            // The plain also rises gently away from the site, so its forms tilt towards a viewer on the platform
+            // and the river can cut 30 m without reaching the old terrain's lowest ground.
+            float h = 14f * S(700f, 1600f, r) + 24f * swell * S(540f, 1700f, r) + 42f * crest * S(700f, 2000f, r)
                 + 4f * Bi(Fbm(X / 330f + 5f, Z / 330f + 2f, 3, 13)) * S(520f, 1300f, r)
                 + 1.1f * Bi(Fbm(X / 70f + 1.7f, Z / 70f + 8.8f, 3, 14)) * S(480f, 800f, r);
 
@@ -159,7 +162,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             float channel = 1f - S(bedHalf, bedHalf + 20f, dist);
             float terrace = 1f - S(bedHalf + 75f, bedHalf + 92f, dist);
             float bars = Mathf.Clamp01((Fbm(X / 42f + 3f, Z / 42f + 9f, 3, 24) - .52f) * 4f) * 2.4f * channel;
-            h -= (22f * valley + 7f * channel + 2.6f * terrace - bars) * S(560f, 900f, r);
+            h -= (26f * valley + 8f * channel + 3f * terrace - bars) * S(560f, 900f, r);
             // Shallow draws that drain the plain.
             float draw = Bi(Fbm(X / 520f + 11f, Z / 520f + 5f, 3, 31));
             h -= (1f - S(0f, .14f, Mathf.Abs(draw))) * 4.5f * S(700f, 1500f, r) * (1f - channel);
