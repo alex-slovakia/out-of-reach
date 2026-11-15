@@ -306,6 +306,14 @@ namespace OutOfReach.Presentation.UI.Chapter
                 : "A message from Earth was received.";
         }
 
+        /// <summary>The dispatch card's body under its title (the title already states the news).</summary>
+        public static string DispatchDetail(string contentId)
+        {
+            return contentId == RescueFailedContentId
+                ? "The support vehicle was lost before it could reach the ship."
+                : "A message from Earth was received.";
+        }
+
         /// <summary>Day-9 concrete hope. <paramref name="reportDay"/> = Core's scheduled report day, or null when unknown.</summary>
         public static string HopeText(int? reportDay)
         {

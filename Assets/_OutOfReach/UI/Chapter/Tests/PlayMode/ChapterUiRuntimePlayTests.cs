@@ -216,7 +216,7 @@ namespace OutOfReach.Tests.ChapterUi
             yield return RoutineThroughTheUi("days 20 to 30");
             yield return ExpectBeat("RENDEZVOUS");
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Beacon));
-            Assert.That(ui.Text("chapter-card-meta"), Does.StartWith("Window closes in 8 h"));
+            Assert.That(ui.Text("chapter-card-meta"), Is.EqualTo("Window closes Day 30, 16:00 (mission clock)."));
             presenter.DismissCard();
             Assert.That(harness.Runtime.SurvivalRecovery.TryPowerBeacon().Succeeded, Is.True, "the cockpit console's command");
             presenter.Tick(.1f);

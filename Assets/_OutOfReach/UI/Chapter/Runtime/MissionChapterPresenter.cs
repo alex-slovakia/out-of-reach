@@ -640,7 +640,7 @@ namespace OutOfReach.Presentation.UI.Chapter
                     ChapterView.SetText(view.CardTitle, ChapterCopy.DecisionTitle(ChapterDecision.AcknowledgeRescueFailure));
                     ChapterView.SetText(view.CardMeta, "Sent " + ChapterCopy.DayAndClock(current.TransmittedAt) + " · received "
                         + ChapterCopy.DayAndClock(current.ReceivedAt) + " · " + ChapterCopy.Transit(current.ReceivedAt - current.TransmittedAt) + " on the way");
-                    ChapterView.SetText(view.CardBody, ChapterCopy.DispatchText(current.ContentId) + " Acknowledge it, then reassess the reserves through day 30.");
+                    ChapterView.SetText(view.CardBody, ChapterCopy.DispatchDetail(current.ContentId) + " Acknowledge it, then reassess the reserves through day 30.");
                     ChapterView.SetText(view.CardFacts, ReservesLine());
                     ChapterView.SetText(view.CardNote, ChapterCopy.FictionNote);
                     SetOptions(ChapterDecision.AcknowledgeRescueFailure);
@@ -680,7 +680,7 @@ namespace OutOfReach.Presentation.UI.Chapter
                 ChapterView.SetText(view.CardMeta, "Sent " + ChapterCopy.DayAndClock(dispatch.TransmittedAtSimulationSeconds) + " · received "
                     + ChapterCopy.DayAndClock(dispatch.ReceivedAtSimulationSeconds) + " · "
                     + ChapterCopy.Transit(dispatch.ReceivedAtSimulationSeconds - dispatch.TransmittedAtSimulationSeconds) + " on the way");
-                ChapterView.SetText(view.CardBody, ChapterCopy.DispatchText(dispatch.ContentId) + " Acknowledge it, then reassess the reserves through day 30.");
+                ChapterView.SetText(view.CardBody, ChapterCopy.DispatchDetail(dispatch.ContentId) + " Acknowledge it, then reassess the reserves through day 30.");
             }
             else
             {
@@ -700,11 +700,15 @@ namespace OutOfReach.Presentation.UI.Chapter
             ChapterView.SetTone(view.Card, ChapterTone.Attention);
             ChapterView.SetText(view.CardKicker, "RENDEZVOUS · " + ChapterCopy.DayAndClock(now).ToUpperInvariant());
             ChapterView.SetText(view.CardTitle, "The recovery craft asks for the beacon");
-            ChapterView.SetText(view.CardMeta, ChapterCopy.BeaconWindow(recovery.BeaconWindowEndsAtSimulationSeconds, now));
+            // One countdown only: the absolute window end here, Core's own remaining time and cost in the facts line.
+            double? ends = recovery.BeaconWindowEndsAtSimulationSeconds;
+            ChapterView.SetText(view.CardMeta, ends.HasValue && ChapterCopy.Finite(ends.Value)
+                ? (ends.Value > now ? "Window closes " + ChapterCopy.DayAndClock(ends.Value) + " (mission clock)." : "The beacon window has closed.")
+                : string.Empty);
             CommandResult check = recovery.CheckPowerBeacon();
-            ChapterView.SetText(view.CardBody, "Power the recovery beacon at the cockpit console. Without it the craft cannot find the ship."
-                + (string.IsNullOrEmpty(check.Explanation) ? string.Empty : "\n" + ChapterCopy.Sentence(check.Explanation)));
-            ChapterView.SetText(view.CardFacts, ReservesLine());
+            ChapterView.SetText(view.CardBody, "Power the recovery beacon at the cockpit console. Without it the craft cannot find the ship.");
+            string core = ChapterCopy.Sentence(check.Explanation);
+            ChapterView.SetText(view.CardFacts, (core.Length > 0 ? core + "\n" : string.Empty) + ReservesLine());
             ChapterView.SetText(view.CardNote, ChapterCopy.FictionNote);
             SetDismiss("Go to the cockpit console");
         }
@@ -839,13 +843,10 @@ namespace OutOfReach.Presentation.UI.Chapter
                     break;
                 case ChapterScreen.Decision:
                 case ChapterScreen.Message:
+                    // Digits pick the numbered options; Enter is always the card's own Enter button (later / understood).
                     if (one && cardOptions.Length > 0) ChooseOption(0);
                     else if (two && cardOptions.Length > 1) ChooseOption(1);
-                    else if (enter)
-                    {
-                        if (screen == ChapterScreen.Message && cardOptions.Length == 1) ChooseOption(0);
-                        else if (screen == ChapterScreen.Message) DismissCard();
-                    }
+                    else if (enter) DismissCard();
                     break;
                 case ChapterScreen.Beacon:
                     if (enter) DismissCard();

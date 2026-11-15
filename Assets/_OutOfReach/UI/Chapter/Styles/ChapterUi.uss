@@ -32,26 +32,28 @@
 /* ---------- routine montage (full screen) ---------- */
 .chapter-layer .chapter-montage {
     position: absolute; left: 0; top: 0; right: 0; bottom: 0;
-    align-items: center; justify-content: center;
+    align-items: flex-start; justify-content: flex-start;
+    padding: 78px 64px 0 316px;
     background-color: rgba(7, 9, 9, 0.9);
 }
-.chapter-layer .chapter-montage-column { width: 880px; max-width: 92%; }
+/* Starts right of the HUD instruments (bottom left) and ends above the subtitles (bottom centre). */
+.chapter-layer .chapter-montage-column { width: 880px; max-width: 100%; }
 .chapter-layer .chapter-montage-kicker {
     font-size: 16px; letter-spacing: 4px; color: rgb(155, 229, 232);
     -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
 }
 .chapter-layer .chapter-montage-dayrow { flex-direction: row; align-items: flex-end; margin-top: 6px; }
 .chapter-layer .chapter-montage-day {
-    font-size: 92px; letter-spacing: 6px; color: rgb(242, 240, 227);
+    font-size: 76px; letter-spacing: 6px; color: rgb(242, 240, 227);
     -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
 }
 .chapter-layer .chapter-montage-clock {
-    margin-left: 20px; margin-bottom: 16px; font-size: 36px; letter-spacing: 2px; color: rgb(207, 216, 212);
+    margin-left: 18px; margin-bottom: 12px; font-size: 32px; letter-spacing: 2px; color: rgb(207, 216, 212);
     -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
 }
 .chapter-layer .chapter-montage-range { font-size: 16px; color: rgb(207, 216, 212); }
 .chapter-layer .chapter-ruler {
-    position: relative; height: 8px; margin: 22px 0 30px;
+    position: relative; height: 8px; margin: 16px 0 26px;
     background-color: rgba(242, 240, 227, 0.1);
 }
 .chapter-layer .chapter-ruler-fill {
@@ -67,21 +69,21 @@
     background-color: rgba(242, 240, 227, 0.5);
 }
 .chapter-layer .chapter-ruler-label {
-    position: absolute; top: 14px; left: -30px; width: 60px; font-size: 12px; letter-spacing: 1px;
+    position: absolute; top: 14px; left: -30px; width: 60px; font-size: 13px; letter-spacing: 1px;
     color: rgb(177, 184, 177); -unity-text-align: upper-center; white-space: nowrap;
     -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
 }
 .chapter-layer .chapter-montage-elapsed { font-size: 15px; color: rgb(214, 217, 208); }
 .chapter-layer .chapter-montage-activity { margin-top: 6px; font-size: 16px; color: rgb(242, 240, 227); }
 .chapter-layer .chapter-montage-activity.chapter-asleep { color: rgb(155, 229, 232); }
-.chapter-layer .chapter-montage-tally { flex-direction: row; margin-top: 18px; }
+.chapter-layer .chapter-montage-tally { flex-direction: row; margin-top: 12px; }
 .chapter-layer .chapter-tally-cell { width: 170px; margin-right: 18px; padding-left: 12px; border-left-width: 2px; border-left-color: rgba(242, 240, 227, 0.22); }
 .chapter-layer .chapter-tally-value {
-    font-size: 36px; color: rgb(242, 240, 227);
+    font-size: 30px; color: rgb(242, 240, 227);
     -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
 }
 .chapter-layer .chapter-tally-caption { font-size: 13px; color: rgb(177, 184, 177); }
-.chapter-layer .chapter-montage-lower { flex-direction: row; margin-top: 22px; }
+.chapter-layer .chapter-montage-lower { flex-direction: row; margin-top: 16px; }
 .chapter-layer .chapter-montage-reserves { width: 46%; margin-right: 4%; }
 .chapter-layer .chapter-montage-feed { width: 50%; }
 .chapter-layer .chapter-section-title {
@@ -89,15 +91,15 @@
     -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
 }
 .chapter-layer .chapter-reserve-row {
-    flex-direction: row; align-items: center; min-height: 24px;
+    flex-direction: row; align-items: center; min-height: 22px;
     border-bottom-width: 1px; border-bottom-color: rgba(242, 240, 227, 0.08);
 }
 .chapter-layer .chapter-reserve-name { width: 110px; font-size: 14px; color: rgb(177, 184, 177); }
 .chapter-layer .chapter-reserve-value { flex-grow: 1; font-size: 15px; color: rgb(242, 240, 227); }
 .chapter-layer .chapter-reserve-delta { width: 80px; font-size: 14px; color: rgb(207, 216, 212); -unity-text-align: middle-right; }
-.chapter-layer .chapter-feed-line { min-height: 22px; font-size: 14px; color: rgb(226, 228, 218); white-space: nowrap; overflow: hidden; }
+.chapter-layer .chapter-feed-line { min-height: 21px; font-size: 14px; color: rgb(226, 228, 218); white-space: nowrap; overflow: hidden; }
 .chapter-layer .chapter-feed-line.chapter-feed-old { opacity: 0.55; }
-.chapter-layer .chapter-montage-stop { align-self: flex-start; margin-top: 22px; }
+.chapter-layer .chapter-montage-stop { align-self: flex-start; margin-top: 14px; }
 
 /* ---------- routine report (non-modal) ---------- */
 .chapter-layer .chapter-report { position: absolute; left: 0; right: 0; top: 24%; align-items: center; }
@@ -159,7 +161,7 @@
 .chapter-layer .chapter-option-physical .chapter-option-title { color: rgb(155, 229, 232); }
 .chapter-layer .chapter-card-dismiss { align-self: flex-end; margin-top: 12px; }
 .chapter-layer .chapter-card-feedback { margin-top: 8px; font-size: 14px; color: rgb(245, 188, 116); }
-.chapter-layer .chapter-card-note { margin-top: 12px; font-size: 12px; color: rgb(160, 167, 160); }
+.chapter-layer .chapter-card-note { margin-top: 12px; font-size: 13px; color: rgb(170, 177, 170); }
 
 /* ---------- next-routine strip (bottom right, inside the HUD margin) ---------- */
 .chapter-layer .chapter-strip {

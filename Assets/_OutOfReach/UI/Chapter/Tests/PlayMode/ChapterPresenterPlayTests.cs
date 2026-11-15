@@ -254,7 +254,8 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Message));
             Assert.That(ui.Text("chapter-card-kicker"), Is.EqualTo("MESSAGE FROM EARTH · DELAYED BY LIGHT TIME"));
             Assert.That(ui.Text("chapter-card-meta"), Is.EqualTo("Sent Day 14, 07:46 · received Day 14, 08:00 · 13 min 52 s on the way"));
-            Assert.That(ui.Text("chapter-card-body"), Does.StartWith("The first rescue attempt failed."));
+            Assert.That(ui.Text("chapter-card-title"), Is.EqualTo("The first rescue attempt failed"));
+            Assert.That(ui.Text("chapter-card-body"), Does.StartWith("The support vehicle was lost before it could reach the ship."));
             Assert.That(ui.Text("chapter-option-title-0"), Is.EqualTo("Acknowledge"));
             Assert.That(presenter.BlocksPlayerControl, Is.True);
             flow.Revision += 3;
@@ -318,8 +319,8 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(ui.Text("chapter-beat-title"), Is.EqualTo("RENDEZVOUS"));
             TickFor(MissionChapterPresenter.BeatSeconds + .2f);
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Beacon));
-            Assert.That(ui.Text("chapter-card-meta"), Is.EqualTo("Window closes in 8 h (simulated), Day 30, 16:00."));
-            Assert.That(ui.Text("chapter-card-body"), Does.Contain("Power the beacon: 0.4 kWh from the battery."));
+            Assert.That(ui.Text("chapter-card-meta"), Is.EqualTo("Window closes Day 30, 16:00 (mission clock)."));
+            Assert.That(ui.Text("chapter-card-facts"), Does.StartWith("Power the beacon: 0.4 kWh from the battery."), "Core's own CheckPowerBeacon text");
             presenter.DismissCard();
             Tick();
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.None));

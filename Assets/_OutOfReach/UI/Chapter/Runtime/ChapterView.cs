@@ -13,7 +13,7 @@ namespace OutOfReach.Presentation.UI.Chapter
     public sealed class ChapterView
     {
         public const string LayerName = "chapter-ui-layer";
-        public const int FeedLines = 6;
+        public const int FeedLines = 5;
 
         public VisualElement Layer { get; }
 
