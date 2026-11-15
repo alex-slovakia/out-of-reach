@@ -192,7 +192,7 @@ public sealed class EvaTetherNativeQaDriver : MonoBehaviour
     readonly List<Collider> probes = new List<Collider>();
     readonly HashSet<string> intrusions = new HashSet<string>();
     EvaTetherHand lastHolder; float lastRung = float.NaN; Vector3 lastFist; bool haveFist;
-    float maxSlip, maxFistError, maxStep, maxSpeed, minSpeedMoving = float.PositiveInfinity;
+    float maxSlip, maxFistError, maxStep, maxSpeed, maxElbowGap, minSpeedMoving = float.PositiveInfinity;
     int strokes, frames;
     float lastDistance = float.NaN;
     static string Output => EvaTetherNativeQa.Output;
@@ -317,6 +317,7 @@ public sealed class EvaTetherNativeQaDriver : MonoBehaviour
                 hullShot = true; yield return Capture("15-hull-run"); yield return CaptureOutside("20-outside-view-climb");
                 Soft(sleeves.IsShowing, "Arm sleeves join both climbing forearms to the shoulders.");
                 if (sleeves.TryGetArm(EvaTetherHand.Right, out Vector3 sr, out Vector3 er)) Note("Right sleeve shoulder " + sr.ToString("F3") + " elbow " + er.ToString("F3") + " forearm end gap " + (Vector3.Distance(er, rightHand.parent.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres)) * 1000).ToString("F1") + " mm");
+                if (sleeves.TryGetArm(EvaTetherHand.Left, out Vector3 sl, out Vector3 el)) Note("Left sleeve shoulder " + sl.ToString("F3") + " elbow " + el.ToString("F3") + " forearm end gap " + (Vector3.Distance(el, leftHand.parent.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres)) * 1000).ToString("F1") + " mm");
             }
             else if (!downShot && d > 7.2f)
             {
@@ -411,12 +412,14 @@ public sealed class EvaTetherNativeQaDriver : MonoBehaviour
             "max body step per frame: " + (maxStep * 1000).ToString("F1") + " mm", "max speed: " + maxSpeed.ToString("F3") + " m/s",
             "min speed while moving: " + (float.IsInfinity(minSpeedMoving) ? "n/a" : minSpeedMoving.ToString("F3")) + " m/s",
             "glove part intrusions into hull colliders / visual meshes: " + intrusions.Count,
+            "max gap between a forearm end and its elbow cover: " + (maxElbowGap * 1000).ToString("F1") + " mm",
         };
         lines.AddRange(intrusions.Take(40));
         File.WriteAllLines(Path.Combine(Output, "metrics.txt"), lines);
         Soft(maxSlip < .0025f, "The holding glove never slides on the rope (max " + (maxSlip * 1000).ToString("F2") + " mm per frame).");
         Soft(maxFistError < .004f, "The holding fist stays on the rope centre (max " + (maxFistError * 1000).ToString("F2") + " mm).");
         Soft(intrusions.Count == 0, "No glove part enters a hull collider or visual mesh on the climb (" + intrusions.Count + ").");
+        Soft(maxElbowGap < .01f, "Every forearm meets its elbow on the climb (max gap " + (maxElbowGap * 1000).ToString("F1") + " mm).");
     }
 
     void Command(CommandResult result, string why) => Check(result.Succeeded, why + ": " + result.Explanation);
@@ -493,6 +496,12 @@ public sealed class EvaTetherNativeQaDriver : MonoBehaviour
             maxFistError = Mathf.Max(maxFistError, Vector3.Distance(fist, rope.PointAt(rung)));
         }
         lastHolder = holder; lastRung = rung; lastFist = fist; haveFist = hands.TetherBlend >= .999f;
+        if (hands.TetherBlend >= .999f)
+            foreach (EvaTetherHand h in new[] { EvaTetherHand.Right, EvaTetherHand.Left })
+            {
+                Transform arm = (h == EvaTetherHand.Right ? rightHand : leftHand).parent;
+                maxElbowGap = Mathf.Max(maxElbowGap, Vector3.Distance(arm.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres), hands.TetherPose(h).Elbow));
+            }
         if (frames % 3 == 0)
             foreach (Transform part in gloveParts)
             {
@@ -605,8 +614,13 @@ public sealed class EvaTetherNativeQaDriver : MonoBehaviour
         var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create();
         try
         {
-            cam.targetTexture = texture; cam.aspect = 16f / 9; cam.enabled = false;
-            yield return null; cam.Render();
+            // Render in the normal camera pass (after every LateUpdate), so gloves, sleeves and rope are from one frame.
+            cam.targetTexture = texture; cam.aspect = 16f / 9; cam.depth = view.depth - 1; cam.enabled = true;
+            yield return null; yield return null; yield return null;
+            Vector3 rNow = Fist(EvaTetherHand.Right), lNow = Fist(EvaTetherHand.Left);
+            go.transform.position += ((rNow + lNow) * .5f) - mid; // follow the climb for the frames waited
+            yield return null; yield return null;
+            cam.enabled = false;
             var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
             try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); }
             finally { RenderTexture.active = active; Object.Destroy(image); }

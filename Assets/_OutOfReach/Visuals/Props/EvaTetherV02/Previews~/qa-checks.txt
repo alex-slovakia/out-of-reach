@@ -33,7 +33,8 @@ PASS antenna tool hold | Real interaction ray resolves the antenna at the route 
 SOFT-FAIL antenna tool hold | The real antenna E starts the tool hold (root's work gate decides).
 PASS tool hold priority probe (disclosed) | A tool lease takes the right glove from the rope (climb sleeves hidden).
 PASS tool hold priority probe (disclosed) | After the tool lease the gloves blend back onto the rope.
-PASS metrics | The holding glove never slides on the rope (max 1,34 mm per frame).
-PASS metrics | The holding fist stays on the rope centre (max 1,34 mm).
+PASS metrics | The holding glove never slides on the rope (max 1,04 mm per frame).
+PASS metrics | The holding fist stays on the rope centre (max 1,04 mm).
 SOFT-FAIL metrics | No glove part enters a hull collider or visual mesh on the climb (1).
+PASS metrics | Every forearm meets its elbow on the climb (max gap 1,0 mm).
 PASS metrics | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.

@@ -1,21 +1,22 @@
-89,490 | Rope anchors 13, on hull 12, route 15,33 m
-89,867 | == marine boarding W
-95,287 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
-130,069 | ACTUAL MARINE TRANSFER
-130,124 | == DISCLOSED domain shortcut to the outer hatch
-130,593 | Temporary visual-mesh probes added near the route: 8
-130,602 | == rope at the hatch
-132,227 | == hand over hand W
-140,967 | Right sleeve shoulder (4.195, 2.355, 20.009) elbow (3.909, 2.106, 19.546) forearm end gap 135,3 mm
-142,527 | == pause
-143,330 | Glove drift during pause (camera/menu motion only; joint poses frozen): 1,34 mm
-143,347 | == turn round
-145,229 | == to the work site
-152,630 | == antenna tool hold
-152,632 | ConnectorDamaged bounds (3.333, 2.290, 13.002) size (0.253, 0.277, 0.066)
-152,633 | Rope end (3.394, 2.300, 13.206), rope tail end (3.382, 2.300, 13.127)
-152,913 | INTERACTION False The work cannot start now.
-152,974 | Antenna E: The work cannot start now.
-155,977 | == tool hold priority probe (disclosed)
-155,983 | Probe TryBeginToolHold=True rejection=''
-157,113 | == metrics
+8,167 | Rope anchors 13, on hull 12, route 15,33 m
+8,495 | == marine boarding W
+13,888 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+48,667 | ACTUAL MARINE TRANSFER
+48,704 | == DISCLOSED domain shortcut to the outer hatch
+49,086 | Temporary visual-mesh probes added near the route: 8
+49,091 | == rope at the hatch
+50,254 | == hand over hand W
+59,022 | Right sleeve shoulder (4.201, 2.360, 19.865) elbow (3.865, 2.066, 19.518) forearm end gap 9,6 mm
+59,022 | Left sleeve shoulder (4.550, 2.462, 19.830) elbow (4.250, 2.072, 19.337) forearm end gap 9,6 mm
+60,557 | == pause
+61,359 | Glove drift during pause (camera/menu motion only; joint poses frozen): 1,04 mm
+61,379 | == turn round
+63,247 | == to the work site
+70,861 | == antenna tool hold
+70,863 | ConnectorDamaged bounds (3.333, 2.290, 13.002) size (0.253, 0.277, 0.066)
+70,864 | Rope end (3.394, 2.300, 13.206), rope tail end (3.382, 2.300, 13.127)
+70,923 | INTERACTION False The work cannot start now.
+70,940 | Antenna E: The work cannot start now.
+73,947 | == tool hold priority probe (disclosed)
+73,953 | Probe TryBeginToolHold=True rejection=''
+75,115 | == metrics
