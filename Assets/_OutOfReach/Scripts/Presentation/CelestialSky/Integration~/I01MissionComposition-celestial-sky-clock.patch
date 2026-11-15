@@ -1,5 +1,5 @@
 diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
-index 2ae6e82..212bd4e 100644
+index 2ae6e82..111fc32 100644
 --- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 +++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
 @@ -10,6 +10,7 @@ using OutOfReach.Presentation.AirlockPanel;
@@ -10,13 +10,17 @@ index 2ae6e82..212bd4e 100644
  using OutOfReach.Presentation.Lighting;
  using OutOfReach.Presentation.Motion;
  using OutOfReach.Presentation.Hands;
-@@ -702,6 +703,9 @@ namespace OutOfReach.Composition
+@@ -702,6 +703,13 @@ namespace OutOfReach.Composition
              flightBoard.enabled = true;
              cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
              cinematics.enabled = true;
-+            // Celestial sky: read-only clock selects the daily Horizons Sun sample (optional; absent = day 0).
++            // Celestial sky: read-only clock selects the daily Horizons Sun sample; reduced effects removes the Sun glare.
 +            CelestialSkyPresenter celestialSky = FindFirstObjectByType<CelestialSkyPresenter>();
-+            if (celestialSky) celestialSky.Configure(runtime.Clock);
++            if (celestialSky)
++            {
++                celestialSky.Configure(runtime.Clock);
++                celestialSky.ConfigureReducedEffects(cinematics.ReducedEffects);
++            }
              if (footsteps && runtime.Player)
                  footsteps.Configure(runtime.Player.GetComponent<CharacterController>(), runtime.GameState,
                      runtime.Clock, runtime.EvaStatus, CanPresentGroundedStepAudio,

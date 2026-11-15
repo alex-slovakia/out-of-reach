@@ -14,6 +14,11 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
         _SunRadiance ("Sun disc HDR radiance (not scaled by Exposure)", Float) = 60
         _EarthSkyDirection ("Static Earth: sky-frame direction (xyz), map flux in texture units x sr (w; 0 = none)", Vector) = (0, 0, 0, 0)
         _EarthTint ("Earth colour, linear, luminance 1", Vector) = (0.90, 1.0, 1.22, 0)
+        _GalaxyBoost ("Faint diffuse light multiplier (1 = source values; keep <= 3 for monotonic)", Range(1, 3)) = 1
+        _GalaxyKnee ("Source luminance where the faint-light lift is halved", Float) = 0.05
+        _SunGlare ("Sun glare halo HDR peak (cinematic optics; off under reduced effects)", Range(0, 10)) = 0
+        _UseGlobals ("Follow CelestialSkyPresenter (1) or static values only (0)", Float) = 1
+        _EarthPoint ("Draw the Earth point (0 when the observer is at Earth)", Float) = 1
     }
 
     SubShader
@@ -39,6 +44,12 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
             float _SunRadiance;
             float4 _EarthSkyDirection;
             float4 _EarthTint;
+            half _GalaxyBoost;
+            float _GalaxyKnee;
+            float _SunGlare;
+            float _UseGlobals;
+            float _EarthPoint;
+            float _OorCelestialReducedEffects; // global: 1 = reduced effects (no glare), 0/unset = full
             // Globals from CelestialSkyPresenter; all zeros (never set / presenter disabled) select the static values.
             float4 _OorCelestialSkyRotation;
             float4 _OorCelestialSun;
@@ -75,7 +86,7 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                float4 q = dot(_OorCelestialSkyRotation, _OorCelestialSkyRotation) > 0.25
+                float4 q = (_UseGlobals > 0.5 && dot(_OorCelestialSkyRotation, _OorCelestialSkyRotation) > 0.25)
                     ? _OorCelestialSkyRotation : _SkyRotation;
                 q *= rsqrt(max(dot(q, q), 1e-8));
                 o.skyDir = RotateByQuaternion(q, v.vertex.xyz); // linear map, so interpolation stays exact
@@ -97,15 +108,21 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
                 if (abs(dyAlt) < abs(dy.x)) dy.x = dyAlt;
                 half4 tex = tex2Dgrad(_MainTex, uv, dx, dy);
                 float3 scale = _Tint.rgb * unity_ColorSpaceDouble.rgb * _Exposure;
-                float3 c = DecodeHDR(tex, _MainTex_HDR) * scale;
+                float3 src = DecodeHDR(tex, _MainTex_HDR);
+                // Galaxy lift: static tone curve on source luminance, f(L) = L (1 + (B - 1) / (1 + (L / k)^2)).
+                // Faint diffuse light gets x B, the lift is halved at L = k and vanishes for star cores; the curve is
+                // strictly increasing (minimum slope 1 - (B - 1) / 8), so it never reorders brightness.
+                float L = dot(src, float3(0.2126, 0.7152, 0.0722));
+                float x = L / max(_GalaxyKnee, 1e-4);
+                float3 c = src * (1.0 + max(_GalaxyBoost - 1.0, 0.0) / (1.0 + x * x)) * scale;
 
                 // Angular size of this pixel (radians); unit-vector derivatives approximate angle per pixel.
                 float pixelAngle = max(max(length(ddx(d)), length(ddy(d))), 1e-6);
 
                 // Earth: unresolved point, drawn one pixel in radius with radiance = flux / solid angle, so its
                 // brightness relative to the catalogue stars is preserved at any resolution or field of view.
-                float4 earth = _OorCelestialEarth.w > 0.0 ? _OorCelestialEarth : _EarthSkyDirection;
-                if (earth.w > 0.0)
+                float4 earth = (_UseGlobals > 0.5 && _OorCelestialEarth.w > 0.0) ? _OorCelestialEarth : _EarthSkyDirection;
+                if (earth.w > 0.0 && _EarthPoint > 0.5)
                 {
                     float rho = pixelAngle;
                     float cover = saturate((rho - AngleBetween(d, normalize(earth.xyz))) / pixelAngle + 0.5);
@@ -113,10 +130,13 @@ Shader "OutOfReach/Skybox/Celestial Panoramic"
                 }
 
                 // Sun: true angular size (0.33 deg from Mars), linear limb darkening u = 0.6, occludes the stars.
-                float4 sun = _OorCelestialSun.w > 0.0 ? _OorCelestialSun : _SunSkyDirection;
+                float4 sun = (_UseGlobals > 0.5 && _OorCelestialSun.w > 0.0) ? _OorCelestialSun : _SunSkyDirection;
                 if (sun.w > 0.0)
                 {
                     float theta = AngleBetween(d, normalize(sun.xyz));
+                    // Soft glare: optical halo (eye/lens), falling as (r/theta)^2.5 outside the disc. Cinematic.
+                    float glare = _SunGlare * (1.0 - saturate(_OorCelestialReducedEffects)) * pow(sun.w / max(theta, sun.w), 2.5);
+                    c += float3(1.0, 0.96, 0.90) * glare;
                     float cover = saturate((sun.w - theta) / pixelAngle + 0.5);
                     float r = saturate(theta / sun.w);
                     float limb = 1.0 - 0.6 * (1.0 - sqrt(1.0 - r * r));

@@ -29,8 +29,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EarthPoint: 1
     - _Exposure: 1
+    - _GalaxyBoost: 2
+    - _GalaxyKnee: 0.05
+    - _SunGlare: 4
     - _SunRadiance: 60
+    - _UseGlobals: 1
     m_Colors:
     - _EarthSkyDirection: {r: 0.815142115, g: -0.260348247, b: -0.517457364, a: 0.00004830392043}
     - _EarthTint: {r: 0.9, g: 1, b: 1.22, a: 0}

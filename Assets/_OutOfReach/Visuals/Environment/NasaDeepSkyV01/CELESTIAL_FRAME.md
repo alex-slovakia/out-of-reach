@@ -12,6 +12,8 @@ This note covers how the sky is oriented, the 8K star map, and the real-size Sun
 | Ship attitude | fictional, rule-based | The rule (below): the real Sun is placed where the authored scene light comes from, and ecliptic north is kept as close to cabin "up" as possible. No measured attitude exists. |
 | Sun disc | NASA data, true size | Angular radius asin(695,700 km / Sun–observer distance). The radius is from the NASA Sun fact sheet in the same archive. It is 0.331° across on day 0 (62 % of the Sun's size seen from Earth) and 0.326° on day 30. Limb darkening uses the linear law with u = 0.6, an approximate visible-band value. Brightness is an HDR art value that saturates to white, like any eye or camera. |
 | Earth | NASA data, true direction and size, estimated brightness | Earth subtends 13.3″ on day 0 and 16.6″ on day 30, well under one pixel, so it is drawn as a point that conserves flux. Its V magnitude uses NASA's Earth V(1,0) = −3.99 (Earth fact sheet), the Horizons distances and a Lambert-sphere phase law: −2.25 on day 0 (phase angle 86.9°, 53 % lit) and −2.11 on day 30. That is about 2× Sirius (V −1.46). Flux is calibrated against Sirius in the same 8K map. The pale blue-white tint is an art choice. |
+| Sun glare | cinematic shortcut | A soft optical halo, falling as (r/θ)^2.5 outside the disc, with a peak HDR value of 4. It is an eye or lens effect, not sky radiance, and reduced effects removes it. |
+| Departure in Earth orbit | simplified, reference epoch | `NasaDeepSky_Celestial_EarthOrbit.mat` uses Earth as the observer on day 0, because the departure date is not defined. The Sun is at RA 229.165°, Dec −18.158°, 0.5386° across. It uses the orbit light Euler(26, 220, 0) from `I06MarineBindings`, a static rotation q = (−0.141957, 0.918569, −0.368556, −0.015665), and no Earth point. |
 | Moon, Mars, other planets | not drawn | The Moon would be about 0.11° from Earth; it needs one more Horizons query. Mars' size depends on the ship's undefined distance to Mars. |
 
 These corrections are left out: stellar proper motion from the Gaia epoch to 2026, annual and planetary aberration (≤ 20″ at Mars), light-time, and parallax of the stars. All of them are far below one texel, which is 0.044° on the 8192-px map.
@@ -115,4 +117,36 @@ The 8K map stores the diffuse Milky Way at about 1/3.9 of the 4K per-texel value
 
 **At 1.0 the Milky Way is a faint visible band.** The dark sky stays black. Stars are crisp points: one 8K texel is 0.044°, against about 0.063° per pixel at 1080p with the 68° field of view. Only the cores of the brightest stars just cross the bloom threshold. Nothing animates, flickers or adapts, so reduced effects need no special case.
 
-This is a dark-adapted view, not what an eye sees next to a sunlit hull, where the Milky Way would wash out. The credit should say: "source pixels unmodified, shown at native values, oriented to the NASA/JPL Horizons Sun; Sun disc and Earth point computed from NASA data". Confirm all of this with a native Unity 6000.3.28f1 screenshot before stating visibility as fact.
+**Galaxy lift (committed: `_GalaxyBoost` B = 2, `_GalaxyKnee` k = 0.05).** This is a static tone curve on source luminance L:
+
+    f(L) = L · (1 + (B − 1) / (1 + (L/k)²))
+    f'(L) = 1 + (B − 1)(1 − x²)/(1 + x²)²,  x = L/k   →   minimum 1 − (B − 1)/8 = 0.875 at x = √3
+
+Faint diffuse light is about doubled. The lift is halved at L = 0.05 and vanishes for star cores (L = 1 → ×1.0025). The curve is strictly increasing, so it never reorders brightness. An earlier smoothstep version had a near-plateau, with slope 0.017 at L ≈ 0.155, that would have merged medium-bright stars; this curve replaces it. Estimated result at exposure 1.0:
+
+| Region | Before | After |
+|---|---|---|
+| Milky Way band median | 5/255 | 15/255 |
+| Milky Way band p90 | 22/255 | 39/255 |
+| Dark sky | 0 | 0 |
+| Saturated stars | 219/255 | 219/255 |
+
+This is what "exposure-adjusted" in the credit refers to.
+
+This is a dark-adapted view, not what an eye sees next to a sunlit hull, where the Milky Way would wash out. The credit must say **exposure-adjusted**. The patch `Scripts/Presentation/CelestialSky/Integration~/sky-credit-exposure-adjusted.patch` makes that change in `FlightRecorderPresenter.cs` (UI lane) and `NOTICE.txt`. ## 7. Unity verification (15 Nov 2026, 21:50 CET)
+
+Unity 6000.3.28f1 ran in batch mode on Direct3D 12, on an isolated scratch project, never the game checkout. The project had:
+- the repository's ProjectSettings, linear colour space;
+- URP 17.3.0 with `PC_RPAsset`;
+- a global Volume with the game's `CinematicGrade` (+0.45 EV, contrast, ACES, bloom, vignette);
+- these exact CelestialSky files, both materials and the 8K map.
+
+Results, from run 3:
+- `ShaderUtil.ShaderHasError` = false and `isSupported` = true.
+- The installer's `EnsureMaterial` verified the 8K SHA-256 and built both materials. The map imported as 8192×4096 BC6H with 14 mips.
+- Five 1920×1080 renders at a 68° field of view: flight toward the Sun and Earth, flight anti-Sun, the static fallback without a presenter, departure toward the Sun, and departure away from it.
+- The presenter published exactly q(day 0) = (−0.43, 0.27, −0.24, 0.83). The no-presenter fallback rendered identically: mean 9.14/255, 319 pixels above 200.
+- In the flight view, the Earth point is at (691, 602) against a predicted (692, 604). The Sun's peak is at (1225, 473) against a predicted (1227, 477).
+- The Milky Way core and dust lanes are clearly visible. Toward the anti-Sun, Orion, the Hyades and the Pleiades are recognisable, with the faint anticentre band.
+
+Not verified: the real Bootstrap scene with the ship hull, the composition patch inside the full project, a standalone build, and reduced-effects behaviour at runtime. The global path (`ConfigureReducedEffects`) compiles but was not rendered.

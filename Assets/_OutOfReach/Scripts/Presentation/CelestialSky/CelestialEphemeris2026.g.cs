@@ -16,6 +16,9 @@ namespace OutOfReach.Presentation.CelestialSky
         public static readonly Vector3 GalacticCentre = new Vector3(-0.054875560f, -0.483835016f, -0.873437090f);
         /// <summary>Day-0 rotation for the default authored light Euler(34,-55,0); the material's static fallback.</summary>
         public static readonly Quaternion DefaultSkyFromWorld = new Quaternion(-0.425012484f, 0.269377633f, -0.238544697f, 0.830600088f);
+        /// <summary>Departure in Earth orbit (observer = Earth, day 0) with the orbit light Euler(26,220,0).</summary>
+        public static readonly Quaternion EarthOrbitSkyFromWorld = new Quaternion(-0.141956899f, 0.918569340f, -0.368555589f, -0.015664723f);
+        public static readonly Vector4 EarthOrbitSun = new Vector4(-0.621321281f, -0.311634361f, -0.718918556f, 4.699998810e-03f);
         public static readonly Vector3[] SunFromObserver =
         {
             new Vector3(0.287602568f, -0.405695695f, -0.867580409f), // day 0

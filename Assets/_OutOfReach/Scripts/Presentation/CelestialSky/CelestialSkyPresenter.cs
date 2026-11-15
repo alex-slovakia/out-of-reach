@@ -18,6 +18,7 @@ namespace OutOfReach.Presentation.CelestialSky
         private static readonly int GlobalRotation = Shader.PropertyToID(GlobalRotationProperty);
         private static readonly int GlobalSun = Shader.PropertyToID("_OorCelestialSun");
         private static readonly int GlobalEarth = Shader.PropertyToID("_OorCelestialEarth");
+        private static readonly int GlobalReducedEffects = Shader.PropertyToID("_OorCelestialReducedEffects");
 
         [Tooltip("Directional light acting as the Sun. Empty uses RenderSettings.sun.")]
         [SerializeField] private Light sun;
@@ -57,6 +58,12 @@ namespace OutOfReach.Presentation.CelestialSky
         {
             sun = directionalSun;
             Apply(true);
+        }
+
+        /// <summary>Reduced effects removes the cinematic Sun glare. The static galaxy curve and true-size Sun stay.</summary>
+        public void ConfigureReducedEffects(bool reducedEffects)
+        {
+            Shader.SetGlobalFloat(GlobalReducedEffects, reducedEffects ? 1f : 0f);
         }
 
         private void OnEnable() => Apply(true);

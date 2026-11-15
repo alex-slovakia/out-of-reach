@@ -32,6 +32,7 @@ A_G = ((-0.0548755604162154, -0.8734370902348850, -0.4838350155487132),
        (+0.4941094278755837, -0.4448296299600112, +0.7469822444972189),
        (-0.8676661490190047, -0.1980763734312015, +0.4559837761750669))
 DEFAULT_LIGHT_EULER = (34.0, -55.0, 0.0)       # Bootstrap.unity "Sunlight - authored direction"
+ORBIT_LIGHT_EULER = (26.0, 220.0, 0.0)         # I06MarineBindings.ApplyOrbitEnvironment (departure, Earth orbit)
 AU_KM = 149597870.7                            # IAU 2012 astronomical unit
 EARTH_H = -3.99                                # NASA Earth fact sheet, V-band magnitude V(1,0)
 SIRIUS_V = -1.46                               # Sirius Johnson V (Hipparcos-era catalogues)
@@ -225,6 +226,17 @@ def main(write):
                        ("Rigel", 78.6345, -8.2016), ("Polaris", 37.9529, 89.2641),
                        ("Vega", 279.2347, 38.7837), ("Canopus", 95.9880, -52.6957)):
         describe(n, eq_to_sky(radec(ra, dec)))
+    # Departure in Earth orbit: observer = Earth centre at the reference epoch (departure date is not defined).
+    e0 = tuple(body["Earth"][0][k] for k in "xyz")
+    sun_from_earth = eq_to_sky(norm(ecl_to_eq(tuple(-c for c in e0))))
+    sun_radius_earth = math.asin(radius["Sun"] / math.dist(e0, (0, 0, 0)))
+    orbit_light = euler(*ORBIT_LIGHT_EULER)
+    sun_world_orbit = tuple(-c for c in quat_rot(orbit_light, (0, 0, 1)))
+    q_orbit = sky_from_world(sun_world_orbit, sun_from_earth, (0, 1, 0), ecl_north)
+    assert math.dist(quat_rot(q_orbit, sun_world_orbit), sun_from_earth) < 1e-9
+    ra, dec = to_radec(sky_to_eq(sun_from_earth))
+    print(f"departure (Earth observer, day 0): Sun RA {ra:.3f} Dec {dec:+.3f}, disc {2 * math.degrees(sun_radius_earth):.4f} deg; "
+          f"orbit q = {tuple(round(c, 9) for c in q_orbit)}")
     tilt = math.degrees(math.acos(dot(quat_rot(inv, ecl_north), (0, 1, 0))))
     sun_ecl = math.degrees(math.asin(dot(sun_dir[0], ecl_north)))
     print(f"Sun ecliptic latitude seen from Mars, day 0: {sun_ecl:+.3f} deg")
@@ -253,6 +265,11 @@ def main(write):
         "        /// <summary>Day-0 rotation for the default authored light Euler(34,-55,0); the material's static fallback.</summary>",
         f"        public static readonly Quaternion DefaultSkyFromWorld = new Quaternion({q0[0]:.9f}f, {q0[1]:.9f}f, "
         f"{q0[2]:.9f}f, {q0[3]:.9f}f);",
+        "        /// <summary>Departure in Earth orbit (observer = Earth, day 0) with the orbit light Euler(26,220,0).</summary>",
+        f"        public static readonly Quaternion EarthOrbitSkyFromWorld = new Quaternion({q_orbit[0]:.9f}f, {q_orbit[1]:.9f}f, "
+        f"{q_orbit[2]:.9f}f, {q_orbit[3]:.9f}f);",
+        f"        public static readonly Vector4 EarthOrbitSun = new Vector4({sun_from_earth[0]:.9f}f, {sun_from_earth[1]:.9f}f, "
+        f"{sun_from_earth[2]:.9f}f, {sun_radius_earth:.9e}f);",
         "        public static readonly Vector3[] SunFromObserver =",
         "        {",
     ]

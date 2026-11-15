@@ -100,6 +100,15 @@ namespace OutOfReach.Tests.CelestialSky
         }
 
         [Test]
+        public void DepartureVariantPutsTheSunSeenFromEarthOnTheOrbitLight()
+        {
+            Vector3 orbitForward = Quaternion.Euler(26f, 220f, 0f) * Vector3.forward;
+            Vector4 sun = CelestialEphemeris2026.EarthOrbitSun;
+            AssertClose(-orbitForward, CelestialSkyFrame.ToWorld(CelestialEphemeris2026.EarthOrbitSkyFromWorld, new Vector3(sun.x, sun.y, sun.z)), 1e-4f);
+            Assert.That(2f * sun.w * Mathf.Rad2Deg, Is.EqualTo(0.5386f).Within(0.0005f)); // 695700 km at 0.9895 AU
+        }
+
+        [Test]
         public void DayIndexUsesLastSampleAtOrBeforeAndClamps()
         {
             Assert.That(CelestialSkyFrame.DayIndex(double.NaN), Is.EqualTo(0));

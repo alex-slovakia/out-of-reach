@@ -1,0 +1,26 @@
+diff --git a/Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs b/Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs
+index 8373d81..aad6a09 100644
+--- a/Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs
++++ b/Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs
+@@ -390,7 +390,7 @@ namespace OutOfReach.Presentation.UI.Report
+             artPage.Add(FlightRecorderElements.Text("Apollo 11 launch commentary (public domain). Two excerpts, radio band-limited; the mission name is omitted. No NASA endorsement is implied.", "recorder-source-description"));
+             artPage.Add(SourceLink("NASA launch commentary · source", "https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3", true));
+             artPage.Add(FlightRecorderElements.Text("Space sky — NASA/Goddard Space Flight Center Scientific Visualization Studio", "recorder-source-deck"));
+-            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Unmodified; public-domain reuse per NASA SVS.", "recorder-source-description"));
++            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020 (8K); Gaia DR2: ESA/Gaia/DPAC. Exposure-adjusted (faint light lifted); oriented to the NASA/JPL Horizons Sun; public-domain reuse per NASA SVS.", "recorder-source-description"));
+             artPage.Add(SourceLink("NASA SVS · Deep Star Maps 2020", "https://svs.gsfc.nasa.gov/4851/", true));
+             artPage.Add(FlightRecorderElements.Text("Synthetic voices — Google Gemini text-to-speech", "recorder-source-deck"));
+             artPage.Add(FlightRecorderElements.Text("Voices Orus and Kore. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants.", "recorder-source-description"));
+diff --git a/Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NOTICE.txt b/Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NOTICE.txt
+index 78d2e75..7f50792 100644
+--- a/Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NOTICE.txt
++++ b/Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NOTICE.txt
+@@ -2,5 +2,7 @@ NASA SVS Deep Star Maps 2020
+ Source: https://svs.gsfc.nasa.gov/4851/
+ NASA/Goddard Space Flight Center Scientific Visualization Studio. Gaia DR2: ESA/Gaia/DPAC.
+ Public-domain reuse policy: https://svs.gsfc.nasa.gov/help/
+-No endorsement implied. Static celestial reference, artistic exposure; not mission-epoch astrometry.
++No endorsement implied. Exposure-adjusted (faint diffuse light lifted). In-game orientation follows the NASA/JPL Horizons Sun
++(Mars-vicinity proxy, 14 Nov-15 Dec 2026); the ship attitude is fictional. Sun disc and Earth point are computed
++from NASA data; the Sun glare is a cinematic optical effect. See CELESTIAL_FRAME.md.
+ Provenance: docs/art-direction/nasa-deep-sky-20261115/README.md
