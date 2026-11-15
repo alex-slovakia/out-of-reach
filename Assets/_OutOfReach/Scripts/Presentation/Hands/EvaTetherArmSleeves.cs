@@ -22,6 +22,9 @@ namespace OutOfReach.Presentation.Hands
 
         public const float ElbowCoverRadius = 0.072f;
 
+        /// <summary>Longest shoulder-to-elbow stretch still drawn as one sleeve, metres.</summary>
+        public const float MaxUpperSleeveMetres = 1.1f;
+
         private readonly Transform[] sleeves = new Transform[2];
         private readonly Transform[] elbows = new Transform[2];
         private readonly MeshRenderer[] renderers = new MeshRenderer[4];
@@ -111,7 +114,9 @@ namespace OutOfReach.Presentation.Hands
                 Vector3 elbow = pose.Elbow;
                 Vector3 upper = elbow - shoulder;
                 float length = upper.magnitude;
-                bool show = hands.TetherBlend > 0.98f && Finite(shoulder) && Finite(elbow) && length > 0.12f && length < 0.75f;
+                // The body's shoulder sits behind the camera (standing fit), so a long reach stretches the upper sleeve;
+                // keep the arm joined up to 1.1 m rather than leaving an open forearm end in view.
+                bool show = hands.TetherBlend > 0.98f && Finite(shoulder) && Finite(elbow) && length > 0.12f && length < MaxUpperSleeveMetres;
                 renderers[i * 2].enabled = show;
                 renderers[(i * 2) + 1].enabled = show;
                 if (!show)
