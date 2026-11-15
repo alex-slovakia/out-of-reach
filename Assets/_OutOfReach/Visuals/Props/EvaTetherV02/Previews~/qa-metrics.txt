@@ -1,0 +1,28 @@
+frames on rope: 12288
+hand change-overs: 66
+max holding-fist slip per frame (same rung, world): 0,57 mm
+max holding-fist distance from the rope centre: 0,57 mm
+max body step per frame: 398,6 mm
+max speed: 1,363 m/s
+min speed while moving: 0,734 m/s
+glove part intrusions into hull colliders / visual meshes: 19
+max gap between a forearm end and its elbow cover: 0,6 mm
+R_Ring3 in AURORA-7 interior/IntegrationAnchors/AntennaRepair/Antenna repair worksite/Antenna housing collision - authored box (collider) at d=15,33 [tool hold priority probe (disclosed), holder Left phase 0,95]
+L_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+L_Hand in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Hand in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Middle1 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Ring1 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Little1 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,61]
+R_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Hand in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Thumb3 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Ring1 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Little1 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Little2 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Ring2 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Little3 in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,62]
+R_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,33 [return to the hatch, holder Right phase 0,63]
+R_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,32 [return to the hatch, holder Right phase 0,63]
+R_Arm in AURORA-7 delivered Blender models/ExteriorParts/Antenna_AzimuthPivot/Antenna_ElevationPivot/Antenna_Elevation/Reflector (visual mesh) at d=15,32 [return to the hatch, holder Right phase 0,64]

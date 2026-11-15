@@ -1,0 +1,694 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using OutOfReach.Composition;
+using OutOfReach.Composition.Editor;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.Hands;
+using OutOfReach.Presentation.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+// EVA-TETHER-01 native QA (Claude, temporary, never committed). Adapted from the lead's MoveMechNativeQa, itself
+// adapted from root's SurfacePushNativeQa. The actual saved Bootstrap with EvaTetherAuthoring.Install applied IN MEMORY
+// (the scene file is never saved), the real Practice -> marine boarding -> departure -> arrival route, then a DISCLOSED
+// domain-command shortcut to the outer hatch (cockpit check, impact skip through its presenter, two repairs, suit,
+// airlock, depressurization, go outside). On the rope: real keyboard W/S and mouse look only.
+[InitializeOnLoad]
+public static class EvaTetherNativeQa
+{
+    const string Key = "OutOfReach.EvaTetherNativeQa.";
+    public const string Bootstrap = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
+    public const string FixtureName = "EVA_TETHER_NATIVE_QA_UNSAVED";
+    public static string Output => SessionState.GetString(Key + "output", "C:/Users/alexp/NASA/_qa/eva-tether-01/failed-start");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+    [Serializable] public sealed class CheckEntry { public string utc, stage, message; public bool pass; }
+    [Serializable] public sealed class CheckList { public CheckEntry[] checks; }
+    [Serializable] sealed class FileEntry { public string path, sha256; }
+    [Serializable] sealed class Files { public FileEntry[] files; }
+    [Serializable] sealed class Result { public bool pass; public string message, utc, scope; public int checks, softFailures; }
+    static EvaTetherNativeQa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+    public static string Hierarchy(Transform t) => t ? (t.parent ? Hierarchy(t.parent) + "/" : "") + t.name : "<root>";
+    public static void Run()
+    {
+        try
+        {
+            if (!Application.isBatchMode || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Start in batch Edit mode only.");
+            if (Application.unityVersion != "6000.3.28f1" || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null)
+                throw new InvalidOperationException("Exact Unity 6000.3.28f1 and a real GPU are required.");
+            string sha = Environment.GetEnvironmentVariable("QA_SHA") ?? "unknown";
+            SessionState.SetString(Key + "output", Path.Combine(Environment.GetEnvironmentVariable("QA_OUT") ?? "C:/Users/alexp/NASA/_qa/eva-tether-01", DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + "-" + sha).Replace('\\', '/'));
+            Directory.CreateDirectory(Output); SessionState.SetInt(Key + "checks", 0); SessionState.SetInt(Key + "soft", 0); SessionState.SetString(Key + "errors", "");
+            SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(640).ToString("O", CultureInfo.InvariantCulture)); SetStage("opening actual saved Bootstrap");
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation); ShaderUtil.allowAsyncCompilation = false;
+            File.WriteAllText(Path.Combine(Output, "scope.txt"),
+                "Actual saved Bootstrap + EvaTetherAuthoring.Install(route, hands) applied in memory (scene file not saved; every Assets file hash protected).\n"
+                + "Real Practice UI, marine W boarding, seat E departure and normal arrival in float.\n"
+                + "DISCLOSED SHORTCUT from arrival to the outer hatch: domain commands (cockpit check, impact cinematic skipped through its real presenter, power + life-support repair, suit, airlock cycle, depressurization time, go outside).\n"
+                + "On the rope: real keyboard W/S and mouse look only (InputSystem state events on QA devices). Pause via MissionRuntime.SetPaused (disclosed).\n");
+            SnapshotFiles("assets-before.json");
+            EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            Check(Object.FindFirstObjectByType<I01MissionComposition>(), "Saved root composition is present.");
+            TetheredRoute route = Object.FindObjectsByType<TetheredRoute>(FindObjectsInactive.Include, FindObjectsSortMode.None).Single();
+            AstronautHandsPresenter hands = Object.FindObjectsByType<AstronautHandsPresenter>(FindObjectsInactive.Include, FindObjectsSortMode.None).Single();
+            LineRenderer guide = route.GetComponent<LineRenderer>();
+            EvaTetherRope rope = hands.TetherRope;
+            if (rope)
+            {
+                // R04 candidate: the saved scene already carries the installed rope (no in-memory install).
+                Check(!guide || !guide.enabled, "Saved Bootstrap no longer draws the old amber guide line.");
+                Check(rope.Waypoints.SequenceEqual(route.Waypoints) && rope.HasBakedBrackets,
+                    "SAVED Bootstrap: the installed rope follows the real route waypoints, with baked bracket feet, bound to the hands.");
+                Check(hands.GetComponentInChildren<EvaTetherArmSleeves>(true), "SAVED Bootstrap: the arm sleeves are installed.");
+            }
+            else
+            {
+                Check(guide && guide.enabled, "Saved Bootstrap still draws the old amber guide line before the install.");
+                rope = EvaTetherAuthoring.Install(route, hands);
+                Check(rope && hands.TetherRope == rope && !guide.enabled && rope.Waypoints.SequenceEqual(route.Waypoints),
+                    "EvaTetherAuthoring.Install binds the rope to the real route waypoints and hands, and hides the old guide (in memory).");
+            }
+            List<string> clearance = EvaTetherAuthoring.ClearanceReport(rope, null);
+            File.WriteAllLines(Path.Combine(Output, "rope-clearance-edit.txt"), clearance.Count == 0 ? new[] { "CLEAR: rope, no collider or renderer mesh within rope radius + 5 mm" } : clearance.ToArray());
+            Soft(clearance.Count == 0, "Edit-time rope clearance against every collider and renderer mesh: " + clearance.Count + " findings.");
+            if (rope.GeneratedRoot) Object.DestroyImmediate(rope.GeneratedRoot.gameObject); // play mode builds its own
+            VerifyProtected(); SetStage("entering"); EditorApplication.isPlaying = true;
+        }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || Stage != "entering") return;
+        try { SetStage("native actual Bootstrap"); new GameObject(FixtureName).AddComponent<EvaTetherNativeQaDriver>(); }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void Watchdog()
+    {
+        if (Stage.Length == 0) return;
+        if (DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime deadline)
+            && DateTime.UtcNow > deadline) Finish(false, "640-second watchdog expired; see completed checks and captures.");
+    }
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (Stage.Length == 0 || (type != LogType.Error && type != LogType.Exception && type != LogType.Assert)) return;
+        string entry = type + ": " + message + "\n" + stack + "\n";
+        if (type == LogType.Exception && message.StartsWith("ArgumentOutOfRangeException:", StringComparison.Ordinal)
+            && stack.Contains("UnityEditor.Search") && !stack.Contains("OutOfReach"))
+        { File.AppendAllText(Path.Combine(Output, "editor-environment-errors.txt"), entry); return; }
+        SessionState.SetString(Key + "errors", SessionState.GetString(Key + "errors", "") + entry);
+        File.AppendAllText(Path.Combine(Output, "runtime-errors.txt"), entry);
+    }
+    public static void RequireNoErrors()
+    {
+        string errors = SessionState.GetString(Key + "errors", ""); if (errors.Length > 0) throw new InvalidOperationException(errors);
+    }
+    public static void SetStage(string value) => SessionState.SetString(Key + "stage", value);
+    static void Record(bool condition, string message, string verdict)
+    {
+        var entry = new CheckEntry { utc = DateTime.UtcNow.ToString("O"), stage = Stage, pass = condition, message = message };
+        File.AppendAllText(Path.Combine(Output, "checks.jsonl"), JsonUtility.ToJson(entry) + "\n");
+        File.AppendAllText(Path.Combine(Output, "checks.txt"), verdict + " " + Stage + " | " + message + "\n");
+        SessionState.SetInt(Key + "checks", SessionState.GetInt(Key + "checks", 0) + 1);
+    }
+    public static void Check(bool condition, string message)
+    {
+        Record(condition, message, condition ? "PASS" : "FAIL");
+        if (!condition) throw new InvalidOperationException(message);
+    }
+    public static bool Soft(bool condition, string message)
+    {
+        Record(condition, message, condition ? "PASS" : "SOFT-FAIL");
+        if (!condition) SessionState.SetInt(Key + "soft", SessionState.GetInt(Key + "soft", 0) + 1);
+        return condition;
+    }
+    public static void Note(string message) => File.AppendAllText(Path.Combine(Output, "observations.txt"), message + "\n");
+    static IEnumerable<string> AssetPaths() => Directory.GetFiles("Assets", "*", SearchOption.AllDirectories).Select(p => p.Replace('\\', '/')).OrderBy(p => p, StringComparer.Ordinal);
+    static string Hash(string path) { using (var sha = SHA256.Create()) return BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes(path))).Replace("-", "").ToLowerInvariant(); }
+    static void SnapshotFiles(string name)
+    {
+        File.WriteAllText(Path.Combine(Output, name), JsonUtility.ToJson(new Files { files = AssetPaths().Select(p => new FileEntry { path = p, sha256 = Hash(p) }).ToArray() }, true));
+    }
+    public static void VerifyProtected()
+    {
+        var before = JsonUtility.FromJson<Files>(File.ReadAllText(Path.Combine(Output, "assets-before.json"))).files;
+        var current = AssetPaths().ToArray(); var original = new HashSet<string>(before.Select(x => x.path), StringComparer.Ordinal);
+        foreach (var item in before) if (!File.Exists(item.path) || Hash(item.path) != item.sha256) throw new InvalidOperationException("QA changed an asset: " + item.path);
+        if (current.Any(p => !original.Contains(p))) throw new InvalidOperationException("QA created Assets files: " + string.Join(", ", current.Where(p => !original.Contains(p))));
+        Check(before.Any(f => f.path == Bootstrap), "Saved Bootstrap and every pre-existing Assets file retain exact source hashes.");
+    }
+    public static void Finish(bool pass, string message)
+    {
+        try { if (File.Exists(Path.Combine(Output, "assets-before.json"))) VerifyProtected(); RequireNoErrors(); }
+        catch (Exception error) { pass = false; message += "\n" + error; }
+        int soft = SessionState.GetInt(Key + "soft", 0);
+        SessionState.SetString(Key + "stage", ""); ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Directory.CreateDirectory(Output);
+        string checksPath = Path.Combine(Output, "checks.jsonl");
+        var entries = File.Exists(checksPath) ? File.ReadAllLines(checksPath).Where(x => x.Length > 0).Select(JsonUtility.FromJson<CheckEntry>).ToArray() : Array.Empty<CheckEntry>();
+        File.WriteAllText(Path.Combine(Output, "checks.json"), JsonUtility.ToJson(new CheckList { checks = entries }, true));
+        bool all = pass && soft == 0;
+        File.WriteAllText(Path.Combine(Output, all ? "PASS.txt" : "FAIL.txt"), message + "\nsoft failures: " + soft);
+        File.WriteAllText(Path.Combine(Output, "result.json"), JsonUtility.ToJson(new Result { pass = all, message = message, softFailures = soft,
+            utc = DateTime.UtcNow.ToString("O"), checks = entries.Length, scope = "Actual saved Bootstrap EVA-TETHER-01 smoke with disclosed shortcut to the hatch; not full mission acceptance. Images need visual review." }, true));
+        Debug.Log((all ? "EVA_TETHER_NATIVE_QA_PASS " : "EVA_TETHER_NATIVE_QA_FAIL ") + message + " soft=" + soft + " output=" + Output);
+        EditorApplication.Exit(all ? 0 : 1);
+    }
+}
+
+[DefaultExecutionOrder(600)]
+public sealed class EvaTetherNativeQaDriver : MonoBehaviour
+{
+    I01MissionComposition composition;
+    MissionRuntime runtime;
+    FirstPersonController player;
+    InteractionResolver resolver;
+    I06MarineBindings marine;
+    AstronautHandsPresenter hands;
+    EvaTetherRope rope;
+    EvaTetherArmSleeves sleeves;
+    TetheredRoute route;
+    Camera view;
+    UIDocument document;
+    Keyboard keyboard;
+    Mouse mouse;
+    InputSettings originalSettings, qaSettings;
+    HideFlags originalFlags;
+    bool previousBackground;
+    readonly List<InputDevice> disabledDevices = new List<InputDevice>();
+    int interactionCount, transferred;
+    CommandResult lastInteraction;
+    string stage = "startup";
+    bool climbing;
+    Transform rightHand, leftHand;
+    readonly List<Transform> gloveParts = new List<Transform>();
+    readonly List<Collider> probes = new List<Collider>();
+    readonly HashSet<string> intrusions = new HashSet<string>();
+    EvaTetherHand lastHolder; float lastRung = float.NaN; Vector3 lastFist; bool haveFist;
+    float maxSlip, maxFistError, maxStep, maxSpeed, maxElbowGap, minSpeedMoving = float.PositiveInfinity;
+    int strokes, frames;
+    float lastDistance = float.NaN;
+    static string Output => EvaTetherNativeQa.Output;
+    MissionSession Session => runtime.Session;
+    PlayerInputActions Input => player.InputSource as PlayerInputActions;
+    [Serializable] sealed class Sample
+    {
+        public string stage, phase, holder;
+        public Vector3 feet, eye, rightFist, leftFist;
+        public float pitch, distance, speed, effort, strokePhase, gloveStrokePhase, rightGrip, leftGrip, blend, rightBend, leftBend;
+        public int motionSense, facing;
+        public bool onRoute, climbActive, toolHold, paused, control;
+        public double realTime;
+    }
+    void Check(bool pass, string message) => EvaTetherNativeQa.Check(pass, message);
+    bool Soft(bool pass, string message) => EvaTetherNativeQa.Soft(pass, message);
+    void Stage(string value) { stage = value; EvaTetherNativeQa.SetStage(value); Note("== " + value); }
+    void Note(string text) => EvaTetherNativeQa.Note(Time.realtimeSinceStartupAsDouble.ToString("F3") + " | " + text);
+
+    IEnumerator Start()
+    {
+        previousBackground = Application.runInBackground; Application.runInBackground = true;
+        originalSettings = InputSystem.settings; originalFlags = originalSettings.hideFlags;
+        if (originalFlags == HideFlags.HideAndDontSave) originalSettings.hideFlags = HideFlags.DontSave;
+        qaSettings = Object.Instantiate(originalSettings); qaSettings.hideFlags = HideFlags.DontSave;
+        qaSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        qaSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+        InputSystem.settings = qaSettings;
+        foreach (var device in InputSystem.devices.ToArray())
+            if (device.enabled && (device is Mouse || device is Keyboard || device is Gamepad)) { disabledDevices.Add(device); InputSystem.DisableDevice(device); }
+        keyboard = InputSystem.AddDevice<Keyboard>("EvaTether QA keyboard"); mouse = InputSystem.AddDevice<Mouse>("EvaTether QA mouse");
+        var stack = new Stack<IEnumerator>(); stack.Push(Exercise()); Exception failed = null;
+        while (stack.Count > 0)
+        {
+            bool more = false; object yielded = null;
+            try { EvaTetherNativeQa.RequireNoErrors(); more = stack.Peek().MoveNext(); if (more) yielded = stack.Peek().Current; }
+            catch (Exception error) { failed = error; }
+            if (failed != null) { foreach (var step in stack) try { (step as IDisposable)?.Dispose(); } catch { } break; }
+            if (!more) { stack.Pop(); continue; }
+            if (yielded is IEnumerator nested) { stack.Push(nested); continue; }
+            yield return yielded;
+        }
+        if (failed != null)
+        {
+            Keys(); Dump("failure-state.json");
+            if (view) yield return Capture("FAIL-actual-state");
+            Cleanup(); EvaTetherNativeQa.Finish(false, "Stage=" + stage + "\n" + failed); yield break;
+        }
+        Cleanup(); EvaTetherNativeQa.Finish(true, "EVA-TETHER-01 native rope climb run completed; see checks, metrics and captures.");
+    }
+
+    IEnumerator Exercise()
+    {
+        yield return WaitFor(() => Object.FindFirstObjectByType<MissionRuntime>()?.Session != null, 15, "Actual saved session startup");
+        composition = Object.FindFirstObjectByType<I01MissionComposition>(); runtime = composition.Runtime; player = runtime.Player;
+        resolver = player.Interaction; marine = Object.FindFirstObjectByType<I06MarineBindings>();
+        hands = Object.FindFirstObjectByType<AstronautHandsPresenter>(); route = runtime.EvaRoute; rope = hands.TetherRope;
+        view = Camera.main; document = Object.FindFirstObjectByType<MissionFlightBoard>().GetComponent<UIDocument>();
+        Check(marine && view && Input != null && hands && rope && route && rope.Waypoints.SequenceEqual(route.Waypoints),
+            "Saved production marine, camera, input, hands and the installed rope on the real route exist in play mode.");
+        Transform generated = rope.GeneratedRoot;
+        Check(generated && generated.Find("Rope") && generated.Find("Clips") && generated.Find("Brackets"), "The rope, clips and brackets are built at runtime.");
+        Note("Rope anchors " + rope.AnchorPoints.Count + ", on hull " + rope.BracketOnHull.Count(x => x) + ", route " + route.LengthMetres.ToString("F2") + " m");
+        player.SendMessage("OnApplicationFocus", true, SendMessageOptions.RequireReceiver);
+        resolver.Interacted += OnInteract; marine.Transferred += OnTransferred;
+        foreach (Transform t in hands.ModelRoot.GetComponentsInChildren<Transform>(true))
+        {
+            if (t.name == "R_Hand") rightHand = t; if (t.name == "L_Hand") leftHand = t;
+            if (t.GetComponent<MeshFilter>()) gloveParts.Add(t);
+        }
+        Check(rightHand && leftHand && gloveParts.Count > 10, "Glove joints and rigid glove parts found.");
+        sleeves = hands.GetComponentInChildren<EvaTetherArmSleeves>(true);
+        Check(sleeves && sleeves.Hands == hands, "The installed arm sleeves are bound to the gloves.");
+
+        // R01 startup cards run first; keep choosing the real Practice button until the mode is really chosen.
+        double practiceUntil = Now + 45; int submits = 0;
+        while (!(composition.ModeChosen && player.ControlAllowed))
+        {
+            if (Now > practiceUntil) throw new TimeoutException("Practice never released the deck controls (submits=" + submits + ").");
+            var practice = PracticeButton();
+            if (practice != null) { Submit(practice); submits++; }
+            yield return Seconds(.5);
+        }
+        Note("Practice accepted after " + submits + " submit(s) (startup cards first).");
+        Check(composition.ModeChosen && player.ControlAllowed, "Actual Practice choice releases ordinary deck controls (after the startup cards).");
+        Stage("marine boarding W");
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, -12)), .13f, 20);
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, .7f)), .13f, 25);
+        yield return Use(Target(InteractionIds.CockpitConsole));
+        yield return WaitFor(() => composition.IsTransportDeparturePlaying, 4, "Real seat E starts departure");
+        yield return WaitFor(() => transferred == 1 && !marine.OwnsPresentation && player.ControlAllowed, 40, "Actual complete departure/transfer");
+        Stage("DISCLOSED domain shortcut to the outer hatch");
+        Command(Session.Director.TryCompleteCockpitCheck(), "Actual cockpit check (impact)");
+        yield return Frames(3);
+        if (Session.Cinematics.IsWaiting) Check(composition.Cinematics.SkipActive() && !Session.Cinematics.IsWaiting, "Impact cinematic skipped through its real presenter (disclosed).");
+        Command(Session.Systems.Power.TryRepair(Session.Resources), "Actual power repair");
+        Command(Session.Systems.LifeSupport.TryRepair(Session.Resources), "Actual life-support repair");
+        Command(Session.Eva.TryPrepareSuit(), "Actual suit preparation");
+        Command(Session.Eva.TryBeginEva(), "Actual airlock cycle");
+        Command(Session.AdvanceSimulation(Session.Eva.Spec.DepressurizationSeconds), "Real depressurization time");
+        Command(Session.Eva.TryGoOutside(), "Actual go-outside command");
+        yield return WaitFor(() => player.IsOnRoute, 3, "MissionRuntime clips the player to the EVA route");
+        yield return WaitFor(() => player.ControlAllowed && hands.IsVisible, 6, "Control and gloves on the route");
+        yield return WaitFor(() => hands.IsTetherClimbActive && hands.TetherBlend >= .999f, 3, "Gloves blend onto the rope");
+        Check(player.IsAtRouteStart && runtime.EvaStatus.IsOutside, "At the outer hatch, outside, on the tether.");
+        climbing = true;
+        AddVisualProbes();
+
+        Stage("rope at the hatch");
+        yield return Aim(LookAhead(1.6f, -.25f));
+        yield return Seconds(.35);
+        yield return Capture("10-hatch-gloves-on-rope");
+        Soft(GloveOnRope(hands.TetherHoldingHand) < .003f, "At rest the holding glove's fist is on the rope (" + (GloveOnRope(hands.TetherHoldingHand) * 1000).ToString("F1") + " mm).");
+
+        Stage("hand over hand W");
+        bool rightShot = false, leftShot = false, cornerShot = false, hullShot = false, downShot = false;
+        Keys(Key.W);
+        double end = Now + 150;
+        while (player.RouteDistanceMetres < 9.4f && Now < end)
+        {
+            yield return SteerAlongRoute(-.2f);
+            float d = player.RouteDistanceMetres;
+            if (!rightShot && d > 2.4f && hands.TetherHoldingHand == EvaTetherHand.Right && hands.TetherStrokePhase > .25f && hands.TetherStrokePhase < .4f)
+            { rightShot = true; yield return Capture("11-right-glove-pulls"); }
+            else if (!leftShot && d > 3f && hands.TetherHoldingHand == EvaTetherHand.Left && hands.TetherStrokePhase > .84f && hands.TetherStrokePhase < .95f)
+            { leftShot = true; yield return Capture("12-left-pulls-right-closes"); }
+            else if (!cornerShot && d > 5.4f)
+            { cornerShot = true; yield return Capture("14-after-corner"); }
+            else if (!hullShot && d > 8.4f)
+            {
+                hullShot = true; yield return Capture("15-hull-run"); yield return CaptureOutside("20-outside-view-climb");
+                Soft(sleeves.IsShowing, "Arm sleeves join both climbing forearms to the shoulders.");
+                if (sleeves.TryGetArm(EvaTetherHand.Right, out Vector3 sr, out Vector3 er)) Note("Right sleeve shoulder " + sr.ToString("F3") + " elbow " + er.ToString("F3") + " forearm end gap " + (Vector3.Distance(er, rightHand.parent.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres)) * 1000).ToString("F1") + " mm");
+                if (sleeves.TryGetArm(EvaTetherHand.Left, out Vector3 sl, out Vector3 el)) Note("Left sleeve shoulder " + sl.ToString("F3") + " elbow " + el.ToString("F3") + " forearm end gap " + (Vector3.Distance(el, leftHand.parent.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres)) * 1000).ToString("F1") + " mm");
+            }
+            else if (!downShot && d > 7.2f)
+            {
+                downShot = true;
+                Vector3 down = player.ViewPivot.position + Flat(player.ViewPivot.forward) * .55f - Vector3.up * .75f;
+                yield return Aim(down); yield return Capture("13-look-down-arms-on-rope");
+            }
+        }
+        Keys();
+        Check(player.RouteDistanceMetres >= 9.3f, "Real W climbed hand over hand to 9.3 m along the rope (" + player.RouteDistanceMetres.ToString("F2") + " m).");
+        yield return WaitFor(() => player.RouteMotionSense == 0, 1.2, "The holding glove brakes to rest");
+        Soft(strokes >= 14, "At least 14 hand change-overs on the way (" + strokes + ").");
+        yield return Seconds(.3);
+        yield return Aim(LookAhead(1.2f, -.45f));
+        yield return Capture("16-rest-both-gloves");
+        yield return CaptureOutside("21-outside-view-rest");
+        float restDistance = player.RouteDistanceMetres;
+
+        Stage("pause");
+        Vector3 rFist = Fist(EvaTetherHand.Right), lFist = Fist(EvaTetherHand.Left);
+        runtime.SetPaused(true); Keys(Key.W); yield return Seconds(.8); Keys();
+        float drift = Mathf.Max(Vector3.Distance(Fist(EvaTetherHand.Right), rFist), Vector3.Distance(Fist(EvaTetherHand.Left), lFist));
+        Note("Glove drift during pause (camera/menu motion only; joint poses frozen): " + (drift * 1000).ToString("F2") + " mm");
+        Check(player.RouteDistanceMetres == restDistance && drift < .003f, "Pause freezes the body exactly and both gloves within 3 mm (menu camera drift) even with W held.");
+        runtime.SetPaused(false); yield return Frames(3);
+
+        Stage("turn round");
+        int facing = hands.TetherFacingSense;
+        yield return Aim(LookAhead(-1.6f, -.3f));
+        yield return Seconds(.45);
+        Check(hands.TetherFacingSense == -facing, "Facing the hatch, the gloves re-grip towards it.");
+        Vector3 eye = player.ViewPivot.position, look = Flat(player.ViewPivot.forward);
+        Check(Vector3.Dot(Fist(EvaTetherHand.Right) - eye, look) > .05f && Vector3.Dot(Fist(EvaTetherHand.Left) - eye, look) > .05f, "Both gloves are in front after turning round.");
+        yield return Capture("17-turned-round-regrip");
+        Keys(Key.W); yield return Seconds(1.0); Keys();
+        yield return WaitFor(() => player.RouteMotionSense == 0, 1.2, "Brake after the return pulls");
+        Check(player.RouteDistanceMetres < restDistance - .5f, "W facing the hatch climbs back towards it.");
+
+        Stage("to the work site");
+        yield return Aim(LookAhead(1.6f, -.2f));
+        Keys(Key.W); end = Now + 120;
+        while (!player.IsAtRouteEnd && Now < end) yield return SteerAlongRoute(-.2f);
+        Keys();
+        yield return WaitFor(() => player.RouteMotionSense == 0, 1.0, "The end anchor stops the last centimetre");
+        Check(player.IsAtRouteEnd && player.RouteMotionSense == 0 && player.RouteDistanceMetres >= route.LengthMetres - 1e-4f,
+            "The end anchor stops the body exactly at the work site.");
+        yield return Seconds(.3);
+        yield return Capture("18-work-site-gloves");
+        RemoveVisualProbes();
+
+        Stage("antenna tool hold");
+        foreach (Renderer r in Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+            if (r.name == "ConnectorDamaged") Note("ConnectorDamaged bounds " + r.bounds.center.ToString("F3") + " size " + r.bounds.size.ToString("F3"));
+        Note("Rope end " + rope.PointAt(route.LengthMetres).ToString("F3") + ", rope tail end " + rope.PointAt(rope.MaxParam).ToString("F3"));
+        InteractableTarget antenna = Target(InteractionIds.RepairAntenna);
+        yield return Aim(antenna.transform.position); yield return Frames(3); resolver.Refresh();
+        if (Soft(resolver.CurrentTarget == antenna, "Real interaction ray resolves the antenna at the route end."))
+        {
+            int before = interactionCount; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(4);
+            Note("Antenna E: " + (interactionCount > before ? lastInteraction.Explanation : "no interaction"));
+            yield return WaitSoft(() => hands.IsToolHoldActive, 3, "The real antenna E starts the tool hold (root's work gate decides).");
+            if (hands.IsToolHoldActive) { yield return Seconds(.5); yield return Capture("19-antenna-tool-hold"); }
+        }
+
+        if (!hands.IsToolHoldActive)
+        {
+            // DISCLOSED presenter probe: a tool lease at a reachable frame in front of the right glove, exactly the call
+            // the antenna presenter makes. Proves the tool hold takes priority over the rope climb and hands it back.
+            Stage("tool hold priority probe (disclosed)");
+            var frame = new GameObject("QA tool grip frame").transform;
+            Vector3 eye2 = player.ViewPivot.position, fwd = Flat(player.ViewPivot.forward);
+            frame.position = eye2 + fwd * .32f - Vector3.up * .25f + Vector3.Cross(Vector3.up, fwd) * .15f;
+            frame.rotation = Quaternion.LookRotation(fwd, Vector3.up) * Quaternion.Euler(0f, 0f, 0f);
+            bool began = hands.TryBeginToolHold(frame, () => true);
+            Note("Probe TryBeginToolHold=" + began + " rejection='" + hands.LastToolHoldRejection + "'");
+            yield return Seconds(.35);
+            Soft(began && hands.IsToolHoldActive && !sleeves.IsShowing, "A tool lease takes the right glove from the rope (climb sleeves hidden).");
+            yield return Capture("19-tool-hold-probe");
+            hands.EndToolHold(); Object.Destroy(frame.gameObject);
+            yield return Seconds(.4);
+            Soft(hands.IsTetherClimbActive && hands.TetherBlend >= .999f && GloveOnRope(hands.TetherHoldingHand) < .003f,
+                "After the tool lease the gloves blend back onto the rope.");
+        }
+
+        // Return path (Alex 6896702312): hand over hand back to the outer hatch, then the real E at the hatch.
+        Stage("return to the hatch");
+        hands.EndToolHold();
+        yield return Seconds(.4);
+        AddVisualProbes();
+        yield return Aim(LookAhead(-1.6f, -.2f));
+        bool hullBack = false, nearHatch = false;
+        Keys(Key.W); end = Now + 150;
+        while (!player.IsAtRouteStart && Now < end)
+        {
+            yield return SteerAlongRoute(-.2f);
+            if (!hullBack && player.RouteDistanceMetres < 9f) { hullBack = true; yield return Capture("22-return-along-hull"); }
+            else if (!nearHatch && player.RouteDistanceMetres < 1.2f) { nearHatch = true; yield return Capture("23-return-climbing-down-to-hatch"); }
+        }
+        Keys();
+        yield return WaitFor(() => player.RouteMotionSense == 0, 1.0, "The start anchor stops the body at the hatch");
+        Check(player.IsAtRouteStart && player.RouteDistanceMetres <= 1e-4f, "Real W climbs the whole rope back to the outer hatch (" + player.RouteDistanceMetres.ToString("F3") + " m).");
+        yield return Seconds(.3);
+        yield return Capture("24-at-hatch-gloves-on-rope");
+        RemoveVisualProbes();
+
+        Stage("back inside");
+        InteractableTarget hatch = Target(InteractionIds.EvaReturn);
+        yield return Aim(hatch.transform.position); yield return Frames(3); resolver.Refresh();
+        bool realE = resolver.CurrentTarget == hatch;
+        Note("Return target in view: " + realE + " prompt='" + (resolver.CurrentTarget ? resolver.CurrentTarget.InteractionId : "none") + "'");
+        if (realE)
+        {
+            int before = interactionCount; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(4);
+            Note("Return E: " + (interactionCount > before ? lastInteraction.Succeeded + " " + lastInteraction.Explanation : "no interaction"));
+        }
+
+        if (player.IsOnRoute)
+        {
+            Command(Session.Eva.TryReturnInside(), "Disclosed domain return inside (the real E did not move the crew in)");
+        }
+
+        yield return WaitFor(() => !player.IsOnRoute, 3, "MissionRuntime releases the route back inside");
+        yield return Seconds(.6);
+        Check(!player.IsOnRoute && !runtime.EvaStatus.IsOutside, "Back inside: off the route, not outside" + (realE ? " (real E at the hatch)" : " (disclosed domain return)") + ".");
+        Check(!hands.IsTetherClimbActive && !sleeves.IsShowing, "Back inside the gloves leave the rope and the climb sleeves hide.");
+        yield return Capture("25-back-inside-airlock");
+
+        climbing = false;
+        Stage("metrics");
+        var lines = new List<string>
+        {
+            "frames on rope: " + frames, "hand change-overs: " + strokes,
+            "max holding-fist slip per frame (same rung, world): " + (maxSlip * 1000).ToString("F2") + " mm",
+            "max holding-fist distance from the rope centre: " + (maxFistError * 1000).ToString("F2") + " mm",
+            "max body step per frame: " + (maxStep * 1000).ToString("F1") + " mm", "max speed: " + maxSpeed.ToString("F3") + " m/s",
+            "min speed while moving: " + (float.IsInfinity(minSpeedMoving) ? "n/a" : minSpeedMoving.ToString("F3")) + " m/s",
+            "glove part intrusions into hull colliders / visual meshes: " + intrusions.Count,
+            "max gap between a forearm end and its elbow cover: " + (maxElbowGap * 1000).ToString("F1") + " mm",
+        };
+        lines.AddRange(intrusions.Take(40));
+        File.WriteAllLines(Path.Combine(Output, "metrics.txt"), lines);
+        Soft(maxSlip < .0025f, "The holding glove never slides on the rope (max " + (maxSlip * 1000).ToString("F2") + " mm per frame).");
+        Soft(maxFistError < .004f, "The holding fist stays on the rope centre (max " + (maxFistError * 1000).ToString("F2") + " mm).");
+        Soft(intrusions.Count == 0, "No glove part enters a hull collider or visual mesh on the climb (" + intrusions.Count + ").");
+        Soft(maxElbowGap < .01f, "Every forearm meets its elbow on the climb (max gap " + (maxElbowGap * 1000).ToString("F1") + " mm).");
+    }
+
+    void Command(CommandResult result, string why) => Check(result.Succeeded, why + ": " + result.Explanation);
+
+    Vector3 LookAhead(float metres, float drop)
+    {
+        float d = Mathf.Clamp(player.RouteDistanceMetres + metres, 0f, route.LengthMetres);
+        return route.PointAt(d) + Vector3.up * (1.65f + drop);
+    }
+
+    IEnumerator SteerAlongRoute(float drop)
+    {
+        int sense = player.RouteDirection >= 0 ? 1 : -1;
+        Vector3 target = LookAhead(1.6f * sense, drop);
+        Vector3 delta = target - player.ViewPivot.position;
+        float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, pitch = Mathf.Atan2(delta.y, new Vector2(delta.x, delta.z).magnitude) * Mathf.Rad2Deg;
+        Vector2 degrees = new Vector2(Mathf.DeltaAngle(player.transform.eulerAngles.y, yaw), Mathf.Clamp(pitch, -80f, 80f) - player.PitchDegrees);
+        degrees = Vector2.ClampMagnitude(degrees, 4f);
+        InputSystem.QueueStateEvent(mouse, new MouseState { delta = degrees / Input.MouseDegreesPerPixel });
+        yield return null;
+    }
+
+    float GloveOnRope(EvaTetherHand hand) => Vector3.Distance(Fist(hand), rope.PointAt(hands.TetherRopeParam(hand)));
+    Vector3 Fist(EvaTetherHand hand) => (hand == EvaTetherHand.Right ? rightHand : leftHand).TransformPoint(AstronautHandsPresenter.TetherTubeCentreInHand);
+
+    void AddVisualProbes()
+    {
+        Transform skip = player.transform;
+        int added = 0;
+        foreach (MeshRenderer r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))
+        {
+            if (!r.enabled || r.GetComponent<Collider>() || r.transform.IsChildOf(skip) || r.transform.IsChildOf(rope.transform)
+                || (hands.ModelRoot && r.transform.IsChildOf(hands.ModelRoot))) continue;
+            MeshFilter f = r.GetComponent<MeshFilter>(); if (!f || !f.sharedMesh) continue;
+            Bounds b = r.bounds; b.Expand(2f);
+            bool near = false; for (float d = 0; d <= route.LengthMetres && !near; d += .25f) near = b.Contains(route.PointAt(d) + Vector3.up);
+            if (!near) continue;
+            var probe = r.gameObject.AddComponent<MeshCollider>(); probe.sharedMesh = f.sharedMesh; probes.Add(probe); added++;
+        }
+        Physics.SyncTransforms();
+        Note("Temporary visual-mesh probes added near the route: " + added);
+        List<string> ropeHits = new List<string>();
+        for (float d = rope.MinParam; d <= rope.MaxParam; d += .02f)
+            foreach (Collider c in Physics.OverlapSphere(rope.PointAt(d), rope.RadiusMetres - .001f, ~0, QueryTriggerInteraction.Ignore))
+                if (!c.transform.IsChildOf(rope.transform) && !c.transform.IsChildOf(player.transform))
+                    ropeHits.Add("rope d=" + d.ToString("F2") + " in " + EvaTetherNativeQa.Hierarchy(c.transform) + (probes.Contains(c) ? " (visual mesh)" : " (collider)"));
+        File.WriteAllLines(Path.Combine(Output, "rope-clearance-play.txt"), ropeHits.Count == 0 ? new[] { "CLEAR" } : ropeHits.Distinct().ToArray());
+        Soft(ropeHits.Count == 0, "Play-time rope clearance against hull colliders and visual meshes: " + ropeHits.Distinct().Count() + " findings.");
+    }
+
+    void RemoveVisualProbes()
+    {
+        foreach (Collider c in probes) if (c) Object.Destroy(c);
+        probes.Clear();
+    }
+
+    void LateUpdate()
+    {
+        // Rope metrics only while the gloves are on the rope: a tool lease takes the right glove off it on purpose.
+        if (!climbing || !player || !player.IsOnRoute || !hands.IsTetherClimbActive || hands.IsToolHoldActive) { haveFist = false; return; }
+        frames++;
+        float d = player.RouteDistanceMetres;
+        if (!float.IsNaN(lastDistance)) maxStep = Mathf.Max(maxStep, Mathf.Abs(d - lastDistance));
+        lastDistance = d;
+        maxSpeed = Mathf.Max(maxSpeed, player.RouteSpeedMetresPerSecond);
+        if (player.RouteClimbEffort01 > .99f) minSpeedMoving = Mathf.Min(minSpeedMoving, player.RouteSpeedMetresPerSecond);
+        EvaTetherHand holder = hands.TetherHoldingHand;
+        float rung = hands.TetherRopeParam(holder);
+        Vector3 fist = Fist(holder);
+        if (hands.TetherBlend >= .999f)
+        {
+            if (haveFist && holder == lastHolder && Mathf.Approximately(rung, lastRung)) maxSlip = Mathf.Max(maxSlip, Vector3.Distance(fist, lastFist));
+            if (haveFist && holder != lastHolder) strokes++;
+            maxFistError = Mathf.Max(maxFistError, Vector3.Distance(fist, rope.PointAt(rung)));
+        }
+        lastHolder = holder; lastRung = rung; lastFist = fist; haveFist = hands.TetherBlend >= .999f;
+        if (hands.TetherBlend >= .999f)
+            foreach (EvaTetherHand h in new[] { EvaTetherHand.Right, EvaTetherHand.Left })
+            {
+                Transform arm = (h == EvaTetherHand.Right ? rightHand : leftHand).parent;
+                maxElbowGap = Mathf.Max(maxElbowGap, Vector3.Distance(arm.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres), hands.TetherPose(h).Elbow));
+            }
+        if (frames % 3 == 0)
+            foreach (Transform part in gloveParts)
+            {
+                MeshFilter f = part.GetComponent<MeshFilter>(); if (!f || !f.sharedMesh) continue;
+                Bounds local = f.sharedMesh.bounds;
+                Vector3 half = Vector3.Max(Vector3.zero, Vector3.Scale(local.extents, part.lossyScale) - Vector3.one * .002f);
+                foreach (Collider c in Physics.OverlapBox(part.TransformPoint(local.center), half, part.rotation, ~0, QueryTriggerInteraction.Ignore))
+                    if (!c.transform.IsChildOf(player.transform) && !c.transform.IsChildOf(rope.transform))
+                        intrusions.Add(part.name + " in " + EvaTetherNativeQa.Hierarchy(c.transform) + (probes.Contains(c) ? " (visual mesh)" : " (collider)") + " at d=" + d.ToString("F2") + " [" + stage + ", holder " + hands.TetherHoldingHand + " phase " + hands.TetherStrokePhase.ToString("F2") + "]");
+            }
+        if (frames % 3 == 0) File.AppendAllText(Path.Combine(Output, "trace.jsonl"), JsonUtility.ToJson(State()) + "\n");
+    }
+
+    Sample State() => new Sample
+    {
+        stage = stage, phase = Session.State.Phase.ToString(), holder = hands ? hands.TetherHoldingHand.ToString() : "",
+        feet = player.transform.position, eye = player.ViewPivot.position, rightFist = rightHand ? Fist(EvaTetherHand.Right) : default,
+        leftFist = leftHand ? Fist(EvaTetherHand.Left) : default, pitch = player.PitchDegrees, distance = player.RouteDistanceMetres,
+        speed = player.RouteSpeedMetresPerSecond, effort = player.RouteClimbEffort01, strokePhase = player.RouteStrokePhase,
+        gloveStrokePhase = hands ? hands.TetherStrokePhase : 0, rightGrip = hands ? hands.TetherGrip(EvaTetherHand.Right) : 0,
+        leftGrip = hands ? hands.TetherGrip(EvaTetherHand.Left) : 0, blend = hands ? hands.TetherBlend : 0,
+        rightBend = hands ? hands.TetherPose(EvaTetherHand.Right).WristBendDegrees : 0, leftBend = hands ? hands.TetherPose(EvaTetherHand.Left).WristBendDegrees : 0,
+        motionSense = player.RouteMotionSense, facing = hands ? hands.TetherFacingSense : 0, onRoute = player.IsOnRoute,
+        climbActive = hands && hands.IsTetherClimbActive, toolHold = hands && hands.IsToolHoldActive, paused = runtime.IsPaused,
+        control = player.ControlAllowed, realTime = Now,
+    };
+    void Dump(string name) { if (player && runtime?.Session != null) File.WriteAllText(Path.Combine(Output, name), JsonUtility.ToJson(State(), true)); }
+    InteractableTarget Target(string id) => runtime.InteractionTargets.Single(t => t.InteractionId == id);
+    Button PracticeButton() => document.rootVisualElement.Query<Button>().ToList().FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy && Visible(b));
+    static void Submit(VisualElement e) { e.Focus(); using (var action = NavigationSubmitEvent.GetPooled()) { action.target = e; e.SendEvent(action); } }
+    static bool Visible(VisualElement e) { for (var n = e; n != null; n = n.parent) if (n.resolvedStyle.display == DisplayStyle.None || n.resolvedStyle.visibility != Visibility.Visible) return false; return e?.panel != null; }
+    void Keys(params Key[] keys) { if (keyboard != null && keyboard.added) InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys)); }
+    void OnInteract(CommandResult result) { interactionCount++; lastInteraction = result; Note("INTERACTION " + result.Succeeded + " " + result.Explanation); }
+    void OnTransferred() { transferred++; Note("ACTUAL MARINE TRANSFER"); }
+    static Vector3 Flat(Vector3 v) { v.y = 0f; return v.sqrMagnitude > 1e-6f ? v.normalized : Vector3.forward; }
+    void Cleanup()
+    {
+        climbing = false; Keys(); RemoveVisualProbes();
+        if (resolver) resolver.Interacted -= OnInteract;
+        if (marine) marine.Transferred -= OnTransferred;
+        if (keyboard != null && keyboard.added) InputSystem.RemoveDevice(keyboard); if (mouse != null && mouse.added) InputSystem.RemoveDevice(mouse);
+        foreach (var device in disabledDevices) if (device.added) InputSystem.EnableDevice(device);
+        if (originalSettings) { InputSystem.settings = originalSettings; originalSettings.hideFlags = originalFlags; }
+        if (qaSettings) Object.Destroy(qaSettings);
+        Application.runInBackground = previousBackground;
+    }
+    IEnumerator Aim(Vector3 worldPoint)
+    {
+        double end = Now + 2.5;
+        while (true)
+        {
+            Vector3 delta = worldPoint - player.ViewPivot.position; if (delta.sqrMagnitude < .000001f) yield break;
+            float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, pitch = Mathf.Atan2(delta.y, new Vector2(delta.x, delta.z).magnitude) * Mathf.Rad2Deg;
+            Vector2 degrees = new Vector2(Mathf.DeltaAngle(player.transform.eulerAngles.y, yaw), Mathf.Clamp(pitch, -80f, 80f) - player.PitchDegrees);
+            if (degrees.sqrMagnitude < .04f) break; if (Now > end) { Note("Aim did not converge; remaining=" + degrees); break; }
+            degrees = Vector2.ClampMagnitude(degrees, 70); InputSystem.QueueStateEvent(mouse, new MouseState { delta = degrees / Input.MouseDegreesPerPixel }); yield return null;
+        }
+        InputSystem.QueueStateEvent(mouse, new MouseState()); yield return Frames(1);
+    }
+    IEnumerator WalkTo(Vector3 goal, float radius, double seconds)
+    {
+        double end = Now + seconds;
+        while (Horizontal(goal, player.transform.position) > radius)
+        {
+            if (Now > end) throw new TimeoutException("Actual marine W route stalled at " + player.transform.position);
+            Vector3 flat = goal; flat.y = player.ViewPivot.position.y; yield return Aim(flat); Keys(Key.W); yield return Seconds(.08); Keys(); yield return Frames(1);
+        }
+        Keys();
+    }
+    IEnumerator Use(InteractableTarget target)
+    {
+        Keys(); yield return Aim(target.transform.position); yield return Frames(2); resolver.Refresh();
+        Check(resolver.CurrentTarget == target, "Actual interaction ray resolves " + target.InteractionId);
+        int before = interactionCount; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(2);
+        Check(interactionCount == before + 1 && lastInteraction.Succeeded, "Single actual E succeeds: " + target.InteractionId + " | " + lastInteraction.Explanation);
+    }
+    IEnumerator WaitSoft(Func<bool> ready, double seconds, string why)
+    {
+        double end = Now + seconds; while (!ready() && Now < end) yield return null;
+        Soft(ready(), why);
+    }
+    static double Now => Time.realtimeSinceStartupAsDouble;
+    static float Horizontal(Vector3 a, Vector3 b) => Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+    static IEnumerator Frames(int count) { for (int i = 0; i < count; i++) yield return null; }
+    static IEnumerator Seconds(double seconds) { double end = Now + seconds; while (Now < end) yield return null; }
+    static IEnumerator WaitFor(Func<bool> ready, double seconds, string why) { double end = Now + seconds; while (!ready()) { if (Now > end) throw new TimeoutException(why); yield return null; } }
+    IEnumerator Capture(string name)
+    {
+        var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create(); var old = view.targetTexture; float aspect = view.aspect;
+        var panels = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled && d.panelSettings && d.rootVisualElement?.panel != null).Select(d => d.panelSettings).Distinct().ToArray();
+        var targets = panels.Select(p => p.targetTexture).ToArray(); var clears = panels.Select(p => p.clearColor).ToArray();
+        try
+        {
+            view.targetTexture = texture; view.aspect = 16f / 9; foreach (var panel in panels) { panel.targetTexture = texture; panel.clearColor = false; }
+            yield return Frames(6); var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
+            try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); Dump(name + ".json"); }
+            finally { RenderTexture.active = active; Object.Destroy(image); }
+        }
+        finally { view.targetTexture = old; view.aspect = aspect; for (int i = 0; i < panels.Length; i++) if (panels[i]) { panels[i].targetTexture = targets[i]; panels[i].clearColor = clears[i]; } texture.Release(); Object.Destroy(texture); }
+    }
+    // Debug view from outside the suit (QA only): a temporary camera off the hull side looking at the gloves on the rope.
+    IEnumerator CaptureOutside(string name)
+    {
+        Vector3 rFist = Fist(EvaTetherHand.Right), lFist = Fist(EvaTetherHand.Left), mid = (rFist + lFist) * .5f;
+        Vector3 eye = player.ViewPivot.position, toRope = Vector3.ProjectOnPlane(rope.PointAt(player.RouteDistanceMetres) - eye, Vector3.up).normalized;
+        var go = new GameObject("QA outside camera"); var cam = go.AddComponent<Camera>();
+        cam.CopyFrom(view); cam.fieldOfView = 50f;
+        go.transform.position = eye - toRope * 1.25f + Vector3.up * .35f + Flat(player.ViewPivot.forward) * .9f;
+        go.transform.LookAt(mid);
+        var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create();
+        try
+        {
+            // Render in the normal camera pass (after every LateUpdate), so gloves, sleeves and rope are from one frame.
+            cam.targetTexture = texture; cam.aspect = 16f / 9; cam.depth = view.depth - 1; cam.enabled = true;
+            yield return null; yield return null; yield return null;
+            Vector3 rNow = Fist(EvaTetherHand.Right), lNow = Fist(EvaTetherHand.Left);
+            go.transform.position += ((rNow + lNow) * .5f) - mid; // follow the climb for the frames waited
+            yield return null; yield return null;
+            cam.enabled = false;
+            var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
+            try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); }
+            finally { RenderTexture.active = active; Object.Destroy(image); }
+        }
+        finally { cam.targetTexture = null; texture.Release(); Object.Destroy(texture); Object.Destroy(go); }
+    }
+}

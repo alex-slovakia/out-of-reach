@@ -1,0 +1,29 @@
+33,788 | Rope anchors 13, on hull 12, route 15,33 m
+44,919 | Practice accepted after 22 submit(s) (startup cards first).
+44,926 | == marine boarding W
+50,470 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+85,268 | ACTUAL MARINE TRANSFER
+85,338 | == DISCLOSED domain shortcut to the outer hatch
+86,160 | Temporary visual-mesh probes added near the route: 8
+86,170 | == rope at the hatch
+88,319 | == hand over hand W
+97,466 | Right sleeve shoulder (4.195, 2.351, 19.355) elbow (3.916, 2.093, 18.895) forearm end gap 24,4 mm
+97,467 | Left sleeve shoulder (4.549, 2.464, 19.311) elbow (4.301, 2.093, 18.881) forearm end gap 24,4 mm
+98,613 | == pause
+99,451 | Glove drift during pause (camera/menu motion only; joint poses frozen): 0,66 mm
+99,479 | == turn round
+101,535 | == to the work site
+109,126 | == antenna tool hold
+109,127 | ConnectorDamaged bounds (3.333, 2.290, 13.002) size (0.253, 0.277, 0.066)
+109,128 | Rope end (3.394, 2.300, 13.206), rope tail end (3.382, 2.300, 13.127)
+109,195 | INTERACTION False The work cannot start now.
+109,213 | Antenna E: The work cannot start now.
+112,217 | == tool hold priority probe (disclosed)
+112,225 | Probe TryBeginToolHold=True rejection=''
+113,469 | == return to the hatch
+113,891 | Temporary visual-mesh probes added near the route: 8
+129,916 | == back inside
+129,950 | Return target in view: True prompt='eva-return'
+129,956 | INTERACTION True Inside the airlock.
+130,020 | Return E: True Inside the airlock.
+130,931 | == metrics
