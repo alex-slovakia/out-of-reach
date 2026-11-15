@@ -319,20 +319,29 @@ namespace OutOfReach.Presentation.UI
         private static void BuildFloating(List<PauseControlRow> rows, bool railGrip, PauseBindings bindings)
         {
             rows.Add(new PauseControlRow("Look", One(bindings.MouseLooks ? PauseGlyph.MouseLook() : PauseGlyph.Mouse(false, false))));
-            // Floating has no thrust: the mouse buttons push off a surface within reach.
+            // Floating has no thrust (MOVE-MECH-03): W/S/A/D only choose the direction; Space or the mouse buttons
+            // push off a real surface within reach. The same wording as the first in-flight movement hint.
+            rows.Add(new PauseControlRow("Hold W + Space · push off",
+                Chords(new PauseGlyph[] { MovePart(bindings, 0, "W"), PauseGlyph.Key(FootPushKey) }),
+                "Legs on the deck, hands near walls"));
             rows.Add(new PauseControlRow("Push off a surface in reach",
                 Merge(One(PauseGlyph.Mouse(true, false)), One(PauseGlyph.Mouse(false, true)))));
             rows.Add(new PauseControlRow("Push with both hands", One(PauseGlyph.Mouse(true, true))));
-            if (bindings.Move.Count > 0)
-                rows.Add(new PauseControlRow("Aim the push · hold while clicking",
-                    Chords(new PauseGlyph[] { bindings.Move[0], PauseGlyph.Mouse(true, false) })));
-            rows.Add(new PauseControlRow("Foot push", One(PauseGlyph.Key(FootPushKey)), "Only while your feet touch support"));
+            rows.Add(new PauseControlRow("Lean · tap or hold to side-step",
+                Merge(One(MovePart(bindings, 1, "A")), One(MovePart(bindings, 3, "D")))));
             if (railGrip)
-                rows.Add(new PauseControlRow("Grip a reachable rail · click to release",
-                    Chords(new PauseGlyph[] { PauseGlyph.Key(RailGripKey), PauseGlyph.Mouse(true, false) })));
+                rows.Add(new PauseControlRow("Grip a reachable rail · click again to push off",
+                    Merge(One(PauseGlyph.Mouse(true, false)), One(PauseGlyph.Mouse(false, true)))));
             var keys = new List<PauseGlyph>();
             foreach (var glyph in bindings.Interact) if (glyph.Kind == PauseGlyphKind.Key) keys.Add(glyph);
             rows.Add(new PauseControlRow("Use equipment", Each(keys)));
+        }
+
+        // One key of the live keyboard move cluster (0 up, 1 left, 2 down, 3 right), or the default key.
+        private static PauseGlyph MovePart(PauseBindings bindings, int index, string fallback)
+        {
+            var cluster = bindings.Move.Count > 0 ? bindings.Move[0].Cluster : null;
+            return cluster != null && cluster.Count > index && cluster[index] != null ? cluster[index] : PauseGlyph.Key(fallback);
         }
 
         private static PauseGlyph VerticalOnly(PauseGlyph cluster)
