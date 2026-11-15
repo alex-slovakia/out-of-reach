@@ -18,6 +18,14 @@ This REPLACES the earlier Codex control proposal. Do not implement the old Space
 - Claude must reply in its own words confirming this corrected contract before its implementation proceeds. The user asked explicitly for that acknowledgement.
 
 ## Ownership and priorities
+### Contextual contact addendum — latest user clarification
+Published to Claude in [issue #7 comment 6893693954](https://github.com/alex-slovakia/out-of-reach/issues/7#issuecomment-6893693954); Claude acknowledgement remains required.
+- Near a usable handle, LMB/RMB must GRIP with the corresponding hand and stabilize, not push the player away. Highlight usable handles and clearly show reach and available action. Do not replace contextual mouse grip with E-only.
+- Support floor, wall and ceiling contact, including diagonal walls and suitable solid props, not only axis-aligned panels.
+- Floor push must visibly plant, bend and extend the legs in the chosen valid direction. Both original-reference suits must preserve a convincing body without torso distortion.
+- Reproduce reported wall clipping and classify whether it is the player capsule, camera/limbs, or tether-route movement. Fix the demonstrated cause and verify in actual play; tests alone cannot establish that clipping is resolved.
+- Preserve the corrected single-hand/paired push, W + Space with top-right hint and A/D tilt requirements above. Context determines whether a mouse action grips a handle or pushes from a surface.
+
 - Claude gameplay: movement mechanics + body/hand animations first. Root Codex releases its two composition movement adapters for a coordinated Claude proposal (separate branch; integrator reviews). Avoid two writers on the same file. No merge/promotion without exact-revision checks.
 - Claude character work: use ORIGINAL male references only: docs/art-direction/astronaut-reference-v01/cabin-front-back.png and eva-front-back.png. Preserve agreed rig/164-bone contract; coordinate body owner. No substitute random female character or rejected EVA concept. Sitting, fastening/unfastening harness, resting and wake body animations are still needed.
 - Claude art/VFX: user explicitly requests parallel work on launch water deluge, steam, engine exhaust, ignition/ramp-up, failed-launch rocket explosion and cinematic effects matching supplied reference direction. Split disjoint folders/sessions; movement priority remains. Earth launch audio can be atmospheric; external space sound only suit/contact/radio or score. Overload explosion must follow authoritative mission result, never a parallel presentation outcome.

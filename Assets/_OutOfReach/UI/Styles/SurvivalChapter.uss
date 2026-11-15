@@ -37,9 +37,9 @@
 .survival-presentation-layer, .survival-rest-eyes, .survival-water-locator { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
 .survival-presentation-layer { -unity-font-definition: url("../Typography/SourceSans3-Regular.otf"); }
 .survival-water-distance { position: absolute; width: 170px; font-size: 13px; letter-spacing: 1px; color: rgb(155, 229, 232); white-space: normal; -unity-text-align: upper-center; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95); }
-.survival-presentation-layer .survival-rest { top: 0; bottom: 0; justify-content: center; }
+.survival-presentation-layer .survival-rest { top: 22%; bottom: auto; justify-content: flex-start; }
 .survival-presentation-layer .survival-rest-day { font-size: 88px; letter-spacing: 7px; margin-bottom: 12px; -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); }
 .survival-presentation-layer .survival-rest-time { color: rgb(180, 191, 190); margin-bottom: 18px; }
 .survival-presentation-layer .survival-wake { min-width: 104px; height: 40px; font-size: 16px; border-color: rgba(207, 220, 216, 0.45); }
-.survival-wake-title { position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; }
+.survival-wake-title { position: absolute; left: 0; top: 22%; right: 0; bottom: auto; align-items: center; justify-content: flex-start; }
 .survival-wake-day { font-size: 88px; letter-spacing: 7px; color: rgb(242, 240, 227); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); -unity-text-align: middle-center; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65); }
