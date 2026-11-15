@@ -16,7 +16,7 @@ the input bindings, which root owns; `8056815` addresses it. Nothing in Player o
 | Contract | Where | Result |
 |---|---|---|
 | Left/right hand push | `FirstPersonController.TryPushOff` (line 398) | Solid non-trigger collider, reach 0.85 m from the eye, line of sight, direction away from the hit normal by at least `MinimumAwayDot`; one shared cooldown. Correct. |
-| Both hands | `TryPushOffPair` (imported as `dccbf61`, `5d8dcaf`) | Atomic: both contacts are verified before any change; the sum is capped to one full push; one cooldown and one `Pushed`. Root's two-contact wiring is still pending. |
+| Both hands | `TryPushOffPair` (imported as `dccbf61`, `5d8dcaf`) | Atomic: both contacts are verified before any change; the sum is capped to one full push; one cooldown and one `Pushed`. Already wired at this baseline: `I06MicrogravityBridge.cs:441` calls it with the left and right contact samples (corrected after root's note 6892187869). |
 | Space, foot push from the deck | `TryPushFromFootContact` | Needs real support within 0.05 m under the feet with normal·up ≥ 0.8, and the direction away from it. It works from the deck only, by design; a foot lifted off the deck refuses, which is correct. |
 | Entering float | composition `MaintainMicrogravity` → `EnterFloatFromFootSupport` | Entry only from real foot support; this covers the spawn and the EVA return (feet in the airlock). |
 | Teleports | `Teleport` (line 252) always ends float; `MissionRuntime` lines 602 and 629 | Teleports happen only at session start and restart, followed by entry from the deck. Nothing teleports mid-route. |
