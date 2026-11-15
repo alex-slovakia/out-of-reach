@@ -1,0 +1,58 @@
+35,126 | == practice and marine boarding
+40,837 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+75,852 | ACTUAL MARINE TRANSFER
+78,624 | CAPTURE 00-arrival-before-accident screen=None day=1
+78,625 | == accident (cockpit check command)
+88,689 | CAPTURE 01-beat-days-1-2-accident screen=Beat day=1
+93,209 | CAPTURE 02-strip-refusal-before-repairs screen=None day=1
+93,209 | == day 1: repairs, first ration, first rest (station commands)
+96,690 | CAPTURE 03-day1-first-rest-root-overlay screen=None day=1
+106,245 | CAPTURE 04-strip-continue-routine screen=None day=1
+106,245 | == routine to day 5 by R, stop by R, again by R
+106,246 | KEY R
+108,127 | CAPTURE 05-montage-awake screen=Montage day=1
+109,584 | CAPTURE 06-montage-asleep screen=Montage day=2
+110,956 | KEY R
+112,087 | CAPTURE 07-report-stopped-by-the-crew screen=Report day=2
+112,088 | KEY Enter
+112,520 | KEY R
+125,563 | CAPTURE 08-beat-day5-consequences screen=Beat day=5
+130,199 | Day-5 decision: ScienceOrSalvage | option 1: Keep the instrument — Keep the science instrument: its load stays on the bus and no spare parts are recovered.
+130,443 | CAPTURE 09-decision-day5 screen=Decision day=5
+130,444 | KEY Digit1
+130,468 | == routine to day 9
+130,971 | KEY R
+148,628 | CAPTURE 10-beat-day9-contact screen=Beat day=9
+153,154 | CAPTURE 11-strip-contact-first screen=None day=9
+153,155 | == day 9: exterior repair and the call (domain commands)
+184,915 | CAPTURE 12-message-day9-hope screen=Message day=9
+184,915 | KEY Enter
+184,941 | HUD objective after contact: Continue the routine / Next: day 14, news of the rescue attempt · press R
+185,162 | CAPTURE 12b-hud-objective-after-contact screen=None day=9
+185,162 | == routine to day 14 with a pause
+185,766 | KEY R
+187,291 | KEY Escape
+189,258 | CAPTURE 13-pause-during-routine screen=None day=9
+189,259 | KEY Escape
+191,055 | CAPTURE 14-montage-days-9-14 screen=Montage day=10
+209,096 | CAPTURE 15-beat-day14-the-message screen=Beat day=14
+213,823 | CAPTURE 16-message-day14-failure-delayed screen=Message day=14
+213,824 | KEY Digit1
+215,011 | CAPTURE 17-message-new-plan screen=Message day=14
+215,013 | KEY Enter
+215,053 | == routine to day 20
+215,560 | KEY R
+241,176 | CAPTURE 18-beat-day20-last-reserves screen=Beat day=20
+246,040 | CAPTURE 19-decision-day20 screen=Decision day=20
+246,040 | KEY Digit2
+246,066 | == routine to day 30, beacon, docking
+246,569 | KEY R
+249,802 | CAPTURE 20-montage-days-20-30 screen=Montage day=21
+289,079 | CAPTURE 21-beat-day30-rendezvous screen=Beat day=30
+295,883 | CAPTURE 22-beacon-request screen=Beacon day=30
+295,884 | KEY Enter
+297,169 | CAPTURE 23-strip-beacon-requested screen=None day=30
+298,625 | CAPTURE 24-strip-docking screen=None day=30
+298,626 | KEY R
+302,450 | CAPTURE 25-after-docking screen=None day=30
+302,451 | Final: day 30, outcome Recovered

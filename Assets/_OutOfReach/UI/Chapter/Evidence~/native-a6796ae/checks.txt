@@ -1,0 +1,54 @@
+PASS opening actual saved Bootstrap | Saved root composition is present.
+PASS opening actual saved Bootstrap | Saved Bootstrap and every pre-existing Assets file keep their exact hashes (installer only in memory).
+PASS opening actual saved Bootstrap | Installer applied in memory without warnings:
+CHAPTER-UI-01 install into Assets/_OutOfReach/Scenes/Bootstrap.unity:
+  presenter: I01 mission composition/ChapterUi (document MissionFlightBoard)
+  composition: chapterUi and chapterStyle assigned
+  MissionRuntime: chapterLoop = true, survivalExtension = true
+
+PASS native actual Bootstrap | The installed chapter presenter exists and the composition bound it to the session.
+PASS native actual Bootstrap | The installer turned on the chapter loop: MissionRuntime.ChapterFlow is not null.
+PASS native actual Bootstrap | Saved marine prologue, camera and default input exist.
+PASS practice and marine boarding | Actual Practice choice releases the deck controls.
+PASS practice and marine boarding | No chapter UI during planning and the prologue.
+PASS practice and marine boarding | Actual interaction ray resolves cockpit-console
+PASS practice and marine boarding | Single actual E succeeds: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS practice and marine boarding | No chapter UI during the departure and the arrival.
+PASS accident (cockpit check command) | Cockpit check (the console's own command) starts the accident: Cockpit check complete. Impact detected.
+PASS accident (cockpit check command) | Beat card days 1-2: THE ACCIDENT
+PASS accident (cockpit check command) | Strip shows Core's refusal: Repair power and life support first.
+PASS day 1: repairs, first ration, first rest (station commands) | Power repair command
+PASS day 1: repairs, first ration, first rest (station commands) | Life-support repair command
+PASS day 1: repairs, first ration, first rest (station commands) | First stored ration (the food locker's command): Prepare and eat the first packaged meal: 0.4575 kg
+PASS day 1: repairs, first ration, first rest (station commands) | First rest (the berth's command): Rest up to 8.5 h: about 0.648 kg food and 0.885 L water at the BVAD crew-day rates; any danger wakes the crew
+PASS day 1: repairs, first ration, first rest (station commands) | Root's rest overlay is visible before contact in the chapter loop (SurvivalChapterPresenter edit).
+PASS day 1: repairs, first ration, first rest (station commands) | HUD objective after day 1 (CHAPTER-UI-02): Continue the routine / Next: day 5, inspection of the repairs and reserves · press R
+PASS routine to day 5 by R, stop by R, again by R | R issued Core's TryContinueRoutine
+PASS routine to day 5 by R, stop by R, again by R | Root's rest overlay and DAY title stay hidden during the routine night.
+PASS routine to day 5 by R, stop by R, again by R | Core stopped it as cancelled: the crew stopped the routine
+PASS routine to day 5 by R, stop by R, again by R | Stopped at the committed time, not the target: Day 2, 12:45
+PASS routine to day 5 by R, stop by R, again by R | Report shows the real stop time
+PASS routine to day 5 by R, stop by R, again by R | Beat card title CONSEQUENCES / summary: After 2 d 19 h of routine: 7 meals · 7 water portions · 3 nights of ordinary sleep.
+PASS routine to day 5 by R, stop by R, again by R | The decision card frees the cursor through the composition gate.
+PASS routine to day 9 | Beat card title CONTACT / summary: After 3 d 23 h of routine: 10 meals · 10 water portions · 4 nights of ordinary sleep.
+PASS routine to day 9 | Before contact the spacewalk stays root's HUD objective: Prepare for a spacewalk
+PASS day 9: exterior repair and the call (domain commands) | suit
+PASS day 9: exterior repair and the call (domain commands) | begin EVA
+PASS day 9: exterior repair and the call (domain commands) | depressurize
+PASS day 9: exterior repair and the call (domain commands) | go outside
+PASS day 9: exterior repair and the call (domain commands) | antenna repair
+PASS day 9: exterior repair and the call (domain commands) | return inside
+PASS day 9: exterior repair and the call (domain commands) | end EVA
+PASS day 9: exterior repair and the call (domain commands) | repressurize
+PASS day 9: exterior repair and the call (domain commands) | link diagnostic
+PASS day 9: exterior repair and the call (domain commands) | transmit
+PASS day 9: exterior repair and the call (domain commands) | Hope message: A first rescue attempt is under way: an uncrewed support vehicle already near Mars will try to reach the ship. Mission control will report its progress about mission day 14.
+PASS routine to day 14 with a pause | Pause suspends the routine (no simulated time passes) and hides the montage
+PASS routine to day 14 with a pause | Beat card title THE MESSAGE / summary: After 4 d 20 h of routine: 13 meals · 13 water portions · 5 nights of ordinary sleep.
+PASS routine to day 14 with a pause | Sent/received times: Sent Day 14, 07:49 · received Day 14, 08:00 · 10 min 3 s on the way
+PASS routine to day 20 | Beat card title LAST RESERVES / summary: After 5 d 23 h of routine: 16 meals · 16 water portions · 6 nights of ordinary sleep.
+PASS routine to day 30, beacon, docking | Beat card title RENDEZVOUS / summary: After 9 d 23 h of routine: 26 meals · 26 water portions · 10 nights of ordinary sleep.
+PASS routine to day 30, beacon, docking | Beacon power-up (the cockpit console's command): Recovery beacon powered: the rendezvous stays on schedule.
+PASS routine to day 30, beacon, docking | Strip offers the routine to the docking: Day 30, 18:00 — the recovery craft docks
+PASS routine to day 30, beacon, docking | The chapter UI leaves the screen to the ending and the report.
+PASS routine to day 30, beacon, docking | Saved Bootstrap and every pre-existing Assets file keep their exact hashes (installer only in memory).
