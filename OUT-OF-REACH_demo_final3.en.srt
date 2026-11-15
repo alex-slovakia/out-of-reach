@@ -1,0 +1,44 @@
+1
+00:00:00,150 --> 00:00:01,920
+SPACE MISSION DESIGN GAME
+You pack the ship. Every kilogram must launch.
+
+2
+00:00:02,300 --> 00:00:04,800
+OUT OF REACH
+The mission you design is the mission you must survive.
+
+3
+00:00:06,350 --> 00:00:08,100
+Then debris hits. Power and life support fail.
+
+4
+00:00:08,300 --> 00:00:10,000
+EVERY REPAIR HAS A COST
+Paid in the spare parts you packed.
+
+5
+00:00:10,250 --> 00:00:13,900
+SPACEWALK
+Clip the tether. Fix the antenna by hand.
+
+6
+00:00:14,150 --> 00:00:16,100
+REAL NASA/JPL HORIZONS DISTANCE
+11 light-minutes away: a reply takes 32 minutes.
+
+7
+00:00:16,350 --> 00:00:18,500
+NASA LIFE-SUPPORT BASELINE (BVAD)
+Food, water and air run down at real rates.
+
+8
+00:00:18,750 --> 00:00:23,400
+DAY 30 · RESCUE
+Help arrives only as fast as physics allows.
+
+9
+00:00:27,300 --> 00:00:29,500
+OUT OF REACH
+Pack your own ship. Would you survive?
+Team Polish Alex Goats · NASA Space Apps Challenge 2026
