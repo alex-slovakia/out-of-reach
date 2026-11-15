@@ -1,0 +1,39 @@
+PASS opening actual saved Bootstrap | Saved root composition is present.
+PASS opening actual saved Bootstrap | Saved Bootstrap still draws the old amber guide line before the install.
+PASS opening actual saved Bootstrap | EvaTetherAuthoring.Install binds the rope to the real route waypoints and hands, and hides the old guide (in memory).
+PASS opening actual saved Bootstrap | Edit-time rope clearance against every collider and renderer mesh: 0 findings.
+PASS opening actual saved Bootstrap | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.
+PASS native actual Bootstrap | Saved production marine, camera, input, hands and the installed rope on the real route exist in play mode.
+PASS native actual Bootstrap | The rope, clips and brackets are built at runtime.
+PASS native actual Bootstrap | Glove joints and rigid glove parts found.
+PASS native actual Bootstrap | The installed arm sleeves are bound to the gloves.
+PASS native actual Bootstrap | Actual Practice choice releases ordinary deck controls.
+PASS marine boarding W | Actual interaction ray resolves cockpit-console
+PASS marine boarding W | Single actual E succeeds: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS DISCLOSED domain shortcut to the outer hatch | Actual cockpit check (impact): Cockpit check complete. Impact detected.
+PASS DISCLOSED domain shortcut to the outer hatch | Impact cinematic skipped through its real presenter (disclosed).
+PASS DISCLOSED domain shortcut to the outer hatch | Actual power repair: power distribution repaired (2 spare parts).
+PASS DISCLOSED domain shortcut to the outer hatch | Actual life-support repair: life support repaired (2 spare parts, 1 kWh).
+PASS DISCLOSED domain shortcut to the outer hatch | Actual suit preparation: EVA suit on. Tank: 0.3 kg oxygen.
+PASS DISCLOSED domain shortcut to the outer hatch | Actual airlock cycle: Inner hatch sealed. Depressurizing.
+PASS DISCLOSED domain shortcut to the outer hatch | Real depressurization time: Simulation advanced.
+PASS DISCLOSED domain shortcut to the outer hatch | Actual go-outside command: Outside on the tether.
+PASS DISCLOSED domain shortcut to the outer hatch | At the outer hatch, outside, on the tether.
+PASS DISCLOSED domain shortcut to the outer hatch | Play-time rope clearance against hull colliders and visual meshes: 0 findings.
+PASS rope at the hatch | At rest the holding glove's fist is on the rope (0,0 mm).
+PASS hand over hand W | Arm sleeves join both climbing forearms to the shoulders.
+PASS hand over hand W | Real W climbed hand over hand to 9.3 m along the rope (9,40 m).
+PASS hand over hand W | At least 14 hand change-overs on the way (19).
+PASS pause | Pause freezes the body exactly and both gloves within 3 mm (menu camera drift) even with W held.
+PASS turn round | Facing the hatch, the gloves re-grip towards it.
+PASS turn round | Both gloves are in front after turning round.
+PASS turn round | W facing the hatch climbs back towards it.
+PASS to the work site | The end anchor stops the body exactly at the work site.
+PASS antenna tool hold | Real interaction ray resolves the antenna at the route end.
+SOFT-FAIL antenna tool hold | The real antenna E starts the tool hold (root's work gate decides).
+PASS tool hold priority probe (disclosed) | A tool lease takes the right glove from the rope (climb sleeves hidden).
+PASS tool hold priority probe (disclosed) | After the tool lease the gloves blend back onto the rope.
+PASS metrics | The holding glove never slides on the rope (max 1,34 mm per frame).
+PASS metrics | The holding fist stays on the rope centre (max 1,34 mm).
+SOFT-FAIL metrics | No glove part enters a hull collider or visual mesh on the climb (1).
+PASS metrics | Saved Bootstrap and every pre-existing Assets file retain exact source hashes.

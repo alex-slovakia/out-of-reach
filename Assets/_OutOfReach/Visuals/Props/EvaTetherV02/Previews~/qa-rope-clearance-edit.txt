@@ -1,0 +1,1 @@
+CLEAR: rope, no collider or renderer mesh within rope radius + 5 mm

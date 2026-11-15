@@ -1,0 +1,4 @@
+Actual saved Bootstrap + EvaTetherAuthoring.Install(route, hands) applied in memory (scene file not saved; every Assets file hash protected).
+Real Practice UI, marine W boarding, seat E departure and normal arrival in float.
+DISCLOSED SHORTCUT from arrival to the outer hatch: domain commands (cockpit check, impact cinematic skipped through its real presenter, power + life-support repair, suit, airlock cycle, depressurization time, go outside).
+On the rope: real keyboard W/S and mouse look only (InputSystem state events on QA devices). Pause via MissionRuntime.SetPaused (disclosed).
