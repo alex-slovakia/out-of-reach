@@ -229,8 +229,9 @@ namespace OutOfReach.Tests.BodyAnim
         }
 
         /// <summary>
-        /// The seated WORK body has no head: from outside the seat eye it must not be drawn while the place of the head
-        /// is in view, the neck stays closed from the seat eye, and everything is restored when the lease ends.
+        /// First person only: the seated WORK body (it has no head) and its straps are drawn only while the camera is at
+        /// the seat eye, never from outside, whatever the camera looks at. The neck stays closed from the seat eye and
+        /// everything is restored when the lease ends.
         /// </summary>
         [Test]
         public void SeatedBodyIsNeverDrawnHeadless()
@@ -277,10 +278,31 @@ namespace OutOfReach.Tests.BodyAnim
                     foreach (Renderer r in renderers) Assert.IsTrue(r.forceRenderingOff, "outside " + from + ": " + r.name + " must not be drawn");
                 }
 
-                // Outside but looking away from the seat: the head place is not in view, so nothing needs hiding.
+                // Outside and looking away from the seat: still not drawn (never in third person, whatever is in view).
                 view.transform.SetPositionAndRotation(head + seat.TransformDirection(new Vector3(0f, .3f, 2f)), seat.rotation);
                 Assert.IsTrue(s.Body.PresentDepartureSeat(2.2f));
-                foreach (Renderer r in renderers) Assert.IsFalse(r.forceRenderingOff, "looking away: " + r.name);
+                foreach (Renderer r in renderers) Assert.IsTrue(r.forceRenderingOff, "outside, looking away: " + r.name);
+
+                // The camera flying into the seat like the cinematic (from 1.4 m in front, turning round): the body
+                // appears only in the last 0.33 m and then stays.
+                Vector3 seatEye = seat.TransformPoint(new Vector3(0f, 1.277f, .06f));
+                Vector3 start = seatEye + seat.TransformDirection(new Vector3(.3f, .35f, 1.3f));
+                Quaternion startLook = Quaternion.LookRotation(seatEye - start, Vector3.up);
+                bool shown = false;
+                for (int i = 0; i <= 90; i++)
+                {
+                    float blend = Mathf.SmoothStep(0f, 1f, i / 90f);
+                    view.transform.SetPositionAndRotation(Vector3.Lerp(start, seatEye, blend), Quaternion.Slerp(startLook, seat.rotation, blend));
+                    Assert.IsTrue(s.Body.PresentDepartureSeat(i / 30f));
+                    float distance = Vector3.Distance(view.transform.position, neck.position + seat.up * .2f);
+                    bool hidden = renderers[0].forceRenderingOff;
+                    foreach (Renderer r in renderers) Assert.AreEqual(hidden, r.forceRenderingOff, "all renderers switch together");
+                    if (distance > .34f) Assert.IsTrue(hidden, "fly-in: drawn " + distance.ToString("F2") + " m from the head place");
+                    if (distance < .29f) Assert.IsFalse(hidden, "fly-in: not drawn " + distance.ToString("F2") + " m from the head place");
+                    if (shown) Assert.IsFalse(hidden, "no flicker once the body is shown");
+                    shown = !hidden;
+                }
+                Assert.IsTrue(shown, "drawn at the seat eye at the end of the fly-in");
 
                 // Back at the seat eye the body returns; ending the lease restores the neck and every renderer.
                 view.transform.SetPositionAndRotation(seat.TransformPoint(new Vector3(0f, 1.277f, .06f)), seat.rotation * Quaternion.Euler(60f, 0f, 0f));
