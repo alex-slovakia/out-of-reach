@@ -46,6 +46,12 @@ namespace OutOfReach.Core
         /// <summary>R22: a second berth press cannot end a rest younger than this (simulated hours; a double press of E).</summary>
         public const double MinimumRestBeforeWakeHours = 0.5d;
 
+        /// <summary>
+        /// R22: while the day-1 night is still owed, an interrupted rest may be resumed at once until the crew has slept
+        /// this long in all (simulated hours); after that the ordinary sleep need applies again.
+        /// </summary>
+        public const double OwedFirstNightSleepLimitHours = 2d * SurvivalRecovery.MaximumRestHours;
+
         public const int AccidentDay = 1;
         public const int ConsequencesDay = 5;
         public const int ContactDay = 9;
@@ -919,7 +925,8 @@ namespace OutOfReach.Core
         /// here changes the beats or the routine's pacing; it only stops the berth from being used to skip them:
         /// - a running routine owns the crew's nights, so the berth neither starts a second rest nor wakes its night;
         /// - an open decision is answered first, as for the routine;
-        /// - the first rest follows the day-1 order: power and life support repaired, then the first ration;
+        /// - the first rest follows the day-1 order: power and life support repaired, then the first ration; while that
+        ///   night is owed, a rest that was cut short may be resumed at once (bounded), so day 1 never stalls;
         /// - a later rest needs the crew to have been up long enough for the sleep they last had: the routine's own
         ///   15.5 h waking day after a full 8.5 h night, proportionally less after a short one. Rests can therefore
         ///   never be chained into a time skip, however often the berth is pressed;
@@ -958,6 +965,13 @@ namespace OutOfReach.Core
                 if (survival.RationsEaten < 1)
                 {
                     return "Not yet: eat the first stored ration before the first rest.";
+                }
+
+                // The day-1 night is still owed (R waits for one completed rest): a rest that was cut short may be
+                // resumed at once, so day 1 never stalls. Bounded to two nights' sleep, so it is no time-skip loop.
+                if (recovery.RestedSimulationSeconds < (OwedFirstNightSleepLimitHours * Hour) - SurvivalRules.TimeToleranceSeconds)
+                {
+                    return null;
                 }
             }
 

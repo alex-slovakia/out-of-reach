@@ -138,8 +138,11 @@ namespace OutOfReach.Tests.EditMode
             using (MissionSession session = Accident())
             {
                 ReadyForTheFirstRest(session);
+                FullNightThroughTheBerth(session);
+                StayAwake(session, MissionChapterFlow.RoutineAwakeHours * Hour);
+
                 Require(Berth(session).TryInteract());
-                Assert.That(session.SurvivalRecovery.RestCount, Is.EqualTo(1));
+                Assert.That(session.SurvivalRecovery.RestCount, Is.EqualTo(2));
                 AssertRefusedWithoutEffect(session, "settling in");
 
                 Require(session.AdvanceSimulation(Hour));
@@ -156,7 +159,41 @@ namespace OutOfReach.Tests.EditMode
                 StayAwake(session, 60d);
                 Assert.That(Berth(session).CanInteract, Is.True, Berth(session).Prompt);
                 Require(Berth(session).TryInteract());
-                Assert.That(session.SurvivalRecovery.RestCount, Is.EqualTo(2));
+                Assert.That(session.SurvivalRecovery.RestCount, Is.EqualTo(3));
+            }
+        }
+
+        [Test]
+        public void TheOwedDay1Night_CanBeResumedAfterAnInterruptedRest_ButNeverLoopedIntoATimeSkip()
+        {
+            using (MissionSession session = Accident())
+            {
+                ReadyForTheFirstRest(session);
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+
+                // Woken after 7 h and 8 h: the day-1 night is still owed, so the berth takes the crew back at once.
+                foreach (double hours in new[] { 7d, 8d })
+                {
+                    Require(Berth(session).TryInteract());
+                    Require(session.AdvanceSimulation(hours * Hour));
+                    Require(Berth(session).TryInteract());
+                    Assert.That(recovery.LastRestStop, Is.EqualTo(RestStopReason.Woken));
+                    Assert.That(recovery.CompletedRestCount, Is.EqualTo(0));
+                    Assert.That(Berth(session).CanInteract, Is.True, "day 1 never stalls: " + Berth(session).Prompt);
+                }
+
+                // A third cut-short rest passes two nights' sleep in all: the ordinary sleep need applies again.
+                Require(Berth(session).TryInteract());
+                Require(session.AdvanceSimulation(2.5d * Hour));
+                Require(Berth(session).TryInteract());
+                Assert.That(recovery.RestedSimulationSeconds, Is.GreaterThanOrEqualTo(MissionChapterFlow.OwedFirstNightSleepLimitHours * Hour));
+                AssertRefusedWithoutEffect(session, "Not tired yet");
+                StayAwake(session, MissionChapterFlow.SleepNeedAwakeSeconds(2.5d * Hour));
+
+                FullNightThroughTheBerth(session);
+                Assert.That(recovery.CompletedRestCount, Is.EqualTo(1));
+                Assert.That(session.ChapterFlow.CheckContinueRoutine().Succeeded, Is.True, session.ChapterFlow.CheckContinueRoutine().Explanation);
+                Assert.That(session.ChapterFlow.Chapter, Is.EqualTo(MissionChapter.Accident), "rests alone never move the story");
             }
         }
 
