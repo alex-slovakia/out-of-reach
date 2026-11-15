@@ -18,6 +18,8 @@ namespace OutOfReach.Presentation.Cargo
         [SerializeField, Range(0f, 50f)] private float carryGripRollDegrees = 42f;
         [Tooltip("Mirrored wrist adjustment aims the sleeves toward the carrier while fingers keep their authored grip.")]
         [SerializeField, Range(0f, 35f)] private float carryWristYawCorrectionDegrees = 28f;
+        private const float FollowEyeDownDegrees = 20f;
+        private const float MaximumCargoDownDegrees = 28f;
         private static readonly Vector3 GripPointInHand = new Vector3(0f, -.033f, .082f);
         private static readonly Vector3 PickupOffset = new Vector3(0f, -.018f, -.025f);
         private ICargoLoading cargo, subscribedCargo;
@@ -149,8 +151,10 @@ namespace OutOfReach.Presentation.Cargo
         {
             float progress = reducedMotion ? 1f : Mathf.Clamp01(pickupElapsed / Mathf.Max(.1f, pickupSeconds));
             float remainder = 1f - Mathf.SmoothStep(0f, 1f, progress);
-            // Move the entire visual assembly: neither hand ever slips off its handle during the settling motion.
-            settlingRoot.SetLocalPositionAndRotation(neutralPosition + PickupOffset * remainder, neutralRotation);
+            Quaternion correction = CarryPitchCorrection(settlingRoot.parent);
+            // Bend the whole assembly about the eye so the near edge of the cradle stays ahead of the legs.
+            settlingRoot.SetLocalPositionAndRotation(correction * (neutralPosition + PickupOffset * remainder),
+                correction * neutralRotation);
             foreach (JointBinding joint in joints)
                 joint.Node.SetLocalPositionAndRotation(joint.RestPosition, joint.GripRotation);
             // The mirrored frames share local X as their tube axis. The same roll
@@ -159,6 +163,22 @@ namespace OutOfReach.Presentation.Cargo
             float wristYaw = Mathf.Clamp(carryWristYawCorrectionDegrees, 0f, 35f);
             SeatArm(leftArm, leftHand, leftGripFrame, carryRoll, wristYaw);
             SeatArm(rightArm, rightHand, rightGripFrame, carryRoll, -wristYaw);
+        }
+
+        private static Quaternion CarryPitchCorrection(Transform eye)
+        {
+            if (!eye) return Quaternion.identity;
+            Vector3 forward = eye.forward;
+            Vector3 horizonRight = Vector3.Cross(Vector3.up, forward);
+            float lookDown = Mathf.Atan2(-forward.y, horizonRight.magnitude) * Mathf.Rad2Deg;
+            if (lookDown <= FollowEyeDownDegrees) return Quaternion.identity;
+
+            // Match the initial eye motion and ease to a fixed carry angle as the view continues down.
+            float range = MaximumCargoDownDegrees - FollowEyeDownDegrees;
+            float t = Mathf.Clamp01((lookDown - FollowEyeDownDegrees) / (2f * range));
+            float cargoPitch = FollowEyeDownDegrees + range * t * (2f - t);
+            if (horizonRight.sqrMagnitude < 1e-8f) horizonRight = eye.right;
+            return Quaternion.AngleAxis(cargoPitch - lookDown, eye.InverseTransformDirection(horizonRight.normalized));
         }
 
         private static void SeatArm(JointBinding arm, JointBinding hand, Transform grip, Quaternion carryRoll, float wristYaw)
