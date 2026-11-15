@@ -14,6 +14,9 @@ namespace OutOfReach.Composition
     [DefaultExecutionOrder(130)]
     public sealed class I06AntennaRepairBindings : MonoBehaviour
     {
+        public const string MoveCloserMessage = "Too far from the antenna. Move closer and press E to repair.";
+        private const float MaximumEyeReachMetres = .8f;
+        private const float MaximumArmReachMetres = .72f;
         [SerializeField] private InteractableTarget target;
         [SerializeField] private Transform motionRoot;
         [SerializeField] private Transform gripFrame;
@@ -39,6 +42,18 @@ namespace OutOfReach.Composition
         public double Progress01 => gate != null ? gate.Progress01 : 0d;
         public TimedInteractionGate WorkGate => gate;
         public Transform GripFrame => gripFrame;
+        /// <summary>Read-only explanation using the same distances as the existing worksite gate.</summary>
+        public bool IsBeyondWorkReach
+        {
+            get
+            {
+                if (!eye || !gripFrame) return false;
+                Vector3 shoulder = eye.position + eye.rotation * new Vector3(.18f, -.28f, -.08f);
+                Vector3 wrist = gripFrame.position - gripFrame.rotation * AstronautHandsPresenter.ToolGripCentreInHand;
+                return Vector3.Distance(eye.position, gripFrame.position) > MaximumEyeReachMetres
+                    || Vector3.Distance(shoulder, wrist) > MaximumArmReachMetres;
+            }
+        }
         public event Action<CommandResult> WorkFinished;
         public event Action<string> WorkCancelled;
 
@@ -200,13 +215,13 @@ namespace OutOfReach.Composition
         private bool WorksitePathsClear()
         {
             Vector3 point = gripFrame.position, fromEye = point - eye.position;
-            if (fromEye.magnitude > .8f || Vector3.Dot(fromEye, eye.forward) < .12f) return false;
+            if (fromEye.magnitude > MaximumEyeReachMetres || Vector3.Dot(fromEye, eye.forward) < .12f) return false;
             if (Blocked(Physics.RaycastAll(eye.position, fromEye.normalized, fromEye.magnitude,
                 Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))) return false;
             Vector3 shoulder = eye.position + eye.rotation * new Vector3(.18f, -.28f, -.08f);
             Vector3 wrist = point - gripFrame.rotation * AstronautHandsPresenter.ToolGripCentreInHand;
             Vector3 path = wrist - shoulder;
-            if (path.magnitude < .18f || path.magnitude > .72f) return false;
+            if (path.magnitude < .18f || path.magnitude > MaximumArmReachMetres) return false;
             return !Blocked(Physics.SphereCastAll(shoulder, .01f, path.normalized, path.magnitude,
                 Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore));
         }

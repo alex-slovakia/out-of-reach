@@ -462,6 +462,7 @@ namespace OutOfReach.Composition
         {
             MaintainMicrogravity();
             UpdateMicrogravityHelp();
+            if (rejectionUntil <= 0f && IsAntennaFocused()) RefreshInteractionPrompt();
             if (!departureRestraintCuePlayed && marine && marine.IsSeatedDeparture
                 && embodiedBody && embodiedBody.IsDepartureSeatLatched && audioPresenter)
             {
@@ -628,6 +629,7 @@ namespace OutOfReach.Composition
             if (antennaRepair && !antennaRepair.ConfigureSession(runtime, astronautHands,
                 antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
                 throw new InvalidOperationException("The antenna worksite could not bind to the current session.");
+            if (antennaRepair) antennaRepair.WorkCancelled += OnAntennaWorkCancelled;
             if (antennaProgress && antennaRepair)
                 antennaProgress.Configure(antennaProgressDocument, () => antennaRepair.IsWorking,
                     () => antennaRepair.Progress01, () => CanPresentAntennaWork() && !menuPresentationVisible,
@@ -678,7 +680,11 @@ namespace OutOfReach.Composition
             if (earthTerminal) earthTerminal.ClearBinding();
             if (evaWorkLamp) evaWorkLamp.ClearBinding();
             if (antennaProgress) antennaProgress.ClearBinding();
-            if (antennaRepair) antennaRepair.ClearBinding();
+            if (antennaRepair)
+            {
+                antennaRepair.WorkCancelled -= OnAntennaWorkCancelled;
+                antennaRepair.ClearBinding();
+            }
             if (microgravityInput) microgravityInput.ClearBinding();
             if (microgravityBridge)
             {
@@ -1048,8 +1054,21 @@ namespace OutOfReach.Composition
         private void RefreshInteractionPrompt()
         {
             if (!flightBoard) return;
-            if (string.IsNullOrWhiteSpace(latestPrompt)) flightBoard.ClearInteractionPrompt();
+            if (IsAntennaFocused() && antennaRepair && antennaRepair.IsBeyondWorkReach)
+                flightBoard.ShowInteractionPrompt(I06AntennaRepairBindings.MoveCloserMessage, false);
+            else if (string.IsNullOrWhiteSpace(latestPrompt)) flightBoard.ClearInteractionPrompt();
             else flightBoard.ShowInteractionPrompt(latestPrompt, latestPromptAvailable);
+        }
+
+        private bool IsAntennaFocused() => interaction && interaction.CurrentTarget
+            && interaction.CurrentTarget.InteractionId == InteractionIds.RepairAntenna;
+
+        private void OnAntennaWorkCancelled(string reason)
+        {
+            if (!flightBoard || !antennaRepair) return;
+            flightBoard.ShowInteractionPrompt(antennaRepair.IsBeyondWorkReach
+                ? I06AntennaRepairBindings.MoveCloserMessage : reason, false);
+            rejectionUntil = Time.unscaledTime + 4f;
         }
 
         private void OnInteractionAttempted(bool succeeded, string explanation)
@@ -1065,6 +1084,8 @@ namespace OutOfReach.Composition
             }
             else if (!string.IsNullOrWhiteSpace(explanation))
             {
+                if (IsAntennaFocused() && antennaRepair && antennaRepair.IsBeyondWorkReach)
+                    explanation = I06AntennaRepairBindings.MoveCloserMessage;
                 flightBoard.ShowInteractionPrompt(explanation, false);
                 rejectionUntil = Time.unscaledTime + 4f;
             }
