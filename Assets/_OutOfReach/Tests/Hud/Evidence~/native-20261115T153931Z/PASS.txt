@@ -1,0 +1,2 @@
+MOVEMENT-HINT-01 native show and exit completed; see checks and captures.
+soft failures: 0

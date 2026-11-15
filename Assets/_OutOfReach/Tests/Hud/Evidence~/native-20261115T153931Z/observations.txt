@@ -1,0 +1,13 @@
+16,064 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+50,852 | ACTUAL MARINE TRANSFER
+50,912 | Arrival: floating=True phase=Intro
+50,913 | == hint, normal motion
+52,119 | 0 shown: x=591,4 w=469,7 opacity=1,00 translate=0,0 phase=Showing exit=0,00
+72,032 | 0 mid-exit: x=668,4 w=469,7 opacity=0,57 translate=76,9 phase=Exiting exit=0,45 start x=591,4
+75,026 | == real restart, reduced effects on
+80,872 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+115,672 | ACTUAL MARINE TRANSFER
+115,679 | Arrival: floating=True phase=Intro
+115,680 | == hint, reduced effects
+116,882 | 1 shown: x=591,4 w=469,7 opacity=1,00 translate=0,0 phase=Showing exit=0,00
+129,879 | 1 mid-exit: x=591,4 w=469,7 opacity=0,57 translate=0,0 phase=Exiting exit=0,45 start x=591,4

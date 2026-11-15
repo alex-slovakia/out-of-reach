@@ -1,0 +1,27 @@
+PASS opening actual saved Bootstrap | Saved root composition is present.
+PASS native actual Bootstrap | Saved marine, flight board, camera and default input exist.
+PASS native actual Bootstrap | A new session starts with the movement hint not yet shown.
+PASS native actual Bootstrap | Actual interaction ray resolves cockpit-console
+PASS native actual Bootstrap | Single actual E: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS native actual Bootstrap | No movement hint during the prologue and the departure.
+PASS hint, normal motion | The hint element is in the actual HUD.
+PASS hint, normal motion | It teaches the four delivered controls, W + Space first: Hold W + press Space: push off (legs on the deck, hands near walls) | LMB / RMB: push with the left / right hand. On a handrail: grab it, click again to push off | Both buttons: strong two-hand push | A / D: lean and side-step off a nearby surface
+PASS hint, normal motion | Fully readable after appearing.
+PASS hint, normal motion | Still readable after 6 s.
+PASS hint, normal motion | It slides to the RIGHT (x 591,4 -> 668,4).
+PASS hint, normal motion | It fades while sliding (opacity 0,57).
+PASS hint, normal motion | Gone after its exit.
+PASS hint, normal motion | It does not come back in the same session.
+PASS real restart, reduced effects on | Saved marine, flight board, camera and default input exist.
+PASS real restart, reduced effects on | A new session starts with the movement hint not yet shown.
+PASS real restart, reduced effects on | Actual interaction ray resolves cockpit-console
+PASS real restart, reduced effects on | Single actual E: cockpit-console | AURORA-7 launched with 7 equipment line(s).
+PASS real restart, reduced effects on | No movement hint during the prologue and the departure.
+PASS hint, reduced effects | The hint element is in the actual HUD.
+PASS hint, reduced effects | It teaches the four delivered controls, W + Space first: Hold W + press Space: push off (legs on the deck, hands near walls) | LMB / RMB: push with the left / right hand. On a handrail: grab it, click again to push off | Both buttons: strong two-hand push | A / D: lean and side-step off a nearby surface
+PASS hint, reduced effects | Fully readable after appearing.
+PASS hint, reduced effects | Still readable after 6 s.
+PASS hint, reduced effects | Reduced effects: no motion (x 591,4 -> 591,4).
+PASS hint, reduced effects | Reduced effects: it fades (opacity 0,57).
+PASS hint, reduced effects | Gone after its exit.
+PASS hint, reduced effects | It does not come back in the same session.

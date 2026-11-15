@@ -1,0 +1,1 @@
+Actual saved Bootstrap (hint branch + composition patch, uncommitted). Real route twice; reduced effects via the composition's public SetReducedEffects (the pause-menu option's target).

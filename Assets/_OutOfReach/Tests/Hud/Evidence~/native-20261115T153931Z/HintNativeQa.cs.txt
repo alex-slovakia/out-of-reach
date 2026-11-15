@@ -1,0 +1,315 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using OutOfReach.Composition;
+using OutOfReach.Contracts;
+using OutOfReach.Core;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
+using OutOfReach.Player;
+using OutOfReach.Presentation.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+// MOVEMENT-HINT-01 native QA (temporary, never committed). The actual saved Bootstrap with the hint branch and the
+// composition patch applied in the writer's own clone. Real Practice UI, marine W boarding, seat E, real departure and
+// arrival in float: the hint appears at the first in-flight control, stays readable, then slides and fades out to the
+// right. A real restart, the existing reduced-effects option, the same route again: the hint only fades.
+[InitializeOnLoad]
+public static class HintNativeQa
+{
+    const string Key = "OutOfReach.HintNativeQa.";
+    public const string Bootstrap = "Assets/_OutOfReach/Scenes/Bootstrap.unity";
+    public static string Output => SessionState.GetString(Key + "output", "C:/Users/alexp/NASA/_qa/movement-hint/failed-start");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+    static HintNativeQa()
+    {
+        EditorApplication.playModeStateChanged += OnPlayMode;
+        EditorApplication.update += Watchdog;
+        Application.logMessageReceived += OnLog;
+    }
+    public static void Run()
+    {
+        try
+        {
+            if (!Application.isBatchMode || EditorApplication.isPlayingOrWillChangePlaymode) throw new InvalidOperationException("Start in batch Edit mode only.");
+            if (Application.unityVersion != "6000.3.28f1" || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null)
+                throw new InvalidOperationException("Exact Unity 6000.3.28f1 and a real GPU are required.");
+            string tag = Environment.GetEnvironmentVariable("QA_TAG") ?? "hint";
+            SessionState.SetString(Key + "output", Path.Combine(Environment.GetEnvironmentVariable("QA_OUT") ?? "C:/Users/alexp/NASA/_qa/movement-hint",
+                DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + "-" + tag).Replace('\\', '/'));
+            Directory.CreateDirectory(Output); SessionState.SetInt(Key + "soft", 0); SessionState.SetString(Key + "errors", "");
+            SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(600).ToString("O", CultureInfo.InvariantCulture));
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation); ShaderUtil.allowAsyncCompilation = false;
+            File.WriteAllText(Path.Combine(Output, "scope.txt"), "Actual saved Bootstrap (hint branch + composition patch, uncommitted). Real route twice; reduced effects via the composition's public SetReducedEffects (the pause-menu option's target).\n");
+            SetStage("opening actual saved Bootstrap");
+            EditorSceneManager.OpenScene(Bootstrap, OpenSceneMode.Single);
+            Check(Object.FindFirstObjectByType<I01MissionComposition>(), "Saved root composition is present.");
+            SetStage("entering"); EditorApplication.isPlaying = true;
+        }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void OnPlayMode(PlayModeStateChange state)
+    {
+        if (state != PlayModeStateChange.EnteredPlayMode || Stage != "entering") return;
+        try { SetStage("native actual Bootstrap"); new GameObject("HINT_NATIVE_QA_UNSAVED").AddComponent<HintNativeQaDriver>(); }
+        catch (Exception error) { Finish(false, error.ToString()); }
+    }
+    static void Watchdog()
+    {
+        if (Stage.Length == 0) return;
+        if (DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime deadline)
+            && DateTime.UtcNow > deadline) Finish(false, "600-second watchdog expired.");
+    }
+    static void OnLog(string message, string stack, LogType type)
+    {
+        if (Stage.Length == 0 || (type != LogType.Error && type != LogType.Exception && type != LogType.Assert)) return;
+        string entry = type + ": " + message + "\n" + stack + "\n";
+        if (type == LogType.Exception && stack.Contains("UnityEditor.Search") && !stack.Contains("OutOfReach"))
+        { File.AppendAllText(Path.Combine(Output, "editor-environment-errors.txt"), entry); return; }
+        SessionState.SetString(Key + "errors", SessionState.GetString(Key + "errors", "") + entry);
+        File.AppendAllText(Path.Combine(Output, "runtime-errors.txt"), entry);
+    }
+    public static void RequireNoErrors() { string e = SessionState.GetString(Key + "errors", ""); if (e.Length > 0) throw new InvalidOperationException(e); }
+    public static void SetStage(string value) => SessionState.SetString(Key + "stage", value);
+    static void Record(string verdict, string message) => File.AppendAllText(Path.Combine(Output, "checks.txt"), verdict + " " + Stage + " | " + message + "\n");
+    public static void Check(bool ok, string message) { Record(ok ? "PASS" : "FAIL", message); if (!ok) throw new InvalidOperationException(message); }
+    public static bool Soft(bool ok, string message) { Record(ok ? "PASS" : "SOFT-FAIL", message); if (!ok) SessionState.SetInt(Key + "soft", SessionState.GetInt(Key + "soft", 0) + 1); return ok; }
+    public static void Note(string message) => File.AppendAllText(Path.Combine(Output, "observations.txt"), message + "\n");
+    public static void Finish(bool pass, string message)
+    {
+        try { RequireNoErrors(); } catch (Exception error) { pass = false; message += "\n" + error; }
+        int soft = SessionState.GetInt(Key + "soft", 0);
+        SessionState.SetString(Key + "stage", ""); ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Directory.CreateDirectory(Output);
+        bool all = pass && soft == 0;
+        File.WriteAllText(Path.Combine(Output, all ? "PASS.txt" : "FAIL.txt"), message + "\nsoft failures: " + soft);
+        Debug.Log((all ? "HINT_NATIVE_QA_PASS " : "HINT_NATIVE_QA_FAIL ") + message + " soft=" + soft + " output=" + Output);
+        EditorApplication.Exit(all ? 0 : 1);
+    }
+}
+
+[DefaultExecutionOrder(600)]
+public sealed class HintNativeQaDriver : MonoBehaviour
+{
+    I01MissionComposition composition;
+    MissionRuntime runtime;
+    FirstPersonController player;
+    InteractionResolver resolver;
+    I06MarineBindings marine;
+    MissionFlightBoard board;
+    Camera view;
+    UIDocument document;
+    Keyboard keyboard;
+    Mouse mouse;
+    InputSettings originalSettings, qaSettings;
+    HideFlags originalFlags;
+    readonly List<InputDevice> disabledDevices = new List<InputDevice>();
+    int interactions, transferred;
+    CommandResult lastInteraction;
+    string stage = "startup";
+    PlayerInputActions Input => player.InputSource as PlayerInputActions;
+    static string Output => HintNativeQa.Output;
+    void Check(bool ok, string message) => HintNativeQa.Check(ok, message);
+    bool Soft(bool ok, string message) => HintNativeQa.Soft(ok, message);
+    void Stage(string value) { stage = value; HintNativeQa.SetStage(value); Note("== " + value); }
+    void Note(string text) => HintNativeQa.Note(Time.realtimeSinceStartupAsDouble.ToString("F3") + " | " + text);
+
+    IEnumerator Start()
+    {
+        DontDestroyOnLoad(gameObject);
+        Application.runInBackground = true;
+        originalSettings = InputSystem.settings; originalFlags = originalSettings.hideFlags;
+        if (originalFlags == HideFlags.HideAndDontSave) originalSettings.hideFlags = HideFlags.DontSave;
+        qaSettings = Object.Instantiate(originalSettings); qaSettings.hideFlags = HideFlags.DontSave;
+        qaSettings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+        qaSettings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+        InputSystem.settings = qaSettings;
+        foreach (var device in InputSystem.devices.ToArray())
+            if (device.enabled && (device is Mouse || device is Keyboard || device is Gamepad)) { disabledDevices.Add(device); InputSystem.DisableDevice(device); }
+        keyboard = InputSystem.AddDevice<Keyboard>("Hint QA keyboard"); mouse = InputSystem.AddDevice<Mouse>("Hint QA mouse");
+        var stack = new Stack<IEnumerator>(); stack.Push(Exercise()); Exception failed = null;
+        while (stack.Count > 0)
+        {
+            bool more = false; object yielded = null;
+            try { HintNativeQa.RequireNoErrors(); more = stack.Peek().MoveNext(); if (more) yielded = stack.Peek().Current; }
+            catch (Exception error) { failed = error; }
+            if (failed != null) break;
+            if (!more) { stack.Pop(); continue; }
+            if (yielded is IEnumerator nested) { stack.Push(nested); continue; }
+            yield return yielded;
+        }
+        if (failed != null)
+        {
+            Keys();
+            if (view) yield return Capture("FAIL-actual-state");
+            Cleanup(); HintNativeQa.Finish(false, "Stage=" + stage + "\n" + failed); yield break;
+        }
+        Cleanup(); HintNativeQa.Finish(true, "MOVEMENT-HINT-01 native show and exit completed; see checks and captures.");
+    }
+
+    IEnumerator Exercise()
+    {
+        yield return Bind();
+        yield return RouteToFloat();
+        Stage("hint, normal motion");
+        yield return ObserveHint("0", false);
+
+        Stage("real restart, reduced effects on");
+        MissionRuntime old = runtime;
+        runtime.RestartMission();
+        yield return WaitFor(() => { var r = Object.FindFirstObjectByType<MissionRuntime>(); return r && r != old && r.Session != null; }, 30, "The real restart rebuilds the saved scene");
+        yield return Frames(10);
+        yield return Bind();
+        composition.SetReducedEffects(true); // the target of the pause menu's "Reduced camera motion and light effects"
+        yield return RouteToFloat();
+        Stage("hint, reduced effects");
+        yield return ObserveHint("1", true);
+    }
+
+    IEnumerator Bind()
+    {
+        yield return WaitFor(() => Object.FindFirstObjectByType<MissionRuntime>()?.Session != null, 15, "Actual saved session startup");
+        if (resolver) resolver.Interacted -= OnInteract;
+        if (marine) marine.Transferred -= OnTransferred;
+        composition = Object.FindFirstObjectByType<I01MissionComposition>(); runtime = composition.Runtime; player = runtime.Player;
+        resolver = player.Interaction; marine = Object.FindFirstObjectByType<I06MarineBindings>();
+        board = Object.FindFirstObjectByType<MissionFlightBoard>(); document = board.GetComponent<UIDocument>();
+        view = Camera.main; transferred = 0;
+        Check(marine && board && document && view && Input != null, "Saved marine, flight board, camera and default input exist.");
+        player.SendMessage("OnApplicationFocus", true, SendMessageOptions.RequireReceiver);
+        resolver.Interacted += OnInteract; marine.Transferred += OnTransferred;
+        Check(board.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Hidden, "A new session starts with the movement hint not yet shown.");
+    }
+
+    IEnumerator RouteToFloat()
+    {
+        yield return WaitFor(() => PracticeButton() != null, 8, "Actual Practice UI"); Submit(PracticeButton()); yield return Frames(3);
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, -12)), .13f, 20);
+        yield return WalkTo(marine.MarineRoot.TransformPoint(new Vector3(0, .035f, .7f)), .13f, 25);
+        yield return Use(Target(InteractionIds.CockpitConsole));
+        yield return WaitFor(() => composition.IsTransportDeparturePlaying, 4, "Real seat E starts departure");
+        Check(!board.IsMicrogravityHintVisible, "No movement hint during the prologue and the departure.");
+        yield return WaitFor(() => transferred == 1 && !marine.OwnsPresentation && player.ControlAllowed, 40, "Actual complete departure/transfer");
+        Note("Arrival: floating=" + player.IsFloating + " phase=" + runtime.Session.State.Phase);
+    }
+
+    IEnumerator ObserveHint(string prefix, bool reduced)
+    {
+        yield return WaitFor(() => board.IsMicrogravityHintVisible, 12, "The movement hint appears at the first in-flight control");
+        VisualElement hint = document.rootVisualElement.Q("microgravity-tutorial");
+        Check(hint != null, "The hint element is in the actual HUD.");
+        string[] lines = hint.Query<Label>(className: "control-hint-action").ToList().Select(l => l.text).ToArray();
+        Check(lines.SequenceEqual(FlightBoardView.MicrogravityHintLines), "It teaches the four delivered controls, W + Space first: " + string.Join(" | ", lines));
+        yield return Seconds(1.2);
+        Note(prefix + " shown: " + Pose(hint));
+        yield return Capture(prefix + "1-hint-shown" + (reduced ? "-reduced" : ""));
+        Check(board.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Showing && hint.resolvedStyle.opacity > .99f, "Fully readable after appearing.");
+        yield return Seconds(5.0);
+        Check(board.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Showing, "Still readable after 6 s.");
+        float startX = hint.worldBound.x;
+        yield return WaitFor(() => board.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Exiting, 14, "The slow exit starts after the reading time");
+        yield return WaitFor(() => board.MicrogravityHintExitProgress >= .45f, 3, "Mid-exit");
+        float midX = hint.worldBound.x, midOpacity = hint.resolvedStyle.opacity;
+        Note(prefix + " mid-exit: " + Pose(hint) + " start x=" + startX.ToString("F1"));
+        yield return Capture(prefix + "2-hint-exit-mid" + (reduced ? "-reduced" : ""));
+        if (reduced)
+        {
+            Check(Mathf.Abs(midX - startX) < .5f, "Reduced effects: no motion (x " + startX.ToString("F1") + " -> " + midX.ToString("F1") + ").");
+            Check(midOpacity < .9f, "Reduced effects: it fades (opacity " + midOpacity.ToString("F2") + ").");
+        }
+        else
+        {
+            Check(midX > startX + 20f, "It slides to the RIGHT (x " + startX.ToString("F1") + " -> " + midX.ToString("F1") + ").");
+            Check(midOpacity < .9f && midOpacity > .05f, "It fades while sliding (opacity " + midOpacity.ToString("F2") + ").");
+        }
+        yield return WaitFor(() => board.MicrogravityHint == FlightBoardView.MicrogravityHintPhase.Done, 4, "The exit completes");
+        yield return Frames(3);
+        Check(!board.IsMicrogravityHintVisible, "Gone after its exit.");
+        yield return Capture(prefix + "3-hint-gone" + (reduced ? "-reduced" : ""));
+        yield return Seconds(2.0);
+        Check(!board.IsMicrogravityHintVisible, "It does not come back in the same session.");
+    }
+
+    string Pose(VisualElement hint) => "x=" + hint.worldBound.x.ToString("F1") + " w=" + hint.worldBound.width.ToString("F1")
+        + " opacity=" + hint.resolvedStyle.opacity.ToString("F2") + " translate=" + hint.resolvedStyle.translate.x.ToString("F1")
+        + " phase=" + board.MicrogravityHint + " exit=" + board.MicrogravityHintExitProgress.ToString("F2");
+
+    InteractableTarget Target(string id) => runtime.InteractionTargets.Single(t => t.InteractionId == id);
+    UnityEngine.UIElements.Button PracticeButton() => document.rootVisualElement.Query<UnityEngine.UIElements.Button>().ToList()
+        .FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy && Visible(b));
+    static void Submit(VisualElement e) { e.Focus(); using (var action = NavigationSubmitEvent.GetPooled()) { action.target = e; e.SendEvent(action); } }
+    static bool Visible(VisualElement e) { for (var n = e; n != null; n = n.parent) if (n.resolvedStyle.display == DisplayStyle.None || n.resolvedStyle.visibility != Visibility.Visible) return false; return e?.panel != null; }
+    void Keys(params Key[] keys) { if (keyboard != null && keyboard.added) InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys)); }
+    static float Horizontal(Vector3 a, Vector3 b) => Vector2.Distance(new Vector2(a.x, a.z), new Vector2(b.x, b.z));
+    void OnInteract(CommandResult result) { interactions++; lastInteraction = result; Note("INTERACTION " + result.Succeeded + " " + result.Explanation); }
+    void OnTransferred() { transferred++; Note("ACTUAL MARINE TRANSFER"); }
+    void Cleanup()
+    {
+        Keys();
+        if (resolver) resolver.Interacted -= OnInteract;
+        if (marine) marine.Transferred -= OnTransferred;
+        if (keyboard != null && keyboard.added) InputSystem.RemoveDevice(keyboard); if (mouse != null && mouse.added) InputSystem.RemoveDevice(mouse);
+        foreach (var device in disabledDevices) if (device.added) InputSystem.EnableDevice(device);
+        if (originalSettings) { InputSystem.settings = originalSettings; originalSettings.hideFlags = originalFlags; }
+        if (qaSettings) Object.Destroy(qaSettings);
+    }
+    IEnumerator Aim(Vector3 worldPoint)
+    {
+        double end = Now + 2.5;
+        while (true)
+        {
+            Vector3 delta = worldPoint - player.ViewPivot.position; if (delta.sqrMagnitude < .000001f) yield break;
+            float yaw = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg, pitch = Mathf.Atan2(delta.y, new Vector2(delta.x, delta.z).magnitude) * Mathf.Rad2Deg;
+            Vector2 degrees = new Vector2(Mathf.DeltaAngle(player.transform.eulerAngles.y, yaw), Mathf.Clamp(pitch, -80f, 80f) - player.PitchDegrees);
+            if (degrees.sqrMagnitude < .04f) break; if (Now > end) { Note("Aim did not converge; remaining=" + degrees); break; }
+            degrees = Vector2.ClampMagnitude(degrees, 70); InputSystem.QueueStateEvent(mouse, new MouseState { delta = degrees / Input.MouseDegreesPerPixel }); yield return null;
+        }
+        InputSystem.QueueStateEvent(mouse, new MouseState()); yield return Frames(1);
+    }
+    IEnumerator WalkTo(Vector3 goal, float radius, double seconds)
+    {
+        double end = Now + seconds;
+        while (Horizontal(goal, player.transform.position) > radius)
+        {
+            if (Now > end) throw new TimeoutException("Actual marine W route stalled at " + player.transform.position);
+            Vector3 flat = goal; flat.y = player.ViewPivot.position.y; yield return Aim(flat); Keys(Key.W); yield return Seconds(.08); Keys(); yield return Frames(1);
+        }
+        Keys();
+    }
+    IEnumerator Use(InteractableTarget target)
+    {
+        Keys(); yield return Aim(target.transform.position); yield return Frames(2); resolver.Refresh();
+        Check(resolver.CurrentTarget == target, "Actual interaction ray resolves " + target.InteractionId);
+        int before = interactions; Keys(Key.E); yield return Frames(2); Keys(); yield return Frames(2);
+        Check(interactions == before + 1 && lastInteraction.Succeeded, "Single actual E: " + target.InteractionId + " | " + lastInteraction.Explanation);
+    }
+    static double Now => Time.realtimeSinceStartupAsDouble;
+    static IEnumerator Frames(int count) { for (int i = 0; i < count; i++) yield return null; }
+    static IEnumerator Seconds(double seconds) { double end = Now + seconds; while (Now < end) yield return null; }
+    static IEnumerator WaitFor(Func<bool> ready, double seconds, string why) { double end = Now + seconds; while (!ready()) { if (Now > end) throw new TimeoutException(why); yield return null; } }
+    IEnumerator Capture(string name)
+    {
+        var texture = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32); texture.Create(); var old = view.targetTexture; float aspect = view.aspect;
+        var panels = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled && d.panelSettings && d.rootVisualElement?.panel != null).Select(d => d.panelSettings).Distinct().ToArray();
+        var targets = panels.Select(p => p.targetTexture).ToArray(); var clears = panels.Select(p => p.clearColor).ToArray();
+        try
+        {
+            view.targetTexture = texture; view.aspect = 16f / 9; foreach (var panel in panels) { panel.targetTexture = texture; panel.clearColor = false; }
+            yield return Frames(2); var active = RenderTexture.active; var image = new Texture2D(1280, 720, TextureFormat.RGBA32, false);
+            try { RenderTexture.active = texture; image.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0); image.Apply(); File.WriteAllBytes(Path.Combine(Output, name + ".png"), image.EncodeToPNG()); }
+            finally { RenderTexture.active = active; Object.Destroy(image); }
+        }
+        finally { view.targetTexture = old; view.aspect = aspect; for (int i = 0; i < panels.Length; i++) if (panels[i]) { panels[i].targetTexture = targets[i]; panels[i].clearColor = clears[i]; } texture.Release(); Object.Destroy(texture); }
+    }
+}
