@@ -88,7 +88,7 @@ namespace OutOfReach.Tests.PauseControls
             Assert.That(Row(rows, "Grip"), Is.Null, "a bare-hand grip is not authored");
             Assert.That(Signatures(Row(rows, "Push off")), Is.EqualTo(new[] { "mouse:L", "mouse:R" }));
             Assert.That(Signatures(Row(rows, "Push with both")), Is.EqualTo(new[] { "mouse:LR" }));
-            Assert.That(Signatures(Row(rows, "Lean")), Is.EqualTo(new[] { "key:A", "key:D" }));
+            Assert.That(Signatures(Row(rows, "Side-step")), Is.EqualTo(new[] { "key:A", "key:D" }));
             var push = Row(rows, "Hold W + Space");
             Assert.That(Signatures(push), Is.EqualTo(new[] { "key:W+key:SPACE" }));
             Assert.That(push.Note, Does.Contain("Legs on the deck"));
