@@ -1,0 +1,64 @@
+{
+ "hash": "459a989457d9af1e",
+ "bones": 164,
+ "meshes": {
+  "A7_SuitV03_WORK_TorsoLegs": {
+   "verts": 22039,
+   "tris": 45374,
+   "materials": [
+    "MAT_V03_Shirt",
+    "MAT_V03_Trousers",
+    "MAT_V03_TrousersPanel",
+    "MAT_V03_Shoe",
+    "MAT_V03_Sole",
+    "MAT_V03_Skin",
+    "MAT_V03_Trim"
+   ],
+   "weights": {
+    "verts": 22039,
+    "bad_weight_sum": 0,
+    "max_influences": 4,
+    "groups": 59
+   }
+  },
+  "A7_SuitV03_WORK_Arm_L": {
+   "verts": 8059,
+   "tris": 16066,
+   "materials": [
+    "MAT_V03_Shirt",
+    "MAT_V03_Trousers",
+    "MAT_V03_TrousersPanel",
+    "MAT_V03_Shoe",
+    "MAT_V03_Sole",
+    "MAT_V03_Skin",
+    "MAT_V03_Trim"
+   ],
+   "weights": {
+    "verts": 8059,
+    "bad_weight_sum": 0,
+    "max_influences": 4,
+    "groups": 30
+   }
+  },
+  "A7_SuitV03_WORK_Arm_R": {
+   "verts": 8059,
+   "tris": 16066,
+   "materials": [
+    "MAT_V03_Shirt",
+    "MAT_V03_Trousers",
+    "MAT_V03_TrousersPanel",
+    "MAT_V03_Shoe",
+    "MAT_V03_Sole",
+    "MAT_V03_Skin",
+    "MAT_V03_Trim"
+   ],
+   "weights": {
+    "verts": 8059,
+    "bad_weight_sum": 0,
+    "max_influences": 4,
+    "groups": 30
+   }
+  }
+ },
+ "tris_total": 77506
+}

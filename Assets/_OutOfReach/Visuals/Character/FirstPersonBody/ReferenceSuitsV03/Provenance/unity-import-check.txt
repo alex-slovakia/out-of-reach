@@ -1,0 +1,29 @@
+[WORK] bones new=164 fitv02=164 missingInNew=0 parentMismatch=0 maxBonePosErr_m=0,2867 maxBoneRotErr_deg=35,68 maxLocalScaleDev=1,422E-06
+[WORK] CharacterRoot localScale new=(1.00, 1.00, 1.00) fit=(1.00, 1.00, 1.00) lossy new=(1.00, 1.00, 1.00) ; rig(armature node) lossyScale=(1.00, 1.00, 1.00)
+[WORK] transforms under CharacterRoot: new=164 fit=164
+[WORK] BINDPOSE compare vs FitV02: bones=164 missing=0 maxElementDiff=9,842E-05
+[WORK] POSE-TRANSFER TorsoLegs baked bounds new center=(0.000, -0.060, 0.832) size=(0.818, 0.645, 1.724) | FitV02 center=(0.000, -0.062, 0.829) size=(0.729, 0.619, 1.706)
+[WORK] SMR A7_SuitV03_WORK_Arm_L verts=8796 tris=16066 bindposes=164 smrBones=164 bounds.center=(-0.339, -0.139, 1.256) size=(0.379, 0.405, 0.502) baked.size=(0.319, 0.529, 0.643) mats=[MAT_V03_Shirt,MAT_V03_Skin]
+[WORK] SMR A7_SuitV03_WORK_Arm_R verts=8796 tris=16066 bindposes=164 smrBones=164 bounds.center=(0.339, -0.139, 1.256) size=(0.379, 0.405, 0.502) baked.size=(0.319, 0.529, 0.643) mats=[MAT_V03_Shirt,MAT_V03_Skin]
+[WORK] SMR A7_SuitV03_WORK_TorsoLegs verts=31417 tris=45368 bindposes=164 smrBones=164 bounds.center=(0.000, -0.059, 0.775) size=(0.641, 0.401, 1.542) baked.size=(0.818, 0.645, 1.724) mats=[MAT_V03_Trousers,MAT_V03_Shoe,MAT_V03_Sole,MAT_V03_Shirt,MAT_V03_Skin,MAT_V03_TrousersPanel,MAT_V03_Trim]
+[WORK] FITV02 SMR A7_WORK_Arm_L baked.size=(0.304, 0.523, 0.635) center=(-0.208, -0.146, 1.315)
+[WORK] FITV02 SMR A7_WORK_Arm_R baked.size=(0.304, 0.523, 0.635) center=(0.208, -0.146, 1.315)
+[WORK] FITV02 SMR A7_WORK_TorsoLegs baked.size=(0.729, 0.619, 1.706) center=(0.000, -0.062, 0.829)
+[WORK] TOTAL triangles (unity) = 77500 => PASS
+[EVA] bones new=164 fitv02=164 missingInNew=0 parentMismatch=0 maxBonePosErr_m=0,2867 maxBoneRotErr_deg=35,68 maxLocalScaleDev=1,422E-06
+[EVA] CharacterRoot localScale new=(1.00, 1.00, 1.00) fit=(1.00, 1.00, 1.00) lossy new=(1.00, 1.00, 1.00) ; rig(armature node) lossyScale=(1.00, 1.00, 1.00)
+[EVA] transforms under CharacterRoot: new=164 fit=164
+[EVA] BINDPOSE compare vs FitV02: bones=164 missing=0 maxElementDiff=9,842E-05
+[EVA] POSE-TRANSFER TorsoLegs baked bounds new center=(0.000, -0.057, 0.843) size=(0.852, 0.675, 1.751) | FitV02 center=(0.000, -0.062, 0.838) size=(0.752, 0.638, 1.725)
+[EVA] SMR A7_SuitV03_EVA_Arm_L verts=9296 tris=16092 bindposes=164 smrBones=164 bounds.center=(-0.339, -0.130, 1.264) size=(0.379, 0.424, 0.517) baked.size=(0.370, 0.550, 0.669) mats=[MAT_V03_EvaSuit,MAT_V03_EvaMetal,MAT_V03_EvaRed,MAT_V03_EvaGloveGrip,MAT_V03_EvaGlove]
+[EVA] SMR A7_SuitV03_EVA_Arm_R verts=9296 tris=16092 bindposes=164 smrBones=164 bounds.center=(0.339, -0.130, 1.264) size=(0.379, 0.424, 0.517) baked.size=(0.370, 0.550, 0.669) mats=[MAT_V03_EvaSuit,MAT_V03_EvaMetal,MAT_V03_EvaRed,MAT_V03_EvaGloveGrip,MAT_V03_EvaGlove]
+[EVA] SMR A7_SuitV03_EVA_ChestPanel verts=1136 tris=796 bindposes=164 smrBones=164 bounds.center=(-0.010, -0.223, 1.315) size=(0.235, 0.065, 0.231) baked.size=(0.235, 0.127, 0.249) mats=[MAT_V03_EvaStrap,MAT_V03_EvaBootGrey,MAT_V03_EvaDisplay,MAT_V03_EvaYellow,MAT_V03_EvaPanel]
+[EVA] SMR A7_SuitV03_EVA_Helmet verts=1230 tris=1824 bindposes=164 smrBones=164 bounds.center=(0.000, -0.022, 1.700) size=(0.456, 0.400, 0.390) baked.size=(0.456, 0.420, 0.411) mats=[MAT_V03_EvaSuit,MAT_V03_EvaDark,MAT_V03_EvaMetal,MAT_V03_EvaRed,MAT_V03_EvaLight,MAT_V03_EvaStrap]
+[EVA] SMR A7_SuitV03_EVA_Plss verts=916 tris=544 bindposes=164 smrBones=164 bounds.center=(0.000, 0.265, 1.259) size=(0.350, 0.220, 0.783) baked.size=(0.350, 0.473, 0.827) mats=[MAT_V03_EvaPanel,MAT_V03_EvaSuit,MAT_V03_EvaRed,MAT_V03_EvaMetal,MAT_V03_EvaStrap]
+[EVA] SMR A7_SuitV03_EVA_TorsoLegs verts=54095 tris=71516 bindposes=164 smrBones=164 bounds.center=(0.000, -0.045, 0.781) size=(0.655, 0.431, 1.557) baked.size=(0.852, 0.675, 1.751) mats=[MAT_V03_EvaBoot,MAT_V03_EvaSuit,MAT_V03_EvaSole,MAT_V03_EvaBootGrey,MAT_V03_EvaMetal,MAT_V03_EvaStrap,MAT_V03_EvaPanel,MAT_V03_EvaRed]
+[EVA] SMR A7_SuitV03_EVA_Visor verts=106 tris=164 bindposes=164 smrBones=164 bounds.center=(0.000, -0.156, 1.714) size=(0.313, 0.152, 0.212) baked.size=(0.313, 0.157, 0.227) mats=[MAT_V03_EvaVisorGold]
+[EVA] FITV02 SMR A7_EVA_Arm_L baked.size=(0.338, 0.488, 0.568) center=(-0.205, -0.114, 1.367)
+[EVA] FITV02 SMR A7_EVA_Arm_R baked.size=(0.338, 0.488, 0.568) center=(0.205, -0.114, 1.367)
+[EVA] FITV02 SMR A7_EVA_TorsoLegs baked.size=(0.752, 0.638, 1.725) center=(0.000, -0.062, 0.838)
+[EVA] TOTAL triangles (unity) = 107028 => PASS
+RESULT PASS
