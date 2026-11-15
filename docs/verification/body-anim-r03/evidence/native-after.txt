@@ -1,0 +1,16 @@
+21.748 | SUMMARY forward: frames 95 gaitActive 94 still 0 hitch 0 | worst planted slide mm L 0.1 R 0.9 | pelvis range cm 7.3 | steps/min 156
+27.016 | SUMMARY backward: frames 70 gaitActive 70 still 0 hitch 0 | worst planted slide mm L 0.6 R 0.8 | pelvis range cm 7.3 | steps/min 261
+30.882 | SUMMARY strafe: frames 68 gaitActive 68 still 0 hitch 0 | worst planted slide mm L 24.5 R 0.4 | pelvis range cm 7.3 | steps/min 219
+34.872 | SUMMARY sprint: frames 66 gaitActive 65 still 0 hitch 1 | worst planted slide mm L 1.0 R 0.1 | pelvis range cm 10.1 | steps/min 202
+35.722 | SUMMARY stop: frames 49 gaitActive 0 still 0 hitch 0 | worst planted slide mm L 0.0 R 0.0 | pelvis range cm 0.0 | steps/min 0
+37.283 | SUMMARY turn-in-place: frames 82 gaitActive 0 still 0 hitch 1 | worst planted slide mm L 0.2 R 0.3 | pelvis range cm 7.1 | steps/min 0
+38.323 | SUMMARY settle: frames 54 gaitActive 0 still 0 hitch 1 | worst planted slide mm L 0.0 R 0.0 | pelvis range cm 3.8 | steps/min 0
+44.548 | SUMMARY walk-curve: frames 91 gaitActive 90 still 0 hitch 0 | worst planted slide mm L 0.2 R 34.3 | pelvis range cm 12.9 | steps/min 452
+45.398 | SUMMARY stop2: frames 49 gaitActive 0 still 0 hitch 0 | worst planted slide mm L 0.0 R 0.0 | pelvis range cm 0.0 | steps/min 0
+50.099 | SUMMARY lookdown-walk: frames 78 gaitActive 77 still 0 hitch 1 | worst planted slide mm L 0.5 R 0.5 | pelvis range cm 13.6 | steps/min 155
+50.947 | SUMMARY stop3: frames 48 gaitActive 10 still 0 hitch 0 | worst planted slide mm L 0.6 R 0.0 | pelvis range cm 0.8 | steps/min 0
+51.032 | carry
+58.503 | carry: crate shown True body arms True gloves False arms Both
+59.138 | pass carry-walk
+63.258 | SUMMARY carry-walk: frames 72 gaitActive 70 still 1 hitch 2 | worst planted slide mm L 0.3 R 0.3 | pelvis range cm 5.8 | steps/min 140
+63.259 | carry shortfall m 0.0000

@@ -1,0 +1,6 @@
+47.605 | SUMMARY forward: frames 86 gaitActive 84 still 0 | worst planted slide mm L 0.3 R 307.4 | pelvis range cm 15.9
+49.003 | SUMMARY backward: frames 231 gaitActive 123 still 0 | worst planted slide mm L 0.6 R 0.8 | pelvis range cm 22.7
+50.343 | SUMMARY strafe: frames 135 gaitActive 131 still 2 | worst planted slide mm L 1593.8 R 1.5 | pelvis range cm 21.8
+51.570 | SUMMARY sprint: frames 136 gaitActive 131 still 4 | worst planted slide mm L 424.8 R 150.3 | pelvis range cm 22.0
+52.503 | SUMMARY stop: frames 93 gaitActive 31 still 0 | worst planted slide mm L 1.3 R 0.6 | pelvis range cm 0.7
+52.505 | carry
