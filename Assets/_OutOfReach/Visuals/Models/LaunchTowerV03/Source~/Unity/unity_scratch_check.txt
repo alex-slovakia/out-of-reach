@@ -1,0 +1,23 @@
+unity 6000.3.28f1
+prefab tris=28718 renderers=2 colliders=8
+  LTV3_Tower pos=(0.0000, 0.0000, 0.0000) tris=26140 bounds=(-4.070, -32.831, -14.150)..(4.750, 23.750, -4.180) mats=LT3_Galvanized:Universal Render Pipeline/Lit,LT3_SteelGraphite:Universal Render Pipeline/Lit,LT3_Hazard:Universal Render Pipeline/Lit,LT3_Grating:Universal Render Pipeline/Lit,LT3_SafetyAmber:Universal Render Pipeline/Lit,LT3_LampRed:Universal Render Pipeline/Lit,LT3_Rubber:Universal Render Pipeline/Lit,LT3_WarningRed:Universal Render Pipeline/Lit,LT3_LampWarm:Universal Render Pipeline/Lit
+  LTV3_AccessArm pos=(-0.9000, 0.0000, -6.9000) tris=2578 bounds=(-0.460, -0.620, -0.460)..(2.280, 2.720, 4.340) mats=LT3_Grating:Universal Render Pipeline/Lit,LT3_Galvanized:Universal Render Pipeline/Lit,LT3_Hazard:Universal Render Pipeline/Lit,LT3_SteelGraphite:Universal Render Pipeline/Lit,LT3_SafetyAmber:Universal Render Pipeline/Lit,LT3_LampWarm:Universal Render Pipeline/Lit,LT3_WhiteRoom:Universal Render Pipeline/Lit,LT3_GlassDark:Universal Render Pipeline/Lit,LT3_LampCyan:Universal Render Pipeline/Lit,LT3_Rubber:Universal Render Pipeline/Lit,LT3_WarningRed:Universal Render Pipeline/Lit,LT3_LampRed:Universal Render Pipeline/Lit
+install:
+V03 instantiated under I06 isolated marine prologue/Launch site - stationary; arm under I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted at pivot (-0.900, 0.000, -6.900)
+walk colliders: 8 on layer 
+deactivated I06 isolated marine prologue/Launch site - stationary/Launch tower V02 detail - b330226
+deactivated I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted/LTV2_ArmDetail
+renderer off I06 isolated marine prologue/Launch site - stationary/AccessMastTower
+renderer off I06 isolated marine prologue/Launch site - stationary/Access arm control +Y 0 connected to -90 retracted/AccessArm
+scene marked dirty, not saved
+
+second install: already installed under I06 isolated marine prologue/Launch site - stationary (nothing changed)
+PASS arm parent is control
+PASS arm pivot
+PASS V02 inactive
+PASS blockout renderers off
+PASS collider layer copied
+PASS tower identity in prologue
+PASS floor top y=0 (0.0000)
+PASS walkway corridor x+-0.9 y0.04..2.18 z-6.88..-2.52 free of colliders
+RESULT PASS

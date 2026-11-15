@@ -1,0 +1,16 @@
+{
+    "name": "OutOfReach.LaunchTowerV03.Editor",
+    "rootNamespace": "OutOfReach.Visuals.LaunchTowerV03.Editor",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
