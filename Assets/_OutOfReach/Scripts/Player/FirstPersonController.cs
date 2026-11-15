@@ -492,8 +492,9 @@ namespace OutOfReach.Player
 
         private static bool IsValidPushInput(Vector3 point, Vector3 direction, float strength01)
         {
+            // Finite strength only: Clamp01 would turn +Infinity into a full push.
             return IsFinite(point) && IsFinite(direction) && direction.sqrMagnitude >= 1e-6f
-                && !float.IsNaN(strength01) && strength01 > 0f;
+                && !float.IsNaN(strength01) && !float.IsInfinity(strength01) && strength01 > 0f;
         }
 
         /// <summary>The per-contact part of <see cref="TryPushOff"/>'s verification; changes nothing.</summary>

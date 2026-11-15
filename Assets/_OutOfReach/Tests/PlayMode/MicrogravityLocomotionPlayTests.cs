@@ -188,6 +188,10 @@ namespace OutOfReach.Tests.PlayMode
                 Is.EqualTo(FloatActionResult.OutOfReach));
             Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.zero, 1f), Is.EqualTo(FloatActionResult.InvalidInput));
             Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, 0f), Is.EqualTo(FloatActionResult.InvalidInput));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, float.PositiveInfinity),
+                Is.EqualTo(FloatActionResult.InvalidInput), "an infinite strength is not a full push");
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, float.PositiveInfinity, left, side, Vector3.right, 1f),
+                Is.EqualTo(FloatActionResult.InvalidInput));
             Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, new Vector3(float.NaN, 0f, 0f), Vector3.right, 1f),
                 Is.EqualTo(FloatActionResult.InvalidInput));
             GameObject blocker = harness.AddWall(new Vector3(-1.7f, 50.2f + Eye, 0.6f), new Vector3(0.1f, 0.4f, 0.4f));
