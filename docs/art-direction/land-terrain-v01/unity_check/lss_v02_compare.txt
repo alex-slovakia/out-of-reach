@@ -1,0 +1,11 @@
+root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 7 anchors 7
+max world-bounds deviation 0.0004 m, max anchor deviation 0.0000 m, rotation 0 / scale 1 on every node: True
+  LSS_Berms_v02          Unity triangles    660 (report    660), vertices    718, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LSS_Drainage_v02       Unity triangles   1548 (report   1548), vertices   2682, zero-area 0, submeshes 3, UInt16, normals True, uv0 True
+  LSS_Fence_v02          Unity triangles   5968 (report   5968), vertices  10182, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LSS_GroundBreakup_v02  Unity triangles  11200 (report  11200), vertices   6480, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LSS_Scrub_v02          Unity triangles   3360 (report   3360), vertices   3214, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LSS_TreeLines_v02      Unity triangles   5230 (report   5230), vertices   6188, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LSS_UtilityPoles_v02   Unity triangles   1122 (report   1122), vertices   2169, zero-area 0, submeshes 2, UInt16, normals True, uv0 True
+triangles total: report 29088, Unity 29088
+RESULT PASS

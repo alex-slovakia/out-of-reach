@@ -2,22 +2,30 @@
 
 Branch `feature/land-terrain-v1` (worktree `NASA/out-of-reach-terrain`, sparse: this folder and `docs/playtest-review/`), cut from `origin/codex/i01-integration` at `62ced0cf0cc2f74f2c23dfd292cdc1823a1ccca5`. Write scope: `docs/art-direction/land-terrain-v01/**` only.
 
-## Checkpoint 1: terrain package (this commit)
+## Checkpoint 1: terrain package
+
+- Pushed as `9ee0985a9643dc5cbb1a5aaecdc78f578b481929`; handoff posted on issue #7.
+- Superseded by checkpoint 2: the rocks there were seated on the analytic h and could float up to about 1 m above the rendered mesh.
+
+## Checkpoint 2: terrain fix and LAND-SURROUNDINGS v02 (this commit)
 
 **Finished:**
-- `LT_LandTerrain.fbx` (LT_TerrainInner 48,212 tris, LT_TerrainFar 6,212, LT_Rocks 9,400; total 63,824) and `LT_LandTerrain.blend`;
-- `textures/` (macro 2048², detail albedo and normal 1024², fallback tile 1024²), `renders/` (4 views and `LT_sheet.png`), `source/`, `unity_check/`;
-- `lt_build_report.json`, `lt_build_roundtrip.json` (PASS), `lt_boundary_check.json` (PASS), `lt_manifest.json` (SHA-256 of every file except this one);
-- Unity 6000.3.28f1 isolated import: PASS, 63,824 = 63,824 triangles.
+- **Terrain update:**
+  - rocks are seated on the rendered mesh (`source/lt_surface.py`): 470/470 bottoms below the lowest mesh ground under them;
+  - dunes fade out over 500–1,300 m (mesh resolution).
+  - Re-run on the new files: round trip PASS 7/7, boundary and seam PASS, Unity PASS 63,824 = 63,824.
+- **`LT_Surroundings_v02.fbx`:** the 7 v01 groups (+ `_v02`), 29,088 triangles, 7 anchors, re-seated on the terrain mesh. Round trip PASS 14/14, Unity PASS 29,088 = 29,088, seating 0 floating base points.
+- **Combined renders:** `renders/LT2_*`.
+- **`lt_manifest.json`:** covers both packages (SHA-256 of every file except this one).
 
-The commit SHA is in the handoff comment on issue #7 and in the next checkpoint.
+The commit SHA is in the second handoff comment on issue #7.
 
-**Unfinished:** LAND-SURROUNDINGS v02 (second package). The plan:
-1. `source/lss_kit_v02.py` takes the height function instead of the constant G. Every base, mound, berm and tree-line bottom follows `lt_height`.
-2. Export `LT_Surroundings_v02.fbx` here, with the v01 group names plus the suffix `_v02`.
-3. Run the round trip, the Unity check, and renders with the terrain.
+**Unfinished, optional:**
+- material check in a Unity URP scene (the import checks are mesh-only);
+- a per-pixel overlap check of hummocks, berms and canopy against the terrain;
+- colliders.
 
-**Next exact action:** write `source/lss_kit_v02.py` (copy of v01 `lss_kit.py`, G → `lt_height.ground_y` / `seat_y`) and `source/build_surroundings_v02.py`; build in the local work folder `NASA/blender/land-terrain-v01/out`.
+**Next exact action, if asked:** integrate in root's scene. Disable the old ground plane at y −36.6, import both FBX with Bake Axis Conversion ON, build `LT_Terrain`, `LT_TerrainFar` and `LT_Rock` from `source/lt_materials.json`, and set the camera far clip to at least 10 km or use fog.
 
 ## Commands (from the local work folder `NASA/blender/land-terrain-v01`)
 
@@ -27,13 +35,19 @@ blender -b --factory-startup --python src/build_terrain.py -- --out out --textur
 blender -b --factory-startup --python src/roundtrip_habitat.py -- --out out --report lt_build_report.json > out/roundtrip.txt 2>&1
 blender -b --factory-startup --python src/check_terrain.py -- --out out --land-fbx <LAND package>/LS_LandLaunchSite.fbx > out/boundary.txt 2>&1
 python -B src/make_sheet.py out/renders LT
-Unity.exe -batchmode -nographics -projectPath <scratch>/ls_unity_check -executeMethod LTCheck.Run -ltFbx Assets/LT/LT_LandTerrain.fbx -ltOut lt_check.tsv -logFile unity_lt.txt
-python unity_check/lt_compare.py <project>/lt_check.tsv out/lt_build_report.json
+blender -b --factory-startup --python src/build_surroundings_v02.py -- --out out --textures ../land-surroundings-v01/out/textures --lt-textures out/textures > out/build_v02.txt 2>&1
+blender -b --factory-startup --python src/roundtrip_habitat.py -- --out out --report lss_v02_build_report.json > out/roundtrip_v02.txt 2>&1
+blender -b --factory-startup --python src/build_terrain.py -- --out out2 --textures out/textures --land-textures ../launch-site-v01/out/textures --lss-textures ../land-surroundings-v01/out/textures --land-src <LAND package>/source --render --surroundings --samples 32 > out2/build.txt 2>&1
+python -B src/make_sheet.py out2/renders LT2
+Unity.exe -batchmode -nographics -projectPath <scratch>/ls_unity_check -executeMethod LTCheck.Run -ltFbx Assets/LT/<fbx> -ltOut <tsv> -logFile <txt>
+python unity_check/lt_compare.py <tsv> out/<report>.json
 python -B src/make_manifest.py <this folder>
 ```
 
 ## Known problems and limits
 
-- Seen from the crew deck at 38 m, the relief reads as gentle: it is held to the requested 0.5–4 m nearby. Scrub, tree lines and berms (v02) do most of the work of breaking up the near ground.
-- The preview sun (from v01 renders, elevation 31.5° from the north-east) back-lights the deck views; root's sun may differ.
-- No collider. The URP material is documented but was not built or checked in Unity.
+- Seen from the crew deck at 38 m, the relief reads as gentle: it is held to the requested 0.5–4 m nearby.
+- The preview sun (from the v01 renders, elevation 31.5° from the north-east) back-lights the deck views; root's sun may differ.
+- Between vertices, h and the mesh differ by about ±0.9 m (p1–p99) at 80–2,900 m. Seat things on the mesh (`lt_surface`, or a raycast in Unity), not on h.
+- The v01 scrub clumps and tree lines keep their v01 look: dark olive domes and bands.
+- No collider. The URP materials are documented but were not built or checked in Unity.

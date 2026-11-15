@@ -12,12 +12,12 @@
      ],
      "bounds_min": [
       -3000.0,
-      -57.00762,
+      -57.0147,
       -2990.0
      ],
      "bounds_max": [
       3000.0,
-      -10.10027,
+      -10.37644,
       3000.0
      ],
      "per_material": {
@@ -54,12 +54,12 @@
      ],
      "bounds_min": [
       -1343.5177,
-      -43.62445,
+      -43.53808,
       -1221.50288
      ],
      "bounds_max": [
       1195.30065,
-      -28.10044,
+      -28.80995,
       1143.81035
      ],
      "per_material": {
@@ -641,7 +641,7 @@
   "d": "smooth distance (polynomial smooth-min, k 24 m) to the union of the footprint and both corridors; 0 inside",
   "M": "smootherstep((d - 6) / 64): 0 inside and within 6 m of every protected edge, 1 beyond 70 m",
   "R": {
-   "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out over 350..1000 m and the field over 1400..3000 m), 4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
+   "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out over 150..450 m and the field over 500..1300 m), 4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
    "swales": "down to -1.3 m (fbm, 190 m cells)",
    "swells": "(1.2 + 4.3 smoothstep(200, 1300, r)) * 1.7 fbm(220 m, 2 octaves)",
    "rolling": "a(r) * (1.7 fbm(620 m, 3 octaves) + 0.22), a(r) = 1.3 + 14.7 smoothstep(300, 2500, r) - 5 smoothstep(3200, 6500, r)",

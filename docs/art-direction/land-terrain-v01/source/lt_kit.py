@@ -162,13 +162,14 @@ _ICO_T = np.array([(0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11), (1
 
 def rock(m, x, z, size, rng):
     """Jittered icosahedron (20 triangles), `size` m across, squashed to 62 % height, random yaw and a small tilt,
-    sunk so about 35 % of its height is below the lowest ground under it."""
+    sunk so about 35 % of its height is below the lowest ground of the terrain mesh under it."""
     r = size / 2.0
     v = _ICO_V * (1.0 + 0.28 * (rng.random((12, 1)) - 0.5)) * np.array([r, 0.62 * r, r * (0.7 + 0.5 * rng.random())])
     yaw, tilt = rng.random() * 2 * math.pi, math.radians(10.0 * (rng.random() - 0.5))
     cy, sy, ct, st = math.cos(yaw), math.sin(yaw), math.cos(tilt), math.sin(tilt)
     rot = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]]) @ np.array([[1, 0, 0], [0, ct, -st], [0, st, ct]])
-    base = float(H.seat_y(np.array([x]), np.array([z]), r)[0])
+    import lt_surface  # the rendered (piecewise-linear) mesh surface, not the analytic h
+    base = lt_surface.surface().seat(x, z, r)
     centre = np.array([x, base + 0.3 * 0.62 * r, z])
     v = v @ rot.T + centre
     m.add(ROCK_MAT, v, a7kit._outward_convex(v, _ICO_T, centre))

@@ -7,7 +7,7 @@ Ground surface: y = DATUM + h(x, z), with h = M(d) * R(x, z).
   M(d)  smootherstep((d - 6) / 64): exactly 0 inside the rectangles and within 6 m of them, 1 beyond 70 m.
   R     coastal relief (metres):
           dunes    shore-parallel ridged noise (ridges run along z, about 60 m apart), up to about 4 m on the coast
-                   side (+x) and about 2 m inland (-x);
+                   side (+x) and about 2 m inland (-x); they fade out over 500-1300 m (mesh resolution);
           swales   shallow depressions down to -1.3 m;
           swells   mid-scale undulation (220 m cells), about +-1 m near the site, +-4 m from 1.3 km;
           rolling  broad fractal ground whose amplitude grows from about 1.5 m near the site to 10-20 m at
@@ -146,10 +146,11 @@ def components(x, z):
     xw = x + 150.0 * fbm(x, z, 800.0, 2, 3) + 0.16 * z
     zw = z + 150.0 * fbm(x, z, 800.0, 2, 4)
     # shore-parallel dune ridges (anisotropic ridged noise, ridges along z)
-    # the fine octave fades out by 1 km and the whole field by 3 km, where the mesh can no longer resolve them
+    # the fine octave fades out over 150-450 m and the whole field over 500-1300 m, where the mesh spacing
+    # (5.5 + 0.023 r) can no longer resolve them; beyond that the swells and rolling ground carry the relief
     dune = (_ridge(vnoise(xw, zw, 60.0, 260.0, 20, 0.10)) ** 2
-            + 0.5 * smoothstep(1000.0, 350.0, r) * _ridge(vnoise(xw, zw, 30.0, 100.0, 21, 0.18)) ** 2) / 1.5
-    dune = dune * smoothstep(3000.0, 1400.0, r)
+            + 0.5 * smoothstep(450.0, 150.0, r) * _ridge(vnoise(xw, zw, 30.0, 100.0, 21, 0.18)) ** 2) / 1.5
+    dune = dune * smoothstep(1300.0, 500.0, r)
     coast = smoothstep(-1600.0, 2400.0, x)
     hummock = 0.55 + 0.45 * vnoise(x, z, 380.0, 380.0, 22)
     fence_in = smoothstep(6.0, -30.0, rect_signed(x, z, FENCE))
@@ -236,7 +237,7 @@ def describe():
              % (FLAT, BLEND, FLAT, FLAT + BLEND),
         "R": {
             "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out "
-                     "over 350..1000 m and the field over 1400..3000 m), "
+                     "over 150..450 m and the field over 500..1300 m), "
                      "4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
             "swales": "down to -1.3 m (fbm, 190 m cells)",
             "swells": "(1.2 + 4.3 smoothstep(200, 1300, r)) * 1.7 fbm(220 m, 2 octaves)",
