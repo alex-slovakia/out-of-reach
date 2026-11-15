@@ -19,6 +19,7 @@ namespace OutOfReach.Presentation.UI
         private ISimulationClock clock;
         private Func<bool> presentationAllowed;
         private Func<double?> readBeaconRequestTime;
+        private Func<int> readDrinksTaken;
         private IInteractable drinkAction, rationAction;
         private Camera guidanceCamera;
         private Transform waterTarget;
@@ -47,7 +48,8 @@ namespace OutOfReach.Presentation.UI
             ISurvivalRecovery recoveryService, IGameState gameState, ISimulationClock simulationClock,
             Func<bool> canPresent, Func<double?> readBeaconRequestTime = null,
             IInteractable drinkAction = null, IInteractable rationAction = null,
-            Camera guidanceCamera = null, Transform waterTarget = null, Func<bool> reducedMotion = null)
+            Camera guidanceCamera = null, Transform waterTarget = null, Func<bool> reducedMotion = null,
+            Func<int> readDrinksTaken = null)
         {
             ClearBinding();
             document = ui;
@@ -58,6 +60,7 @@ namespace OutOfReach.Presentation.UI
             clock = simulationClock;
             presentationAllowed = canPresent;
             this.readBeaconRequestTime = readBeaconRequestTime;
+            this.readDrinksTaken = readDrinksTaken;
             this.drinkAction = drinkAction;
             this.rationAction = rationAction;
             this.guidanceCamera = guidanceCamera;
@@ -87,6 +90,7 @@ namespace OutOfReach.Presentation.UI
             survival = null;
             recovery = null;
             readBeaconRequestTime = null;
+            readDrinksTaken = null;
             drinkAction = rationAction = null;
             guidanceCamera = null;
             waterTarget = null;
@@ -164,7 +168,8 @@ namespace OutOfReach.Presentation.UI
                 && recovery.LastRestStop != RestStopReason.Completed && recovery.LastRestStop != RestStopReason.Woken);
 
             bool resting = restShown;
-            waterLocator.Present(guidanceCamera, waterTarget, !resting && !owned);
+            bool firstDrinkPending = (readDrinksTaken?.Invoke() ?? 0) == 0;
+            waterLocator.Present(guidanceCamera, waterTarget, firstDrinkPending && !resting && !owned);
             Show(rest, resting);
             wake.SetEnabled(resting);
             if (resting)

@@ -685,7 +685,8 @@ namespace OutOfReach.Composition
                             + SurvivalRecovery.BeaconRequestAfterContactDays * MissionCalendar.SecondsPerDay
                         : null, drinkAction, rationAction, presentationCamera,
                     habitat ? habitat.GetPresentationAnchor(InteractionIds.DrinkWater) : null,
-                    () => cinematics && cinematics.ReducedEffects);
+                    () => cinematics && cinematics.ReducedEffects,
+                    readDrinksTaken: () => session.Survival?.DrinksTaken ?? 0);
                 survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
                 survivalUi.WakePresentationStarted += OnWakePresentationStarted;
             }
