@@ -252,7 +252,7 @@ namespace OutOfReach.Presentation.Motion
         /// </summary>
         public bool TryBeginDepartureSeat(Transform seatBodyFrame)
         {
-            if (!Application.isPlaying || !bound || !isActiveAndEnabled || notifyingReset || departureSeat != null
+            if (!(Application.isPlaying || AllowEditModeDepartureSeat) || !bound || !isActiveAndEnabled || notifyingReset || departureSeat != null
                 || clock.IsPaused || suit.IsSuitOn || suit.IsOutside || !seatBodyFrame
                 || !seatBodyFrame.gameObject.activeInHierarchy || !seatBodyFrame.parent
                 || !visualRoot || !visualRoot.gameObject.activeInHierarchy || !playerFeet || !playerCamera
@@ -288,6 +288,9 @@ namespace OutOfReach.Presentation.Motion
                 throw;
             }
         }
+
+        /// <summary>Edit-mode harness only: lets the departure seat lease run outside Play mode. Never set in the game.</summary>
+        internal static bool AllowEditModeDepartureSeat;
 
         /// <summary>Call after the actual vehicle/camera frame. The departure owner supplies its held playhead.</summary>
         public bool PresentDepartureSeat(float presentedSeconds)

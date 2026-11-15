@@ -612,6 +612,153 @@ namespace OutOfReach.Tests.BodyAnim
             Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"));
         }
 
+        private const string TransportPath = "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx";
+
+        // Root's lean toward the buckle (I06MarineBindings.PresentSeat), replayed on the harness camera.
+        private static void SeatCamera(Stage s, Transform seatFrame, Vector3 seatedEye, float t)
+        {
+            float lookDown = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(1.30f, 2.26f, t));
+            float lookUp = Mathf.SmoothStep(1f, 0f, Mathf.InverseLerp(3.23f, 4.38f, t));
+            float glance = lookDown * lookUp;
+            Vector3 leaning = seatedEye + (seatFrame.forward * .13f - seatFrame.up * .105f) * glance;
+            Vector3 buckle = seatFrame.TransformPoint(new Vector3(0f, .665f, .315f));
+            Quaternion target = Quaternion.LookRotation(buckle - leaning, seatFrame.up);
+            s.Eye.transform.SetPositionAndRotation(leaning, Quaternion.Slerp(seatFrame.rotation, target, glance));
+            s.Eye.fieldOfView = Mathf.Lerp(75f, 55f, glance);
+        }
+
+        [Test]
+        public void DepartureSeatHarnessOnTheRealTransportSeat()
+        {
+            Stage s = Build();
+            GameObject.Find("Ground").SetActive(false);
+            Settle(s);
+            var vehicleAsset = AssetDatabase.LoadAssetAtPath<GameObject>(TransportPath);
+            Assert.IsTrue(vehicleAsset, "transport model");
+            Transform vehicle = ((GameObject)Object.Instantiate(vehicleAsset)).transform;
+            vehicle.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            var seatFrame = new GameObject("Departure seated WORK body").transform;
+            seatFrame.SetParent(vehicle, false);
+            seatFrame.SetLocalPositionAndRotation(new Vector3(0f, .12f, 1.46f), Quaternion.Euler(0f, 180f, 0f));
+            Vector3 seatedEye = vehicle.TransformPoint(new Vector3(0f, 1.397f, 1.40f));
+            var lamp = new GameObject("Cabin lamp").AddComponent<Light>();
+            lamp.type = LightType.Point; lamp.range = 4f; lamp.intensity = 2f;
+            lamp.transform.position = seatFrame.TransformPoint(new Vector3(.3f, 1.6f, .9f));
+            Camera side = s.Side;
+            side.fieldOfView = 40f;
+            side.transform.position = seatFrame.TransformPoint(new Vector3(1.15f, 1.05f, .85f));
+            side.transform.rotation = Quaternion.LookRotation(seatFrame.TransformPoint(new Vector3(0f, .75f, .15f)) - side.transform.position, Vector3.up);
+            EmbodiedBodyPresenter.AllowEditModeDepartureSeat = true;
+            UnityEngine.TestTools.LogAssert.ignoreFailingMessages = true;   // the lease destroys its props with Object.Destroy
+            try
+            {
+                SeatCamera(s, seatFrame, seatedEye, 0f);
+                Assert.IsTrue(s.Body.TryBeginDepartureSeat(seatFrame), "seat lease on the real transport");
+                Transform wristR = Bone(s, "wrist.R"), wristL = Bone(s, "wrist.L");
+                float latchedAt = -1f, nearest = float.MaxValue;
+                for (int f = 0; f <= 150; f++)
+                {
+                    float t = f / 30f;
+                    SeatCamera(s, seatFrame, seatedEye, t);
+                    Assert.IsTrue(s.Body.PresentDepartureSeat(t), "present at " + t);
+                    if (latchedAt < 0f && s.Body.IsDepartureSeatLatched) latchedAt = t;
+                    nearest = Mathf.Min(nearest, NearestBodyVertex(s, s.Eye.transform.position));
+                    if (f % 10 == 0) { Shot(s, s.Eye, "seat_eye_" + (f / 10), 480, 270); Shot(s, side, "seat_side_" + (f / 10)); }
+                }
+                Debug.Log("[BODYANIM] departure seat: latched at " + latchedAt + " s, nearest skin to the seat eye " + nearest
+                          + " m, wrists " + seatFrame.InverseTransformPoint(wristL.position).ToString("F3") + " / " + seatFrame.InverseTransformPoint(wristR.position).ToString("F3"));
+                Assert.Greater(latchedAt, 0f, "the restraint must latch on the departure playhead");
+                Assert.Greater(nearest, .03f, "no skin across the seat camera");
+                SeatFit(s, vehicle, seatFrame);
+                // Pause holds the presented pose; the lease survives.
+                Vector3 before = wristR.position;
+                s.Clock.Paused = true;
+                Assert.IsTrue(s.Body.PresentDepartureSeat(2.0f));
+                Assert.Less(Vector3.Distance(before, wristR.position), 1e-5f, "pause must hold the seat pose");
+                s.Clock.Paused = false;
+                // A suit (or leaving the vehicle) releases the lease at once.
+                s.Suit.On = true;
+                Assert.IsFalse(s.Body.PresentDepartureSeat(5f));
+                Assert.IsFalse(s.Body.HasDepartureSeat, "suit on releases the seat lease");
+                s.Suit.On = false;
+                Assert.IsTrue(s.Body.TryBeginDepartureSeat(seatFrame), "seat lease again");
+                s.Body.EndDepartureSeat();
+                Assert.IsFalse(s.Body.HasDepartureSeat, "EndDepartureSeat releases");
+            }
+            finally
+            {
+                EmbodiedBodyPresenter.AllowEditModeDepartureSeat = false;
+                UnityEngine.TestTools.LogAssert.ignoreFailingMessages = false;
+            }
+        }
+
+        // Webbing against the actual skin (signed distance along the nearest skin normal) and the gap from the body's
+        // back to the real chair surface behind it, measured at the latched pose.
+        private static void SeatFit(Stage s, Transform vehicle, Transform seatFrame)
+        {
+            var skin = new List<Vector3>(); var normals = new List<Vector3>();
+            var mesh = new Mesh();
+            foreach (SkinnedMeshRenderer r in s.Body.VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(false))
+            {
+                if (!r.enabled) continue;
+                r.BakeMesh(mesh, true);
+                Matrix4x4 m = Matrix4x4.TRS(r.transform.position, r.transform.rotation, Vector3.one);
+                Vector3[] v = mesh.vertices, n = mesh.normals;
+                for (int i = 0; i < v.Length; i++) { skin.Add(m.MultiplyPoint3x4(v[i])); normals.Add(m.MultiplyVector(n[i]).normalized); }
+            }
+            Object.DestroyImmediate(mesh);
+            int strapPoints = 0, inside = 0; float deepest = 0f;
+            var perPoint = new System.Text.StringBuilder();
+            Transform props = s.Body.VisualRoot.Find("WORK departure restraint");
+            if (props)
+                foreach (MeshFilter filter in props.GetComponentsInChildren<MeshFilter>(false))
+                {
+                    if (!filter.sharedMesh || !filter.name.ToLowerInvariant().Contains("webbing")) continue;
+                    Vector3[] ribbon = filter.sharedMesh.vertices;
+                    for (int vi = 0; vi < ribbon.Length; vi++)
+                    {
+                        Vector3 local = ribbon[vi];
+                        Vector3 p = filter.transform.TransformPoint(local);
+                        int best = -1; float bestDistance = float.MaxValue;
+                        for (int i = 0; i < skin.Count; i++)
+                        {
+                            float d = (skin[i] - p).sqrMagnitude;
+                            if (d < bestDistance) { bestDistance = d; best = i; }
+                        }
+                        if (best < 0 || bestDistance > .05f * .05f) { strapPoints++; continue; }
+                        float signedDistance = Vector3.Dot(p - skin[best], normals[best]);
+                        strapPoints++;
+                        if (signedDistance < -.004f) { inside++; deepest = Mathf.Min(deepest, signedDistance); }
+                        if (signedDistance < -.002f)
+                            perPoint.Append(filter.name).Append(" pt").Append(vi / 4).Append(" v").Append(vi % 4).Append(' ')
+                                .Append((signedDistance * 1000f).ToString("F1")).Append("mm n=").Append(seatFrame.InverseTransformDirection(normals[best]).ToString("F2")).Append("; ");
+                    }
+                }
+            foreach (MeshFilter filter in vehicle.GetComponentsInChildren<MeshFilter>(true))
+                if (filter.sharedMesh && !filter.GetComponent<Collider>()) filter.gameObject.AddComponent<MeshCollider>().sharedMesh = filter.sharedMesh;
+            Physics.SyncTransforms();
+            var gaps = new System.Text.StringBuilder();
+            foreach (string boneName in new[] { "spine05", "spine03", "spine01" })
+            {
+                Transform bone = Bone(s, boneName);
+                if (!bone) continue;
+                Vector3 back = -seatFrame.forward;
+                float skinBack = 0f;
+                for (int i = 0; i < skin.Count; i++)
+                {
+                    Vector3 d = skin[i] - bone.position;
+                    if (Mathf.Abs(Vector3.Dot(d, seatFrame.up)) < .03f && Mathf.Abs(Vector3.Dot(d, seatFrame.right)) < .06f)
+                        skinBack = Mathf.Max(skinBack, Vector3.Dot(d, back));
+                }
+                bool hit = Physics.Raycast(bone.position, back, out RaycastHit h, 1f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+                gaps.Append(boneName).Append(" y=").Append(seatFrame.InverseTransformPoint(bone.position).y.ToString("F2"))
+                    .Append(hit ? " gap " + ((h.distance - skinBack) * 1000f).ToString("F0") + " mm (" + h.collider.name + ")" : " no chair hit").Append("; ");
+            }
+            Assert.AreEqual(0, inside, "seat webbing must not sink more than 4 mm into the skin");
+            Debug.Log("[BODYANIM] departure seat fit: webbing points " + strapPoints + ", inside the skin by more than 4 mm " + inside
+                      + " (deepest " + deepest * 1000f + " mm); back-to-chair " + gaps + "\n[BODYANIM] seat webbing inside: " + perPoint);
+        }
+
         // Horizontal drift of an ankle across stretches where it stays on the ground (within 12 mm of its lowest point).
         private static float MaxPlantedSlide(List<Vector3> path)
         {
