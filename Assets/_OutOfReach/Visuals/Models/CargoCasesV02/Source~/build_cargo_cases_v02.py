@@ -178,11 +178,11 @@ def science(p):
         toggle_latch(p, x, -.153, seam)
         hinge(p, x, .152, seam, length=.06, mat=ALU, r=.006)
     # desiccant / shock indicator
-    lathe(p, (.158, -.151, .135), FRONT, [(0, .021), (.006, .021), (.006, .017), (.004, .017), (.004, 0)], ALU, n=18)
-    decal(p, "icon:gauge", (.158, -.1555, .135), FRONT, UP, w=.032, off=.0002)
+    lathe(p, (.108, -.151, .105), FRONT, [(0, .021), (.006, .021), (.006, .017), (.004, .017), (.004, 0)], ALU, n=18)
+    decal(p, "icon:gauge", (.108, -.1555, .105), FRONT, UP, w=.032, off=.0002)
     side_handles(p, .217, plate_z=.166)
     feet(p, x=.15, y=.095)
-    decal(p, "name:spectrometer", (-.035, -.151, .133), FRONT, UP, w=.26)
+    decal(p, "name:spectrometer", (-.045, -.151, .133), FRONT, UP, w=.24)
     decal(p, "name:spectrometer", (0, 0, top + .0015), UP, Y, w=.3, off=.0004)
     decal(p, "icon:fragile", (.062, -.151, .247), FRONT, UP, w=.085)
     decal(p, "icon:up", (-.062, -.151, .247), FRONT, UP, w=.05)
@@ -261,8 +261,7 @@ def battery(p):
     side_handles(p, .215, plate_z=.17)
     decal(p, "name:battery-module", (0, -.1585, .066), FRONT, UP, w=.24, off=.0004)
     decal(p, "name:battery-module", (0, -.068, .235), UP, Y, w=.27, off=.0006)
-    decal(p, "icon:hazard", (.158, -.156, .1), FRONT, UP, w=.05, off=.0004)
-    decal(p, "icon:hazard", (.165, -.068, .235), UP, Y, w=.05, off=.0006)
+    decal(p, "icon:hazard", (.018, -.1565, .162), FRONT, UP, w=.046, off=.0004)
     decal(p, "icon:plate", (0, .158, .12), BACK, UP, w=.11, off=.0004)
 
 
@@ -300,8 +299,8 @@ def oxygen(p):
     side_handles(p, .2085, plate_z=.17, plate_h=.05, plate_w=.16)
     feet(p, x=.17, y=.085, size=(.04, .03, .008))
     # placards: painted plate on the front rail, stencil on the bottle crown
-    obox(p, (-.04, -.131, .112), FRONT, UP, (.25, .086, .003), sh, bevel=.001, tile=.3)
-    decal(p, "name:oxygen-tank", (-.04, -.1325, .112), FRONT, UP, w=.215, off=.0004)
+    obox(p, (0, -.131, .112), FRONT, UP, (.25, .086, .003), sh, bevel=.001, tile=.3)
+    decal(p, "name:oxygen-tank", (0, -.1325, .112), FRONT, UP, w=.215, off=.0004)
     cyl_decal(p, "name:oxygen-tank", -.03, R, 62, 0, az, w=.2)
     cyl_patch(p, L.LABELS, -.03, .1, R, 118, .053, 0, az, uv_rect=ATLAS["icon:nooil"])
 
@@ -324,13 +323,13 @@ def solar(p):
     for y in (-.088, .088):                                                                       # skid rails
         box(p, (0, y, .013), (.42, .028, .022), ALU, bevel=.004, seg=1, tile=.3)
     # stowed wing visible through the deployment slot
-    cyl_patch(p, "CC2_SolarCell", 0, .25, R, 87, .058, 0, az, uv_tile=.16, off=.0012)
+    cyl_patch(p, "CC2_SolarCell", 0, .25, R, 87, .058, 0, az, uv_tile=.16, off=.003)
     for a in (71.5, 102.5):
         y, z = -(R + .003) * math.cos(math.radians(a)), az + (R + .003) * math.sin(math.radians(a))
         n = Vector((0, -math.cos(math.radians(a)), math.sin(math.radians(a))))
         obox(p, (0, y, z), n, X, (.008, .27, .006), ALU, bevel=.002)
     for x in (-.13, .13):
-        cyl_patch(p, ALU, x, .01, R + .003, 87, .068, 0, az, uv_tile=.3, off=0)
+        cyl_patch(p, ALU, x, .01, R + .006, 87, .068, 0, az, uv_tile=.3, off=0)
     side_handles(p, .2065, plate_z=.17, plate_h=.05, plate_w=.16)
     feet(p, x=.17, y=.088, size=(.045, .03, .008))
     cyl_decal(p, "name:solar-wing", 0, R, 36, 0, az, w=.215)
@@ -346,7 +345,7 @@ def water(p):
     for x in (-.166, .166):                                                                       # cinch straps
         loop = fillet([(x, -.1485, .05), (x, -.1485, top + .001), (x, .1485, top + .001), (x, .1485, .05)], .032,
                       6 if p.lod == 0 else 3)
-        ribbon(p, loop, X, .032, .003, WEBA)
+        ribbon(p, loop, X, .032, .003, WEB)
         obox(p, (x, -.154, .178), FRONT, UP, (.04, .052, .012), GRA, bevel=.004)                  # side-release buckle
         if p.lod < 2:
             obox(p, (x, -.158, .188), FRONT, UP, (.026, .018, .006), GRA, bevel=.002)

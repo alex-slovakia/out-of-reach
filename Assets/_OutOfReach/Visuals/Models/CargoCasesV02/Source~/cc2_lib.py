@@ -7,6 +7,9 @@ from mathutils import Matrix, Vector
 
 X, Y, Z = Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1))
 LABELS = "CC2_Labels"
+# Bootstrap sits about 10 km from the world origin, where a float32 position resolves about 1 mm: a stencil closer
+# than that to its surface z-fights (one whole triangle of the quad can lose). Keep every decal at least this far out.
+MIN_DECAL_OFFSET = .0026
 
 
 class Part:
@@ -254,7 +257,7 @@ def decal(part, key, c, n, up, w=None, h=None, off=.0009, mat=LABELS):
         h = w / r["aspect"]
     n, up = Vector(n).normalized(), Vector(up).normalized()
     right = up.cross(n).normalized()
-    c = Vector(c) + n * off
+    c = Vector(c) + n * max(off, MIN_DECAL_OFFSET)
     bm = bmesh.new()
     uvl = bm.loops.layers.uv.new("UVMap")
     vs = [bm.verts.new(c + right * sx * w / 2 + up * sy * h / 2) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
@@ -268,6 +271,8 @@ def cyl_patch(part, mat, xc, w, radius, ang_c, arc_len, axis_y, axis_z, uv_rect=
     """Patch wrapped on a cylinder whose axis is X through (y, z) = (axis_y, axis_z).
     ang_c in degrees from the front (-Y) up towards +Z; arc_len in metres along the surface."""
     steps = max(2, steps // (part.lod + 1))
+    if mat == LABELS:
+        off = max(off, MIN_DECAL_OFFSET)
     rr = radius + off
     half = arc_len / rr / 2
     a0 = math.radians(ang_c) - half

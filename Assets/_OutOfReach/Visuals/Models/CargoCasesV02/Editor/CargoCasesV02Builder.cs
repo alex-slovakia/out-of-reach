@@ -93,8 +93,10 @@ namespace OutOfReach.Visuals.CargoCasesV02.Editor
 
         public static bool PrefabsReady()
         {
+            if (File.Exists(RackModelPath) && !AssetDatabase.LoadAssetAtPath<GameObject>(RackPrefabPath)) return false;
             foreach (CaseDef def in Cases)
             {
+                if (File.Exists(def.CellModelPath) && !AssetDatabase.LoadAssetAtPath<GameObject>(def.CellPrefabPath)) return false;
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(def.PrefabPath);
                 if (!prefab) return false;
                 foreach (MeshRenderer r in prefab.GetComponentsInChildren<MeshRenderer>(true))
