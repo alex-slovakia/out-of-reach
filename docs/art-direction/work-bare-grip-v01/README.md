@@ -15,7 +15,7 @@ Staged art for root's BareArmContactPresenter: an open-to-closed grip take and a
 |---|---|
 | `BODY_WORK_GripRail_R_V01.fbx`, `BODY_WORK_GripRail_L_V01.fbx` | Animation-only clips on the original 164-bone `A7_ContinuousBody_Rig` bind, takes `WORK_GripRail_R` and `WORK_GripRail_L` |
 | `grip_anchors.json` | Per hand: the rail axis and radius, in Unity model space and in the wrist bone's bind frame; palm normal; finger direction; every joint's closed delta (Blender local axis and angle, and the Unity model-space quaternion); closed-pose bone heads and fingertip tails |
-| `grip_report.json`, `grip_solve.log` | Skin evidence per region and per frame (below), and the solver's log |
+| `grip_report.json`, `grip_solve_log.txt` | Skin evidence per region and per frame (below), and the solver's log |
 | `grip_pose_samples.json` | Every finger and thumb bone's local rotation at all 21 frames, re-read from the FBX |
 | `renders/` | Workbench stills: palm, side and back views per hand, and the sheet |
 | `source/grip_solve.py` | The solver and exporter |
