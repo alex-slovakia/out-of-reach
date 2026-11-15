@@ -36,7 +36,7 @@
   ],
   "centreline": "x = 0, y = 1.25, z -3 .. 21"
  },
- "total_triangles": 18312,
+ "total_triangles": 37788,
  "rooms": {
   "Engineering": {
    "fbx": "Meshes/DP02_Engineering.fbx",
@@ -315,6 +315,298 @@
     "max_bounds_pivot_err_m": 0.0,
     "triangles_blender": 18312,
     "triangles_unity": 18312,
+    "objects": 4,
+    "anchors": 1
+   },
+   "blender_roundtrip_pass": true
+  },
+  "Habitat": {
+   "fbx": "Meshes/DP02_Habitat.fbx",
+   "triangles": 19476,
+   "materials": [
+    "A7_Aluminum",
+    "A7_AnodizedBlack",
+    "A7_AnodizedBlue",
+    "A7_AnodizedClear",
+    "A7_CableBlue",
+    "A7_CableYellow",
+    "A7_Decals",
+    "A7_FabricCanvas",
+    "A7_FabricDark",
+    "A7_FabricStrap",
+    "A7_FabricWhite",
+    "A7_MLISilver",
+    "A7_PaintGraphite",
+    "A7_PaintWhite",
+    "A7_PlasticWhite",
+    "A7_Rubber",
+    "HB_BagQuilt",
+    "HB_Labels"
+   ],
+   "bounds_min": [
+    -2.3284,
+    0.1205,
+    11.2365
+   ],
+   "bounds_max": [
+    2.3795,
+    2.453,
+    15.3965
+   ],
+   "groups": {
+    "DP02_HAB_StrapStow_R_Z1325": {
+     "room": "Habitat",
+     "host": "starboard (+x) blanket bay z 13.25 (opposite the berth): quilt face plus 3.5 mm, edge strips",
+     "pivot": [
+      2.3265,
+      0.0,
+      13.25
+     ],
+     "mount_normal": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      2.0414,
+      0.545,
+      12.526
+     ],
+     "bounds_max": [
+      2.326,
+      2.2098,
+      13.974
+     ],
+     "triangles": 7596,
+     "materials": {
+      "A7_Aluminum": 1832,
+      "A7_AnodizedBlack": 1032,
+      "A7_AnodizedBlue": 240,
+      "A7_AnodizedClear": 176,
+      "A7_CableBlue": 576,
+      "A7_Decals": 4,
+      "A7_FabricCanvas": 2304,
+      "A7_FabricStrap": 712,
+      "A7_MLISilver": 264,
+      "A7_PaintWhite": 88,
+      "A7_PlasticWhite": 352,
+      "HB_Labels": 16
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.004,
+      "max_standoff_m": 0.2886,
+      "min_dist_rails_m": 0.294,
+      "min_dist_controls_m": 1.6462,
+      "min_dist_gameplay_parts_m": 4.2096,
+      "min_dist_airlock_door_sweep_m": 2.896,
+      "min_dist_corridor_box_m": 1.1414,
+      "min_dist_corridor_centreline_m": 2.0683,
+      "min_dist_habitat_anchor_m": [
+       0.884,
+       "GrowTray"
+      ],
+      "min_dist_habitat_collider_m": [
+       0.2739,
+       "COL_Habitat_GrowCassette"
+      ]
+     }
+    },
+    "DP02_HAB_CrewKit_L_Z1175": {
+     "room": "Habitat",
+     "host": "port (-x) blanket bay z 11.75 (beside the berth entrance): quilt face plus 3.5 mm",
+     "pivot": [
+      -2.3265,
+      0.0,
+      11.75
+     ],
+     "mount_normal": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -2.3284,
+      1.3848,
+      11.2365
+     ],
+     "bounds_max": [
+      -2.0988,
+      2.453,
+      12.232
+     ],
+     "triangles": 3626,
+     "materials": {
+      "A7_Aluminum": 572,
+      "A7_AnodizedBlack": 904,
+      "A7_CableBlue": 40,
+      "A7_FabricDark": 556,
+      "A7_FabricStrap": 576,
+      "A7_FabricWhite": 44,
+      "A7_PaintGraphite": 128,
+      "A7_PlasticWhite": 24,
+      "A7_Rubber": 492,
+      "HB_BagQuilt": 288,
+      "HB_Labels": 2
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0016,
+      "max_standoff_m": 0.2312,
+      "min_dist_rails_m": 0.2513,
+      "min_dist_controls_m": 4.4261,
+      "min_dist_gameplay_parts_m": 4.5287,
+      "min_dist_airlock_door_sweep_m": 4.638,
+      "min_dist_corridor_box_m": 1.1988,
+      "min_dist_corridor_centreline_m": 2.2661,
+      "min_dist_habitat_anchor_m": [
+       0.9339,
+       "SleepCamera"
+      ],
+      "min_dist_habitat_collider_m": [
+       0.295,
+       "COL_Habitat_Berth"
+      ]
+     }
+    },
+    "DP02_HAB_GrowPlumbing_R_Z1414": {
+     "room": "Habitat",
+     "host": "starboard wall strip z 14.04-14.25 between the ring frame (z 14.0) and the grow cassette's forward side face (z 14.25), plus fittings on that face",
+     "pivot": [
+      2.38,
+      0.0,
+      14.145
+     ],
+     "mount_normal": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      2.0315,
+      0.1205,
+      14.059
+     ],
+     "bounds_max": [
+      2.3795,
+      1.0377,
+      14.2495
+     ],
+     "triangles": 5590,
+     "materials": {
+      "A7_Aluminum": 1380,
+      "A7_AnodizedBlack": 576,
+      "A7_AnodizedBlue": 180,
+      "A7_PaintGraphite": 176,
+      "A7_PlasticWhite": 44,
+      "A7_Rubber": 3232,
+      "HB_Labels": 2
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.1525,
+      "min_dist_rails_m": 0.5031,
+      "min_dist_controls_m": 3.3683,
+      "min_dist_gameplay_parts_m": 4.54,
+      "min_dist_airlock_door_sweep_m": 2.6205,
+      "min_dist_corridor_box_m": 1.1315,
+      "min_dist_corridor_centreline_m": 2.0921,
+      "min_dist_habitat_anchor_m": [
+       0.6084,
+       "GrowTray"
+      ],
+      "min_dist_habitat_collider_m": [
+       0.0,
+       "COL_Habitat_GrowCassette"
+      ]
+     }
+    },
+    "DP02_HAB_GrowCables_R_Z1536": {
+     "room": "Habitat",
+     "host": "starboard wall strip z 15.25-15.46 between the grow cassette's aft side face and the ring frame (z 15.5), plus connectors on that face",
+     "pivot": [
+      2.38,
+      0.0,
+      15.355
+     ],
+     "mount_normal": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      2.27,
+      0.1205,
+      15.251
+     ],
+     "bounds_max": [
+      2.3795,
+      1.8331,
+      15.3965
+     ],
+     "triangles": 2664,
+     "materials": {
+      "A7_Aluminum": 700,
+      "A7_AnodizedBlack": 464,
+      "A7_AnodizedClear": 288,
+      "A7_CableYellow": 252,
+      "A7_Decals": 4,
+      "A7_PaintGraphite": 240,
+      "A7_Rubber": 716
+     },
+     "clearance": {
+      "overlap_pairs": 0,
+      "mount_gap_m": 0.0005,
+      "max_standoff_m": 0.0963,
+      "min_dist_rails_m": 0.3569,
+      "min_dist_controls_m": 4.3827,
+      "min_dist_gameplay_parts_m": 3.4301,
+      "min_dist_airlock_door_sweep_m": 1.4735,
+      "min_dist_corridor_box_m": 1.37,
+      "min_dist_corridor_centreline_m": 2.3295,
+      "min_dist_habitat_anchor_m": [
+       0.631,
+       "GrowTray"
+      ],
+      "min_dist_habitat_collider_m": [
+       0.0,
+       "COL_Habitat_GrowCassette"
+      ]
+     }
+    }
+   },
+   "anchors": {
+    "DP02_HAB_ReviewEye": {
+     "point": [
+      -0.9,
+      1.62,
+      12.15
+     ],
+     "forward": [
+      0.8575,
+      -0.13,
+      0.4979
+     ],
+     "role": "review eye of the preview render (not gameplay)"
+    }
+   },
+   "unity_import": {
+    "importer": {
+     "guid": "0eced475c5d912f812cc5bfef69d5f7d",
+     "bakeAxisConversion": "True",
+     "useFileUnits": "True",
+     "useFileScale": "True",
+     "globalScale": "1",
+     "importCameras": "False",
+     "importLights": "False",
+     "materialImportMode": "ImportViaMaterialDescription",
+     "preserveHierarchy": "True",
+     "externalMaterialMaps": "18"
+    },
+    "max_bounds_pivot_err_m": 0.0001,
+    "triangles_blender": 19476,
+    "triangles_unity": 19476,
     "objects": 4,
     "anchors": 1
    },

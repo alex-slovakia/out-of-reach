@@ -64,6 +64,10 @@ def frames_along(path, ref):
         tangents[i] = unit(d)
     normals, binormals = np.zeros_like(path), np.zeros_like(path)
     nrm = vec(ref)
+    for helper in (vec(ref), vec(1.0, 0.0, 0.0), vec(0.0, 1.0, 0.0)):   # a reference along the first tangent
+        nrm = helper - tangents[0] * np.dot(helper, tangents[0])      # would collapse every ring to a point
+        if np.linalg.norm(nrm) > 1e-3:
+            break
     for i in range(n):
         t = tangents[i]
         nrm = unit(nrm - t * np.dot(nrm, t))

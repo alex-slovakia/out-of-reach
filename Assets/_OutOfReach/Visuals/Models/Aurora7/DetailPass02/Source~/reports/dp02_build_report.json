@@ -182,8 +182,201 @@
     "A7_Rubber"
    ],
    "fbx": "Meshes/DP02_Engineering.fbx"
+  },
+  "DP02_Habitat": {
+   "room": "Habitat",
+   "objects": {
+    "DP02_HAB_StrapStow_R_Z1325": {
+     "triangles": 7596,
+     "per_material": {
+      "A7_Aluminum": 1832,
+      "A7_AnodizedBlack": 1032,
+      "A7_AnodizedBlue": 240,
+      "A7_AnodizedClear": 176,
+      "A7_CableBlue": 576,
+      "A7_Decals": 4,
+      "A7_FabricCanvas": 2304,
+      "A7_FabricStrap": 712,
+      "A7_MLISilver": 264,
+      "A7_PaintWhite": 88,
+      "A7_PlasticWhite": 352,
+      "HB_Labels": 16
+     },
+     "bounds_min": [
+      2.0414,
+      0.545,
+      12.526
+     ],
+     "bounds_max": [
+      2.326,
+      2.2098,
+      13.974
+     ],
+     "origin": [
+      2.3265,
+      0.0,
+      13.25
+     ],
+     "host": "starboard (+x) blanket bay z 13.25 (opposite the berth): quilt face plus 3.5 mm, edge strips",
+     "mount_out": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_HAB_CrewKit_L_Z1175": {
+     "triangles": 3626,
+     "per_material": {
+      "A7_Aluminum": 572,
+      "A7_AnodizedBlack": 904,
+      "A7_CableBlue": 40,
+      "A7_FabricDark": 556,
+      "A7_FabricStrap": 576,
+      "A7_FabricWhite": 44,
+      "A7_PaintGraphite": 128,
+      "A7_PlasticWhite": 24,
+      "A7_Rubber": 492,
+      "HB_BagQuilt": 288,
+      "HB_Labels": 2
+     },
+     "bounds_min": [
+      -2.3284,
+      1.3848,
+      11.2365
+     ],
+     "bounds_max": [
+      -2.0988,
+      2.453,
+      12.232
+     ],
+     "origin": [
+      -2.3265,
+      0.0,
+      11.75
+     ],
+     "host": "port (-x) blanket bay z 11.75 (beside the berth entrance): quilt face plus 3.5 mm",
+     "mount_out": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_HAB_GrowPlumbing_R_Z1414": {
+     "triangles": 5590,
+     "per_material": {
+      "A7_Aluminum": 1380,
+      "A7_AnodizedBlack": 576,
+      "A7_AnodizedBlue": 180,
+      "A7_PaintGraphite": 176,
+      "A7_PlasticWhite": 44,
+      "A7_Rubber": 3232,
+      "HB_Labels": 2
+     },
+     "bounds_min": [
+      2.0315,
+      0.1205,
+      14.059
+     ],
+     "bounds_max": [
+      2.3795,
+      1.0377,
+      14.2495
+     ],
+     "origin": [
+      2.38,
+      0.0,
+      14.145
+     ],
+     "host": "starboard wall strip z 14.04-14.25 between the ring frame (z 14.0) and the grow cassette's forward side face (z 14.25), plus fittings on that face",
+     "mount_out": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_HAB_GrowCables_R_Z1536": {
+     "triangles": 2664,
+     "per_material": {
+      "A7_Aluminum": 700,
+      "A7_AnodizedBlack": 464,
+      "A7_AnodizedClear": 288,
+      "A7_CableYellow": 252,
+      "A7_Decals": 4,
+      "A7_PaintGraphite": 240,
+      "A7_Rubber": 716
+     },
+     "bounds_min": [
+      2.27,
+      0.1205,
+      15.251
+     ],
+     "bounds_max": [
+      2.3795,
+      1.8331,
+      15.3965
+     ],
+     "origin": [
+      2.38,
+      0.0,
+      15.355
+     ],
+     "host": "starboard wall strip z 15.25-15.46 between the grow cassette's aft side face and the ring frame (z 15.5), plus connectors on that face",
+     "mount_out": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "anchors": {
+    "DP02_HAB_ReviewEye": {
+     "point": [
+      -0.9,
+      1.62,
+      12.15
+     ],
+     "forward": [
+      0.8575,
+      -0.13,
+      0.4979
+     ],
+     "role": "review eye of the preview render (not gameplay)"
+    }
+   },
+   "bounds_min": [
+    -2.3284,
+    0.1205,
+    11.2365
+   ],
+   "bounds_max": [
+    2.3795,
+    2.453,
+    15.3965
+   ],
+   "triangles": 19476,
+   "materials": [
+    "A7_Aluminum",
+    "A7_AnodizedBlack",
+    "A7_AnodizedBlue",
+    "A7_AnodizedClear",
+    "A7_CableBlue",
+    "A7_CableYellow",
+    "A7_Decals",
+    "A7_FabricCanvas",
+    "A7_FabricDark",
+    "A7_FabricStrap",
+    "A7_FabricWhite",
+    "A7_MLISilver",
+    "A7_PaintGraphite",
+    "A7_PaintWhite",
+    "A7_PlasticWhite",
+    "A7_Rubber",
+    "HB_BagQuilt",
+    "HB_Labels"
+   ],
+   "fbx": "Meshes/DP02_Habitat.fbx"
   }
  },
- "total_triangles": 18312,
+ "total_triangles": 37788,
  "convention": "Unity space, metres, y up; objects are placed in AURORA-7 ship coordinates; each pivot is the origin of the cluster's mount frame (host surface, deck level); drop the FBX at the ship origin with identity rotation"
 }
