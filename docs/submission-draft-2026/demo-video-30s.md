@@ -1,6 +1,8 @@
 # Demo video — 30 seconds, script and exact shot list
 
-**DRAFT.** Nothing was recorded or uploaded. The team records it from the submitted Windows build, edits it and uploads it.
+**DRAFT.** Nothing was recorded or uploaded here.
+
+**Owner of the final video: the `demo-video` session** (claim #7 6895463698). It captures real footage from the frozen `claude/integration` build automatically (Unity batch mode, virtual input, nobody on camera), cuts it with ffmpeg and burned-in English captions, and delivers the MP4 outside the repo (`C:\Users\alexp\NASA\submission-video\`) around 22:00 CET. **Its shot list and caption text are authoritative**; the team only uploads it. This file keeps the official rules, the YouTube description and metadata, the upload checks, and a draft shot list that is the fallback if the video has to be recorded by hand.
 
 ## Rules this video must meet (official guides, read 15 Nov 2026)
 

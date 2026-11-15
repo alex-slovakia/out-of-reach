@@ -2,16 +2,21 @@
 
 **DRAFT for Alexander (Team Owner) and Alex/Apoliak.** Claude does not submit, publish, upload or change repository visibility; every action below is a human action unless it names a Claude lane.
 
-## Deadline
+## Deadline and today's schedule
 
-| | UTC | Bratislava (CET) |
+Binding schedule for the Claude lanes: #7 6895582351 (the lead). Times CET (UTC+1).
+
+| CET | UTC | Gate |
 |---|---|---|
-| Hard deadline: "Submit for Judging" clicked (Universal Event = **Team Owner's** local time; Team Owner Alexander Kozovy, Slovakia) | **22:59** | **23:59** |
-| Recommended first submission (2 h buffer; you can edit and resubmit until the deadline, only the last saved version is judged) | 21:00 | 22:00 |
-| Links public and tested | 20:45 | 21:45 |
-| Video exported (≤ 29.5 s) | 20:30 | 21:30 |
-| Final build recorded (shots S1–S9) | 19:30 | 20:30 |
-| Final integrated Windows build | 18:00 target | 19:00 |
+| 18:30 | 17:30 | Feature freeze: the integrator merges every lane that is DONE |
+| 19:00 | 18:00 | Playable combined SHA, QA full run 1, Windows x64 build 1 |
+| 21:00 | 20:00 | **Code freeze**: final combined SHA, final Windows build, final QA run |
+| 21:00–22:15 | 20:00–21:15 | Final demo video capture and cut (`demo-video` session); submission texts and slides updated to the final features (`submit-pack-02`) |
+| **22:30** | **21:30** | **Submission package ready**: video, slides, texts, credits, public links |
+| **by 23:30** | **by 22:30** | **Team Owner submits** (30 min buffer) |
+| 23:59 | 22:59 | Hard deadline — Universal Event = **Team Owner's** local time (Alexander Kozovy, Slovakia) |
+
+Safety net (recommended): once the public final-project link and the deck PDF exist, the Team Owner can already submit a complete version (deck as the demo), then edit and resubmit with the video before 23:30. The guide allows unlimited resubmissions until the deadline and judges only the last saved version.
 
 Anything saved after 23:59 CET is not judged. The participant certificate appears in each member's profile only after the project is submitted.
 
@@ -27,7 +32,7 @@ Anything saved after 23:59 CET is not judged. The participant certificate appear
 
 | Option | What | Owner | Notes |
 |---|---|---|---|
-| **A (recommended)** | 30-second video on **YouTube** (Public or Unlisted) | Record + edit: whoever plays the final build (Apoliak or Alexander); upload: Team Owner | Script, shot list, captions, description, metadata: [demo-video-30s.md](demo-video-30s.md), [demo-video-30s.en.srt](demo-video-30s.en.srt) |
+| **A (recommended)** | 30-second video on **YouTube** (Public or Unlisted) | Capture + cut: `demo-video` session (automatic, from the frozen build); upload: Team Owner | Script, shot list, captions, description, metadata: [demo-video-30s.md](demo-video-30s.md), [demo-video-30s.en.srt](demo-video-30s.en.srt) |
 | B (fallback) | The 7-slide deck as **PDF** | Team Owner | [deck/OUT-OF-REACH_SpaceApps2026_deck.pdf](deck/OUT-OF-REACH_SpaceApps2026_deck.pdf) on Google Drive ("Anyone with the link · Viewer") or in the public repo |
 
 The form has one demo link; if both exist, use the video and put the deck in the final-project folder.
@@ -49,17 +54,17 @@ Optional: the free `outofreach.earth` domain (if its registration finished) can 
 
 | # | Item | Owner | Due (UTC) | Status |
 |---|---|---|---|---|
-| 1 | Final integrated build SHA + Windows build | Claude integration assembler (`claude/integration`), root acceptance | 18:00 | in progress (#7 6895055267) |
-| 2 | In-game Sources: add the AI-voice and AI-synth lines and the NASA SVS sky credit ([credits-and-licenses.md](credits-and-licenses.md) §C gaps 1–2) | Claude integration assembler | before build freeze | open |
+| 1 | Final integrated build SHA + Windows build | Claude integration assembler (`claude/integration`), root acceptance | 21:00 CET | in progress (#7 6895321605) |
+| 2 | In-game Sources: add the AI-voice and AI-synth lines and the NASA SVS sky credit ([credits-and-licenses.md](credits-and-licenses.md) §C gaps 1–2) | Claude integration assembler | before the 21:00 CET code freeze | open |
 | 3 | Countdown audio provenance next to the clip; music README/manifest fixed (mx01 = Cobalt); Titan excerpt text on the Sources page | `audio-opening` lane | with its DONE | open |
-| 4 | Human playthrough of the final build; note anything the texts claim that the build does not show | Apoliak or Alexander | 19:00 | open |
-| 5 | Record shots S1–S9, edit, export ≤ 29.5 s, write metadata | Apoliak or Alexander (nobody on camera, no voice-over) | 20:30 | open |
-| 6 | Swap the slide-3 launch picture for a capture of the final build (optional; `deck/build_deck.py` → `CAPTURES["launch"]`, or replace it in PowerPoint) | anyone | 20:30 | optional |
-| 7 | Upload the video; set Public/Unlisted; paste the description; add the SRT | Team Owner | 20:45 | open |
-| 8 | Create the public final-project location (option A or B), README, credits, build zip | Team Owner | 20:45 | open |
-| 9 | Choose the fallback lines in [form-fields.md](form-fields.md) that match the build (chapter loop, tether, countdown) | Apoliak | 20:45 | open |
-| 10 | Paste the 8 fields, tick both boxes, **Submit for Judging**, check the success banner | **Team Owner only** | 21:00 | open |
-| 11 | Open both links in a private window and on a phone, without login | both | 21:05 | open |
+| 4 | Claim check of the final build ([playthrough-checklist.md](playthrough-checklist.md)): QA results from `qa-e2e` plus one human look at anything QA cannot show | `qa-e2e` + Apoliak or Alexander | 21:15 CET | open |
+| 5 | Final video ≤ 30 s, captions, metadata (nobody on camera, no voice-over) | `demo-video` session | 22:00 CET | in progress (#7 6895463698) |
+| 6 | Texts, slides and credits updated to the final features (slide-3 launch picture swapped for a final-build frame) | `submit-pack-02` | 22:15 CET | after the code freeze |
+| 7 | Upload the video; set Public/Unlisted; paste the description; add the SRT | Team Owner | 22:30 CET | open |
+| 8 | Create the public final-project location (option A or B), README, credits, build zip | Team Owner | 22:30 CET | open |
+| 9 | Fallback lines in [form-fields.md](form-fields.md) chosen to match the final build (chapter loop, tether, countdown, meal) | `submit-pack-02`, confirmed by Apoliak | 22:15 CET | after the code freeze |
+| 10 | Paste the 8 fields, tick both boxes, **Submit for Judging**, check the success banner | **Team Owner only** | by 23:30 CET | open |
+| 11 | Open both links in a private window and on a phone, without login | both | right after submitting | open |
 | 12 | Last edits/resubmit if something changes | Team Owner | before 22:59 | — |
 
 ## Final check before clicking "Submit for Judging"
