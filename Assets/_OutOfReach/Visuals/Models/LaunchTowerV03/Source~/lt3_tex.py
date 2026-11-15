@@ -2,7 +2,7 @@
 
 Usage: python lt3_tex.py <out_dir>
 Every texture is tileable, original and generated from fixed seeds, so a rebuild is byte-reproducible.
-BaseColor PNGs are sRGB, MetallicSmoothness PNGs are linear (R = metallic, A = smoothness, URP Lit convention),
+BaseColor PNGs are sRGB (metallic / smoothness are material scalars, no map),
 Normal PNGs are tangent-space OpenGL (+Y up), which is what Unity expects for a texture imported as Normal map.
 """
 import os, sys, zlib, struct
@@ -186,7 +186,7 @@ def rubber(seed):
 def main(out):
     os.makedirs(out, exist_ok=True)
     jobs = {}
-    b, m, n = painted(101, (0.16, 0.165, 0.172), 0.14, 0.10)
+    b, m, n = painted(101, (0.30, 0.315, 0.34), 0.14, 0.10, primer=(0.46, 0.44, 0.41))
     jobs['LT3_SteelGraphite'] = (b, m, n)
     b, m, n = painted(202, (0.84, 0.50, 0.07), 0.16, 0.06, primer=(0.12, 0.12, 0.13))
     jobs['LT3_SafetyAmber'] = (b, m, n)
@@ -204,7 +204,6 @@ def main(out):
     jobs['LT3_Rubber'] = (b, m, None)
     for name, (b, m, n) in jobs.items():
         write_png(os.path.join(out, name + '_BaseColor.png'), b)
-        write_png(os.path.join(out, name + '_MetallicSmoothness.png'), m)
         if n is not None:
             write_png(os.path.join(out, name + '_Normal.png'), n)
         print('texture', name)

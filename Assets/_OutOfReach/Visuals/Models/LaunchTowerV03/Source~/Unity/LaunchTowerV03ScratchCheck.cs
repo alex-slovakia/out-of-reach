@@ -85,10 +85,13 @@ public static class LaunchTowerV03ScratchCheck
             Standins(prologue);
             var sun = new GameObject("Sun").AddComponent<Light>();
             sun.type = LightType.Directional; sun.intensity = 2.2f; sun.shadows = LightShadows.Soft;
-            sun.transform.rotation = prologue.rotation * Quaternion.Euler(38f, 140f, 0f);
+            sun.transform.rotation = prologue.rotation * Quaternion.Euler(42f, 35f, 0f);
             RenderSettings.ambientMode = AmbientMode.Flat; RenderSettings.ambientLight = new Color(.36f, .4f, .47f);
-            Capture(prologue, outDir, "urp_overview", new Vector3(-34f, -4f, 26f), new Vector3(0f, -10f, -9f), 38f);
-            Capture(prologue, outDir, "urp_arm_walk", new Vector3(0f, 1.62f, -8.6f), new Vector3(0f, 1.2f, -2.4f), 62f);
+            var sh = new SphericalHarmonicsL2(); sh.AddAmbientLight(new Color(.36f, .4f, .47f)); RenderSettings.ambientProbe = sh;
+            Capture(prologue, outDir, "urp_overview", new Vector3(-46f, -26f, -44f), new Vector3(0f, -10f, -7f), 42f);
+            Capture(prologue, outDir, "urp_spawn_to_arm", new Vector3(0f, 1.7f, -12.34f), new Vector3(0f, 1.3f, -2.4f), 62f);
+            Capture(prologue, outDir, "urp_spawn_look_up_back", new Vector3(0f, 1.7f, -10.5f), new Vector3(3.2f, 7f, -13.4f), 62f);
+            Capture(prologue, outDir, "urp_arm_walk", new Vector3(0f, 1.62f, -8.2f), new Vector3(0f, 1.2f, -2.4f), 62f);
             Capture(prologue, outDir, "urp_arm_side", new Vector3(7.5f, 2.8f, -1.5f), new Vector3(-.3f, .5f, -5.5f), 50f);
             armControl.localRotation = Quaternion.Euler(0f, -90f, 0f);
             Capture(prologue, outDir, "urp_arm_retracted", new Vector3(-9f, 6f, 4f), new Vector3(-2.5f, 0f, -7f), 50f);
@@ -124,17 +127,37 @@ public static class LaunchTowerV03ScratchCheck
 
     private static void Standins(Transform prologue)
     {
-        var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); mat.SetColor("_BaseColor", new Color(.55f, .56f, .58f));
-        GameObject Prim(PrimitiveType t, Vector3 c, Vector3 s)
+        var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")); mat.SetColor("_BaseColor", new Color(.6f, .61f, .63f));
+        mat.SetFloat("_Smoothness", .2f);
+        // Real existing meshes when present (read-only copies of TransportLaunch.fbx / MarineDock.fbx), in the Bootstrap poses.
+        var transport = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx");
+        var dock = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_OutOfReach/Visuals/Models/MarinePrologue/Dock/Models/MarineDock.fbx");
+        if (transport && dock)
         {
-            var g = GameObject.CreatePrimitive(t); g.transform.SetParent(prologue, false);
-            g.transform.localPosition = c; g.transform.localScale = s; g.GetComponent<Renderer>().sharedMaterial = mat;
+            var t = (GameObject)Object.Instantiate(transport, prologue); t.transform.localPosition = Vector3.zero; t.transform.localRotation = Quaternion.identity;
+            var d = (GameObject)Object.Instantiate(dock, prologue); d.transform.localPosition = new Vector3(0f, -.021f, -9.9f); d.transform.localRotation = Quaternion.identity;
+            foreach (Renderer r in t.GetComponentsInChildren<Renderer>(true).Concat(d.GetComponentsInChildren<Renderer>(true)))
+            {
+                r.sharedMaterials = r.sharedMaterials.Select(_ => mat).ToArray();
+                string n = r.name; bool underHidden = false;
+                for (Transform p = r.transform; p; p = p.parent)
+                    if (p.name == "AccessArm" || p.name == "AccessMastTower" || p.name == "AccessMastLanding" || p.name == "Hatch") underHidden = true;
+                if (underHidden || n.StartsWith("Support ") || n.StartsWith("Marine fender") || n.StartsWith("Fender rib") || n.StartsWith("Fender chain restraint"))
+                    r.enabled = false;
+            }
+            foreach (Collider c in t.GetComponentsInChildren<Collider>(true).Concat(d.GetComponentsInChildren<Collider>(true))) Object.DestroyImmediate(c);
+            return;
+        }
+        GameObject Prim(PrimitiveType type, Vector3 c, Vector3 sc)
+        {
+            var g = GameObject.CreatePrimitive(type); g.transform.SetParent(prologue, false);
+            g.transform.localPosition = c; g.transform.localScale = sc; g.GetComponent<Renderer>().sharedMaterial = mat;
             Object.DestroyImmediate(g.GetComponent<Collider>()); return g;
         }
-        Prim(PrimitiveType.Cube, new Vector3(0, -33.1f, -2f), new Vector3(36, 1, 24));                   // barge deck
-        Prim(PrimitiveType.Cube, new Vector3(0, -.3f, -9.9f), new Vector3(8, .6f, 6));                    // crew deck module
-        Prim(PrimitiveType.Cylinder, new Vector3(0, -16f, 0), new Vector3(5.79f, 15.5f, 5.79f));         // booster
-        Prim(PrimitiveType.Cylinder, new Vector3(0, 1.2f, 0), new Vector3(5.15f, 1.7f, 5.15f));          // capsule
+        Prim(PrimitiveType.Cube, new Vector3(0, -33.1f, -2f), new Vector3(36, 1, 24));
+        Prim(PrimitiveType.Cube, new Vector3(0, -.3f, -9.9f), new Vector3(8, .6f, 6));
+        Prim(PrimitiveType.Cylinder, new Vector3(0, -16f, 0), new Vector3(5.79f, 15.5f, 5.79f));
+        Prim(PrimitiveType.Cylinder, new Vector3(0, 1.2f, 0), new Vector3(5.15f, 1.7f, 5.15f));
     }
 
     private static void Capture(Transform prologue, string dir, string name, Vector3 eye, Vector3 target, float fov)
