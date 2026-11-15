@@ -394,6 +394,37 @@ namespace OutOfReach.Presentation.UI.Chapter
             + (frozenAtTransmission ? " · Earth–Mars range when the call was sent" : " · today's Earth–Mars range")
             + ", used as a Mars-vicinity proxy";
 
+        // ---------- MISSION-DATA: informational radiation estimate (never read by the simulation) ----------
+
+        /// <summary>
+        /// Average galactic-cosmic-ray dose equivalent the RAD instrument measured inside the Mars Science Laboratory
+        /// spacecraft on its 2011-2012 cruise to Mars, as NASA/JPL states it (30 May 2013): 1.8 millisieverts per day.
+        /// https://www.jpl.nasa.gov/news/data-from-nasa-rovers-voyage-to-mars-aids-planning/
+        /// </summary>
+        public const double RadCruiseMilliSievertsPerDay = 1.8d;
+
+        /// <summary>
+        /// Rough accumulated dose for the mission time so far: elapsed mission days x the MSL RAD cruise rate. For
+        /// orientation only (another craft, other shielding, another solar cycle); no rule of the game reads it.
+        /// One decimal below ten millisieverts, whole millisieverts above: "0.5 mSv", "25 mSv".
+        /// </summary>
+        public static string RadiationDose(double elapsedSimulationSeconds)
+        {
+            if (!Finite(elapsedSimulationSeconds)) return string.Empty;
+            double dose = Math.Max(0d, elapsedSimulationSeconds) / SecondsPerDay * RadCruiseMilliSievertsPerDay;
+            return dose.ToString(dose < 9.95d ? "0.0" : "0", CultureInfo.InvariantCulture) + " mSv";
+        }
+
+        /// <summary>"Radiation since Day 1 ≈ 25 mSv (est. at 1.8 mSv/day, NASA MSL RAD cruise measurement)".</summary>
+        public static string RadiationLine(double elapsedSimulationSeconds)
+        {
+            string dose = RadiationDose(elapsedSimulationSeconds);
+            return dose.Length == 0
+                ? string.Empty
+                : "Radiation since Day 1 ≈ " + dose + " (est. at " + RadCruiseMilliSievertsPerDay.ToString("0.0#", CultureInfo.InvariantCulture)
+                  + " mSv/day, NASA MSL RAD cruise measurement)";
+        }
+
         public static string Mass(double kg) => Finite(kg) ? kg.ToString("0.0", CultureInfo.InvariantCulture) + " kg" : "—";
         public static string Litres(double litres) => Finite(litres) ? litres.ToString("0.0", CultureInfo.InvariantCulture) + " L" : "—";
         public static string Energy(double kWh) => Finite(kWh) ? kWh.ToString("0.00", CultureInfo.InvariantCulture) + " kWh" : "—";

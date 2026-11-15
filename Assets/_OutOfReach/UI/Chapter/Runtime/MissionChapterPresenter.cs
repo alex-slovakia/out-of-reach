@@ -84,6 +84,8 @@ namespace OutOfReach.Presentation.UI.Chapter
         private double dataKm = double.NaN, dataLight = double.NaN;
         private bool dataFrozen;
         private string dataLine = string.Empty, dataSource = string.Empty;
+        private long doseMinute = long.MinValue;
+        private string doseLine = string.Empty;
 
         /// <summary>The screen presented in the last frame (None while hidden).</summary>
         public ChapterScreen CurrentScreen => presentable ? screen : ChapterScreen.None;
@@ -420,6 +422,7 @@ namespace OutOfReach.Presentation.UI.Chapter
 
             bool strip = (screen == ChapterScreen.None || screen == ChapterScreen.Beat) && FillStrip(now, realSeconds);
             if (strip) FillMissionData();
+            if (strip) FillRadiationEstimate(now);
             ChapterView.Show(view.Strip, strip);
         }
 
@@ -470,6 +473,22 @@ namespace OutOfReach.Presentation.UI.Chapter
                 if (stage != RecoveryStage.BeaconRequested) beaconDeferred = false;
                 lastStage = stage;
             }
+        }
+
+        /// <summary>
+        /// MISSION-DATA: an estimate for orientation, the one mission clock x the MSL RAD cruise rate. Display only: nothing
+        /// is stored, charged or decided from it. Re-formatted once per simulated minute.
+        /// </summary>
+        private void FillRadiationEstimate(double now)
+        {
+            long minute = ChapterCopy.Finite(now) ? (long)Math.Floor(Math.Max(0d, now) / 60d) : -1L;
+            if (minute != doseMinute)
+            {
+                doseMinute = minute;
+                doseLine = ChapterCopy.RadiationLine(now);
+            }
+
+            ChapterView.SetText(view.StripDose, doseLine);
         }
 
         // ---------- beat card ----------
