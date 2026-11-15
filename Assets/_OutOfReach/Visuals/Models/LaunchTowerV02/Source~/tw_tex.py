@@ -40,9 +40,9 @@ def tint(base, n):
 
 
 N = 1024
-# ---- painted structural steel (light grey-blue), chips and weld grime ----
+# ---- painted structural steel (graphite, matching the graphite/amber/cyan/red art direction), chips and grime ----
 n1, n2, n3 = noise(N, 4, 1), noise(N, 16, 2), noise(N, 64, 3)
-col = tint((0.52, 0.55, 0.58), 0.6 * n1 + 0.4 * n2)
+col = tint((0.30, 0.315, 0.335), 0.6 * n1 + 0.4 * n2)
 streak = noise(N, 2, 4)[:, :1] * np.ones((1, N), np.float32)          # vertical streaks
 streak = np.asarray(Image.fromarray((noise(N, 2, 5) * 255).astype(np.uint8)).resize((N, N)).filter(ImageFilter.GaussianBlur(1)), np.float32) / 255
 vs = np.tile(noise(N, 128, 6)[:1, :], (N, 1))                          # vertical rain streaks

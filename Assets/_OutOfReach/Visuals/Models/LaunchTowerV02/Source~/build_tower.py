@@ -44,6 +44,17 @@ def make_materials(textured=True):
         bsdf.inputs['Metallic'].default_value = met
         bsdf.inputs['Roughness'].default_value = rough
         p = os.path.join(TEX, tex) if tex else None
+        msp = os.path.join(TEX, tex.replace('BaseColor', 'MetallicSmoothness')) if tex else None
+        if textured and msp and os.path.exists(msp):
+            img2 = bpy.data.images.load(msp, check_existing=True)
+            img2.colorspace_settings.name = 'Non-Color'
+            t2 = nt.nodes.new('ShaderNodeTexImage'); t2.image = img2
+            sep = nt.nodes.new('ShaderNodeSeparateColor')
+            inv = nt.nodes.new('ShaderNodeMath'); inv.operation = 'SUBTRACT'; inv.inputs[0].default_value = 1.0
+            nt.links.new(t2.outputs['Color'], sep.inputs['Color'])
+            nt.links.new(sep.outputs['Red'], bsdf.inputs['Metallic'])
+            nt.links.new(t2.outputs['Alpha'], inv.inputs[1])
+            nt.links.new(inv.outputs['Value'], bsdf.inputs['Roughness'])
         if textured and p and os.path.exists(p):
             img = bpy.data.images.load(p, check_existing=True)
             tn = nt.nodes.new('ShaderNodeTexImage'); tn.image = img

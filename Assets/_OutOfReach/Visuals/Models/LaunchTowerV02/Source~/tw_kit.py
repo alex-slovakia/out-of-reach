@@ -168,7 +168,7 @@ class Obj:
     def cone(self, p0, p1, r0, r1, mat, seg=10):
         self.tube(p0, p1, r0, mat, seg=seg, r1=r1)
 
-    def quad(self, c, right, up, w, h, mat, uvrect=None):
+    def quad(self, c, right, up, w, h, mat, uvrect=None, backing=True):
         """single sided label plate. Text reads left to right along `right` for a viewer in front of the plate;
         the front faces up x right (Unity coordinates, left handed; checked against a Blender back-face-culled render)."""
         c, right, up = Vector(c), Vector(right).normalized(), Vector(up).normalized()
@@ -177,6 +177,8 @@ class Obj:
                c + right * (w / 2) + up * (h / 2), c + right * (-w / 2) + up * (h / 2)]
         u0, v0, u1, v1 = uvrect or (0, 0, 1, 1)
         self.poly(pts, mat, normal=n, uvs=[(u0, v0), (u1, v0), (u1, v1), (u0, v1)])
+        if backing:   # painted backing plate, so the plate reads as a plate (not mirrored text) from behind
+            self.rect_plate(c - n * 0.006, right, up, w + 0.02, h + 0.02, 0.008, PAINT)
 
     # ---- composite helpers -------------------------------------------------
     def tube_path(self, pts, r, mat, bend=0.25, seg=10, bend_segs=4):

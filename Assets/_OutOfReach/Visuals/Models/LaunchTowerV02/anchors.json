@@ -98,8 +98,8 @@
  },
  "objects": {
   "LTV2_TowerFacade": {
-   "tris": 38216,
-   "verts": 70724,
+   "tris": 38384,
+   "verts": 71060,
    "origin": [
     0.0,
     0.0,
@@ -111,12 +111,12 @@
     -11.915
    ],
    "bounds_max": [
-    4.615,
+    4.625,
     -0.67,
     -6.0
    ],
    "tris_by_material": {
-    "TW_SteelPainted": 5080,
+    "TW_SteelPainted": 5248,
     "TW_Galvanized": 31980,
     "TW_OchrePaint": 876,
     "TW_HazardStripe": 48,
@@ -185,8 +185,8 @@
    }
   },
   "LTV2_ArmDetail": {
-   "tris": 5622,
-   "verts": 10660,
+   "tris": 5634,
+   "verts": 10684,
    "origin": [
     -0.9,
     0.0,
@@ -199,11 +199,11 @@
    ],
    "bounds_max": [
     1.28,
-    2.505,
+    2.515,
     -3.025
    ],
    "tris_by_material": {
-    "TW_SteelPainted": 828,
+    "TW_SteelPainted": 840,
     "TW_Galvanized": 3808,
     "TW_OchrePaint": 0,
     "TW_HazardStripe": 48,
@@ -214,7 +214,7 @@
    }
   }
  },
- "total_triangles": 54762,
+ "total_triangles": 54942,
  "anchors": {
   "ArmPivot": {
    "point": [
