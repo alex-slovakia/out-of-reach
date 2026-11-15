@@ -398,6 +398,9 @@ namespace OutOfReach.Presentation.UI.Report
                 }
             nasaPage.Add(dataset);
             nasaPage.Add(FlightRecorderElements.Text("AURORA-7 is fictional. This is a distance reference, not its trajectory.", "recorder-source-note"));
+            nasaPage.Add(FlightRecorderElements.Text("Cruise radiation — Mars Science Laboratory", "recorder-source-deck"));
+            nasaPage.Add(FlightRecorderElements.Text("The routine estimate multiplies elapsed mission days by 1.8 mSv/day, the average dose equivalent from galactic cosmic rays measured by RAD inside the Mars Science Laboratory spacecraft during cruise. The estimate is informational.", "recorder-source-description"));
+            nasaPage.Add(SourceLink("NASA/JPL · Mars cruise radiation measurements (2013)", "https://www.jpl.nasa.gov/news/data-from-nasa-rovers-voyage-to-mars-aids-planning/", true));
             artPage.Add(FlightRecorderElements.Text("MUSIC & ART", "recorder-source-heading"));
             artPage.Add(FlightRecorderElements.Text("Cobalt — Scott Buckley", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Exploration music · Creative Commons Attribution 4.0. Edited loop with level adjustment and an eight-second crossfade.", "recorder-source-description"));
