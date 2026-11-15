@@ -776,6 +776,7 @@ namespace OutOfReach.Composition
             boundEvents.AirlockStateChanged += OnAirlockStateChanged;
             if (airlockDoors) airlockDoors.Configure(runtime.EvaStatus, runtime.Clock);
             if (airlockPanel) airlockPanel.Configure(runtime.EvaStatus, runtime.Clock);
+            if (shipLighting) shipLighting.SetReducedEffects(cinematics.ReducedEffects);
             if (shipLighting)
                 shipLighting.Configure(boundEvents, runtime.GameState, Repairable(ShipSystemId.Power), workingLights, emergencyLights, runtime.Clock);
             audioPresenter.SetPresentationPaused(runtime.IsPaused);
@@ -928,6 +929,7 @@ namespace OutOfReach.Composition
             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
             if (preflightTension) preflightTension.SetReducedEffects(reduced);
             if (cargoHands) cargoHands.SetReducedMotion(reduced);
+            if (shipLighting) shipLighting.SetReducedEffects(reduced);
         }
 
         private void OnPauseChanged(bool paused)
@@ -996,6 +998,9 @@ namespace OutOfReach.Composition
                     audioPresenter.SetMood(InteriorRepairsComplete ? MusicMood.Isolation : MusicMood.Tension);
                     break;
                 case GamePhase.Eva:
+                    // R19 (Alex-approved): EVA uses the regular background score (mx01_isolation).
+                    audioPresenter.SetMood(MusicMood.Isolation);
+                    break;
                 case GamePhase.Transmission:
                     audioPresenter.SetMood(MusicMood.Tension);
                     break;

@@ -25,6 +25,7 @@
     "OutOfReach.UI",
     "OutOfReach.UI.Report",
     "OutOfReach.UI.Chapter",
+    "OutOfReach.UI.Startup",
     "OutOfReach.Terminal"
   ],
   "includePlatforms": [],
