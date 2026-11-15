@@ -1,0 +1,20 @@
+{
+  "name": "OutOfReach.UI.Pause.Tests",
+  "rootNamespace": "OutOfReach.Tests.PauseControls",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "Unity.InputSystem",
+    "OutOfReach.UI",
+    "OutOfReach.Player"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

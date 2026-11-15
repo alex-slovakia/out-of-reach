@@ -1,0 +1,49 @@
+/* Pause-menu controls card. Pause-only: nothing else loads this sheet (Resources.Load "PauseControls").
+   Palette matches the cockpit HUD: graphite panel, amber accent, cyan secondary, off-white ink. */
+.pc-card {
+    position: absolute;
+    right: 6%;
+    top: 50%;
+    translate: 0 -50%;
+    width: 470px;
+    max-width: 42%;
+    padding: 18px 22px 14px 20px;
+    background-color: rgba(13, 15, 15, 0.9);
+    border-left-width: 3px;
+    border-left-color: rgb(245, 188, 116);
+    -unity-font-definition: url("../Typography/SourceSans3-Regular.otf");
+    color: rgb(238, 237, 225);
+}
+.pc-head { flex-direction: row; align-items: baseline; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom-width: 1px; border-bottom-color: rgba(238, 237, 225, 0.22); }
+.pc-title { font-size: 13px; letter-spacing: 3px; color: rgb(245, 188, 116); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); }
+.pc-mode { font-size: 12px; letter-spacing: 2px; color: rgb(120, 205, 214); }
+.pc-rows { flex-direction: column; }
+.pc-row { flex-direction: row; align-items: center; min-height: 36px; margin-bottom: 6px; }
+.pc-glyphs { width: 224px; flex-shrink: 0; flex-direction: row; align-items: center; }
+.pc-text { flex-grow: 1; flex-shrink: 1; min-width: 0; margin-left: 14px; }
+.pc-action { font-size: 16px; color: rgb(242, 240, 233); white-space: normal; -unity-text-align: middle-left; margin: 0; padding: 0; }
+.pc-note { font-size: 13px; color: rgb(120, 205, 214); white-space: normal; margin: 2px 0 0; padding: 0; }
+.pc-sep { margin: 0 6px; padding: 0; font-size: 14px; -unity-text-align: middle-center; }
+.pc-or { color: rgb(177, 184, 177); }
+.pc-plus { color: rgb(245, 188, 116); font-size: 16px; }
+.pc-key {
+    min-width: 26px;
+    height: 26px;
+    margin: 0 2px;
+    padding: 0;
+    border-width: 1px;
+    border-bottom-width: 3px;
+    border-color: rgba(238, 237, 225, 0.8);
+    border-radius: 4px;
+    background-color: rgba(30, 34, 35, 0.95);
+    color: rgb(238, 237, 225);
+    font-size: 14px;
+    -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf");
+    -unity-text-align: middle-center;
+}
+.pc-key-wide { padding: 0 8px; font-size: 12px; letter-spacing: 1px; }
+.pc-arrow { width: 26px; }
+.pc-cluster { flex-direction: column; align-items: center; flex-shrink: 0; }
+.pc-cluster-row { flex-direction: row; justify-content: center; margin: 1px 0; }
+.pc-mouse { width: 26px; height: 31px; margin: 0 4px; flex-shrink: 0; }
+.pc-mouse-look { width: 48px; }
