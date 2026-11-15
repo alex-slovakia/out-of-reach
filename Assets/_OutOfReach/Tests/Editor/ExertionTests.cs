@@ -35,11 +35,12 @@ namespace OutOfReach.Tests.Editor
             state.Advance(100f, ExertionActivity.Sprinting, 1f);
             Assert.That(state.Remaining01, Is.Zero);
             Assert.That(state.CanSprint, Is.False);
-            Assert.That(state.TraversalSpeedFactor, Is.EqualTo(0.8f));
+            Assert.That(state.TraversalSpeedFactor, Is.EqualTo(PlayerExertion.MinimumTraversalFactor));
             state.Advance(1f, ExertionActivity.Resting, 0f);
             Assert.That(state.Remaining01, Is.EqualTo(0.1f).Within(1e-6f));
             Assert.That(state.CanSprint, Is.False, "no exhausted/resting oscillation every frame");
-            Assert.That(state.TraversalSpeedFactor, Is.EqualTo(0.9f).Within(1e-6f));
+            Assert.That(state.TraversalSpeedFactor,
+                Is.EqualTo((PlayerExertion.MinimumTraversalFactor + 1f) * 0.5f).Within(1e-6f));
             state.Advance(1f, ExertionActivity.Resting, 0f);
             Assert.That(state.CanSprint, Is.True);
             Assert.That(state.TraversalSpeedFactor, Is.EqualTo(1f));
@@ -55,7 +56,7 @@ namespace OutOfReach.Tests.Editor
             {
                 float before = state.TraversalSpeedFactor;
                 state.Advance(0.1f, ExertionActivity.TetherTraversal, 1f);
-                Assert.That(state.TraversalSpeedFactor, Is.InRange(0.8f, 1f));
+                Assert.That(state.TraversalSpeedFactor, Is.InRange(PlayerExertion.MinimumTraversalFactor, 1f));
                 Assert.That(before - state.TraversalSpeedFactor, Is.InRange(0f, 0.00201f));
                 if (state.Remaining01 >= 0.2f)
                 {

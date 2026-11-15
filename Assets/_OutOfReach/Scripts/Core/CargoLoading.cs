@@ -23,11 +23,11 @@ namespace OutOfReach.Core
     /// </summary>
     public sealed class CargoLoading : ICargoLoading
     {
-        /// <summary>GAMEPLAY TUNING: a crate this heavy (or heavier) halves the walk speed.</summary>
+        /// <summary>GAMEPLAY TUNING: a crate this heavy (or heavier) gives the slowest carry speed.</summary>
         public const double MassForSlowestCarryKg = 90d;
 
         /// <summary>GAMEPLAY TUNING: slowest carry speed as a share of the walk speed.</summary>
-        public const double MinimumCarrySpeedFactor = 0.5d;
+        public const double MinimumCarrySpeedFactor = 0.7d;
 
         private readonly MissionDefinition definition;
         private readonly MissionPlanner planner;

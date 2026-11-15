@@ -31,6 +31,10 @@ namespace OutOfReach.Tests.PlayMode
             Cursor.visible = true;
         }
 
+        // Linear carry tuning below the slowest-carry mass; asserted against the constants, not a pinned number.
+        private static float CarryFactor(double massKg) => (float)(1d - (massKg * (1d - CargoLoading.MinimumCarrySpeedFactor)
+            / CargoLoading.MassForSlowestCarryKg));
+
         private static IEnumerator Frames(int count)
         {
             for (int i = 0; i < count; i++)
@@ -84,11 +88,11 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(harness.Resolver.CurrentPrompt, Is.EqualTo("Pick up battery module: 55 kg, 60 credits, +10 kWh battery (2 on the pallet)"));
             yield return PressInteract();
             Assert.That(harness.Runtime.Cargo.CarriedEquipmentId, Is.EqualTo(AuroraMission.BatteryModule));
-            Assert.That(harness.Player.SpeedMultiplier, Is.EqualTo(1f - (55f / 180f)).Within(1e-4f));
+            Assert.That(harness.Player.SpeedMultiplier, Is.EqualTo(CarryFactor(55d)).Within(1e-4f));
 
             float carrying = 0f;
             yield return WalkAlongWalkway(distance => carrying = distance);
-            Assert.That(carrying, Is.EqualTo(emptyHanded * (1f - (55f / 180f))).Within(0.08f), "heavier crates are slower");
+            Assert.That(carrying, Is.EqualTo(emptyHanded * CarryFactor(55d)).Within(0.08f), "heavier crates are slower");
             Assert.That(carrying, Is.LessThan(emptyHanded - 0.2f));
 
             // Load it: one unit more in the planner's draft, and over the mass limit.
@@ -155,7 +159,8 @@ namespace OutOfReach.Tests.PlayMode
             yield return PressInteract();
             Assert.That(harness.Runtime.Cargo.CarriedEquipmentId, Is.EqualTo(AuroraMission.SolarWing));
             Assert.That(harness.Runtime.Planner.Draft.Validate().Succeeded, Is.False);
-            Assert.That(harness.Player.SpeedMultiplier, Is.LessThan(0.62f));
+            Assert.That(harness.Player.SpeedMultiplier, Is.EqualTo(CarryFactor(70d)).Within(1e-4f));
+            Assert.That(harness.Player.SpeedMultiplier, Is.LessThan(1f));
 
             Assert.That(harness.Runtime.Step(61d).Succeeded, Is.True);
             yield return Frames(3);

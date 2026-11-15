@@ -22,7 +22,7 @@ namespace OutOfReach.Player
         [SerializeField, Min(0f)] private float restRecoveryPerSecond = 0.1f;
 
         public const float RecoveryThreshold01 = 0.2f;
-        public const float MinimumTraversalFactor = 0.8f;
+        public const float MinimumTraversalFactor = 0.9f;
 
         private float remaining01 = 1f;
         private bool needsRecovery;
@@ -30,7 +30,7 @@ namespace OutOfReach.Player
         public float Remaining01 => remaining01;
         public bool CanSprint => !needsRecovery && remaining01 > 0f;
 
-        /// <summary>Cargo and tether speed only: unchanged above 20%, smoothly falls to 80% at empty.</summary>
+        /// <summary>Cargo and tether speed only: unchanged above 20%, smoothly falls to 90% at empty.</summary>
         public float TraversalSpeedFactor => Mathf.Lerp(MinimumTraversalFactor, 1f,
             Mathf.Clamp01(remaining01 / RecoveryThreshold01));
 
