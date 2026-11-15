@@ -38,7 +38,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         private Vector4[] footprintClearAreas = Array.Empty<Vector4>();
         [SerializeField, Range(0f, 30f)] private float clearRamp = 10f;
         [SerializeField, Range(0f, 1f), Tooltip("Share of the field thinned into clearings by broad noise.")]
-        private float clearings = .18f;
+        private float clearings = .12f;
         [SerializeField, Range(0f, 80f), Tooltip("Steeper slopes stay bare (degrees).")]
         private float maxSlope = 38f;
         [SerializeField] private int seed = 1977;
@@ -90,6 +90,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04
         public long LastTriangles { get; private set; }
 
         public void SetReducedEffects(bool reduced) => reducedEffects = reduced;
+
+        /// <summary>Edit-mode preview / evidence capture: freezes the wind at a given time (negative = live time).</summary>
+        public void PreviewWindTime(float seconds) => previewWindTime = seconds;
+        private float previewWindTime = -1f;
 
         /// <summary>Authoring entry point used by the editor installer.</summary>
         public void Configure(Material grass, MeshFilter groundMesh, Vector4[] extraClearAreas)
@@ -323,7 +327,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             if (pending != null && pending.IsCompleted) Finish(pending.Result);
             Vector2 wd = windDirection.sqrMagnitude > 1e-6f ? windDirection.normalized : Vector2.right;
             Shader.SetGlobalVector(WindId, new Vector4(wd.x, wd.y, swayAngle * (reducedEffects ? .5f : 1f), gustAngle));
-            Shader.SetGlobalVector(WindWaveId, new Vector4(gustSpeed, gustWavelength, reducedEffects ? 1f : 0f, 0f));
+            // Scaled game time in Play mode (the wind holds when the game is paused by time scale).
+            float windTime = previewWindTime >= 0f ? previewWindTime : Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
+            Shader.SetGlobalVector(WindWaveId, new Vector4(gustSpeed, gustWavelength, reducedEffects ? 1f : 0f, windTime));
         }
 
         private void Draw(ScriptableRenderContext context, Camera camera)

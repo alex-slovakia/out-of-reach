@@ -5,7 +5,7 @@
 // Instance buffer: float4(world x, y, z, seed). Per draw: _ChunkStart, _ChunkCount, _IsCard.
 // Globals written by PampasGrassField / LaunchGrassGustPresenter:
 //   _OOR_GrassWind      xy wind direction (world xz), z sway angle (rad), w gust-wave angle (rad)
-//   _OOR_GrassWindWave  x wave speed (m/s), y wavelength (m), z reduced effects (0/1), w unused
+//   _OOR_GrassWindWave  x wave speed (m/s), y wavelength (m), z reduced effects (0/1), w wind time (s)
 //   _OOR_GrassLod       x near-mesh distance, y cross-fade band, z max draw distance, w far count fraction
 //   _OOR_GrassGust      xyz thruster gust origin (world), w strength 0..1 (0 = off)
 //   _OOR_GrassGustWave  x shock front radius (m), y front width (m), z sustained reach (m), w flutter 0..1
@@ -105,14 +105,14 @@ Shader "OutOfReach/Launch Pampas Grass V04"
             float3 p=v.positionOS;
             p=float3(p.x*c-p.z*s,p.y,p.x*s+p.z*c);
             float3 n=float3(v.normalOS.x*c-v.normalOS.z*s,v.normalOS.y,v.normalOS.x*s+v.normalOS.z*c);
-            float width=(_IsCard>.5?widen:1)*lerp(.85,1.2,r3);
+            float width=(_IsCard>.5?widen*1.22:1)*lerp(.85,1.2,r3);
             p.xz*=H*width; p.y*=H*fade*visible;
             float hNorm=saturate(v.positionOS.y);
 
             // Wind: slow sway plus travelling gust bands along the wind direction.
             float2 wd=normalize(_OOR_GrassWind.xy+1e-5);
             float along=dot(root.xz,wd), across=dot(root.xz,float2(-wd.y,wd.x));
-            float t=_Time.y;
+            float t=_OOR_GrassWindWave.w;
             float reduced=_OOR_GrassWindWave.z;
             float wl=max(_OOR_GrassWindWave.y,1);
             float wave=Noise(float2((along-t*_OOR_GrassWindWave.x)/wl,across/(wl*2.6)))*.75
