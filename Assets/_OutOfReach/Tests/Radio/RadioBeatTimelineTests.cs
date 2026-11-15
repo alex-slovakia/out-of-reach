@@ -164,6 +164,23 @@ namespace OutOfReach.Tests.Radio
         }
 
         [Test]
+        public void EveryVoiceCueHasATakeThatIsPreloadedInThePlayer()
+        {
+            foreach (string cue in RadioBeats.VoiceCues)
+            {
+                string wav = "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/" + cue + ".wav";
+                Assert.IsTrue(System.IO.File.Exists(wav), wav);
+                string meta = System.IO.File.ReadAllText(wav + ".meta");
+                StringAssert.Contains("preloadAudioData: 1", meta, cue + ": the take is loaded with the scene, not on first play");
+                StringAssert.Contains("loadType: 0", meta, cue + ": decompress on load");
+            }
+            // Every line of every beat is recorded, and its cue is one the installer binds.
+            foreach (string id in RadioBeats.Ids)
+                foreach (RadioLine line in Beat(id).Lines)
+                    Assert.Contains(line.CueId, RadioBeats.VoiceCues, id + ": " + line.Text);
+        }
+
+        [Test]
         public void Day14AnnouncementUsesTheFreshTakeAndNamesNoDate()
         {
             RadioBeat beat = Beat(RadioBeats.Day14Announcement);

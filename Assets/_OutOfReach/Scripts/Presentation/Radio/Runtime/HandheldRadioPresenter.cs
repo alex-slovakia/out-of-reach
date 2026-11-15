@@ -126,6 +126,8 @@ namespace OutOfReach.Presentation.Radio
             voiceObject.transform.SetParent(transform, false);
             voice = voiceObject.AddComponent<AudioSource>();
             voice.playOnAwake = false; voice.spatialBlend = 0f; voice.volume = 1f;
+            // A voice take must never lose its channel to ambience or effects, and it pauses with sfx and bed.
+            voice.priority = 0; voice.mute = false; voice.ignoreListenerPause = false;
             voiceObject.AddComponent<AudioHighPassFilter>().cutoffFrequency = 300f;
             voiceObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = 3400f;
             voiceObject.AddComponent<AudioDistortionFilter>().distortionLevel = .12f;
@@ -315,6 +317,9 @@ namespace OutOfReach.Presentation.Radio
             {
                 r.shadowCastingMode = ShadowCastingMode.Off;
                 r.lightProbeUsage = LightProbeUsage.Off;
+                // Alex: the handheld radio is never shown (it clashed with a carried crate). The beat stays
+                // audible and readable: chirp, squelch, static bed, voice takes and subtitles are unchanged.
+                r.enabled = false;
             }
             foreach (Collider c in instance.GetComponentsInChildren<Collider>(true)) Destroy(c);
             ptt = FindChild(instance.transform, "PTT");
@@ -393,7 +398,12 @@ namespace OutOfReach.Presentation.Radio
                 {
                     if (keyUp) sfx.PlayOneShot(keyUp, .75f);
                     AudioClip recorded = ClipFor(timeline.Beat.Lines[line].CueId);
-                    if (recorded) { voice.clip = recorded; voice.PlayDelayed(.12f); }
+                    if (recorded)
+                    {
+                        // Never rely on lazy loading in a player: the data is in memory before the delayed start.
+                        if (recorded.loadState == AudioDataLoadState.Unloaded) recorded.LoadAudioData();
+                        voice.clip = recorded; voice.PlayDelayed(.12f);
+                    }
                     bed.volume = timeline.Beat.Lines[line].Kind == RadioLineKind.Transmit ? .05f : .15f;
                     if (!bed.isPlaying) bed.Play();
                 }
