@@ -1,0 +1,18 @@
+{
+    "name": "OutOfReach.CargoCasesV02.Editor",
+    "rootNamespace": "OutOfReach.Visuals.CargoCasesV02.Editor",
+    "references": [
+        "OutOfReach.CargoCasesV02"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
