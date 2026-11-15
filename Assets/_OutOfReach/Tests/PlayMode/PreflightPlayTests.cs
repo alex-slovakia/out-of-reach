@@ -99,14 +99,13 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(harness.Runtime.Planner.Draft.TotalMassKg, Is.EqualTo(601d));
             Assert.That(harness.Player.SpeedMultiplier, Is.EqualTo(1f));
 
-            // The console refuses the launch with the planner's own reason.
+            // R27: the console warns that the launch is overweight (launching anyway ends in a crash),
+            // so the player does not press it here.
             Vector3 console = RepairLoopHarness.ConsolePosition;
             harness.PlacePlayerFacing(0f, console.z - 0.15f - 1.5f, console);
             yield return Frames(3);
             Assert.That(harness.Resolver.CurrentTarget, Is.SameAs(harness.Console));
-            Assert.That(harness.Resolver.CurrentPrompt, Is.EqualTo("Mass 601.0 kg exceeds the 600.0 kg launch limit by 1.0 kg."));
-            Assert.That(harness.Resolver.CurrentCanInteract, Is.False);
-            yield return PressInteract();
+            Assert.That(harness.Resolver.CurrentPrompt, Is.EqualTo("Begin mission OVERWEIGHT: 601 of 600 kg, over the launch limit"));
             Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Planning));
 
             // Make room: take one spare-parts kit out and put it back on its pallet.

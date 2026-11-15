@@ -75650,6 +75650,16 @@ MonoBehaviour:
   - contentId: dispatch.rescue-1-failed
     beatId: radio.day14-call
   voiceClips:
+  - cueId: vo41_pad_briefing_intro
+    clip: {fileID: 8300000, guid: 42a3f478cdb24604b2707feea776c726, type: 3}
+  - cueId: vo42_pad_briefing_food_water
+    clip: {fileID: 8300000, guid: 55300e9711254d97b5aafb426de6e91b, type: 3}
+  - cueId: vo43_pad_briefing_solar_spares
+    clip: {fileID: 8300000, guid: fd2e5bc8cd5b4525afa9f9c602f2fceb, type: 3}
+  - cueId: vo44_pad_briefing_mass_limit
+    clip: {fileID: 8300000, guid: af6b4e8427824096be086362841230b6, type: 3}
+  - cueId: vo45_pad_briefing_orbit
+    clip: {fileID: 8300000, guid: 89b08488660c4e1e82ab1e7103675276, type: 3}
   - cueId: vo30_mc_aurora_radio_check
     clip: {fileID: 8300000, guid: 19e391eae9ca43279f08c44f4b4310b7, type: 3}
   - cueId: vo31_crew_aurora_loud_clear
