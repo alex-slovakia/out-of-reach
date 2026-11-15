@@ -32,7 +32,8 @@ Shader "OutOfReach/Launch Ground V03"
         _HazeColor("Haze away from the sun",Color)=(0.42,0.48,0.58,1)
         _HazeSunColor("Haze towards the sun",Color)=(0.86,0.80,0.70,1)
         _HazeFloor("Haze at height scale (m)",Float)=1400
-        _Sheen("Back-lit grass sheen",Range(0,1))=0.25
+        _Sheen("Back-lit grass sheen",Range(0,2))=0.55
+        _WindDir("Wind direction (site xz)",Vector)=(0.82,0.57,0,0)
         [HideInInspector]_BaseMap("Shadow compatibility",2D)="white"{}
         [HideInInspector]_BaseColor("Shadow compatibility",Color)=(1,1,1,1)
         [HideInInspector]_Cull("Cull",Float)=2
@@ -48,7 +49,7 @@ Shader "OutOfReach/Launch Ground V03"
         TEXTURE2D(_SoilNormal); SAMPLER(sampler_SoilNormal);
         TEXTURE2D(_SoilMask); SAMPLER(sampler_SoilMask);
         CBUFFER_START(UnityPerMaterial)
-        float4 _SiteOriginWS, _TileMetres;
+        float4 _SiteOriginWS, _TileMetres, _WindDir;
         half4 _GrassDry, _GrassGreen, _GrassLush, _Scrub, _Rock, _RockDark, _BaseColor, _HazeColor, _HazeSunColor;
         float _DatumY, _HazeDensity, _HazeFloor;
         half _NormalStrength, _DetailStrength, _DetailHue, _GreenAmount, _Sheen, _Cull;
@@ -153,12 +154,25 @@ Shader "OutOfReach/Launch Ground V03"
             half3 tuftColor=lerp(_GrassGreen.rgb,_GrassLush.rgb,.5)*.86;
             half3 gapColor=lerp(_GrassDry.rgb,grass,.4)*1.05;
             grass=lerp(grass,lerp(gapColor,tuftColor,tuft),.42*(1-smoothstep(1500,4000,d)));
+            // Combed grass: streaks along the (slowly turning) wind direction, 0.14-3 m, faded by footprint.
+            float2 wd=normalize(_WindDir.xy+float2(mid-.5,broad-.5)*.7);
+            float2 sp=float2(dot(p,wd),dot(p,float2(-wd.y,wd.x)));
+            float comb=.6*lerp(.5,Noise(sp*float2(1/3.0,1/.35)+4.1),1-smoothstep(.12,.40,footprint))
+                +.4*lerp(.5,Noise(sp*float2(1/1.2,1/.14)+8.3),1-smoothstep(.05,.16,footprint));
+            grass*=lerp(.84,1.13,comb);
+            // Soft wind: gust bands roll across the field and lift the paler side of the blades.
+            float gust=.5+.5*sin(dot(p,normalize(_WindDir.xy))*.085-_Time.y*1.7+Noise(p/23+_Time.y*.11)*3.0);
+            grass*=1+.07*(gust-.5)*(1-smoothstep(600,2500,d));
             // Close range: elongated blade streaks that slowly change direction.
             float bladeAngle=broad*12.566+mid*3.0;
             float2 bd=float2(cos(bladeAngle),sin(bladeAngle));
             float2 bq=float2(dot(p,bd),dot(p,float2(-bd.y,bd.x)));
             half blades=Noise(bq*float2(2.2,24))*.6+Noise(bq*float2(4.7,51)+3.1)*.4;
             grass*=lerp(1,lerp(.80,1.14,blades),1-smoothstep(.035,.11,footprint));
+            // A dense canopy seen at a low angle shows shaded stems rather than sunlit tops: darker towards grazing
+            // views. This also matches the far ground to the near shell grass at eye level.
+            float3 toEye=normalize(GetCameraPositionWS()-input.positionWS);
+            grass*=lerp(.60,1,smoothstep(.02,.35,saturate(dot(n,toEye))));
 
             // Foothills and mountains: olive scrub on slopes and mid heights, warm rock on steep or high ground.
             float relief=smoothstep(35,240,h);
@@ -244,7 +258,7 @@ Shader "OutOfReach/Launch Ground V03"
                 half4 color=UniversalFragmentPBR(lighting,surface);
                 // Dry grass glows a little when the low sun is behind it (forward scattering).
                 Light sun=GetMainLight(lighting.shadowCoord);
-                half back=pow(saturate(dot(-lighting.viewDirectionWS,sun.direction)),5)*saturate(n.y);
+                half back=pow(saturate(dot(-lighting.viewDirectionWS,sun.direction)),3)*saturate(n.y)*lerp(.12,1,smoothstep(.03,.35,saturate(dot(n,lighting.viewDirectionWS))));
                 color.rgb+=albedo*sun.color*sun.shadowAttenuation*back*_Sheen*(1-smoothstep(.25,.6,1-n.y));
                 if(SceneFogOn())
                 {

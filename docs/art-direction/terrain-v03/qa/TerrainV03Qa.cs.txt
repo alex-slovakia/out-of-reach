@@ -184,7 +184,7 @@ public static class TerrainV03Qa
 [DefaultExecutionOrder(32000)]
 public sealed class TerrainV03QaDriver : MonoBehaviour
 {
-    [Serializable] sealed class View { public string name; public float[] pos; public float[] look; public float fov = 60; public string space = "site"; }
+    [Serializable] sealed class View { public string name; public float[] pos; public float[] look; public float fov = 60; public string space = "site"; public float eye = -1; }
     [Serializable] sealed class ViewList { public View[] views; }
 
     Camera view;
@@ -230,9 +230,86 @@ public sealed class TerrainV03QaDriver : MonoBehaviour
         foreach (View v in list.views)
         {
             Vector3 p = new Vector3(v.pos[0], v.pos[1], v.pos[2]), l = new Vector3(v.look[0], v.look[1], v.look[2]);
+            if (v.eye >= 0)
+            {
+                // Ground-relative: camera `eye` metres above the actual near terrain, look target pos.y above its ground.
+                p.y = GroundY(site, p.x, p.z) + v.eye;
+                l.y = GroundY(site, l.x, l.z) + v.look[1];
+                TerrainV03Qa.Note(v.name + " ground at camera " + (p.y - v.eye).ToString("F2"));
+            }
             if (v.space == "site") { p = site.TransformPoint(p); l = site.TransformPoint(l); }
-            yield return Capture(v.name, new Pose(p, Quaternion.LookRotation(l - p, Vector3.up)), v.fov);
+            var pose = new Pose(p, Quaternion.LookRotation(l - p, Vector3.up));
+            if (Environment.GetEnvironmentVariable("TERRAIN_QA_PERF") == "1")
+            {
+                if (v.name.StartsWith("01-", StringComparison.Ordinal) || v.name.StartsWith("02-", StringComparison.Ordinal)
+                    || v.name.StartsWith("03-", StringComparison.Ordinal) || v.name.StartsWith("13-", StringComparison.Ordinal))
+                    yield return Measure(v.name, pose, v.fov);
+                continue;
+            }
+            yield return Capture(v.name, pose, v.fov);
         }
+    }
+
+    // Rough cost evidence: 1920x1080 target, 40 warm-up frames, then 150 frames of wall time and, when the
+    // platform reports it, FrameTimingManager GPU time. Same harness, same GPU for before and after.
+    IEnumerator Measure(string name, Pose pose, float fov)
+    {
+        Transform parent = view.transform.parent;
+        Vector3 lp = view.transform.localPosition; Quaternion lr = view.transform.localRotation; float oldFov = view.fieldOfView;
+        var texture = new RenderTexture(1920, 1080, 24, RenderTextureFormat.ARGB32) { antiAliasing = 1 };
+        texture.Create();
+        RenderTexture old = view.targetTexture; float aspect = view.aspect;
+        try
+        {
+            view.transform.SetParent(null, true);
+            posePosition = pose.position; poseRotation = pose.rotation; poseFov = fov; posing = true;
+            view.targetTexture = texture; view.aspect = 1920f / 1080f;
+            for (int i = 0; i < 40; i++) yield return null;
+            var walls = new List<double>(); var gpus = new List<double>();
+            var timings = new FrameTiming[1];
+            for (int i = 0; i < 150; i++)
+            {
+                double t0 = Time.realtimeSinceStartupAsDouble;
+                yield return null;
+                walls.Add((Time.realtimeSinceStartupAsDouble - t0) * 1000.0);
+                FrameTimingManager.CaptureFrameTimings();
+                if (FrameTimingManager.GetLatestTimings(1, timings) > 0 && timings[0].gpuFrameTime > 0) gpus.Add(timings[0].gpuFrameTime);
+            }
+            walls.Sort(); gpus.Sort();
+            string line = name + " wallMs median=" + walls[walls.Count / 2].ToString("F2", CultureInfo.InvariantCulture)
+                + " p90=" + walls[(int)(walls.Count * .9)].ToString("F2", CultureInfo.InvariantCulture)
+                + (gpus.Count > 0 ? " gpuMs median=" + gpus[gpus.Count / 2].ToString("F2", CultureInfo.InvariantCulture) + " n=" + gpus.Count : " gpuMs=unavailable")
+                + " gpu=" + SystemInfo.graphicsDeviceName;
+            File.AppendAllText(Path.Combine(TerrainV03Qa.Output, "perf.txt"), line + "\n");
+            TerrainV03Qa.Note("perf " + line);
+        }
+        finally
+        {
+            posing = false;
+            view.targetTexture = old; view.aspect = aspect; view.fieldOfView = oldFov;
+            view.transform.SetParent(parent, false); view.transform.localPosition = lp; view.transform.localRotation = lr;
+            texture.Release(); Destroy(texture);
+        }
+    }
+
+    static float GroundY(Transform site, float x, float z)
+    {
+        var inner = site.Find("Coastal relief and launch pad detail/LT_LandTerrain/LT_TerrainInner").GetComponent<MeshFilter>();
+        Mesh m = inner.sharedMesh; Vector3[] v = m.vertices; int[] t = m.triangles;
+        Matrix4x4 toSite = site.worldToLocalMatrix * inner.transform.localToWorldMatrix;
+        float best = -36.6f; bool found = false;
+        for (int i = 0; i < t.Length; i += 3)
+        {
+            Vector3 a = toSite.MultiplyPoint3x4(v[t[i]]), b = toSite.MultiplyPoint3x4(v[t[i + 1]]), c = toSite.MultiplyPoint3x4(v[t[i + 2]]);
+            if (x < Mathf.Min(a.x, b.x, c.x) || x > Mathf.Max(a.x, b.x, c.x) || z < Mathf.Min(a.z, b.z, c.z) || z > Mathf.Max(a.z, b.z, c.z)) continue;
+            float den = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+            if (Mathf.Abs(den) < 1e-7f) continue;
+            float wa = ((b.z - c.z) * (x - c.x) + (c.x - b.x) * (z - c.z)) / den, wb = ((c.z - a.z) * (x - c.x) + (a.x - c.x) * (z - c.z)) / den, wc = 1 - wa - wb;
+            if (wa < -1e-4f || wb < -1e-4f || wc < -1e-4f) continue;
+            float h = wa * a.y + wb * b.y + wc * c.y;
+            if (!found || h > best) { best = h; found = true; }
+        }
+        return best;
     }
 
     void LateUpdate()
@@ -247,7 +324,7 @@ public sealed class TerrainV03QaDriver : MonoBehaviour
         Transform parent = view.transform.parent;
         Vector3 lp = view.transform.localPosition; Quaternion lr = view.transform.localRotation; float oldFov = view.fieldOfView;
         int w = 1600, h = 900;
-        var texture = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+        var texture = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 1 };
         texture.Create();
         RenderTexture old = view.targetTexture; float aspect = view.aspect;
         try

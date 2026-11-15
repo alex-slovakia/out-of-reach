@@ -1,15 +1,21 @@
-14:20:12.553 mode=installed gpu=Intel(R) UHD Graphics api=Direct3D11 unity=6000.3.28f1
-14:20:32.834 env fog=ExponentialSquared d=0,00013 col=RGBA(0.650, 0.690, 0.730, 1.000) sky=MAT_LaunchSky_RockyRidge camera=PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift/Player camera at 10000.0,101.7,-12.3 far=10500 hdr=True siteActive=True sun=(18.00, 312.00, 0.00) i=2,1
-14:20:34.126 captured 00-player-start-view at 10000.0,101.7,-12.3 fwd=0.0,0.0,1.0 fov=68
-14:20:35.145 captured 01-deck-west at 9996.6,101.7,-10.0 fwd=-1.0,-0.1,0.0 fov=65
-14:20:35.701 captured 02-deck-east at 10003.4,101.7,-10.0 fwd=1.0,-0.1,0.0 fov=65
-14:20:36.234 captured 03-deck-north-facility at 10000.0,101.7,-12.6 fwd=0.0,-0.1,-1.0 fov=65
-14:20:36.856 captured 04-deck-southwest at 9996.6,101.7,-7.4 fwd=-0.7,-0.1,0.7 fov=65
-14:20:37.197 captured 05-deck-southeast at 10003.4,101.7,-7.4 fwd=0.7,-0.1,0.7 fov=65
-14:20:37.571 captured 06-facility-ground-to-pad at 9970.0,65.1,-890.0 fwd=0.0,0.0,1.0 fov=65
-14:20:37.911 captured 07-ground-apron-west at 9920.0,65.1,-20.0 fwd=-1.0,0.0,-0.1 fov=65
-14:20:38.211 captured 08-ground-root-reference at 9922.0,65.3,-60.0 fwd=-0.2,0.0,1.0 fov=65
-14:20:38.760 captured 09-aerial-overview at 10420.0,260.0,520.0 fwd=-0.6,-0.3,-0.8 fov=55
-14:20:39.322 captured 10-high-ascent-north at 10000.0,1500.0,300.0 fwd=0.0,-0.3,-1.0 fov=60
-14:20:40.078 captured 11-deck-down-west at 9996.6,101.7,-10.0 fwd=-1.0,-0.2,-0.1 fov=65
-14:20:40.665 captured 12-high-ascent-west at 10000.0,2700.0,0.0 fwd=-0.9,-0.4,0.0 fov=60
+15:12:49.298 mode=installed gpu=Intel(R) UHD Graphics api=Direct3D11 unity=6000.3.28f1
+15:13:03.853 env fog=ExponentialSquared d=0,00013 col=RGBA(0.650, 0.690, 0.730, 1.000) sky=MAT_LaunchSky_RockyRidge camera=PlayerRig/ViewPivot/Planning framing/Transport departure offset/Cinematic offset/First person visual motion/Opening menu drift/Player camera at 10000.0,101.7,-12.3 far=10500 hdr=True siteActive=True sun=(18.00, 312.00, 0.00) i=2,1
+15:13:06.444 captured 00-player-start-view at 10000.0,101.7,-12.3 fwd=0.0,0.0,1.0 fov=68
+15:13:07.021 captured 01-deck-west at 9996.6,101.7,-10.0 fwd=-1.0,-0.1,0.0 fov=65
+15:13:07.391 captured 02-deck-east at 10003.4,101.7,-10.0 fwd=1.0,-0.1,0.0 fov=65
+15:13:08.267 captured 03-deck-north-facility at 10000.0,101.7,-12.6 fwd=0.0,-0.1,-1.0 fov=65
+15:13:08.679 captured 04-deck-southwest at 9996.6,101.7,-7.4 fwd=-0.7,-0.1,0.7 fov=65
+15:13:09.058 captured 05-deck-southeast at 10003.4,101.7,-7.4 fwd=0.7,-0.1,0.7 fov=65
+15:13:09.423 captured 06-facility-ground-to-pad at 9970.0,65.1,-890.0 fwd=0.0,0.0,1.0 fov=65
+15:13:10.440 captured 07-ground-apron-west at 9920.0,65.1,-20.0 fwd=-1.0,0.0,-0.1 fov=65
+15:13:11.360 captured 08-ground-root-reference at 9922.0,65.3,-60.0 fwd=-0.2,0.0,1.0 fov=65
+15:13:11.807 captured 09-aerial-overview at 10420.0,260.0,520.0 fwd=-0.6,-0.3,-0.8 fov=55
+15:13:12.137 captured 10-high-ascent-north at 10000.0,1500.0,300.0 fwd=0.0,-0.3,-1.0 fov=60
+15:13:12.597 captured 11-deck-down-west at 9996.6,101.7,-10.0 fwd=-1.0,-0.2,-0.1 fov=65
+15:13:12.961 captured 12-high-ascent-west at 10000.0,2700.0,0.0 fwd=-0.9,-0.4,0.0 fov=60
+15:13:13.011 13-ground-closeup-backlit ground at camera -35,82
+15:13:14.024 captured 13-ground-closeup-backlit at 9905.0,65.9,-115.0 fwd=0.7,-0.1,-0.7 fov=60
+15:13:14.062 14-ground-closeup-side ground at camera -36,80
+15:13:15.119 captured 14-ground-closeup-side at 9900.0,64.9,40.0 fwd=-1.0,0.0,0.3 fov=60
+15:13:15.155 15-ground-closeup-down ground at camera -36,11
+15:13:16.547 captured 15-ground-closeup-down at 9890.0,65.6,-20.0 fwd=-0.9,-0.3,-0.3 fov=60
