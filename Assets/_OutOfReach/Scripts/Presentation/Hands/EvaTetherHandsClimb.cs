@@ -236,21 +236,45 @@ namespace OutOfReach.Presentation.Hands
             }
 
             Vector3 centre = tetherRope.PointAt(param);
+            if (lift > 0f)
+            {
+                EvaTetherArmPose resting = SolveReaching(centre, ropeForward, hand, shoulder, pole, up);
+                Vector3 liftDirection = ((resting.Hand * Vector3.up) + (up * 0.6f)).normalized;
+                centre += liftDirection * lift;
+            }
+
+            return SolveReaching(centre, ropeForward, hand, shoulder, pole, up);
+        }
+
+        /// <summary>
+        /// Solves the grip, reaching with the shoulder (protraction and a torso turn, at most 30 cm in all) until the
+        /// wrist is within arm's length, so the delivered forearm always meets its elbow.
+        /// </summary>
+        private static EvaTetherArmPose SolveReaching(Vector3 centre, Vector3 ropeForward, EvaTetherHand hand,
+            Vector3 shoulder, Vector3 pole, Vector3 up)
+        {
+            const float maxLean = 0.3f;
             float reach = TetherUpperArmMetres + ToolForearmMetres;
+            float leaned = 0f;
             Vector3 toward = centre - shoulder;
             float excess = toward.magnitude - (reach - 0.03f);
             if (excess > 0f)
             {
-                // Reach with the shoulder (protraction and a torso turn), at most 30 cm (reaching across round a corner).
-                shoulder += toward.normalized * Mathf.Min(0.3f, excess);
+                leaned = Mathf.Min(maxLean, excess);
+                shoulder += toward.normalized * leaned;
             }
 
             EvaTetherArmPose pose = EvaTetherClimbMath.SolveGrip(centre, ropeForward, hand, shoulder, pole, up,
                 TubeCentreInHand, TetherUpperArmMetres, ToolForearmMetres, TetherMaxObliquityDegrees);
-            if (lift > 0f)
+            for (int pass = 0; pass < 2 && !pose.Reachable && leaned < maxLean; pass++)
             {
-                Vector3 liftDirection = ((pose.Hand * Vector3.up) + (up * 0.6f)).normalized;
-                pose = EvaTetherClimbMath.SolveGrip(centre + (liftDirection * lift), ropeForward, hand, shoulder, pole, up,
+                // The wrist sits off the rope centre, so the first lean can fall a few centimetres short.
+                Vector3 toWrist = pose.Wrist - shoulder;
+                float deficit = toWrist.magnitude - (reach - 0.01f);
+                float step = Mathf.Min(maxLean - leaned, Mathf.Max(0.005f, deficit));
+                shoulder += toWrist.normalized * step;
+                leaned += step;
+                pose = EvaTetherClimbMath.SolveGrip(centre, ropeForward, hand, shoulder, pole, up,
                     TubeCentreInHand, TetherUpperArmMetres, ToolForearmMetres, TetherMaxObliquityDegrees);
             }
 
