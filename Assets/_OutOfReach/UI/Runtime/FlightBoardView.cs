@@ -43,6 +43,10 @@ namespace OutOfReach.Presentation.UI
         private double co2ActionPpm, co2EmergencyPpm;
         private readonly Button launch;
         private readonly bool commandsEnabled;
+        private string objectiveOverrideTitle = string.Empty, objectiveOverrideDetail = string.Empty;
+        private bool phaseKnown, lastRepairsComplete;
+        private GamePhase lastPhase;
+        private MissionOutcome lastOutcome;
 
         public FlightBoardView(VisualElement host, StyleSheet styleSheet, bool commandsEnabled = true)
         {
@@ -306,6 +310,7 @@ namespace OutOfReach.Presentation.UI
 
         public void ShowUnbound()
         {
+            phaseKnown = false;
             root.RemoveFromClassList("report-visible");
             ShowPlanning(false);
             phase.text = "Waiting for mission";
@@ -377,8 +382,26 @@ namespace OutOfReach.Presentation.UI
         public void SetPhase(GamePhase current, MissionOutcome outcome)
             => SetPhase(current, outcome, false);
 
+        /// <summary>
+        /// Optional (CHAPTER-UI-02): the opt-in chapter loop's real next step. It replaces the phase copy only in Repair
+        /// after the interior repairs and in Survival (no outcome); null or empty text restores the phase copy.
+        /// </summary>
+        public void SetObjectiveOverride(string title, string detail)
+        {
+            title ??= string.Empty;
+            detail ??= string.Empty;
+            if (title == objectiveOverrideTitle && detail == objectiveOverrideDetail) return;
+            objectiveOverrideTitle = title;
+            objectiveOverrideDetail = detail;
+            if (phaseKnown) SetPhase(lastPhase, lastOutcome, lastRepairsComplete);
+        }
+
         public void SetPhase(GamePhase current, MissionOutcome outcome, bool interiorRepairsComplete)
         {
+            phaseKnown = true;
+            lastPhase = current;
+            lastOutcome = outcome;
+            lastRepairsComplete = interiorRepairsComplete;
             root.EnableInClassList("report-visible", current == GamePhase.Report);
             root.EnableInClassList("intro-active", current == GamePhase.Intro);
             root.EnableInClassList("in-flight-active", current != GamePhase.Planning
@@ -410,6 +433,14 @@ namespace OutOfReach.Presentation.UI
                     objective.text = outcome == MissionOutcome.RecoveryPossible ? "Recovery planning is possible. Rescue is not confirmed." : string.Empty;
                     break;
                 default: phase.text = "Mission status"; objective.text = string.Empty; break;
+            }
+            // CHAPTER-UI-02: days 1-9 after the repairs and Survival take the chapter loop's next step when it supplies one;
+            // Emergency, pending repairs, EVA, Transmission and the outcome keep the phase copy above.
+            if (outcome == MissionOutcome.None && objectiveOverrideTitle.Length > 0
+                && ((current == GamePhase.Repair && interiorRepairsComplete) || current == GamePhase.Survival))
+            {
+                phase.text = objectiveOverrideTitle;
+                objective.text = objectiveOverrideDetail;
             }
             phase.EnableInClassList("constraint-exceeded", current == GamePhase.Emergency || outcome == MissionOutcome.Lost);
             if (current != GamePhase.Outcome && current != GamePhase.Report) outcomeReason.text = string.Empty;

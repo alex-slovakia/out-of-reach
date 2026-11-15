@@ -43,6 +43,18 @@ namespace OutOfReach.Presentation.UI
         private Func<bool> readInteriorSystemsOperational;
         private Func<string> readPlanningInstruction;
         public void ConfigurePlanningInstruction(Func<string> readInstruction) => readPlanningInstruction = readInstruction;
+        private Func<string> readObjectiveTitle, readObjectiveDetail;
+
+        /// <summary>
+        /// Optional (CHAPTER-UI-02): the chapter loop's next step for the HUD objective, read every frame (cached strings).
+        /// Null providers or empty text keep the phase copy; FlightBoardView applies it only after the repairs and in Survival.
+        /// </summary>
+        public void ConfigureObjectiveOverride(Func<string> readTitle, Func<string> readDetail)
+        {
+            readObjectiveTitle = readTitle;
+            readObjectiveDetail = readDetail;
+            view?.SetObjectiveOverride(readTitle?.Invoke(), readDetail?.Invoke());
+        }
 
         public StyleSheet SharedStyleSheet => styleSheet;
 
@@ -224,6 +236,7 @@ namespace OutOfReach.Presentation.UI
             // never integrate deltaTime, decrement a deadline or infer elapsed simulation time.
             if (disposed) return;
             RefreshTiming();
+            view?.SetObjectiveOverride(readObjectiveTitle?.Invoke(), readObjectiveDetail?.Invoke());
             view?.SetExertion(readExertionRemaining != null && state != null && state.Outcome == MissionOutcome.None
                 ? readExertionRemaining() : float.NaN);
             view?.AdvancePresentation(Time.unscaledDeltaTime, menuOverlayVisible || (clock != null && clock.IsPaused));

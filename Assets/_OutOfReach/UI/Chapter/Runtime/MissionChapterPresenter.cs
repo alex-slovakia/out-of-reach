@@ -96,6 +96,14 @@ namespace OutOfReach.Presentation.UI.Chapter
         /// </summary>
         public bool RoutineOwnsRestPresentation => routineSeen && isActiveAndEnabled;
 
+        /// <summary>
+        /// CHAPTER-UI-02: the chapter loop's next step for the HUD objective (MissionFlightBoard.ConfigureObjectiveOverride),
+        /// built from Core only; empty keeps the phase copy (e.g. while the day-9 spacewalk is the step).
+        /// </summary>
+        public string ObjectiveTitle { get; private set; } = string.Empty;
+
+        public string ObjectiveDetail { get; private set; } = string.Empty;
+
         public bool IsBound => flow != null;
         public ChapterView View => view;
         public ChapterCue CurrentCue => current;
@@ -190,7 +198,18 @@ namespace OutOfReach.Presentation.UI.Chapter
                 observer.Observe(flow, active, ended, now, recovery?.Stage ?? RecoveryStage.NotStarted, recovery?.ArrivalAtSimulationSeconds);
             if (ended || !bound) ResetTransient();
 
-            presentable = active && isActiveAndEnabled && !clock.IsPaused && Gate() && EnsureView();
+            bool gateOpen = active && !clock.IsPaused && Gate();
+            if (gateOpen)
+            {
+                RefreshCheck(realSeconds);
+                UpdateObjective();
+            }
+            else if (!active)
+            {
+                SetObjective(string.Empty, string.Empty);
+            }
+
+            presentable = gateOpen && isActiveAndEnabled && EnsureView();
             if (!presentable)
             {
                 screen = ChapterScreen.None;
@@ -793,19 +812,7 @@ namespace OutOfReach.Presentation.UI.Chapter
                 return true;
             }
 
-            // Core's answer is re-read at most every 0.25 s, and at once when anything it depends on visibly changes.
-            int stateKey = ((int)state.Phase * 4) + (recovery != null && recovery.IsResting ? 1 : 0)
-                + (survival != null && survival.IsActive ? 2 : 0) + ((int)(recovery?.Stage ?? RecoveryStage.NotStarted) * 64);
-            checkIn -= realSeconds;
-            if (!hasCheck || checkIn <= 0f || checkedRevision != flow.Revision || checkedStateKey != stateKey)
-            {
-                lastCheck = flow.CheckContinueRoutine();
-                hasCheck = true;
-                checkIn = CheckInterval;
-                checkedRevision = flow.Revision;
-                checkedStateKey = stateKey;
-            }
-
+            if (!hasCheck) return false;
             double? target = flow.NextChapterAtSimulationSeconds;
             bool rendezvous = flow.Chapter == MissionChapter.Rendezvous;
             if (!target.HasValue || (!rendezvous && flow.NextChapter == MissionChapter.None)) return false;
@@ -824,6 +831,86 @@ namespace OutOfReach.Presentation.UI.Chapter
             view.StripActionText.text = "Continue the routine";
             view.StripAction.SetEnabled(lastCheck.Succeeded);
             return true;
+        }
+
+        /// <summary>Core's CheckContinueRoutine, re-read at most every 0.25 s and at once when what it depends on changes.</summary>
+        private void RefreshCheck(float realSeconds)
+        {
+            int stateKey = ((int)state.Phase * 4) + (recovery != null && recovery.IsResting ? 1 : 0)
+                + (survival != null && survival.IsActive ? 2 : 0) + ((int)(recovery?.Stage ?? RecoveryStage.NotStarted) * 64);
+            checkIn -= realSeconds;
+            if (!hasCheck || checkIn <= 0f || checkedRevision != flow.Revision || checkedStateKey != stateKey)
+            {
+                lastCheck = flow.CheckContinueRoutine();
+                hasCheck = true;
+                checkIn = CheckInterval;
+                checkedRevision = flow.Revision;
+                checkedStateKey = stateKey;
+            }
+        }
+
+        // ---------- HUD objective (CHAPTER-UI-02) ----------
+
+        private void UpdateObjective()
+        {
+            GamePhase phase = state.Phase;
+            if (phase == GamePhase.Eva || phase == GamePhase.Transmission || phase == GamePhase.Emergency)
+            {
+                SetObjective(string.Empty, string.Empty);
+                return;
+            }
+
+            if (flow.IsRoutineRunning)
+            {
+                double? until = flow.NextChapterAtSimulationSeconds;
+                SetObjective("Routine: ordinary crew days", (until.HasValue ? "Until " + ChapterCopy.DayAndClock(until.Value) + " · " : string.Empty)
+                    + "R stops the routine");
+                return;
+            }
+
+            ChapterDecision pending = flow.PendingDecision;
+            if (pending != ChapterDecision.None)
+            {
+                SetObjective(ChapterCopy.DecisionObjective(pending), "The routine waits for this decision · R opens it");
+                return;
+            }
+
+            if (recovery != null && recovery.Stage == RecoveryStage.BeaconRequested)
+            {
+                double? ends = recovery.BeaconWindowEndsAtSimulationSeconds;
+                SetObjective("Power the recovery beacon", "Cockpit console"
+                    + (ends.HasValue && ChapterCopy.Finite(ends.Value) ? " · window closes " + ChapterCopy.DayAndClock(ends.Value) : string.Empty));
+                return;
+            }
+
+            // Before contact the day-9 chapter's step is the spacewalk: root's phase copy says exactly that.
+            if (flow.Chapter == MissionChapter.Contact && phase != GamePhase.Survival)
+            {
+                SetObjective(string.Empty, string.Empty);
+                return;
+            }
+
+            if (!lastCheck.Succeeded)
+            {
+                SetObjective(ChapterCopy.ChapterGoal(flow.Chapter), ChapterCopy.Sentence(lastCheck.Explanation));
+                return;
+            }
+
+            double? next = flow.NextChapterAtSimulationSeconds;
+            if (flow.Chapter == MissionChapter.Rendezvous)
+                SetObjective("Wait for the docking", (next.HasValue ? "The craft docks " + ChapterCopy.DayAndClock(next.Value) + " · " : string.Empty)
+                    + "R continues the routine");
+            else if (next.HasValue && flow.NextChapter != MissionChapter.None)
+                SetObjective("Continue the routine", "Next: day " + ChapterCopy.DayAt(next.Value).ToString(CultureInfo.InvariantCulture) + ", "
+                    + ChapterCopy.NextName(flow.NextChapter).ToLowerInvariant() + " · press R");
+            else
+                SetObjective(string.Empty, string.Empty);
+        }
+
+        private void SetObjective(string title, string detail)
+        {
+            ObjectiveTitle = title ?? string.Empty;
+            ObjectiveDetail = detail ?? string.Empty;
         }
 
         // ---------- input ----------
@@ -920,6 +1007,7 @@ namespace OutOfReach.Presentation.UI.Chapter
             checkedStateKey = -1;
             stripFeedback = string.Empty;
             stripFeedbackSeconds = 0f;
+            SetObjective(string.Empty, string.Empty);
         }
 
         private static bool IsChapterPhase(GamePhase phase) =>

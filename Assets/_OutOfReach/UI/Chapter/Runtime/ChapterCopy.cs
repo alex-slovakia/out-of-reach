@@ -159,6 +159,34 @@ namespace OutOfReach.Presentation.UI.Chapter
             }
         }
 
+        /// <summary>HUD objective title while Core refuses the routine in this chapter (its refusal is the detail line).</summary>
+        public static string ChapterGoal(MissionChapter chapter)
+        {
+            switch (chapter)
+            {
+                case MissionChapter.Accident: return "Get through the first days";
+                case MissionChapter.Consequences: return "Take stock of the reserves";
+                case MissionChapter.Contact: return "Keep contact with Earth";
+                case MissionChapter.RescueFailed: return "Wait for news of the rescue";
+                case MissionChapter.FinalDecision: return "Final power and supply decision";
+                case MissionChapter.Rendezvous: return "Rendezvous";
+                default: return "Survive until rescue";
+            }
+        }
+
+        /// <summary>HUD objective title while a chapter decision is pending.</summary>
+        public static string DecisionObjective(ChapterDecision decision)
+        {
+            switch (decision)
+            {
+                case ChapterDecision.ScienceOrSalvage: return "Decide: keep or salvage the instrument";
+                case ChapterDecision.GrowOrConserve: return "Decide: grow module or reserves";
+                case ChapterDecision.AcknowledgeRescueFailure: return "Answer the message from Earth";
+                case ChapterDecision.GrowOrBeacon: return "Decide: grow module or beacon power";
+                default: return "Decide";
+            }
+        }
+
         /// <summary>Short name of the beat the next routine would reach, for the request strip.</summary>
         public static string NextName(MissionChapter chapter)
         {
