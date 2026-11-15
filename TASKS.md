@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current increment — 15 November 2026, carry clearance
+
+`I06-CARRY-KNEE` runtime `a18b134` is on disk in the original project. It limits the complete carried assembly's downward pitch while preserving handle contacts and body visibility. Isolated Unity 6000.3.28f1 import/compile exited 0; repository and NASA checks passed. Live Play was left untouched; visual ramp acceptance is still pending. Claude has the newly user-assigned sole grounded-gait scope; Codex does not edit that presenter concurrently. [Actual player screenshots, paths, hashes and limits](docs/verification/i06-player-feedback-20261115/README.md).
+
 ## Current checkpoint — 15 November 2026, manual playtest delivery
 
 I06 runtime `ed1a4c5` is now in the original project on `feature/visuals-cinematics`: natural hand pushes, grounded gait, explicit avatar profiles and launch FX V04. Alex requested immediate delivery and will handle broad gameplay testing; keep subsequent automated checks small and relevant. Live-editor import/compile of this revision is not confirmed because computer control was stopped with Escape. Full-route acceptance and a new Windows executable remain open. [Exact delivery, earlier evidence and limitations](docs/verification/i06-manual-playtest-handoff.md). Older claims below are historical.
