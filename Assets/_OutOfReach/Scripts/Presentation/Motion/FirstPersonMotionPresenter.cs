@@ -293,10 +293,8 @@ namespace OutOfReach.Presentation.Motion
                 ResetToNeutral();
                 return;
             }
-            // Combined yaw/roll stays within one degree, including gait roll, even with maximum tunings.
-            Vector2 cameraAngles = Vector2.ClampMagnitude(new Vector2(turnYaw, cameraRoll + strafeRoll), 1f);
             cameraPivot.SetLocalPositionAndRotation(cameraNeutralPosition + cameraOffset,
-                cameraNeutralRotation * Quaternion.Euler(0f, cameraAngles.x, cameraAngles.y));
+                cameraNeutralRotation * CameraMotionRotation(turnYaw, cameraRoll + strafeRoll));
             if (handsPivot)
                 handsPivot.SetLocalPositionAndRotation(handsNeutralPosition + handsOffset,
                     handsNeutralRotation * Quaternion.AngleAxis(handsRoll, Vector3.forward));
@@ -342,6 +340,17 @@ namespace OutOfReach.Presentation.Motion
             || phase == GamePhase.Survival;
 
         private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
+
+        /// <summary>
+        /// Visual camera rotation added on top of the neutral pose: the small turn-lag yaw only, at most one degree.
+        /// The view never rolls (Alex, 15 Nov: no camera roll from A/D on foot or in float); gait and strafe roll are
+        /// accepted for compatibility but ignored, so the horizon stays level. Hands may still sway.
+        /// </summary>
+        internal static Quaternion CameraMotionRotation(float turnYawDegrees, float rollDegrees)
+        {
+            float yaw = IsFinite(turnYawDegrees) ? Mathf.Clamp(turnYawDegrees, -1f, 1f) : 0f;
+            return Quaternion.Euler(0f, yaw, 0f);
+        }
 
         private static void ValidateVisualPivot(CharacterController actor, Transform pivot, string argument)
         {
