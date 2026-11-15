@@ -11,6 +11,9 @@ The math and provenance are in `Assets/_OutOfReach/Visuals/Environment/NasaDeepS
 2. **Clock binding (optional, recommended).** Run `git apply` on `I01MissionComposition-celestial-sky-clock.patch`. It adds one asmdef reference and three lines after `cinematics.Configure(...)`. Without it, the sky stays at day 0 (2026-11-14). With it, the Sun direction follows the day: about 0.46° per day, 14.3° by day 31.
 3. **Earth-orbit sky (optional).** `I06MarineBindings.orbitalSky` still points to `NasaDeepSky.mat`, which uses yaw-only Panoramic. If that field is switched to `NasaDeepSky_Celestial.mat`, the departure scene also gets a Sun that matches the sky. That scene uses the Mars-proxy star field, a disclosed simplification.
 4. **Exposure (decision for Alex or art).** At 0.15 the Milky Way is estimated at 0/255 on screen. **Apply proposed Milky Way exposure (0.60)** changes only the new material. If you adopt it, update the credit (see the doc corrections below).
-5. **Finale (AppleX, R20).** Any finale shot that uses `RenderSettings.skybox` inherits the orientation. For markers, use `CelestialSkyPresenter.WorldDirectionFromRaDec(ra, dec)` and `WorldDirectionToEarth`. This lane did not edit any `RecoveryArrival`, `MarsDeparture` or rescue file.
+5. **Finale (Apoliak, R20).** Any finale shot that uses `RenderSettings.skybox` inherits the orientation. For markers, use `CelestialSkyPresenter.WorldDirectionFromRaDec(ra, dec)` and `WorldDirectionToEarth`. This lane did not edit any `RecoveryArrival`, `MarsDeparture` or rescue file.
 
-Verify: `python Assets/_OutOfReach/Scripts/Presentation/CelestialSky/Tools~/celestial_sky_table.py` prints `CELESTIAL_SKY_TABLE_PASS`. EditMode tests are in `OutOfReach.Tests.CelestialSky`.
+Verify:
+- `python Assets/_OutOfReach/Scripts/Presentation/CelestialSky/Tools~/celestial_sky_table.py` prints `CELESTIAL_SKY_TABLE_PASS`.
+- `blender -b --factory-startup --python Assets/_OutOfReach/Scripts/Presentation/CelestialSky/Tools~/verify_sky_chain_blender.py -- <starmap_2020_4k.exr>` prints `CELESTIAL_SKY_CHAIN_PASS`. This runs 9 bright stars and the sunlight through the exact shader lookup on the real EXR.
+- EditMode tests are in `OutOfReach.Tests.CelestialSky`.

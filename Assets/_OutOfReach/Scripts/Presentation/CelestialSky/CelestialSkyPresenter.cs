@@ -76,7 +76,8 @@ namespace OutOfReach.Presentation.CelestialSky
             Quaternion lightRotation = light
                 ? light.transform.rotation
                 : Quaternion.Euler(CelestialSkyFrame.DefaultLightEuler);
-            if (!force && day == lastDay && lightRotation == lastLight) return;
+            // Exact compare: Quaternion == tolerates ~0.16 deg, which would let the Sun drift from the light.
+            if (!force && day == lastDay && lightRotation.Equals(lastLight)) return;
             lastDay = day;
             lastLight = lightRotation;
             DayIndex = day;

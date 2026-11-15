@@ -84,10 +84,15 @@ Resulting world directions at day 0 (heading = atan2(x, z), like Unity yaw):
 
 All values come from `Scripts/Presentation/CelestialSky/Tools~/celestial_sky_table.py`, which uses only the Python standard library and runs offline. It checks the input hashes and the frame cross-check, then regenerates `CelestialEphemeris2026.g.cs` byte for byte.
 
+**End-to-end check on the pixels.** `Tools~/verify_sky_chain_blender.py` runs in Blender. For 9 bright stars (Sirius, Canopus, Arcturus, Vega, Rigel, Betelgeuse, Polaris, Capella, Procyon), it takes the world direction above and sends it through the exact shader lookup with the material's rotation:
+- all 9 land on a saturated star pixel;
+- the old unrotated material, used as a control, misses all 9;
+- the default sunlight direction samples RA 288.33°, Dec −23.95°, which is 0.02° from the Horizons Sun.
+
 ## 5. Runtime behaviour
 
 - `OutOfReach/Skybox/Celestial Panoramic` uses the same sampling, tint, [Gamma] exposure and HDR decode as `Skybox/Panoramic`, with a full quaternion in place of yaw only. It also adds seam-free mip selection at RA 12h. `NasaDeepSky_Celestial.mat` carries q(day 0) as a static fallback. Its texture, tint and 0.15 exposure are the same as `NasaDeepSky.mat`.
-- `CelestialSkyPresenter` publishes the global `_OorCelestialSkyRotation`. It recomputes q whenever the Sun light rotates (for example, the Earth-orbit lighting change in `I06MarineBindings`) or the day changes. The day index is `floor(ElapsedSimulationSeconds / 86400)` from the read-only `ISimulationClock`, clamped to 0–31, using the last sample at or before that time. This is the same rule as the communications dataset; there is no interpolation, so the step is about 0.46° per day. If no clock is bound, it uses day 0. The presenter writes no state.
+- `CelestialSkyPresenter` publishes the global `_OorCelestialSkyRotation`. It recomputes q whenever the Sun light rotates (for example, the Earth-orbit lighting change in `I06MarineBindings`) or the day changes. The day index is `floor(ElapsedSimulationSeconds / 86400)` from the read-only `ISimulationClock`, clamped to 0–31, using the last sample at or before that time. This assumes mission T0 is the first Horizons epoch, 2026-11-14 08:00 UTC, which is what `MissionDirector` uses because `AuroraMission` sets no other `MissionEpochAtStartUtc`. This is the same rule as the communications dataset; there is no interpolation, so the step is about 0.46° per day. If no clock is bound, it uses day 0. The presenter writes no state.
 - In the Earth-orbit departure scene the observer should strictly be Earth. The presenter still matches the Sun to the light there, but keeps the Mars-proxy star field. The departure epoch is unspecified, so treat this as a disclosed cinematic simplification.
 
 ## 6. Milky Way visibility (estimate, not a render)
