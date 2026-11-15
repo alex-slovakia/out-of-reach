@@ -311,8 +311,9 @@ namespace OutOfReach.Presentation.Routine
         {
             if (!texture)
             {
-                int height = Mathf.Clamp(Screen.height / 2, 360, 720);
-                int width = Mathf.Clamp(Mathf.RoundToInt(height * (Screen.height > 0 ? (float)Screen.width / Screen.height : 16f / 9f)), 480, 1600);
+                // Two thirds of the screen is enough for a dimmed backdrop and keeps the extra camera cheap.
+                int height = Mathf.Clamp(Screen.height * 2 / 3, 540, 720);
+                int width = Mathf.Clamp(Mathf.RoundToInt(height * (Screen.height > 0 ? (float)Screen.width / Screen.height : 16f / 9f)), 640, 1720);
                 texture = new RenderTexture(width, height, 24, RenderTextureFormat.Default)
                 {
                     name = "RoutineStationBackdrop (R18)",
@@ -331,7 +332,6 @@ namespace OutOfReach.Presentation.Routine
                 stationCamera.depth = (main ? main.depth : 0f) - 5f;
                 stationCamera.fieldOfView = FieldOfView;
                 stationCamera.nearClipPlane = .05f;
-                stationCamera.stereoTargetEye = StereoTargetEyeMask.None;
                 stationCamera.enabled = false;
             }
 
