@@ -1,0 +1,83 @@
+{
+  "package_id": "earth-terminal-slovakia-static-v01",
+  "issue": "alex-slovakia/out-of-reach#11 R33 (first part: static image, no interaction)",
+  "status": "Committed static image for the Earth terminal; Unity import and in-game render not yet verified",
+  "image": {
+    "file": "modis_terra_slovakia_20261114_0815utc.jpg",
+    "bytes": 258894,
+    "sha256": "7e1d762d2daef4c63aeb954d58266849ebe769bd27190aae11c2e0c3a84ae700",
+    "mime_type": "image/jpeg",
+    "width_pixels": 1280,
+    "height_pixels": 1012,
+    "pixel_modifications": "None. These are the bytes GIBS returned for the WMS GetMap request below. No overlays, borders or colour edits are added; the terminal shader only multiplies brightness by 0.92 at display time."
+  },
+  "observation": {
+    "provider": "NASA Global Imagery Browse Services (GIBS) / ESDIS",
+    "layer": "MODIS_Terra_CorrectedReflectance_TrueColor",
+    "endpoint": "epsg4326/best (GIBS chooses the best available version: LANCE near-real-time until replaced by standard science processing)",
+    "instrument": "MODIS (Moderate Resolution Imaging Spectroradiometer)",
+    "platform": "NASA Terra",
+    "product_kind": "Corrected Reflectance true colour (bands 1/4/3), daily mosaic tile service",
+    "date": "2026-11-14",
+    "granule_covering_all_of_slovakia": {
+      "producer_granule_id": "MOD03.A2026318.0815.061.2026318092449.NRT.hdf",
+      "cmr_concept": "LANCEMODIS:3101040922 (MOD03, collection C1426422512-LANCEMODIS)",
+      "time_start_utc": "2026-11-14T08:15:00Z",
+      "time_end_utc": "2026-11-14T08:20:00Z",
+      "time_start_cet": "2026-11-14T09:15:00+01:00",
+      "day_night_flag": "DAY",
+      "cmr_polygon_lat_lon": "36.362494 -3.598296, 33.105921 21.433689, 50.089365 30.97853, 54.717085 -2.510763",
+      "coverage_note": "Slovakia (about 47.73-49.61 N, 16.83-22.57 E) lies entirely inside this granule's footprint."
+    },
+    "slovakia_crossing_estimate_utc": "about 08:16-08:17 (linear interpolation of latitude along the 5-minute descending granule; approximate, not read from per-pixel geolocation)",
+    "other_granule_touching_crop": {
+      "producer_granule_id": "MOD03.A2026318.0635.061.2026318075323.NRT.hdf",
+      "time_utc": "2026-11-14T06:35:00Z/2026-11-14T06:40:00Z",
+      "note": "Its swath edge reaches about 21.8-21.9 E at these latitudes. GIBS composites overlapping swaths into one daily mosaic, and this package has NOT verified which pass supplied the pixels in the easternmost strip of the crop (east of about 21.8 E, which includes the far eastern tip of Slovakia). Everything west of that strip can only come from the 08:15 pass."
+    },
+    "target_time_requested": "2026-11-14T08:00:00Z (09:00 CET)",
+    "difference_from_target": "Terra pass started 15 min after the target. No earlier daytime Terra pass covers Slovakia that morning; EPIC had no 2026-11-14 images in its archive at retrieval (latest available day 2026-11-13).",
+    "is_live": false,
+    "is_forecast": false,
+    "is_onboard_vessel_view": false
+  },
+  "crop": {
+    "crs": "EPSG:4326 (plate carree, lat/lon grid)",
+    "bbox_lat_lon": { "south": 46.9, "west": 16.3, "north": 50.45, "east": 23.1 },
+    "centre_lat_lon": [48.675, 19.7],
+    "pixel_aspect_note": "Longitude spacing 0.0053125 deg/px and latitude 0.0035079 deg/px, so pixels are about square on the ground at the centre latitude (cos 48.675 = 0.660). The east-west scale error is under about 3.5 percent at the top and bottom edges.",
+    "approx_ground_resolution_m_per_px": 390,
+    "contents": "Slovakia with neighbouring Czechia, Poland, Ukraine, Hungary and Austria. Clouds cover the High Tatras and much of southern Poland; much of central and southern Slovakia is cloud-free."
+  },
+  "sources": {
+    "image_url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor&STYLES=&CRS=EPSG:4326&BBOX=46.9,16.3,50.45,23.1&WIDTH=1280&HEIGHT=1012&FORMAT=image/jpeg&TIME=2026-11-14",
+    "granule_search_url": "https://cmr.earthdata.nasa.gov/search/granules.json?short_name=MOD03&provider=LANCEMODIS&temporal=2026-11-14T06:00:00Z,2026-11-14T09:00:00Z&bounding_box=16,47,23.5,50.5",
+    "epic_availability_checked": "https://epic.gsfc.nasa.gov/api/natural/available",
+    "worldview_equivalent": "https://worldview.earthdata.nasa.gov/?v=16.3,46.9,23.1,50.45&l=MODIS_Terra_CorrectedReflectance_TrueColor&t=2026-11-14",
+    "gibs_documentation_and_acknowledgement": "https://nasa-gibs.github.io/gibs-api-docs/",
+    "nasa_data_use_guidance": "https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance"
+  },
+  "rights": {
+    "basis": "NASA Earth science data use guidance: data from NASA-led missions are licensed CC0 unless marked otherwise; NASA requests citation. GIBS requests the acknowledgement below.",
+    "required_acknowledgement": "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).",
+    "display_attribution": "Imagery: NASA GIBS / ESDIS, MODIS Terra (LANCE NRT)",
+    "endorsement": "No NASA endorsement is stated or implied."
+  },
+  "mission_time": {
+    "runtime_binding": "MissionRuntime.Calendar.NowUtc via the existing ConfigureSession delegate; read only.",
+    "availability_gate_utc": "2026-11-14T08:20:00Z (granule end). Before this the screen shows OBSERVATION UNAVAILABLE.",
+    "age_reference": "Displayed image age counts from the granule end, labelled FROM PASS END.",
+    "processing_latency_note": "Real LANCE products appear some hours after the pass. The game shows the image as soon as the pass ends; this is a simplification, listed here."
+  },
+  "download": {
+    "retrieved_at_utc": "2026-11-15T18:24:22Z",
+    "keyless": true,
+    "new_dependencies": false,
+    "image_bytes": 258894
+  },
+  "verification": {
+    "image_decoded_and_visually_inspected": true,
+    "visual_description": "Natural-colour view of the Western Carpathians and Pannonian basin: Lake Neusiedl at lower left, Lake Balaton at bottom, the Danube bend, the brown Slovak ranges, bright cloud over the Tatras and southern Poland, and a cloud patch over north-east Hungary.",
+    "unity_import_playtest_or_terminal_render": false
+  }
+}

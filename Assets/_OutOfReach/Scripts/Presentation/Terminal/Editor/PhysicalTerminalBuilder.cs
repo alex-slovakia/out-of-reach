@@ -16,6 +16,8 @@ namespace OutOfReach.Presentation.Terminal.Editor
         private const string ImagePath=Root+"/Data/epic_1b_20261111110606.jpg";
         private const string PrefabPath=Root+"/MissionTerminal.prefab";
         private const string ImageHash="d5a5fc0ce1505848b9ddd8fd1e6b020d21d44d532d24f05ee083202c8d8c9463";
+        private const string StaticImagePath=Root+"/Data/modis_terra_slovakia_20261114_0815utc.jpg";
+        private const string StaticImageHash="7e1d762d2daef4c63aeb954d58266849ebe769bd27190aae11c2e0c3a84ae700";
         private const string TextureRoot=Root+"/Textures/";
         private const string ModelHash="034d9d8a3f4e62265397f395516f44d2ae532f118d5f26c7002ca739b1e15d52";
 
@@ -114,6 +116,10 @@ namespace OutOfReach.Presentation.Terminal.Editor
                 var presenter=root.AddComponent<PhysicalEarthTerminalPresenter>();
                 presenter.ConfigureScene(null,frame,new Vector2(.64f,.4f),screen,null,null,grip);
                 presenter.ConfigureDisplay(AssetDatabase.LoadAssetAtPath<Texture2D>(ImagePath),mission,observed,age,status);
+                // R33: look-only Slovakia image is the default; the EPIC globe path stays available with staticImageMode off.
+                var staticImage=AssetDatabase.LoadAssetAtPath<Texture2D>(StaticImagePath);
+                Require(staticImage && Hash(StaticImagePath)==StaticImageHash,"R33 static NASA GIBS image missing or changed.");
+                presenter.ConfigureStaticImage(staticImage);
                 Validate(root,screen);
                 PrefabUtility.SaveAsPrefabAsset(root,PrefabPath,out bool saved);
                 Require(saved,"Prefab save failed.");

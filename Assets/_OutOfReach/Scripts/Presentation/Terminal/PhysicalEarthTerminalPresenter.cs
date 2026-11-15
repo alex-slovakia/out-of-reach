@@ -38,12 +38,24 @@ namespace OutOfReach.Presentation.Terminal
         [SerializeField] private Texture observationTexture;
         [SerializeField, Min(0)] private float hoverDistance = .012f;
         [SerializeField, Range(.03f,.3f)] private float pressSeconds = .11f;
+        [Tooltip("R33: static archived Slovakia image. Removes glove reach, touch, drag and the globe projection.")]
+        [SerializeField] private bool staticImageMode = true;
+        [SerializeField] private Texture staticObservationTexture;
+        // NASA GIBS MODIS_Terra_CorrectedReflectance_TrueColor, 2026-11-14. Slovakia lies wholly inside Terra MODIS
+        // granule MOD03.A2026318.0815 (08:15:00-08:20:00 UTC, CMR LANCEMODIS:3101040922). Gate and age use the granule
+        // END so the image never appears before its pass finished. See Data/slovakia-observation-manifest.json.
+        private static readonly DateTime StaticPassEndUtc = new DateTime(2026,11,14,8,20,0,DateTimeKind.Utc);
+        // 1280x1012 px plate carree crop, 46.90-50.45 N / 16.30-23.10 E. The panel keeps that pixel aspect on the .64x.40 m screen.
+        private static readonly Vector4 StaticPanelUv = new Vector4(.025f,.245f,.515625f,.865f);
+        private const string StaticStatus="ARCHIVED SATELLITE IMAGE\nNot live. Earth-orbit view,\nnot taken by AURORA-7.";
         private static readonly DateTime ObservationUtc = new DateTime(2026,11,11,11,1,17,DateTimeKind.Utc);
         private static readonly int ObservationId=Shader.PropertyToID("_Observation");
         private static readonly int RotationId=Shader.PropertyToID("_GlobeRotation");
         private static readonly int PointerId=Shader.PropertyToID("_Pointer");
         private static readonly int RippleId=Shader.PropertyToID("_Ripple");
         private static readonly int AvailableId=Shader.PropertyToID("_ObservationAvailable");
+        private static readonly int StaticImageId=Shader.PropertyToID("_StaticImage");
+        private static readonly int StaticRectId=Shader.PropertyToID("_StaticRect");
         private Func<bool> tryAcquireSession, mustCloseSession;
         private Action releaseSession, acquiredRelease;
         private Func<DateTime> readMissionUtc;
@@ -59,6 +71,8 @@ namespace OutOfReach.Presentation.Terminal
         private float contactAge=10, rippleAge=10, displayRefresh;
 
         public bool IsEntered => active;
+        /// <summary>True when the terminal is a look-only static image: no touch, drag, glove or pointer.</summary>
+        public bool IsStaticImage => staticImageMode && staticObservationTexture;
         public bool TouchReachable => pointerValid && pointerReachable;
         public TerminalReachFrame ActiveReachFrame { get; private set; }
         public Vector3 RightElbowWorld => glove.SolvedElbow;
@@ -95,6 +109,18 @@ namespace OutOfReach.Presentation.Terminal
             tryAcquireSession=acquire; releaseSession=release; mustCloseSession=close; readMissionUtc=missionUtc;
             if(acquire==null) readReach=null;
             ApplyReadableLabels();
+            if(IsStaticImage) RefreshStatic(true);
+        }
+
+        /// <summary>Builder/composition hook for the committed static image asset.</summary>
+        public void ConfigureStaticImage(Texture image, bool enabled=true)
+        {
+            int generation=++configurationGeneration;
+            Exit(TerminalExitReason.Reconfigured);
+            if (generation != configurationGeneration) return;
+            staticObservationTexture=image; staticImageMode=enabled;
+            ApplyReadableLabels();
+            if(IsStaticImage) RefreshStatic(true);
         }
 
         public void ConfigureDisplay(Texture image, TextMesh mission, TextMesh observed, TextMesh age, TextMesh status)
@@ -108,6 +134,7 @@ namespace OutOfReach.Presentation.Terminal
         public bool TryEnter()
         {
             if (active) return true;
+            if (IsStaticImage) return TryEnterStatic();
             if (transitioning || !isActiveAndEnabled || !ReferencesValid() || tryAcquireSession == null ||
                 releaseSession == null || mustCloseSession == null || readMissionUtc == null) return false;
             int generation=configurationGeneration;
@@ -160,6 +187,38 @@ namespace OutOfReach.Presentation.Terminal
             return active;
         }
 
+        /// <summary>Look-only focus: root's camera lease only. No body reach, glove, cursor contact or drag.</summary>
+        private bool TryEnterStatic()
+        {
+            if (transitioning || !isActiveAndEnabled || !StaticReferencesValid() || tryAcquireSession == null ||
+                releaseSession == null || mustCloseSession == null || readMissionUtc == null) return false;
+            int generation=configurationGeneration;
+            var release=releaseSession;
+            bool acquired=false;
+            transitioning=true;
+            try
+            {
+                if (mustCloseSession()) return false;
+                acquired=tryAcquireSession();
+                if (!acquired) return false;
+                if (generation != configurationGeneration || !isActiveAndEnabled || !StaticReferencesValid() || mustCloseSession())
+                    return false;
+                acquiredRelease=release; active=true; acquired=false;
+                pointerValid=false; pointerReachable=false; dragging=false; held=false;
+                LastTouchRefusal=string.Empty; displayRefresh=0;
+                RefreshStatic(true);
+            }
+            catch (Exception exception) { Debug.LogException(exception,this); Exit(TerminalExitReason.Fault); }
+            finally
+            {
+                transitioning=false;
+                if (!active) { acquiredRelease=null; if (acquired) InvokeSafely(release); }
+            }
+            if (!active) return false;
+            Notify(Entered);
+            return active;
+        }
+
         public void Exit(TerminalExitReason reason=TerminalExitReason.User)
         {
             if (!active) return;
@@ -170,8 +229,12 @@ namespace OutOfReach.Presentation.Terminal
             transitioning=true;
             try
             {
-                glove.Restore();
-                if (displayRenderer && previousProperties != null) displayRenderer.SetPropertyBlock(previousProperties);
+                if (IsStaticImage) RefreshStatic(true); // The static screen stays lit after focus ends.
+                else
+                {
+                    glove.Restore();
+                    if (displayRenderer && previousProperties != null) displayRenderer.SetPropertyBlock(previousProperties);
+                }
             }
             catch (Exception exception) { Debug.LogException(exception,this); }
             finally
@@ -183,7 +246,7 @@ namespace OutOfReach.Presentation.Terminal
 
         public void SubmitPointer(Vector2 screenPixels, bool pressed, bool isHeld, bool released)
         {
-            if (!active || transitioning) return;
+            if (!active || transitioning || IsStaticImage) return; // R33: static mode has no touch or drag.
             if (!ReferencesValid()) { Exit(TerminalExitReason.Invalidated); return; }
             if (!TryMapPointer(screenPixels,out var uv))
             {
@@ -236,8 +299,14 @@ namespace OutOfReach.Presentation.Terminal
             return uv.x>=0 && uv.x<=1 && uv.y>=0 && uv.y<=1;
         }
 
+        private void OnEnable()
+        {
+            if (IsStaticImage) RefreshStatic(true);
+        }
+
         private void Update()
         {
+            if (IsStaticImage) { UpdateStatic(); return; }
             if (!active) return;
             try
             {
@@ -250,6 +319,53 @@ namespace OutOfReach.Presentation.Terminal
                 PlaceHands(dt); ApplyDisplay();
             }
             catch (Exception exception) { Debug.LogException(exception,this); Exit(TerminalExitReason.Fault); }
+        }
+
+        private void UpdateStatic()
+        {
+            if (active)
+            {
+                try
+                {
+                    if (!StaticReferencesValid() || mustCloseSession == null || mustCloseSession())
+                    { Exit(TerminalExitReason.Invalidated); return; }
+                }
+                catch (Exception exception) { Debug.LogException(exception,this); Exit(TerminalExitReason.Fault); return; }
+            }
+            displayRefresh-=Mathf.Min(Time.unscaledDeltaTime,.05f);
+            if (displayRefresh<=0) { RefreshStatic(false); displayRefresh=.25f; }
+        }
+
+        /// <summary>The static screen is visible focused or not. It only reads the bound mission calendar.</summary>
+        private void RefreshStatic(bool logFault)
+        {
+            if (!displayRenderer || !staticObservationTexture) return;
+            try
+            {
+                if (readMissionUtc != null) RefreshTime();
+                else
+                {
+                    observationAvailable=false;
+                    SetLabel(missionLabel,"MISSION UTC\nAwaiting mission calendar");
+                    SetLabel(observationLabel,"OBSERVED UTC\n2026-11-14 08:15-08:20");
+                    SetLabel(ageLabel,"IMAGE AGE\nAwaiting mission calendar");
+                    SetLabel(statusLabel,StaticStatus);
+                }
+            }
+            catch (Exception exception)
+            {
+                observationAvailable=false;
+                if (logFault) Debug.LogException(exception,this);
+            }
+            if (properties == null) properties=new MaterialPropertyBlock();
+            properties.Clear();
+            properties.SetTexture(ObservationId,staticObservationTexture);
+            properties.SetFloat(StaticImageId,1);
+            properties.SetVector(StaticRectId,StaticPanelUv);
+            properties.SetFloat(AvailableId,observationAvailable?1:0);
+            properties.SetVector(PointerId,Vector4.zero);
+            properties.SetVector(RippleId,new Vector4(0,0,10,0));
+            displayRenderer.SetPropertyBlock(properties);
         }
 
         private void PlaceHands(float dt)
@@ -286,6 +402,26 @@ namespace OutOfReach.Presentation.Terminal
                 float size=label.name=="Title"?.0036f:label.name=="Credit"?.0022f:.0024f;
                 label.characterSize=size; label.fontSize=64; label.lineSpacing=1.1f;
                 label.color=new Color(.82f,.89f,.92f,1);
+                if(IsStaticImage)
+                {
+                    if(label.name=="Mode")
+                    { label.text="SLOVAKIA  /  TERRA MODIS TRUE COLOUR"; label.transform.localPosition=new Vector3(-.296f,-.122f,-.0004f); }
+                    if(label.name=="Truth")
+                    {
+                        label.transform.localPosition=new Vector3(-.296f,-.141f,-.0004f);
+                        label.text="46.9-50.45 N, 16.3-23.1 E. Lat/lon grid, unmodified pixels.\nTerra pass 08:15-08:20 UTC (09:15-09:20 CET). Static image.";
+                        label.characterSize=.0021f;
+                    }
+                    if(label.name=="OriginalInset") label.text=string.Empty;
+                    if(label.name=="Credit")
+                    {
+                        label.text="Imagery: NASA GIBS / ESDIS, MODIS Terra (LANCE NRT)\nworldview.earthdata.nasa.gov  /  2026-11-14";
+                        label.characterSize=.0021f;
+                    }
+                    var staticBinder=label.GetComponent<ShipLabelAtlasBinder>();
+                    if(staticBinder) staticBinder.RefreshAtlas();
+                    continue;
+                }
                 if(label.name=="Mode")
                 { label.text="EARTH IMAGE"; label.transform.localPosition=new Vector3(-.296f,-.130f,-.0004f); }
                 if(label.name=="Truth")
@@ -304,6 +440,18 @@ namespace OutOfReach.Presentation.Terminal
             var utc=readMissionUtc();
             // Unspecified/Local clocks are rejected; presentation must never silently substitute PC local time.
             if (utc.Kind != DateTimeKind.Utc) throw new InvalidOperationException("Terminal mission UTC delegate must return DateTimeKind.Utc.");
+            if (IsStaticImage)
+            {
+                observationAvailable=utc>=StaticPassEndUtc;
+                SetLabel(missionLabel,"MISSION UTC\n"+utc.ToString("yyyy-MM-dd HH:mm:ss",CultureInfo.InvariantCulture));
+                SetLabel(observationLabel,"OBSERVED UTC\n2026-11-14 08:15-08:20");
+                var sincePass=utc-StaticPassEndUtc;
+                SetLabel(ageLabel,observationAvailable ? string.Format(CultureInfo.InvariantCulture,
+                    "IMAGE AGE (FROM PASS END)\n{0}d {1:00}h {2:00}m {3:00}s",sincePass.Days,sincePass.Hours,sincePass.Minutes,sincePass.Seconds)
+                    : "OBSERVATION UNAVAILABLE\nTerra pass not yet complete");
+                SetLabel(statusLabel,StaticStatus);
+                return;
+            }
             observationAvailable=utc>=ObservationUtc;
             SetLabel(missionLabel,"MISSION UTC\n"+utc.ToString("yyyy-MM-dd HH:mm:ss",CultureInfo.InvariantCulture));
             SetLabel(observationLabel,"OBSERVED UTC\n2026-11-11 11:01:17");
@@ -324,6 +472,8 @@ namespace OutOfReach.Presentation.Terminal
             separateGloveInstance && rigJson && activeSizeMetres.x>.01f && activeSizeMetres.y>.01f &&
             Finite(activeSizeMetres.x) && Finite(activeSizeMetres.y) &&
             (displayFrame.lossyScale-Vector3.one).sqrMagnitude<.00001f;
+        private bool StaticReferencesValid() => viewCamera && displayFrame && displayRenderer && staticObservationTexture &&
+            activeSizeMetres.x>.01f && activeSizeMetres.y>.01f && Finite(activeSizeMetres.x) && Finite(activeSizeMetres.y);
         private static bool IsOverGlobe(Vector2 uv) => new Vector2((uv.x-.29f)*1.6f,uv.y-.51f).sqrMagnitude<.30f*.30f;
         private static bool Finite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
         private void OnDisable() => Exit(TerminalExitReason.Disabled);

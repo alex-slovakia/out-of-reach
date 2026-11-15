@@ -1,0 +1,33 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06EarthTerminalBindings.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06EarthTerminalBindings.cs
+index 6b48de2..a2b6aac 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06EarthTerminalBindings.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06EarthTerminalBindings.cs
+@@ -116,7 +116,9 @@ namespace OutOfReach.Composition
+             {
+                 beforeFocus?.Invoke(); // Root releases actual micro contact; no fake surface or gameplay success.
+                 if (!ContextValid()) { Release(); return false; }
+-                ApplyCamera(); Cursor.lockState=CursorLockMode.None; Cursor.visible=true;
++                ApplyCamera();
++                // R33: the static image is look-only, so the cursor stays as gameplay left it.
++                if (!terminal.IsStaticImage) { Cursor.lockState=CursorLockMode.None; Cursor.visible=true; }
+                 return true;
+             }
+             catch { Release(); throw; }
+@@ -170,6 +172,7 @@ namespace OutOfReach.Composition
+                 || (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame))
+             { Exit(TerminalExitReason.Escape); return; }
+             if (Time.frameCount==enteredFrame) return; // Opening Interact/LMB cannot also press the screen.
++            if (terminal.IsStaticImage) return; // R33: no pointer, touch or drag in static mode; Escape still closes.
+             var mouse=Mouse.current;
+             if (mouse==null) return;
+             if(!pointerReady)
+@@ -187,7 +190,8 @@ namespace OutOfReach.Composition
+         {
+             if (!focused) return;
+             if (!ContextValid()) { Exit(TerminalExitReason.Invalidated); return; }
+-            ApplyCamera(); Cursor.lockState=CursorLockMode.None; Cursor.visible=true;
++            ApplyCamera();
++            if (!terminal.IsStaticImage) { Cursor.lockState=CursorLockMode.None; Cursor.visible=true; }
+         }
+         void ApplyCamera()
+         {

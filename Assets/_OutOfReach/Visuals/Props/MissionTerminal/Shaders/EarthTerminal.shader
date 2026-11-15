@@ -8,6 +8,8 @@ Shader "OutOfReach/PhysicalEarthTerminal"
         _Pointer ("UV / valid / held", Vector) = (0,0,0,0)
         _Ripple ("Contact UV / age / enabled", Vector) = (0,0,10,0)
         _DiscRadius ("Approximate observed disc radius / image width", Float) = .405
+        _StaticImage ("R33 static flat image mode", Float) = 0
+        _StaticRect ("Static image panel UV min.xy / max.xy", Vector) = (.025,.245,.515625,.865)
     }
     SubShader
     {
@@ -25,8 +27,8 @@ Shader "OutOfReach/PhysicalEarthTerminal"
             struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; };
             TEXTURE2D(_Observation); SAMPLER(sampler_Observation);
             CBUFFER_START(UnityPerMaterial)
-            float4 _GlobeRotation, _Pointer, _Ripple;
-            float _ObservationAvailable, _DiscRadius;
+            float4 _GlobeRotation, _Pointer, _Ripple, _StaticRect;
+            float _ObservationAvailable, _DiscRadius, _StaticImage;
             CBUFFER_END
             Varyings Vert(Attributes input)
             {
@@ -41,6 +43,22 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                 half3 color=half3(.006,.014,.019);
                 float rule=1-smoothstep(.001,.002,abs(uv.y-.88));
                 color+=half3(.07,.14,.17)*rule;
+                if(_StaticImage>.5)
+                {
+                    // R33 static mode: the whole archived image, unmodified pixels, no projection, pointer or ripple.
+                    // The panel rect matches the image's pixel aspect, so nothing is cropped or stretched.
+                    float2 panel=(uv-_StaticRect.xy)/(_StaticRect.zw-_StaticRect.xy);
+                    float2 edge=min(panel,1-panel)*(_StaticRect.zw-_StaticRect.xy)*float2(1.6,1);
+                    float border=min(edge.x,edge.y);
+                    if(all(panel>=0) && all(panel<=1))
+                    {
+                        color=_ObservationAvailable>.5
+                            ? SAMPLE_TEXTURE2D(_Observation,sampler_Observation,panel).rgb*.92
+                            : half3(.018,.028,.034);
+                    }
+                    color+=half3(.02,.12,.18)*(1-smoothstep(.0015,.004,abs(border)));
+                    return half4(color,1);
+                }
                 float2 disc=(uv-float2(.29,.51))*float2(1.6,1)/.30;
                 float radius=length(disc);
                 if(radius<1)

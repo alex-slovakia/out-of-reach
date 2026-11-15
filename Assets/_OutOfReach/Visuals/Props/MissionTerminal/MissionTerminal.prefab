@@ -1476,6 +1476,8 @@ MonoBehaviour:
   observationTexture: {fileID: 2800000, guid: 665260e252f85fdebf882afbdcf6bc38, type: 3}
   hoverDistance: 0.012
   pressSeconds: 0.11
+  staticImageMode: 1
+  staticObservationTexture: {fileID: 2800000, guid: 77551e25d2f1427aa4125476ed752d08, type: 3}
 --- !u!1001 &8251408973894352640
 PrefabInstance:
   m_ObjectHideFlags: 0
