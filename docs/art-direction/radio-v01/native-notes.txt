@@ -1,0 +1,11 @@
+19:24:18.943 installer: object=Handheld radio V01 prefab=Assets/_OutOfReach/Visuals/Props/RadioV01/RadioV01.prefab threshold=I06 isolated marine prologue/Transport vehicle - root controls launch/BoardingThreshold placement=AuroraArrival day14Dispatch=dispatch.rescue-1-failed colliders=328 (unchanged) gpu=Intel(R) UHD Graphics
+19:24:26.356 player camera Player camera at (10000.00, 101.67, -12.34) fwd (0.00, 0.00, 1.00)
+19:24:27.076 captured 00-before-radio phase=Idle line=-1 pose=0,00 led=Off
+19:24:27.087 boarding beat total 11,96 s
+19:24:27.330 captured 01-raise phase=Raise line=-1 pose=0,57 led=Off
+19:24:28.909 captured 02-pad-receive-line phase=Line line=0 pose=1,00 led=Receive
+19:24:32.666 captured 03-player-transmit-ptt phase=Line line=1 pose=1,00 led=Transmit
+19:24:34.048 captured 04-paused phase=Line line=1 pose=1,00 led=Transmit
+19:24:40.678 captured 05-after-boarding-beat phase=Done line=-1 pose=0,00 led=Off
+19:24:42.714 captured 06-day14-call-receive phase=Line line=0 pose=1,00 led=Receive
+19:24:45.000 captured 07-distress-call-transmit phase=Line line=0 pose=1,00 led=Transmit

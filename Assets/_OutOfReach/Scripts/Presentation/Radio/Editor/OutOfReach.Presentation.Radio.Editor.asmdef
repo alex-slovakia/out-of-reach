@@ -1,0 +1,16 @@
+{
+  "name": "OutOfReach.Presentation.Radio.Editor",
+  "rootNamespace": "OutOfReach.Presentation.Radio.Editor",
+  "references": [
+    "OutOfReach.Presentation.Radio"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
