@@ -3,6 +3,7 @@ using OutOfReach.Contracts;
 using OutOfReach.Core.Runtime;
 using OutOfReach.Interaction;
 using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.LaunchFXV03;
 using OutOfReach.Presentation.MarineOcean;
 using OutOfReach.Presentation.MarineOcean.FX;
 using OutOfReach.Presentation.Motion;
@@ -30,6 +31,8 @@ namespace OutOfReach.Composition
         [SerializeField] private CanvasGroup transferFade;
         [SerializeField] private MarineDepartureFxPresenter departureFx;
         [SerializeField] private Transform nozzleFrame, deckPlane;
+        [SerializeField] private LaunchFxV03Presenter launchFx;
+        [SerializeField] private Transform launchDeflector, launchPad, launchTrenchExit;
         [SerializeField] private Material fxExhaust, fxSteam;
         [SerializeField] private Transform stationarySite, dustPlane;
         [SerializeField] private Transform capsulePort, booster, auroraReceiver;
@@ -60,6 +63,7 @@ namespace OutOfReach.Composition
         private DepartureLocation departureLocation;
         private Material transitSky;
         private float fadeRemaining;
+        private TransportDepartureCue launchCue;
         public event Action<string> CaptionChanged;
         public event Action<TransportDepartureCue> CueRaised;
         public event Action<TransportDepartureEnd> DepartureEnded;
@@ -83,6 +87,23 @@ namespace OutOfReach.Composition
         {
             if (bound) throw new InvalidOperationException("Configure launch effects before a session.");
             departureFx = effects; nozzleFrame = nozzle; deckPlane = deck; fxExhaust = exhaust; fxSteam = steam;
+        }
+
+        /// <summary>LAUNCH-FX-V03: replaces the old flame/steam rendering. Nozzle = the existing nozzleFrame.
+        /// Root's builder calls this at authoring; calling it while bound (not during a departure) binds immediately.</summary>
+        public void ConfigureLaunchFxV03(LaunchFxV03Presenter effects, Transform deflector, Transform pad, Transform trenchExit)
+        {
+            if (OwnsPresentation) throw new InvalidOperationException("Configure launch FX V03 outside a departure.");
+            if (launchFx && launchFx != effects) launchFx.ClearBinding();
+            launchFx = effects; launchDeflector = deflector; launchPad = pad; launchTrenchExit = trenchExit;
+            if (bound) BindLaunchFxV03();
+        }
+
+        private void BindLaunchFxV03()
+        {
+            if (!launchFx) return;
+            launchFx.Configure(nozzleFrame, launchDeflector, launchPad, launchTrenchExit);
+            if (departureFx) departureFx.ResetEffects(); // V03 owns flame, steam and light; never render both sets.
         }
 
         public void ConfigureViews(Transform root, Transform transport, Transform hatchFrame, Transform armFrame,
@@ -163,6 +184,7 @@ namespace OutOfReach.Composition
                     departureFx.ConfigureDustPlane(dustPlane);
                     departureFx.ConfigureViews(nozzleFrame, deckPlane, fxExhaust, fxSteam);
                 }
+                BindLaunchFxV03();
                 if (orbitalSet) orbitalSet.SetActive(false);
                 if (owner.GameState.Phase == GamePhase.Planning)
                 {
@@ -194,6 +216,7 @@ namespace OutOfReach.Composition
         {
             if (!bound || runtime.GameState.Phase != GamePhase.Intro || OwnsPresentation) return false;
             seatRequested = false;
+            launchCue = TransportDepartureCue.Boarding;
             lease = true;
             if (departure.Begin()) return true;
             if (!lease) return false; // A cue subscriber may already have ended the lease.
@@ -210,7 +233,7 @@ namespace OutOfReach.Composition
             if (ocean) ocean.SetReducedMotion(reduced);
         }
         private void ForwardCaption(string caption) => CaptionChanged?.Invoke(caption);
-        private void ForwardCue(TransportDepartureCue cue) => CueRaised?.Invoke(cue);
+        private void ForwardCue(TransportDepartureCue cue) { launchCue = cue; CueRaised?.Invoke(cue); }
         private void OnDepartureEnd(TransportDepartureEnd reason)
         {
             if (!lease || unbinding) return;
@@ -221,6 +244,7 @@ namespace OutOfReach.Composition
         {
             ReleaseSeat();
             if (departureFx) departureFx.ResetEffects();
+            if (launchFx) launchFx.ResetEffects();
             // Core moved the player to AURORA on leaving Planning. The camera lease has already returned.
             if (transferFade) transferFade.alpha = 1f;
             RestoreConsole();
@@ -241,7 +265,9 @@ namespace OutOfReach.Composition
                 if (IsSeatedDeparture) PresentSeat();
                 else ReleaseSeat();
             }
-            if (departureFx && departure)
+            if (launchFx && launchFx.IsBound && departure)
+                launchFx.Present(PresentedSeconds, launchCue, IsDeparturePlaying, runtime.IsPaused, departure.ReducedMotion);
+            else if (departureFx && departure)
                 departureFx.Present(PresentedSeconds, IsDeparturePlaying, runtime.IsPaused, departure.ReducedMotion);
             if (!finishing || runtime.IsPaused) return;
             fadeRemaining = Mathf.Max(0, fadeRemaining - Time.unscaledDeltaTime);
@@ -418,6 +444,7 @@ namespace OutOfReach.Composition
                     departure.Unbind();
                 }
                 if (departureFx) departureFx.ClearBinding();
+                if (launchFx) launchFx.ClearBinding();
                 RestoreConsole();
                 RestoreDepartureEnvironment();
                 if (ocean) ocean.ClearBinding();
