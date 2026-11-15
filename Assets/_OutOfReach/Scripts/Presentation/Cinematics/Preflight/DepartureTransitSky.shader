@@ -41,8 +41,7 @@ Shader "OutOfReach/Cinematics/DepartureTransitSky"
                 float4 _SunDirection;
             CBUFFER_END
 
-            // Global published by URP's light setup before the skybox draws; xyz points toward a directional light.
-            float4 _MainLightPosition;
+            // _MainLightPosition is already declared by URP's Core.hlsl (Input.hlsl); xyz points toward the main directional light.
 
             struct Attributes { float4 positionOS : POSITION; };
             struct Varyings { float4 positionCS : SV_POSITION; float3 ray : TEXCOORD0; };
