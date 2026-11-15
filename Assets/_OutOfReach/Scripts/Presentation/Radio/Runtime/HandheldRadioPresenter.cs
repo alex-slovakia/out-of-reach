@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
+using OutOfReach.Core;
 using OutOfReach.Core.Runtime;
+using OutOfReach.Interaction;
 using OutOfReach.Presentation.Audio;
 using OutOfReach.Presentation.Cinematics;
 using OutOfReach.Presentation.UI;
@@ -22,6 +24,14 @@ namespace OutOfReach.Presentation.Radio
         public string beatId;
     }
 
+    /// <summary>A recorded voice line (Audio/Voices/...) for a radio line's cue id.</summary>
+    [Serializable]
+    public sealed class RadioVoiceClip
+    {
+        public string cueId;
+        public AudioClip clip;
+    }
+
     /// <summary>
     /// STORY-RADIO-01: first-person handheld radio. Raises the radio into view, keys the PTT (amber LED), plays
     /// original procedural crackle/chirp/squelch, shows each line through the existing flight-board subtitle, then
@@ -37,6 +47,7 @@ namespace OutOfReach.Presentation.Radio
         [SerializeField] private RadioBoardingPlacement boardingPlacement = RadioBoardingPlacement.AuroraArrival;
         [SerializeField] private float boardingRadius = 2.4f;
         [SerializeField] private List<RadioDispatchBinding> dispatchBeats = new List<RadioDispatchBinding>();
+        [SerializeField] private List<RadioVoiceClip> voiceClips = new List<RadioVoiceClip>();
         [SerializeField] private Vector3 heldPosition = new Vector3(.125f, -.152f, .31f);
         [SerializeField] private Vector3 heldEuler = new Vector3(-10f, -26f, 8f);
         [SerializeField] private Vector3 hiddenPosition = new Vector3(.2f, -.47f, .24f);
@@ -66,7 +77,8 @@ namespace OutOfReach.Presentation.Radio
         private Renderer led;
         private Vector3 pttRest;
         private MaterialPropertyBlock block;
-        private AudioSource sfx, bed;
+        private AudioSource sfx, bed, voice;
+        private InteractionResolver resolver;
         private AudioClip chirp, keyUp, squelch, staticBed;
         private RadioPhase lastPhase = RadioPhase.Idle;
         private int lastLine = -1;
@@ -107,6 +119,14 @@ namespace OutOfReach.Presentation.Radio
                 source.playOnAwake = false; source.spatialBlend = 0f; source.ignoreListenerPause = false;
             }
             bed.loop = true;
+            // Recorded voices go through a radio band (300-3400 Hz) with a little grit, on their own source.
+            var voiceObject = new GameObject("Radio voice");
+            voiceObject.transform.SetParent(transform, false);
+            voice = voiceObject.AddComponent<AudioSource>();
+            voice.playOnAwake = false; voice.spatialBlend = 0f; voice.volume = 1f;
+            voiceObject.AddComponent<AudioHighPassFilter>().cutoffFrequency = 300f;
+            voiceObject.AddComponent<AudioLowPassFilter>().cutoffFrequency = 3400f;
+            voiceObject.AddComponent<AudioDistortionFilter>().distortionLevel = .12f;
             chirp = RadioSynth.IncomingChirp(); keyUp = RadioSynth.KeyUp(); squelch = RadioSynth.SquelchTail(); staticBed = RadioSynth.StaticBed();
             bed.clip = staticBed;
         }
@@ -121,6 +141,7 @@ namespace OutOfReach.Presentation.Radio
 
         private void OnDestroy()
         {
+            if (resolver) resolver.Interacted -= OnInteracted;
             if (instance) Destroy(instance);
             foreach (AudioClip clip in new[] { chirp, keyUp, squelch, staticBed }) if (clip) Destroy(clip);
         }
@@ -135,7 +156,8 @@ namespace OutOfReach.Presentation.Radio
             if (!timeline.IsActive) TryStartNext(paused);
             if (!timeline.IsActive) return;
             var player = runtime.Player;
-            if (!paused && (!player || !player.ControlAllowed || (cinematics && cinematics.IsPlaying)))
+            bool viewTaken = !player || !player.ControlAllowed;
+            if (!paused && ((viewTaken && !VoiceOnlyAllowed(timeline.Beat)) || (cinematics && cinematics.IsPlaying)))
             {
                 // A cutscene or departure took the view: the radio lowers out of the way, the beat is done.
                 if (timeline.Phase != RadioPhase.Lower) Skip();
@@ -151,6 +173,16 @@ namespace OutOfReach.Presentation.Radio
 
         private void LateUpdate() => ApplyPose();
 
+        private static bool VoiceOnlyAllowed(RadioBeat beat) => beat != null && beat.Id == RadioBeats.Day14Announcement;
+
+        // Day 14: after the priority call, the next use of the cockpit console plays the voiced announcement once.
+        private void OnInteracted(CommandResult result)
+        {
+            if (!resolver || !played.Contains(RadioBeats.Day14Call) || played.Contains(RadioBeats.Day14Announcement)) return;
+            InteractableTarget target = resolver.CurrentTarget;
+            if (target && target.InteractionId == InteractionIds.CockpitConsole) TryPlay(RadioBeats.Day14Announcement);
+        }
+
         private void Bind()
         {
             if (!runtime) runtime = Object.FindFirstObjectByType<MissionRuntime>();
@@ -163,6 +195,13 @@ namespace OutOfReach.Presentation.Radio
                 if (candidate && candidate != view) view = candidate;
             }
             if (!view) view = Camera.main;
+            InteractionResolver current = runtime && runtime.Player ? runtime.Player.Interaction : null;
+            if (current != resolver)
+            {
+                if (resolver) resolver.Interacted -= OnInteracted;
+                resolver = current;
+                if (resolver) resolver.Interacted += OnInteracted;
+            }
         }
 
         // New or ended session: forget everything; edges are measured from the state at binding (no retrigger).
@@ -227,11 +266,12 @@ namespace OutOfReach.Presentation.Radio
         {
             if (queue.Count == 0 || paused) return;
             var player = runtime.Player;
-            if (!view || !player || !player.ControlAllowed) return;
+            if (!RadioBeats.TryGet(queue.Peek(), out RadioBeat beat)) { queue.Dequeue(); return; }
+            if (!view || !player || (!player.ControlAllowed && !VoiceOnlyAllowed(beat))) return;
             if (cinematics && cinematics.IsPlaying) return;
             if (audioPresenter && audioPresenter.IsDialoguePlaying) return;   // never talk over the ship computer or Earth
-            if (!RadioBeats.TryGet(queue.Dequeue(), out RadioBeat beat)) return;
-            timeline.Start(beat, cinematics && cinematics.ReducedEffects);
+            queue.Dequeue();
+            timeline.Start(beat.WithVoiceLengths(ClipSeconds), cinematics && cinematics.ReducedEffects);
             lastPhase = RadioPhase.Idle; lastLine = -1; swayClock = 0f;
             EnsureInstance();
         }
@@ -254,6 +294,24 @@ namespace OutOfReach.Presentation.Radio
             instance.SetActive(false);
         }
 
+        private AudioClip ClipFor(string cueId)
+        {
+            if (string.IsNullOrEmpty(cueId)) return null;
+            foreach (RadioVoiceClip v in voiceClips) if (v != null && v.clip && v.cueId == cueId) return v.clip;
+            return null;
+        }
+
+        private float? ClipSeconds(string cueId)
+        {
+            AudioClip clip = ClipFor(cueId);
+            return clip ? clip.length : (float?)null;
+        }
+
+        public bool IsVoicePlaying => voice && voice.isPlaying;
+
+        /// <summary>True when a recorded voice is bound for the cue (installer reports it).</summary>
+        public bool HasVoice(string cueId) => ClipFor(cueId);
+
         private static Transform FindChild(Transform root, string name)
         {
             foreach (Transform t in root.GetComponentsInChildren<Transform>(true)) if (t.name == name) return t;
@@ -263,6 +321,7 @@ namespace OutOfReach.Presentation.Radio
         private void ApplyPose()
         {
             float w = timeline.IsActive ? timeline.PoseWeight : 0f;
+            if (runtime && runtime.Player && !runtime.Player.ControlAllowed && !runtime.IsPaused) w = 0f;   // view taken: voice only
             if (!instance) return;
             if (w <= .001f || !view) { if (instance.activeSelf) instance.SetActive(false); return; }
             if (instance.transform.parent != view.transform) instance.transform.SetParent(view.transform, false);
@@ -289,19 +348,22 @@ namespace OutOfReach.Presentation.Radio
         {
             if (paused)
             {
-                if (!audioPaused) { sfx.Pause(); bed.Pause(); audioPaused = true; }
+                if (!audioPaused) { sfx.Pause(); bed.Pause(); voice.Pause(); audioPaused = true; }
                 return;
             }
-            if (audioPaused) { sfx.UnPause(); bed.UnPause(); audioPaused = false; }
+            if (audioPaused) { sfx.UnPause(); bed.UnPause(); voice.UnPause(); audioPaused = false; }
             RadioPhase phase = timeline.Phase;
             int line = timeline.LineIndex;
             if (phase != lastPhase && phase == RadioPhase.Incoming && chirp) sfx.PlayOneShot(chirp, .8f);
             if (line != lastLine)
             {
                 if (lastLine >= 0 && squelch) sfx.PlayOneShot(squelch, .7f);
+                if (lastLine >= 0 && voice.isPlaying) voice.Stop();
                 if (line >= 0)
                 {
                     if (keyUp) sfx.PlayOneShot(keyUp, .75f);
+                    AudioClip recorded = ClipFor(timeline.Beat.Lines[line].CueId);
+                    if (recorded) { voice.clip = recorded; voice.PlayDelayed(.12f); }
                     bed.volume = timeline.Beat.Lines[line].Kind == RadioLineKind.Transmit ? .05f : .15f;
                     if (!bed.isPlaying) bed.Play();
                 }
@@ -317,10 +379,11 @@ namespace OutOfReach.Presentation.Radio
             bool otherDialogue = audioPresenter && audioPresenter.IsDialoguePlaying;
             if (line.HasValue && board && !otherDialogue)
             {
-                if (!subtitleShown || shownText != line.Value.Text || Time.unscaledTime >= reassertAt)
+                string text = line.Value.SubtitleAt(timeline.LineSeconds);
+                if (!subtitleShown || shownText != text || Time.unscaledTime >= reassertAt)
                 {
-                    board.ShowSubtitle(line.Value.Text, line.Value.Speaker);
-                    subtitleShown = true; shownText = line.Value.Text; reassertAt = Time.unscaledTime + .25f;
+                    board.ShowSubtitle(text, line.Value.Speaker);
+                    subtitleShown = true; shownText = text; reassertAt = Time.unscaledTime + .25f;
                 }
             }
             else if (!line.HasValue) ClearSubtitle();
@@ -336,6 +399,7 @@ namespace OutOfReach.Presentation.Radio
         {
             if (sfx) sfx.Stop();
             if (bed) bed.Stop();
+            if (voice) voice.Stop();
             audioPaused = false;
         }
     }

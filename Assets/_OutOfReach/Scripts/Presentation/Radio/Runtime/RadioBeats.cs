@@ -8,19 +8,61 @@ namespace OutOfReach.Presentation.Radio
     /// <summary>One spoken radio line: who speaks, the subtitle and whether the player keys the PTT.</summary>
     public readonly struct RadioLine
     {
-        public RadioLine(string speaker, string text, RadioLineKind kind)
+        public RadioLine(string speaker, string text, RadioLineKind kind, string cueId = null, float? seconds = null)
         {
             Speaker = speaker ?? string.Empty;
             Text = text ?? string.Empty;
             Kind = kind;
-            // Subtitle reading time (about 17 characters per second plus 0.6 s) with a floor for short calls.
-            Seconds = Math.Max(2f, .058f * Text.Length + .6f);
+            CueId = cueId;
+            // Subtitle reading time (about 17 characters per second plus 0.6 s) with a floor for short calls;
+            // a recorded voice line uses its clip length instead.
+            Seconds = seconds ?? Math.Max(2f, .058f * Text.Length + .6f);
         }
 
         public string Speaker { get; }
         public string Text { get; }
         public RadioLineKind Kind { get; }
+        /// <summary>Voice cue id (Audio/Voices/...), or null for a subtitle-and-radio-sound line.</summary>
+        public string CueId { get; }
         public float Seconds { get; }
+        public RadioLine WithSeconds(float seconds) => new RadioLine(Speaker, Text, Kind, CueId, seconds);
+
+        /// <summary>
+        /// Subtitle shown at <paramref name="t"/> seconds into the line: long lines are split at sentence ends into
+        /// readable chunks (max ~95 characters) timed in proportion to their length.
+        /// </summary>
+        public string SubtitleAt(float t)
+        {
+            if (Text.Length <= 110) return Text;
+            var chunks = new List<string>();
+            string current = string.Empty;
+            foreach (string sentence in SplitSentences(Text))
+            {
+                if (current.Length > 0 && current.Length + 1 + sentence.Length > 95) { chunks.Add(current); current = sentence; }
+                else current = current.Length == 0 ? sentence : current + " " + sentence;
+            }
+            if (current.Length > 0) chunks.Add(current);
+            int total = 0; foreach (string c in chunks) total += c.Length;
+            float elapsed = Math.Max(0f, Math.Min(1f, t / Math.Max(.01f, Seconds))) * total;
+            int run = 0;
+            foreach (string c in chunks) { run += c.Length; if (elapsed < run) return c; }
+            return chunks[chunks.Count - 1];
+        }
+
+        private static IEnumerable<string> SplitSentences(string text)
+        {
+            int start = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                bool end = (text[i] == '.' || text[i] == '?' || text[i] == '!') && (i + 1 == text.Length || text[i + 1] == ' ');
+                if (!end) continue;
+                // Keep "Seven..." style ellipses inside the sentence.
+                if (text[i] == '.' && i + 1 < text.Length && i > 0 && text[i - 1] == '.') continue;
+                yield return text.Substring(start, i + 1 - start).Trim();
+                start = i + 1;
+            }
+            if (start < text.Length && text.Substring(start).Trim().Length > 0) yield return text.Substring(start).Trim();
+        }
     }
 
     /// <summary>A short first-person radio scene: an optional incoming-call chirp, then lines.</summary>
@@ -34,6 +76,19 @@ namespace OutOfReach.Presentation.Radio
         public string Id { get; }
         public bool IncomingCall { get; }
         public IReadOnlyList<RadioLine> Lines { get; }
+
+        /// <summary>Copy whose lines with a recorded voice last as long as that recording.</summary>
+        public RadioBeat WithVoiceLengths(Func<string, float?> clipSeconds)
+        {
+            var lines = new RadioLine[Lines.Count];
+            for (int i = 0; i < lines.Length; i++)
+            {
+                RadioLine line = Lines[i];
+                float? length = line.CueId != null ? clipSeconds(line.CueId) : null;
+                lines[i] = length.HasValue ? line.WithSeconds(length.Value + .35f) : line;
+            }
+            return new RadioBeat(Id, IncomingCall, lines);
+        }
     }
 
     /// <summary>
@@ -49,6 +104,9 @@ namespace OutOfReach.Presentation.Radio
         public const string DistressCall = "radio.distress-call";
         public const string EarthReplyDay14 = "radio.earth-reply-day14";
         public const string Day14Call = "radio.day14-call";
+        /// <summary>Voiced Day-14 announcement at the console (Codex's approved vo23, Alex 6896919554).</summary>
+        public const string Day14Announcement = "radio.day14-announcement";
+        public const string RescueLostCue = "vo23_mc_rescue_lost";
 
         public const string PadSpeaker = "PAD CONTROL · RADIO";
         public const string PlayerSpeaker = "YOU · RADIO";
@@ -72,6 +130,11 @@ namespace OutOfReach.Presentation.Radio
                 new RadioLine(EarthSpeaker, "A rescue rocket is being readied. Expect rescue on day fourteen. Ration carefully. Earth out.", RadioLineKind.Receive)),
             [Day14Call] = new RadioBeat(Day14Call, true,
                 new RadioLine(EarthSpeaker, "Aurora, Earth. Priority traffic. Go to the console, Aurora.", RadioLineKind.Receive)),
+            // Transcript exactly as approved and recorded (Audio/Voices/Story02/vo23_mc_rescue_lost.txt).
+            [Day14Announcement] = new RadioBeat(Day14Announcement, true,
+                new RadioLine(ControlSpeaker, "Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach. "
+                    + "I'm sorry. A second craft is already in transit. New rendezvous: mission day thirty-one. "
+                    + "Conserve your supplies. We are not giving up on you.", RadioLineKind.Receive, RescueLostCue)),
         };
 
         public static IEnumerable<string> Ids => Beats.Keys;

@@ -6,6 +6,7 @@
     "OutOfReach.Core",
     "OutOfReach.Core.Runtime",
     "OutOfReach.Player",
+    "OutOfReach.Interaction",
     "OutOfReach.Cinematics",
     "OutOfReach.Audio",
     "OutOfReach.UI",
