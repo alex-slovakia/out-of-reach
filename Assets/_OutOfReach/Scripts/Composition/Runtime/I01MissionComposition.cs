@@ -1239,12 +1239,25 @@ namespace OutOfReach.Composition
                 restLeaseLocalRotation = planningFramingPivot.localRotation;
                 restCameraLeased = true;
             }
-            // Keep every offset below the pivot (departure, cinematic, motion) and land the actual camera on SleepCamera.
+            // Keep every offset below the pivot (departure, cinematic, motion) and land the actual camera on SleepCamera,
+            // looking down at the hands drawing the straps while the body enters, then settling on the buckled body.
             Transform eye = RestEye().transform;
             Quaternion relative = Quaternion.Inverse(planningFramingPivot.rotation) * eye.rotation;
             Vector3 offset = planningFramingPivot.InverseTransformPoint(eye.position);
-            Quaternion rotation = sleepCameraAnchor.rotation * Quaternion.Inverse(relative);
+            Quaternion view = sleepCameraAnchor.rotation * Quaternion.Euler(RestPitchDegrees(), 0f, 0f);
+            Quaternion rotation = view * Quaternion.Inverse(relative);
             planningFramingPivot.SetPositionAndRotation(sleepCameraAnchor.position - rotation * offset, rotation);
+        }
+
+        private float RestPitchDegrees()
+        {
+            float t = embodiedBody.RestPhaseSeconds;
+            switch (embodiedBody.RestPhase)
+            {
+                case RestPhase.Entering: return 46f * Mathf.SmoothStep(0f, 1f, t / .45f);
+                case RestPhase.Held: return Mathf.Lerp(46f, 18f, Mathf.SmoothStep(0f, 1f, t / 1.2f));
+                default: return 0f;
+            }
         }
 
         private void ReleaseRestCamera()
