@@ -1,0 +1,51 @@
+CREDITS — OUT OF REACH (NASA Space Apps Challenge 2026, team Polish Alex Goats)
+
+Music
+- "Titan" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/). Adapted excerpt (source 48–132 s); added percussion
+  synthesized by AI-written code; gain staging and mastering.
+- "Cobalt" by Scott Buckley — www.scottbuckley.com.au — licensed under CC BY 4.0. Edited 120-second loop.
+- Ending themes "Thirty-One Dawns" and "Last Carrier" and the tension and emergency cues: original,
+  composed and synthesized by scripts written with AI coding assistants.
+
+NASA and space-agency media (no endorsement implied; no NASA logos or insignia are used)
+- Launch radio countdown: NASA audio, Apollo 11 launch commentary (nasa.gov), two excerpts, radio
+  band-limited; the mission name is omitted.
+- Earth image: NASA EPIC Team / NOAA DSCOVR (epic.gsfc.nasa.gov), observed 2026-11-11 11:01:17 UTC.
+- Slovakia image: NASA GIBS / ESDIS, MODIS Terra, 2026-11-14. We acknowledge the use of imagery provided
+  by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and
+  Information System (ESDIS).
+- Mars map: NASA/Jet Propulsion Laboratory & Caltech (Viking images processed by USGS).
+- Space sky: NASA/Goddard Space Flight Center Scientific Visualization Studio, Deep Star Maps 2020;
+  Gaia DR2: ESA/Gaia/DPAC.
+- Earth–Mars distances: NASA/JPL Horizons. Life-support values: NASA Life Support Baseline Values and
+  Assumptions Document (NASA/TP-2015-218570/REV2).
+- Radiation estimate: NASA/JPL Mars Science Laboratory, Radiation Assessment Detector (RAD), cruise
+  average of 1.8 mSv per day (NASA/JPL, 30 May 2013; Zeitlin et al., Science 340, 2013).
+- Deep Space Network view: site coordinates of DSS-14 Goldstone, DSS-63 Madrid and DSS-43 Canberra
+  from NASA/JPL Horizons; the visibility of Mars is computed by the game.
+- Star data in the source package: NASA General Mission Analysis Tool (GMAT), Apache License 2.0.
+
+3D models, skies and textures (CC0 1.0)
+- Poly Haven (polyhaven.com): James Ray Cock, Mia Pecina Zorko, Rob Tuytel, Rico Cilliers, Greg Zaal,
+  Jarod Guest, BKS, Mateusz Sadek, PierreB3D, Michał Wiśniewski, Ulan Cabanilla, Derek Wight, Dario Barresi,
+  Yann Kervran.
+- ambientCG (ambientcg.com): Ground109, Ground110, Metal009, Metal027.
+- MakeHuman base mesh, skeleton and weights (makehumancommunity.org).
+
+Effects (Unity Asset Store licence)
+- Unity Particle Pack by Unity Technologies: launch smoke and exhaust effects.
+
+Fonts (SIL Open Font License 1.1 unless noted)
+- Barlow Condensed — The Barlow Project Authors. Source Sans 3 — Adobe.
+- Inter — The Inter Project Authors (rendered into textures). DejaVu Sans Mono — Bitstream, Inc. and
+  DejaVu contributors, Bitstream Vera / DejaVu licence (rendered into textures).
+
+AI-generated content
+- All dialogue uses synthetic voices generated with Google Gemini text-to-speech (voices Orus, Kore and
+  Iapetus).
+- Original score cues and sound effects were synthesized by scripts written with AI coding assistants.
+- Code, procedural 3D models and textures were created with AI coding assistants (Claude Code, OpenAI Codex)
+  under the team's direction, review and playtesting.
+
+Engine: Unity 6000.3.28f1 (Universal Render Pipeline). AURORA-7, its crew and its rescue are fictional.

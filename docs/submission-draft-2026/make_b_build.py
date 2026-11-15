@@ -179,6 +179,9 @@ def main() -> int:
     ap.add_argument("--out", default="B-build", help="output folder name next to the A set (default B-build)")
     ap.add_argument("--label", default="B build", help="how the README calls this build")
     ap.add_argument("--readme-only", action="store_true", help="rewrite only README.md of an existing set")
+    ap.add_argument("--deck-d", action="store_true",
+                    help="build the deck of the D build (new launch capture, data-lines block, exact test counts, "
+                         "16 new radio lines); see D_BUILD in deck/build_deck.py")
     args = ap.parse_args()
     OUT = HERE / args.out
     flags = [f for f in FLAGS if getattr(args, f)]
@@ -191,7 +194,7 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp) / "pack"
-        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-*build", ".build", "captures", "*.pptx", "*.pdf",
+        shutil.copytree(HERE, work, ignore=shutil.ignore_patterns("B-*build", "D-build", ".build", "captures", "*.pptx", "*.pdf",
                                                                  "__pycache__"))
         run([sys.executable, str(HERE / "apply_b_variant.py"), "--root", str(work)] + ["--" + f for f in flags])
         recount(work / "form-fields.md")
@@ -225,6 +228,8 @@ def main() -> int:
     pdf = OUT / "OUT-OF-REACH_SpaceApps2026_deck.pdf"
     env = dict(os.environ, OOR_DECK_FLAGS=",".join(f for f in flags if f not in ("models", "voices")),
                OOR_DECK_OUT=str(pptx))
+    if args.deck_d:
+        env["OOR_DECK_D"] = "1"
     run([sys.executable, str(HERE / "deck" / "build_deck.py")], env=env)
     with tempfile.TemporaryDirectory() as pngs:
         run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File",

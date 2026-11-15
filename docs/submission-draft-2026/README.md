@@ -87,3 +87,7 @@ Sources: [Project Submission Guide](https://www.spaceappschallenge.org/resources
 | Demo: slides or video | Open — **Apoliak decides at 23:00 CET** |
 | Public final-project location and public demo link | Open — Team Owner |
 | Submit for Judging | Open — Team Owner only, around 23:30 CET |
+
+## Set D (build `feature/claude-max-final-b@f0ec271`)
+
+Folder [D-build/](D-build/): deck PDF and PPTX, form texts, credits, AI statement and the public-folder files for build D. Start with the section "SET D" at the top of [D-build/form-fields.md](D-build/form-fields.md). Rebuild: `python make_d_build.py`.

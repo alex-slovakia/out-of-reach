@@ -45,6 +45,11 @@ HORIZONS_LINE_SHIPPED = False   # Horizons range and one-way delay on the next-c
 RAD_SHIPPED = False             # radiation estimate from NASA MSL RAD (119a083)
 DSN_SHIPPED = False             # Deep Space Network complex in view, shown in the UI (8aea692 + a UI hook)
 PARTICLE_PACK_SHIPPED = False   # launch effects built with the Unity Particle Pack (1b733ac)
+# D build (feature/claude-max-final-b@f0ec271): launch picture with the new AURORA 7 launch vehicle and pad,
+# a data-lines block on slide 4 (Horizons range and delay, DSN complex in view, MSL RAD dose), exact test counts,
+# the 16 new Gemini radio lines on slide 7. make_b_build.py --deck-d sets OOR_DECK_D=1.
+D_BUILD = False
+TESTS_D = (542, 174)            # EditMode 542/542, PlayMode 174/174 on f0ec271 (#7 6902121785)
 
 _DECK = "docs/submission-draft-2026/deck/captures/"
 CAPTURES = {
@@ -58,6 +63,7 @@ CAPTURES = {
     "sources": "docs/verification/i06-player-feedback-20261115/sources-v03-native.png",
     "hud": _DECK + "r18-routine-montage-day4.png",                  # R18 routine montage, native run
     "meal": _DECK + "cf2224d-27-meal-in-progress.png",              # spare: ration pouch, native QA run on cf2224d
+    "launch_d": _DECK + "f0ec271-06-liftoff-aurora7.png",           # native QA run on f0ec271 (D build): new launch vehicle and pad
 }
 
 # Palette: graphite / amber / cyan (+ red only for danger), matching the game's UI language.
@@ -307,7 +313,8 @@ def slide_loop(prs):
         rect(s, x, 1.85, cw, 0.05, fill=col)
         text(s, x, 1.97, cw, 0.32, [[R(f"{i + 1}  ", 11, col, HEAD), R(name, 12.5, TXT, BODY_SEMI, spc=0.5)]])
         text(s, x, 2.34, cw - 0.05, 1.0, [([R(desc, 10.5, TXT2)], None, 0, 1.05)])
-    shots = [("launch", "Vertical launch from launch complex LC-7", (0.5, 0.5)),
+    shots = [(("launch_d", "Lift-off: the AURORA 7 launch vehicle leaves the pad", (0.5, 0.5)) if D_BUILD else
+              ("launch", "Vertical launch from launch complex LC-7", (0.5, 0.5))),
              ("eva", "Spacewalk: the antenna repaired by hand", (0.5, 0.5)),
              ("rescue", "Day 30: the rescue craft hard-docks under NASA's Deep Star Maps sky", (0.5, 0.5))]
     pw = (12.13 - 2 * 0.2) / 3
@@ -336,6 +343,11 @@ def slide_data(prs):
          "NASA crew practice for sleep and for ready-to-eat, rehydratable and thermostabilized food "
          "shapes the meals and the rest rules."),
     ]
+    if D_BUILD:  # the data lines the D build keeps on screen replace the sleep block (the sleep fact moves to the panel)
+        blocks[2] = ("1.8 mSv per day", "radiation estimate on screen, from NASA MSL RAD cruise data",
+                     "During play the game keeps its mission data in view: Earth range and one-way signal delay from "
+                     "NASA/JPL Horizons, the Deep Space Network complex that has Mars in view (geometry from the "
+                     "same vectors, not the DSN schedule) and the estimated dose since day 1.")
     y = 1.85
     for big, label, body in blocks:
         text(s, 0.6, y, 6.2, 0.6, [[R(big, 30, CYAN, HEAD)]])
@@ -351,12 +363,15 @@ def slide_data(prs):
             "Slovakia inset: NASA GIBS, MODIS Terra")
     if COUNTDOWN_SHIPPED:
         also += "  ·  Launch radio: NASA audio, Apollo 11 commentary"
-    if RAD_SHIPPED:
-        also += "  ·  Radiation estimate: NASA MSL RAD cruise data"
-    if DSN_SHIPPED:
-        also += "  ·  DSN complex in view: NASA Deep Space Network sites"
-    if not (RAD_SHIPPED and DSN_SHIPPED):  # keep the panel to four lines
-        also += "  ·  Development: NASA GMAT star catalogue"
+    if D_BUILD:  # RAD and DSN have their own block on the left; the sleep fact moves here
+        also += "  ·  Meals and sleep (up to 8.5 h): NASA crew practice  ·  Development: NASA GMAT star catalogue"
+    else:
+        if RAD_SHIPPED:
+            also += "  ·  Radiation estimate: NASA MSL RAD cruise data"
+        if DSN_SHIPPED:
+            also += "  ·  DSN complex in view: NASA Deep Space Network sites"
+        if not (RAD_SHIPPED and DSN_SHIPPED):  # keep the panel to four lines
+            also += "  ·  Development: NASA GMAT star catalogue"
     text(s, 7.22, 5.89, 5.4, 0.9,
          [([R("ALSO FROM NASA  ", 9, AMBER, BODY_SEMI, spc=1.2)], None, 2),
           ([R(also, 10, TXT2)], None, 0, 1.04)])
@@ -399,8 +414,11 @@ def slide_built(prs):
         ("One authority.", "One mission clock and one ledger in real units (kg, L, kWh, W, ppm, parts); "
                            "spending is all-or-nothing and the visuals only show committed state."),
         ("Data you can check.", "The NASA/JPL snapshot ships offline and is verified by SHA-256 at mission start."),
-        ("Tested.", f"More than {TESTS_EDITMODE} EditMode and {TESTS_PLAYMODE} PlayMode tests pass on the release "
-                    "candidate, plus scripted full-mission runs, native Unity captures and human playtests."),
+        ("Tested.", (f"EditMode {TESTS_D[0]}/{TESTS_D[0]} and PlayMode {TESTS_D[1]}/{TESTS_D[1]} tests pass on the "
+                     "submitted build, plus native full-mission runs, native Unity captures and human playtests.")
+                    if D_BUILD else
+                    (f"More than {TESTS_EDITMODE} EditMode and {TESTS_PLAYMODE} PlayMode tests pass on the release "
+                     "candidate, plus scripted full-mission runs, native Unity captures and human playtests.")),
         ("Honest fiction.", "AURORA-7, the rescue, prices and time compression are labelled. No NASA logos."),
     ]
     y = 1.86
@@ -464,8 +482,9 @@ def slide_next(prs):
         ("ASSETS", assets),
         ("AI USE", "Idea, story and design decisions: the team. Code, procedural models and textures, original score "
                    "cues and sound effects: written with AI coding assistants (Claude Code, OpenAI Codex) under our "
-                   "direction. All dialogue: AI-generated synthetic voices, Google Gemini text-to-speech. "
-                   "No AI-generated pictures in this deck."),
+                   "direction. All dialogue: AI-generated synthetic voices, Google Gemini text-to-speech"
+                   + (" (voices Orus, Kore and Iapetus), incl. 16 new radio lines. " if D_BUILD else ". ")
+                   + "No AI-generated pictures in this deck."),
         ("FICTION", "AURORA-7, LC-7, the crew and the rescue are fictional. No NASA logos or insignia."),
     ]
     heights = {"MUSIC": 0.8, "NASA DATA AND MEDIA": 1.14, "ASSETS": 0.82, "AI USE": 1.36, "FICTION": 0.62}
@@ -481,8 +500,10 @@ def slide_next(prs):
 
 
 def main():
-    global OUT, HORIZONS_LINE_SHIPPED, RAD_SHIPPED, DSN_SHIPPED, PARTICLE_PACK_SHIPPED
+    global OUT, HORIZONS_LINE_SHIPPED, RAD_SHIPPED, DSN_SHIPPED, PARTICLE_PACK_SHIPPED, D_BUILD
     import os
+    if os.environ.get("OOR_DECK_D") == "1":  # deck of the D build (see D_BUILD above)
+        D_BUILD = True
     if os.environ.get("OOR_DECK_PREVIEW_B") == "1":  # layout preview with every B-build extra switched on
         HORIZONS_LINE_SHIPPED = RAD_SHIPPED = DSN_SHIPPED = PARTICLE_PACK_SHIPPED = True
         TMP.mkdir(exist_ok=True)
