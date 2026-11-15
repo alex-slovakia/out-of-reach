@@ -59,7 +59,11 @@ namespace OutOfReach.Composition
         float handStrength, footStrength;
         bool hasQueued, queuedGrip, queuedPair, queuedStrong;
         ContactHand queuedHand;
+        string queuedReason = string.Empty;
         float queuedUntil, nextPreviewAt;
+
+        /// <summary>HUD text when a click finds no solid surface within hand reach (after its short wait).</summary>
+        public const string NoSurfaceInReach = "No solid surface within reach. Drift closer to a wall, the floor or the ceiling.";
 
         /// <summary>Root must suppress decorative L/R and successful-E gestures while true, including refusal/pause.</summary>
         public bool ContactRoutingRequested => armed;
@@ -262,6 +266,12 @@ namespace OutOfReach.Composition
                 if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
                 return;
             }
+            // Drifting towards a wall: a click made just before it comes within reach waits for it (one press only).
+            if (!bridge.TrySelectPushSurface(eye.forward, pair ? (ContactHand?)null : hand, out _, out _))
+            {
+                Queue(hand, false, pair, false, bridge.NoSurfaceReason());
+                return;
+            }
             bool accepted = pair ? bridge.TryPushPairContext(eye.forward, travel, handStrength)
                 : bridge.TryPushContext(hand, eye.forward, travel, handStrength);
             if (!accepted && pair)
@@ -309,16 +319,16 @@ namespace OutOfReach.Composition
             DispatchHand(ContactHand.Left, false, true);
         }
 
-        void Queue(ContactHand hand, bool grip, bool pair, bool strong)
+        void Queue(ContactHand hand, bool grip, bool pair, bool strong, string reason = "Still recovering from the last push; press again.")
         {
             if (!hasQueued) queuedUntil = Time.unscaledTime + QueueSeconds; // A retry never extends its own wait.
-            hasQueued = true; queuedHand = hand; queuedGrip = grip; queuedPair = pair; queuedStrong = strong;
+            hasQueued = true; queuedHand = hand; queuedGrip = grip; queuedPair = pair; queuedStrong = strong; queuedReason = reason;
         }
 
         void RetryQueued()
         {
             if (!hasQueued) return;
-            if (Time.unscaledTime > queuedUntil) { hasQueued = false; Refuse("Still recovering from the last push; press again."); return; }
+            if (Time.unscaledTime > queuedUntil) { hasQueued = false; Refuse(queuedReason); return; }
             if (!player.HeldHandhold && bridge.IsBusy) return;
             if (!queuedGrip && player.PushCooldownRemaining > 0f) return;
             hasQueued = false;

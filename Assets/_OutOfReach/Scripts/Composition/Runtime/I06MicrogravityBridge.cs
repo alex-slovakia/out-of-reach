@@ -146,61 +146,141 @@ namespace OutOfReach.Composition
         /// MOVE-MECH-01 selection, read-only: the surface a push would use. First the solid surface the view ray meets
         /// within reach (<paramref name="aimed"/> true); otherwise the nearest reachable solid surface around the eye
         /// (walls, ceiling, floor, slopes, solid props) along body-relative probe rays in the front hemisphere and to
-        /// the sides, preferring the given hand's side. Owned colliders, triggers and small decorative colliders (less
-        /// than 8 cm across in two dimensions) never count. No force, no animation, no state change.
+        /// the sides, preferring the given hand's side. Owned colliders, triggers, small decorative colliders (less
+        /// than 8 cm across in two dimensions) and, with bare WORK arms, points the real shoulder cannot reach never
+        /// count. No force, no animation, no state change.
         /// </summary>
         public bool TrySelectPushSurface(Vector3 aimDirection, ContactHand? preferredHand, out RaycastHit hit, out bool aimed)
         {
-            hit = default; aimed = false;
-            if (!bound || !player || !player.ViewPivot) return false;
-            Transform view = player.ViewPivot;
-            Vector3 origin = view.position;
-            if (Finite(aimDirection) && aimDirection.sqrMagnitude > .00001f
-                && Nearest(origin, aimDirection.normalized, Reach, out RaycastHit aimedHit) && Pushable(aimedHit.collider))
-            { hit = aimedHit; aimed = true; return true; }
-            float best = float.PositiveInfinity;
-            bool found = false;
-            foreach (Vector3 local in ProbeDirections)
-            {
-                Vector3 direction = view.TransformDirection(local);
-                if (!Nearest(origin, direction, Reach, out RaycastHit candidate) || !Pushable(candidate.collider)) continue;
-                float score = candidate.distance;
-                if (preferredHand.HasValue)
-                {
-                    float side = Vector3.Dot(candidate.point - origin, view.right);
-                    // Keep the other hand's side usable, but let the clicking hand's side win a near tie.
-                    if ((preferredHand.Value == ContactHand.Left && side > .05f) || (preferredHand.Value == ContactHand.Right && side < -.05f))
-                        score += .15f;
-                }
-                if (score < best) { best = score; hit = candidate; found = true; }
-            }
-            return found;
+            int count = CollectPushCandidates(aimDirection, preferredHand, false);
+            hit = count > 0 ? candidates[0].Hit : default;
+            aimed = count > 0 && candidates[0].Aimed;
+            return count > 0;
         }
 
         /// <summary>
         /// One medium hand push from the selected surface (see <see cref="TrySelectPushSurface"/>). With an explicit
         /// travel intent the push follows it, limited to the outward cone of the real surface. Without one, an aimed
         /// surface is pushed straight away from, and a surface found around the body sends the body where the view
-        /// points (outward cone). The visible reach and the Player's verification still decide success.
+        /// points (outward cone). When the arm presenter refuses the best spot (pose, wrist, clearance), the next
+        /// candidates are tried, up to <see cref="MaxPushAttempts"/>. The visible reach and the Player still decide.
         /// </summary>
         public bool TryPushContext(ContactHand selectedHand, Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
         {
             LastRefusal = string.Empty;
-            if (!TrySelectPushSurface(aimDirection, selectedHand, out RaycastHit hit, out bool aimed))
-                return Refuse("No solid surface within reach. Drift closer to a wall, the floor or the ceiling.");
-            Vector3 intent = ContextIntent(desiredTravelWorld, aimed);
-            Vector3 toward = hit.point - player.ViewPivot.position;
-            return intent == Vector3.zero ? TryPush(selectedHand, toward, strength01)
-                : TryPushDirected(selectedHand, toward, intent, strength01);
+            int count = CollectPushCandidates(aimDirection, selectedHand, false);
+            if (count == 0) return Refuse(NoSurfaceReason());
+            string first = null;
+            for (int i = 0; i < count && i < MaxPushAttempts; i++)
+            {
+                PushCandidate c = candidates[i];
+                Vector3 intent = ContextIntent(desiredTravelWorld, c.Aimed);
+                Vector3 toward = c.Hit.point - player.ViewPivot.position;
+                bool accepted = intent == Vector3.zero ? TryPush(selectedHand, toward, strength01)
+                    : TryPushDirected(selectedHand, toward, intent, strength01);
+                if (accepted) return true;
+                if (first == null) first = LastRefusal;
+            }
+            return Refuse(first);
         }
 
         /// <summary>Both hands on the selected surface: one coherent paired push (see <see cref="TryPushContext"/>).</summary>
         public bool TryPushPairContext(Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
         {
             LastRefusal = string.Empty;
-            if (!TrySelectPushSurface(aimDirection, null, out RaycastHit hit, out bool aimed))
-                return Refuse("No solid surface within reach. Drift closer to a wall, the floor or the ceiling.");
-            return TryPushPair(hit.point - player.ViewPivot.position, ContextIntent(desiredTravelWorld, aimed), strength01);
+            int count = CollectPushCandidates(aimDirection, null, true);
+            if (count == 0) return Refuse(NoSurfaceReason());
+            string first = null;
+            for (int i = 0; i < count && i < MaxPushAttempts; i++)
+            {
+                PushCandidate c = candidates[i];
+                if (TryPushPair(c.Hit.point - player.ViewPivot.position, ContextIntent(desiredTravelWorld, c.Aimed), strength01)) return true;
+                if (first == null) first = LastRefusal;
+            }
+            return Refuse(first);
+        }
+
+        /// <summary>How many candidate spots one click may try when the arm presenter refuses the best one.</summary>
+        public const int MaxPushAttempts = 4;
+        const string NoSurfaceText = "No solid surface within reach. Drift closer to a wall, the floor or the ceiling.";
+        const string OutOfViewText = "Turn towards the wall, ceiling or floor you want to push from: your hands push only where you can see them.";
+
+        /// <summary>Readable reason for an empty selection: nothing in reach at all, or a surface in reach behind the view.</summary>
+        public string NoSurfaceReason()
+        {
+            if (!bound || !player || !player.ViewPivot) return NoSurfaceText;
+            Vector3 origin = player.ViewPivot.position;
+            foreach (Vector3 axis in WorldAxes)
+                if (Nearest(origin, axis, Reach, out RaycastHit hit) && Pushable(hit.collider)) return OutOfViewText;
+            return NoSurfaceText;
+        }
+
+        static readonly Vector3[] WorldAxes = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
+
+        struct PushCandidate
+        {
+            public RaycastHit Hit;
+            public bool Aimed;
+            public float Score;
+        }
+
+        readonly PushCandidate[] candidates = new PushCandidate[32];
+
+        int CollectPushCandidates(Vector3 aimDirection, ContactHand? preferredHand, bool bothHands)
+        {
+            if (!bound || !player || !player.ViewPivot) return 0;
+            Transform view = player.ViewPivot;
+            Vector3 origin = view.position;
+            int count = 0;
+            if (Finite(aimDirection) && aimDirection.sqrMagnitude > .00001f
+                && Nearest(origin, aimDirection.normalized, Reach, out RaycastHit aimedHit) && Pushable(aimedHit.collider)
+                && ArmCanReach(aimedHit.point, preferredHand, bothHands))
+                candidates[count++] = new PushCandidate { Hit = aimedHit, Aimed = true, Score = -1f };
+            foreach (Vector3 local in ProbeDirections)
+            {
+                if (count >= candidates.Length) break;
+                Vector3 direction = view.TransformDirection(local);
+                if (!Nearest(origin, direction, Reach, out RaycastHit hit) || !Pushable(hit.collider)
+                    || !ArmCanReach(hit.point, preferredHand, bothHands)) continue;
+                bool duplicate = false;
+                for (int i = 0; i < count && !duplicate; i++)
+                    duplicate = candidates[i].Hit.collider == hit.collider && Vector3.Distance(candidates[i].Hit.point, hit.point) < .05f;
+                if (duplicate) continue;
+                float score = hit.distance;
+                if (preferredHand.HasValue)
+                {
+                    float side = Vector3.Dot(hit.point - origin, view.right);
+                    // Keep the other hand's side usable, but let the clicking hand's side win a near tie.
+                    if ((preferredHand.Value == ContactHand.Left && side > .05f) || (preferredHand.Value == ContactHand.Right && side < -.05f))
+                        score += .15f;
+                }
+                candidates[count++] = new PushCandidate { Hit = hit, Aimed = false, Score = score };
+            }
+            for (int i = 1; i < count; i++) // Insertion sort: at most 25 entries, no allocation.
+            {
+                PushCandidate item = candidates[i];
+                int j = i - 1;
+                while (j >= 0 && candidates[j].Score > item.Score) { candidates[j + 1] = candidates[j]; j--; }
+                candidates[j + 1] = item;
+            }
+            return count;
+        }
+
+        // Bare WORK arms: the real shoulder must reach the palm spot with a bent elbow (the arm presenter refuses a
+        // straight or over-stretched arm only after its reach animation has started). Gloves keep their own checks.
+        // No hand given: a paired push needs both shoulders, a preview or selection either one.
+        bool ArmCanReach(Vector3 point, ContactHand? hand, bool bothHands)
+        {
+            if (suit == null || suit.IsSuitOn || !bare) return true;
+            if (hand.HasValue) return ShoulderReaches(hand.Value, point);
+            return bothHands ? ShoulderReaches(ContactHand.Left, point) && ShoulderReaches(ContactHand.Right, point)
+                : ShoulderReaches(ContactHand.Left, point) || ShoulderReaches(ContactHand.Right, point);
+        }
+
+        bool ShoulderReaches(ContactHand hand, Vector3 point)
+        {
+            if (!bare.TryGetPushGeometry(hand, out Vector3 shoulder, out float upperArm, out float forearm, out _)) return true;
+            return Vector3.Distance(shoulder, point) <= (upperArm + forearm) * .93f;
         }
 
         Vector3 ContextIntent(Vector3 desiredTravelWorld, bool aimed)
@@ -477,7 +557,10 @@ namespace OutOfReach.Composition
                 // bent elbow with the actual side-facing palm, and scales with the bound arm.
                 float armSpan = upperArm + forearm;
                 halfSpacing = armSpan * .33f;
-                Vector3 naturalPoint = eyeOnPlane + heading * (armSpan * .135f)
+                // MOVE-MECH-01 native QA (d1512f7): with the head at the ceiling, armSpan*.135 put the palm only
+                // 6.5 cm ahead of the eye and the arm presenter refuses targets under 10 cm ahead (it keeps the
+                // reach in view). 12.5 cm still leaves the wrist, about 8 cm below the palm, within the elbow range.
+                Vector3 naturalPoint = eyeOnPlane + heading * Mathf.Max(armSpan * .135f, .125f)
                     + across * (side * halfSpacing);
                 // Anticipate only drift away from this forward ceiling patch, during REAL reach
                 // seconds. Approaching motion already increases reach margin and needs no lead.
