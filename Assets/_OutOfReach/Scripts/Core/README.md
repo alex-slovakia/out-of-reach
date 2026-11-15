@@ -597,3 +597,17 @@ Vessel baseline: generation 1,300 W, load 1,100 W. Reserves: O₂ 10 kg, water 2
   Windows build, a human play-through (carry speeds, whether a cartridge is ever worth its part), performance.
 - Unity side effects left uncommitted: the `Assets/Settings/Mobile_RPAsset.asset` URP upgrade and a generated
   `ProjectSettings/SceneTemplateSettings.json`.
+
+## MICRO-PAIR-PUSH: one simultaneous two-hand push (root 6889731362)
+
+`FirstPersonController.TryPushOffPair(surfaceA, pointA, directionA, strengthA, surfaceB, pointB, directionB, strengthB)`
+is additive; `TryPushOff` and its callers are unchanged, and there is no Contracts change.
+
+- Everything is checked before anything changes: floating, control, finite input and strength > 0 for both hands,
+  the shared cooldown, then each contact with `TryPushOff`'s own verification (solid surface, reach, line of sight,
+  direction away from that surface). A refusal returns the first failing hand's result and changes nothing: no
+  velocity, no cooldown, no hold release, no `Pushed`.
+- On success each hand contributes like a single push (`MaxPushSpeed × clamp01(strength)`), the sum is capped to one
+  full push and the speed to `MaxSpeed` (`MicrogravityLocomotion.PushPair`); the hold is released, the cooldown
+  starts and `Pushed` is raised once. Two partial hands are stronger than one, never stronger than one full push.
+- The caller (Codex) owns the two-hand contact animation and input and calls it only after both real contacts.

@@ -100,6 +100,24 @@ namespace OutOfReach.Player
         }
 
         /// <summary>
+        /// The velocity after one simultaneous two-hand push: each hand contributes like a single push (capped by its
+        /// strength), the combined change is capped to one full push (<see cref="MaxPushSpeed"/>) and the speed to
+        /// <see cref="MaxSpeed"/>. Two hands are stronger than one partial push, never stronger than one full push.
+        /// </summary>
+        public Vector3 PushPair(Vector3 velocity, Vector3 directionA, float strengthA, Vector3 directionB, float strengthB)
+        {
+            Vector3 change = Vector3.ClampMagnitude(Contribution(directionA, strengthA) + Contribution(directionB, strengthB), maxPushSpeed);
+            return Vector3.ClampMagnitude(velocity + change, maxSpeed);
+        }
+
+        private Vector3 Contribution(Vector3 direction, float strength01)
+        {
+            return direction.sqrMagnitude < 1e-8f || float.IsNaN(strength01)
+                ? Vector3.zero
+                : direction.normalized * (maxPushSpeed * Mathf.Clamp01(strength01));
+        }
+
+        /// <summary>
         /// Exact displacement over one interval, and the velocity at its end, for the combined exponential decay of
         /// drag and (while gripping) the arm's settling. The closed form makes a free drift and a grip settle cover the
         /// same path at 30 and at 240 frames per second.
