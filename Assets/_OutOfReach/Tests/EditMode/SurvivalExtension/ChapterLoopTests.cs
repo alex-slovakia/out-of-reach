@@ -613,5 +613,26 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(flow.LatestDispatch.ReceivedAtSimulationSeconds, Is.GreaterThan(contactAt));
             }
         }
+
+        [Test]
+        public void ARoutineRunningWhileEarthsReplyTravels_StopsAtTheActualReply_AtTheSurvivalSpeed()
+        {
+            using (MissionSession session = Accident())
+            {
+                MissionChapterFlow flow = session.ChapterFlow;
+                CompleteAccidentBeat(session);
+                Fixtures.CompleteEva(session);
+                Fixtures.Transmit(session);
+                double replyDue = session.Communications.ReplyDueAtSimulationSeconds.Value;
+                Segment segment = RunRoutine(session);
+                Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.DispatchReceived), flow.LastRoutineStopText);
+                Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value, Is.EqualTo(replyDue).Within(Tolerance));
+                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Survival));
+                Assert.That(flow.Rescue, Is.EqualTo(RescuePlan.FirstRescuePlanned));
+                Assert.That(session.Clock.TimeScale, Is.EqualTo(session.Survival.Spec.TimeScale));
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Accident), "no beat skipped");
+                Assert.That(segment.Frames, Is.GreaterThan(0));
+            }
+        }
     }
 }

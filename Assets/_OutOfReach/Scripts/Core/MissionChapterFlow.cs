@@ -466,6 +466,10 @@ namespace OutOfReach.Core
                 "Earth relays concrete hope: a first rescue attempt is under way, an uncrewed fictional support vehicle already near Mars that will try to reach the ship. Mission control will report its progress (about mission day {0}).",
                 MissionCalendar.DayNumberAt(dispatchDueAt.Value)));
             Notify();
+
+            // Contact moved the mission into Survival and set its speed: a routine running meanwhile (the reply was
+            // still travelling) stops here, at the actual time, so the news is seen.
+            StopRoutine(RoutineStopReason.DispatchReceived, "Earth's reply arrived");
         }
 
         /// <summary>After a salvage or another field modification: the day-5 decision may be settled by the salvage itself.</summary>
