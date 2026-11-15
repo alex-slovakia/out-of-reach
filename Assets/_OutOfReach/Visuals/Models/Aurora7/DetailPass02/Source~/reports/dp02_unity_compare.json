@@ -38,6 +38,25 @@
    "triangles_unity": 19476,
    "objects": 4,
    "anchors": 1
+  },
+  "DP02_Cockpit": {
+   "importer": {
+    "guid": "1ab9e7e087b6c0d8d6e76e0f3f1c3358",
+    "bakeAxisConversion": "True",
+    "useFileUnits": "True",
+    "useFileScale": "True",
+    "globalScale": "1",
+    "importCameras": "False",
+    "importLights": "False",
+    "materialImportMode": "ImportViaMaterialDescription",
+    "preserveHierarchy": "True",
+    "externalMaterialMaps": "15"
+   },
+   "max_bounds_pivot_err_m": 0.0,
+   "triangles_blender": 21094,
+   "triangles_unity": 21094,
+   "objects": 5,
+   "anchors": 1
   }
  },
  "failures": [],
@@ -53,6 +72,13 @@
   "DP02_HAB_GrowPlumbing_R_Z1414  tris blender  5590 unity  5590 | bounds/pivot err 0.00010 m | submeshes 7/7 | ok",
   "DP02_HAB_GrowCables_R_Z1536    tris blender  2664 unity  2664 | bounds/pivot err 0.00000 m | submeshes 7/7 | ok",
   "DP02_HAB_ReviewEye             anchor unity [-0.9, 1.62, 12.15] report [-0.9, 1.62, 12.15] err 0.00000",
-  "DP02_Habitat: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00010 m | triangles blender 19476 unity 19476"
+  "DP02_Habitat: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00010 m | triangles blender 19476 unity 19476",
+  "DP02_CKP_FrameLoom_L_Z000      tris blender  7378 unity  7378 | bounds/pivot err 0.00000 m | submeshes 11/11 | ok",
+  "DP02_CKP_FrameLoom_R_Z150      tris blender  7378 unity  7378 | bounds/pivot err 0.00000 m | submeshes 11/11 | ok",
+  "DP02_CKP_CrewNotes_L_Z075      tris blender  2782 unity  2782 | bounds/pivot err 0.00000 m | submeshes 10/10 | ok",
+  "DP02_CKP_AccessPanel_AftL      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
+  "DP02_CKP_AccessPanel_AftR      tris blender  1778 unity  1778 | bounds/pivot err 0.00000 m | submeshes 6/6 | ok",
+  "DP02_CKP_ReviewEye             anchor unity [0.3, 1.62, 0.95] report [0.3, 1.62, 0.95] err 0.00000",
+  "DP02_Cockpit: importer {'bakeAxisConversion': 'True', 'useFileUnits': 'True', 'useFileScale': 'True', 'globalScale': '1', 'importCameras': 'False', 'importLights': 'False'} | max bounds/pivot error 0.00000 m | triangles blender 21094 unity 21094"
  ]
 }

@@ -375,8 +375,231 @@
     "HB_Labels"
    ],
    "fbx": "Meshes/DP02_Habitat.fbx"
+  },
+  "DP02_Cockpit": {
+   "room": "Cockpit",
+   "objects": {
+    "DP02_CKP_FrameLoom_L_Z000": {
+     "triangles": 7378,
+     "per_material": {
+      "A7_Aluminum": 1372,
+      "A7_AnodizedBlack": 1568,
+      "A7_AnodizedClear": 864,
+      "A7_CableBlue": 350,
+      "A7_CableOrange": 350,
+      "A7_CableRed": 322,
+      "A7_Decals": 14,
+      "A7_PaintGraphite": 368,
+      "A7_PaintGray": 44,
+      "A7_PaintWhite": 80,
+      "A7_Rubber": 2046
+     },
+     "bounds_min": [
+      -2.9325,
+      0.1205,
+      -0.075
+     ],
+     "bounds_max": [
+      -2.7223,
+      2.5174,
+      0.075
+     ],
+     "origin": [
+      -2.804,
+      0.0,
+      0.0
+     ],
+     "host": "port (-x) cockpit ring-frame flange face at z 0.0, between the locker bay (z -0.75) and the blanket bay (z 0.75); beside and behind the commander's seat",
+     "mount_out": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_CKP_FrameLoom_R_Z150": {
+     "triangles": 7378,
+     "per_material": {
+      "A7_Aluminum": 1372,
+      "A7_AnodizedBlack": 1568,
+      "A7_AnodizedClear": 864,
+      "A7_CableBlue": 350,
+      "A7_CableOrange": 350,
+      "A7_CableRed": 322,
+      "A7_Decals": 14,
+      "A7_PaintGraphite": 368,
+      "A7_PaintGray": 44,
+      "A7_PaintWhite": 80,
+      "A7_Rubber": 2046
+     },
+     "bounds_min": [
+      2.7223,
+      0.1205,
+      1.425
+     ],
+     "bounds_max": [
+      2.9325,
+      2.5174,
+      1.575
+     ],
+     "origin": [
+      2.804,
+      0.0,
+      1.5
+     ],
+     "host": "starboard (+x) cockpit ring-frame flange face at z 1.5, between the locker bay (z 0.75) and the blanket bay (z 2.25); clear of the deep stowage bay at z -0.75",
+     "mount_out": [
+      -1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_CKP_CrewNotes_L_Z075": {
+     "triangles": 2782,
+     "per_material": {
+      "A7_Aluminum": 840,
+      "A7_AnodizedBlack": 764,
+      "A7_CableBlue": 40,
+      "A7_Decals": 2,
+      "A7_FabricDark": 332,
+      "A7_FabricStrap": 84,
+      "A7_FabricWhite": 44,
+      "A7_PaintGraphite": 128,
+      "A7_PlasticWhite": 56,
+      "A7_Rubber": 492
+     },
+     "bounds_min": [
+      -2.9262,
+      1.433,
+      0.264
+     ],
+     "bounds_max": [
+      -2.8865,
+      1.752,
+      1.272
+     ],
+     "origin": [
+      -2.9265,
+      0.0,
+      0.75
+     ],
+     "host": "port cockpit blanket bay z 0.75 (behind the commander's seat): quilt face plus 3.5 mm, above the bay handrail",
+     "mount_out": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    },
+    "DP02_CKP_AccessPanel_AftL": {
+     "triangles": 1778,
+     "per_material": {
+      "A7_Aluminum": 1024,
+      "A7_AnodizedBlack": 320,
+      "A7_Decals": 6,
+      "A7_PaintGraphite": 252,
+      "A7_PaintWhite": 80,
+      "A7_Rubber": 96
+     },
+     "bounds_min": [
+      -2.15,
+      1.05,
+      2.9015
+     ],
+     "bounds_max": [
+      -1.81,
+      1.75,
+      2.9195
+     ],
+     "origin": [
+      -1.98,
+      0.0,
+      2.92
+     ],
+     "host": "port wing of the portal at z 3, cockpit face, outboard of the vertical strip",
+     "mount_out": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "DP02_CKP_AccessPanel_AftR": {
+     "triangles": 1778,
+     "per_material": {
+      "A7_Aluminum": 1024,
+      "A7_AnodizedBlack": 320,
+      "A7_Decals": 6,
+      "A7_PaintGraphite": 252,
+      "A7_PaintWhite": 80,
+      "A7_Rubber": 96
+     },
+     "bounds_min": [
+      1.81,
+      1.05,
+      2.9015
+     ],
+     "bounds_max": [
+      2.15,
+      1.75,
+      2.9195
+     ],
+     "origin": [
+      1.98,
+      0.0,
+      2.92
+     ],
+     "host": "starboard wing of the portal at z 3, cockpit face, outboard of the vertical strip",
+     "mount_out": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    }
+   },
+   "anchors": {
+    "DP02_CKP_ReviewEye": {
+     "point": [
+      0.3,
+      1.62,
+      0.95
+     ],
+     "forward": [
+      -0.9702,
+      -0.1314,
+      -0.2034
+     ],
+     "role": "review eye of the preview render (not gameplay)"
+    }
+   },
+   "bounds_min": [
+    -2.9325,
+    0.1205,
+    -0.075
+   ],
+   "bounds_max": [
+    2.9325,
+    2.5174,
+    2.9195
+   ],
+   "triangles": 21094,
+   "materials": [
+    "A7_Aluminum",
+    "A7_AnodizedBlack",
+    "A7_AnodizedClear",
+    "A7_CableBlue",
+    "A7_CableOrange",
+    "A7_CableRed",
+    "A7_Decals",
+    "A7_FabricDark",
+    "A7_FabricStrap",
+    "A7_FabricWhite",
+    "A7_PaintGraphite",
+    "A7_PaintGray",
+    "A7_PaintWhite",
+    "A7_PlasticWhite",
+    "A7_Rubber"
+   ],
+   "fbx": "Meshes/DP02_Cockpit.fbx"
   }
  },
- "total_triangles": 37788,
+ "total_triangles": 58882,
  "convention": "Unity space, metres, y up; objects are placed in AURORA-7 ship coordinates; each pivot is the origin of the cluster's mount frame (host surface, deck level); drop the FBX at the ship origin with identity rotation"
 }

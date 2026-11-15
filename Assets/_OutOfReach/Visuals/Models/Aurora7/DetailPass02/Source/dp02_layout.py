@@ -11,12 +11,16 @@ import sys
 
 sys.dont_write_bytecode = True
 from a7kit import front_frame  # noqa: E402
+import dp02_cockpit as ckp  # noqa: E402
 import dp02_habitat as hab  # noqa: E402
 import dp02_kit as kit  # noqa: E402
 
 FLANGE_X = 2.4 - 0.196     # room-facing face of a ring-frame flange (a7_ship.ring_frame)
 QUILT_X = 2.38 - 0.0535    # blanket-bay host plane: quilt face (2.33) plus 3.5 mm, clear of the quilt's decals
 WALL_X = 2.38              # bare side wall (habitat bay without a bay unit)
+CKP_FLANGE_X = 3.0 - 0.196             # cockpit (6 m wide) ring-frame flange face
+CKP_QUILT_X = 2.98 - 0.0535            # cockpit blanket-bay host plane (quilt face plus 3.5 mm)
+FWD_WING_Z = 3.0 - 0.08                # cockpit-side face of the portal at z = 3
 AFT_WING_Z = 11.0 - 0.08   # engineering-side face of the portal at z = 11 (a7_ship.portal)
 
 ROOMS = {
@@ -59,6 +63,31 @@ ROOMS = {
         "review": {"anchor": "DP02_HAB_ReviewEye", "eye": (-0.9, 1.62, 12.15), "target": (2.2, 1.15, 13.95), "fov": 76},
         "extra_views": [{"name": "HabitatCrewKit", "eye": (0.55, 1.62, 13.1), "target": (-2.3, 1.7, 11.75), "fov": 62},
                         {"name": "HabitatGrowPlumbing", "eye": (1.05, 1.42, 13.35), "target": (2.3, 0.72, 14.3), "fov": 58}],
+    },
+    "Cockpit": {
+        "fbx": "DP02_Cockpit",
+        "clusters": [
+            {"name": "DP02_CKP_FrameLoom_L_Z000", "pivot": (-CKP_FLANGE_X, 0.0, 0.0), "out": (1, 0, 0),
+             "host": "port (-x) cockpit ring-frame flange face at z 0.0, between the locker bay (z -0.75) and the "
+                     "blanket bay (z 0.75); beside and behind the commander's seat",
+             "build": lambda c: kit.frame_loom_cluster(c["decals"], "c_hv", -0.116, (0, 1, 2, 3))},
+            {"name": "DP02_CKP_FrameLoom_R_Z150", "pivot": (CKP_FLANGE_X, 0.0, 1.5), "out": (-1, 0, 0),
+             "host": "starboard (+x) cockpit ring-frame flange face at z 1.5, between the locker bay (z 0.75) and "
+                     "the blanket bay (z 2.25); clear of the deep stowage bay at z -0.75",
+             "build": lambda c: kit.frame_loom_cluster(c["decals"], "c_hv", -0.116, (8, 9, 10, 11))},
+            {"name": "DP02_CKP_CrewNotes_L_Z075", "pivot": (-CKP_QUILT_X, 0.0, 0.75), "out": (1, 0, 0),
+             "host": "port cockpit blanket bay z 0.75 (behind the commander's seat): quilt face plus 3.5 mm, above "
+                     "the bay handrail",
+             "build": lambda c: ckp.crew_notes_cluster(c["decals"], c["hb"])},
+            {"name": "DP02_CKP_AccessPanel_AftL", "pivot": (-1.98, 0.0, FWD_WING_Z), "out": (0, 0, -1),
+             "host": "port wing of the portal at z 3, cockpit face, outboard of the vertical strip",
+             "build": lambda c: kit.access_panel_cluster(c["decals"], -1, "pn_14")},
+            {"name": "DP02_CKP_AccessPanel_AftR", "pivot": (1.98, 0.0, FWD_WING_Z), "out": (0, 0, -1),
+             "host": "starboard wing of the portal at z 3, cockpit face, outboard of the vertical strip",
+             "build": lambda c: kit.access_panel_cluster(c["decals"], 1, "pn_15")},
+        ],
+        "review": {"anchor": "DP02_CKP_ReviewEye", "eye": (0.3, 1.62, 0.95), "target": (-2.8, 1.2, 0.3), "fov": 70},
+        "extra_views": [{"name": "CockpitAft", "eye": (0.2, 1.62, 0.2), "target": (1.4, 1.25, 2.9), "fov": 72}],
     },
 }
 

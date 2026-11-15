@@ -1,10 +1,15 @@
 {
  "package": "SHIP-DETAIL-02",
- "parent_commit": "38cac1f591c06f938616e5a52628144fa55f76d0",
+ "parent_commit": "c3f12a06e81d5c1bb6083391931ee23f068f9246",
  "rights": "Original procedural team work made with AI (Claude Opus 5.5) for Apoliak7777's team; see ATTRIBUTION.md. No downloads, scans, photographs, generated images or new packages.",
  "materials": "No new materials or textures: every slot is an existing A7_* or HB_* material, remapped by name to its existing asset GUID.",
  "generator": "Source/build_dp02.py with Source/dp02_kit.py and Source/dp02_layout.py, on top of the AURORA-7 generator in ../Source (a7kit.py, a7_ship.py)",
  "records": [
+  {
+   "path": "Meshes/DP02_Cockpit.fbx",
+   "sha256": "1f2971ec9e0646cdf8e54e17277d4755ecb192d765fe5e63d353d7f21616a966",
+   "bytes": 626572
+  },
   {
    "path": "Meshes/DP02_Engineering.fbx",
    "sha256": "9db4189c06867e098f156cd6827051d0dd3c69fc0f06bec7ebc562f4fe71043e",
@@ -14,6 +19,16 @@
    "path": "Meshes/DP02_Habitat.fbx",
    "sha256": "fc43c026b7a98096915852a83ba892c18db0876b04025c881520a37280f94464",
    "bytes": 576252
+  },
+  {
+   "path": "Previews~/DP02_Cockpit.png",
+   "sha256": "19cd71bfffabaf11264a984dd64190435c4b7d5829d68fd93afc030b0592c212",
+   "bytes": 2018848
+  },
+  {
+   "path": "Previews~/DP02_CockpitAft.png",
+   "sha256": "ba42df36a9e8313bdcf40e5a35903c2766ac6cec49c0cce36261f502a5eac396",
+   "bytes": 2224214
   },
   {
    "path": "Previews~/DP02_Engineering.png",
@@ -34,6 +49,11 @@
    "path": "Previews~/DP02_HabitatGrowPlumbing.png",
    "sha256": "f60f92f84b7ddddcb675f0d9ceedc0b847aaa7d4df7226161735e888418e1464",
    "bytes": 2210007
+  },
+  {
+   "path": "Previews~/DP02_Sheet.png",
+   "sha256": "722ce1ef32113f05435278e34b30d928fc9d8623b29a4c660fdfc98b3668c17c",
+   "bytes": 2771362
   }
  ]
 }

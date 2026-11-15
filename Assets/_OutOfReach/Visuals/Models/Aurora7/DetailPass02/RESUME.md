@@ -7,8 +7,8 @@
 | # | Content | Status | Commit |
 |---|---|---|---|
 | 1 | Engineering: `Meshes/DP02_Engineering.fbx` (4 objects, 1 anchor, 18,312 triangles), source, metas, manifest, `Previews~/DP02_Engineering.png` | finished and checked | `38cac1f591c06f938616e5a52628144fa55f76d0` |
-| 2 | Crew habitat: `Meshes/DP02_Habitat.fbx` (4 objects, 1 anchor, 19,476 triangles), `Source/dp02_habitat.py`, `Source/hb_labels_map.json`, three habitat previews | finished and checked | the commit that changes this line (see `git log -- RESUME.md`) |
-| 3 | Cockpit | not started | none yet |
+| 2 | Crew habitat: `Meshes/DP02_Habitat.fbx` (4 objects, 1 anchor, 19,476 triangles), `Source/dp02_habitat.py`, `Source/hb_labels_map.json`, three habitat previews | finished and checked | `c3f12a06e81d5c1bb6083391931ee23f068f9246` |
+| 3 | Cockpit: `Meshes/DP02_Cockpit.fbx` (5 objects, 1 anchor, 21,094 triangles), `Source/dp02_cockpit.py`, `Source/make_sheet.py`, two cockpit previews, contact sheet | finished and checked | the commit that changes this line (see `git log -- RESUME.md`) |
 
 ## Finished paths in checkpoint 1
 - `Meshes/DP02_Engineering.fbx` and its `.meta`
@@ -24,16 +24,22 @@
 - `Source/dp02_habitat.py`, `Source/hb_labels_map.json`, and their `.meta` files
 - `Previews~/DP02_Habitat.png`, `Previews~/DP02_HabitatCrewKit.png`, `Previews~/DP02_HabitatGrowPlumbing.png`
 
+## Checkpoint 3 also adds
+- `Meshes/DP02_Cockpit.fbx` and its `.meta`
+- `Source/dp02_cockpit.py`, `Source/make_sheet.py`, and their `.meta` files
+- `Previews~/DP02_Cockpit.png`, `Previews~/DP02_CockpitAft.png`, `Previews~/DP02_Sheet.png`
+
 ## Unfinished objects
-- **Cockpit:** looms and access panels clear of the console, seats, windows and rails.
-- **Contact sheet.**
+- None of the planned first-package objects are missing. Possible follow-ups:
+  - a dedicated label atlas with a unique crew photo and name tags;
+  - a material check inside the game project;
+  - more clusters (cockpit and airlock), as the budget allows: about 1.1k triangles are left under 60k.
 
 ## Next exact action
-Add a `"Cockpit"` room to `Source/dp02_layout.py`, with its clusters in a new `Source/dp02_cockpit.py`:
-- hosts: cockpit ring frames, the aft portal wing faces at z 2.92, and the bay faces that have no controls (lockers and blankets), all clear of the console (z -2.3 to -1.5), the seats at x -/+1.15 and z -0.45, the windows and the rails;
-- run `build_dp02.py -- --export Cockpit`, the round trip, `--check` and `--render` for `Cockpit`;
-- run `make_metas.py` and `make_manifest.py`, then the Unity check;
-- commit, push, and post on issue #7.
+The integrator reviews the three rooms in the game project. Drop the FBX files at the ship origin, then check:
+- that the materials resolve to the existing assets;
+- the look in URP;
+- the three rooms in first person.
 
 ## Commands used
 See README.md, section Rebuild:

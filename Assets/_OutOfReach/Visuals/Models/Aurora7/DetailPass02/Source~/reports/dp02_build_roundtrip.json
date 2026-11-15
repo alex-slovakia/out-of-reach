@@ -79,6 +79,51 @@
      ]
     }
    ]
+  },
+  "DP02_Cockpit": {
+   "fbx": "Meshes/DP02_Cockpit.fbx",
+   "objects_in_file": 6,
+   "checks": [
+    {
+     "object": "DP02_CKP_FrameLoom_L_Z000",
+     "ok": true,
+     "triangles": 7378,
+     "expected": 7378
+    },
+    {
+     "object": "DP02_CKP_FrameLoom_R_Z150",
+     "ok": true,
+     "triangles": 7378,
+     "expected": 7378
+    },
+    {
+     "object": "DP02_CKP_CrewNotes_L_Z075",
+     "ok": true,
+     "triangles": 2782,
+     "expected": 2782
+    },
+    {
+     "object": "DP02_CKP_AccessPanel_AftL",
+     "ok": true,
+     "triangles": 1778,
+     "expected": 1778
+    },
+    {
+     "object": "DP02_CKP_AccessPanel_AftR",
+     "ok": true,
+     "triangles": 1778,
+     "expected": 1778
+    },
+    {
+     "anchor": "DP02_CKP_ReviewEye",
+     "ok": true,
+     "point": [
+      0.3,
+      1.62,
+      0.95
+     ]
+    }
+   ]
   }
  },
  "failures": [],

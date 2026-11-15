@@ -6,7 +6,9 @@ Procedural detail that makes the ship's rooms look inhabited and mechanically be
 |---|---|---|
 | Engineering | `Meshes/DP02_Engineering.fbx` | done and checked (round trip, Unity import, clearance) |
 | Crew habitat | `Meshes/DP02_Habitat.fbx` | done and checked (round trip, Unity import, clearance) |
-| Cockpit | `Meshes/DP02_Cockpit.fbx` | not started in this checkpoint |
+| Cockpit | `Meshes/DP02_Cockpit.fbx` | done and checked (round trip, Unity import, clearance) |
+
+**Total: 58,882 triangles.** It uses 21 existing materials (19 `A7_*` plus `HB_BagQuilt` and `HB_Labels`) and adds no new materials or textures.
 
 `DetailPass02Layout.json` is the placement manifest. It covers only the rooms that are present.
 
@@ -42,21 +44,34 @@ The pieces are functions that are instanced in deliberate clusters; nothing is s
 - `quarter_turn`, `barrel_hinge`, `junction_box`, `service_panel`;
 - clusters: `frame_loom_cluster`, `access_panel_cluster`.
 
+## Cockpit (21,094 triangles, 15 existing materials)
+| Object | Host | Triangles | What it is |
+|---|---|---|---|
+| `DP02_CKP_FrameLoom_L_Z000` | Port cockpit ring-frame flange (-2.804, 0, 0.0), beside and behind the commander's seat | 7,378 | The kit's frame loom cluster, with connector labels 0 to 5. |
+| `DP02_CKP_FrameLoom_R_Z150` | Starboard cockpit ring-frame flange (2.804, 0, 1.5). It is not on frame z 0.0 because the deep stowage bay at z -0.75 is next to that frame. | 7,378 | The same cluster, with labels 8 to 13. |
+| `DP02_CKP_CrewNotes_L_Z075` | Port cockpit blanket bay at z 0.75, behind the commander's seat, above the bay rail | 2,782 | The flight log: a larger hardcover notebook with a tethered pen, held by a strap with a cam buckle between two tie-down points. Also a laminated procedure card (`p_repair` from `A7_Decals`) under an elastic strap, and a comm headset on a hook-and-loop strap. |
+| `DP02_CKP_AccessPanel_AftL` / `_AftR` | Wings of the portal at z 3, cockpit face z 2.92, x = -/+1.98 | 1,778 each | The kit's access panel. |
+
+Nothing is placed on the console, the seats, the forward bulkhead, the windows or any control panel.
+
 Habitat pieces (`Source/dp02_habitat.py`):
 - straps and stowage: `strap`, `cam_buckle`, `strap_anchor`, `pouch`, `elastic`, `placard`;
 - personal items: `notebook`, `photo`, `headphones`, `rolled_bag`, `wrap_strap`;
 - plumbing: `sweep`, `flex_hose`, `hex_union`, `capped_valve`, `twin_clamp`, `bulkhead_fitting`;
 - clusters: `stowage_cluster`, `crew_kit_cluster`, `grow_plumbing_cluster`, `grow_cable_cluster`.
 
+The cockpit has one extra piece, `checklist_card`, and one cluster, `crew_notes_cluster`, both in `Source/dp02_cockpit.py`.
+
 Every piece keeps a 0.5 mm gap above its host surface. The placements live in `Source/dp02_layout.py`. `Source/hb_labels_map.json` is the UV map of the delivered `HB_Labels` atlas: SHA-256 `47805ca0…` matches `Habitat/Textures/HB_Labels.png`.
 
 ## Rebuild
 From `DetailPass02/`, with Blender 5.3 and Python 3 with numpy:
 ```
-blender -b --factory-startup --python Source/build_dp02.py -- --export Engineering,Habitat
+blender -b --factory-startup --python Source/build_dp02.py -- --export Engineering,Habitat,Cockpit
 blender -b --factory-startup --python Source/roundtrip_habitat.py -- --out . --report "Source~/reports/dp02_build_report.json"
-blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat --check
-blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat --render [--views Habitat]
+blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat,Cockpit --check
+blender -b --factory-startup --python Source/build_dp02.py -- --rooms Engineering,Habitat,Cockpit --render [--views Cockpit]
+python -B Source/make_sheet.py
 python -B Source/make_metas.py
 python -B Source/make_manifest.py
 ```
@@ -97,8 +112,21 @@ python -B Source/make_manifest.py
   - `Previews~/DP02_HabitatCrewKit.png`;
   - `Previews~/DP02_HabitatGrowPlumbing.png`.
 
+## Evidence for the cockpit
+- **Blender round trip:** PASS for all three FBX files. 16 checks, 0 failed.
+- **Isolated Unity import:** PASS. Importer settings are as above, with 15 material remaps. Unity counts 21,094 triangles, the same as the report. Bounds, pivots and the anchor match with 0.0000 m error.
+- **Clearance and overlap:**
+  - Overlap: 0 triangle pairs for all 5 objects.
+  - Mount gap: 0.5 mm (crew notes: 3.8 mm, from the quilt host plane). Maximum standoff: 0.087 m.
+  - Nearest amber handrail: 0.264 m or more.
+  - Nearest seat or control: 1.26 m (left loom to the commander's seat). The crew notes are 1.58 m away.
+  - `AftL` panel: 0.49 m to an engineering-side switch panel behind the 0.16 m portal wing.
+  - Corridor box: 0.91 m or more. Airlock door sweep: 13.9 m or more.
+- **Previews:**
+  - `Previews~/DP02_Cockpit.png`, from `DP02_CKP_ReviewEye`;
+  - `Previews~/DP02_CockpitAft.png`;
+  - contact sheet `Previews~/DP02_Sheet.png` (six tiles).
+
 ## Unfinished
-- Cockpit.
-- The contact sheet.
 - The photo on the crew board reuses `photo_hills` from `HB_Labels`. The same picture is one of the three photos inside the berth, because no new atlas was made.
 - Material slots show as `null` in the isolated Unity project only, because the A7 material assets are not in that project. In the game project, `externalObjects` points them at the existing assets. This is not tested in the game project.
