@@ -453,6 +453,12 @@ namespace OutOfReach.Core
                 }
 
                 RefreshRates();
+                if (OverweightLaunch.IsOverweight(launched))
+                {
+                    // R27: an overweight manifest launched; the ascent fails through the normal Lost outcome path.
+                    LossCause = SurvivalFailure.LaunchOverweight;
+                    TryEndMission(MissionOutcome.Lost, OverweightLaunch.DescribeLoss(launched));
+                }
             }
 
             if (message.Current == GamePhase.Report)

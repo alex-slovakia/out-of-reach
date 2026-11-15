@@ -83,6 +83,12 @@ namespace OutOfReach.Core
         {
             MissionConfiguration draft = planner.DraftConfiguration;
             CommandResult valid = draft.Validate();
+            if (!valid.Succeeded && OverweightLaunch.IsOnlyOverweight(draft))
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Begin mission OVERWEIGHT: {0:0} of {1:0} kg, over the launch limit",
+                    draft.TotalMassKg, draft.MassLimitKg);
+            }
+
             return valid.Succeeded
                 ? string.Format(CultureInfo.InvariantCulture, "Begin mission: {0:0} of {1:0} kg, {2:0} of {3:0} credits",
                     draft.TotalMassKg, draft.MassLimitKg, draft.TotalBudgetCredits, draft.BudgetLimitCredits)
@@ -127,7 +133,8 @@ namespace OutOfReach.Core
 
                 if (state.Phase == GamePhase.Planning)
                 {
-                    return launchesFromConsole && planner.DraftConfiguration.Validate().Succeeded;
+                    return launchesFromConsole && (planner.DraftConfiguration.Validate().Succeeded
+                        || OverweightLaunch.IsOnlyOverweight(planner.DraftConfiguration));
                 }
 
                 return IsDiagnosticNext ? director.CheckLinkDiagnostic().Succeeded : communications.CheckTransmit().Succeeded;

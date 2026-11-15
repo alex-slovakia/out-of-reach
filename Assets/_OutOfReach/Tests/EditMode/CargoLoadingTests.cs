@@ -156,10 +156,6 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(loaded.Succeeded, Is.True, "the draft stays inspectable");
                 Assert.That(loaded.Explanation, Is.EqualTo("Battery module loaded. " + violation));
                 Assert.That(session.Planner.Draft.Validate().Explanation, Is.EqualTo(violation));
-                CommandResult launch = session.Planner.TryLaunch();
-                Assert.That(launch.Failure, Is.EqualTo(CommandFailure.PreconditionsNotMet));
-                Assert.That(session.State.Phase, Is.EqualTo(GamePhase.Planning));
-
                 using (var listPlanner = Fixtures.NewSession(AuroraMission.ScienceFocusPresetId))
                 {
                     Require(listPlanner.Planner.TrySetEquipment(AuroraMission.BatteryModule, 3));
