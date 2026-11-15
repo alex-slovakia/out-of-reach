@@ -1,0 +1,56 @@
+39,787 | == practice and marine boarding
+45,486 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+80,341 | ACTUAL MARINE TRANSFER
+83,285 | CAPTURE 00-arrival-before-accident screen=None day=1
+83,286 | == accident (cockpit check command)
+93,359 | CAPTURE 01-beat-days-1-2-accident screen=Beat day=1
+97,950 | CAPTURE 02-strip-refusal-before-repairs screen=None day=1
+97,951 | == day 1: repairs, first ration, first rest (station commands)
+101,413 | CAPTURE 03-day1-first-rest-root-overlay screen=None day=1
+111,202 | CAPTURE 04-strip-continue-routine screen=None day=1
+111,204 | == routine to day 5 by R, stop by R, again by R
+111,206 | KEY R
+113,641 | CAPTURE 05-montage-awake screen=Montage day=1
+115,021 | CAPTURE 06-montage-asleep screen=Montage day=2
+116,334 | KEY R
+117,852 | CAPTURE 07-report-stopped-by-the-crew screen=Report day=2
+117,854 | KEY Enter
+118,311 | KEY R
+131,358 | CAPTURE 08-beat-day5-consequences screen=Beat day=5
+135,921 | Day-5 decision: ScienceOrSalvage | option 1: Keep the instrument — Keep the science instrument: its load stays on the bus and no spare parts are recovered.
+136,276 | CAPTURE 09-decision-day5 screen=Decision day=5
+136,277 | KEY Digit1
+136,309 | == routine to day 9
+136,810 | KEY R
+154,624 | CAPTURE 10-beat-day9-contact screen=Beat day=9
+159,245 | CAPTURE 11-strip-contact-first screen=None day=9
+159,246 | == day 9: exterior repair and the call (domain commands)
+191,301 | CAPTURE 12-message-day9-hope screen=Message day=9
+191,302 | KEY Enter
+191,345 | == routine to day 14 with a pause
+191,949 | KEY R
+193,487 | KEY Escape
+195,622 | CAPTURE 13-pause-during-routine screen=None day=9
+195,624 | KEY Escape
+197,548 | CAPTURE 14-montage-days-9-14 screen=Montage day=10
+215,348 | CAPTURE 15-beat-day14-the-message screen=Beat day=14
+220,106 | CAPTURE 16-message-day14-failure-delayed screen=Message day=14
+220,107 | KEY Digit1
+221,196 | CAPTURE 17-message-new-plan screen=Message day=14
+221,197 | KEY Enter
+221,229 | == routine to day 20
+221,736 | KEY R
+247,374 | CAPTURE 18-beat-day20-last-reserves screen=Beat day=20
+252,206 | CAPTURE 19-decision-day20 screen=Decision day=20
+252,206 | KEY Digit2
+252,232 | == routine to day 30, beacon, docking
+252,738 | KEY R
+255,935 | CAPTURE 20-montage-days-20-30 screen=Montage day=21
+294,447 | CAPTURE 21-beat-day30-rendezvous screen=Beat day=30
+299,292 | CAPTURE 22-beacon-request screen=Beacon day=30
+299,293 | KEY Enter
+300,274 | CAPTURE 23-strip-beacon-requested screen=None day=30
+301,277 | CAPTURE 24-strip-docking screen=None day=30
+301,278 | KEY R
+304,889 | CAPTURE 25-after-docking screen=None day=30
+304,890 | Final: day 30, outcome Recovered

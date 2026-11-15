@@ -1,0 +1,4 @@
+CHAPTER-UI-01 install into Assets/_OutOfReach/Scenes/Bootstrap.unity:
+  presenter: I01 mission composition/ChapterUi (document MissionFlightBoard)
+  composition: chapterUi and chapterStyle assigned
+  MissionRuntime: chapterLoop = true, survivalExtension = true
