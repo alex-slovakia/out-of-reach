@@ -75,6 +75,10 @@ namespace OutOfReach.Presentation.UI.Chapter
         public Label StripDetail { get; }
         public Button StripAction { get; }
         public Label StripActionText { get; }
+        /// <summary>MISSION-DATA: Core's NASA/JPL Horizons reference sample (distance, one-way light time).</summary>
+        public Label StripData { get; }
+        /// <summary>MISSION-DATA: the source and what the number stands for.</summary>
+        public Label StripSource { get; }
 
         public event Action StripActionClicked;
         public event Action MontageStopClicked;
@@ -228,6 +232,12 @@ namespace OutOfReach.Presentation.UI.Chapter
             Strip.Add(StripTitle);
             Strip.Add(StripDetail);
             Strip.Add(StripAction);
+            StripData = Text("chapter-strip-data", "chapter-strip-data");
+            StripSource = Text("chapter-strip-source", "chapter-strip-source");
+            Show(StripData, false);
+            Show(StripSource, false);
+            Strip.Add(StripData);
+            Strip.Add(StripSource);
 
             // Back to front: strip and beat under the montage; the report and the modal card on top.
             Layer.Add(Strip);
