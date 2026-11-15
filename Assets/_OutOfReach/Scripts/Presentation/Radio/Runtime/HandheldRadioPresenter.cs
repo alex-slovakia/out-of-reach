@@ -250,7 +250,11 @@ namespace OutOfReach.Presentation.Radio
         private void DetectTriggers()
         {
             GamePhase phase = runtime.GameState.Phase;
-            if (phase == GamePhase.Planning) sawPlanning = true;
+            if (phase == GamePhase.Planning)
+            {
+                sawPlanning = true;
+                TryPlay(RadioBeats.PreflightBriefing);   // once per session, as the preflight planning begins
+            }
             var player = runtime.Player;
             if (!played.Contains(RadioBeats.AuroraBoarding) && !played.Contains(RadioBeats.PadBoarding) && player && player.ControlAllowed)
             {

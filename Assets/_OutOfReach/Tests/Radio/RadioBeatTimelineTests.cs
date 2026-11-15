@@ -139,6 +139,31 @@ namespace OutOfReach.Tests.Radio
         }
 
         [Test]
+        public void PreflightBriefingIsASpokenPadWalkthroughForThePlanningPhase()
+        {
+            RadioBeat beat = Beat(RadioBeats.PreflightBriefing);
+            Assert.IsTrue(beat.IncomingCall, "Pad calls the player");
+            Assert.That(beat.Lines.Count, Is.InRange(4, 5));
+            foreach (RadioLine line in beat.Lines)
+            {
+                Assert.AreEqual(RadioBeats.PadSpeaker, line.Speaker);
+                Assert.AreEqual(RadioLineKind.Receive, line.Kind);
+                Assert.That(line.Text.Length, Is.LessThanOrEqualTo(RadioLine.WholeLineCharacters), line.Text);
+                Assert.Contains(line.CueId, RadioBeats.VoiceCues, "Every briefing line is recorded");
+                string transcript = System.IO.File.ReadAllText(
+                    "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/" + line.CueId + ".txt").Trim();
+                Assert.AreEqual(transcript, line.Text, "The subtitle is exactly the transcript of the take");
+            }
+            string spoken = string.Join(" ", beat.Lines.Select(l => l.Text)).ToLowerInvariant();
+            // Core's AuroraMission.MassLimitKg is 600 kg; the briefing names the same limit and the survival cargo.
+            foreach (string topic in new[] { "food and water", "solar wing", "spare parts kit", "six hundred kilograms", "orbit" })
+                StringAssert.Contains(topic, spoken);
+            foreach (GamePhase phase in (GamePhase[])System.Enum.GetValues(typeof(GamePhase)))
+                Assert.AreEqual(phase != GamePhase.Planning, RadioBeats.IsStale(RadioBeats.PreflightBriefing, phase), phase.ToString());
+            Assert.AreEqual(RadioBeats.VoiceCues.Length, RadioBeats.VoiceCues.Distinct().Count(), "Cue ids are unique");
+        }
+
+        [Test]
         public void Day14AnnouncementUsesTheFreshTakeAndNamesNoDate()
         {
             RadioBeat beat = Beat(RadioBeats.Day14Announcement);

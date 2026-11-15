@@ -64,3 +64,6 @@ Alex asked for the radio lines that had no voice, and for a fresh Day-14 crash t
   has been listened to by a human (`listening_audited: false`). The Day-14 take is the second one: the first was
   transcribed as "is crashed" and discarded.
   Delete a WAV and re-run the installer to fall back to subtitles with the radio sound only for that line.
+- **vo41 - vo45 (preflight briefing, added later the same evening):** five Pad Control lines for the beat
+  `radio.preflight-briefing`, same model, voice (Orus) and handling. The spoken limit is Core's
+  `AuroraMission.MassLimitKg` (600 kg).

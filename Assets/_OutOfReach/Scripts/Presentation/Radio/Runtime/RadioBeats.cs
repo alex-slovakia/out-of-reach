@@ -110,6 +110,8 @@ namespace OutOfReach.Presentation.Radio
         public const string AuroraBoarding = "radio.aurora-boarding";
         /// <summary>Alternative placement: radio check at the transport hatch on the pad, before seat E.</summary>
         public const string PadBoarding = "radio.pad-boarding";
+        /// <summary>Pad Control's spoken cargo walkthrough as the preflight planning begins (Practice or Timed).</summary>
+        public const string PreflightBriefing = "radio.preflight-briefing";
         public const string DistressCall = "radio.distress-call";
         public const string EarthReplyDay14 = "radio.earth-reply-day14";
         public const string Day14Call = "radio.day14-call";
@@ -132,10 +134,16 @@ namespace OutOfReach.Presentation.Radio
         public const string EarthWeHearYouCue = "vo37_mc_earth_we_hear_you";
         public const string EarthRescueDay14Cue = "vo38_mc_earth_rescue_day14";
         public const string PriorityTrafficCue = "vo39_mc_priority_traffic";
+        public const string BriefingIntroCue = "vo41_pad_briefing_intro";
+        public const string BriefingFoodWaterCue = "vo42_pad_briefing_food_water";
+        public const string BriefingSolarSparesCue = "vo43_pad_briefing_solar_spares";
+        public const string BriefingMassLimitCue = "vo44_pad_briefing_mass_limit";
+        public const string BriefingOrbitCue = "vo45_pad_briefing_orbit";
 
         /// <summary>Every recorded cue, in script order (installer binding and tests).</summary>
         public static readonly string[] VoiceCues =
         {
+            BriefingIntroCue, BriefingFoodWaterCue, BriefingSolarSparesCue, BriefingMassLimitCue, BriefingOrbitCue,
             AuroraRadioCheckCue, AuroraLoudAndClearCue, PadRadioCheckCue, PadLoudAndClearCue, PadStrapInCue, MaydayCue,
             RequestingRescueCue, EarthWeHearYouCue, EarthRescueDay14Cue, PriorityTrafficCue, RescueLostCue,
         };
@@ -147,6 +155,13 @@ namespace OutOfReach.Presentation.Radio
 
         private static readonly Dictionary<string, RadioBeat> Beats = new Dictionary<string, RadioBeat>(StringComparer.Ordinal)
         {
+            // The spoken limit is Core's AuroraMission.MassLimitKg (600 kg). Every line fits one subtitle line.
+            [PreflightBriefing] = new RadioBeat(PreflightBriefing, true,
+                new RadioLine(PadSpeaker, "Aurora, Pad. Preflight briefing before you load.", RadioLineKind.Receive, BriefingIntroCue),
+                new RadioLine(PadSpeaker, "Take food and water. You will need both.", RadioLineKind.Receive, BriefingFoodWaterCue),
+                new RadioLine(PadSpeaker, "Take the solar wing and the spare parts kit in case you get stranded or lose power.", RadioLineKind.Receive, BriefingSolarSparesCue),
+                new RadioLine(PadSpeaker, "Keep the total under six hundred kilograms.", RadioLineKind.Receive, BriefingMassLimitCue),
+                new RadioLine(PadSpeaker, "Any heavier and the vehicle will not make orbit. Pad out.", RadioLineKind.Receive, BriefingOrbitCue)),
             [AuroraBoarding] = new RadioBeat(AuroraBoarding, true,
                 new RadioLine(ControlSpeaker, "Aurora Seven, Mission Control. We show you aboard. Radio check, how do you read?", RadioLineKind.Receive, AuroraRadioCheckCue),
                 new RadioLine(PlayerSpeaker, "Loud and clear, Control. Aboard and floating. Starting cockpit checks.", RadioLineKind.Transmit, AuroraLoudAndClearCue)),
@@ -179,7 +194,7 @@ namespace OutOfReach.Presentation.Radio
         public static bool IsStale(string beatId, GamePhase phase)
         {
             if (beatId == AuroraBoarding) return phase != GamePhase.Intro;
-            if (beatId == PadBoarding) return phase != GamePhase.Planning;
+            if (beatId == PadBoarding || beatId == PreflightBriefing) return phase != GamePhase.Planning;
             return false;
         }
 
