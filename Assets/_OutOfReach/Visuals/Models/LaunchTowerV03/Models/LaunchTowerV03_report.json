@@ -3,8 +3,8 @@
  "frame": "Unity metres, prologue root, identity",
  "objects": {
   "LTV3_Tower": {
-   "tris": 26140,
-   "verts": 17628,
+   "tris": 25468,
+   "verts": 17170,
    "origin": [
     0.0,
     0.0,
@@ -13,23 +13,23 @@
    "bounds_min": [
     -4.07,
     -32.831,
-    -14.15
+    -13.95
    ],
    "bounds_max": [
-    4.75,
-    23.75,
+    5.25,
+    23.6,
     -4.18
    ],
    "tris_by_material": {
-    "LT3_Galvanized": 4196,
-    "LT3_SteelGraphite": 12192,
+    "LT3_Galvanized": 4608,
+    "LT3_SteelGraphite": 11330,
     "LT3_Hazard": 72,
-    "LT3_Grating": 2100,
-    "LT3_SafetyAmber": 6084,
-    "LT3_LampRed": 152,
-    "LT3_Rubber": 332,
+    "LT3_Grating": 2088,
+    "LT3_SafetyAmber": 5964,
+    "LT3_LampRed": 76,
+    "LT3_Rubber": 342,
     "LT3_WarningRed": 892,
-    "LT3_LampWarm": 120
+    "LT3_LampWarm": 96
    }
   },
   "LTV3_AccessArm": {
@@ -80,7 +80,7 @@
   "LT3_LampCyan",
   "LT3_GlassDark"
  ],
- "total_triangles": 28718,
+ "total_triangles": 28046,
  "keep_clear_vertices": {
   "arm_walkway": 0,
   "hatch_doorway": 0,

@@ -23,16 +23,21 @@ namespace OutOfReach.Visuals.LaunchTowerV03.Editor
         // Same pivot as TransportLaunch AccessArmPivot / LaunchTowerV02 LTV2_ArmDetail (prologue root frame, metres).
         public static readonly Vector3 ArmPivot = new Vector3(-0.9f, 0f, -6.9f);
 
-        private static readonly string[] Textured =
+        // name -> (metallic, smoothness). Scalars on purpose: no metallic/smoothness map, so a missing or mis-imported
+        // texture can never turn the paint into a mirror that reflects the sky.
+        private static readonly Dictionary<string, Vector2> TexturedScalars = new Dictionary<string, Vector2>
         {
-            "LT3_SteelGraphite", "LT3_SafetyAmber", "LT3_Galvanized", "LT3_Grating", "LT3_WhiteRoom",
-            "LT3_WarningRed", "LT3_Rubber", "LT3_Hazard",
+            ["LT3_SteelGraphite"] = new Vector2(0f, .38f), ["LT3_SafetyAmber"] = new Vector2(0f, .40f),
+            ["LT3_Galvanized"] = new Vector2(.5f, .35f), ["LT3_Grating"] = new Vector2(.5f, .30f),
+            ["LT3_WhiteRoom"] = new Vector2(0f, .35f), ["LT3_WarningRed"] = new Vector2(0f, .40f),
+            ["LT3_Rubber"] = new Vector2(0f, .20f), ["LT3_Hazard"] = new Vector2(0f, .35f),
         };
+        private static readonly string[] Textured = TexturedScalars.Keys.ToArray();
         private static readonly Dictionary<string, Color> Lamps = new Dictionary<string, Color>
         {
-            ["LT3_LampWarm"] = new Color(1f, .78f, .5f) * 6f,
-            ["LT3_LampRed"] = new Color(1f, .06f, .03f) * 8f,
-            ["LT3_LampCyan"] = new Color(.2f, .9f, 1f) * 4f,
+            ["LT3_LampWarm"] = new Color(1f, .8f, .55f) * 3f,
+            ["LT3_LampRed"] = new Color(1f, .06f, .03f) * 4f,
+            ["LT3_LampCyan"] = new Color(.2f, .9f, 1f) * 2.5f,
         };
         private const string Glass = "LT3_GlassDark";
 
@@ -55,7 +60,7 @@ namespace OutOfReach.Visuals.LaunchTowerV03.Editor
                 var importer = (TextureImporter)AssetImporter.GetAtPath(path)
                     ?? throw new InvalidOperationException("Texture not imported: " + path);
                 bool normal = path.EndsWith("_Normal.png", StringComparison.Ordinal);
-                bool linear = normal || path.EndsWith("_MetallicSmoothness.png", StringComparison.Ordinal);
+                bool linear = normal;
                 bool changed = false;
                 void Set<T>(T current, T wanted, Action<T> apply) { if (!EqualityComparer<T>.Default.Equals(current, wanted)) { apply(wanted); changed = true; } }
                 Set(importer.textureType, normal ? TextureImporterType.NormalMap : TextureImporterType.Default, v => importer.textureType = v);
@@ -96,24 +101,27 @@ namespace OutOfReach.Visuals.LaunchTowerV03.Editor
                 mat.SetFloat("_Cull", 2f);
                 mat.SetFloat("_AlphaClip", 0f);
                 mat.DisableKeyword("_ALPHATEST_ON");
-                mat.DisableKeyword("_EMISSION");
+                mat.DisableKeyword("_METALLICSPECGLOSSMAP");
+                mat.SetTexture("_MetallicGlossMap", null);
+                // One keyword set (_NORMALMAP + _EMISSION) for every LT3 material, so they share a single URP Lit
+                // variant: the lamps never sit on a separate still-compiling (editor cyan placeholder) variant.
+                mat.EnableKeyword("_NORMALMAP");
+                mat.EnableKeyword("_EMISSION");
+                mat.SetTexture("_BumpMap", null);
                 mat.SetColor("_EmissionColor", Color.black);
                 mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
                 mat.renderQueue = -1;
                 if (Textured.Contains(name))
                 {
-                    Texture2D baseMap = Tex(name + "_BaseColor") ?? throw new InvalidOperationException("Missing " + name + "_BaseColor");
+                    Texture2D baseMap = Tex(name + "_BaseColor") ?? throw new InvalidOperationException("Missing texture " + name
+                        + "_BaseColor.png (Git LFS pointer not smudged?)");
                     mat.SetTexture("_BaseMap", baseMap);
                     mat.SetTexture("_MainTex", baseMap);
-                    mat.SetTexture("_MetallicGlossMap", Tex(name + "_MetallicSmoothness"));
-                    mat.EnableKeyword("_METALLICSPECGLOSSMAP");
-                    mat.SetFloat("_Smoothness", 1f);
-                    mat.SetFloat("_GlossMapScale", 1f);
+                    mat.SetFloat("_Metallic", TexturedScalars[name].x);
+                    mat.SetFloat("_Smoothness", TexturedScalars[name].y);
                     mat.SetFloat("_SmoothnessTextureChannel", 0f);
-                    Texture2D normal = Tex(name + "_Normal");
-                    mat.SetTexture("_BumpMap", normal);
-                    if (normal) { mat.EnableKeyword("_NORMALMAP"); mat.SetFloat("_BumpScale", .8f); }
-                    else mat.DisableKeyword("_NORMALMAP");
+                    mat.SetTexture("_BumpMap", Tex(name + "_Normal"));
+                    mat.SetFloat("_BumpScale", .8f);
                     if (name == "LT3_Grating")
                     {
                         mat.SetFloat("_AlphaClip", 1f);
@@ -131,15 +139,13 @@ namespace OutOfReach.Visuals.LaunchTowerV03.Editor
                     mat.SetFloat("_Metallic", 0f);
                     mat.SetFloat("_Smoothness", .85f);
                     mat.SetColor("_EmissionColor", emission);
-                    mat.EnableKeyword("_EMISSION");
                     mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.BakedEmissive;
                 }
                 else
                 {
                     mat.SetColor("_BaseColor", new Color(.02f, .025f, .03f, 1f));
-                    mat.SetFloat("_Metallic", .2f);
-                    mat.SetFloat("_Smoothness", .95f);
-                    mat.DisableKeyword("_METALLICSPECGLOSSMAP");
+                    mat.SetFloat("_Metallic", 0f);
+                    mat.SetFloat("_Smoothness", .7f);
                 }
                 EditorUtility.SetDirty(mat);
                 result.Add(name, mat);

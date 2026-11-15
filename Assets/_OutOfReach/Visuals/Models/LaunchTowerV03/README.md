@@ -27,10 +27,10 @@ What the installer does (additive, reversible, idempotent):
 
 | Path | What |
 |---|---|
-| `Models/LaunchTowerV03.fbx` | 2 mesh objects, **28,718 triangles** (tower 26,140, arm 2,578), no LODs |
+| `Models/LaunchTowerV03.fbx` | 2 mesh objects, **28,046 triangles** (tower 25,468, arm 2,578), no LODs |
 | `Prefabs/LaunchTowerV03.prefab` | `LTV3_Tower`, `LTV3_AccessArm` (origin = arm pivot), 8 box colliders, 3 anchors |
 | `Materials/LT3_*.mat` | 12 URP Lit materials (graphite steel, safety amber, warning red, galvanised, grating cut-out, white room, hazard, rubber, dark glass, warm/red/cyan emissive lamps) |
-| `Textures/LT3_*.png` | 21 procedural tileable textures, 1024 px (grating 512): BaseColor, MetallicSmoothness, Normal |
+| `Textures/LT3_*.png` | 12 procedural tileable textures, 1024 px (grating 512): BaseColor, Normal. Metallic/smoothness are material scalars |
 | `Editor/` | builder + installer (own Editor-only asmdef, no project references) |
 | `Models/LaunchTowerV03_report.json` | Blender build report: triangles per object/material, bounds, keep-clear vertex counts |
 | `Source~/` | `build_tower_v03.py`, `lt3_tex.py`, `LaunchTowerV03.blend`, the Unity scratch check and its output |
@@ -45,8 +45,8 @@ What the installer does (additive, reversible, idempotent):
   to the service levels. Caged ladder and vertical cable tray with cable bundle on -x.
 - **Services**: red fire-water riser with flanges, valve station and drencher header; two retracted umbilical swing
   arms with hose loops and hazard carrier plates (parked 1.2 m off the booster, nothing attached to the vehicle).
-- **Lighting / lightning mast** behind the crew deck up to y +23.75: tapered lattice, floodlight gallery, lightning rod,
-  red obstruction lights. Lamps are emissive meshes only — no `Light` components (the lighting lane decides).
+- **Lightning / lighting pole** at the rear +x corner beyond the deck (x 4.5, z -13.4) up to y +23.6: tapered steel
+  pole with flanged base on an outrigger girder, floodlight crossarm, air terminal, red obstruction lights. Lamps are emissive meshes only — no `Light` components (the lighting lane decides).
 - **Crew access arm**: slewing drive at the pivot, grated walkway on cross beams, Pratt side trusses with portals,
   standing-seam roof, amber handrails, walkway lamps, energy chain and service lines on +x, hazard thresholds.
 - **White room** at the hatch end (z -4.75..-2.74): white panelled walls with windows, walk-through door with hazard
@@ -66,10 +66,24 @@ walls, door jambs, ceiling (underside y 2.38).
    with `--export` only (Blender 3.6.1). Export runs separately so the FBX carries no local path.
 2. Unity **6000.3.28f1** batch run in an empty scratch URP 17.3.0 project (not the game project):
    `Source~/Unity/LaunchTowerV03ScratchCheck.cs`, output in `Source~/Unity/unity_scratch_check.txt` — **RESULT PASS**:
-   both scripts compile, 28,718 triangles after import, tower at (0,0,0), arm at (-0.9,0,-6.9), all materials URP Lit,
+   both scripts compile, 28,046 triangles after import, tower at (0,0,0), arm at (-0.9,0,-6.9), all materials URP Lit,
    installer run twice against a stand-in hierarchy with the Bootstrap object names (rotated, offset root): arm under
    the control frame at the pivot, V02 deactivated, blockout renderers off, layer copied, floor ray hit at y 0.0000,
-   walkway corridor free of colliders, four URP captures written.
+   walkway corridor free of colliders. URP captures (`urp_*.png`) use read-only copies of the real
+   `TransportLaunch.fbx` and `MarineDock.fbx` in their Bootstrap poses (neutral grey), incl. the player's view from
+   `GroundEntry` (prologue (0, 1.7, -12.34)) toward the arm.
+
+## Fix 1 after the first playtest (release session, 15 Nov)
+
+- **Cyan box at the top**: the 5 m-wide lattice mast directly behind the spawn is gone (it towered over the arrival
+  platform). Lamp materials now share the single URP Lit keyword set of the other LT3 materials (`_NORMALMAP` +
+  `_EMISSION`), so no separate shader variant is compiling (editor cyan placeholder) on first view, and emission is lower.
+- **Pitch-black lattice**: the graphite was metallic map driven and very dark; with no reflection probe a metallic
+  surface only reflects the dark ambient. Now non-metallic paint (metallic 0, smoothness 0.38), base colour lifted to
+  a mid graphite, no metallic/smoothness maps at all. Galvanised and grating stay metallic 0.5.
+- **Placement**: the walkway is unchanged (same pivot, floor y 0, z -6.9..-2.62, meets the crew-deck edge at
+  z -6.9); the only structure above deck level is now the slim pole outside the deck at the rear +x corner.
+- Installer re-runs the builder when a prefab material lost its base texture (e.g. an un-smudged LFS checkout).
 
 ## Limits (honest)
 
