@@ -44,7 +44,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             for (int layer = 0; layer < 2; layer++)
             {
                 // layer 0: the cap in the canopy; layer 1: a wider rosette lying on the ground.
-                float half = layer == 0 ? .62f : .8f, y = layer == 0 ? .55f : .015f;
+                float half = layer == 0 ? .62f : .8f, y = layer == 0 ? .55f : .05f;   // clumps are sunk 4 cm: keep the rosette above the soil
                 int cap = p.Count;
                 for (int k = 0; k < 4; k++)
                 {
