@@ -1,5 +1,13 @@
 # I06 player feedback and carry correction — 15 November 2026
 
+## Sources simplification — latest user override
+
+Alex dropped the planet/orbit diagram entirely. Sources now keeps NASA links and expandable metadata, Music & Art and Assumptions. No right-hand scrollbar or boxed Back; centered up/down controls appear when content overflows. Back sits at bottom left with Escape/cancel handling. The old orbit implementation and its Unity Resources were removed; numeric research is archived outside the build.
+
+Unity 6000.3.28f1 run `TestResults/i06-sources-clean-03.log` exited 0 with [68 scoped checks](sources-v03-checks.jsonl), [result](sources-v03-result.json), and [source hashes](sources-v03-source-hashes.json). It checked diagram absence, hidden scrollbar, borderless Back, arrow scrolling in both directions, tabs, disclosure and restart, alongside the earlier music/cargo/outcome checks. [Actual native Sources capture](sources-v03-native.png). Physical Escape input was not exercised by the harness. No full-route or movement acceptance is claimed.
+
+The v02 Sources capture below was rejected and is historical evidence only. The victory layout remains unchanged.
+
 ## Latest presentation delivery
 
 Runtime `323d926`: Alex-approved Cobalt replaces isolation music with a120-second licensed loop; clip GUID preserved, attribution/seam/level evidence committed. Titan approved and unchanged; rejected Resonance is not used. Other tension/emergency/recovery loops remain unchanged.

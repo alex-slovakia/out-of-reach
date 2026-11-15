@@ -164,7 +164,6 @@
 .recorder-source-disclosure { flex-shrink: 0; margin: 16px 0 0 0; }
 .recorder-source-disclosure > .unity-toggle { min-height: 44px; font-size: 20px; color: #e5cfaa; }
 .recorder-source-disclosure > .unity-foldout__content { margin-left: 0; }
-.recorder-source-orbit { height: auto; flex-shrink: 0; margin-bottom: 18px; }
 .recorder-detail.recorder-sources-open { padding: 0; background-color: rgba(8, 11, 12, 0.65); border-width: 0; }
 .recorder-sources-open .recorder-detail-navigation { padding: 0 0 24px 0; }
 .recorder-sources-open .recorder-section { border-top-color: rgba(184, 193, 188, 0.18); }
@@ -186,14 +185,20 @@
 
 .recorder-sources-open .recorder-detail-navigation { padding-bottom: 8px; }
 .recorder-source-page { padding-top: 0; }
-.recorder-source-orbit { margin-bottom: 15px; }
 .recorder-source-heading { font-size: 44px; }
 .recorder-source-deck { margin-bottom: 20px; }
 .recorder-source-description { font-size: 20px; margin-bottom: 10px; }
 .recorder-source-note { font-size: 13px; margin-top: 12px; }
 .recorder-source-page .recorder-source-link { border-width: 0; -unity-text-align: middle-left; padding: 5px 0; margin: 0; }
 .recorder-source-disclosure { margin-top: 5px; }
-.recorder-sources-open .unity-scroller--vertical { width: 8px; }
-.recorder-sources-open .unity-scroller__low-button, .recorder-sources-open .unity-scroller__high-button { display: none; }
-.recorder-sources-open .unity-base-slider__tracker { background-color: rgba(150, 165, 157, 0.12); border-width: 0; }
-.recorder-sources-open .unity-base-slider__dragger { background-color: #8b8f84; border-width: 0; border-radius: 0; }
+.recorder-source-body { flex-grow: 1; flex-basis: 0; min-width: 0; min-height: 0; }
+.recorder-source-arrows { flex-direction: row; justify-content: center; flex-shrink: 0; height: 44px; }
+.recorder-source-arrows .recorder-button { background-color: rgba(0, 0, 0, 0); border-width: 0; margin: 0 8px; padding: 0 12px; font-size: 26px; color: #d7be85; }
+.recorder-source-arrows .recorder-button:disabled { opacity: 0.15; }
+.recorder-source-arrows .recorder-button:hover, .recorder-source-arrows .recorder-button:focus { color: #ffffff; background-color: rgba(255, 255, 255, 0.06); }
+.recorder-sources-open .recorder-detail-navigation { position: absolute; left: 0; bottom: 0; padding: 0; }
+.recorder-sources-open #reportBackButton { border-width: 0; background-color: rgba(0, 0, 0, 0); padding: 8px 0; color: #c5c6c2; font-size: 18px; }
+.recorder-sources-open #reportBackButton:hover, .recorder-sources-open #reportBackButton:focus { color: #edbc72; border-width: 0; }
+.recorder-sources-open .recorder-source-layout { margin-top: 28px; margin-bottom: 56px; }
+.recorder-sources-open #reportNasaPage { padding-top: 90px; }
+.recorder-loss-compact .recorder-sources-open #reportNasaPage { padding-top: 40px; }

@@ -13,7 +13,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / 'docs/data/reference-orbits'
-RUNTIME = ROOT / 'Assets/_OutOfReach/UI/Report/Resources/OorReferenceOrbits.json'
+RUNTIME = ROOT / 'docs/data/reference-orbits/normalized.json'
 START = datetime(2026, 11, 14, 8, tzinfo=timezone.utc)
 DAYS = 700
 END = START + timedelta(days=DAYS)

@@ -14,6 +14,7 @@ namespace OutOfReach.Presentation.UI.Report
         private readonly ScrollView record, sources;
         private readonly VisualElement sourceLayout, nasaPage, artPage, assumptionsPage;
         private readonly Button nasaTab, artTab, assumptionsTab;
+        private readonly Button sourceUp, sourceDown;
         private readonly Button recordButton, sourcesButton, restartButton, backButton, marsSourceButton, rollPauseButton, rollSkipButton;
         private bool hasReport, hasSources, showingSources, canRestart, restartPending, disposed;
         private bool reducedMotion;
@@ -30,6 +31,8 @@ namespace OutOfReach.Presentation.UI.Report
             Root = Element("flightRecorder", "flight-recorder");
             Root.styleSheets.Add(styleSheet);
             Root.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            Root.RegisterCallback<KeyDownEvent>(OnDetailKeyDown);
+            Root.RegisterCallback<NavigationCancelEvent>(OnDetailCancel);
             Root.Add(new ReportShade());
             endCard = Element("reportEndCard", "recorder-end-card");
             var hero = Element("reportHero", "recorder-end-hero");
@@ -70,6 +73,7 @@ namespace OutOfReach.Presentation.UI.Report
             record.RegisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
             record.RegisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
             sources = Scroll("reportSources");
+            sources.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             sourceLayout = Element("reportSourceLayout", "recorder-source-layout");
             var sourceNav = Element("reportSourceNavigation", "recorder-source-navigation");
             sourceNav.Add(FlightRecorderElements.Text("SOURCES", "recorder-source-title"));
@@ -81,7 +85,18 @@ namespace OutOfReach.Presentation.UI.Report
             artPage = Element("reportArtPage", "recorder-source-page");
             assumptionsPage = Element("reportAssumptionsPage", "recorder-source-page");
             sources.Add(nasaPage); sources.Add(artPage); sources.Add(assumptionsPage);
-            sourceLayout.Add(sourceNav); sourceLayout.Add(sources);
+            var sourceBody = Element("reportSourceBody", "recorder-source-body");
+            var sourceArrows = Element("reportSourceArrows", "recorder-source-arrows");
+            sourceUp = Button("↑", "reportSourcesUp", () => ScrollSources(-1));
+            sourceDown = Button("↓", "reportSourcesDown", () => ScrollSources(1));
+            sourceUp.tooltip = "Scroll up";
+            sourceDown.tooltip = "Scroll down";
+            sourceArrows.Add(sourceUp); sourceArrows.Add(sourceDown);
+            sourceBody.Add(sources); sourceBody.Add(sourceArrows);
+            sources.contentContainer.RegisterCallback<GeometryChangedEvent>(OnSourceGeometryChanged);
+            sources.contentViewport.RegisterCallback<GeometryChangedEvent>(OnSourceGeometryChanged);
+            sources.verticalScroller.valueChanged += OnSourceScrollChanged;
+            sourceLayout.Add(sourceNav); sourceLayout.Add(sourceBody);
             marsCredits = Element("marsImageryCredits", "recorder-section");
             marsCredits.Add(FlightRecorderElements.Text("Mars surface imagery", "recorder-section-title"));
             marsCredits.Add(FlightRecorderElements.Text("NASA/Jet Propulsion Laboratory & Caltech", "recorder-classification"));
@@ -227,6 +242,11 @@ namespace OutOfReach.Presentation.UI.Report
             Clear();
             disposed = true;
             Root.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            Root.UnregisterCallback<KeyDownEvent>(OnDetailKeyDown);
+            Root.UnregisterCallback<NavigationCancelEvent>(OnDetailCancel);
+            sources.contentContainer.UnregisterCallback<GeometryChangedEvent>(OnSourceGeometryChanged);
+            sources.contentViewport.UnregisterCallback<GeometryChangedEvent>(OnSourceGeometryChanged);
+            sources.verticalScroller.valueChanged -= OnSourceScrollChanged;
             record.UnregisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
             record.UnregisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
             recordButton.clicked -= OnRecordRequested;
@@ -271,6 +291,38 @@ namespace OutOfReach.Presentation.UI.Report
         private void OnSourcesRequested() { if (!disposed && hasReport && hasSources) OpenDetail(true); }
         private void OnBackRequested() { if (!disposed && hasReport) ShowEndCard(true); }
 
+        private void OnDetailKeyDown(KeyDownEvent evt)
+        {
+            if (evt.keyCode != KeyCode.Escape || detail.ClassListContains("recorder-hidden")) return;
+            OnBackRequested();
+            evt.StopPropagation();
+        }
+        private void OnDetailCancel(NavigationCancelEvent evt)
+        {
+            if (detail.ClassListContains("recorder-hidden")) return;
+            OnBackRequested();
+            evt.StopPropagation();
+        }
+        private void ScrollSources(int direction)
+        {
+            if (disposed || !showingSources || detail.ClassListContains("recorder-hidden")) return;
+            float step = Mathf.Max(100f, sources.contentViewport.layout.height * .65f);
+            sources.scrollOffset = new Vector2(0f, Mathf.Clamp(sources.scrollOffset.y + direction * step,
+                0f, Mathf.Max(0f, sources.verticalScroller.highValue)));
+            UpdateSourceArrows();
+        }
+        private void OnSourceGeometryChanged(GeometryChangedEvent evt) => UpdateSourceArrows();
+        private void OnSourceScrollChanged(float value) => UpdateSourceArrows();
+        private void UpdateSourceArrows()
+        {
+            float bottom = sources.verticalScroller.highValue;
+            bool overflowing = bottom > 1f;
+            sourceUp.style.visibility = overflowing ? Visibility.Visible : Visibility.Hidden;
+            sourceDown.style.visibility = overflowing ? Visibility.Visible : Visibility.Hidden;
+            sourceUp.SetEnabled(overflowing && sources.scrollOffset.y > 1f);
+            sourceDown.SetEnabled(overflowing && sources.scrollOffset.y < bottom - 1f);
+        }
+
         private Button SourceTab(string text, string name, int index)
         {
             var button = Button(text, name, () =>
@@ -294,9 +346,6 @@ namespace OutOfReach.Presentation.UI.Report
 
         private void BuildSources(IMissionReport report)
         {
-            var orbitHost = Element("sources-orbit-host", "recorder-source-orbit");
-            orbitHost.Add(new ReferenceOrbitView(true));
-            nasaPage.Add(orbitHost);
             nasaPage.Add(FlightRecorderElements.Text("NASA / JPL HORIZONS", "recorder-source-heading"));
             nasaPage.Add(FlightRecorderElements.Text("The distance behind the delay.", "recorder-source-deck"));
             nasaPage.Add(FlightRecorderElements.Text("Earth–Mars reference data sets the minimum time for a signal to reach Earth and return.", "recorder-source-description"));
@@ -369,6 +418,7 @@ namespace OutOfReach.Presentation.UI.Report
             detail.EnableInClassList("recorder-sources-open", sourceView);
             Show(rollControls, !sourceView && finalRecord);
             detailTitle.text = sourceView ? string.Empty : "Mission record";
+            backButton.text = sourceView ? "ESC   Back" : "Back";
             (sourceView ? sources : record).scrollOffset = Vector2.zero;
             backButton.Focus();
             if (!sourceView && finalRecord) StartRecordRoll();

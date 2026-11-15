@@ -1,4 +1,6 @@
-# Sun, Earth and Mars reference — 15 November 2026
+# Archived Sun, Earth and Mars research — 15 November 2026
+
+**Withdrawn from the UI at Alex’s request.** No planet diagram or orbit controls ship in Sources. The normalized file is now `normalized.json` in this archive, outside Unity Assets. Display and integration notes below describe the removed prototype only.
 
 This is a **fixed, dated NASA reference**, separate from the game's authority and fictional spacecraft. Body centres are shown at **2026-11-14 08:00 UTC**, the existing reference epoch. Paths contain701 inclusive daily samples through **2028-10-14 08:00 UTC** (700days), enough to show approximately one Mars revolution and almost two Earth revolutions. Daily samples form straight segments, not exact continuous curves or decorative ellipses.
 

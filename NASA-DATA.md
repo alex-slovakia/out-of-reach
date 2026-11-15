@@ -1,10 +1,10 @@
 # NASA data and scientific assumptions
 
-## Sources-menu heliocentric reference — 15 November 2026
+## Archived orbit research — 15 November 2026
 
-The Sources archive uses an explicitly dated Sun/Earth/Mars reference, independent of mission simulation. Two 701-sample daily heliocentric Horizons traces start at 2026-11-14 08:00 UTC, with Sun-centred geometric positions in kilometres. One uniform scale applies to distances and spherical mean radii. The top-down ecliptic XY projection omits depth; optional locator crosses do not represent physical size. Zoom reveals subpixel bodies without inflating them.
+Alex explicitly dropped the planet/orbit diagram from Sources. The menu retains the mission's NASA source links and full dataset disclosure; no orbit viewer or planet data is loaded by this UI.
 
-Raw responses, physical-radius sources, query URLs, hashes, sampling/projection assumptions and verification are in [the reference dataset](docs/data/reference-orbits/README.md). `python tools/nasa/reference_orbits.py` verifies it offline. It does not replace the communications data or claim live spacecraft positions. The Mars cinematic uses NASA/JPL Viking imagery on an authored globe, not terrain-resolved navigation geometry.
+The unused heliocentric research is archived in [reference-orbits](docs/data/reference-orbits/README.md), including raw responses, hashes and `normalized.json`. `python tools/nasa/reference_orbits.py` verifies that archive offline. It does not replace the communications data. The Mars cinematic still uses NASA/JPL Viking imagery on an authored globe.
 
 ## Marine prologue presentation boundary
 
