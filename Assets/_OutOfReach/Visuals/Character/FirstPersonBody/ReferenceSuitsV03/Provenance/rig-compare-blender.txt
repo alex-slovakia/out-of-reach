@@ -1,6 +1,8 @@
+WORK vs FitV02:
 bones 164 164 same names True
 parent mismatches 0 max head/tail err m 7.152557373046875e-07 max len err 8.102506399154663e-07 max bone matrix err 8.814036846160889e-05
 scale [1.0, 1.0, 1.0] [1.0, 1.0, 1.0]
+EVA vs FitV02:
 bones 164 164 same names True
 parent mismatches 0 max head/tail err m 7.152557373046875e-07 max len err 8.102506399154663e-07 max bone matrix err 8.814036846160889e-05
 scale [1.0, 1.0, 1.0] [1.0, 1.0, 1.0]

@@ -1,22 +1,24 @@
-"""EVA suit: off-white layered suit, red bands, chest panel, harness, PLSS, helmet+gold visor, gloves.
-blender -b --factory-startup --python build_eva.py -- <in EVA fbx> <in WORK fbx (hands source)> <out dir> [--export]"""
+"""EVA suit (V03 detail pass): off-white layered suit with elbow/knee bellows, red bands, harness, front and side
+pockets, gloves; chest control panel with display; detailed PLSS with canister and hose; bubble helmet with clear
+visor, gold sun shade, lights; head (MakeHuman CC0) visible behind the visor.
+blender -b --factory-startup --python build_eva.py -- <EVA fbx> <WORK fbx (hands)> <out dir> <mh_cc0 dir> <display png> [--export]"""
 import sys, os
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from suitlib import *
+from head import build_head
 
 A = sys.argv[sys.argv.index("--") + 1:]
-IN, INW, OUT = (os.path.abspath(a) for a in A[:3])
+IN, INW, OUT, MHDIR, DISPLAY_PNG = (os.path.abspath(a) for a in A[:5])
 EXPORT = "--export" in A
 os.makedirs(OUT, exist_ok=True)
 
 arm, meshes = load_fbx(IN)
 HASH0 = bone_hash(arm)
 bpy.ops.import_scene.fbx(filepath=INW)
-wobjs = [o for o in bpy.context.scene.objects if o.name not in meshes and o is not arm and o.name != arm.name and o.type in ("MESH", "ARMATURE")]
-warm = next(o for o in wobjs if o.type == "ARMATURE")
+wobjs = [o for o in bpy.context.scene.objects if o.name not in meshes and o is not arm and o.type in ("MESH", "ARMATURE")]
 wmesh = {o.name: o for o in wobjs if o.type == "MESH"}
-log("bones", len(arm.data.bones), HASH0, "hands source", list(wmesh))
+log("bones", len(arm.data.bones), HASH0)
 
 PAL = [
     ("MAT_V03_EvaSuit", dict(hexcol="#D6D2C8", rough=0.85)),
@@ -29,14 +31,22 @@ PAL = [
     ("MAT_V03_EvaStrap", dict(hexcol="#47494C", rough=0.88)),
     ("MAT_V03_EvaMetal", dict(hexcol="#9AA2A8", rough=0.4, metal=0.8)),
     ("MAT_V03_EvaRed", dict(hexcol="#B5382C", rough=0.75)),
-    ("MAT_V03_EvaDisplay", dict(hexcol="#0B1620", rough=0.3, emission="#2DA8C8", emission_strength=1.2)),
+    ("MAT_V03_EvaDisplay", dict(hexcol="#FFFFFF", rough=0.3)),
     ("MAT_V03_EvaVisorGold", dict(hexcol="#C9A24A", rough=0.12, metal=1.0)),
     ("MAT_V03_EvaLight", dict(hexcol="#FFF2D0", rough=0.3, emission="#FFE9B0", emission_strength=6.0)),
     ("MAT_V03_EvaYellow", dict(hexcol="#E0B020", rough=0.5)),
     ("MAT_V03_EvaDark", dict(hexcol="#1B1C1E", rough=0.7)),
+    ("MAT_V03_EvaVisorClear", dict(hexcol="#C8D6DE", rough=0.05)),
+    ("MAT_V03_Skin", dict(hexcol="#A67A64", rough=0.65)),
+    ("MAT_V03_Hair", dict(hexcol="#2B211B", rough=0.75)),
+    ("MAT_V03_EyeWhite", dict(hexcol="#D8D3CA", rough=0.3)),
+    ("MAT_V03_EyeIris", dict(hexcol="#3A2B22", rough=0.2)),
 ]
 M = Mat(PAL)
-SUIT, PANEL, BOOT, BGREY, SOLE, GLOVE, GRIP, STRAP, METAL, RED, DISPLAY, VISOR, LIGHT, YELLOW, DARK = (M.idx(n) for n, _ in PAL)
+(SUIT, PANEL, BOOT, BGREY, SOLE, GLOVE, GRIP, STRAP, METAL, RED, DISPLAY, VISOR, LIGHT, YELLOW, DARK, CLEAR,
+ SKIN, HAIR, EYEW, IRIS) = (M.idx(n) for n, _ in PAL)
+texture_material(M.mats["MAT_V03_EvaDisplay"], DISPLAY_PNG, 1.5)
+alpha_material(M.mats["MAT_V03_EvaVisorClear"], 0.12)
 SHOE_TOP = 0.092
 
 
@@ -77,7 +87,9 @@ def loose(v):
 for v in bm.verts:
     v.co = v.co + loose(v)
 bm.normal_update()
-for z in (1.512, 1.45, 0.83, 0.635, 1.40, 1.30, 1.03, 0.985, 0.92, 0.86, 0.80, 0.72, 0.60, 0.52, 0.47, 0.35, 0.17, 0.14, 0.08, SHOE_TOP, 0.06):
+ZC = (1.512, 1.45, 1.40, 1.30, 1.03, 0.985, 0.92, 0.86, 0.83, 0.80, 0.78, 0.76, 0.72, 0.64, 0.635, 0.60, 0.57, 0.545,
+      0.52, 0.495, 0.47, 0.35, 0.17, 0.14, 0.08, SHOE_TOP, 0.06)
+for z in ZC:
     cutz(bm, z)
 for y in (-0.06, -0.065, 0.02, -0.12, -0.14):
     cuty(bm, y)
@@ -108,24 +120,28 @@ def region(zlo, zhi, mat=SUIT, ylo=-9, yhi=9, xlo=-9, xhi=9, absx=False):
     return out
 
 
-raise_region(bm, region(0.985, 1.03), 0.007, METAL)                          # waist ring
-raise_region(bm, region(1.45, 1.512, xhi=0.11, absx=True), 0.008, METAL)                          # neck seal ring (lower)
-raise_region(bm, region(1.30, 1.45, ylo=-9, yhi=-0.12, xlo=0.06, xhi=0.095, absx=True), 0.007, STRAP)   # shoulder-to-chest straps
-raise_region(bm, region(0.80, 0.83), 0.006, STRAP)                           # thigh straps
-raise_region(bm, region(0.60, 0.72, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True), 0.010, PANEL)   # side thigh pockets
-raise_region(bm, region(0.47, 0.60, ylo=-9, yhi=-0.06), 0.012, PANEL)       # knee pads
-kr = region(0.52, 0.55, mat=PANEL, ylo=-9, yhi=-0.06)
-raise_region(bm, region(0.60, 0.72, ylo=-9, yhi=-0.065, mat=SUIT, xlo=0.0, xhi=9), 0.0, SUIT) if False else None
-raise_region(bm, region(0.35, 0.47, ylo=-9, yhi=-0.06), 0.006, PANEL)       # shin panel
-raise_region(bm, region(0.14, 0.17), 0.007, STRAP)                           # boot-top ankle strap
-raise_region(bm, region(0.60, 0.72, ylo=0.02, xlo=0.0, xhi=9), 0.0, SUIT) if False else None
-# red band above the knees (front), clean planar strip
-raise_region(bm, region(0.60, 0.635, ylo=-9, yhi=-0.06), 0.0035, RED)
+raise_region(bm, region(0.985, 1.03), 0.007, METAL)                                              # waist ring
+raise_region(bm, region(1.30, 1.512, xlo=0.06, xhi=0.095, absx=True), 0.007, STRAP)             # harness straps over the shoulders
+raise_region(bm, region(0.80, 0.83), 0.006, STRAP)                                               # thigh straps
+raise_region(bm, region(0.60, 0.72, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True), 0.010, PANEL)   # side pockets
+fp = raise_region(bm, region(0.64, 0.78, yhi=-0.06, xlo=0.06, xhi=0.16, absx=True), 0.009, PANEL)  # front thigh pockets
+raise_region(bm, [f for f in fp if f.is_valid and fcenter(f).z > 0.76], 0.004, PANEL)              # pocket flaps
+raise_region(bm, region(0.47, 0.60, yhi=-0.06), 0.012, PANEL)                                    # knee pads
+for lo_, hi_ in ((0.495, 0.52), (0.545, 0.57)):
+    raise_region(bm, region(lo_, hi_, mat=PANEL, yhi=-0.06), 0.004, PANEL)                       # knee bellows ribs
+raise_region(bm, region(0.35, 0.47, yhi=-0.06), 0.006, PANEL)                                    # shin panels
+raise_region(bm, region(0.14, 0.17), 0.007, STRAP)                                               # ankle straps
+raise_region(bm, region(0.60, 0.635, yhi=-0.06), 0.0035, RED)                                    # red bands above knees
 finish_mesh(tl, bm, M, 38.0)
 log("TorsoLegs", len(tl.data.vertices), vg_weight_report(tl, arm))
 bm.free()
+TV = [tl.matrix_world @ v.co for v in tl.data.vertices]
+CHEST_Y = min(p.y for p in TV if abs(p.x) < 0.05 and abs(p.z - 1.28) < 0.03)
+BACK_Y = max(p.y for p in TV if abs(p.x) < 0.10 and 1.10 < p.z < 1.45)
+log("chest front y", round(CHEST_Y, 4), "back y", round(BACK_Y, 4))
 
-# ------------------------------------------------------------------ arms + gloves
+
+# ------------------------------------------------------------------ arms + gloves + elbow bellows
 def copy_faces(src_obj, pred, dst_obj, dst_bm):
     sbm = bmesh.new()
     sbm.from_mesh(src_obj.data)
@@ -143,8 +159,8 @@ def copy_faces(src_obj, pred, dst_obj, dst_bm):
         for v in f.verts:
             if v not in vmap:
                 nv = dst_bm.verts.new(v.co)
-                for gi, w in v[sdl].items():
-                    nv[ddl][dmap[smap[gi]]] = w
+                for gi_, w in v[sdl].items():
+                    nv[ddl][dmap[smap[gi_]]] = w
                 vmap[v] = nv
             vs.append(vmap[v])
         try:
@@ -165,8 +181,11 @@ for s in "LR":
     for g in src.vertex_groups:
         if g.name not in ob.vertex_groups:
             ob.vertex_groups.new(name=g.name)
-    la, wr = arm.data.bones["lowerarm02." + s], arm.data.bones["wrist." + s]
-    d = (wr.head_local - la.head_local).normalized()
+    ua, la, wr = (arm.data.bones[n + "." + s] for n in ("upperarm02", "lowerarm01", "wrist"))
+    d = (wr.head_local - arm.data.bones["lowerarm02." + s].head_local).normalized()
+    elbow = la.head_local.copy()
+    dup = (la.head_local - ua.head_local).normalized()
+    dlo = (wr.head_local - la.head_local).normalized()
     bm = bmesh.new()
     bm.from_mesh(ob.data)
     bm.faces.ensure_lookup_table()
@@ -177,20 +196,28 @@ for s in "LR":
     for v, n in vnn.items():
         v.co = v.co + n * 0.012
     bm.normal_update()
-    # sleeve bands: upper arm red patch band + metal wrist ring + elbow pad
-    for z in (0.0,):
-        pass
+    ribs = []
+    for lo_, hi_ in ((-0.070, -0.062), (-0.056, -0.048), (-0.042, -0.034), (-0.028, -0.020)):
+        ribs.append((dup, elbow.dot(dup) + lo_, elbow.dot(dup) + hi_))
+    for lo_, hi_ in ((0.020, 0.028), (0.034, 0.042), (0.048, 0.056)):
+        ribs.append((dlo, elbow.dot(dlo) + lo_, elbow.dot(dlo) + hi_))
+    for ax, lo_, hi_ in ribs:
+        cut(bm, ax * lo_, ax)
+        cut(bm, ax * hi_, ax)
     cut(bm, d * (s_end - 0.05), d)
     cut(bm, d * (s_end - 0.012), d)
+    cutz(bm, 1.36)
+    cutz(bm, 1.40)
     bm.normal_update()
-    raise_region(bm, [f for f in bm.faces if fcenter(f).dot(d) > s_end - 0.05 and fcenter(f).dot(d) <= s_end - 0.012], 0.010, METAL)
-    # red band on the upper arm (planar band across the arm at fixed z)
-    cutz(bm, 1.36); cutz(bm, 1.40)
-    raise_region(bm, [f for f in bm.faces if 1.36 <= fcenter(f).z <= 1.40 and f.material_index == SUIT and fcenter(f).dot(d) < s_end - 0.2], 0.0035, RED)
-    # gloves from the WORK hands
-    sd = d
-    def is_hand(f, src=src, sd=sd, s_end=s_end):
-        return f.material_index == 5 and fcenter(f).dot(sd) > s_end - 0.035
+    for ax, lo_, hi_ in ribs:
+        raise_region(bm, [f for f in bm.faces if f.material_index == SUIT and lo_ <= fcenter(f).dot(ax) <= hi_
+                          and (fcenter(f) - elbow).length < 0.11], 0.004, SUIT)
+    raise_region(bm, [f for f in bm.faces if s_end - 0.05 < fcenter(f).dot(d) <= s_end - 0.012], 0.010, METAL)
+    raise_region(bm, [f for f in bm.faces if 1.36 <= fcenter(f).z <= 1.40 and f.material_index == SUIT
+                      and fcenter(f).dot(d) < s_end - 0.2], 0.0035, RED)
+
+    def is_hand(f, sd=d, se=s_end):
+        return f.material_index == 5 and fcenter(f).dot(sd) > se - 0.035
     nf = copy_faces(src, is_hand, ob, bm)
     vh = vnormals_from_faces(nf)
     for v, n in vh.items():
@@ -200,8 +227,8 @@ for s in "LR":
     for f in nf:
         w = {}
         for v in f.verts:
-            for gi, ww in v[dl].items():
-                w[names[gi]] = w.get(names[gi], 0) + ww
+            for gi_, ww in v[dl].items():
+                w[names[gi_]] = w.get(names[gi_], 0) + ww
         dom = max(w, key=w.get) if w else ""
         f.material_index = GRIP if dom.startswith("finger") and not dom.startswith("finger1-1") else GLOVE
     bm.normal_update()
@@ -209,74 +236,126 @@ for s in "LR":
     log(ob.name, len(ob.data.vertices), "glove faces", len(nf), vg_weight_report(ob, arm))
     bm.free()
 
-# ------------------------------------------------------------------ separate rigid parts (all skinned 100 % to one bone)
+
+# ------------------------------------------------------------------ rigid parts (skinned 100 % to one bone)
 def new_part(name, bone):
     ob = make_part(name, arm, bone, M, None)
-    bm = bmesh.new()
-    return ob, bm
+    return ob, bmesh.new()
 
 
 # chest control panel (spine02)
 ob, bm = new_part("A7_SuitV03_EVA_ChestPanel", "spine02")
-cy = -0.222
-box(bm, 0, cy, 1.275, 0.215, 0.050, 0.150, BGREY, 0.006)
-box(bm, 0, cy - 0.022, 1.282, 0.125, 0.006, 0.058, DISPLAY, 0.002)       # display
-for i in range(3):
-    for j in range(2):
-        box(bm, 0.085 + 0.018 * i, cy - 0.024, 1.292 - 0.022 * j, 0.012, 0.008, 0.012, STRAP, 0.002)   # buttons (right)
-for k, x in enumerate((-0.075, -0.035, 0.005)):
-    cylinder(bm, (x, cy - 0.026, 1.215), (0, 1, 0), 0.016, 0.014, STRAP, 16)       # knobs
-cylinder(bm, (0.062, cy - 0.027, 1.215), (0, 1, 0), 0.0155, 0.012, YELLOW, 20)    # yellow ring
-box(bm, 0, cy + 0.012, 1.395, 0.15, 0.040, 0.07, PANEL, 0.006)                  # upper chest pocket
+pb = CHEST_Y - 0.004
+pf = pb - 0.050
+cy = (pb + pf) / 2
+box(bm, 0, pb - 0.006, 1.275, 0.228, 0.012, 0.162, BGREY, 0.004)
+box(bm, 0, cy, 1.275, 0.214, 0.050, 0.150, PANEL, 0.009, 3)
+box(bm, -0.020, pf - 0.002, 1.292, 0.138, 0.006, 0.074, DARK, 0.003)
+uv_quad(bm, [(-0.080, pf - 0.0055, 1.2635), (0.040, pf - 0.0055, 1.2635), (0.040, pf - 0.0055, 1.3205), (-0.080, pf - 0.0055, 1.3205)], DISPLAY)
+for i in range(2):
+    for j in range(3):
+        box(bm, 0.072 + 0.020 * i, pf - 0.004, 1.316 - 0.021 * j, 0.014, 0.008, 0.013, STRAP if (i + j) % 3 else RED, 0.002)
+for x in (-0.075, -0.040, -0.005):
+    cylinder(bm, (x, pf - 0.008, 1.222), (0, 1, 0), 0.0145, 0.016, DARK, 18)
+    cylinder(bm, (x, pf - 0.0165, 1.222), (0, 1, 0), 0.007, 0.004, METAL, 12)
+torus(bm, (0.058, pf - 0.006, 1.222), (0, 1, 0), 0.016, 0.0042, YELLOW, 24, 8)
+box(bm, 0.058, pf - 0.006, 1.222, 0.010, 0.010, 0.010, METAL, 0.002)
+for x in (-0.096, 0.096):
+    for z in (1.209, 1.341):
+        cylinder(bm, (x, pf - 0.002, z), (0, 1, 0), 0.004, 0.004, METAL, 8)
+box(bm, 0, pb - 0.020, 1.398, 0.150, 0.042, 0.072, PANEL, 0.008, 3)
+box(bm, 0, pb - 0.042, 1.425, 0.154, 0.006, 0.026, PANEL, 0.003)
+box(bm, 0, pb - 0.0425, 1.398, 0.156, 0.005, 0.012, STRAP, 0.002)                  # pouch strap
 finalize_part(ob, bm, M, "spine02")
 bm.free()
 chest = ob
 
 # PLSS backpack (spine02)
 ob, bm = new_part("A7_SuitV03_EVA_Plss", "spine02")
-py = 0.250
-box(bm, 0, py, 1.255, 0.350, 0.190, 0.460, SUIT, 0.020, 3)
-box(bm, 0, py + 0.098, 1.255, 0.24, 0.006, 0.040, RED, 0.002)                    # red band, back face
-box(bm, 0, py + 0.099, 1.34, 0.12, 0.008, 0.026, METAL, 0.004)                   # handle
-box(bm, 0, py + 0.05, 1.012, 0.30, 0.150, 0.080, PANEL, 0.015, 3)                # base module
-cylinder(bm, (0, py + 0.005, 0.925), (1, 0, 0), 0.058, 0.300, PANEL, 24)          # lower canister
-box(bm, 0.135, py + 0.10, 1.12, 0.04, 0.012, 0.09, STRAP, 0.003)
-box(bm, -0.135, py + 0.10, 1.12, 0.04, 0.012, 0.09, STRAP, 0.003)
-cylinder(bm, (0.15, py + 0.05, 1.56), (0, 0, 1), 0.006, 0.18, METAL, 8)           # antenna
+yb0 = BACK_Y + 0.006
+yb = yb0 + 0.190
+yc = (yb0 + yb) / 2
+box(bm, 0, yc, 1.300, 0.350, 0.190, 0.400, SUIT, 0.026, 3)
+box(bm, 0, yb + 0.002, 1.315, 0.290, 0.008, 0.300, PANEL, 0.004)
+box(bm, 0, yb + 0.008, 1.250, 0.200, 0.006, 0.022, RED, 0.002)
+box(bm, 0, yb + 0.032, 1.432, 0.130, 0.014, 0.018, METAL, 0.005)
+for x in (-0.058, 0.058):
+    box(bm, x, yb + 0.016, 1.432, 0.014, 0.030, 0.014, METAL, 0.003)
+for x in (-0.178, 0.178):
+    for z in (1.40, 1.25, 1.12):
+        box(bm, x, yc + 0.005, z, 0.012, 0.050, 0.042, STRAP, 0.003)
+        box(bm, x * 1.035, yc + 0.005, z, 0.006, 0.026, 0.020, METAL, 0.002)
+box(bm, 0, yb0 + 0.080, 1.045, 0.330, 0.150, 0.110, PANEL, 0.016, 3)
+for x in (0.075, 0.120):
+    cylinder(bm, (x, yb0 + 0.159, 1.045), (0, 1, 0), 0.018, 0.012, DARK, 18)
+    cylinder(bm, (x, yb0 + 0.166, 1.045), (0, 1, 0), 0.009, 0.004, METAL, 12)
+box(bm, -0.070, yb0 + 0.157, 1.045, 0.075, 0.006, 0.052, METAL, 0.003)
+ycan = yb0 + 0.085
+cylinder(bm, (0, ycan, 0.930), (1, 0, 0), 0.058, 0.300, PANEL, 28)
+for x in (-0.092, 0.092):
+    cylinder(bm, (x, ycan, 0.930), (1, 0, 0), 0.0615, 0.022, STRAP, 28)
+box(bm, 0, ycan + 0.059, 0.930, 0.150, 0.004, 0.012, RED, 0.001)
+tube(bm, [(0.150, yb0 + 0.080, 1.120), (0.192, yb0 + 0.095, 1.075), (0.200, yb0 + 0.100, 1.005), (0.185, ycan + 0.02, 0.955),
+          (0.152, ycan + 0.01, 0.935)], 0.011, METAL, 12)
+box(bm, 0.140, yb0 + 0.120, 1.507, 0.030, 0.030, 0.016, METAL, 0.004)
+cylinder(bm, (0.140, yb0 + 0.120, 1.605), (0, 0, 1), 0.004, 0.190, METAL, 8)
 finalize_part(ob, bm, M, "spine02")
 bm.free()
 plss = ob
 
-# helmet shell + neck ring (head)
-hc = (0.0, -0.022, 1.700)
+# head (CC0 MakeHuman) under the helmet
+head = build_head("A7_SuitV03_EVA_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN)
+HV = [head.matrix_world @ v.co for v in head.data.vertices if (head.matrix_world @ v.co).z > 1.58]
+lo = Vector([min(p[i] for p in HV) for i in range(3)])
+hi = Vector([max(p[i] for p in HV) for i in range(3)])
+hc = Vector((0.0, (lo.y + hi.y) / 2 - 0.018, (lo.z + hi.z) / 2 + 0.012))
+rx = max(0.172, (hi.x - lo.x) / 2 + 0.075)
+ry = max(0.197, (hi.y - lo.y) / 2 + 0.085)
+rz = max(0.192, (hi.z - lo.z) / 2 + 0.060)
+log("head bbox", [round(x, 3) for x in lo], [round(x, 3) for x in hi], "helmet c", [round(x, 3) for x in hc], "r", round(rx, 3), round(ry, 3), round(rz, 3))
+ZCUT = hc.z - 0.80 * rz
+k = math.sqrt(1 - 0.80 ** 2)
+rrx, rry = rx * k + 0.010, ry * k + 0.010
+
 ob, bm = new_part("A7_SuitV03_EVA_Helmet", "head")
-faces = ellipsoid(bm, hc, 0.175, 0.200, 0.195, SUIT, 36, 20)
-bmesh.ops.recalc_face_normals(bm, faces=faces)
-bm.normal_update()
-for f in faces:
-    c = f.calc_center_median()
-    if c.y < hc[1] - 0.07 and abs(c.x) < 0.14 and hc[2] - 0.08 < c.z < hc[2] + 0.12:
-        f.material_index = DARK
-cylinder(bm, (0, -0.012, 1.538), (0, 0, 1), 0.112, 0.050, METAL, 28)
-cylinder(bm, (0, -0.012, 1.566), (0, 0, 1), 0.116, 0.010, RED, 28)
+shell_from_ellipsoid(bm, hc, rx * 1.035, ry * 1.035, rz * 1.035,
+                     lambda r: r.z > ZCUT - hc.z + 0.004 and (r.y > -0.045 or r.z > 0.72 * rz), SUIT, 0.010,
+                     cuts=(((0, hc.y - 0.045, 0), (0, 1, 0)), ((0, 0, hc.z + 0.72 * rz), (0, 0, 1)), ((0, 0, ZCUT + 0.004), (0, 0, 1))))
+ring = cylinder(bm, (0, hc.y, ZCUT - 0.012), (0, 0, 1), 1.0, 0.050, METAL, 36)
+for v in {v for f in ring for v in f.verts}:
+    v.co.x = v.co.x * rrx
+    v.co.y = hc.y + (v.co.y - hc.y) * rry
+rr = cylinder(bm, (0, hc.y, ZCUT + 0.018), (0, 0, 1), 1.0, 0.010, RED, 36)
+for v in {v for f in rr for v in f.verts}:
+    v.co.x = v.co.x * (rrx + 0.004)
+    v.co.y = hc.y + (v.co.y - hc.y) * (rry + 0.004)
+bmesh.ops.delete(bm, geom=[f for f in rr if len(f.verts) > 4], context="FACES")      # red stripe = open band
 for sx in (1, -1):
-    box(bm, sx * 0.205, -0.085, 1.735, 0.030, 0.060, 0.050, STRAP, 0.006)   # side light pods
-    cylinder(bm, (sx * 0.222, -0.085, 1.735), (1, 0, 0), 0.018, 0.012, LIGHT, 16)
+    hx = sx * (rx * 1.035 + 0.030)
+    box(bm, sx * (rx * 1.035 + 0.008), hc.y - 0.050, hc.z + 0.035, 0.026, 0.030, 0.030, METAL, 0.003)
+    box(bm, hx, hc.y - 0.075, hc.z + 0.035, 0.040, 0.050, 0.075, STRAP, 0.006, 2)
+    for dz in (0.017, -0.017):
+        cylinder(bm, (hx, hc.y - 0.1015, hc.z + 0.035 + dz), (0, 1, 0), 0.0155, 0.004, DARK, 18)
+        cylinder(bm, (hx, hc.y - 0.1040, hc.z + 0.035 + dz), (0, 1, 0), 0.0115, 0.004, LIGHT, 18)
+    cylinder(bm, (sx * (rx * 1.07 + 0.006), hc.y - 0.010, hc.z + 0.005), (1, 0, 0), 0.022, 0.012, METAL, 18)
+box(bm, 0.060, hc.y + 0.040, hc.z + rz * 1.035 - 0.004, 0.050, 0.070, 0.028, PANEL, 0.006, 2)
+dam_o = [bm.verts.new((math.cos(2 * math.pi * i / 36) * rrx, hc.y + math.sin(2 * math.pi * i / 36) * rry, ZCUT - 0.030)) for i in range(36)]
+dam_i = [bm.verts.new((math.cos(2 * math.pi * i / 36) * 0.072, -0.012 + math.sin(2 * math.pi * i / 36) * 0.082, ZCUT - 0.030)) for i in range(36)]
+for i in range(36):
+    j = (i + 1) % 36
+    f = bm.faces.new((dam_i[i], dam_i[j], dam_o[j], dam_o[i]))
+    f.material_index = METAL
 finalize_part(ob, bm, M, "head")
 bm.free()
 helmet = ob
 
-# visor (gold) = outer shell copy of the dark front faces, raised
 ob, bm = new_part("A7_SuitV03_EVA_Visor", "head")
-faces = ellipsoid(bm, hc, 0.175, 0.200, 0.195, VISOR, 36, 20)
-bmesh.ops.recalc_face_normals(bm, faces=faces)
-bm.normal_update()
-keep = [f for f in bm.faces if (lambda c: c.y < hc[1] - 0.07 and abs(c.x) < 0.14 and hc[2] - 0.08 < c.z < hc[2] + 0.12)(f.calc_center_median())]
-rest = [f for f in bm.faces if f not in set(keep)]
-bmesh.ops.delete(bm, geom=rest, context="FACES")
-for v in bm.verts:
-    d0 = (v.co - Vector(hc))
-    v.co = Vector(hc) + Vector((d0.x * 1.045, d0.y * 1.05, d0.z * 1.045))
+shell_from_ellipsoid(bm, hc, rx, ry, rz, lambda r: r.z > ZCUT - hc.z and r.y < 0.03, CLEAR, 0.0,
+                     cuts=(((0, 0, ZCUT), (0, 0, 1)), ((0, hc.y + 0.03, 0), (0, 1, 0))))
+VX = 0.86 * rx * 1.07
+shell_from_ellipsoid(bm, hc, rx * 1.07, ry * 1.07, rz * 1.07,
+                     lambda r: r.y < -0.025 and r.z > -0.010 and abs(r.x) < VX, VISOR, 0.004,
+                     cuts=(((VX, 0, 0), (1, 0, 0)), ((-VX, 0, 0), (1, 0, 0)), ((0, 0, hc.z - 0.010), (0, 0, 1)), ((0, hc.y - 0.025, 0), (0, 1, 0))))
 finalize_part(ob, bm, M, "head")
 bm.free()
 visor = ob
@@ -288,7 +367,7 @@ for o, n in ren.items():
     meshes[o].data.name = n
 for o in list(wobjs):
     bpy.data.objects.remove(o, do_unlink=True)
-objs = [arm] + [meshes[o] for o in ren] + [chest, plss, helmet, visor]
+objs = [arm] + [meshes[o] for o in ren] + [head, chest, plss, helmet, visor]
 assert bone_hash(arm) == HASH0
 bpy.context.view_layer.update()
 tri = 0
@@ -302,8 +381,18 @@ for o in objs[1:]:
 rep["tris_total"] = tri
 json.dump(rep, open(os.path.join(OUT, "build_report.json"), "w"), indent=1)
 log("tris", tri)
+# the FBX must not carry this PC's texture path: export with the display texture unlinked (Unity's material has it)
+dm = M.mats["MAT_V03_EvaDisplay"].node_tree
+tex_links = [(l.from_socket, l.to_socket) for l in dm.links if l.from_node.type == "TEX_IMAGE"]
+for l in [l for l in dm.links if l.from_node.type == "TEX_IMAGE"]:
+    dm.links.remove(l)
 if EXPORT:
     export_fbx(os.path.join(OUT, "A7_SuitV03_EVA.fbx"), objs)
     log("exported")
-
+for a_, b_ in tex_links:
+    dm.links.new(a_, b_)
+for img in bpy.data.images:
+    if img.name.startswith("T_V03_"):
+        img.pack()
+        img.filepath_raw = "//" + os.path.basename(img.filepath_raw)
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "EVA.blend"))

@@ -323,3 +323,109 @@ def limit_influences(bm, maxinf=4):
             if tot > 0 and abs(tot - 1.0) > 1e-6:
                 for k in list(d.keys()):
                     d[k] = d[k] / tot
+
+
+def _frame(axis):
+    a = Vector(axis).normalized()
+    up = Vector((0, 0, 1)) if abs(a.z) < 0.9 else Vector((1, 0, 0))
+    u = a.cross(up).normalized()
+    return a, u, a.cross(u).normalized()
+
+
+def torus(bm, c, axis, R, r, mat, seg=28, rseg=8):
+    a, u, w = _frame(axis)
+    c = Vector(c)
+    rings = []
+    for i in range(seg):
+        t = 2 * math.pi * i / seg
+        cd = u * math.cos(t) + w * math.sin(t)
+        ctr = c + cd * R
+        rings.append([bm.verts.new(ctr + (cd * math.cos(2 * math.pi * k / rseg) + a * math.sin(2 * math.pi * k / rseg)) * r) for k in range(rseg)])
+    fs = []
+    for i in range(seg):
+        j = (i + 1) % seg
+        for k in range(rseg):
+            l = (k + 1) % rseg
+            fs.append(bm.faces.new((rings[i][k], rings[j][k], rings[j][l], rings[i][l])))
+    for f in fs:
+        f.material_index = mat
+    bmesh.ops.recalc_face_normals(bm, faces=fs)
+    return fs
+
+
+def tube(bm, pts, r, mat, seg=10):
+    pts = [Vector(p) for p in pts]
+    rings = []
+    prev_u = None
+    for i, p in enumerate(pts):
+        t = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
+        if prev_u is None:
+            _, prev_u, _ = _frame(t)
+        u = (prev_u - t * prev_u.dot(t)).normalized()
+        w = t.cross(u)
+        prev_u = u
+        rings.append([bm.verts.new(p + (u * math.cos(2 * math.pi * k / seg) + w * math.sin(2 * math.pi * k / seg)) * r) for k in range(seg)])
+    fs = []
+    for i in range(len(rings) - 1):
+        for k in range(seg):
+            l = (k + 1) % seg
+            fs.append(bm.faces.new((rings[i][k], rings[i + 1][k], rings[i + 1][l], rings[i][l])))
+    fs.append(bm.faces.new(list(reversed(rings[0]))))
+    fs.append(bm.faces.new(rings[-1]))
+    for f in fs:
+        f.material_index = mat
+    bmesh.ops.recalc_face_normals(bm, faces=fs)
+    return fs
+
+
+def uv_quad(bm, corners, mat):
+    """corners in order bottom-left, bottom-right, top-right, top-left (seen from the front)."""
+    uvl = bm.loops.layers.uv.verify()
+    f = bm.faces.new([bm.verts.new(Vector(c)) for c in corners])
+    for lp, uv in zip(f.loops, ((0, 0), (1, 0), (1, 1), (0, 1))):
+        lp[uvl].uv = uv
+    f.material_index = mat
+    return f
+
+
+def shell_from_ellipsoid(bm, c, rx, ry, rz, keep, mat, thickness=0.0, usegs=40, vsegs=24, cuts=()):
+    """ellipsoid part kept by keep(rel_centre); cuts = planes (co, no) applied first so kept edges are straight."""
+    pre = set(bm.faces)
+    faces = ellipsoid(bm, c, rx, ry, rz, mat, usegs, vsegs)
+    bmesh.ops.recalc_face_normals(bm, faces=faces)
+    for co, no in cuts:
+        cut(bm, co, no)
+    ell = [f for f in bm.faces if f not in pre and f.material_index == mat]
+    drop = [f for f in ell if not keep(f.calc_center_median() - Vector(c))]
+    bmesh.ops.delete(bm, geom=drop, context="FACES")
+    kept = [f for f in bm.faces if f.is_valid and f not in pre and f.material_index == mat]
+    if thickness > 0:
+        bmesh.ops.solidify(bm, geom=kept, thickness=thickness)
+    return kept
+
+
+def texture_material(mat, image_path, emission_strength=0.0):
+    nt = mat.node_tree
+    img = bpy.data.images.load(image_path)
+    tn = nt.nodes.new("ShaderNodeTexImage")
+    tn.image = img
+    b = nt.nodes["Principled BSDF"]
+    nt.links.new(tn.outputs["Color"], b.inputs["Base Color"])
+    if emission_strength > 0:
+        nt.links.new(tn.outputs["Color"], b.inputs["Emission Color"])
+        b.inputs["Emission Strength"].default_value = emission_strength
+    return img
+
+
+def alpha_material(mat, alpha):
+    b = mat.node_tree.nodes["Principled BSDF"]
+    b.inputs["Alpha"].default_value = alpha
+    try:
+        mat.surface_render_method = "BLENDED"
+    except Exception:
+        pass
+    try:
+        mat.blend_method = "BLEND"
+    except Exception:
+        pass
+    mat.diffuse_color = (mat.diffuse_color[0], mat.diffuse_color[1], mat.diffuse_color[2], alpha)

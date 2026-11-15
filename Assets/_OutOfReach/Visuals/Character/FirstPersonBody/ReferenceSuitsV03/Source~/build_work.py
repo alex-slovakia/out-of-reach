@@ -4,9 +4,10 @@ import sys, os
 sys.dont_write_bytecode = True
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from suitlib import *
+from head import build_head
 
 A = sys.argv[sys.argv.index("--") + 1:]
-IN, OUT = os.path.abspath(A[0]), os.path.abspath(A[1])
+IN, OUT, MHDIR = os.path.abspath(A[0]), os.path.abspath(A[1]), os.path.abspath(A[2])
 EXPORT = "--export" in A
 os.makedirs(OUT, exist_ok=True)
 
@@ -22,9 +23,14 @@ PAL = [
     ("MAT_V03_Sole", dict(hexcol="#16181A", rough=0.9)),
     ("MAT_V03_Skin", dict(hexcol="#A67A64", rough=0.65)),
     ("MAT_V03_Trim", dict(hexcol="#1B1C1E", rough=0.7)),
+    ("MAT_V03_Hair", dict(hexcol="#2B211B", rough=0.75)),
+    ("MAT_V03_EyeWhite", dict(hexcol="#D8D3CA", rough=0.3)),
+    ("MAT_V03_EyeIris", dict(hexcol="#3A2B22", rough=0.2)),
+    ("MAT_V03_ShirtSeam", dict(hexcol="#1E2843", rough=0.9)),
+    ("MAT_V03_ShoeMid", dict(hexcol="#4A4D52", rough=0.85)),
 ]
 M = Mat(PAL)
-SHIRT, TROUS, PANEL, SHOE, SOLE, SKIN, TRIM = (M.idx(n) for n, _ in PAL)
+SHIRT, TROUS, PANEL, SHOE, SOLE, SKIN, TRIM, HAIR, EYEW, IRIS, SEAM, SHOEMID = (M.idx(n) for n, _ in PAL)
 HEM_Z = 0.925
 SHOE_TOP = 0.092
 NECK_Z = 1.512
@@ -51,7 +57,7 @@ for f in bm.faces:
     if om in (1, 4, 6, 7):
         flat.update(f.verts)
     f.material_index = nm
-smooth_set(bm, [v for v in flat if v.co.z > 0.2], iters=22, factor=0.6)
+smooth_set(bm, [v for v in flat if v.co.z > 0.2], iters=45, factor=0.6)
 bm.normal_update()
 vn = {v: v.normal.copy() for v in bm.verts}
 
@@ -65,13 +71,17 @@ def loose(v):
             d = 0.004
         else:
             t = min(1.0, max(0.0, (z - 1.38) / 0.08))   # chest (0.006) -> waist/hem (0.016)
-            d = 0.016 - 0.010 * (1 - 0) * (z - 0.885) / (1.38 - 0.885) if z < 1.38 else 0.006
+            d = 0.011 - 0.005 * (z - 0.885) / (1.38 - 0.885) if z < 1.38 else 0.006
             d = max(0.006, d) if z < 1.38 else 0.006
-    else:                                          # straight-cut trousers
-        if z > 0.55:
-            d = 0.040 + 0.010 * (z - 0.55) / 0.35
-        elif z > 0.15:
-            d = 0.034 + 0.006 * (z - 0.15) / 0.40
+    else:                                          # straight-cut trousers: slim at the hips, fuller calves
+        if z >= 0.86:
+            d = 0.012
+        elif z >= 0.62:
+            d = 0.026 - 0.014 * (z - 0.62) / 0.24
+        elif z >= 0.30:
+            d = 0.036 - 0.010 * (z - 0.30) / 0.32
+        elif z >= 0.15:
+            d = 0.038
         else:
             d = 0.040
         inward = -sgn(v.co.x) * n.x
@@ -85,7 +95,7 @@ for v in bm.verts:
 bm.normal_update()
 
 # planar cuts: every region boundary is a clean line
-for z in (NECK_Z, COLLAR_Z, HEM_Z - 0.03, HEM_Z, HEM_Z + 0.032, SHOE_TOP, 0.60, 0.80, 0.40, 0.57, 0.835, 0.915):
+for z in (1.400, 1.404, 0.022, NECK_Z, COLLAR_Z, HEM_Z - 0.03, HEM_Z, HEM_Z + 0.032, SHOE_TOP, 0.60, 0.80, 0.40, 0.57, 0.835, 0.915):
     cutz(bm, z)
 for y in (-0.065, 0.02, -0.06, 0.06):
     cuty(bm, y)
@@ -106,6 +116,11 @@ for f in bm.faces:
     elif m == SHOE:
         if c.z > SHOE_TOP:
             f.material_index = TROUS
+for f in bm.faces:
+    if f.material_index == SOLE and fcenter(f).z > 0.022:
+        f.material_index = SHOEMID
+# the skin neck stub is replaced by the real head/neck (A7_SuitV03_WORK_Head)
+bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.material_index == SKIN], context="FACES")
 bm.faces.ensure_lookup_table()
 
 
@@ -124,6 +139,8 @@ def region(zlo, zhi, extra=None, mat=TROUS, ylo=-9, yhi=9, xlo=-9, xhi=9, absx=F
 # --- shirt: hem band, collar ring
 raise_region(bm, region(HEM_Z, HEM_Z + 0.032, mat=SHIRT), 0.004, SHIRT)
 raise_region(bm, region(COLLAR_Z, NECK_Z, mat=SHIRT, ylo=-0.2, yhi=0.2), 0.0055, SHIRT)
+# back yoke seam
+raise_region(bm, region(1.400, 1.404, mat=SHIRT, ylo=0.03), 0.0012, SEAM)
 # --- side cargo pockets (outer thigh) with flap and zip
 pk = region(0.60, 0.80, ylo=-0.065, yhi=0.02, xlo=0.125, absx=True)
 caps = raise_region(bm, pk, 0.008, PANEL)
@@ -165,11 +182,12 @@ for s in "LR":
     log(ob.name, "verts", len(ob.data.vertices), vg_weight_report(ob, arm))
     bm.free()
 
+head = build_head("A7_SuitV03_WORK_Head", arm, M, MHDIR, SKIN, HAIR, EYEW, IRIS, SKIN)
 ren = {"A7_WORK_TorsoLegs": "A7_SuitV03_WORK_TorsoLegs", "A7_WORK_Arm_L": "A7_SuitV03_WORK_Arm_L", "A7_WORK_Arm_R": "A7_SuitV03_WORK_Arm_R"}
 for o, n in ren.items():
     meshes[o].name = n
     meshes[o].data.name = n
-objs = [arm] + [meshes[o] for o in ren]
+objs = [arm] + [meshes[o] for o in ren] + [head]
 assert bone_hash(arm) == HASH0
 bpy.context.view_layer.update()
 tri = 0
