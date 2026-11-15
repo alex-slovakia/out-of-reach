@@ -270,5 +270,135 @@ namespace OutOfReach.Tests.Rescue.PlayMode
             Assert.AreEqual(1, finished.Count);
             yield return null;
         }
+
+        // ---- R20: the existing NASA sky at its deep-view exposure during the ending ----
+
+        private readonly List<Object> skies = new List<Object>();
+
+        private Material MakeSky(string starMapName, float exposure)
+        {
+            var map = new Texture2D(4, 2) { name = starMapName };
+            var sky = new Material(Shader.Find("Skybox/Panoramic")) { name = "NasaDeepSky (test)" };
+            sky.SetTexture("_MainTex", map);
+            sky.SetFloat("_Exposure", exposure);
+            skies.Add(map); skies.Add(sky);
+            return sky;
+        }
+
+        private void PutSkyBack(Material before)
+        {
+            RenderSettings.skybox = before;
+            foreach (Object sky in skies) if (sky) Object.DestroyImmediate(sky);
+            skies.Clear();
+        }
+
+        [UnityTest]
+        public IEnumerator NasaSky_EasesToItsDeepView_StaysForMarsDeparture_AndIsBackAtTheReport()
+        {
+            Material before = RenderSettings.skybox;
+            Material sky = MakeSky(RescueEndingSky.NasaStarMapName, .15f);
+            try
+            {
+                RenderSettings.skybox = sky;
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.IsTrue(presenter.IsPlaying);
+                Assert.IsTrue(presenter.DeepSkyRaised);
+                Assert.AreNotSame(sky, RenderSettings.skybox, "a runtime copy is shown; the saved material is never edited");
+                Assert.AreSame(sky.GetTexture("_MainTex"), RenderSettings.skybox.GetTexture("_MainTex"), "the same NASA star map");
+                Assert.AreEqual(.15f, presenter.DeepSkyExposure, 1e-4f, "starts at the saved exposure");
+                presenter.Advance(RescueEndingSky.RampSeconds * .5f);
+                Assert.That(presenter.DeepSkyExposure, Is.GreaterThan(.16f).And.LessThan(RescueEndingSky.DeepViewExposure - .01f));
+                presenter.Advance(RescueEndingSky.RampSeconds);
+                Assert.AreEqual(RescueEndingSky.DeepViewExposure, presenter.DeepSkyExposure, 1e-4f);
+                clock.IsPaused = true;
+                for (int i = 0; i < 3; i++) yield return null;
+                Assert.AreEqual(RescueEndingSky.DeepViewExposure, RenderSettings.skybox.GetFloat("_Exposure"), 1e-4f, "paused: held");
+                clock.IsPaused = false;
+                presenter.Advance(T.Duration);
+                Assert.IsFalse(presenter.IsPlaying);
+                Assert.AreEqual(1, finished.Count);
+                Assert.IsTrue(presenter.DeepSkyRaised, "kept for the MarsDeparture that follows");
+                bus.Publish(Request(CinematicId.MarsDeparture));
+                yield return null;
+                yield return null;
+                Assert.IsTrue(presenter.DeepSkyRaised);
+                Assert.AreEqual(RescueEndingSky.DeepViewExposure, RenderSettings.skybox.GetFloat("_Exposure"), 1e-4f);
+                state.Phase = GamePhase.Report;
+                yield return null;
+                yield return null;
+                Assert.IsFalse(presenter.DeepSkyRaised);
+                Assert.AreSame(sky, RenderSettings.skybox, "the saved sky is back at the report");
+                Assert.AreEqual(.15f, sky.GetFloat("_Exposure"), 1e-6f, "and it was never changed");
+            }
+            finally { PutSkyBack(before); }
+        }
+
+        [UnityTest]
+        public IEnumerator NasaSky_HasNoRampWithReducedEffects_SurvivesASkip_AndReleasePutsTheSavedSkyBack()
+        {
+            Material before = RenderSettings.skybox;
+            Material sky = MakeSky(RescueEndingSky.NasaStarMapName, .15f);
+            try
+            {
+                RenderSettings.skybox = sky;
+                presenter.ReducedEffects = true;
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.AreEqual(RescueEndingSky.DeepViewExposure, presenter.DeepSkyExposure, 1e-4f, "reduced effects: no ramp");
+                Assert.IsTrue(presenter.SkipActive());
+                Assert.IsTrue(presenter.DeepSkyRaised, "a skip still leads into MarsDeparture");
+                presenter.ReducedEffects = false;
+                presenter.Release();
+                Assert.IsFalse(presenter.DeepSkyRaised);
+                Assert.AreSame(sky, RenderSettings.skybox);
+
+                // Without reduced effects a skip inside the ramp still leaves the full deep view for MarsDeparture.
+                presenter.Configure(bus, state, clock);
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.AreEqual(.15f, presenter.DeepSkyExposure, 1e-4f);
+                Assert.IsTrue(presenter.SkipActive());
+                Assert.AreEqual(RescueEndingSky.DeepViewExposure, presenter.DeepSkyExposure, 1e-4f);
+                bus.Publish(Request(CinematicId.EndingPullback));
+                Assert.IsFalse(presenter.DeepSkyRaised, "any other cinematic gets the saved sky");
+                Assert.AreSame(sky, RenderSettings.skybox);
+                yield return null;
+            }
+            finally { PutSkyBack(before); }
+        }
+
+        [UnityTest]
+        public IEnumerator AnyOtherSky_IsLeftAlone_AndALostOutcomeTakesTheDeepSkyDown()
+        {
+            Material before = RenderSettings.skybox;
+            Material other = MakeSky("some-other-panorama", .15f);
+            Material sky = MakeSky(RescueEndingSky.NasaStarMapName, .15f);
+            try
+            {
+                RenderSettings.skybox = other;
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.IsTrue(presenter.IsPlaying, "the ending plays exactly as before");
+                Assert.IsFalse(presenter.DeepSkyRaised);
+                Assert.AreSame(other, RenderSettings.skybox);
+                presenter.Advance(T.Duration);
+                Assert.AreSame(other, RenderSettings.skybox);
+
+                RenderSettings.skybox = null;
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.IsTrue(presenter.IsPlaying, "no skybox at all: still plays");
+                Assert.IsFalse(presenter.DeepSkyRaised);
+                Assert.IsFalse(RenderSettings.skybox);
+                presenter.Advance(T.Duration);
+
+                RenderSettings.skybox = sky;
+                bus.Publish(Request(CinematicId.RecoveryArrival));
+                Assert.IsTrue(presenter.DeepSkyRaised);
+                state.Outcome = MissionOutcome.Lost;
+                yield return null;
+                yield return null;
+                Assert.IsFalse(presenter.IsPlaying);
+                Assert.IsFalse(presenter.DeepSkyRaised);
+                Assert.AreSame(sky, RenderSettings.skybox);
+            }
+            finally { PutSkyBack(before); }
+        }
     }
 }
