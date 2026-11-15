@@ -11,10 +11,6 @@ namespace OutOfReach.Presentation.Hands
         [SerializeField, Range(.15f, .25f)] private float reachSeconds = .20f;
         [SerializeField, Range(.15f, .35f)] private float returnSeconds = .24f;
         [SerializeField] private BareRailGripPose gripPose;
-        private BareRailGripLease grip;
-        private Func<HandContactTarget?> readHeldGrip;
-        private float gripClose, gripReturnClose;
-        private float gripAxialDegrees;
         public float GripAxialRotationDegrees => grip != null ? gripAxialDegrees : 0f;
         public bool GripPoseConfigured => gripPose && gripPose.IsValid;
         public int GripMeasuredVertexCount => grip != null ? grip.VertexCount : 0;
@@ -22,34 +18,121 @@ namespace OutOfReach.Presentation.Hands
         public float GripMaximumRegionGapMetres => grip != null ? grip.MaximumRegionGap : float.NaN;
         public float GripRegionGapMetres(int region) => grip != null && region >= 0 && region < 6 ? grip.RegionGap(region) : float.NaN;
         public void ConfigureGripPose(BareRailGripPose pose) { CancelImmediately(); gripPose = pose; }
-        private BareArmContactRig left, right, active;
+        private BareArmContactRig left, right;
         private Transform eye;
         private ISimulationClock clock;
         private Func<ContactHand, bool> leaseAllowed;
         private Func<int> readRevision;
-        private Func<HandContactSample, bool> validate, action;
-        private HandContactTarget target;
-        private BarePalmContactPose calibration;
-        private HandContactSample lastSample;
-        private ContactHand hand;
-        private int poseRevision, generation;
-        private float elapsed, lastBlend, returnFromBlend;
-        private Vector3 lastFinalWrist;
-        private Quaternion lastFinalRotation;
-        private Vector3 palmPoint, startWrist, elbowPole, previousPoint, previousEye;
-        private Quaternion palmFrame, startWristRotation;
-        private bool overheadReach;
-        private float overheadPoleSign;
+        private Func<HandContactSample, bool> validate;
+        private int generation;
         private const float OverheadForwardArc = .12f;
-        private readonly Quaternion[] baseline = new Quaternion[13], previousPose = new Quaternion[13];
+        // Two leases on the existing left/right skeleton. The solver below runs against one
+        // record at a time; paired dispatch waits until BOTH visible poses pass their original proof.
+        private sealed class ArmState
+        {
+            public BareRailGripLease grip;
+            public Func<HandContactTarget?> readHeldGrip;
+            public float gripClose;
+            public float gripReturnClose;
+            public float gripAxialDegrees;
+            public BareArmContactRig active;
+            public Func<HandContactSample, bool> action;
+            public HandContactTarget target;
+            public BarePalmContactPose calibration;
+            public HandContactSample lastSample;
+            public ContactHand hand;
+            public int poseRevision;
+            public float elapsed;
+            public float lastBlend;
+            public float returnFromBlend;
+            public Vector3 lastFinalWrist;
+            public Quaternion lastFinalRotation;
+            public Vector3 palmPoint;
+            public Vector3 startWrist;
+            public Vector3 elbowPole;
+            public Vector3 previousPoint;
+            public Vector3 previousEye;
+            public Quaternion palmFrame;
+            public Quaternion startWristRotation;
+            public bool overheadReach;
+            public float overheadPoleSign;
+            public Quaternion[] baseline = new Quaternion[13];
+            public Quaternion[] previousPose = new Quaternion[13];
+            public Vector3 diagnosticPoint;
+            public Vector3 diagnosticNormal;
+            public Vector3 diagnosticTangent;
+            public Vector3 diagnosticEyeLocal;
+            public Vector3 diagnosticWrist;
+            public float diagnosticBlend;
+            public float diagnosticWristAngle;
+            public bool diagnosticHasTarget;
+            public bool diagnosticHasWrist;
+            public HandContactStage WorkingStage;
+            public float ContactErrorMetres = float.NaN;
+            public float MinimumHandPlaneClearanceMetres = float.NaN;
+            public float PalmPatchPlaneDistanceMetres = float.NaN;
+            public float MeasuredWaypointCorrectionMetres;
+            public int SafeSolveAttempts;
+            public string LastRefusalReason = string.Empty;
+            public string LastRefusalDiagnostic = string.Empty;
+        }
+        private readonly ArmState leftState = new ArmState(), rightState = new ArmState();
+        private ArmState selectedState;
+        private ArmState Current => selectedState ?? leftState;
+        private bool pairedPush;
+        private Func<HandContactSample, bool> pairAction;
+        public HandContactStage ContactStage => leftState.WorkingStage != HandContactStage.None
+            ? leftState.WorkingStage : rightState.WorkingStage;
+        public HandContactStage ContactStageFor(ContactHand selected) => StateFor(selected)?.WorkingStage ?? HandContactStage.None;
+        public float ContactErrorFor(ContactHand selected) => StateFor(selected)?.ContactErrorMetres ?? float.NaN;
+        private ArmState StateFor(ContactHand selected) => selected == ContactHand.Left ? leftState
+            : selected == ContactHand.Right ? rightState : null;
+        private BareRailGripLease grip { get => Current.grip; set => Current.grip = value; }
+        private Func<HandContactTarget?> readHeldGrip { get => Current.readHeldGrip; set => Current.readHeldGrip = value; }
+        private float gripClose { get => Current.gripClose; set => Current.gripClose = value; }
+        private float gripReturnClose { get => Current.gripReturnClose; set => Current.gripReturnClose = value; }
+        private float gripAxialDegrees { get => Current.gripAxialDegrees; set => Current.gripAxialDegrees = value; }
+        private BareArmContactRig active { get => Current.active; set => Current.active = value; }
+        private Func<HandContactSample, bool> action { get => Current.action; set => Current.action = value; }
+        private HandContactTarget target { get => Current.target; set => Current.target = value; }
+        private BarePalmContactPose calibration { get => Current.calibration; set => Current.calibration = value; }
+        private HandContactSample lastSample { get => Current.lastSample; set => Current.lastSample = value; }
+        private ContactHand hand { get => Current.hand; set => Current.hand = value; }
+        private int poseRevision { get => Current.poseRevision; set => Current.poseRevision = value; }
+        private float elapsed { get => Current.elapsed; set => Current.elapsed = value; }
+        private float lastBlend { get => Current.lastBlend; set => Current.lastBlend = value; }
+        private float returnFromBlend { get => Current.returnFromBlend; set => Current.returnFromBlend = value; }
+        private Vector3 lastFinalWrist { get => Current.lastFinalWrist; set => Current.lastFinalWrist = value; }
+        private Quaternion lastFinalRotation { get => Current.lastFinalRotation; set => Current.lastFinalRotation = value; }
+        private Vector3 palmPoint { get => Current.palmPoint; set => Current.palmPoint = value; }
+        private Vector3 startWrist { get => Current.startWrist; set => Current.startWrist = value; }
+        private Vector3 elbowPole { get => Current.elbowPole; set => Current.elbowPole = value; }
+        private Vector3 previousPoint { get => Current.previousPoint; set => Current.previousPoint = value; }
+        private Vector3 previousEye { get => Current.previousEye; set => Current.previousEye = value; }
+        private Quaternion palmFrame { get => Current.palmFrame; set => Current.palmFrame = value; }
+        private Quaternion startWristRotation { get => Current.startWristRotation; set => Current.startWristRotation = value; }
+        private bool overheadReach { get => Current.overheadReach; set => Current.overheadReach = value; }
+        private float overheadPoleSign { get => Current.overheadPoleSign; set => Current.overheadPoleSign = value; }
+        private Quaternion[] baseline { get => Current.baseline; set => Current.baseline = value; }
+        private Quaternion[] previousPose { get => Current.previousPose; set => Current.previousPose = value; }
+        private Vector3 diagnosticPoint { get => Current.diagnosticPoint; set => Current.diagnosticPoint = value; }
+        private Vector3 diagnosticNormal { get => Current.diagnosticNormal; set => Current.diagnosticNormal = value; }
+        private Vector3 diagnosticTangent { get => Current.diagnosticTangent; set => Current.diagnosticTangent = value; }
+        private Vector3 diagnosticEyeLocal { get => Current.diagnosticEyeLocal; set => Current.diagnosticEyeLocal = value; }
+        private Vector3 diagnosticWrist { get => Current.diagnosticWrist; set => Current.diagnosticWrist = value; }
+        private float diagnosticBlend { get => Current.diagnosticBlend; set => Current.diagnosticBlend = value; }
+        private float diagnosticWristAngle { get => Current.diagnosticWristAngle; set => Current.diagnosticWristAngle = value; }
+        private bool diagnosticHasTarget { get => Current.diagnosticHasTarget; set => Current.diagnosticHasTarget = value; }
+        private bool diagnosticHasWrist { get => Current.diagnosticHasWrist; set => Current.diagnosticHasWrist = value; }
+
         private const float PlaneTolerance = .0001f;
-        public HandContactStage ContactStage { get; private set; }
-        public float ContactErrorMetres { get; private set; } = float.NaN;
-        public float MinimumHandPlaneClearanceMetres { get; private set; } = float.NaN;
-        public float PalmPatchPlaneDistanceMetres { get; private set; } = float.NaN;
-        public float MeasuredWaypointCorrectionMetres { get; private set; }
-        public int SafeSolveAttempts { get; private set; }
-        public string LastRefusalReason { get; private set; } = string.Empty;
+        private HandContactStage WorkingStage { get => Current.WorkingStage; set => Current.WorkingStage = value; }
+        public float ContactErrorMetres { get => Current.ContactErrorMetres; private set => Current.ContactErrorMetres = value; }
+        public float MinimumHandPlaneClearanceMetres { get => Current.MinimumHandPlaneClearanceMetres; private set => Current.MinimumHandPlaneClearanceMetres = value; }
+        public float PalmPatchPlaneDistanceMetres { get => Current.PalmPatchPlaneDistanceMetres; private set => Current.PalmPatchPlaneDistanceMetres = value; }
+        public float MeasuredWaypointCorrectionMetres { get => Current.MeasuredWaypointCorrectionMetres; private set => Current.MeasuredWaypointCorrectionMetres = value; }
+        public int SafeSolveAttempts { get => Current.SafeSolveAttempts; private set => Current.SafeSolveAttempts = value; }
+        public string LastRefusalReason { get => Current.LastRefusalReason; private set => Current.LastRefusalReason = value; }
         public int ContactSupportVertexIndex => calibration?.SupportIndex ?? -1;
         public int ContactHandVertexCount => calibration?.SkinIndices.Length ?? 0;
         public int ContactPatchVertexCount => calibration?.PatchIndices.Length ?? 0;
@@ -73,6 +156,15 @@ namespace OutOfReach.Presentation.Hands
         public bool TryReachPush(ContactHand requestedHand, HandContactTarget actualSurface,
             Func<HandContactSample, bool> tryPushAtContact)
         {
+            if (ContactStage != HandContactStage.None) return RefuseDiagnostic("request.busy:" + ContactStage);
+            if (StateFor(requestedHand) == null) return RefuseDiagnostic("request.invalidHand");
+            selectedState = StateFor(requestedHand);
+            return PreparePush(requestedHand, actualSurface, tryPushAtContact);
+        }
+
+        private bool PreparePush(ContactHand requestedHand, HandContactTarget actualSurface,
+            Func<HandContactSample, bool> tryPushAtContact)
+        {
             LastRefusalReason = LastRefusalDiagnostic = string.Empty;
             diagnosticPoint = diagnosticNormal = diagnosticTangent = diagnosticEyeLocal = diagnosticWrist = Vector3.zero;
             diagnosticBlend = diagnosticWristAngle = float.NaN;
@@ -80,7 +172,7 @@ namespace OutOfReach.Presentation.Hands
             if (!isActiveAndEnabled) return RefuseDiagnostic("request.componentDisabled");
             if (clock == null) return RefuseDiagnostic("request.unboundClock");
             if (clock.IsPaused) return RefuseDiagnostic("request.paused");
-            if (ContactStage != HandContactStage.None) return RefuseDiagnostic("request.busy:" + ContactStage);
+            if (WorkingStage != HandContactStage.None) return RefuseDiagnostic("request.busy:" + WorkingStage);
             if (requestedHand != ContactHand.Left && requestedHand != ContactHand.Right) return RefuseDiagnostic("request.invalidHand");
             if (tryPushAtContact == null) return RefuseDiagnostic("request.missingAction");
             if (!leaseAllowed(requestedHand)) return RefuseDiagnostic("request.visualLeaseDenied:" + requestedHand);
@@ -89,7 +181,8 @@ namespace OutOfReach.Presentation.Hands
             { RefuseDiagnostic("request.rigOrRendererUnavailable"); Forget(); return false; }
             poseRevision = readRevision(); target = actualSurface;
             CapturePose(baseline);
-            if (!BarePalmCalibration.TryMeasure(active, out calibration)) { LastRefusalReason = "No valid anatomical palm support patch."; Forget(); return false; }
+            if (!BarePalmCalibration.TryMeasure(active, out BarePalmContactPose measured)) { LastRefusalReason = "No valid anatomical palm support patch."; Forget(); return false; }
+            calibration = measured;
             palmPoint = calibration.LocalPoint; palmFrame = calibration.LocalFrame;
             startWrist = active.Upper.parent.InverseTransformPoint(active.Wrist.position);
             startWristRotation = Quaternion.Inverse(active.Upper.parent.rotation) * active.Wrist.rotation;
@@ -110,8 +203,62 @@ namespace OutOfReach.Presentation.Hands
                 overheadPoleSign = Vector3.Dot(Vector3.Cross(axis, pole), outward) >= 0f ? 1f : -1f;
             }
             lastSample = sample; lastFinalWrist = point; lastFinalRotation = rotation; lastBlend = 0f;
-            action = tryPushAtContact; elapsed = 0f; ContactStage = HandContactStage.Reaching;
+            action = tryPushAtContact; elapsed = 0f; WorkingStage = HandContactStage.Reaching;
             return true;
+        }
+
+        /// <summary>Acquire both real arm leases before any reach. Callback order is Left, Right in one frame.
+        /// Caller must treat Left as provisional and commit an atomic domain command only on Right.</summary>
+        public bool TryReachPushPair(HandContactTarget leftTarget, HandContactTarget rightTarget,
+            Func<HandContactSample, bool> onContact)
+        {
+            if (ContactStage != HandContactStage.None || onContact == null) return false;
+            selectedState = leftState;
+            if (!PreparePush(ContactHand.Left, leftTarget, onContact)) return false;
+            int token = generation;
+            selectedState = rightState;
+            if (!PreparePush(ContactHand.Right, rightTarget, onContact) || token != generation)
+            { CancelImmediately(); return false; }
+            pairedPush = true; pairAction = onContact;
+            return true;
+        }
+
+        private void Both(Action operation)
+        {
+            ArmState previous = selectedState;
+            try { selectedState = leftState; operation(); selectedState = rightState; operation(); }
+            finally { selectedState = previous; }
+        }
+
+        private void DispatchPair()
+        {
+            // Re-prove both skin envelopes after both rigs have been posed. No standalone action fires.
+            int token = generation;
+            bool proven = true;
+            Both(() =>
+            {
+                if (!proven || token != generation) return;
+                proven = TryTarget(out HandContactSample fresh, out _, out _) && MeasureSkin(fresh)
+                    && ContactErrorMetres <= .003f && PalmPatchPlaneDistanceMetres <= .003f
+                    && MinimumHandPlaneClearanceMetres >= -PlaneTolerance;
+                if (proven) lastSample = fresh;
+            });
+            if (token != generation) return;
+            if (!proven) { CancelContact(); return; }
+            var callback = pairAction; pairAction = null;
+            bool accepted;
+            try
+            {
+                accepted = callback != null && callback(leftState.lastSample);
+                if (token != generation || !pairedPush) return;
+                if (!accepted || clock == null || clock.IsPaused || readRevision == null
+                    || readRevision() != leftState.poseRevision || readRevision() != rightState.poseRevision
+                    || !leaseAllowed(ContactHand.Left) || !leaseAllowed(ContactHand.Right))
+                { CancelContact(); return; }
+                accepted = callback(rightState.lastSample);
+            }
+            catch (Exception error) { Debug.LogException(error, this); accepted = false; }
+            if (token == generation && !accepted) CancelContact();
         }
 
         public Vector3 OrientGripAxis(ContactHand selected, Vector3 axis, Vector3 normal)
@@ -129,8 +276,10 @@ namespace OutOfReach.Presentation.Hands
         public bool TryReachGrip(ContactHand requestedHand, HandContactTarget actualSurface,
             Func<HandContactSample, bool> tryGrabAtContact, Func<HandContactTarget?> heldPoint)
         {
+            if (ContactStage != HandContactStage.None || StateFor(requestedHand) == null) return false;
+            selectedState = StateFor(requestedHand);
             LastRefusalReason = LastRefusalDiagnostic = string.Empty;
-            if (!isActiveAndEnabled || clock == null || clock.IsPaused || ContactStage != HandContactStage.None
+            if (!isActiveAndEnabled || clock == null || clock.IsPaused || WorkingStage != HandContactStage.None
                 || !GripPoseConfigured || tryGrabAtContact == null || heldPoint == null
                 || (requestedHand != ContactHand.Left && requestedHand != ContactHand.Right)
                 || !leaseAllowed(requestedHand) || Mathf.Abs(actualSurface.GripRadiusMetres - .015f) > .00001f)
@@ -156,7 +305,7 @@ namespace OutOfReach.Presentation.Hands
             if (!SelectGripAxialPose() || !TryTarget(out sample, out point, out rotation)) { Forget(); return false; }
             lastSample = sample; lastFinalWrist = point; lastFinalRotation = rotation;
             action = tryGrabAtContact; readHeldGrip = heldPoint; gripClose = lastBlend = elapsed = 0f;
-            ContactStage = HandContactStage.Reaching; return true;
+            WorkingStage = HandContactStage.Reaching; return true;
         }
 
         bool SelectGripAxialPose()
@@ -192,7 +341,7 @@ namespace OutOfReach.Presentation.Hands
 
         void TickGrip()
         {
-            if (ContactStage == HandContactStage.Holding)
+            if (WorkingStage == HandContactStage.Holding)
             {
                 int token = generation; HandContactTarget? held;
                 try { held = readHeldGrip?.Invoke(); }
@@ -204,7 +353,7 @@ namespace OutOfReach.Presentation.Hands
             if (!TryTarget(out HandContactSample sample, out Vector3 wrist, out Quaternion rotation))
             { CancelImmediately(); return; }
             float arm, close;
-            if (ContactStage == HandContactStage.Returning)
+            if (WorkingStage == HandContactStage.Returning)
             {
                 float openingSeconds = gripReturnClose * BareRailGripPose.Duration;
                 close = openingSeconds > 0f ? gripReturnClose * (1f - Mathf.Clamp01(elapsed / openingSeconds)) : 0f;
@@ -215,17 +364,17 @@ namespace OutOfReach.Presentation.Hands
                 if (retract >= 1f) { Restore(baseline, 1f); grip.Restore(); Forget(); }
                 return;
             }
-            arm = ContactStage == HandContactStage.Holding ? 1f : Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / reachSeconds));
-            close = ContactStage == HandContactStage.Holding ? 1f : Mathf.Clamp01((elapsed - reachSeconds) / BareRailGripPose.Duration);
+            arm = WorkingStage == HandContactStage.Holding ? 1f : Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / reachSeconds));
+            close = WorkingStage == HandContactStage.Holding ? 1f : Mathf.Clamp01((elapsed - reachSeconds) / BareRailGripPose.Duration);
             if (!TryApplyGripPose(arm, close, wrist, rotation, sample)) { CancelImmediately(); return; }
             gripClose = close; lastBlend = arm; lastSample = sample; lastFinalWrist = wrist; lastFinalRotation = rotation;
             if (close < 1f) return;
             if (ContactErrorMetres > .003f || grip.MaximumRegionGap > .002f
                 || grip.MinimumClearance < -PlaneTolerance || grip.AxisAlignment < .999f)
             { RefuseDiagnostic("grip.closedSkinOrAxisNotProven"); CancelContact(); return; }
-            if (ContactStage == HandContactStage.Holding) return;
+            if (WorkingStage == HandContactStage.Holding) return;
             var callback = action; action = null; int generationBefore = generation;
-            ContactStage = HandContactStage.Holding; elapsed = 0f;
+            WorkingStage = HandContactStage.Holding; elapsed = 0f;
             bool accepted;
             try { accepted = callback != null && callback(sample); }
             catch (Exception error) { Debug.LogException(error, this); accepted = false; }
@@ -262,17 +411,30 @@ namespace OutOfReach.Presentation.Hands
         /// <summary>Synchronous lease return before the body owner samples, hides or restores its own skeleton.</summary>
         public void CancelImmediately()
         {
-            if (active != null && ContactStage != HandContactStage.None && readRevision != null && readRevision() == poseRevision)
+            pairAction = null;
+            Both(CancelOneImmediately);
+            pairedPush = false;
+        }
+
+        private void CancelOneImmediately()
+        {
+            if (active != null && WorkingStage != HandContactStage.None && readRevision != null && readRevision() == poseRevision)
             { Restore(baseline, 1f); grip?.Restore(); }
             Forget();
         }
 
         public void CancelContact()
         {
-            if (active == null || ContactStage == HandContactStage.None || ContactStage == HandContactStage.Returning) return;
+            pairAction = null;
+            Both(CancelOneContact);
+        }
+
+        private void CancelOneContact()
+        {
+            if (active == null || WorkingStage == HandContactStage.None || WorkingStage == HandContactStage.Returning) return;
             returnFromBlend = lastBlend; gripReturnClose = gripClose;
             generation++; action = null; elapsed = 0f;
-            ContactErrorMetres = float.NaN; ContactStage = HandContactStage.Returning;
+            ContactErrorMetres = float.NaN; WorkingStage = HandContactStage.Returning;
         }
 
         public void ClearBinding()
@@ -287,14 +449,27 @@ namespace OutOfReach.Presentation.Hands
             calibration?.Dispose(); calibration = null;
             grip?.Dispose(); grip = null; readHeldGrip = null; gripClose = gripReturnClose = gripAxialDegrees = 0f;
             generation++; active = null; action = null; target = default;
-            ContactStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN; overheadReach = false; overheadPoleSign = 0f;
+            WorkingStage = HandContactStage.None; elapsed = 0f; ContactErrorMetres = float.NaN; overheadReach = false; overheadPoleSign = 0f;
             MinimumHandPlaneClearanceMetres = PalmPatchPlaneDistanceMetres = float.NaN;
             MeasuredWaypointCorrectionMetres = 0f; SafeSolveAttempts = 0; lastBlend = returnFromBlend = 0f;
         }
 
         private void LateUpdate()
         {
-            if (ContactStage == HandContactStage.None) return;
+            if (!pairedPush) { TickContact(); return; }
+            Both(TickContact);
+            if (ContactStage == HandContactStage.None) { pairedPush = false; pairAction = null; return; }
+            if (pairAction == null) return;
+            if (leftState.WorkingStage == HandContactStage.Returning || rightState.WorkingStage == HandContactStage.Returning
+                || leftState.WorkingStage == HandContactStage.None || rightState.WorkingStage == HandContactStage.None)
+            { CancelContact(); return; }
+            if (leftState.WorkingStage != HandContactStage.PushContact || rightState.WorkingStage != HandContactStage.PushContact) return;
+            DispatchPair();
+        }
+
+        private void TickContact()
+        {
+            if (WorkingStage == HandContactStage.None) return;
             if (active == null || !active.IsUsable || readRevision() != poseRevision) { Forget(); return; }
             if (clock.IsPaused) { CancelContact(); return; } // Freeze visible pose; no queued action survives resume.
             if (!leaseAllowed(hand) || !active.Renderer.enabled || !active.Renderer.gameObject.activeInHierarchy)
@@ -306,7 +481,7 @@ namespace OutOfReach.Presentation.Hands
             if (dt > .1f) dt = 0f;
             elapsed += dt;
             if (grip != null) { TickGrip(); return; }
-            if (ContactStage == HandContactStage.Returning)
+            if (WorkingStage == HandContactStage.Returning)
             {
                 float t = Mathf.Clamp01(elapsed / Mathf.Clamp(returnSeconds, .15f, .35f));
                 // Reverse the same measured path; direct quaternion return can sweep fingers through a wall.
@@ -319,16 +494,17 @@ namespace OutOfReach.Presentation.Hands
             if (!TryTarget(out HandContactSample sample, out Vector3 finalWrist, out Quaternion finalRotation))
             { CancelContact(); return; }
             float reach = Mathf.Clamp01(elapsed / Mathf.Clamp(reachSeconds, .15f, .25f));
-            float blend = ContactStage == HandContactStage.Reaching ? Mathf.SmoothStep(0f, 1f, reach) : 1f;
+            float blend = WorkingStage == HandContactStage.Reaching ? Mathf.SmoothStep(0f, 1f, reach) : 1f;
             if (!TryApplySafePose(blend, finalWrist, finalRotation, sample)) { CancelContact(); return; }
             lastSample = sample; lastFinalWrist = finalWrist; lastFinalRotation = finalRotation; lastBlend = blend;
-            if (ContactStage == HandContactStage.PushContact)
+            if (WorkingStage == HandContactStage.PushContact)
             { if (elapsed >= .06f) CancelContact(); return; }
             if (reach < 1f) return;
             if (ContactErrorMetres > .003f || PalmPatchPlaneDistanceMetres > .003f
                 || MinimumHandPlaneClearanceMetres < -PlaneTolerance) { CancelContact(); return; }
             var callback = action; action = null;
-            ContactStage = HandContactStage.PushContact; elapsed = 0f;
+            WorkingStage = HandContactStage.PushContact; elapsed = 0f;
+            if (pairedPush) return;
             int token = generation;
             bool accepted;
             try { accepted = callback != null && callback(sample); }
@@ -505,17 +681,14 @@ namespace OutOfReach.Presentation.Hands
         }
 
         // Diagnostics only; retained through Forget/Cancel, never consulted by an acceptance gate.
-        private Vector3 diagnosticPoint, diagnosticNormal, diagnosticTangent, diagnosticEyeLocal, diagnosticWrist;
-        private float diagnosticBlend, diagnosticWristAngle;
-        private bool diagnosticHasTarget, diagnosticHasWrist;
-        public string LastRefusalDiagnostic { get; private set; } = string.Empty;
+        public string LastRefusalDiagnostic { get => Current.LastRefusalDiagnostic; private set => Current.LastRefusalDiagnostic = value; }
         private bool RefuseDiagnostic(string reason)
         {
             LastRefusalReason = reason;
             float a = active != null && active.Upper && active.Lower ? Vector3.Distance(active.Upper.position, active.Lower.position) : float.NaN;
             float b = active != null && active.Lower && active.Wrist ? Vector3.Distance(active.Lower.position, active.Wrist.position) : float.NaN;
             float d = active != null && active.Upper ? Vector3.Distance(active.Upper.position, diagnosticWrist) : float.NaN;
-            LastRefusalDiagnostic = reason + " hand=" + hand + " stage=" + ContactStage
+            LastRefusalDiagnostic = reason + " hand=" + hand + " stage=" + WorkingStage
                 + " hasTarget=" + diagnosticHasTarget + " hasWrist=" + diagnosticHasWrist
                 + " blend=" + diagnosticBlend.ToString("R") + " a=" + a.ToString("R") + " b=" + b.ToString("R") + " d=" + d.ToString("R")
                 + " elbowCos=" + ((a*a+b*b-d*d)/(2f*a*b)).ToString("R") + " wristAngle=" + diagnosticWristAngle.ToString("R")

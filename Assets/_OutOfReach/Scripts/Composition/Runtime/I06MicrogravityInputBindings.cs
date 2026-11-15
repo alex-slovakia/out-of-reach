@@ -23,6 +23,10 @@ namespace OutOfReach.Composition
         PlayerInputActions source;
         bool bound, armed, faulted, subscribed, permissionWasAllowed;
         bool leftReady, rightReady, footReady;
+        bool handClickPending;
+        ContactHand pendingHand;
+        float pendingUntil;
+        const float ChordSeconds = .075f;
         int armedFrame;
         float handStrength, footStrength;
 
@@ -30,6 +34,8 @@ namespace OutOfReach.Composition
         public bool ContactRoutingRequested => armed;
         public bool HasInputLease => armed && !faulted && player && ReferenceEquals(player.InputSource, source) && lease.IsOwned;
         public bool IsFaulted => faulted;
+        public bool HasRailGrip => bound && (suit.IsSuitOn || bridge.WorkGripAvailable);
+        public bool AimAtReachableRail() => HasInputLease && HasRailGrip && !bridge.IsBusy && PreferRailGrip();
         public string LastRefusal { get; private set; } = string.Empty;
         public FloatActionResult? LastFootResult { get; private set; }
 
@@ -78,7 +84,7 @@ namespace OutOfReach.Composition
         public void Disarm()
         {
             armed = false; faulted = false; permissionWasAllowed = false;
-            leftReady = rightReady = footReady = false;
+            leftReady = rightReady = footReady = handClickPending = false;
             if (bridge) bridge.SetContactModeEnabled(false);
             lease.Release(); source = null;
         }
@@ -114,7 +120,7 @@ namespace OutOfReach.Composition
             if (!Permission() || !source.Map.enabled)
             {
                 if (permissionWasAllowed || bridge.IsBusy) bridge.Release();
-                permissionWasAllowed = false; leftReady = rightReady = footReady = false;
+                permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
                 return; // Keep the LMB lease through pause/menu/rest; no resume-click fallback.
             }
             permissionWasAllowed = true;
@@ -134,30 +140,67 @@ namespace OutOfReach.Composition
             if (left) leftReady = false;
             if (right) rightReady = false;
             if (foot) footReady = false;
-            // One intent per frame; simultaneous L/R chooses left, and a hand click takes priority over Space.
-            if (left || right) DispatchHand(left ? ContactHand.Left : ContactHand.Right);
-            else if (foot) DispatchFoot();
+            bool grip = keyboard != null && (keyboard.leftCtrlKey.isPressed || keyboard.rightCtrlKey.isPressed);
+            if (HandleHandInput(mouse, left, right, grip)) return;
+            if (foot) DispatchFoot();
         }
-        void DispatchHand(ContactHand hand)
+
+        bool HandleHandInput(Mouse mouse, bool left, bool right, bool grip)
+        {
+            if (mouse == null) { handClickPending = false; return false; }
+            if (handClickPending)
+            {
+                bool firstHeld = pendingHand == ContactHand.Left ? mouse.leftButton.isPressed : mouse.rightButton.isPressed;
+                bool secondPressed = pendingHand == ContactHand.Left ? right : left;
+                if (firstHeld && secondPressed && Time.unscaledTime <= pendingUntil)
+                {
+                    handClickPending = false;
+                    DispatchHand(pendingHand, false, true);
+                }
+                else if (!firstHeld || Time.unscaledTime >= pendingUntil)
+                {
+                    handClickPending = false;
+                    DispatchHand(pendingHand, false);
+                }
+                return true;
+            }
+            if (!left && !right) return false;
+            ContactHand hand = left ? ContactHand.Left : ContactHand.Right;
+            if ((left && right) || grip || player.HeldHandhold)
+                DispatchHand(hand, grip && !(left && right), left && right);
+            else
+            {
+                handClickPending = true; pendingHand = hand;
+                pendingUntil = Time.unscaledTime + ChordSeconds;
+            }
+            return true;
+        }
+
+        void DispatchHand(ContactHand hand, bool grip, bool pair = false)
         {
             LastRefusal = string.Empty;
             if (player.HeldHandhold)
             {
-                FloatActionResult result = bridge.Release(); // Does not release another owner's grip.
+                FloatActionResult result = bridge.Release();
                 if (result != FloatActionResult.Done) Refuse("The held grip is not owned by this contact bridge.");
                 return;
             }
             if (bridge.IsBusy) { Refuse("The current hand contact is still in progress."); return; }
-            // Movement is sampled once at this click, never integrated as airborne thrust.
+            if (grip)
+            {
+                if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
+                return;
+            }
+            // Explicit steering is captured once. WASD has no continuous thrust.
             Vector2 move = source.Move;
-            bool directed = move.sqrMagnitude > .01f;
-            Vector3 travel = player.transform.TransformDirection(new Vector3(move.x, 0f, move.y));
-            bool accepted = directed
-                ? bridge.TryPushDirected(hand, eye.forward, travel, handStrength)
-                : (suit.IsSuitOn || bridge.WorkGripAvailable) && PreferRailGrip()
-                    ? bridge.TryGrab(hand, eye.forward) : bridge.TryPush(hand, eye.forward, handStrength);
-            if (!accepted) Refuse(bridge.LastRefusal); // No decorative press and no second action after refusal.
+            Vector3 travel = move.sqrMagnitude > .01f
+                ? player.transform.TransformDirection(new Vector3(move.x, 0f, move.y)) : Vector3.zero;
+            bool accepted = pair ? bridge.TryPushPair(eye.forward, travel, handStrength)
+                : travel == Vector3.zero ? bridge.TryPush(hand, eye.forward, handStrength)
+                    : bridge.TryPushDirected(hand, eye.forward, travel, handStrength);
+            if (!accepted) Refuse(bridge.LastRefusal);
         }
+
         void DispatchFoot()
         {
             LastFootResult = null; LastRefusal = string.Empty;
@@ -191,7 +234,7 @@ namespace OutOfReach.Composition
         }
         void Fault(string reason)
         {
-            faulted = true; permissionWasAllowed = false; leftReady = rightReady = footReady = false;
+            faulted = true; permissionWasAllowed = false; leftReady = rightReady = footReady = handClickPending = false;
             if (bridge) bridge.SetContactModeEnabled(false);
             lease.Release(); source = null; LastRefusal = reason;
             // Keep requested=true until explicit Disarm so root cannot fall back to decorative click/E gestures.

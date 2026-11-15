@@ -25,13 +25,14 @@ namespace OutOfReach.Composition
         public const string RecordActionsName = "reportEndActions";
         public const float DefaultQuitConfirmSeconds = 3f;
 
-        // Pause help for the actual movement mode (root 6885223398). Floating has no WASD thrust and no bare-hand grip.
+        // Pause help follows the active movement mode and authored contact support.
         public const string WalkingControlsHint = "WASD move · Shift sprint · Mouse look\nE interact · Tab systems · Esc resume";
         public const string RouteControlsHint = "W/S move along the tether · Mouse look\nE interact · Tab systems · Esc resume";
         public const string FloatingPushHint = "Left/right click a surface in reach: push off\n"
+            + "Both mouse buttons: push with both hands\n"
             + "WASD only aims a push: hold it while clicking\n"
             + "Space: foot push, only while your feet touch support";
-        public const string SuitedRailHint = "Suit: click a rail to grip, click again to let go";
+        public const string SuitedRailHint = "Ctrl + click a reachable rail to grip · Click to release";
         public const string FloatingSystemsHint = "Mouse look · E use equipment · Tab systems · Esc resume";
 
         [SerializeField] private UIDocument document;
@@ -185,7 +186,8 @@ namespace OutOfReach.Composition
             {
                 var player = composition.Runtime.Player;
                 var eva = composition.Runtime.Eva;
-                controlsHint.text = ControlsHintFor(player && player.IsFloating, player && player.IsOnRoute, eva != null && eva.IsSuitOn);
+                controlsHint.text = ControlsHintFor(player && player.IsFloating, player && player.IsOnRoute,
+                    composition.HasInteriorRailGrip || (eva != null && eva.IsSuitOn));
             }
             if (!visible) feedback.style.display = DisplayStyle.None;
             RefreshCommunications();
@@ -367,12 +369,12 @@ namespace OutOfReach.Composition
 
         /// <summary>
         /// The pause help for the player's actual movement mode. Floating wins over a tether route (the controller
-        /// gives floating no WASD thrust either way); only a suited player is told about rail grips.
+        /// gives floating no WASD thrust either way). Show rail controls when the current outfit supports grips.
         /// </summary>
-        public static string ControlsHintFor(bool floating, bool onRoute, bool suited)
+        public static string ControlsHintFor(bool floating, bool onRoute, bool supportsRailGrip)
         {
             if (!floating) return onRoute ? RouteControlsHint : WalkingControlsHint;
-            return FloatingPushHint + (suited ? "\n" + SuitedRailHint : string.Empty) + "\n" + FloatingSystemsHint;
+            return FloatingPushHint + (supportsRailGrip ? "\n" + SuitedRailHint : string.Empty) + "\n" + FloatingSystemsHint;
         }
 
         /// <summary>

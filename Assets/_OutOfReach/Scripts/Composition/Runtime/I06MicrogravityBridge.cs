@@ -40,6 +40,20 @@ namespace OutOfReach.Composition
         HandContactTarget target;
         float pushStrength, requestStarted;
         Vector3 localPushDirection;
+        PushContact secondPush;
+        HandContactSample leftSample;
+        Vector3 leftDirection;
+        int leftContactFrame = -1;
+
+        readonly struct PushContact
+        {
+            public readonly Collider Surface;
+            public readonly HandContactTarget Target;
+            public readonly Vector3 LocalDirection;
+
+            public PushContact(Collider surface, HandContactTarget target, Vector3 localDirection)
+            { Surface = surface; Target = target; LocalDirection = localDirection; }
+        }
 
         public bool IsBound => bound;
         /// <summary>Explicit routing mode, not permission. A rejected request must not fall back to a decorative press.</summary>
@@ -109,7 +123,15 @@ namespace OutOfReach.Composition
             return Begin(selectedHand, HandContactKind.Push, aimDirection, strength01, desiredTravelWorld);
         }
 
-        /// <summary>Suited glove only; nearest hit must be a registered straight capsule rail with actual 12â€“17mm radius.</summary>
+        public bool TryPushPair(Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01 = .35f)
+        {
+            if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f
+                || !Finite(desiredTravelWorld) || !Finite(desiredTravelWorld.sqrMagnitude))
+                return Refuse("Invalid two-hand push request.");
+            return Begin(ContactHand.Left, HandContactKind.Push, aimDirection, strength01, desiredTravelWorld, true);
+        }
+
+        /// <summary>Nearest hit must be a registered straight capsule rail with the correct radius for the current outfit.</summary>
         public bool TryGrab(ContactHand selectedHand, Vector3 aimDirection) => Begin(selectedHand, HandContactKind.Grip, aimDirection, 0f);
 
         /// <summary>Release dispatched by the same input owner. Cancels pending animation and only this bridge's held grip.</summary>
@@ -158,64 +180,69 @@ namespace OutOfReach.Composition
                 phase = state.Phase;
                 CancelOwnedContact();
             }
-            if (pending && (!ModeAllowed() || pendingSuited != suit.IsSuitOn || !VisualLeaseAllowed(hand))) CancelOwnedContact();
+            if (pending && (!ModeAllowed() || pendingSuited != suit.IsSuitOn || !VisualLeaseAllowed(hand)
+                || (secondPush.Surface && !VisualLeaseAllowed(ContactHand.Right)))) CancelOwnedContact();
         }
         void LateUpdate()
         {
             if (!pending) return;
             if (!ModeAllowed() || pendingSuited != suit.IsSuitOn) { CancelOwnedContact(); return; }
-            HandContactStage stage = pendingSuited ? gloves.ContactStage : bare.ContactStage;
+            HandContactStage stage = ContactStageFor(hand);
+            if (secondPush.Surface)
+            {
+                HandContactStage other = ContactStageFor(ContactHand.Right);
+                if (!actionSent && (!IsApproaching(stage) || !IsApproaching(other))) CancelOwnedContact();
+                else if ((stage == HandContactStage.None && other == HandContactStage.None)
+                    || Time.unscaledTime - requestStarted > 1.5f) CancelOwnedContact();
+                return;
+            }
             if (!pendingSuited && kind == HandContactKind.Grip && stage == HandContactStage.Returning && !gripReturning)
             { gripReturning = true; requestStarted = Time.unscaledTime; }
             if (stage == HandContactStage.None || (ownedGrip && stage != HandContactStage.Holding)
                 || (stage != HandContactStage.Holding && Time.unscaledTime - requestStarted > 1.5f)) CancelOwnedContact();
         }
 
-        bool Begin(ContactHand selectedHand, HandContactKind requestedKind, Vector3 aimDirection, float strength, Vector3 desiredTravelWorld = default)
+        HandContactStage ContactStageFor(ContactHand selectedHand) => pendingSuited
+            ? gloves.ContactStageFor(selectedHand) : bare.ContactStageFor(selectedHand);
+
+        static bool IsApproaching(HandContactStage stage) =>
+            stage == HandContactStage.Reaching || stage == HandContactStage.PushContact;
+
+        bool Begin(ContactHand selectedHand, HandContactKind requestedKind, Vector3 aimDirection, float strength,
+            Vector3 desiredTravelWorld = default, bool twoHands = false)
         {
             LastRefusal = string.Empty; LastCommandResult = null;
             if (!ModeAllowed()) return Refuse("Contact mode is unavailable.");
             if (pending || player.HeldHandhold) return Refuse("Release the current contact first.");
             if (selectedHand != ContactHand.Left && selectedHand != ContactHand.Right) return Refuse("Invalid hand.");
-            if (!VisualLeaseAllowed(selectedHand)) return Refuse("Selected arm does not have the visual lease.");
+            if (!VisualLeaseAllowed(selectedHand) || (twoHands && !VisualLeaseAllowed(ContactHand.Right)))
+                return Refuse("Selected arm does not have the visual lease.");
             if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn && !WorkGripAvailable)
                 return Refuse("Bare-hand grip needs the verified authored 15mm pose asset.");
             if (!Finite(aimDirection) || aimDirection.sqrMagnitude < .00001f
                 || !Nearest(player.ViewPivot.position, aimDirection.normalized, Reach, out RaycastHit hit))
                 return Refuse("No unobstructed solid surface within reach.");
-            // WORK crosshair names the intended surface; the selected palm lands 6cm toward that hand.
-            // This is a new real point on the same aimed plane, never a skin/arm offset or a larger reach.
-            if (requestedKind == HandContactKind.Push && !suit.IsSuitOn
-                && !TryWorkPalmPoint(selectedHand, hit, out hit))
-                return Refuse("No verified same-surface WORK palm point within the original reach.");
-            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
-            // Looking up projects eye.up backward across a ceiling. WORK fingers need a stable forward
-            // tangent there; retain the existing frame for every wall, glove and rail Grip.
-            if (requestedKind == HandContactKind.Push && !suit.IsSuitOn && Vector3.Dot(hit.normal, Vector3.down) > .95f)
-                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal).normalized;
-            float radius = 0f;
-            if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
-                return Refuse("Grip needs a registered 12â€“17mm straight capsule rail.");
-            if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn && Mathf.Abs(radius - .015f) > .00001f)
-                return Refuse("Authored bare-hand grip supports exactly15mm radius rails.");
-            if (tangent.sqrMagnitude < .99f) return Refuse("No stable contact frame.");
-            // A cylinder axis is an unoriented line. Pick the authored grip hemisphere once,
-            // rather than letting an equivalent +axis/-axis model flip the wrist upside down.
-            if (requestedKind == HandContactKind.Grip) tangent = suit.IsSuitOn
-                ? OrientRailAxisAtRequest(tangent, player.ViewPivot) : bare.OrientGripAxis(selectedHand, tangent, hit.normal);
-            Vector3 direction = hit.normal;
-            if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f
-                && !TryDirectedPushDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
-                return Refuse("Invalid directional push geometry.");
-            hand = selectedHand; kind = requestedKind; surface = hit.collider;
-            target = Frame(surface, hit.point, hit.normal, tangent, radius);
-            localPushDirection = surface.transform.InverseTransformVector(direction).normalized;
+            if (!TryBuildContact(selectedHand, requestedKind, hit, desiredTravelWorld, twoHands, out PushContact first))
+                return false;
+            PushContact second = default;
+            if (twoHands && !TryBuildContact(ContactHand.Right, requestedKind, hit, desiredTravelWorld, true, out second))
+                return false;
+
+            hand = selectedHand; kind = requestedKind; surface = first.Surface; target = first.Target;
+            localPushDirection = first.LocalDirection; secondPush = second; leftContactFrame = -1;
             pushStrength = strength; pendingSuited = suit.IsSuitOn; actionSent = false; pending = true; gripReturning = false;
-            requestStarted = Time.unscaledTime; // Presentation watchdog only; never advances simulation or physics.
+            requestStarted = Time.unscaledTime;
             generation++;
-            bool accepted = pendingSuited
-                ? gloves.TryReachContact(hand, kind, target, AtContact, kind == HandContactKind.Grip ? ReadHeld : (Func<HandContactTarget?>)null)
-                : kind == HandContactKind.Grip ? bare.TryReachGrip(hand, target, AtContact, ReadHeld)
+
+            bool accepted;
+            if (twoHands)
+                accepted = pendingSuited
+                    ? gloves.TryReachPushPair(target, secondPush.Target, AtPairContact)
+                    : bare.TryReachPushPair(target, secondPush.Target, AtPairContact);
+            else if (pendingSuited)
+                accepted = gloves.TryReachContact(hand, kind, target, AtContact, kind == HandContactKind.Grip ? ReadHeld : (Func<HandContactTarget?>)null);
+            else
+                accepted = kind == HandContactKind.Grip ? bare.TryReachGrip(hand, target, AtContact, ReadHeld)
                     : bare.TryReachPush(hand, target, AtContact);
             if (accepted) return true;
             string reason = !pendingSuited && bare && !string.IsNullOrEmpty(bare.LastRefusalReason)
@@ -223,6 +250,34 @@ namespace OutOfReach.Composition
                 : "The actual hand pose, arm reach or approach path refused this contact.";
             CancelOwnedContact();
             return Refuse(reason);
+        }
+
+        bool TryBuildContact(ContactHand selectedHand, HandContactKind requestedKind, RaycastHit hit,
+            Vector3 desiredTravelWorld, bool twoHands, out PushContact contact)
+        {
+            contact = default;
+            bool barePush = requestedKind == HandContactKind.Push && !suit.IsSuitOn;
+            // Both hands need separate unobstructed spots on the aimed surface.
+            if ((barePush || twoHands) && !TryPalmPoint(selectedHand, hit, barePush, out hit))
+                return Refuse("No verified palm point on the aimed surface within reach.");
+            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
+            if (barePush && Vector3.Dot(hit.normal, Vector3.down) > .95f)
+                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal).normalized;
+            float radius = 0f;
+            if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
+                return Refuse("Grip needs a registered 12–17mm straight capsule rail.");
+            if (requestedKind == HandContactKind.Grip && !suit.IsSuitOn && Mathf.Abs(radius - .015f) > .00001f)
+                return Refuse("Authored bare-hand grip supports exactly15mm radius rails.");
+            if (tangent.sqrMagnitude < .99f) return Refuse("No stable contact frame.");
+            if (requestedKind == HandContactKind.Grip) tangent = suit.IsSuitOn
+                ? OrientRailAxisAtRequest(tangent, player.ViewPivot) : bare.OrientGripAxis(selectedHand, tangent, hit.normal);
+            Vector3 direction = hit.normal;
+            if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f
+                && !TryDirectedPushDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
+                return Refuse("Invalid directional push geometry.");
+            contact = new PushContact(hit.collider, Frame(hit.collider, hit.point, hit.normal, tangent, radius),
+                hit.collider.transform.InverseTransformVector(direction).normalized);
+            return true;
         }
 
         // Pure request-direction math only. Force magnitude and validated contact dispatch remain Player-owned.
@@ -252,7 +307,7 @@ namespace OutOfReach.Composition
             return true;
         }
 
-        bool TryWorkPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, out RaycastHit palmHit)
+        bool TryPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, bool work, out RaycastHit palmHit)
         {
             palmHit = default;
             Vector3 across = Vector3.ProjectOnPlane(player.ViewPivot.right, aimedHit.normal);
@@ -261,7 +316,7 @@ namespace OutOfReach.Composition
             // At the ceiling the reticle can be 30cm ahead while the real shoulder-to-wrist chain is
             // only48cm. Select a nearby natural palm placement on that SAME aimed plane; the existing
             // re-ray, whole-skin solver, wrist limit and Player validation still decide whether it is real.
-            if (Vector3.Dot(aimedHit.normal, Vector3.down) > .95f)
+            if (work && Vector3.Dot(aimedHit.normal, Vector3.down) > .95f)
             {
                 Vector3 heading = Vector3.ProjectOnPlane(player.ViewPivot.forward, aimedHit.normal);
                 if (heading.sqrMagnitude < .0001f) return false;
@@ -311,33 +366,71 @@ namespace OutOfReach.Composition
 
         bool ValidateContact(HandContactSample sample)
         {
-            if (!pending || !ModeAllowed() || pendingSuited != suit.IsSuitOn || !VisualLeaseAllowed(hand)
-                || sample.Hand != hand || sample.Kind != kind || !ValidSurface(surface) || sample.Surface != surface.transform
+            bool secondary = secondPush.Surface && sample.Hand == ContactHand.Right;
+            Collider contactSurface = secondary ? secondPush.Surface : surface;
+            HandContactTarget contactTarget = secondary ? secondPush.Target : target;
+            ContactHand expectedHand = secondary ? ContactHand.Right : hand;
+            if (!pending || !ModeAllowed() || pendingSuited != suit.IsSuitOn || !VisualLeaseAllowed(expectedHand)
+                || sample.Hand != expectedHand || sample.Kind != kind || !ValidSurface(contactSurface)
+                || sample.Surface != contactSurface.transform
                 || !Finite(sample.Point) || !Finite(sample.Normal) || !Finite(sample.Tangent)
                 || !Finite(sample.CurrentWristPoint) || !Finite(sample.WristPoint)) return false;
             Vector3 origin = player.ViewPivot.position, delta = sample.Point - origin;
             float distance = delta.magnitude;
             if (distance < .001f || distance > Reach || !Nearest(origin, delta / distance, distance + .02f, out RaycastHit hit)
-                || hit.collider != surface || Vector3.Distance(hit.point, sample.Point) > PointTolerance
+                || hit.collider != contactSurface || Vector3.Distance(hit.point, sample.Point) > PointTolerance
                 || Vector3.Dot(hit.normal, sample.Normal) < .98f) return false;
-            Vector3 expectedPoint = target.Surface.TransformPoint(target.LocalPoint);
+            Vector3 expectedPoint = contactTarget.Surface.TransformPoint(contactTarget.LocalPoint);
             if (Vector3.Distance(expectedPoint, sample.Point) > PointTolerance) return false;
             if (kind == HandContactKind.Grip)
             {
-                if (!RailFrame(surface, sample.Point, sample.Normal, out Vector3 axis, out float radius)
+                if (!RailFrame(contactSurface, sample.Point, sample.Normal, out Vector3 axis, out float radius)
                     || Mathf.Abs(radius - sample.GripRadiusMetres) > .0005f || Mathf.Abs(Vector3.Dot(axis, sample.Tangent)) < .99f) return false;
             }
-            return WristPathClear(sample);
+            return WristPathClear(sample, contactSurface);
+        }
+
+        bool AtPairContact(HandContactSample sample)
+        {
+            if (actionSent || !secondPush.Surface || !ValidateContact(sample) || !HasContactAccuracy(sample.Hand))
+                return false;
+            if (sample.Hand == ContactHand.Left)
+            {
+                leftSample = sample;
+                leftContactFrame = Time.frameCount;
+                return TryWorldPushDirection(surface, localPushDirection, sample.Normal, out leftDirection);
+            }
+            if (leftContactFrame != Time.frameCount || !ValidateContact(leftSample) || !HasContactAccuracy(ContactHand.Left)
+                || !TryWorldPushDirection(secondPush.Surface, secondPush.LocalDirection, sample.Normal, out Vector3 rightDirection))
+                return false;
+
+            actionSent = true;
+            int token = generation;
+            FloatActionResult result = player.TryPushOffPair(surface, leftSample.Point, leftDirection, pushStrength,
+                secondPush.Surface, sample.Point, rightDirection, pushStrength);
+            if (token == generation) LastCommandResult = result;
+            return result == FloatActionResult.Done;
+        }
+
+        bool HasContactAccuracy(ContactHand selectedHand)
+        {
+            float error = pendingSuited ? gloves.ContactErrorFor(selectedHand) : bare.ContactErrorFor(selectedHand);
+            return Finite(error) && error <= (pendingSuited ? .002f : .003f);
+        }
+
+        bool TryWorldPushDirection(Collider collider, Vector3 localDirection, Vector3 normal, out Vector3 direction)
+        {
+            direction = collider.transform.TransformVector(localDirection).normalized;
+            return Finite(direction) && direction.sqrMagnitude >= .99f
+                && Vector3.Dot(direction, normal) >= player.Microgravity.MinimumAwayDot;
         }
 
         bool AtContact(HandContactSample sample)
         {
             if (actionSent || !ValidateContact(sample)) return false;
-            float error = pendingSuited ? gloves.ContactErrorMetres : bare.ContactErrorMetres;
-            if (!Finite(error) || error > (pendingSuited ? .002f : .003f)) return false;
-            Vector3 direction = surface.transform.TransformVector(localPushDirection).normalized;
-            if (kind == HandContactKind.Push && (!Finite(direction) || direction.sqrMagnitude < .99f
-                || Vector3.Dot(direction, sample.Normal) < player.Microgravity.MinimumAwayDot)) return false;
+            if (!HasContactAccuracy(sample.Hand)) return false;
+            Vector3 direction = Vector3.zero;
+            if (kind == HandContactKind.Push && !TryWorldPushDirection(surface, localPushDirection, sample.Normal, out direction)) return false;
             actionSent = true; int token = generation;
             // Claim only the intended collider before Player emits its synchronous Grabbed event. A root
             // teardown inside that event can then release the just-created grip instead of leaking it.
@@ -374,10 +467,10 @@ namespace OutOfReach.Composition
             return target;
         }
 
-        bool WristPathClear(HandContactSample sample)
+        bool WristPathClear(HandContactSample sample, Collider contactSurface)
         {
             // Both endpoints are tested because casts do not report a starting overlap reliably.
-            if (!WristPointClear(sample.CurrentWristPoint, sample) || !WristPointClear(sample.WristPoint, sample)) return false;
+            if (!WristPointClear(sample.CurrentWristPoint, sample, contactSurface) || !WristPointClear(sample.WristPoint, sample, contactSurface)) return false;
             Vector3 path = sample.WristPoint - sample.CurrentWristPoint;
             float length = path.magnitude;
             if (length < .0001f) return true;
@@ -388,12 +481,12 @@ namespace OutOfReach.Composition
             {
                 RaycastHit hit = hits[i];
                 if (Owned(hit.collider)) continue;
-                if (hit.collider != surface || hit.distance < length - .025f
+                if (hit.collider != contactSurface || hit.distance < length - .025f
                     || Vector3.Distance(hit.point, sample.Point) > .10f || Vector3.Dot(hit.normal, sample.Normal) < .8f) return false;
             }
             return true;
         }
-        bool WristPointClear(Vector3 point, HandContactSample sample)
+        bool WristPointClear(Vector3 point, HandContactSample sample, Collider contactSurface)
         {
             int count = Physics.OverlapSphereNonAlloc(point, WristPadding, overlaps, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
             if (count >= overlaps.Length) return false;
@@ -401,7 +494,7 @@ namespace OutOfReach.Composition
             {
                 Collider collider = overlaps[i];
                 if (Owned(collider)) continue;
-                if (collider != surface || Vector3.Distance(point, sample.WristPoint) > .025f
+                if (collider != contactSurface || Vector3.Distance(point, sample.WristPoint) > .025f
                     || Vector3.Dot(point - sample.Point, sample.Normal) < -.001f
                     || Vector3.Distance(collider.ClosestPoint(point), sample.Point) > .10f) return false;
             }
@@ -474,6 +567,7 @@ namespace OutOfReach.Composition
             try
             {
                 generation++; pending = false; actionSent = false; surface = null; target = default; localPushDirection = default;
+                secondPush = default; leftSample = default; leftDirection = default; leftContactFrame = -1;
                 Collider release = ownedGrip; ownedGrip = null;
                 if (bare) bare.CancelImmediately();
                 if (gloves) gloves.ResetToNeutral();

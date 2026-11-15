@@ -52,8 +52,11 @@ namespace OutOfReach.Composition
         [SerializeField] private Font antennaProgressFont;
         [SerializeField] private EvaWorkLampPresenter evaWorkLamp;
         private const float MicrogravityHelpSeconds = 20f;
-        private const string MicrogravityHelp = "MICROGRAVITY\nAim at a nearby wall, floor or ceiling.\nLeft / right click · Push off with that hand\nSpace · Push off the floor with your feet\nHold WASD while pushing to steer.";
+        private const string MicrogravityHelp = "MICROGRAVITY\nAim at a nearby wall, floor or ceiling.\nLeft / right click · Push with that hand\nBoth buttons · Push with both hands\nSpace · Push off the floor with your feet\nHold WASD while pushing to steer.";
+        private const string RailGripHelp = "Ctrl + click · Grip this rail";
         private float microgravityHelpRemaining;
+        private float nextRailHintProbe;
+        private bool railHintVisible;
         private bool orbitalLocationReached;
         private MissionSession transferredSession;
         [SerializeField] private I06HabitatBindings habitat;
@@ -228,14 +231,26 @@ namespace OutOfReach.Composition
         private void UpdateMicrogravityHelp()
         {
             if (!flightBoard) return;
-            if (microgravityHelpRemaining > 0f && microgravityInput && microgravityInput.HasInputLease
-                && CanUseMicroContacts())
+            if (!microgravityInput || !microgravityInput.HasInputLease || !CanUseMicroContacts())
             {
-                flightBoard.SetMicrogravityHelp(MicrogravityHelp);
+                railHintVisible = false;
+                nextRailHintProbe = 0f;
+                flightBoard.SetMicrogravityHelp(null);
+                return;
+            }
+            if (Time.unscaledTime >= nextRailHintProbe)
+            {
+                railHintVisible = microgravityInput.AimAtReachableRail();
+                nextRailHintProbe = Time.unscaledTime + .10f;
+            }
+            if (microgravityHelpRemaining > 0f)
+            {
+                flightBoard.SetMicrogravityHelp(railHintVisible ? MicrogravityHelp + "\n" + RailGripHelp : MicrogravityHelp);
                 microgravityHelpRemaining -= Time.unscaledDeltaTime;
             }
-            else flightBoard.SetMicrogravityHelp(null);
+            else flightBoard.SetMicrogravityHelp(railHintVisible ? RailGripHelp : null);
         }
+        public bool HasInteriorRailGrip => microgravityInput && microgravityInput.HasRailGrip;
 
         private void MaintainMicrogravity()
         {
