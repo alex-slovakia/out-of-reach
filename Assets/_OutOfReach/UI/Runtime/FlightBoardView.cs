@@ -253,6 +253,8 @@ namespace OutOfReach.Presentation.UI
             duration.Add(suitSeal);
             evaTelemetry.Add(duration);
             waterGauge = new ResourceGauge(expandedTelemetry, "Water stores", 1);
+            // Survival layout shows Core's litres beside the bar (R37); value text is SetResources' snapshot.
+            waterGauge.Element.AddToClassList("water-meter");
             hudResources[1] = waterGauge.Value;
             hudResources[4] = AddResource(expandedTelemetry, "Spare parts", 4);
             systems = new Button(() => { systemsPinned = !systemsPinned; RefreshTelemetry(); })
