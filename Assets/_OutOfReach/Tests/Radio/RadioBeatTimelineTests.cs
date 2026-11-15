@@ -196,6 +196,31 @@ namespace OutOfReach.Tests.Radio
         }
 
         [Test]
+        public void SplitLinesStayClearOfTheChapterStrip()
+        {
+            // The chapter strip in the lower right covers the end of a HUD subtitle line longer than about 56
+            // characters: every chunk of a split line fits, nothing is lost and the order is kept.
+            foreach (string id in RadioBeats.Ids)
+                foreach (RadioLine source in Beat(id).Lines)
+                {
+                    RadioLine line = source.WithSeconds(20f);
+                    var shown = new System.Collections.Generic.List<string>();
+                    for (float t = 0f; t <= 20f; t += .05f)
+                    {
+                        string chunk = line.SubtitleAt(t);
+                        if (shown.Count == 0 || shown[shown.Count - 1] != chunk) shown.Add(chunk);
+                    }
+                    Assert.AreEqual(line.Text, string.Join(" ", shown), id + ": the chunks in order are the whole line");
+                    if (line.Text.Length <= RadioLine.WholeLineCharacters) { Assert.AreEqual(1, shown.Count, id + ": shown whole"); continue; }
+                    foreach (string chunk in shown)
+                        Assert.LessOrEqual(chunk.Length, RadioLine.ChunkCharacters, id + ": '" + chunk + "'");
+                }
+            RadioLine announcement = Beat(RadioBeats.Day14Announcement).Lines[0].WithSeconds(18.33f);
+            Assert.AreEqual("Aurora Seven... Mission Control.", announcement.SubtitleAt(0f));
+            Assert.AreEqual("Conserve your supplies. We are not giving up on you.", announcement.SubtitleAt(18.3f));
+        }
+
+        [Test]
         public void AbortEndsImmediately()
         {
             var t = new RadioBeatTimeline();
