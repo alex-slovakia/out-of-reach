@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
+using OutOfReach.Presentation.Motion;
 using UnityEngine;
 
 namespace OutOfReach.Presentation.Cargo
 {
-    /// <summary>Separate work-glove instance holding actual preflight cargo. No suit, inventory or input authority.</summary>
+    /// <summary>
+    /// Holds the actual preflight cargo. When the first-person body is shown, the body's own arms (WORK or EVA) hold the
+    /// crate's side handles and the crate sits within their reach (<see cref="CargoCarryArms"/>); otherwise the separate
+    /// work-glove instance holds it as before. No suit, inventory or input authority.
+    /// </summary>
     [DisallowMultipleComponent, DefaultExecutionOrder(180)]
     public sealed class PreflightCargoHandsPresenter : MonoBehaviour
     {
@@ -19,6 +24,10 @@ namespace OutOfReach.Presentation.Cargo
         [Tooltip("Mirrored wrist adjustment aims the sleeves toward the carrier while fingers keep their authored grip.")]
         [SerializeField, Range(0f, 35f)] private float carryWristYawCorrectionDegrees = 28f;
         private const float FollowEyeDownDegrees = 20f;
+        /// <summary>Shoulder-to-wrist distance as a share of the body's arm length (elbows stay slightly bent).</summary>
+        private const float BodyReachUse = .93f;
+        /// <summary>Handle height relative to the reached shoulder joints (the handles stay at the bottom of a level view).</summary>
+        private const float BodyHandleDrop = .04f;
         private const float MaximumCargoDownDegrees = 28f;
         private static readonly Vector3 GripPointInHand = new Vector3(0f, -.033f, .082f);
         private static readonly Vector3 PickupOffset = new Vector3(0f, -.018f, -.025f);
@@ -34,11 +43,30 @@ namespace OutOfReach.Presentation.Cargo
         private float pickupElapsed;
         private bool bound;
         private bool reducedMotion;
+        private EmbodiedBodyPresenter body;
+        private CargoCarryArms carryArms;
+        private CargoCarryArmsDriver driver;
+        private Vector3 leftGripInSettling, rightGripInSettling;
+        private bool bodyMode;
 
         public void SetReducedMotion(bool reduced) => reducedMotion = reduced;
 
         public bool IsBound => bound;
+        /// <summary>The separate work gloves are shown (the body's arms are then hidden by the composition's arm mask).</summary>
         public bool IsVisible => bound && modelRoot && modelRoot.gameObject.activeInHierarchy;
+        /// <summary>The crate is shown and the visible body's own arms hold it.</summary>
+        public bool UsesBodyArms => bound && bodyMode && settlingRoot && settlingRoot.gameObject.activeInHierarchy;
+        public bool IsCarryShown => bound && settlingRoot && settlingRoot.gameObject.activeInHierarchy;
+        /// <summary>Largest wrist distance from its solved handle target while the body's arms hold the crate (0 = reached).</summary>
+        public float BodyReachShortfallMetres => carryArms != null && carryArms.IsHolding ? carryArms.LastReachShortfallMetres : float.NaN;
+
+        /// <summary>Optional: the first-person body whose arms hold the crate. Without it the presenter finds the scene's body.</summary>
+        public void ConfigureBody(EmbodiedBodyPresenter visibleBody)
+        {
+            carryArms?.Release();
+            body = visibleBody;
+            carryArms = bound && body ? new CargoCarryArms(body) : null;
+        }
         public float PickupElapsedSeconds => pickupElapsed;
         public Transform ModelRoot => modelRoot;
         public Transform SettlingRoot => settlingRoot;
@@ -88,6 +116,16 @@ namespace OutOfReach.Presentation.Cargo
             neutralPosition = settlingRoot.localPosition;
             neutralRotation = settlingRoot.localRotation;
             cargo = cargoView; state = gameState; clock = simulationClock; viewAllowed = isCurrentFirstPersonViewAllowed;
+            leftGripInSettling = settlingRoot.InverseTransformPoint(leftGripFrame.position);
+            rightGripInSettling = settlingRoot.InverseTransformPoint(rightGripFrame.position);
+            if (!body) body = FindFirstObjectByType<EmbodiedBodyPresenter>(FindObjectsInactive.Include);
+            carryArms = body ? new CargoCarryArms(body) : null;
+            if (carryArms != null && Application.isPlaying)
+            {
+                if (!driver) driver = GetComponent<CargoCarryArmsDriver>();
+                if (!driver) { driver = gameObject.AddComponent<CargoCarryArmsDriver>(); driver.hideFlags = HideFlags.DontSave; }
+                driver.Bind(this);
+            }
             bound = true;
             if (isActiveAndEnabled) { Subscribe(); Refresh(); }
         }
@@ -96,6 +134,7 @@ namespace OutOfReach.Presentation.Cargo
         {
             Unsubscribe();
             Hide();
+            carryArms?.Release(); carryArms = null; bodyMode = false;
             if (bound && settlingRoot) settlingRoot.SetLocalPositionAndRotation(neutralPosition, neutralRotation);
             foreach (JointBinding joint in joints)
                 if (joint.Node) joint.Node.SetLocalPositionAndRotation(joint.RestPosition, joint.RestRotation);
@@ -123,9 +162,9 @@ namespace OutOfReach.Presentation.Cargo
         private void LateUpdate()
         {
             Refresh();
-            if (!IsVisible || clock.IsPaused) return;
+            if (!IsCarryShown || clock.IsPaused) return;
             pickupElapsed = Mathf.Min(Mathf.Max(.1f, pickupSeconds), pickupElapsed + Mathf.Max(0f, Time.unscaledDeltaTime));
-            ApplyPose();
+            if (!bodyMode) ApplyPose();      // body mode poses after the body presenter (LateBodyCarry, order 265)
         }
 
         // Cargo's event hides immediately on a real stow/return; polling also covers pause, phase and gate changes.
@@ -141,6 +180,15 @@ namespace OutOfReach.Presentation.Cargo
             if (string.IsNullOrEmpty(held)) { Hide(); return; }
             if (clock.IsPaused) return; // Preserve the last visible pose under the pause menu.
             if (!viewAllowed()) { Hide(); return; }
+            bodyMode = carryArms != null && carryArms.CanHold;
+            if (bodyMode)
+            {
+                // The visible body's own arms hold the crate; the separate gloves stay hidden, so the arm mask shows the arms.
+                modelRoot.gameObject.SetActive(false);
+                settlingRoot.gameObject.SetActive(true);
+                return;
+            }
+            carryArms?.Release();
             // Place joints before enabling renderers; the original cargo presenter still owns its child visibility.
             ApplyPose();
             modelRoot.gameObject.SetActive(true);
@@ -163,6 +211,45 @@ namespace OutOfReach.Presentation.Cargo
             float wristYaw = Mathf.Clamp(carryWristYawCorrectionDegrees, 0f, 35f);
             SeatArm(leftArm, leftHand, leftGripFrame, carryRoll, wristYaw);
             SeatArm(rightArm, rightHand, rightGripFrame, carryRoll, -wristYaw);
+        }
+
+        /// <summary>
+        /// After the body presenter: the crate stays level in front of the body's own shoulders, its handles within the
+        /// arms' reach, and both arms hold the handles. Looking down shows the hands on the handles.
+        /// </summary>
+        internal void LateBodyCarry()
+        {
+            if (!bound || !bodyMode || carryArms == null || !IsCarryShown)
+            {
+                if (carryArms != null && carryArms.IsHolding && !bodyMode) carryArms.Release();
+                return;
+            }
+            Transform eye = settlingRoot.parent;
+            Vector3 forward = eye ? eye.forward : transform.forward;
+            forward.y = 0f;
+            if (forward.sqrMagnitude < 1e-6f && eye) { forward = -eye.up; forward.y = 0f; }
+            if (forward.sqrMagnitude < 1e-6f) forward = Vector3.forward;
+            Quaternion yaw = Quaternion.LookRotation(forward.normalized, Vector3.up);
+            float progress = reducedMotion ? 1f : Mathf.Clamp01(pickupElapsed / Mathf.Max(.1f, pickupSeconds));
+            float remainder = 1f - Mathf.SmoothStep(0f, 1f, progress);
+            float weight = Mathf.SmoothStep(0f, 1f, progress);
+            if (!carryArms.Begin(yaw, weight, out Vector3 leftShoulder, out Vector3 rightShoulder)) return;
+
+            Quaternion crate = yaw * neutralRotation;
+            Vector3 handleMid = (leftGripInSettling + rightGripInSettling) * .5f;
+            float halfHandles = Vector3.Distance(leftGripInSettling, rightGripInSettling) * .5f;
+            float halfShoulders = Vector3.Distance(leftShoulder, rightShoulder) * .5f;
+            // Place the crate so each wrist (below and just outside its handle in the underhand grip) is at a fixed share
+            // of the arm's length from its reached shoulder.
+            float hand = float.IsNaN(carryArms.HandLengthMetres) ? .09f : carryArms.HandLengthMetres;
+            float reach = carryArms.ArmLengthMetres * BodyReachUse;
+            float side = halfHandles + CargoCarryArms.PalmToTubeCentre - halfShoulders;
+            float drop = BodyHandleDrop - CargoCarryArms.GripAlongHand * hand;
+            float ahead = Mathf.Sqrt(Mathf.Max(.04f, reach * reach - side * side - drop * drop));
+            Vector3 handles = (leftShoulder + rightShoulder) * .5f + yaw * new Vector3(0f, BodyHandleDrop, ahead)
+                + yaw * (PickupOffset * remainder);
+            settlingRoot.SetPositionAndRotation(handles - crate * handleMid, crate);
+            carryArms.Hold(leftGripFrame, rightGripFrame, yaw, weight);
         }
 
         private static Quaternion CarryPitchCorrection(Transform eye)
@@ -195,6 +282,7 @@ namespace OutOfReach.Presentation.Cargo
 
         private void Hide()
         {
+            carryArms?.Release();
             if (modelRoot) modelRoot.gameObject.SetActive(false);
             if (settlingRoot && transform != settlingRoot && !transform.IsChildOf(settlingRoot)) settlingRoot.gameObject.SetActive(false);
         }

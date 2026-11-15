@@ -1,6 +1,6 @@
 {
   "name": "OutOfReach.Presentation.Cargo",
   "rootNamespace": "OutOfReach.Presentation.Cargo",
-  "references": ["OutOfReach.Contracts"],
+  "references": ["OutOfReach.Contracts", "OutOfReach.Presentation.Motion"],
   "autoReferenced": true
 }
