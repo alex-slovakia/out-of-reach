@@ -1,0 +1,26 @@
+{
+  "name": "OutOfReach.Tests.RealScene",
+  "rootNamespace": "OutOfReach.Tests.RealScene",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Composition",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Player",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
