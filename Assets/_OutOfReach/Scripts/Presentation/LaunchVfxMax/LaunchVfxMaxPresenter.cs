@@ -24,7 +24,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
     [DefaultExecutionOrder(650), DisallowMultipleComponent]
     public sealed class LaunchVfxMaxPresenter : MonoBehaviour
     {
-        public const string Version = "LAUNCH-VFX-MAX-V02";
+        public const string Version = "LAUNCH-VFX-MAX-V04";
         private const float StepSeconds = 1f / 30f;
         private const float MaximumCatchUpSeconds = 3f;
         private const float PlumeFadeSeconds = 21.1f;
@@ -44,7 +44,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax
         [SerializeField, Range(0f, 400f)] private float plumeLightIntensity = 120f;
         [SerializeField, Range(0f, 400f)] private float cloudGlowIntensity = 100f;
         // Sparks and heat shimmer have not been through a render yet, so they ship off; switch them on to try them.
-        [SerializeField] private bool sparks = false, heatShimmer = false, trenchJet = true, groundShockwave = true, publishThrusterGust = false;
+        [SerializeField] private bool sparks = false, heatShimmer = false, trenchJet = false, groundShockwave = true, publishThrusterGust = false;
         [SerializeField] private Color smokeTint = new Color(.70f, .67f, .62f, .9f);
         [SerializeField] private Color billowTint = new Color(.84f, .80f, .74f, .78f);
         [SerializeField] private Color dustTint = new Color(.62f, .55f, .45f, .55f);
@@ -206,7 +206,14 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                         bool flame = layer.Kind == Kind.Flame;
                         float grow = Mathf.Lerp(.85f, 1.2f, climb) * fireScale * (1f + 1.2f * altitude);
                         var main = system.main;
-                        main.startSpeed = flame ? Range(16f * grow, 32f * grow) : Range(18f * grow, 34f * grow);
+                        float fast = flame ? 32f * grow : 34f * grow, slow = flame ? 16f * grow : 18f * grow;
+                        float reach = ClipDistance(exit, down);
+                        if (reach < float.PositiveInfinity)
+                        {
+                            float cap = Mathf.Max(2f, reach / (flame ? .9f : 1.2f));
+                            fast = Mathf.Min(fast, cap); slow = Mathf.Min(slow, cap * .6f);
+                        }
+                        main.startSpeed = Range(slow, fast);
                         main.startSize = flame ? Range(3.4f * grow, 7f * grow) : Range(.14f, .34f);
                         rate = layer.BaseRate * thrust * (1f + 2.5f * flash);
                         break;
@@ -362,11 +369,8 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 Vector3 aim = (dir + Vector3.up * .16f).normalized;
                 Vector3 at = footprint + dir * 5f + Vector3.up * .6f;
                 AddInstance(dustPrefab, "RockDebris", Kind.Debris, at, (dir + Vector3.up * .5f).normalized, ++seed,
-                    life: Range(1.2f, 2f), cone: 30f, radius: 2f, rate: 10f, capacity: 40, gravity: 1f, tint: null,
-                    speed: Range(10f, 18f), size: Range(.25f, .7f));
-                AddInstance(dustPrefab, "SandParticles", Kind.Sand, at, aim, ++seed,
-                    life: Range(.8f, 1.4f), cone: 24f, radius: 2.4f, rate: 110f, capacity: 160, gravity: .4f, tint: dustTint,
-                    speed: Range(14f, 22f), size: Range(.1f, .24f));
+                    life: Range(1f, 1.6f), cone: 30f, radius: 2f, rate: 10f, capacity: 40, gravity: 1.5f, tint: null,
+                    speed: Range(8f, 14f), size: Range(.25f, .7f));
             }
 
             // Sparks off the deflector impingement point, thrown up and out.
@@ -534,8 +538,10 @@ namespace OutOfReach.Presentation.LaunchVfxMax
                 bool big = kind == Kind.Smoke || kind == Kind.Billow || kind == Kind.Deluge || kind == Kind.Shock
                     || kind == Kind.Dust || kind == Kind.Steam;
                 renderer.maxParticleSize = big ? 2f : 1f;
+                // Velocity-stretched pack sprites read as flat ellipses at this scale; clouds are plain billboards.
+                if (big) renderer.renderMode = ParticleSystemRenderMode.Billboard;
                 // Sparks, embers and grit stay at least a couple of pixels wide from the distant launch cameras.
-                if (kind == Kind.Embers || kind == Kind.Rain || kind == Kind.Sparks || kind == Kind.Sand || kind == Kind.Debris)
+                if (kind == Kind.Embers || kind == Kind.Rain || kind == Kind.Sparks)
                     renderer.minParticleSize = .002f;
                 renderer.shadowCastingMode = ShadowCastingMode.Off; renderer.receiveShadows = false;
                 renderer.sortMode = ParticleSystemSortMode.Distance;
@@ -581,6 +587,16 @@ namespace OutOfReach.Presentation.LaunchVfxMax
         }
 
         // ---------- helpers ----------
+
+        /// <summary>Free jet length from the nozzle exit to the solid deflector plane; infinite without one.</summary>
+        private float ClipDistance(Vector3 origin, Vector3 direction)
+        {
+            if (!deflector) return float.PositiveInfinity;
+            float dot = Vector3.Dot(direction, deflector.up);
+            if (dot >= -.1f) return float.PositiveInfinity;
+            float distance = Vector3.Dot(deflector.position - origin, deflector.up) / dot;
+            return Finite(distance) && distance > 0f ? distance : .5f;
+        }
 
         private static void Aim(Transform emitter, Vector3 position, Vector3 direction)
         {

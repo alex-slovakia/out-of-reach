@@ -98,12 +98,12 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
                         string tag = (reduced ? "reduced-" : "") + "t" + time.ToString("00.0").Replace('.', '_');
                         // The game's own shot for this playhead (the seat shot is replaced by the pad shot before 9.75 s).
                         GameShot(time, frame, startPosition, startRotation, vehicle, out Vector3 position, out Quaternion rotation, out float fov);
-                        Shoot(camera, target, readback, position, rotation, fov, $"{Folder}/V02-game-{tag}.jpg");
+                        Shoot(camera, target, readback, position, rotation, fov, $"{Folder}/V04-game-{tag}.jpg");
                         if (!reduced)
                         {
                             Vector3 wide = startPosition + startRotation * new Vector3(62f, -23f, -108f);
                             Vector3 look = startPosition + startRotation * new Vector3(0f, -12f + frame.HeightMetres * .5f, 0f);
-                            Shoot(camera, target, readback, wide, Quaternion.LookRotation(look - wide, Vector3.up), 52f, $"{Folder}/V02-wide-{tag}.jpg");
+                            Shoot(camera, target, readback, wide, Quaternion.LookRotation(look - wide, Vector3.up), 52f, $"{Folder}/V04-wide-{tag}.jpg");
                         }
                         report.AppendLine($"{tag}: live particles {presenter.LiveParticleCount}, height {frame.HeightMetres:0.0} m, cue {frame.Cue}");
                     }
@@ -122,7 +122,7 @@ namespace OutOfReach.Presentation.LaunchVfxMax.Editor
             }
             finally
             {
-                File.WriteAllText($"{Folder}/V02-evidence.txt", report.ToString());
+                File.WriteAllText($"{Folder}/V04-evidence.txt", report.ToString());
                 presenter.PreviewClear();
                 if (v03) launchFx.ClearBinding();
                 vehicle.SetPositionAndRotation(startPosition, startRotation);
