@@ -59,7 +59,7 @@ namespace OutOfReach.Presentation.Rescue
             if (deepView && sky == deepView) sky = saved;   // our copy was put back by someone else: start from the real one
             if (!IsNasaDeepSky(sky)) return false;
             float exposure = sky.GetFloat(ExposureId);
-            if (exposure >= DeepViewExposure) return false;   // already at least as deep: leave it
+            if (exposure >= DeepViewExposure - 1e-4f) return false;   // already at least as deep: leave it
             if (!deepView) deepView = new Material(sky) { hideFlags = HideFlags.HideAndDontSave };
             else { deepView.shader = sky.shader; deepView.CopyPropertiesFromMaterial(sky); }
             deepView.name = sky.name + " (rescue ending deep view)";

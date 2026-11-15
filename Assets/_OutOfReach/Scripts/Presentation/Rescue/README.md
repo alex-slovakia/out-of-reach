@@ -66,6 +66,28 @@ ending played against a black sky.
 
 The airlock shot is an interior with no opening to space, so no sky is in frame there.
 
+## Stars in every view of space (SPACE-SKY)
+
+The same saved sky is behind the Earth-orbit shot of the departure (`I06MarineBindings.orbitalSky` is
+`NasaDeepSky.mat`) and behind the whole EVA, so both looked out on plain black. `SpaceSkyKeeper` is the one owner of
+the deep view in the mission scene. Its rule has no game state: while the active skybox is the saved NASA sky
+(exposure 0.15), it shows a runtime copy at the existing deep-view exposure **0.45**; any other skybox (the launch
+site's `MAT_LaunchSky_RockyRidge`, the upper-atmosphere transit sky) or none is left alone.
+
+- It installs itself in the Bootstrap scene (`RuntimeInitializeOnLoadMethod`, the R18 pattern): no installer, no
+  scene edit, no composition change. Test scenes do not get one.
+- Only `RenderSettings.skybox` is swapped. Bootstrap's ambient is flat colour, and no light, fog, ambient or
+  reflection setting is written; `NasaDeepSky.mat` still reads 0.15.
+- There is no transition, so pause and reduced effects need nothing. A restart needs nothing either: the launch
+  site has its own sky.
+- One owner: `RescueEndingPresenter.TryBegin` calls `SpaceSkyKeeper.HoldNow()` before its own `Raise()`, which then
+  finds the sky already at 0.45 and creates no copy. In the mission the ending's own 1.5 s ramp therefore no longer
+  runs (the stars are already there) and the sky is not lowered at the report. Without a keeper (tests, another
+  scene) the ending raises and lowers the sky exactly as described above.
+- `SpaceSkyKeeper.Enabled = false` is the kill switch: the saved sky is back on the next frame.
+- This is wider than the two shots it was written for: every view of space in the mission (cabin windows, the
+  exterior cinematics, the EVA) now shows the star field.
+
 ## Assembler steps (sole integrator)
 
 1. Merge `feature/rescue-ending-01` (new files only).

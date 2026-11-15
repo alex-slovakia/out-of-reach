@@ -237,6 +237,7 @@ namespace OutOfReach.Presentation.Rescue
             activeRequest = request;
             activeBus = eventBus;
             Capture();
+            SpaceSkyKeeper.HoldNow();   // the mission's one sky owner first: while it holds, Raise() below changes nothing
             deepSky.Raise();
             active = true;
             elapsed = previousElapsed = 0f;
