@@ -107,6 +107,39 @@ namespace OutOfReach.Presentation.Cargo
                 if (cell.Case) cells.Add(cell);
             }
             GroundSupports(supports);
+            if (labels.Count > 0) AddHeader(labels[0]);
+        }
+
+        public const string HeaderName = "Rack header sign (legible)";
+
+        /// <summary>A plain, high-contrast header resting on the top rail of the authored sign frame.</summary>
+        private void AddHeader(Transform templateLabel)
+        {
+            if (transform.Find(HeaderName)) return;
+            Transform topRail = null;
+            foreach (Transform child in transform)
+                if (child.name == "Source station label rail" && (!topRail || child.localPosition.y > topRail.localPosition.y))
+                    topRail = child;
+            if (!topRail) return;
+            // Clone an authored sign: same font, depth-tested label material, atlas binder and plate material.
+            GameObject header = Instantiate(templateLabel.gameObject, transform);
+            header.name = HeaderName;
+            header.transform.localRotation = templateLabel.localRotation;
+            float railTop = topRail.localPosition.y + topRail.localScale.y * .5f;
+            float railFront = topRail.localPosition.z - topRail.localScale.z * .5f;
+            const float plateHeight = .2f, plateDepth = .012f, plateOffset = .008f;
+            header.transform.localPosition = new Vector3(topRail.localPosition.x, railTop + plateHeight * .5f,
+                railFront - plateOffset - plateDepth * .5f);
+            Transform plate = header.transform.Find(PlateName);
+            if (plate) plate.localScale = new Vector3(topRail.localScale.x - .008f, plateHeight, plateDepth);
+            var text = header.GetComponent<TextMesh>();
+            if (!text) return;
+            text.richText = true;
+            text.fontSize = SignFontSize;
+            text.characterSize = .0058f;
+            text.lineSpacing = .95f;
+            text.color = new Color(.95f, .94f, .89f);
+            text.text = "<size=118>PREFLIGHT SUPPLY RACK</size>\nCARRY EACH CASE ABOARD THE TRANSPORT";
         }
 
         /// <summary>Each level's posts stood on the shelf below; run every post to the rack base instead.</summary>
