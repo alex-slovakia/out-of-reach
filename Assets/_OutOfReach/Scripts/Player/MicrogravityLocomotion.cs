@@ -41,14 +41,25 @@ namespace OutOfReach.Player
         [Tooltip("Foot support must face up: minimum dot product of the contact normal with the body's up axis (side walls and bare edges do not count).")]
         [SerializeField, Range(0f, 1f)] private float minimumFootSupportDot = 0.8f;
 
+        // MOVE-MECH-01 tuning (game values, not measured astronaut performance): one medium hand push of strength
+        // 0.55 gives 0.825 m/s, a paired or leg push gives one full push of 1.5 m/s, the drift is capped at 2.2 m/s.
         [Tooltip("Largest speed change one full push gives, metres per second.")]
-        [SerializeField, Min(0f)] private float maxPushSpeed = 1f;
+        [SerializeField, Min(0f)] private float maxPushSpeed = 1.5f;
 
         [Tooltip("Speed cap while floating, metres per second.")]
-        [SerializeField, Min(0.1f)] private float maxSpeed = 1.5f;
+        [SerializeField, Min(0.1f)] private float maxSpeed = 2.2f;
 
         [Tooltip("Minimum time between pushes (hand or foot), seconds, so a held button cannot accelerate continuously.")]
-        [SerializeField, Min(0f)] private float pushCooldownSeconds = 0.35f;
+        [SerializeField, Min(0f)] private float pushCooldownSeconds = 0.25f;
+
+        [Tooltip("Largest view lean (roll) while floating, degrees. A and D only tilt the view: no thrust, no push intent.")]
+        [SerializeField, Range(0f, 60f)] private float maxLeanDegrees = 30f;
+
+        [Tooltip("How fast the view leans while A or D is held, degrees per second.")]
+        [SerializeField, Min(1f)] private float leanDegreesPerSecond = 80f;
+
+        [Tooltip("How fast the view returns level after A or D is released or float ends, degrees per second.")]
+        [SerializeField, Min(1f)] private float leanReturnDegreesPerSecond = 120f;
 
         [Tooltip("Exponential damping per second. Default 0: no hidden force, a push carries on until a surface. Any value above 0 is a disclosed gameplay compromise.")]
         [SerializeField, Min(0f)] private float dragPerSecond;
@@ -86,6 +97,89 @@ namespace OutOfReach.Player
         public float StrandedSeconds => strandedSeconds;
 
         public float StrandedSpeed => strandedSpeed;
+
+        public float MaxLeanDegrees => maxLeanDegrees;
+
+        /// <summary>
+        /// The next view lean after one frame, degrees; positive leans left (counter-clockwise as seen by the player).
+        /// A held lean input (-1 = A, +1 = D) moves towards its lean at the lean rate; no input returns level at the
+        /// return rate. Pure orientation: it never changes velocity or position.
+        /// </summary>
+        public float StepLean(float currentDegrees, float leanInput, float deltaSeconds)
+        {
+            if (float.IsNaN(currentDegrees) || float.IsInfinity(currentDegrees))
+            {
+                return 0f;
+            }
+
+            if (deltaSeconds <= 0f || float.IsNaN(deltaSeconds) || float.IsInfinity(deltaSeconds))
+            {
+                return currentDegrees;
+            }
+
+            float input = float.IsNaN(leanInput) ? 0f : Mathf.Clamp(leanInput, -1f, 1f);
+            bool held = Mathf.Abs(input) >= 0.1f;
+            float target = held ? -input * maxLeanDegrees : 0f;
+            float rate = held ? leanDegreesPerSecond : leanReturnDegreesPerSecond;
+            return Mathf.MoveTowards(Mathf.Clamp(currentDegrees, -maxLeanDegrees, maxLeanDegrees), target, rate * deltaSeconds);
+        }
+
+        /// <summary>
+        /// Direction of a push that should send the body along a travel intent off a surface with this normal. An intent
+        /// already pointing away from the surface by at least the away cone (the larger of 0.25 and the minimum away dot
+        /// plus 0.025) is kept; any other intent keeps its direction along the surface and leaves at the cone, blending
+        /// smoothly towards the normal for an intent almost straight into the surface. Pure math: force magnitude and the
+        /// verified contact stay with the controller.
+        /// </summary>
+        public static bool TryOutwardDirection(Vector3 surfaceNormal, Vector3 travelIntent, float minimumAwayDot, out Vector3 direction)
+        {
+            direction = Vector3.zero;
+            float normalSquared = surfaceNormal.sqrMagnitude, intentSquared = travelIntent.sqrMagnitude;
+            if (!IsFinite(surfaceNormal) || !IsFinite(travelIntent) || float.IsNaN(minimumAwayDot) || float.IsInfinity(minimumAwayDot)
+                || float.IsNaN(normalSquared) || float.IsInfinity(normalSquared) || float.IsNaN(intentSquared) || float.IsInfinity(intentSquared)
+                || normalSquared < 0.0001f || intentSquared < 0.0001f)
+            {
+                return false;
+            }
+
+            Vector3 normal = surfaceNormal / Mathf.Sqrt(normalSquared), intent = travelIntent / Mathf.Sqrt(intentSquared);
+            float away = Mathf.Clamp(Mathf.Max(0.25f, minimumAwayDot + 0.025f), 0f, 1f);
+            float outward = Vector3.Dot(intent, normal);
+            if (outward >= away)
+            {
+                direction = intent;
+                return true;
+            }
+
+            Vector3 tangent = intent - (normal * outward);
+            float tangentLength = tangent.magnitude;
+            if (tangentLength == 0f)
+            {
+                direction = normal;
+                return true;
+            }
+
+            Vector3 tangentDirection = tangent / tangentLength;
+            if (tangentLength >= 0.25f)
+            {
+                direction = (normal * away) + (tangentDirection * Mathf.Sqrt(1f - (away * away)));
+            }
+            else
+            {
+                // A hard 0.25 cutoff would jump 75.52 degrees at the default cone: blend the angle instead.
+                float ratio = Mathf.Clamp01(tangentLength / 0.25f);
+                float angle = ratio * ratio * (3f - (2f * ratio)) * Mathf.Acos(away);
+                direction = (normal * Mathf.Cos(angle)) + (tangentDirection * Mathf.Sin(angle));
+            }
+
+            return true;
+        }
+
+        private static bool IsFinite(Vector3 v)
+        {
+            return !float.IsNaN(v.x) && !float.IsNaN(v.y) && !float.IsNaN(v.z)
+                && !float.IsInfinity(v.x) && !float.IsInfinity(v.y) && !float.IsInfinity(v.z);
+        }
 
         /// <summary>The velocity after one push along a direction: capped per push and in total.</summary>
         public Vector3 Push(Vector3 velocity, Vector3 direction, float strength01)

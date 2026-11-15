@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="27" result="Passed" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.4296499">
+  <test-suite type="TestSuite" id="1150" name="OUT-OF-REACH-NASA-HACKATHON" fullname="OUT-OF-REACH-NASA-HACKATHON" runstate="Runnable" testcasecount="111" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.429650" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1143" name="OutOfReach.Tests.PlayMode.dll" fullname="C:/Users/alexk/Documents/Projects/OUT-OF-REACH-NASA-HACKATHON/.local/i01-integration/Library/ScriptAssemblies/OutOfReach.Tests.PlayMode.dll" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.414877" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="90144" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1144" name="OutOfReach" fullname="OutOfReach" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.413101" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1145" name="Tests" fullname="OutOfReach.Tests" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.412364" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1146" name="PlayMode" fullname="OutOfReach.Tests.PlayMode" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.411633" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1077" name="MicrogravityLocomotionPlayTests" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="1.279353" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1089" name="ACeilingPush_LandsOutOfHandReach_AndOnlyARealFootContactRecovers" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.ACeilingPush_LandsOutOfHandReach_AndOnlyARealFootContactRecovers" methodname="ACeilingPush_LandsOutOfHandReach_AndOnlyARealFootContactRecovers" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1158723021" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:58Z" duration="0.264960" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="ADrift_KeepsItsSpeed_StopsInelasticallyAtAWall_AndNeverTunnelsWithLongFrames" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.ADrift_KeepsItsSpeed_StopsInelasticallyAtAWall_AndNeverTunnelsWithLongFrames" methodname="ADrift_KeepsItsSpeed_StopsInelasticallyAtAWall_AndNeverTunnelsWithLongFrames" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="927585321" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:58Z" duration="0.096151" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="ADrift_PassesA90cmDoorwayWithoutSnagging" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.ADrift_PassesA90cmDoorwayWithoutSnagging" methodname="ADrift_PassesA90cmDoorwayWithoutSnagging" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1840809845" result="Passed" start-time="2026-11-15 13:38:58Z" end-time="2026-11-15 13:38:59Z" duration="0.058687" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1093" name="AFootPush_NeedsRealSupportBelow_NotASideWallABareEdgeAnOwnedPartOrATrigger" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AFootPush_NeedsRealSupportBelow_NotASideWallABareEdgeAnOwnedPartOrATrigger" methodname="AFootPush_NeedsRealSupportBelow_NotASideWallABareEdgeAnOwnedPartOrATrigger" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1456491697" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.010987" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1097" name="AfterAFootSupportEntry_APushUpStopsAtTheCeiling_WithoutPenetrating" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AfterAFootSupportEntry_APushUpStopsAtTheCeiling_WithoutPenetrating" methodname="AfterAFootSupportEntry_APushUpStopsAtTheCeiling_WithoutPenetrating" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1145470425" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.052877" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1091" name="AGripSettle_At30And240Fps_EndsInTheSamePlace" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AGripSettle_At30And240Fps_EndsInTheSamePlace" methodname="AGripSettle_At30And240Fps_EndsInTheSamePlace" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1272112471" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.230730" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1094" name="AHeldGrip_IsReleased_WhenItsAnchorTurnsToTheFarSideOfTheSameHandhold" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AHeldGrip_IsReleased_WhenItsAnchorTurnsToTheFarSideOfTheSameHandhold" methodname="AHeldGrip_IsReleased_WhenItsAnchorTurnsToTheFarSideOfTheSameHandhold" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1766554256" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.014167" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1092" name="AHeldGrip_IsReleasedOnce_WhenItsAnchorLeavesReach_TurnsTrigger_GoesInactive_OrIsCutOff" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AHeldGrip_IsReleasedOnce_WhenItsAnchorLeavesReach_TurnsTrigger_GoesInactive_OrIsCutOff" methodname="AHeldGrip_IsReleasedOnce_WhenItsAnchorLeavesReach_TurnsTrigger_GoesInactive_OrIsCutOff" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1416337451" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.020864" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1090" name="AnOutwardGripNearTheReachLimit_HoldsTheBodyWithinReach_AndAnchorsTheHand" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.AnOutwardGripNearTheReachLimit_HoldsTheBodyWithinReach_AndAnchorsTheHand" methodname="AnOutwardGripNearTheReachLimit_HoldsTheBodyWithinReach_AndAnchorsTheHand" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="942729200" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.039026" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1082" name="APairPush_AddsBothHands_CapsTheSumToOneFullPush_AndRaisesPushedOnce" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.APairPush_AddsBothHands_CapsTheSumToOneFullPush_AndRaisesPushedOnce" methodname="APairPush_AddsBothHands_CapsTheSumToOneFullPush_AndRaisesPushedOnce" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="381318898" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.014682" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1081" name="APairPush_ChecksBothHandsFirst_AndAnyRefusalChangesNothing" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.APairPush_ChecksBothHandsFirst_AndAnyRefusalChangesNothing" methodname="APairPush_ChecksBothHandsFirst_AndAnyRefusalChangesNothing" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="2136834284" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.012887" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1083" name="APairPush_ReleasesAHeldHandholdOnce_OnlyWhenItSucceeds" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.APairPush_ReleasesAHeldHandholdOnce_OnlyWhenItSucceeds" methodname="APairPush_ReleasesAHeldHandholdOnce_OnlyWhenItSucceeds" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1389430682" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.011162" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1080" name="APush_NeedsAVerifiedSurfaceInReachAndInSight_PointingAway_WithACooldownAndACap" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.APush_NeedsAVerifiedSurfaceInReachAndInSight_PointingAway_WithACooldownAndACap" methodname="APush_NeedsAVerifiedSurfaceInReachAndInSight_PointingAway_WithACooldownAndACap" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1131382735" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.008059" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1078" name="FloatIsOffByDefault_NeedsASurfaceInReach_AndExitWalksAgain" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.FloatIsOffByDefault_NeedsASurfaceInReach_AndExitWalksAgain" methodname="FloatIsOffByDefault_NeedsASurfaceInReach_AndExitWalksAgain" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1927166197" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.046817" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1096" name="FootSupportEntry_IsRefused_MidAir_OverATrigger_WhenControlIsDenied_AndOnTheRoute" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.FootSupportEntry_IsRefused_MidAir_OverATrigger_WhenControlIsDenied_AndOnTheRoute" methodname="FootSupportEntry_IsRefused_MidAir_OverATrigger_WhenControlIsDenied_AndOnTheRoute" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="777715696" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.034252" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1095" name="FootSupportEntry_StartsFloatOnTheCentreAisle_AtRest_WithoutAnyMove_AndIsIdempotent" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.FootSupportEntry_StartsFloatOnTheCentreAisle_AtRest_WithoutAnyMove_AndIsIdempotent" methodname="FootSupportEntry_StartsFloatOnTheCentreAisle_AtRest_WithoutAnyMove_AndIsIdempotent" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1307546983" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.024447" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1087" name="Grips_OnlyRegisteredHandholdsInReach_StopTheDrift_NeverMoveTheBody_AndBraceStopsAnApproach" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.Grips_OnlyRegisteredHandholdsInReach_StopTheDrift_NeverMoveTheBody_AndBraceStopsAnApproach" methodname="Grips_OnlyRegisteredHandholdsInReach_StopTheDrift_NeverMoveTheBody_AndBraceStopsAnApproach" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1496199192" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.102618" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1088" name="PauseAndCinematicsKeepTheDrift_ClearMotionDisableTeleportAndTheRouteEndIt" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.PauseAndCinematicsKeepTheDrift_ClearMotionDisableTeleportAndTheRouteEndIt" methodname="PauseAndCinematicsKeepTheDrift_ClearMotionDisableTeleportAndTheRouteEndIt" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="515235537" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.097752" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="TheSameDrift_At30And240Fps_CoversTheSamePath" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.TheSameDrift_At30And240Fps_CoversTheSamePath" methodname="TheSameDrift_At30And240Fps_CoversTheSamePath" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1392025715" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.087089" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1079" name="WasdIsNoThrust" fullname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests.WasdIsNoThrust" methodname="WasdIsNoThrust" classname="OutOfReach.Tests.PlayMode.MicrogravityLocomotionPlayTests" runstate="Runnable" seed="1507872764" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.026566" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1098" name="MoveMech01PlayTests" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.128866" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1102" name="AandD_WhileFloating_OnlyLeanTheView_NeverMoveTheBody" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.AandD_WhileFloating_OnlyLeanTheView_NeverMoveTheBody" methodname="AandD_WhileFloating_OnlyLeanTheView_NeverMoveTheBody" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="217653935" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.046530" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1104" name="FootSupport_IsReadOnly_AndOnlyTrueOnTheDeckWhileFloating" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.FootSupport_IsReadOnly_AndOnlyTrueOnTheDeckWhileFloating" methodname="FootSupport_IsReadOnly_AndOnlyTrueOnTheDeckWhileFloating" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="1445410014" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.021816" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1100" name="OutwardDirection_KeepsAnAwayIntent_AndLeavesAlongTheSurfaceOtherwise" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.OutwardDirection_KeepsAnAwayIntent_AndLeavesAlongTheSurfaceOtherwise" methodname="OutwardDirection_KeepsAnAwayIntent_AndLeavesAlongTheSurfaceOtherwise" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="110204126" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.007932" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1105" name="PushCooldownRemaining_CountsDownAndIsZeroWhenAPushMayRun" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.PushCooldownRemaining_CountsDownAndIsZeroWhenAPushMayRun" methodname="PushCooldownRemaining_CountsDownAndIsZeroWhenAPushMayRun" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="985882051" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.015811" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1101" name="StepLean_HoldsToTheLimit_ReturnsLevel_AndIgnoresBadInput" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.StepLean_HoldsToTheLimit_ReturnsLevel_AndIgnoresBadInput" methodname="StepLean_HoldsToTheLimit_ReturnsLevel_AndIgnoresBadInput" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="1681866529" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.004375" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1099" name="Tuning_IsTheFasterDisclosedResponse_WithNoHiddenDrag" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.Tuning_IsTheFasterDisclosedResponse_WithNoHiddenDrag" methodname="Tuning_IsTheFasterDisclosedResponse_WithNoHiddenDrag" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="1207041548" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.003620" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1103" name="Walking_NeverLeans_AndLeavingFloatReturnsLevel" fullname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests.Walking_NeverLeans_AndLeavingFloatReturnsLevel" methodname="Walking_NeverLeans_AndLeavingFloatReturnsLevel" classname="OutOfReach.Tests.PlayMode.MoveMech01PlayTests" runstate="Runnable" seed="1851174086" result="Passed" start-time="2026-11-15 13:38:59Z" end-time="2026-11-15 13:38:59Z" duration="0.025805" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/alexk/AppData/LocalLow/DefaultCompany/OUT-OF-REACH-NASA-HACKATHON\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

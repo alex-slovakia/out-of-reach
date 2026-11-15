@@ -96,6 +96,12 @@ namespace OutOfReach.Tests.PlayMode
 
         private Vector3 Position => Player.transform.position;
 
+        /// <summary>
+        /// MOVE-MECH-01: the push strength that gives this speed under the current tuning, so these scenarios keep their
+        /// designed speeds and geometry when the disclosed per-push speed changes.
+        /// </summary>
+        private float Speed(float metresPerSecond) => metresPerSecond / Player.Microgravity.MaxPushSpeed;
+
         /// <summary>The point on the back wall straight behind the eye.</summary>
         private Vector3 BackPoint => new Vector3(Position.x, Position.y + Eye, 0f);
 
@@ -309,7 +315,7 @@ namespace OutOfReach.Tests.PlayMode
                 Time.captureDeltaTime = 1f / rates[run];
                 FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
                 yield return null; // the new frame time applies from here; floating still, nothing moves
-                Done(Player.TryPushOff(back, BackPoint, Vector3.forward, 0.6f));
+                Done(Player.TryPushOff(back, BackPoint, Vector3.forward, Speed(0.6f)));
                 yield return Frames(rates[run]);
                 ends[run] = Position;
             }
@@ -342,7 +348,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.TryGrab(handhold, grip), Is.EqualTo(FloatActionResult.OutOfReach));
             Assert.That(Player.TryGrab(left, new Vector3(-2f, 50.2f + Eye, 0.6f)), Is.EqualTo(FloatActionResult.NotAHandhold), "a smooth wall is not grippable");
 
-            Done(Player.TryPushOff(back, BackPoint, Vector3.forward, 0.5f));
+            Done(Player.TryPushOff(back, BackPoint, Vector3.forward, Speed(0.5f)));
             yield return Frames(90);
             Vector3 before = Position;
             Done(Player.TryGrab(handhold, grip));
@@ -357,7 +363,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.Release(), Is.EqualTo(FloatActionResult.NotHolding));
 
             FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
-            Done(Player.TryPushOff(back, BackPoint, Vector3.forward));
+            Done(Player.TryPushOff(back, BackPoint, Vector3.forward, Speed(1f)));
             Assert.That(Player.TryBrace(left, new Vector3(-2f, 50.2f + Eye, 0.6f)), Is.EqualTo(FloatActionResult.Done));
             Assert.That(Player.FloatVelocity.z, Is.EqualTo(1f).Within(1e-5f), "bracing a side wall gives no grip: the slide goes on");
             yield return Frames(80);
@@ -415,7 +421,7 @@ namespace OutOfReach.Tests.PlayMode
         {
             FloatAt(new Vector3(0f, 51f, 1.5f));
             Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.NoSurface), "no foot contact mid-air");
-            Done(Player.TryPushOff(ceiling, new Vector3(0f, 53f, 1.5f), Vector3.down));
+            Done(Player.TryPushOff(ceiling, new Vector3(0f, 53f, 1.5f), Vector3.down, Speed(1f)));
             yield return Frames(75);
             Assert.That(Position.y, Is.EqualTo(50f).Within(0.05f), "landed on the floor");
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0f).Within(1e-4f), "inelastic landing");
@@ -431,7 +437,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.FloatVelocity, Is.EqualTo(resting), "refusals change nothing");
             Assert.That(resting, Is.EqualTo(Vector3.zero), "the landing left an exact stop");
 
-            Done(Player.TryPushFromFootContact(Vector3.up, 0.5f));
+            Done(Player.TryPushFromFootContact(Vector3.up, Speed(0.5f)));
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.5f).Within(1e-5f));
             Assert.That(Player.TryPushFromFootContact(Vector3.up), Is.EqualTo(FloatActionResult.Cooldown));
             yield return Frames(40);
@@ -482,7 +488,7 @@ namespace OutOfReach.Tests.PlayMode
                 Time.captureDeltaTime = 1f / fps;
                 FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
                 yield return null; // the new frame time applies from here
-                Done(Player.TryPushOff(back, BackPoint, Vector3.forward, 0.5f));
+                Done(Player.TryPushOff(back, BackPoint, Vector3.forward, Speed(0.5f)));
                 yield return Frames(Mathf.RoundToInt(1.8f * fps));
                 Done(Player.TryGrab(handhold, grip));
                 yield return Frames(fps);
@@ -581,7 +587,7 @@ namespace OutOfReach.Tests.PlayMode
 
             pad.isTrigger = false;
             Physics.SyncTransforms();
-            Done(Player.TryPushFromFootContact(Vector3.up, 0.3f));
+            Done(Player.TryPushFromFootContact(Vector3.up, Speed(0.3f)));
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.3f).Within(1e-5f), "the same pad, solid and under the feet, is real support");
             yield return null;
         }
@@ -642,7 +648,7 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Player.FloatVelocity, Is.EqualTo(Vector3.zero));
             Assert.That(Vector3.Distance(Position, standing), Is.LessThan(1e-4f));
 
-            Done(Player.TryPushFromFootContact(Vector3.up, 0.4f));
+            Done(Player.TryPushFromFootContact(Vector3.up, Speed(0.4f)));
             Assert.That(Player.FloatVelocity.y, Is.EqualTo(0.4f).Within(1e-5f), "the floor push stays the separate, deliberate command");
         }
 
