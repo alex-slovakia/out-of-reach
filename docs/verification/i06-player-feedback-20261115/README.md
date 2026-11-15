@@ -1,5 +1,21 @@
 # I06 player feedback and carry correction — 15 November 2026
 
+## Latest presentation delivery
+
+Runtime `323d926`: Alex-approved Cobalt replaces isolation music with a120-second licensed loop; clip GUID preserved, attribution/seam/level evidence committed. Titan approved and unchanged; rejected Resonance is not used. Other tension/emergency/recovery loops remain unchanged.
+
+Runtime `815b932`: galley/water/food guidance consults actual interaction availability; critical needs are emphasized. Supply/aboard/carried cases receive equipment colors while retaining geometry, grips and labels. Water cyan, food olive, battery amber. No inventory/resource changes. Hydration-route visual acceptance remains pending.
+
+Runtime `17a2c0a`: real Barlow Condensed Bold outcome UI, actual scene blur, no rejected masthead/footer rule; Sources sidebar, compact NASA overview, expandable complete metadata and optional true-scale orbit exploration. Sun/Earth/Mars reference uses committed heliocentric vectors and mean radii with explicit projection/locator limits. No generated lettering in runtime.
+
+Unity6000.3.28f1 GPU run `TestResults/i06-sources-music-cargo-02.log` exited0 with [68 scoped checks](presentation-v02-checks.jsonl), [result](presentation-v02-result.json), [source hashes](presentation-v02-source-hashes.json). Checks cover actual cargo renderer colors/labels, actual imported Cobalt source playing/advancing, loss layout1280x720/960x540, Sources tabs/disclosures, orbit expand/focus/reset/collapse, Quit confirmation and actual restart. [Sources](sources-v02-native.png), [death](death-v02-native.png). The first61-check run passed but its dense Sources layout was rejected and revised.
+
+[Victory capture](victory-v02-developer-preview.png) is a native **developer UI preview** using an explicitly supplied Recovered display snapshot over the real scene; it was never assigned to mission authority. It proves layout/blur, **not a completed winning playthrough**. No current full route, movement fix, new models or Windows build is claimed. Original Play was untouched; disk delivery is for reload.
+
+Repository checks passed1279GUIDs; existing NASA32samples; new heliocentric701Earth+701Mars samples. Skill checker:2310files, zero errors,46 existing temporary-fixture warnings. Preserve the original voice JSON edit.
+
+Alex reports Apoliak's PC is off with an estimated30-minute return, not confirmed resumed work. Claude movement/model ETA remains unconfirmed; quota last reported94%used/6%remaining at10:24CET. Rest/physical Earth-console animation remains open. New asset-sheet character cells01–02 are explicitly rejected; original approved character boards remain canonical. [Approval and Budget3D feasibility](../../art-direction/outcome-sources-20261115/ASSET-APPROVAL.md). Budget3D was not installed/adopted.
+
 ## Carry knee intersection
 
 Alex reports that the knees still intersect the carried case when looking down on the ramp. This screenshot is the actual before-state supplied by Alex, not a generated render:

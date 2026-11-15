@@ -1,6 +1,6 @@
-# Execution plan and status
+# Execution plan and status## Current increment — 15 November 2026, presentation and approved musicRuntime `323d926` approved Cobalt isolation loop; `815b932` hydration guidance and labeled cargo colors; `17a2c0a` outcome UI, simplified Sources and NASA true-scale reference. Isolated Unity6000.3.28f1 passed68 scoped checks, exit0. Victory image is a developer UI preview, not a completed win. [Evidence and limits](docs/verification/i06-player-feedback-20261115/README.md). Movement/model work remains Claude-owned and incomplete; Alex reports the other PC was off, estimated30-minute return. New character-sheet cells01–02 rejected; original approved character boards remain canonical. Full route, live acceptance and fresh Windows build remain open.
 
-## Current increment � 15 November 2026, death-card UI
+## Current increment — 15 November 2026, death-card UI
 
 `I06-DEATH-CARD` runtime `7666094`: centered YOU DIED with real Source Sans 3 Semibold, concise cause, retained detailed record and responsive actions. Isolated Unity6000.3.28f1 native run exited0 with34 scoped layout/navigation/restart checks and captures at1280x720/960x540. Movement remains Claude's priority and is not delivered by this UI change. [Evidence](docs/verification/i06-player-feedback-20261115/README.md).
 
