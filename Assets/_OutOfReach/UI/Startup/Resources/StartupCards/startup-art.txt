@@ -1,35 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <!--
-    PLACEHOLDER startup art: original goat head with a Slovak double cross, gold on black.
-    Drop-in contract for the final artwork: replace this file's contents with the final SVG (keep the file name).
-    Document order = pencil stroke order. A shape with a stroke is traced with that stroke; a shape with only a fill is
-    traced in pencil gold and then filled. After the last stroke, all fills fade in together.
-    Supported: path (all commands incl. arcs), rect, circle, ellipse, line, polyline, polygon, g, transform, viewBox,
-    fill / stroke / stroke-width / opacity / fill-opacity / stroke-opacity / fill-rule. Gradients are not rendered.
-  -->
-  <g stroke="#E8B554" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-    <!-- horns -->
-    <path fill="#E8B554" d="M158 146 C118 150 74 120 70 64 C70 52 82 50 86 60 C98 98 128 112 170 118 Z"/>
-    <path fill="#E8B554" d="M242 146 C282 150 326 120 330 64 C330 52 318 50 314 60 C302 98 272 112 230 118 Z"/>
-    <!-- ears -->
-    <path fill="#D9A441" d="M148 176 C118 168 92 178 80 196 C106 206 130 204 150 196 Z"/>
-    <path fill="#D9A441" d="M252 176 C282 168 308 178 320 196 C294 206 270 204 250 196 Z"/>
-    <!-- head -->
-    <path fill="#B8842B" d="M200 118 C232 118 252 138 254 170 C256 205 240 240 226 272 C218 290 222 312 214 330 C208 342 192 342 186 330 C178 312 182 290 174 272 C160 240 144 205 146 170 C148 138 168 118 200 118 Z"/>
-    <!-- beard -->
-    <path fill="#D9A441" d="M192 342 C186 360 188 376 200 392 C212 376 214 360 208 342 Z"/>
-    <!-- double cross -->
-    <path fill="#E8B554" d="M194 18 L206 18 L206 36 L228 36 L228 48 L206 48 L206 62 L240 62 L240 74 L206 74 L206 108 L194 108 L194 74 L160 74 L160 62 L194 62 L194 48 L172 48 L172 36 L194 36 Z"/>
-    <!-- eyes with horizontal goat pupils -->
-    <path fill="#0B0B0C" d="M168 188 C178 180 194 182 196 190 C188 198 174 198 168 188 Z"/>
-    <path fill="#0B0B0C" d="M232 188 C222 180 206 182 204 190 C212 198 226 198 232 188 Z"/>
-    <path fill="#E8B554" stroke-width="1.5" d="M176 189 L188 189 L188 192.5 L176 192.5 Z"/>
-    <path fill="#E8B554" stroke-width="1.5" d="M212 189 L224 189 L224 192.5 L212 192.5 Z"/>
-    <!-- nose bridge, nostrils, mouth -->
-    <path fill="none" stroke-width="2" d="M186 205 C188 240 190 270 190 300"/>
-    <path fill="none" stroke-width="2" d="M214 205 C212 240 210 270 210 300"/>
-    <path fill="none" stroke-width="2.5" d="M190 312 C192 307 197 307 198 312"/>
-    <path fill="none" stroke-width="2.5" d="M210 312 C208 307 203 307 202 312"/>
-    <path fill="none" stroke-width="2.5" d="M186 322 Q200 335 214 322"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <!-- Goat logo (spec trace). Gold line art on black. Document order = draw order: horns, head, beard, cross, hills.
+       Replace this file's contents with the final SVG trace to swap the art. data-taper = fraction of an open
+       stroke that tapers at each end (0 = none). -->
+  <g fill="none" stroke="#F5BC74" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+    <g id="head" transform="translate(66 0)">
+    <path id="horn-long" d="M 505 296 C 486 168 372 70 232 104 C 140 128 86 214 96 372 C 118 262 160 196 236 176 C 336 156 426 210 452 306 Z"/>
+    <path id="horn-long-ridges" d="M 423 244.6 L 449.4 227.5 M 390.8 210.7 L 414.2 185.3 M 351.1 186.9 L 369.2 154.6 M 305.5 173.9 L 316.4 137.4 M 255.9 173 L 257.7 136 M 212.8 184 L 208.4 148.9 M 179.8 203.6 L 172 171.3 M 152.3 231.4 L 142.5 203.6 M 129.7 267.3 L 120 246 M 111.7 311.3 L 104.6 298.5" data-taper="0.3"/>
+    <path id="horn-short" d="M 498 316 C 480 244 410 196 330 214 C 262 230 226 286 236 362 C 262 312 300 284 352 288 C 404 292 434 312 452 334 Z"/>
+    <path id="horn-short-ridges" d="M 436.8 318.7 L 457.5 292.8 M 409.5 301.8 L 419 262.2 M 372 290.5 L 366.8 248.7 M 325.8 288.8 L 310.9 256.2 M 285.6 303.8 L 269.7 283 M 253.1 334.7 L 243.9 326.5" data-taper="0.3"/>
+    <path id="ear" d="M 454 336 C 420 330 368 348 316 394 C 366 402 418 402 456 380"/>
+    <path id="ear-inner" d="M 436 358 C 410 362 376 374 350 390" data-taper="0.4"/>
+    <path id="face" d="M 398 306 C 462 300 532 322 568 370 C 598 412 636 460 676 498 C 702 522 704 548 682 562 C 668 571 650 570 640 580 C 638 600 628 618 606 626 C 586 633 560 628 546 618 C 520 600 488 586 452 576 C 428 570 412 558 402 542"/>
+    <path id="brow" d="M 510 376 C 540 356 582 362 606 390" data-taper="0.35"/>
+    <path id="eye" d="M 524 402 C 542 384 576 386 592 406 C 574 420 542 422 524 402 Z" data-taper="0"/>
+    <path id="iris" d="M 565 403 C 565 399 561 396 557 396 C 552 396 549 400 549 404 C 549 408 553 411 557 411 C 562 411 565 408 565 403 Z" data-taper="0"/>
+    <path id="nostril" d="M 664 522 C 674 530 676 540 668 548" data-taper="0.4"/>
+    <path id="mouth" d="M 640 584 C 614 592 584 586 558 566 C 550 560 544 553 540 546" data-taper="0.3"/>
+    <path id="cheek" d="M 590 448 C 604 470 618 488 632 500" data-taper="0.4"/>
+    <path id="neck-back" d="M 424 380 C 384 452 352 546 306 644 C 286 686 274 724 268 764"/>
+    <path id="neck-front" d="M 480 588 C 464 612 452 632 438 648"/>
+    <path id="neck-fur" d="M 410 470 C 392 520 372 566 340 614" data-taper="0.4"/>
+    <path id="beard-1" d="M 592 630 C 604 664 590 692 600 726"/>
+    <path id="beard-2" d="M 572 634 C 574 668 558 694 564 722"/>
+    <path id="beard-3" d="M 552 628 C 548 654 536 672 538 696"/>
+    </g>
+    <path id="cross" d="M 479 686 L 521 686 Q 514.5 696.8 511.5 710 L 511.5 732.5 L 528 732.5 Q 541.2 732.5 552 723 L 552 765 Q 541.2 755.5 528 755.5 L 511.5 755.5 L 511.5 786.5 L 558 786.5 Q 571.2 786.5 582 777 L 582 819 Q 571.2 809.5 558 809.5 L 511.5 809.5 L 511.5 890 Q 514.5 903.2 521 914 L 479 914 Q 485.5 903.2 488.5 890 L 488.5 809.5 L 442 809.5 Q 428.8 809.5 418 819 L 418 777 Q 428.8 786.5 442 786.5 L 488.5 786.5 L 488.5 755.5 L 472 755.5 Q 458.8 755.5 448 765 L 448 723 Q 458.8 732.5 472 732.5 L 488.5 732.5 L 488.5 710 Q 485.5 696.8 479 686 Z" data-taper="0"/>
+    <path id="hill-middle" d="M 388 972 C 418 934 458 916 500 916 C 542 916 582 934 612 972" data-taper="0.2"/>
+    <path id="hill-left" d="M 232 972 C 252 946 288 930 324 930 C 362 930 396 938 418 950" data-taper="0.2"/>
+    <path id="hill-right" d="M 768 972 C 748 946 712 930 676 930 C 638 930 604 938 582 950" data-taper="0.2"/>
   </g>
 </svg>

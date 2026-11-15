@@ -127,13 +127,54 @@ namespace OutOfReach.Tests.StartupUi
             var shape = art.Shapes[0];
             var output = new List<List<Vector2>>();
             var pool = new Stack<List<Vector2>>();
-            VectorArt.VisibleSubpaths(shape, false, shape.RevealStart - .01f, output, pool);
+            VectorArt.VisibleSubpaths(shape, shape.RevealStart - .01f, output, pool);
             Assert.AreEqual(0, output.Count);
-            VectorArt.VisibleSubpaths(shape, false, Mathf.Lerp(shape.RevealStart, shape.RevealEnd, .4f), output, pool);
+            VectorArt.VisibleSubpaths(shape, Mathf.Lerp(shape.RevealStart, shape.RevealEnd, .4f), output, pool);
             Assert.AreEqual(1, output.Count);
             int partial = output[0].Count;
-            VectorArt.VisibleSubpaths(shape, false, shape.RevealEnd, output, pool);
+            VectorArt.VisibleSubpaths(shape, shape.RevealEnd, output, pool);
             Assert.Greater(output[0].Count, partial);
+        }
+
+        [Test]
+        public void StrokesBecomeTaperedCalligraphicRibbons()
+        {
+            var line = new List<Vector2>();
+            for (int i = 0; i <= 40; i++) line.Add(new Vector2(i / 40f * .5f, .2f + Mathf.Sin(i / 40f * 3f) * .05f));
+            var ribbon = new List<Vector2>();
+            Assert.IsTrue(CalligraphicStroke.Build(line, 0.55f, .01f, .3f, false, ribbon));
+            Assert.Greater(ribbon.Count, line.Count * 2, "left side, right side and caps");
+            // width at the middle of an open stroke is wider than at its tip
+            float Gap(int i) => Vector2.Distance(ribbon[i], ribbon[ribbon.Count - 1 - i - 4]);
+            Assert.Greater(Gap(20), Gap(1) * 1.5f);
+            Assert.IsFalse(CalligraphicStroke.Build(new List<Vector2> { Vector2.zero }, 1f, .01f, .3f, false, ribbon));
+        }
+
+        [Test]
+        public void ReducedEffectsHasNoGrainAndFullEffectsHasSome()
+        {
+            Assert.AreEqual(DisplayStyle.None, new StartupCardPresenter(true) { PlayAudio = false }.Grain.style.display.value);
+            Assert.AreEqual(DisplayStyle.Flex, new StartupCardPresenter(false) { PlayAudio = false }.Grain.style.display.value);
+        }
+
+        [Test]
+        public void EventCardDissolvesInWhileTheLogoFadesOut()
+        {
+            var sequence = new StartupSequence(false);
+            var t = sequence.Timing;
+            Assert.Less(t.Gap, 0f, "negative gap = cross-dissolve");
+            Run(sequence, t.PictogramEnd - t.PictogramOut * .5f);
+            var mid = sequence.Evaluate();
+            Assert.Greater(mid.PictogramAlpha, 0f);
+            Assert.Greater(mid.EventAlpha, 0f);
+        }
+
+        [Test]
+        public void LogoHoldsFourToFiveSecondsAfterTheSweepBegins()
+        {
+            var t = StartupTiming.Normal;
+            float hold = t.FillSeconds + t.FillHold;
+            Assert.That(hold, Is.InRange(4f, 5.5f));
         }
 
         [Test]
@@ -170,7 +211,7 @@ namespace OutOfReach.Tests.StartupUi
             Assert.AreEqual("Polish Alex Goats", StartupCardPresenter.TeamName);
             var presenter = new StartupCardPresenter(false) { PlayAudio = false };
             Assert.AreEqual(StartupCardPresenter.EventLine, presenter.Q<Label>("startup-event-line").text);
-            Assert.AreEqual(StartupCardPresenter.TeamName, presenter.Q<Label>("startup-team-name").text);
+            Assert.AreEqual("POLISH ALEX GOATS", presenter.Q<Label>("startup-team-name").text, "tracked-out capitals under the logo");
         }
 
         [Test]

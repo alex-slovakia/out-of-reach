@@ -4,8 +4,9 @@ namespace OutOfReach.Presentation.UI.Startup
 {
     /// <summary>
     /// Durations (real seconds) of the two startup cards. Card 1 timeline, from the card's own start:
-    /// fade in, <see cref="DrawDelay"/>, pencil sketch for <see cref="DrawSeconds"/>, colour fill for
-    /// <see cref="FillSeconds"/>, hold for <see cref="FillHold"/>, fade out. Reduced effects: no sketch, no fill animation.
+    /// fade in, <see cref="DrawDelay"/>, pencil sketch for <see cref="DrawSeconds"/>, glow sweep and team name for
+    /// <see cref="FillSeconds"/>, hold for <see cref="FillHold"/>, fade out. A negative <see cref="Gap"/> makes card 2
+    /// cross-dissolve in while card 1 fades out. Reduced effects: no sketch, no sweep.
     /// </summary>
     public readonly struct StartupTiming
     {
@@ -20,8 +21,8 @@ namespace OutOfReach.Presentation.UI.Startup
             EventOut = eventOut; Reveal = reveal; SkipFade = skipFade;
         }
 
-        public static readonly StartupTiming Normal = new StartupTiming(.3f, .5f, .3f, 4f, 1.3f, 1.2f, .8f, .25f, .8f, 3f, .9f, .6f, .3f);
-        public static readonly StartupTiming ReducedEffects = new StartupTiming(.15f, .4f, 0f, 0f, 0f, 2.2f, .4f, .1f, .4f, 2.4f, .4f, .3f, .15f);
+        public static readonly StartupTiming Normal = new StartupTiming(.3f, .7f, .4f, 4f, 1.5f, 3.6f, .9f, -.85f, .9f, 3f, .9f, .6f, .3f);
+        public static readonly StartupTiming ReducedEffects = new StartupTiming(.15f, .4f, 0f, 0f, 0f, 2.2f, .5f, -.5f, .5f, 2.2f, .4f, .3f, .15f);
 
         public float PictogramStart => Lead;
         /// <summary>Time (from sequence start) the first stroke begins; the pencil sound starts here.</summary>

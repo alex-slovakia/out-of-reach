@@ -2,35 +2,40 @@
 
 Self-contained UI Toolkit presenter for the opening startup cards. Lane: `claude-max-startup`.
 
-## Card 1: goat + Slovak double cross, sketched then coloured
+## Card 1: the logo ident
 
-- Gold vector art on black, imported from SVG at runtime (`Runtime/VectorArt.cs`). **Document order is stroke order.**
-  Each shape is traced like a pencil sketch (stroke-by-stroke `Painter2D` progress, a thin second hand-held pass),
-  then all fills fade in, then the team name "Polish Alex Goats" fades in beneath the pictogram.
+- Gold (#F5BC74) line art on pure black, 1:1 composition: a right-facing mountain goat with two ridged swept-back horns,
+  pointed ear, almond eye, nose/mouth line, wispy beard and neck lines; below the chin a Slovak double cross with flared
+  ends standing on three hill arcs. The shipped file is **my own SVG trace of the written spec** (`gen`-built, 23 paths,
+  see `startup-art.txt`), not Alex's PNG. It is the swap-in target: `Art/goat-logo-source.png` was not present.
+- Imported from SVG at runtime (`Runtime/VectorArt.cs`). **Document order is draw order** (horns, head, beard, cross,
+  hills). Each stroke is a tapered, calligraphic ribbon (`Runtime/CalligraphicStroke.cs`: ends taper to a fine point,
+  width breathes with direction like a broad nib) revealed along its length, with a glowing pen tip.
 - A classic pencil-scratch sound plays in sync with the pen. It is **original and procedural** (`Runtime/PencilScratchSynth.cs`,
-  `PENCIL-SOUND-PROVENANCE.md`), rendered from the same stroke schedule as the picture, so pen lifts are silent and
-  every stroke has its own pressure envelope. No recordings or downloads; nothing audio is committed.
-- Reduced effects: shorter, no sketch, no fill animation, no scratch sound. Any key, mouse button or gamepad button skips
-  (after a 0.35 s grace) with a short fade of picture and sound.
+  `PENCIL-SOUND-PROVENANCE.md`), rendered from the same stroke schedule as the picture. No recordings or downloads.
+- When the last stroke lands a hot-gold glow sweeps diagonally across the mark and leaves a soft bloom; "POLISH ALEX
+  GOATS" (tracked-out capitals, Source Sans 3 Semibold) fades in beneath with its tracking settling.
+- Hold about 5 s (1.5 s sweep + 3.6 s), then card 1 cross-dissolves into card 2. A very subtle film grain (procedural
+  texture, 18 fps jitter, 5 % opacity) lies over both cards. About 15 s in total; any key skips.
+- Reduced effects: shorter (about 8 s), finished logo straight away, no sketch, sweep, grain or scratch sound.
 
-## Dropping in the final artwork (made in ChatGPT)
+## Dropping in the final artwork
 
 Replace the contents of `Resources/StartupCards/startup-art.txt` with the final SVG (keep the file name; `.txt` is
 deliberate so Unity imports it as a `TextAsset` without the Vector Graphics package). No code, scene or prefab change.
 
+- A PNG cannot be sketched stroke by stroke. The final art must be (or be traced to) an SVG whose path order is the
+  desired draw order: large shapes first, details last. Strokes are re-rendered as tapered ribbons using each path's
+  `stroke` colour and `stroke-width`, so outline-only line art is ideal. A fill-only shape is traced in gold, then drawn.
+- Optional `data-taper="0..0.5"` on a path sets the fraction tapered at each end (default 0.28, closed outlines never taper).
 - Supported: `path` (M L H V C S Q T A Z, absolute and relative), `rect`, `circle`, `ellipse`, `line`, `polyline`,
   `polygon`, `g`, `transform`, `viewBox`, and `fill` / `stroke` / `stroke-width` / `opacity` / `fill-opacity` /
-  `stroke-opacity` / `fill-rule` (attributes or `style`).
-- A shape with a stroke is traced with that stroke. A fill-only shape is traced in pencil gold, then filled.
-- Not rendered: gradients (a gradient fill falls back to pencil gold), clip paths, masks, filters, text, `<use>`, images.
-  Ask for flat colours, plain paths and no text when generating the art, and export outlines (convert text to paths).
-- Order the shapes in the SVG in the order they should be drawn (large outline first, details last).
-- If the art arrives as a PNG instead, it needs an ordered stroke-path SVG alongside it; the PNG alone cannot be sketched.
-- The shipped file is a **placeholder**: an original goat head with a double cross.
+  `stroke-opacity` / `fill-rule` (attributes or `style`). Not rendered: gradients (fall back to pencil gold), clip paths,
+  masks, filters, text, `<use>`, images. Export text as outlines.
 
 ## Card 2: event card
 
-Text only: `NASA Space Apps Challenge · Nov 14–15 2026` in Barlow Condensed Bold between gold hairlines (fonts from
+Text only: `NASA Space Apps Challenge · Nov 14–15 2026` in tracked Barlow Condensed Bold between gold hairlines (fonts from
 `UI/Typography` via `Resources/StartupCards/startup-cards.uss`, SIL OFL). **No NASA logo, meatball or other insignia.**
 
 ## Behaviour
