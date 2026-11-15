@@ -349,6 +349,51 @@ namespace OutOfReach.Presentation.UI.Chapter
             return "Late ration";
         }
 
+        // ---------- MISSION-DATA: the NASA/JPL Horizons line of the next-routine strip ----------
+
+        /// <summary>Source label of the reference range (NASA-DATA.md, NASA-01).</summary>
+        public const string HorizonsSource = "NASA/JPL Horizons";
+
+        /// <summary>
+        /// Core's display rule (CommunicationSystem.FormatDistance, NASA-DATA.md): nearest thousand kilometres,
+        /// "197,708,000 km". Empty for a value Core's reference table cannot hold.
+        /// </summary>
+        public static string EarthDistance(double distanceKm)
+        {
+            if (!Finite(distanceKm) || distanceKm <= 0d) return string.Empty;
+            double rounded = Math.Round(distanceKm / 1000d, MidpointRounding.AwayFromZero) * 1000d;
+            return rounded.ToString("#,0", CultureInfo.InvariantCulture) + " km";
+        }
+
+        /// <summary>Core's display rule (CommunicationSystem.FormatDuration): nearest whole second, "10 min 59 s", "9 min 05 s".</summary>
+        public static string LightTime(double seconds)
+        {
+            if (!Finite(seconds) || seconds < 0d) return string.Empty;
+            double rounded = Math.Round(seconds, MidpointRounding.AwayFromZero);
+            long total = (long)Math.Max(0d, Math.Min(rounded, long.MaxValue / 2d));
+            long hours = total / 3600, minutes = (total % 3600) / 60, rest = total % 60;
+            if (hours > 0) return string.Format(CultureInfo.InvariantCulture, "{0} h {1:00} min {2:00} s", hours, minutes, rest);
+            return minutes > 0
+                ? string.Format(CultureInfo.InvariantCulture, "{0} min {1:00} s", minutes, rest)
+                : string.Format(CultureInfo.InvariantCulture, "{0} s", rest);
+        }
+
+        /// <summary>"Earth 197,708,000 km · signal 10 min 59 s one way"; empty when Core supplies no usable sample.</summary>
+        public static string EarthLine(double referenceDistanceKm, double oneWayLightSeconds)
+        {
+            string distance = EarthDistance(referenceDistanceKm), light = LightTime(oneWayLightSeconds);
+            return distance.Length == 0 || light.Length == 0 ? string.Empty : "Earth " + distance + " · signal " + light + " one way";
+        }
+
+        /// <summary>
+        /// What the number is: the Earth–Mars range of the reference ephemeris standing in for the ship's own distance (no
+        /// trajectory of the ship is computed). Core follows the mission date until the call is sent and keeps the
+        /// transmitted sample afterwards, so the label says which of the two is on screen. Nothing is interpolated.
+        /// </summary>
+        public static string EarthLineSource(bool frozenAtTransmission) => HorizonsSource
+            + (frozenAtTransmission ? " · Earth–Mars range when the call was sent" : " · today's Earth–Mars range")
+            + ", used as a Mars-vicinity proxy";
+
         public static string Mass(double kg) => Finite(kg) ? kg.ToString("0.0", CultureInfo.InvariantCulture) + " kg" : "—";
         public static string Litres(double litres) => Finite(litres) ? litres.ToString("0.0", CultureInfo.InvariantCulture) + " L" : "—";
         public static string Energy(double kWh) => Finite(kWh) ? kWh.ToString("0.00", CultureInfo.InvariantCulture) + " kWh" : "—";

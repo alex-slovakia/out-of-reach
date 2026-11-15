@@ -79,6 +79,12 @@ namespace OutOfReach.Presentation.UI.Chapter
         private float stripFeedbackSeconds;
         private bool routineSeen;
 
+        // MISSION-DATA: Core's own reference sample, read while the strip shows and re-formatted only when it changes.
+        private ICommunicationSystem link;
+        private double dataKm = double.NaN, dataLight = double.NaN;
+        private bool dataFrozen;
+        private string dataLine = string.Empty, dataSource = string.Empty;
+
         /// <summary>The screen presented in the last frame (None while hidden).</summary>
         public ChapterScreen CurrentScreen => presentable ? screen : ChapterScreen.None;
 
@@ -122,9 +128,22 @@ namespace OutOfReach.Presentation.UI.Chapter
             lastStage = recovery?.Stage ?? RecoveryStage.NotStarted;
         }
 
+        /// <summary>
+        /// MISSION-DATA: the link whose NASA/JPL Horizons reference sample the strip shows, distance and one-way light time
+        /// exactly as Core holds them (the mission date's sample until the call is sent, the transmitted one afterwards).
+        /// Optional: call it after <see cref="Configure"/>, which clears it. Null hides the line.
+        /// </summary>
+        public void ConfigureMissionData(ICommunicationSystem communication)
+        {
+            link = communication;
+            dataKm = dataLight = double.NaN;
+            dataLine = dataSource = string.Empty;
+        }
+
         /// <summary>Releases the session: hides and forgets every card, deferral and observation (restart, unbind).</summary>
         public void ClearBinding()
         {
+            ConfigureMissionData(null);
             flow = null;
             state = null;
             clock = null;
@@ -400,7 +419,39 @@ namespace OutOfReach.Presentation.UI.Chapter
             }
 
             bool strip = (screen == ChapterScreen.None || screen == ChapterScreen.Beat) && FillStrip(now, realSeconds);
+            if (strip) FillMissionData();
             ChapterView.Show(view.Strip, strip);
+        }
+
+        /// <summary>MISSION-DATA: static text under the strip's action. No clock, no interpolation, no animation.</summary>
+        private void FillMissionData()
+        {
+            if (link != null)
+            {
+                try
+                {
+                    double km = link.ReferenceDistanceKm, light = link.OneWayLightSeconds;
+                    CommunicationState linkState = link.State;
+                    bool frozen = linkState == CommunicationState.AwaitingReply || linkState == CommunicationState.ReplyReceived;
+                    if (km != dataKm || light != dataLight || frozen != dataFrozen)
+                    {
+                        dataKm = km;
+                        dataLight = light;
+                        dataFrozen = frozen;
+                        dataLine = ChapterCopy.EarthLine(km, light);
+                        dataSource = dataLine.Length > 0 ? ChapterCopy.EarthLineSource(frozen) : string.Empty;
+                    }
+                }
+                catch (Exception error)
+                {
+                    // The data line is optional: it must never take the routine strip down with it.
+                    Debug.LogException(error, this);
+                    ConfigureMissionData(null);
+                }
+            }
+
+            ChapterView.SetText(view.StripData, dataLine);
+            ChapterView.SetText(view.StripSource, dataSource);
         }
 
         private void ObserveDecisionState()
