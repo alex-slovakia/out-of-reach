@@ -157,8 +157,10 @@ public sealed class CarryHandsNativeQaDriver : MonoBehaviour
         resolver.Interacted += OnInteract;
 
         Stage("practice");
+        yield return SkipStartupCards();
         yield return WaitFor(() => PracticeButton() != null, 10, "Practice UI");
         Submit(PracticeButton()); yield return Frames(5);
+        yield return SkipStartupCards();
         yield return WaitFor(() => runtime.GameState.Phase == GamePhase.Planning && player.ControlAllowed, 15, "planning control");
 
         Stage("walk to a cargo pallet");
@@ -184,6 +186,23 @@ public sealed class CarryHandsNativeQaDriver : MonoBehaviour
         yield return Frames(3);
 
         yield return Sample("work");
+
+        Stage("drop and regrab (R06)");
+        Keys(); yield return Frames(2);
+        Vector3 back = pallet.transform.position + away.normalized * 1.15f;
+        yield return WalkTo(back, .18f, 30);
+        yield return Use(pallet);
+        yield return WaitFor(() => string.IsNullOrEmpty(runtime.Cargo.CarriedEquipmentId), 3, "dropped");
+        yield return Frames(4);
+        Check(!cargoHands.IsCarryShown && !cargoHands.IsVisible && float.IsNaN(cargoHands.BodyReachShortfallMetres),
+            "drop: crate, gloves and arm lease all released (no floating parts).");
+        yield return Pitch(-30f); yield return Frames(3); yield return Capture("work-dropped-look30");
+        yield return Use(pallet);
+        yield return WaitFor(() => !string.IsNullOrEmpty(runtime.Cargo.CarriedEquipmentId), 3, "regrabbed");
+        yield return Seconds(.6);
+        Check(cargoHands.UsesBodyArms && !cargoHands.IsVisible && cargoHands.BodyReachShortfallMetres < .01f,
+            "regrab: the body's arms hold the crate again (shortfall " + cargoHands.BodyReachShortfallMetres.ToString("F4") + " m).");
+        yield return Pitch(-30f); yield return Frames(3); yield return Capture("work-regrab-look30");
 
         Stage("EVA outfit (presentation check: suit-on flag set by reflection)");
         object eva = runtime.EvaStatus;
@@ -229,6 +248,27 @@ public sealed class CarryHandsNativeQaDriver : MonoBehaviour
             view.transform.InverseTransformPoint(rs.position).ToString("F3"), g));
     }
 
+    /// <summary>R01 startup cards (VisualElement "startup-cards") cover the menu first; like a player, wait and press Space.</summary>
+    IEnumerator SkipStartupCards()
+    {
+        double begin = Now; bool pressed = false;
+        while (StartupCardsShown() && Now - begin < 40)
+        {
+            if (!pressed && Now - begin > 1.0) { pressed = true; Keys(Key.Space); yield return Frames(2); Keys(); Note("startup cards shown; pressed Space"); }
+            yield return null;
+        }
+        if (StartupCardsShown()) throw new TimeoutException("startup cards still shown");
+    }
+    bool StartupCardsShown()
+    {
+        foreach (var doc in Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None))
+            if (doc && doc.isActiveAndEnabled && doc.rootVisualElement != null)
+            {
+                var e = doc.rootVisualElement.Q<VisualElement>("startup-cards");
+                if (e != null && Visible(e)) return true;
+            }
+        return false;
+    }
     IEnumerator SideView(string name)
     {
         var go = new GameObject("QA side camera"); var cam = go.AddComponent<Camera>();
@@ -317,7 +357,16 @@ public sealed class CarryHandsNativeQaDriver : MonoBehaviour
         foreach (var device in disabledDevices) if (device.added) InputSystem.EnableDevice(device);
         if (originalSettings) { InputSystem.settings = originalSettings; originalSettings.hideFlags = originalFlags; } if (qaSettings) Object.Destroy(qaSettings);
     }
-    Button PracticeButton() => document.rootVisualElement.Query<Button>().ToList().FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy && Visible(b));
+    Button PracticeButton()
+    {
+        foreach (var doc in Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None))
+        {
+            if (!doc || !doc.isActiveAndEnabled || doc.rootVisualElement == null) continue;
+            var found = doc.rootVisualElement.Query<Button>().ToList().FirstOrDefault(x => x.text != null && x.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && x.enabledInHierarchy && Visible(x));
+            if (found != null) return found;
+        }
+        return null;
+    }
     static void Submit(VisualElement e) { e.Focus(); using (var action = NavigationSubmitEvent.GetPooled()) { action.target = e; e.SendEvent(action); } }
     static bool Visible(VisualElement e) { for (var n = e; n != null; n = n.parent) if (n.resolvedStyle.display == DisplayStyle.None || n.resolvedStyle.visibility != Visibility.Visible) return false; return e?.panel != null; }
     void Keys(params Key[] keys) { if (keyboard != null && keyboard.added) InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys)); }

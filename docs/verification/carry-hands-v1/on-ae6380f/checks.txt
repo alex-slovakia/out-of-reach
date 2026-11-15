@@ -1,0 +1,21 @@
+PASS play | Actual Bootstrap cargo presenter, body presenter and camera exist.
+PASS walk to a cargo pallet | Cargo supply targets: 7
+PASS walk to a cargo pallet | carryArms field found
+PASS walk to a cargo pallet | Interaction ray resolves cargo-supply:water-tank (current cargo-supply:water-tank)
+PASS walk to a cargo pallet | E succeeds: Carrying water tank.
+PASS walk to a cargo pallet | before: separate gloves shown.
+PASS sample work | work: the crate is shown.
+PASS sample work | work: the body's arms hold it; separate gloves hidden.
+PASS sample work | work: both body arms visible (Both).
+PASS sample work | work: both wrists reach their handle targets (shortfall 0,0000 m).
+PASS drop and regrab (R06) | Interaction ray resolves cargo-supply:water-tank (current cargo-supply:water-tank)
+PASS drop and regrab (R06) | E succeeds: Water tank back on the pallet.
+PASS drop and regrab (R06) | drop: crate, gloves and arm lease all released (no floating parts).
+PASS drop and regrab (R06) | Interaction ray resolves cargo-supply:water-tank (current cargo-supply:water-tank)
+PASS drop and regrab (R06) | E succeeds: Carrying water tank.
+PASS drop and regrab (R06) | regrab: the body's arms hold the crate again (shortfall 0,0000 m).
+PASS EVA outfit (presentation check: suit-on flag set by reflection) | EvaOperations.IsSuitOn setter found on EvaOperations
+PASS sample eva | eva: the crate is shown.
+PASS sample eva | eva: the body's arms hold it; separate gloves hidden.
+PASS sample eva | eva: both body arms visible (Both).
+PASS sample eva | eva: both wrists reach their handle targets (shortfall 0,0000 m).
