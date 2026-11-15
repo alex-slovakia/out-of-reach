@@ -8,7 +8,7 @@ Times CET (UTC+1).
 
 | CET | UTC | Gate |
 |---|---|---|
-| 22:30 | 21:30 | Submission pack ready against `feature/claude-max-final@5ea2c23` (this folder) |
+| 22:30 | 21:30 | Submission pack ready against the release candidate `feature/claude-max-final@5479e87` (this folder); the RC's Windows ZIP is due |
 | **23:00** | **22:00** | **Final build** from CLAUDE-MAX's final integration (final SHA, Windows ZIP, checksum, smoke). **Apoliak decides the demo: slides or video** |
 | 23:00–23:15 | 22:00–22:15 | Last pass of the texts on the final SHA (`submit-pack` lane: switch sentences, test counts). Game done by 23:15 |
 | **≈ 23:30** | **≈ 22:30** | **Team Owner submits** |
@@ -51,9 +51,9 @@ Build ZIP: use the one named in the final post on #7, check its SHA-256 against 
 | # | Item | Owner | When (CET) | Status |
 |---|---|---|---|---|
 | 1 | Final SHA + Windows ZIP + checksum + smoke | CLAUDE-MAX (final integration, #7 6901207238) | 23:00 | open |
-| 1a | VO23 spoken day-neutral cut: approve or clear the binding | **Alex** | before the final build | open (texts are true either way) |
+| 1a | VO23 spoken day-neutral cut: the RC ships the announcement as radio subtitles; the voice returns only if Alex approves the cut for a B build | **Alex** | before a B build | open (texts are true either way) |
 | 2 | Demo decision: slides (A) or video (B) | **Apoliak** | 23:00 | open |
-| 3 | Last diff pass of the texts on the final SHA (checks A1–A3, switches S1/S5/S7/S8/S9, deck rebuild if needed) | `submit-pack` lane | 23:00–23:15 | waits for item 1 |
+| 3 | Diff pass of the texts, **only if the final SHA is not the RC `5479e87`** (checks A1–A3, switches S1/S7/S8/S9/S5/S10, deck rebuild if needed) | `submit-pack` lane | 23:00–23:15 | waits for item 1 |
 | 4 | Claim check of the final build ([playthrough-checklist.md](playthrough-checklist.md)): QA result from `qa-e2e` plus one human look | `qa-e2e` + Apoliak or Alexander | by 23:15 | open |
 | 5 | Public final-project location (option B or A): build ZIP, README, credits, deck PDF | Team Owner | by 23:25 | open |
 | 6 | Public demo link (deck PDF, or the video if Apoliak approved one) | Team Owner | by 23:25 | open |

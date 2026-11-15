@@ -1,22 +1,22 @@
 # Submission form fields — paste-ready
 
-**DRAFT for the Team Owner.** Not submitted, not published. **Checked against the final integration branch:** `feature/claude-max-final` @ `5ea2c23` (15 Nov, 22:05 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes. The first match was against `cf2224d` (tested twin `8665183`: 470/470 EditMode, 151/151 PlayMode, Windows x64 build and smoke PASS, #7 6900862397). CLAUDE-MAX or Alex declares the final SHA; one short diff pass follows. Field names and rules were checked on the official [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/) (dated 13 Nov 2026) and [Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/), both read on 15 Nov 2026.
+**DRAFT for the Team Owner.** Not submitted, not published. **Checked against the release candidate:** `feature/claude-max-final` @ `5479e87` (#7 6901310758; 15 Nov, 22:15 CET) = staging `022138d` (tower V03) + handheld radio + finale stars + routine montage + walk fixes, with the day-14 announcement as radio subtitles. Full suites on the RC: 499/499 EditMode, 155/155 PlayMode (#7 6901385202); its Windows build is running. If the RC ships, the paste blocks are final as they stand. If a B build ships instead, one short diff pass follows (last section). Field names and rules were checked on the official [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/) (dated 13 Nov 2026) and [Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/), both read on 15 Nov 2026.
 
 How to use:
 - Each field has a **paste block** in plain English (no Markdown, the form is plain text).
-- The paste blocks describe only what is in `5ea2c23`. Features still being integrated have **switch sentences** in [the last section](#switch-sentences-for-the-final-sha): add one only if its check passes on the final SHA. Never describe what the build cannot show: judges score *Validity*.
+- The paste blocks describe only what is in the RC `5479e87`. Features offered for a possible B build have **switch sentences** in [the last section](#switch-sentences-for-the-final-sha): add one only if its check passes on the final SHA. Never describe what the build cannot show: judges score *Validity*.
 - Counts are measured on the paste blocks. The guide gives no length limits; if the form refuses a block, use the short version.
 
-What was verified in the tree at `5ea2c23` (saved `Bootstrap.unity` and its prefabs, by GUID; runtime-created parts in their source):
+What was verified in the tree at `5479e87` (saved `Bootstrap.unity` and its prefabs, by GUID; runtime-created parts in their source):
 
-| Claim | In `5ea2c23` | Evidence |
+| Claim | In the RC `5479e87` | Evidence |
 |---|---|---|
 | Day 1–30 chapter loop | **Yes** | `Bootstrap.unity`: `chapterLoop: 1`; `MissionChapterFlow` days 1, 5, 9, 14, 20, 30 |
 | Handheld radio with the story's radio traffic | **Yes** | `HandheldRadioPresenter` and `RadioV01.prefab` in Bootstrap (`3d619b6`, merge `3709b6e`) |
 | Finale stars (NASA SVS sky at a brighter exposure in the ending) | **Yes** | `RescueEndingSky` used by `RescueEndingPresenter` (`12991d7`); runtime only |
 | Routine montage with live station pictures | **Yes** | `RoutineStationMontage` creates itself after scene load (`d67eb8e`…`5ea2c23`) |
 | Launch tower V03 | **Yes** | installed in Bootstrap (`022138d`); original work, no text claim |
-| Day-14 announcement as a **voice** (VO23, day-neutral cut) | **Bound, but pending Alex's approval** | `vo23_mc_rescue_lost_dayneutral.wav` (GUID `c4a8e830…`) in Bootstrap; if the binding is cleared, the same text arrives as radio subtitles — the paste blocks are true either way |
+| Day-14 announcement on the radio | **Yes, as subtitles** | `5479e87` clears the VO23 voice binding (neither the original clip nor the day-neutral cut is referenced by Bootstrap) until Alex approves the cut; the paste blocks say "announcement" and are true with or without the voice |
 | NASA launch radio countdown | **Yes** | `Audio/LaunchRadio/launch-radio-countdown.wav` bound in `MissionAudioPresenter.prefab`; credited on the Sources page |
 | Tether rope on the spacewalk | **Yes** | `EvaTetherRope` installed in Bootstrap (`cbb9140`) |
 | Physical meal from a ration pouch | **Yes** | `MealPresenter` installed in Bootstrap |
@@ -25,7 +25,7 @@ What was verified in the tree at `5ea2c23` (saved `Bootstrap.unity` and its pref
 | Ending themes "Thirty-One Dawns" / "Last Carrier" | **Yes** | bound in `MissionAudioPresenter.prefab` |
 | EPIC globe on the terminal + Slovakia Terra MODIS inset | **Yes** | `MissionTerminal.prefab`: `staticImageMode: 0`, inset texture set |
 | Sources page names the synthetic voices and the NASA SVS sky | **Yes** | `UI/Report/Runtime/FlightRecorderPresenter.cs` lines 410–423 |
-| Day-14 console reveal, Horizons data row, radiation dose (MSL RAD), DSN station | **Not yet** | switch sentences below |
+| Horizons line during play, radiation estimate (MSL RAD), DSN complex in view, day-14 console reveal, stars on the spacewalk, hull V2 / capsules V02 / launch VFX | **Not in the RC** (offered for a B build) | switch sentences below |
 
 ---
 
@@ -241,9 +241,9 @@ Sources: [credits-and-licenses.md](credits-and-licenses.md) (every row has its r
 
 ## Switch sentences for the final SHA
 
-`<SHA>` is the SHA that CLAUDE-MAX or Alex declares final on #7. Run the checks in any clone after `git fetch origin`.
+`<SHA>` is the SHA that CLAUDE-MAX or Alex declares final on #7. Run the checks in any clone after `git fetch origin`. **If the release candidate `5479e87` ships unchanged, nothing below applies: paste the blocks as they are.**
 
-### Already in the paste blocks (in `5ea2c23`) — undo only if the final SHA lost the feature
+### Already in the paste blocks (in the RC `5479e87`) — undo only if the final SHA lost the feature
 
 | # | Feature in the texts | Check on the final SHA | Undo if the check fails |
 |---|---|---|---|
@@ -252,24 +252,28 @@ Sources: [credits-and-licenses.md](credits-and-licenses.md) (every row has its r
 | A3 | Routine montage | `git ls-tree -r --name-only <SHA> \| grep RoutineStationMontage.cs` prints the file | §5 item 7: *"as a short montage that cuts between the galley, the water store and the berth, shows"* → *"as a compressed routine that shows"*; "HOW IT WORKS" and the short version: *"routine montage"* → *"daily routine"*; short version item 6: delete *"ordinary days as a short montage, "*; deck: `ROUTINE_MONTAGE_SHIPPED = False`. |
 | A4 | Launch tower V03 | — | No text depends on it. Deck slide 3, first picture shows tower V03; fine either way (a real capture). |
 
-### Still open — add only if the check passes
+### Offered for a possible B build — add only if the check passes on the final SHA
 
 | # | Feature | Check on the final SHA | If it passes, edit |
 |---|---|---|---|
-| S1 | Day-14 announcement **spoken** (VO23, day-neutral cut; pending Alex's approval) | `git grep -l c4a8e83073e24d17a5d9a27e3aceb9e8 <SHA> -- "Assets/*.unity"` prints `Bootstrap.unity` | **Nothing has to change:** the paste blocks say "Mission Control's announcement", true for a voice and for subtitles alike. Optional, only if bound: §5 item 7 *"for Mission Control's announcement"* → **"for Mission Control's spoken announcement"**. If the **original** clip is bound instead (`git grep -l 95620279f55e4dfda9df3f09c1503265 <SHA> -- "Assets/*.unity"`), it says "mission day thirty-one" while the rendezvous is day 30: report it on #7 before submitting. |
+| S1 | Day-14 announcement **spoken** (VO23, day-neutral cut). In the RC the binding is cleared: the announcement ships as radio subtitles until Alex approves the cut | `git grep -l c4a8e83073e24d17a5d9a27e3aceb9e8 <SHA> -- "Assets/*.unity"` prints `Bootstrap.unity` | **Nothing has to change:** the paste blocks say "Mission Control's announcement", true for a voice and for subtitles alike. Optional, only if bound: §5 item 7 *"for Mission Control's announcement"* → **"for Mission Control's spoken announcement"**. If the **original** clip is bound instead (`git grep -l 95620279f55e4dfda9df3f09c1503265 <SHA> -- "Assets/*.unity"`), it says "mission day thirty-one" while the rendezvous is day 30: report it on #7 before submitting. |
+| S7 | **Horizons line during play** (`feature/apx-mission-data-2315`, commits `6b69313` + `c158a10`, #7 6901373730) | `git grep -n "ConfigureMissionData" <SHA> -- Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs` prints a line | §5 item 7, after the sentence that ends *"…and stops at the first danger."* add: **"Between chapters a line on the next-chapter strip keeps the NASA/JPL Horizons numbers in view: Earth's distance for that mission day and the one-way signal time."** §7 item 1, before *"The Mars-centre distance is a labelled proxy"* add: **"During play the same distance and one-way light time stay visible on the next-chapter strip, labelled NASA/JPL Horizons."** Deck slide 4, first block: add **"The same numbers stay on screen between chapters."** |
+| S8 | **Radiation estimate line** (same branch, commit `119a083`) | `git grep -n "RadCruiseMilliSievertsPerDay" <SHA> -- Assets/_OutOfReach/UI` prints a line | New item in §7, after item 5 (renumber the rest): **"NASA/JPL Mars Science Laboratory, Radiation Assessment Detector (RAD): inside the spacecraft on its cruise to Mars, RAD measured an average of 1.8 millisieverts of galactic cosmic rays per day (NASA/JPL, 'Data From NASA Rover's Voyage to Mars Aids Planning', 30 May 2013, https://www.jpl.nasa.gov/news/data-from-nasa-rovers-voyage-to-mars-aids-planning/; Zeitlin et al., Science 340, 2013). The next-chapter strip shows a labelled estimate of the dose since day 1: elapsed mission days x 1.8 mSv per day. It is information only: no rule, resource or outcome reads it, and AURORA-7's shielding and the solar cycle are not modelled."** §5 "HOW IT WORKS", after the BVAD paragraph add: **"A radiation line estimates the dose since day 1 from the 1.8 mSv per day that NASA's RAD instrument measured on the Mars Science Laboratory cruise; it is information only."** Credits §B5: a row with the same source. Deck slide 4 "ALSO FROM NASA": add "Radiation estimate: NASA MSL RAD cruise measurement". **Also check that the in-game Sources page got its RAD entry** (the lane proposed the text); if not, say so on #7: a NASA number on screen needs its source in the game. |
+| S9 | **DSN complex in view** (lane `dsn-calc`; not READY at 22:15 CET) | the lane's READY post, and its code is in the final SHA | New item in §7 (NASA Deep Space Network: which complex is in view, how it is computed, source URL from the lane's post). One sentence in §5 item 6. Credits §B5 row. Deck slide 4 "ALSO FROM NASA". Wording and numbers only from the lane's post and provenance file. |
 | S5 | Day-14 console reveal | the integrator's final post lists it | §5 item 7, after the day-14 sentences add: **"The cockpit console shows when it was sent and how long it travelled."** Only if that is what the console shows; otherwise write what it shows, or leave it out. |
-| S7 | Horizons data row | the integrator's final post lists it; read the lane's README for the exact fields | §5 item 6, after the sentence about the earliest possible reply, add one sentence naming the fields it shows. §7 item 1: add the same fact. Use the lane's own wording and numbers. |
-| S8 | Radiation dose (MSL RAD) | lane `mission-data` READY post, and its provenance file is in the final SHA | New item in §7 (NASA Data): source URL, instrument (Mars Science Laboratory Radiation Assessment Detector), the value and unit used, and what the game does with it. One sentence in §5 "HOW IT WORKS". A row in credits §B5. Deck slide 4 "ALSO FROM NASA". Numbers only from the lane's provenance file, never from memory. |
-| S9 | DSN station | lane `dsn-calc` READY post, and its provenance file is in the final SHA | New item in §7 (NASA Deep Space Network: which complex or antenna, what is computed, source URL). One sentence in §5 item 6 or "HOW IT WORKS". A row in credits §B5. Deck slide 4 "ALSO FROM NASA". |
+| S10 | Stars during the spacewalk and in the "LATER IN EARTH ORBIT" shot; hold-to-skip for cinematics; hull V2, capsules V02, launch VFX | the integrator's final post lists them | No text change. Re-check the credits re-sweep command below for new attribution files (new models). |
+| S11 | Sources credit wording for the sky (`codex/nasa-2330-sky-credit@bb2dcec`) | — | No text change: §7 item 7 already says the image is shown at an authored exposure. |
 
 ### Always re-run on the final SHA (2 minutes)
 
 ```text
 git show <SHA>:Assets/_OutOfReach/Scenes/Bootstrap.unity | grep -n "chapterLoop"        (must print "chapterLoop: 1")
-git diff --name-status 5ea2c23 <SHA> | grep -iE "attribution|provenance|notice|licen|readme|SOURCE.json"   (new third-party items go to section 8 and credits block A)
+git diff --name-status 5479e87 <SHA> | grep -iE "attribution|provenance|notice|licen|readme|SOURCE.json"   (new third-party items go to section 8 and credits block A)
 git show <SHA>:Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs | grep -n "Synthetic voices\|Deep Star Maps"   (both must still be there)
 ```
 
-Test counts: the texts say "more than 460 EditMode and 150 PlayMode". They need a change only if the final counts are lower.
+Run on the RC `5479e87` at 22:15 CET: `chapterLoop: 1`; radio in Bootstrap; `RescueEndingSky.cs` and `RoutineStationMontage.cs` present; both Sources lines present; VO23 not bound (neither cut); no new attribution file since `5ea2c23`.
+
+Test counts: the texts say "more than 460 EditMode and 150 PlayMode" (the RC has 499 and 155, #7 6901385202). They need a change only if the final counts are lower.
 
 If `chapterLoop` is `0` (not expected): in §2 replace *"Across 30 compressed days you eat, sleep, decide and wait for a rescue that is never instant."* with *"After contact you ration food and water, rest and power a beacon for a rescue that is never instant."*; in §5 replace item 7 with *"7. Survive after contact. Contact is the midpoint, not the win: you eat and drink from the actual stores, can salvage the science instrument for spare parts, may build and harvest one small grow module, sleep up to 8.5 hours per rest, and power a recovery beacon when a fictional rescue craft that was already in transit asks for it."* and delete *"The same model times the day-14 message."* and the "six hours per second in the routine montage" clause.
