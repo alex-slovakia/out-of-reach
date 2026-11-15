@@ -1,0 +1,435 @@
+{
+ "blender": "3.6.1",
+ "units": "metres, Unity axes (x right, y up, z forward)",
+ "props": [
+  {
+   "name": "IH_SeatCdr",
+   "origin": [
+    -1.15,
+    0.0,
+    -0.45
+   ],
+   "module": "ih_cockpit",
+   "hide": [],
+   "carve": [
+    {
+     "target": "A7_Cockpit",
+     "min": [
+      -1.57,
+      0.004,
+      -1.08
+     ],
+     "max": [
+      -0.73,
+      1.72,
+      0.24
+     ]
+    }
+   ],
+   "lods": [
+    {
+     "triangles": 10334,
+     "per_material": {
+      "IH_Aluminium": 2568,
+      "IH_AnodGold": 272,
+      "IH_AnodRed": 228,
+      "IH_Bungee": 336,
+      "IH_CableBlue": 364,
+      "IH_CableOrange": 364,
+      "IH_Chrome": 336,
+      "IH_FabricSeat": 672,
+      "IH_FabricWhite": 100,
+      "IH_Graphite": 924,
+      "IH_GraphiteEdge": 416,
+      "IH_Labels": 22,
+      "IH_PaintAmber": 224,
+      "IH_PlasticDark": 124,
+      "IH_PlasticWhite": 120,
+      "IH_QuiltSeat": 2464,
+      "IH_Rubber": 716,
+      "IH_Strap": 84
+     },
+     "bounds_min": [
+      -1.502,
+      0.0,
+      -0.9966
+     ],
+     "bounds_max": [
+      -0.797,
+      1.5638,
+      0.1329
+     ]
+    },
+    {
+     "triangles": 4502,
+     "per_material": {
+      "IH_Aluminium": 958,
+      "IH_AnodGold": 80,
+      "IH_AnodRed": 52,
+      "IH_Bungee": 336,
+      "IH_CableBlue": 312,
+      "IH_CableOrange": 312,
+      "IH_Chrome": 96,
+      "IH_FabricSeat": 144,
+      "IH_FabricWhite": 48,
+      "IH_Graphite": 838,
+      "IH_Labels": 18,
+      "IH_PaintAmber": 168,
+      "IH_PlasticDark": 48,
+      "IH_PlasticWhite": 24,
+      "IH_QuiltSeat": 528,
+      "IH_Rubber": 456,
+      "IH_Strap": 84
+     },
+     "bounds_min": [
+      -1.502,
+      0.0,
+      -0.9966
+     ],
+     "bounds_max": [
+      -0.7977,
+      1.5638,
+      0.1326
+     ]
+    },
+    {
+     "triangles": 536,
+     "per_material": {
+      "IH_Aluminium": 144,
+      "IH_FabricSeat": 36,
+      "IH_Graphite": 224,
+      "IH_QuiltSeat": 132
+     },
+     "bounds_min": [
+      -1.5,
+      0.0,
+      -0.9979
+     ],
+     "bounds_max": [
+      -0.8,
+      1.5652,
+      0.125
+     ]
+    }
+   ],
+   "views": [
+    {
+     "name": "seat_rear",
+     "eye": [
+      -0.35,
+      1.6,
+      0.9
+     ],
+     "target": [
+      -1.15,
+      0.8,
+      -0.3
+     ],
+     "fov": 60
+    },
+    {
+     "name": "seat_front",
+     "eye": [
+      -0.25,
+      1.5,
+      -1.55
+     ],
+     "target": [
+      -1.15,
+      0.6,
+      -0.4
+     ],
+     "fov": 60
+    }
+   ]
+  },
+  {
+   "name": "IH_SeatFe",
+   "origin": [
+    1.15,
+    0.0,
+    -0.45
+   ],
+   "module": "ih_cockpit",
+   "hide": [],
+   "carve": [
+    {
+     "target": "A7_Cockpit",
+     "min": [
+      0.73,
+      0.004,
+      -1.08
+     ],
+     "max": [
+      1.57,
+      1.72,
+      0.24
+     ]
+    }
+   ],
+   "lods": [
+    {
+     "triangles": 10334,
+     "per_material": {
+      "IH_Aluminium": 2568,
+      "IH_AnodGold": 272,
+      "IH_AnodRed": 228,
+      "IH_Bungee": 336,
+      "IH_CableBlue": 364,
+      "IH_CableOrange": 364,
+      "IH_Chrome": 336,
+      "IH_FabricSeat": 672,
+      "IH_FabricWhite": 100,
+      "IH_Graphite": 924,
+      "IH_GraphiteEdge": 416,
+      "IH_Labels": 22,
+      "IH_PaintAmber": 224,
+      "IH_PlasticDark": 124,
+      "IH_PlasticWhite": 120,
+      "IH_QuiltSeat": 2464,
+      "IH_Rubber": 716,
+      "IH_Strap": 84
+     },
+     "bounds_min": [
+      0.8,
+      0.0,
+      -0.9966
+     ],
+     "bounds_max": [
+      1.503,
+      1.5638,
+      0.1329
+     ]
+    },
+    {
+     "triangles": 4502,
+     "per_material": {
+      "IH_Aluminium": 958,
+      "IH_AnodGold": 80,
+      "IH_AnodRed": 52,
+      "IH_Bungee": 336,
+      "IH_CableBlue": 312,
+      "IH_CableOrange": 312,
+      "IH_Chrome": 96,
+      "IH_FabricSeat": 144,
+      "IH_FabricWhite": 48,
+      "IH_Graphite": 838,
+      "IH_Labels": 18,
+      "IH_PaintAmber": 168,
+      "IH_PlasticDark": 48,
+      "IH_PlasticWhite": 24,
+      "IH_QuiltSeat": 528,
+      "IH_Rubber": 456,
+      "IH_Strap": 84
+     },
+     "bounds_min": [
+      0.8,
+      0.0,
+      -0.9966
+     ],
+     "bounds_max": [
+      1.5023,
+      1.5638,
+      0.1326
+     ]
+    },
+    {
+     "triangles": 536,
+     "per_material": {
+      "IH_Aluminium": 144,
+      "IH_FabricSeat": 36,
+      "IH_Graphite": 224,
+      "IH_QuiltSeat": 132
+     },
+     "bounds_min": [
+      0.8,
+      0.0,
+      -0.9979
+     ],
+     "bounds_max": [
+      1.5,
+      1.5652,
+      0.125
+     ]
+    }
+   ],
+   "views": [
+    {
+     "name": "seat_fe_side",
+     "eye": [
+      0.1,
+      1.65,
+      -0.9
+     ],
+     "target": [
+      1.15,
+      0.7,
+      -0.5
+     ],
+     "fov": 68
+    }
+   ]
+  },
+  {
+   "name": "IH_Console",
+   "origin": [
+    0.0,
+    0.0,
+    -1.95
+   ],
+   "module": "ih_cockpit",
+   "hide": [],
+   "carve": [
+    {
+     "target": "A7_Cockpit",
+     "min": [
+      -1.63,
+      0.004,
+      -2.46
+     ],
+     "max": [
+      1.63,
+      1.68,
+      -1.44
+     ]
+    }
+   ],
+   "lods": [
+    {
+     "triangles": 19296,
+     "per_material": {
+      "IH_Aluminium": 8194,
+      "IH_AnodRed": 880,
+      "IH_CableBlue": 280,
+      "IH_CableOrange": 280,
+      "IH_CableYellow": 24,
+      "IH_Chrome": 3168,
+      "IH_FabricSeat": 240,
+      "IH_Graphite": 1968,
+      "IH_GraphiteEdge": 480,
+      "IH_Labels": 56,
+      "IH_LampWarm": 12,
+      "IH_LedAmber": 24,
+      "IH_LedCyan": 48,
+      "IH_Paint": 564,
+      "IH_PaintAmber": 240,
+      "IH_PaintRed": 280,
+      "IH_PlasticDark": 2172,
+      "IH_PlasticWhite": 80,
+      "IH_Rubber": 292,
+      "IH_Screens": 14
+     },
+     "bounds_min": [
+      -1.55,
+      0.0,
+      -2.38
+     ],
+     "bounds_max": [
+      1.55,
+      1.6372,
+      -1.458
+     ]
+    },
+    {
+     "triangles": 5156,
+     "per_material": {
+      "IH_Aluminium": 1524,
+      "IH_AnodRed": 608,
+      "IH_CableBlue": 240,
+      "IH_CableOrange": 240,
+      "IH_CableYellow": 24,
+      "IH_Chrome": 384,
+      "IH_FabricSeat": 96,
+      "IH_Graphite": 920,
+      "IH_Labels": 56,
+      "IH_LampWarm": 12,
+      "IH_Paint": 300,
+      "IH_PaintAmber": 72,
+      "IH_PaintRed": 72,
+      "IH_PlasticDark": 318,
+      "IH_PlasticWhite": 24,
+      "IH_Rubber": 252,
+      "IH_Screens": 14
+     },
+     "bounds_min": [
+      -1.55,
+      0.0,
+      -2.38
+     ],
+     "bounds_max": [
+      1.55,
+      1.6357,
+      -1.458
+     ]
+    },
+    {
+     "triangles": 719,
+     "per_material": {
+      "IH_FabricSeat": 24,
+      "IH_Graphite": 210,
+      "IH_Paint": 204,
+      "IH_PaintAmber": 48,
+      "IH_PaintRed": 15,
+      "IH_PlasticDark": 204,
+      "IH_Screens": 14
+     },
+     "bounds_min": [
+      -1.55,
+      0.0,
+      -2.38
+     ],
+     "bounds_max": [
+      1.55,
+      1.6404,
+      -1.458
+     ]
+    }
+   ],
+   "views": [
+    {
+     "name": "console",
+     "eye": [
+      0.0,
+      1.6,
+      -0.35
+     ],
+     "target": [
+      0.0,
+      1.1,
+      -1.95
+     ],
+     "fov": 86
+    },
+    {
+     "name": "console_switches",
+     "eye": [
+      0.25,
+      1.5,
+      -1.3
+     ],
+     "target": [
+      0.12,
+      1.0,
+      -1.92
+     ],
+     "fov": 60
+    },
+    {
+     "name": "console_left",
+     "eye": [
+      -0.6,
+      1.45,
+      -1.2
+     ],
+     "target": [
+      -1.1,
+      1.0,
+      -1.95
+     ],
+     "fov": 60
+    }
+   ]
+  }
+ ],
+ "triangles_lod0": 39964
+}

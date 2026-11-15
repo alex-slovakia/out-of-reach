@@ -1,0 +1,2 @@
+# Derived compartment meshes written by the installer: large text YAML, keep them out of plain git history.
+*.asset filter=lfs diff=lfs merge=lfs -text

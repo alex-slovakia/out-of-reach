@@ -1,0 +1,16 @@
+{
+    "name": "OutOfReach.InteriorHeroV01.Editor",
+    "rootNamespace": "OutOfReach.Visuals.InteriorHeroV01.Editor",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
