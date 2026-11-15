@@ -40,7 +40,7 @@ What changes:
 * Within 470 m the ground is the old mesh, triangle for triangle (pad hole, apron, crawlerway, grass field).
 * The sector towards -Z out to 1.3 km (crawlerway, assembly building, pole line) keeps the old heights.
 * Beyond: rolling steppe with hogback ridges 1.2-3 km out, a dry braided river 0.7-1.6 km to the east,
-  foothills, and two ranges up to about 1,750 m. The ranges stand closer in the west and north (3.5-4.5 km)
+  foothills, and two ranges up to about 1,800 m. The ranges stand closer in the west and north (3.5-4.5 km)
   and further in the east (5-7 km), where the river plain opens towards the sun.
 * 581,222 triangles in total (old near ground 71,056, new 510,166). Before: 105,908 + 210,180.
 

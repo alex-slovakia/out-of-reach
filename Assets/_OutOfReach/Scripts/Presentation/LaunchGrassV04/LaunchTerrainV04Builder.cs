@@ -173,10 +173,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                 float along = (dx * GrainCos + dz * GrainSin) / Knolls[k, 3], across = (-dx * GrainSin + dz * GrainCos) / Knolls[k, 4];
                 float d2 = along * along + across * across;
                 if (d2 > 4.5f) continue;
-                float rid = Ridged(along * 1.9f + seed * 7.3f, across * 1.9f + seed * 3.1f, 4, 40 + (int)seed);
+                float rid = Ridged(along * 1.5f + seed * 7.3f, across * 1.5f + seed * 3.1f, 3, 40 + (int)seed);
                 // Asymmetric: a steep scarp on one side, a long dip slope on the other.
                 float scarp = Mathf.Exp(-d2 * 1.9f) * (1f - .35f * Mathf.Clamp(across, -1f, 1f));
-                h += Knolls[k, 2] * scarp * (.42f + .58f * rid) * (1f - .9f * corridor);
+                h += Knolls[k, 2] * scarp * (.62f + .38f * rid) * (1f - .9f * corridor);
             }
 
             // The ranges ring a basin whose centre lies east of the site, so they stand closer in the west and north.
@@ -203,7 +203,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             float gz = az + Bi(Fbm(X / 5200f + 41.9f, Z / 5200f + 63.1f, 2, 61)) * 1200f;
             float ridges = Ridged(gx / 6200f + 101.7f, gz / 2700f + 55.3f, 6, 62);
             float ridges2 = Ridged(gx / 1500f + 31.7f, gz / 1100f + 15.3f, 4, 63);
-            float mountains = (.5f * rise1 + .5f * rise2) * trough * rangeHeight * (.10f + .62f * ridges + .28f * ridges * ridges2);
+            float mountains = (.5f * rise1 + .5f * rise2) * trough * rangeHeight * (.14f + .68f * ridges + .18f * ridges * ridges2);
             float fall = 1f - .55f * S(9600f, OuterRadius, r);
             float gap = Mathf.Pow(1f - S(0f, 420f + .1f * r, dist), 1.2f);  // the river leaves through gaps in the ranges
             h += (foothills + mountains) * fall * (1f - .88f * gap);
