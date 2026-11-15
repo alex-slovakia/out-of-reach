@@ -594,6 +594,46 @@ namespace OutOfReach.Core
             }
 
             bool acted = false;
+            survival.QuietJournal = true;
+            try
+            {
+                acted = IssueDuePortions();
+            }
+            finally
+            {
+                survival.QuietJournal = false;
+            }
+
+            if (!IsRoutineRunning)
+            {
+                return;
+            }
+
+            double now = state.ElapsedSimulationSeconds;
+            if (now >= AwakeSince() + (RoutineAwakeHours * Hour) - SurvivalRules.TimeToleranceSeconds)
+            {
+                CommandResult rest = recovery.CheckRest(SurvivalRecovery.MaximumRestHours);
+                if (!rest.Succeeded)
+                {
+                    StopRoutine(RoutineStopReason.PrerequisiteMissing, "the night's rest could not begin: " + rest.Explanation);
+                    return;
+                }
+
+                recovery.BeginRest(SurvivalRecovery.MaximumRestHours, clock.TimeScale, true);
+                RoutineRests++;
+                acted = true;
+            }
+
+            if (acted)
+            {
+                Notify();
+            }
+        }
+
+        /// <summary>Issues every water portion and ration that is due now; stops the routine if one cannot be taken.</summary>
+        private bool IssueDuePortions()
+        {
+            bool acted = false;
             for (int portion = 0; portion < 8 && survival.TimeUntilPortionDue(false) <= SurvivalRules.TimeToleranceSeconds; portion++)
             {
                 CommandResult drink = survival.TryDrinkWater();
@@ -601,7 +641,7 @@ namespace OutOfReach.Core
                 {
                     StopRoutine(drink.Failure == CommandFailure.InsufficientResources ? RoutineStopReason.ResourceShortage : RoutineStopReason.PrerequisiteMissing,
                         "a water portion was due and could not be taken: " + drink.Explanation);
-                    return;
+                    return acted;
                 }
 
                 RoutineDrinks++;
@@ -615,32 +655,14 @@ namespace OutOfReach.Core
                 {
                     StopRoutine(ration.Failure == CommandFailure.InsufficientResources ? RoutineStopReason.ResourceShortage : RoutineStopReason.PrerequisiteMissing,
                         "a ration was due and could not be eaten: " + ration.Explanation);
-                    return;
+                    return acted;
                 }
 
                 RoutineRations++;
                 acted = true;
             }
 
-            double now = state.ElapsedSimulationSeconds;
-            if (now >= AwakeSince() + (RoutineAwakeHours * Hour) - SurvivalRules.TimeToleranceSeconds)
-            {
-                CommandResult rest = recovery.CheckRest(SurvivalRecovery.MaximumRestHours);
-                if (!rest.Succeeded)
-                {
-                    StopRoutine(RoutineStopReason.PrerequisiteMissing, "the night's rest could not begin: " + rest.Explanation);
-                    return;
-                }
-
-                recovery.BeginRest(SurvivalRecovery.MaximumRestHours, clock.TimeScale);
-                RoutineRests++;
-                acted = true;
-            }
-
-            if (acted)
-            {
-                Notify();
-            }
+            return acted;
         }
 
         /// <summary>A routine cannot start on a portion that is due now and cannot be taken (store short of one portion).</summary>

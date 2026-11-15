@@ -88,6 +88,7 @@ namespace OutOfReach.Core
         private double restedBeforeSeconds;
         private GrowModuleStage cropStageAtRestStart;
         private double scaleBeforeRest;
+        private bool restQuiet;
         private RecoveryStage stage = RecoveryStage.NotStarted;
         private double? contactAt;
         private double? beaconRequestAt;
@@ -244,7 +245,7 @@ namespace OutOfReach.Core
                 return check;
             }
 
-            BeginRest(hours, RestTimeScale);
+            BeginRest(hours, RestTimeScale, false);
             return check;
         }
 
@@ -252,7 +253,7 @@ namespace OutOfReach.Core
         /// Starts an already checked rest at <paramref name="timeScale"/>. The chapter routine passes its own montage
         /// scale; the accounting (BVAD draw, paused needs, every danger stop) is the same as an ordinary rest.
         /// </summary>
-        internal void BeginRest(double hours, double timeScale)
+        internal void BeginRest(double hours, double timeScale, bool quietJournal)
         {
             using (events.DeferDispatch())
             {
@@ -262,13 +263,18 @@ namespace OutOfReach.Core
                 cropStageAtRestStart = survival.GrowStage;
                 LastRestStop = RestStopReason.None;
                 RestCount++;
+                restQuiet = quietJournal;
                 survival.NeedsPaused = true;
                 scaleBeforeRest = clock.TimeScale;
                 clock.TrySetTimeScale(timeScale);
                 ratesChanged?.Invoke();
-                log?.Invoke(string.Format(CultureInfo.InvariantCulture,
-                    "Rest began on mission day {0}: up to {1:0.##} h; food and water are drawn at the BVAD crew-day rates while the crew rests.",
-                    MissionDay, hours));
+                if (!restQuiet)
+                {
+                    log?.Invoke(string.Format(CultureInfo.InvariantCulture,
+                        "Rest began on mission day {0}: up to {1:0.##} h; food and water are drawn at the BVAD crew-day rates while the crew rests.",
+                        MissionDay, hours));
+                }
+
                 Notify();
             }
         }
@@ -783,8 +789,13 @@ namespace OutOfReach.Core
                 }
 
                 ratesChanged?.Invoke();
-                log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Rest ended on mission day {0} after {1:0.##} h: {2}.",
-                    MissionDay, rested / SecondsPerHour, Describe(reason)));
+                if (!restQuiet)
+                {
+                    log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Rest ended on mission day {0} after {1:0.##} h: {2}.",
+                        MissionDay, rested / SecondsPerHour, Describe(reason)));
+                }
+
+                restQuiet = false;
                 Notify();
             }
         }

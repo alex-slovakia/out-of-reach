@@ -200,7 +200,10 @@ namespace OutOfReach.Tests.EditMode
                 CompleteAccidentBeat(session);
 
                 // Days 2 -> 5: three days of life, not one long sleep.
+                int journalBefore = session.Director.Journal.Count;
                 Segment toDay5 = RunRoutine(session);
+                Assert.That(session.Director.Journal.Count - journalBefore, Is.LessThanOrEqualTo(3),
+                    "a routine segment adds its begin, its summary and the beat line to the report timeline, not one line per meal or rest");
                 Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.ReachedChapter), flow.LastRoutineStopText);
                 Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Consequences), flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
                 Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value, Is.EqualTo(MissionChapterFlow.BeatStart(MissionChapter.Consequences)).Within(Tolerance));

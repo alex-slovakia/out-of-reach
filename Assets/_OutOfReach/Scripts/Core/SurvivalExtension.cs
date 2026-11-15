@@ -69,6 +69,12 @@ namespace OutOfReach.Core
         public int RationsEaten { get; private set; }
         public int DrinksTaken { get; private set; }
 
+        /// <summary>
+        /// Set by the chapter routine around the portions it issues: the debit is identical, only the per-portion journal
+        /// line is left out (the routine records one summary line per segment instead of hundreds of report lines).
+        /// </summary>
+        internal bool QuietJournal { get; set; }
+
         /// <summary>Why the crew cannot use the galley or bunk right now (in the suit, outside), or null.</summary>
         internal Func<string> CabinBlocker { get; set; }
 
@@ -222,7 +228,7 @@ namespace OutOfReach.Core
                 if (!spent.Succeeded) return spent;
                 if (food) { hungerSeconds = IsFirstMeal ? hungerSeconds - Spec.PortionSeconds : Math.Max(0d, hungerSeconds - Spec.PortionSeconds); RationsEaten++; }
                 else { thirstSeconds = Math.Max(0d, thirstSeconds - Spec.PortionSeconds); DrinksTaken++; }
-                log?.Invoke(check.Explanation + ".");
+                if (!QuietJournal) log?.Invoke(check.Explanation + ".");
                 Notify();
             }
             return check;
