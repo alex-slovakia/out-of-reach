@@ -12,9 +12,9 @@ namespace OutOfReach.Contracts
         DispatchReceived, DecisionRequired, PrerequisiteMissing, MissionEnded
     }
 
-    public enum ChapterDecision { None, ScienceOrSalvage, AcknowledgeRescueFailure, GrowOrBeacon }
+    public enum ChapterDecision { None, ScienceOrSalvage, AcknowledgeRescueFailure, GrowOrBeacon, GrowOrConserve }
 
-    public enum ChapterChoice { None, PreserveScience, AcknowledgeRescueFailure, StopGrowForBeacon, KeepGrowRunning }
+    public enum ChapterChoice { None, PreserveScience, AcknowledgeRescueFailure, StopGrowForBeacon, KeepGrowRunning, ConserveReserves }
 
     public enum RescuePlan { None, FirstRescuePlanned, FirstRescueFailed, InTransitCraftCommitted }
 
