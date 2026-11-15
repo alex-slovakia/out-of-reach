@@ -41,6 +41,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         {
             Relief + "/LT_LandTerrain", "Launch terrain V03 - far land and mountains", ShellMeadowName, FieldName,
             "Launch landscape V02 - ridges and dry scrub", "Launch vegetation V03 - photographed foreground",
+            LaunchTerrainV04Installer.GroupName,
         };
 
         public static string LastReport { get; private set; }
@@ -149,7 +150,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             return sites[0];
         }
 
-        private static List<int> ActiveColliders(Scene scene) => scene.GetRootGameObjects()
+        internal static List<int> ActiveColliders(Scene scene) => scene.GetRootGameObjects()
             .SelectMany(g => g.GetComponentsInChildren<Collider>(true)).Where(c => c.enabled && c.gameObject.activeInHierarchy)
             .Select(c => c.GetInstanceID()).OrderBy(i => i).ToList();
 
@@ -157,7 +158,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         private static Vector4[] Footprints(Transform site, MeshFilter inner)
         {
             var ignored = IgnoredGroups.Select(site.Find).Where(t => t).ToArray();
-            float groundTop = site.InverseTransformPoint(inner.GetComponent<Renderer>().bounds.center).y + 15f;
+            // From the mesh, not the renderer: the terrain installer may have switched this renderer off.
+            float groundTop = site.InverseTransformPoint(inner.transform.TransformPoint(inner.sharedMesh.bounds.center)).y + 15f;
             var rects = new List<Vector4>();
             foreach (Renderer r in site.GetComponentsInChildren<Renderer>(false))
             {

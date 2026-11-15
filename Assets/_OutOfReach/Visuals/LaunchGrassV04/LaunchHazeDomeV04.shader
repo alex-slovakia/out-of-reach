@@ -15,8 +15,8 @@ Shader "OutOfReach/Launch Haze Dome V04"
         _GlowColor("Haze towards the sun",Color)=(1.0,0.86,0.66,1)
         _Brightness("Haze brightness",Range(0,3))=1.2
         _SkyOpacity("Opacity over the sky",Range(0,1))=0.6
-        _Density("Density at the site datum (per km)",Float)=0.42
-        _HeightFalloff("Height falloff (m)",Float)=170
+        _Density("Density at the site datum (per km)",Float)=0.16
+        _HeightFalloff("Height falloff (m)",Float)=500
         _StartDistance("Clear distance from the camera (m)",Float)=70
         _MaxOpacity("Maximum opacity",Range(0,1))=0.88
         _GlowPower("Sun-ward glow sharpness",Float)=4
