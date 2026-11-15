@@ -60,7 +60,10 @@ namespace OutOfReach.Visuals.LaunchTowerV03.Editor
                 throw new InvalidOperationException("Save the access arm in its connected pose (+Y 0) before installing.");
 
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(LaunchTowerV03Builder.PrefabPath);
-            if (!prefab)
+            // Rebuild when the prefab is missing or one of its materials lost its base texture (e.g. un-smudged LFS).
+            bool broken = prefab && prefab.GetComponentsInChildren<MeshRenderer>(true).SelectMany(r => r.sharedMaterials)
+                .Any(m => !m || (!m.name.StartsWith("LT3_Lamp", StringComparison.Ordinal) && m.name != "LT3_GlassDark" && !m.GetTexture("_BaseMap")));
+            if (!prefab || broken)
             {
                 LaunchTowerV03Builder.BuildAll();
                 prefab = AssetDatabase.LoadAssetAtPath<GameObject>(LaunchTowerV03Builder.PrefabPath)

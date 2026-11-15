@@ -217,6 +217,9 @@ class Mesh:
 # materials (Blender preview only; Unity uses Materials/LT3_*.mat remapped by name)
 # =====================================================================================================
 TEX = os.path.join(ROOT, 'Textures')
+# (metallic, smoothness) scalars, the same values the Unity builder writes into the URP Lit materials
+SCALARS = {STEEL: (0.0, 0.38), AMBER: (0.0, 0.40), GALV: (0.5, 0.35), GRATE: (0.5, 0.30), WHITE: (0.0, 0.35),
+           RED: (0.0, 0.40), RUBBER: (0.0, 0.20), HAZARD: (0.0, 0.35)}
 FLAT = {LWARM: ((1.0, 0.78, 0.5), 18.0), LRED: ((1.0, 0.06, 0.03), 25.0), LCYAN: ((0.2, 0.9, 1.0), 12.0)}
 
 
@@ -238,7 +241,6 @@ def make_materials():
             bsdf.inputs['Metallic'].default_value = 0.2
             continue
         base = os.path.join(TEX, name + '_BaseColor.png')
-        ms = os.path.join(TEX, name + '_MetallicSmoothness.png')
         img = bpy.data.images.load(base, check_existing=True)
         tn = nt.nodes.new('ShaderNodeTexImage')
         tn.image = img
@@ -248,18 +250,9 @@ def make_materials():
             m.blend_method = 'CLIP'
             m.shadow_method = 'CLIP'
             m.use_backface_culling = False
-        mi = bpy.data.images.load(ms, check_existing=True)
-        mi.colorspace_settings.name = 'Non-Color'
-        mn = nt.nodes.new('ShaderNodeTexImage')
-        mn.image = mi
-        sep = nt.nodes.new('ShaderNodeSeparateColor')
-        nt.links.new(mn.outputs['Color'], sep.inputs['Color'])
-        nt.links.new(sep.outputs['Red'], bsdf.inputs['Metallic'])
-        inv = nt.nodes.new('ShaderNodeMath')
-        inv.operation = 'SUBTRACT'
-        inv.inputs[0].default_value = 1.0
-        nt.links.new(mn.outputs['Alpha'], inv.inputs[1])
-        nt.links.new(inv.outputs[0], bsdf.inputs['Roughness'])
+        metal, smooth_ = SCALARS[i]
+        bsdf.inputs['Metallic'].default_value = metal
+        bsdf.inputs['Roughness'].default_value = 1.0 - smooth_
         npath = os.path.join(TEX, name + '_Normal.png')
         if os.path.exists(npath):
             ni = bpy.data.images.load(npath, check_existing=True)
@@ -462,51 +455,32 @@ def tower(m):
             m.path(pts, r, mat, 6)
         m.lamp((x0, uy + 1.0, zt + 0.1), (0, 0, 1), LWARM, 0.22)
 
-    # --- upper lighting / lightning mast behind the crew deck (silhouette), rear plane z TZ0 and TZ0-0.55
-    mz0, mz1 = TZ0, TZ0 - 0.55
-    top_y, top_w = 14.5, 0.75
-    ys = [TOP + i * (top_y - TOP) / 6 for i in range(7)]
-
-    def wx(y):
-        return TX + (top_w - TX) * (y - TOP) / (top_y - TOP)
-    for sx in (-1, 1):
-        m.hbeam((sx * TX, TOP - 0.6, mz0), (sx * top_w, top_y, mz0), 0.32, 0.30, STEEL, up=(1, 0, 0), tf=0.03, tw=0.022)
-        m.beam((sx * (TX - 0.3), TOP - 0.6, mz1), (sx * top_w, top_y, mz1), 0.16, 0.16, STEEL)
-    for i, y in enumerate(ys):
-        w = wx(y)
-        m.beam((-w, y, mz0), (w, y, mz0), 0.16, 0.2, STEEL)
-        m.beam((-w, y, mz1), (w, y, mz1), 0.10, 0.12, STEEL)
-        for sx in (-1, 1):
-            m.beam((sx * w, y, mz0), (sx * w, y, mz1), 0.08, 0.08, STEEL)
-        if i < 6:
-            y2 = ys[i + 1]
-            w2 = wx(y2)
-            m.beam((-w, y, mz0 - 0.08), (w2, y2, mz0 - 0.08), 0.1, 0.08, STEEL, up=(0, 0, 1))
-            m.beam((w, y, mz0 - 0.08), (-w2, y2, mz0 - 0.08), 0.1, 0.08, STEEL, up=(0, 0, 1))
-            for sx in (-1, 1):
-                m.beam((sx * w, y, mz0), (sx * w2, y2, mz1), 0.07, 0.07, STEEL)
-    # mast head: lightning rod, obstruction lights
-    m.boxr(-1.0, 1.0, top_y, top_y + 0.25, mz1 - 0.2, mz0 + 0.2, STEEL)
-    m.tube((0, top_y + 0.25, (mz0 + mz1) / 2), (0, top_y + 9.0, (mz0 + mz1) / 2), 0.16, GALV, 10, r2=0.04)
-    for i in range(4):
-        y = top_y + 0.25 + i * 2.0
-        m.tube((0, y, (mz0 + mz1) / 2), (0, y + 0.12, (mz0 + mz1) / 2), 0.2 - i * 0.03, STEEL, 10)
-    m.tube((0, top_y + 9.0, (mz0 + mz1) / 2), (0, top_y + 9.25, (mz0 + mz1) / 2), 0.09, LRED, 8)
-    for sx in (-1, 1):
-        m.tube((sx * 0.9, top_y + 0.25, (mz0 + mz1) / 2), (sx * 0.9, top_y + 0.45, (mz0 + mz1) / 2), 0.1, LRED, 8)
-        m.tube((sx * wx(ys[3]) + sx * 0.15, ys[3] + 0.1, mz0), (sx * wx(ys[3]) + sx * 0.15, ys[3] + 0.3, mz0), 0.08, LRED, 8)
-    # floodlight gallery facing the vehicle at y ~ +8
-    gy = ys[4]
-    gw = wx(gy)
-    m.plate(-gw - 0.2, gw + 0.2, mz0 + 0.05, mz0 + 0.9, gy + 0.04, 0.04, GRATE, STEEL)
-    m.rail_run((-gw - 0.2, gy + 0.04, mz0 + 0.9), (gw + 0.2, gy + 0.04, mz0 + 0.9), spacing=1.0)
-    for x in (-gw + 0.1, -0.4, 0.4, gw - 0.1):
-        m.lamp((x, gy + 0.55, mz0 + 0.75), (0, 0, 1), LWARM, 0.42)
+    # --- slim lightning / lighting pole off the rear +x deck corner (clear of the deck, its rails and the arrival side)
+    mx, mz = 4.5, TZ0
+    m.hbeam((4.0, TOP - 0.3, TZ0), (mx + 0.3, TOP - 0.3, TZ0), 0.60, 0.30, STEEL, tf=0.04, tw=0.025)
+    m.beam((TX, LEVELS[-2] + 0.3, TZ0), (mx, TOP - 0.6, mz), 0.18, 0.18, STEEL)
+    m.tube((mx, TOP, mz), (mx, TOP + 0.06, mz), 0.36, GALV, 14)                       # base flange
+    for i in range(8):
+        a_ = 2 * math.pi * i / 8
+        m.tube((mx + 0.3 * math.cos(a_), TOP + 0.06, mz + 0.3 * math.sin(a_)), (mx + 0.3 * math.cos(a_), TOP + 0.11, mz + 0.3 * math.sin(a_)), 0.02, GALV, 6)
+    pole_top = 21.0
+    m.tube((mx, TOP + 0.06, mz), (mx, pole_top, mz), 0.2, STEEL, 12, r2=0.06)
+    for y in (4.0, 8.5, 13.0, 17.0):
+        r = 0.2 - 0.14 * (y - TOP) / (pole_top - TOP)
+        m.tube((mx, y, mz), (mx, y + 0.1, mz), r + 0.04, GALV, 12)
+    m.tube((mx, pole_top, mz), (mx, pole_top + 2.6, mz), 0.03, GALV, 6, r2=0.012)     # air terminal
+    m.tube((mx, pole_top - 0.05, mz), (mx, pole_top + 0.16, mz), 0.085, LRED, 8)       # obstruction lights
+    m.tube((mx, 13.12, mz), (mx, 13.3, mz), 0.2, LRED, 10)
+    # floodlight crossarm at y 7, aimed at the vehicle
+    m.tube((mx - 0.75, 7.0, mz), (mx + 0.75, 7.0, mz), 0.045, GALV, 8)
+    for dx in (-0.6, 0.6):
+        m.lamp((mx + dx, 7.05, mz + 0.14), (0, 0, 1), LWARM, 0.3)
+        m.beam((mx + dx, 7.0, mz), (mx + dx, 7.05, mz + 0.05), 0.05, 0.05, GALV)
+    # cable up the pole
+    m.tube((mx + 0.16, TOP + 0.1, mz - 0.12), (mx + 0.07, 7.0, mz - 0.07), 0.02, RUBBER, 5, caps=False)
     # floodlights on the tower head corners, aimed at the arm and the booster
     for x in (-3.7, 3.7):
         m.lamp((x, TOP - 0.85, -7.0), (0, 0, 1), LWARM, 0.36)
-    # cable tray up the mast
-    m.beam((1.4, TOP - 0.6, mz1 - 0.15), (0.55, top_y, mz1 - 0.15), 0.3, 0.05, GALV, up=(0, 0, 1))
 
 
 def stair_tower(m):
@@ -830,7 +804,9 @@ def render(objs, out_dir):
         'arm_side': ((7.5, 2.8, -1.5), (-0.3, 0.5, -5.5), 30),
         'base': ((14, -29.5, -24), (0, -24, -9), 28),
         'whiteroom': ((0.3, 1.55, -5.6), (0.0, 1.1, -2.6), 18),
-        'mast': ((9, 4, 6), (0, 4, -12), 26),
+        'mast': ((-9, 3, 6), (2.5, 8, -12.5), 24),
+        'spawn_fwd': ((0.0, 1.7, -12.34), (0.0, 1.3, -2.4), 20),
+        'spawn_back': ((0.0, 1.7, -9.0), (2.0, 6.0, -13.4), 16),
     }
     for name, (loc, tgt, lens) in views.items():
         cam.lens = lens
