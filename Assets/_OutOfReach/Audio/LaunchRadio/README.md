@@ -73,3 +73,7 @@ band stays 17-20 dB above the ducked score.
 - `Previews/opening-departure-mixdown-v01.mp3` - offline listening mix of departure -1.0 to 35.5 s (departure 0 s
   is at 1.0 s in the file): the approved opening score from 49.90 s, this radio, the runtime duck and the 3.5 s end
   fade. It contains no engine/cabin SFX and is never used at runtime.
+- `Previews/opening-departure-mixdown-v01-with-cabin-sfx.mp3` - the same plus the in-game cabin effects at their
+  cue times and runtime gains (seatbelt, hatch latch, ignition ramp, engine vibration, pad roar with its -4 dB duck
+  floor). Speech-band level of the radio over everything else: count 19.1 dB, pad roar/liftoff 13.8 dB, tower/roll
+  15.7 dB. Rebuild with `--sfx-root Assets/_OutOfReach/Audio/Original/LaunchEffects`.

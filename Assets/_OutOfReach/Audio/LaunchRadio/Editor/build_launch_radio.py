@@ -131,6 +131,7 @@ def main():
     ap.add_argument("--source", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--score")
+    ap.add_argument("--sfx-root", help="Audio/Original/LaunchEffects: also render the mix with the in-game cabin effects")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     src, radio, offsets, start_game, placed, chain = build_radio(a.source)
@@ -178,9 +179,22 @@ def main():
         print(f"  departure {w['departure_seconds']:6.2f} s  {w['text']}")
     if a.score:
         mixdown(a.score, radio, start_game, a.out)
+        if a.sfx_root:
+            mixdown(a.score, radio, start_game, a.out, a.sfx_root)
 
 
-def mixdown(score_path, radio, radio_start_game, out):
+# In-game departure cabin effects (I01MissionComposition.OnDepartureCue): (departure s, clip, cue gain, stopped at s).
+# The seatbelt click follows the seat latch (2.84 s in the native run). StopDepartureEffects cuts every one-shot at
+# 9.75 s (pad cut) and 17.5 s (upper atmosphere); from the pad roar on the cabin source keeps a -4 dB duck floor.
+CABIN_EVENTS = [
+    (2.84, "departure-seatbelt-click", .90, 9.75), (3.00, "departure-hatch-latch", .85, 9.75),
+    (9.00, "departure-ignition-ramp", 1.0, 9.75), (9.00, "departure-engine-vibration", .90, 9.75),
+    (9.75, "departure-pad-roar", .92, 17.5),
+]
+SFX_VOLUME, ATMOSPHERIC_FLOOR, PAD_ROAR_SECONDS = 0.8, 0.631, 9.75
+
+
+def mixdown(score_path, radio, radio_start_game, out, sfx_root=None):
     score = decode(score_path, 2)
     pre, post = 1.0, 1.5
     total = int(round((pre + DEPARTURE_SECONDS + post) * SR))
@@ -203,10 +217,21 @@ def mixdown(score_path, radio, radio_start_game, out):
         g += ((target if active[k] else 1.0) - g) * (a_att if active[k] else a_rel)
         duck[k] = g
     mix = music * (MUSIC_VOLUME * DEPARTURE_TRIM * entry * end * duck)[:, None] + (voice * RADIO_VOLUME)[:, None]
-    path = os.path.join(out, "opening-departure-mixdown.wav")
+    name = "opening-departure-mixdown"
+    if sfx_root:
+        cabin = np.zeros((total, 2))
+        for start, clip, gain, stop in CABIN_EVENTS:
+            data = decode(os.path.join(sfx_root, clip + ".wav"), 2)
+            a, b = int(round((start + pre) * SR)), int(round((stop + pre) * SR))
+            n = max(0, min(len(data), b - a, total - a))
+            cabin[a:a + n] += data[:n] * gain
+        floor = np.where(t >= PAD_ROAR_SECONDS, np.maximum(duck, ATMOSPHERIC_FLOOR), duck)
+        mix = mix + cabin * (SFX_VOLUME * floor)[:, None]
+        name += "-with-cabin-sfx"
+    path = os.path.join(out, name + ".wav")
     write_wav(path, mix, 2)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", path, "-c:a", "libmp3lame", "-b:a", "192k",
-                    os.path.join(out, "opening-departure-mixdown.mp3")], check=True)
+                    os.path.join(out, name + ".mp3")], check=True)
     mi, mp = loudness(path)
     print(f"mixdown {path}: {mi} LUFS, peak {mp} dBFS; departure 0 s is at {pre:.1f} s in the file")
 
