@@ -1,0 +1,218 @@
+// TEMPORARY native QA for STORY-RADIO-01 (never committed; Assets/_RadioQa is excluded locally).
+// Batch Edit mode: opens the saved Bootstrap, adds the radio IN MEMORY with the real installer (scene never saved),
+// enters Play mode, chooses Practice through the real UI, walks the player's position to the boarding threshold
+// (QA teleport only) and records first-person frames from the player's own camera with the HUD composited.
+using System;
+using System.Collections;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using OutOfReach.Core.Runtime;
+using OutOfReach.Presentation.Cinematics;
+using OutOfReach.Presentation.Radio;
+using OutOfReach.Presentation.Radio.Editor;
+using OutOfReach.Presentation.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
+
+[InitializeOnLoad]
+public static class RadioQa
+{
+    const string Key = "OutOfReach.RadioQa.";
+    public static string Output => SessionState.GetString(Key + "out", "");
+    static string Stage => SessionState.GetString(Key + "stage", "");
+
+    static RadioQa()
+    {
+        EditorApplication.playModeStateChanged += s =>
+        {
+            if (s == PlayModeStateChange.EnteredPlayMode && Stage == "entering")
+            { SessionState.SetString(Key + "stage", "playing"); new GameObject("RADIO_QA_UNSAVED").AddComponent<RadioQaDriver>(); }
+        };
+        EditorApplication.update += () =>
+        {
+            if (Stage.Length > 0 && DateTime.TryParse(SessionState.GetString(Key + "deadline", ""), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime d) && DateTime.UtcNow > d)
+                Finish(false, "watchdog at stage " + Stage);
+        };
+        Application.logMessageReceived += (m, st, t) =>
+        {
+            if (Stage.Length > 0 && Output.Length > 0 && (t == LogType.Error || t == LogType.Exception || t == LogType.Assert))
+                File.AppendAllText(Path.Combine(Output, "errors.txt"), t + ": " + m + "\n" + st + "\n");
+        };
+    }
+
+    public static void Run()
+    {
+        try
+        {
+            if (!Application.isBatchMode || SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null) throw new InvalidOperationException("Batch mode with a real GPU only.");
+            string output = Path.GetFullPath("../out-of-reach-radio-logs/qa/" + DateTime.UtcNow.ToString("yyyyMMddTHHmmss"));
+            Directory.CreateDirectory(output);
+            SessionState.SetString(Key + "out", output);
+            SessionState.SetString(Key + "deadline", DateTime.UtcNow.AddSeconds(300).ToString("O"));
+            SessionState.SetBool(Key + "async", ShaderUtil.allowAsyncCompilation);
+            ShaderUtil.allowAsyncCompilation = false;
+            var scene = EditorSceneManager.OpenScene(RadioSceneInstaller.BootstrapPath, OpenSceneMode.Single);
+            RadioSceneInstaller.Apply(scene);
+            Note("installer: " + RadioSceneInstaller.LastReport + " gpu=" + SystemInfo.graphicsDeviceName);
+            SessionState.SetString(Key + "stage", "entering");
+            EditorApplication.isPlaying = true;
+        }
+        catch (Exception e) { Finish(false, e.ToString()); }
+    }
+
+    public static void Note(string text) => File.AppendAllText(Path.Combine(Output, "notes.txt"), DateTime.UtcNow.ToString("HH:mm:ss.fff") + " " + text + "\n");
+    public static void Check(bool pass, string text)
+    {
+        File.AppendAllText(Path.Combine(Output, "checks.txt"), (pass ? "PASS " : "FAIL ") + text + "\n");
+        if (!pass) throw new InvalidOperationException(text);
+    }
+
+    public static void Finish(bool pass, string message)
+    {
+        if (Output.Length > 0) File.WriteAllText(Path.Combine(Output, pass ? "PASS.txt" : "FAIL.txt"), message);
+        SessionState.SetString(Key + "stage", "");
+        ShaderUtil.allowAsyncCompilation = SessionState.GetBool(Key + "async", true);
+        Debug.Log((pass ? "RADIO_QA_PASS " : "RADIO_QA_FAIL ") + message + " out=" + Output);
+        EditorApplication.Exit(pass ? 0 : 1);
+    }
+}
+
+public sealed class RadioQaDriver : MonoBehaviour
+{
+    MissionRuntime runtime; HandheldRadioPresenter radio; Camera view; MissionCinematicPresenter cinematics;
+
+    IEnumerator Start()
+    {
+        Exception failure = null;
+        IEnumerator routine = Run();
+        while (true)
+        {
+            object current;
+            try { if (!routine.MoveNext()) break; current = routine.Current; }
+            catch (Exception e) { failure = e; break; }
+            yield return current;
+        }
+        RadioQa.Finish(failure == null, failure == null ? "radio QA done" : failure.ToString());
+    }
+
+    static double Now => Time.realtimeSinceStartupAsDouble;
+    static IEnumerator Wait(Func<bool> ready, double seconds, string why)
+    {
+        double end = Now + seconds;
+        while (!ready()) { if (Now > end) throw new TimeoutException(why); yield return null; }
+    }
+    static IEnumerator Seconds(double s) { double end = Now + s; while (Now < end) yield return null; }
+
+    IEnumerator Run()
+    {
+        Application.runInBackground = true;
+        yield return Wait(() => (runtime = Object.FindFirstObjectByType<MissionRuntime>()) && runtime.Session != null && RenderSettings.fog, 60, "Planning bind");
+        radio = Object.FindFirstObjectByType<HandheldRadioPresenter>();
+        cinematics = Object.FindFirstObjectByType<MissionCinematicPresenter>();
+        RadioQa.Check(radio, "Installed radio presenter exists in the running scene");
+        runtime.Player.SendMessage("OnApplicationFocus", true, SendMessageOptions.DontRequireReceiver);
+        for (int i = 0; i < 20; i++) yield return null;
+        var document = Object.FindFirstObjectByType<MissionFlightBoard>().GetComponent<UIDocument>();
+        Button practice = null;
+        yield return Wait(() => (practice = document.rootVisualElement.Query<Button>().ToList()
+            .FirstOrDefault(b => b.text.IndexOf("Practice", StringComparison.OrdinalIgnoreCase) >= 0 && b.enabledInHierarchy)) != null, 10, "Practice button");
+        practice.Focus();
+        using (var e = NavigationSubmitEvent.GetPooled()) { e.target = practice; practice.SendEvent(e); }
+        yield return Wait(() => runtime.Player.ControlAllowed, 10, "Practice releases deck controls");
+        view = runtime.Player.GetComponentInChildren<Camera>();
+        RadioQa.Note("player camera " + view.name + " at " + view.transform.position + " fwd " + view.transform.forward);
+        yield return Capture("00-before-radio");
+        RadioQa.Check(!radio.IsPlaying && radio.PlayedBeats.Count == 0, "No radio beat before the boarding threshold");
+
+        // Real trigger: the player stands 1.6 m in front of the transport's boarding threshold.
+        Transform threshold = (Transform)typeof(HandheldRadioPresenter).GetField("boardingThreshold", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(radio);
+        radio.BoardingPlacement = RadioBoardingPlacement.PadHatch;   // exercise the pad-hatch proximity trigger
+        var cc = runtime.Player.GetComponent<CharacterController>();
+        cc.enabled = false;
+        Vector3 target = threshold.position + new Vector3(0f, 0f, -1.6f);
+        target.y = runtime.Player.transform.position.y;
+        runtime.Player.transform.position = target;
+        cc.enabled = true;
+        yield return Wait(() => radio.ActiveBeatId == RadioBeats.PadBoarding, 4, "Pad boarding beat starts at the hatch");
+        RadioQa.Check(true, "Pad-hatch radio check started by proximity to BoardingThreshold (player at " + target + ")");
+        RadioTimeline();
+        yield return Wait(() => radio.Timeline.PoseWeight > .45f, 2, "raising");
+        yield return Capture("01-raise");
+        yield return Wait(() => radio.Timeline.LineIndex == 0, 3, "line 1");
+        yield return Seconds(.9);
+        yield return Capture("02-pad-receive-line");
+        yield return Wait(() => radio.Timeline.LineIndex == 1, 6, "line 2 (transmit)");
+        yield return Seconds(.9);
+        RadioQa.Check(radio.Timeline.PttPressed && radio.Timeline.Led == RadioLed.Transmit, "Player line keys the PTT, amber LED");
+        yield return Capture("03-player-transmit-ptt");
+        // Pause freezes the beat (real runtime pause).
+        float before = radio.Timeline.Time;
+        runtime.SetPaused(true);
+        yield return Seconds(1.2);
+        RadioQa.Check(Mathf.Abs(radio.Timeline.Time - before) < .05f && radio.IsPlaying, "Pause freezes the radio beat (" + before.ToString("F2") + " -> " + radio.Timeline.Time.ToString("F2") + ")");
+        yield return Capture("04-paused");
+        runtime.SetPaused(false);
+        yield return Wait(() => !radio.IsPlaying, 15, "boarding beat ends");
+        yield return Seconds(.2);
+        RadioQa.Check(radio.RadioInstance == null || !radio.RadioInstance.activeSelf, "Radio is lowered and hidden after the beat");
+        yield return Capture("05-after-boarding-beat");
+
+        // Day-14 incoming call with reduced motion, then a skip.
+        bool previous = cinematics && cinematics.ReducedEffects;
+        if (cinematics) cinematics.ReducedEffects = true;
+        RadioQa.Check(radio.TryPlay(RadioBeats.Day14Call), "Day-14 call queued");
+        yield return Wait(() => radio.Timeline.LineIndex == 0, 4, "day-14 line");
+        RadioQa.Check(radio.Timeline.ReducedMotion && radio.Timeline.SwayAmplitude == 0f, "Reduced motion: no sway");
+        yield return Seconds(.8);
+        yield return Capture("06-day14-call-receive");
+        radio.Skip();
+        yield return Wait(() => !radio.IsPlaying, 1.0, "skip ends the beat within the short lowering");
+        RadioQa.Check(true, "Skip lowers and ends the Day-14 call");
+        if (cinematics) cinematics.ReducedEffects = previous;
+
+        // Day-1 distress call (state trigger is CommunicationState.AwaitingReply; started directly here).
+        RadioQa.Check(radio.TryPlay(RadioBeats.DistressCall), "Distress call queued");
+        yield return Wait(() => radio.Timeline.LineIndex == 0, 4, "distress line");
+        yield return Seconds(1.2);
+        yield return Capture("07-distress-call-transmit");
+        radio.Skip();
+        yield return Wait(() => !radio.IsPlaying, 2, "distress skipped");
+        RadioQa.Check(!radio.TryPlay(RadioBeats.DistressCall), "A beat plays once per session (no duplicate)");
+    }
+
+    void RadioTimeline() => RadioQa.Note("boarding beat total " + radio.Timeline.TotalSeconds.ToString("F2") + " s");
+
+    IEnumerator Capture(string name)
+    {
+        const int w = 1600, h = 900;
+        var rt = new RenderTexture(w, h, 24, RenderTextureFormat.ARGB32) { antiAliasing = 1 };
+        rt.Create();
+        var panels = Object.FindObjectsByType<UIDocument>(FindObjectsSortMode.None).Where(d => d.isActiveAndEnabled && d.panelSettings && d.rootVisualElement?.panel != null).Select(d => d.panelSettings).Distinct().ToArray();
+        var targets = panels.Select(p => p.targetTexture).ToArray(); var clears = panels.Select(p => p.clearColor).ToArray();
+        RenderTexture old = view.targetTexture; float aspect = view.aspect;
+        try
+        {
+            view.targetTexture = rt; view.aspect = (float)w / h;
+            foreach (var p in panels) { p.targetTexture = rt; p.clearColor = false; }
+            for (int i = 0; i < 4; i++) yield return null;
+            var image = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            var active = RenderTexture.active;
+            RenderTexture.active = rt; image.ReadPixels(new Rect(0, 0, w, h), 0, 0); image.Apply(); RenderTexture.active = active;
+            File.WriteAllBytes(Path.Combine(RadioQa.Output, name + ".png"), image.EncodeToPNG());
+            Destroy(image);
+            RadioQa.Note("captured " + name + " phase=" + radio.Timeline.Phase + " line=" + radio.Timeline.LineIndex + " pose=" + radio.Timeline.PoseWeight.ToString("F2") + " led=" + radio.Timeline.Led);
+        }
+        finally
+        {
+            view.targetTexture = old; view.aspect = aspect;
+            for (int i = 0; i < panels.Length; i++) if (panels[i]) { panels[i].targetTexture = targets[i]; panels[i].clearColor = clears[i]; }
+            rt.Release(); Destroy(rt);
+        }
+    }
+}

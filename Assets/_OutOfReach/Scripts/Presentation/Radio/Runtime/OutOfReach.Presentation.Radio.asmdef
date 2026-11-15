@@ -1,0 +1,23 @@
+{
+  "name": "OutOfReach.Presentation.Radio",
+  "rootNamespace": "OutOfReach.Presentation.Radio",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
+    "OutOfReach.Cinematics",
+    "OutOfReach.Audio",
+    "OutOfReach.UI",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
