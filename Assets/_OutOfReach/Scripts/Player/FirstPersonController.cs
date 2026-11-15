@@ -23,7 +23,8 @@ namespace OutOfReach.Player
     /// approach against such a surface; <see cref="TryPushFromFootContact"/> pushes off a surface the feet actually
     /// touch (the floor below, out of hand reach); only registered handholds can be gripped (<see cref="TryGrab"/>),
     /// and a grip holds the body within reach of its anchor. WASD and
-    /// sprint do nothing while floating (no thrust, no hidden force); look stays upright. The composition root
+    /// sprint give no thrust while floating (no hidden force); A and D only lean the view (MOVE-MECH-01), and the body
+    /// stays upright. The composition root
     /// registers the handholds and binds the hand inputs to these calls; tuning is in <see cref="MicrogravityLocomotion"/>.
     /// </para>
     /// </summary>
@@ -115,6 +116,12 @@ namespace OutOfReach.Player
         /// <summary>Current look angle, degrees; positive looks up.</summary>
         public float PitchDegrees { get; private set; }
 
+        /// <summary>
+        /// MOVE-MECH-01: current view lean (roll about the view direction), degrees; positive leans left. Only A and D
+        /// while floating lean the view; it returns level on release and outside float. Orientation only, never motion.
+        /// </summary>
+        public float LeanDegrees { get; private set; }
+
         public float WalkSpeedMetresPerSecond => walkSpeedMetresPerSecond;
 
         /// <summary>True only after actual unencumbered sprint movement, while control remains allowed.</summary>
@@ -195,6 +202,25 @@ namespace OutOfReach.Player
         public MicrogravityLocomotion Microgravity => microgravity;
 
         /// <summary>
+        /// Seconds until the shared push cooldown allows the next push (0 when a push may run now, and while walking).
+        /// Read-only, so an input owner can queue one press instead of losing it.
+        /// </summary>
+        public float PushCooldownRemaining => floating
+            ? Mathf.Max(0f, microgravity.PushCooldownSeconds - (floatClock - lastPushAt))
+            : 0f;
+
+        /// <summary>
+        /// Read-only: true while floating with real support under the feet (the same contact that
+        /// <see cref="TryPushFromFootContact"/> requires), with its surface normal. Lets the input owner choose a leg
+        /// push from the deck over a hand push without trying and failing.
+        /// </summary>
+        public bool TryGetFootSupport(out Vector3 normal)
+        {
+            normal = Vector3.zero;
+            return floating && ActiveRoute == null && Body.enabled && FootContact(out normal);
+        }
+
+        /// <summary>
         /// Diagnostic only, no force: a floating player is stranded after the stranded time with no solid surface
         /// within reach while almost still. Entry near a surface and zero drag keep this from happening in normal play;
         /// it can follow a ClearMotion away from every surface. Any recovery assist is a separate, disclosed proposal.
@@ -261,6 +287,7 @@ namespace OutOfReach.Player
             controller.enabled = true;
             verticalVelocity = 0f;
             PitchDegrees = 0f;
+            LeanDegrees = 0f;
             ApplyPitch();
         }
 
@@ -799,6 +826,7 @@ namespace OutOfReach.Player
             }
 
             Look(input.LookDegrees);
+            UpdateLean(floating && ActiveRoute == null ? input.Move.x : 0f, Time.deltaTime);
             sprinting = false;
             float motionFraction;
             ExertionActivity activity;
@@ -856,11 +884,23 @@ namespace OutOfReach.Player
             }
         }
 
+        /// <summary>A/D lean while floating (orientation only); returns level on release and outside float.</summary>
+        private void UpdateLean(float leanInput, float deltaSeconds)
+        {
+            float next = microgravity.StepLean(LeanDegrees, leanInput, deltaSeconds);
+            if (next != LeanDegrees)
+            {
+                LeanDegrees = next;
+                ApplyPitch();
+            }
+        }
+
         private void ApplyPitch()
         {
             if (viewPivot != null)
             {
-                viewPivot.localRotation = Quaternion.Euler(-PitchDegrees, 0f, 0f);
+                // Roll about the pitched view direction: Unity applies z (lean) first, then x (pitch).
+                viewPivot.localRotation = Quaternion.Euler(-PitchDegrees, 0f, LeanDegrees);
             }
         }
 

@@ -135,6 +135,147 @@ namespace OutOfReach.Composition
         /// <summary>Nearest hit must be a registered straight capsule rail with the correct radius for the current outfit.</summary>
         public bool TryGrab(ContactHand selectedHand, Vector3 aimDirection) => Begin(selectedHand, HandContactKind.Grip, aimDirection, 0f);
 
+        /// <summary>True while this bridge's own verified grip holds a rail (the Player's held handhold).</summary>
+        public bool HoldsRail => bound && pending && kind == HandContactKind.Grip && ownedGrip && player
+            && player.HeldHandhold == ownedGrip && player.HeldGripPoint.HasValue;
+
+        /// <summary>The rail held by this bridge, or null.</summary>
+        public Collider HeldRail => HoldsRail ? ownedGrip : null;
+
+        /// <summary>
+        /// MOVE-MECH-01 selection, read-only: the surface a push would use. First the solid surface the view ray meets
+        /// within reach (<paramref name="aimed"/> true); otherwise the nearest reachable solid surface around the eye
+        /// (walls, ceiling, floor, slopes, solid props) along body-relative probe rays in the front hemisphere and to
+        /// the sides, preferring the given hand's side. Owned colliders, triggers and small decorative colliders (less
+        /// than 8 cm across in two dimensions) never count. No force, no animation, no state change.
+        /// </summary>
+        public bool TrySelectPushSurface(Vector3 aimDirection, ContactHand? preferredHand, out RaycastHit hit, out bool aimed)
+        {
+            hit = default; aimed = false;
+            if (!bound || !player || !player.ViewPivot) return false;
+            Transform view = player.ViewPivot;
+            Vector3 origin = view.position;
+            if (Finite(aimDirection) && aimDirection.sqrMagnitude > .00001f
+                && Nearest(origin, aimDirection.normalized, Reach, out RaycastHit aimedHit) && Pushable(aimedHit.collider))
+            { hit = aimedHit; aimed = true; return true; }
+            float best = float.PositiveInfinity;
+            bool found = false;
+            foreach (Vector3 local in ProbeDirections)
+            {
+                Vector3 direction = view.TransformDirection(local);
+                if (!Nearest(origin, direction, Reach, out RaycastHit candidate) || !Pushable(candidate.collider)) continue;
+                float score = candidate.distance;
+                if (preferredHand.HasValue)
+                {
+                    float side = Vector3.Dot(candidate.point - origin, view.right);
+                    // Keep the other hand's side usable, but let the clicking hand's side win a near tie.
+                    if ((preferredHand.Value == ContactHand.Left && side > .05f) || (preferredHand.Value == ContactHand.Right && side < -.05f))
+                        score += .15f;
+                }
+                if (score < best) { best = score; hit = candidate; found = true; }
+            }
+            return found;
+        }
+
+        /// <summary>
+        /// One medium hand push from the selected surface (see <see cref="TrySelectPushSurface"/>). With an explicit
+        /// travel intent the push follows it, limited to the outward cone of the real surface. Without one, an aimed
+        /// surface is pushed straight away from, and a surface found around the body sends the body where the view
+        /// points (outward cone). The visible reach and the Player's verification still decide success.
+        /// </summary>
+        public bool TryPushContext(ContactHand selectedHand, Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
+        {
+            LastRefusal = string.Empty;
+            if (!TrySelectPushSurface(aimDirection, selectedHand, out RaycastHit hit, out bool aimed))
+                return Refuse("No solid surface within reach. Drift closer to a wall, the floor or the ceiling.");
+            Vector3 intent = ContextIntent(desiredTravelWorld, aimed);
+            Vector3 toward = hit.point - player.ViewPivot.position;
+            return intent == Vector3.zero ? TryPush(selectedHand, toward, strength01)
+                : TryPushDirected(selectedHand, toward, intent, strength01);
+        }
+
+        /// <summary>Both hands on the selected surface: one coherent paired push (see <see cref="TryPushContext"/>).</summary>
+        public bool TryPushPairContext(Vector3 aimDirection, Vector3 desiredTravelWorld, float strength01)
+        {
+            LastRefusal = string.Empty;
+            if (!TrySelectPushSurface(aimDirection, null, out RaycastHit hit, out bool aimed))
+                return Refuse("No solid surface within reach. Drift closer to a wall, the floor or the ceiling.");
+            return TryPushPair(hit.point - player.ViewPivot.position, ContextIntent(desiredTravelWorld, aimed), strength01);
+        }
+
+        Vector3 ContextIntent(Vector3 desiredTravelWorld, bool aimed)
+        {
+            if (Finite(desiredTravelWorld) && desiredTravelWorld.sqrMagnitude > .0001f) return desiredTravelWorld;
+            return aimed ? Vector3.zero : player.ViewPivot.forward;
+        }
+
+        /// <summary>
+        /// While this bridge holds a rail: push off from that rail in one action, towards the travel intent (or straight
+        /// away without one), limited to the outward cone of the real rail surface at the held anchor. The Player
+        /// verifies reach, line of sight and direction; on success the grip ends with the push and the hand lets go.
+        /// A cooldown refusal keeps the grip.
+        /// </summary>
+        public bool TryPushOffHeldRail(Vector3 desiredTravelWorld, float strength01)
+        {
+            LastRefusal = string.Empty; LastCommandResult = null;
+            if (!ModeAllowed()) return Refuse("Contact mode is unavailable.");
+            if (!HoldsRail) return Refuse("No rail is held by this contact.");
+            if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f || !Finite(desiredTravelWorld))
+                return Refuse("Invalid push request.");
+            Vector3 eye = player.ViewPivot.position, anchor = player.HeldGripPoint.Value, delta = anchor - eye;
+            float distance = delta.magnitude;
+            if (distance < .001f || !Nearest(eye, delta / distance, distance + .02f, out RaycastHit hit) || hit.collider != ownedGrip)
+                return Refuse("The held rail is not in a clear line of reach.");
+            Vector3 intent = desiredTravelWorld.sqrMagnitude > .0001f ? desiredTravelWorld : hit.normal;
+            if (!MicrogravityLocomotion.TryOutwardDirection(hit.normal, intent, player.Microgravity.MinimumAwayDot, out Vector3 direction))
+                return Refuse("Invalid push direction.");
+            Collider rail = ownedGrip;
+            bool suited = pendingSuited;
+            // The push releases the Player grip synchronously; this bridge already let go of it, so the Released
+            // event must not cancel the hand that is about to return.
+            ownedGrip = null;
+            FloatActionResult result = player.TryPushOff(rail, hit.point, direction, strength01);
+            LastCommandResult = result;
+            if (result != FloatActionResult.Done)
+            {
+                if (player.HeldHandhold == rail) ownedGrip = rail; // Refused before anything changed: still holding.
+                else CancelOwnedContact();
+                return Refuse("Push off the rail refused: " + result + ".");
+            }
+            if (!suited && bare && bare.ContactStage == HandContactStage.Holding)
+            { bare.CancelContact(); requestStarted = Time.unscaledTime; }
+            else CancelOwnedContact();
+            HandPushCompleted?.Invoke();
+            return true;
+        }
+
+        // Body-relative probe rays for a surface around the eye: the front hemisphere and the sides, never behind the head.
+        static readonly Vector3[] ProbeDirections = BuildProbeDirections();
+
+        static Vector3[] BuildProbeDirections()
+        {
+            var list = new System.Collections.Generic.List<Vector3>();
+            foreach (float z in new[] { 1f, 1f, 0f })
+                for (int x = -1; x <= 1; x++)
+                    for (int y = -1; y <= 1; y++)
+                    {
+                        if (x == 0 && y == 0) continue;
+                        list.Add(new Vector3(x, y, z).normalized);
+                    }
+            // The first z = 1 pass is a near-view cone: halve its sideways and vertical part.
+            for (int i = 0; i < 8; i++) list[i] = new Vector3(list[i].x * .5f, list[i].y * .5f, list[i].z).normalized;
+            return list.ToArray();
+        }
+
+        bool Pushable(Collider c)
+        {
+            if (!ValidSurface(c)) return false;
+            if (player.IsHandhold(c)) return true;
+            Vector3 size = c.bounds.size;
+            int wide = (size.x >= .08f ? 1 : 0) + (size.y >= .08f ? 1 : 0) + (size.z >= .08f ? 1 : 0);
+            return wide >= 2;
+        }
+
         /// <summary>Release dispatched by the same input owner. Cancels pending animation and only this bridge's held grip.</summary>
         public FloatActionResult Release()
         {
@@ -261,7 +402,9 @@ namespace OutOfReach.Composition
             // Both hands need separate unobstructed spots on the aimed surface.
             if ((barePush || twoHands) && !TryPalmPoint(selectedHand, hit, barePush, out hit))
                 return Refuse("No verified palm point on the aimed surface within reach.");
-            Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
+            // MOVE-MECH-01: a level view against a ceiling (or any surface whose normal is along view up) has no
+            // tangent from view up; fall back to the view forward, then right, so the frame is never degenerate.
+            Vector3 tangent = StableTangent(hit.normal);
             if (barePush && Vector3.Dot(hit.normal, Vector3.down) > .95f)
             {
                 // One diagonal inward style keeps both palms in view without crossing the midline.
@@ -279,45 +422,32 @@ namespace OutOfReach.Composition
             if (requestedKind == HandContactKind.Grip) tangent = suit.IsSuitOn
                 ? OrientRailAxisAtRequest(tangent, player.ViewPivot) : bare.OrientGripAxis(selectedHand, tangent, hit.normal);
             Vector3 direction = hit.normal;
+            // Pure request-direction math (shared with the Player tuning); force and validated dispatch stay Player-owned.
             if (requestedKind == HandContactKind.Push && desiredTravelWorld.sqrMagnitude > .0001f
-                && !TryDirectedPushDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
+                && !MicrogravityLocomotion.TryOutwardDirection(hit.normal, desiredTravelWorld, player.Microgravity.MinimumAwayDot, out direction))
                 return Refuse("Invalid directional push geometry.");
             contact = new PushContact(hit.collider, Frame(hit.collider, hit.point, hit.normal, tangent, radius),
                 hit.collider.transform.InverseTransformVector(direction).normalized);
             return true;
         }
 
-        // Pure request-direction math only. Force magnitude and validated contact dispatch remain Player-owned.
-        static bool TryDirectedPushDirection(Vector3 surfaceNormal, Vector3 travelIntent, float minimumAwayDot, out Vector3 direction)
+        Vector3 StableTangent(Vector3 normal)
         {
-            direction = Vector3.zero;
-            float normalSquared = surfaceNormal.sqrMagnitude, intentSquared = travelIntent.sqrMagnitude;
-            if (!Finite(surfaceNormal) || !Finite(travelIntent) || !Finite(minimumAwayDot)
-                || !Finite(normalSquared) || !Finite(intentSquared) || normalSquared < .0001f || intentSquared < .0001f) return false;
-            Vector3 normal = surfaceNormal / Mathf.Sqrt(normalSquared), intent = travelIntent / Mathf.Sqrt(intentSquared);
-            float away = Mathf.Clamp(Mathf.Max(.25f, minimumAwayDot + .025f), 0f, 1f);
-            float outward = Vector3.Dot(intent, normal);
-            if (outward >= away) { direction = intent; return true; }
-            Vector3 tangent = intent - normal * outward;
-            float tangentLength = tangent.magnitude;
-            if (tangentLength == 0f) { direction = normal; return true; }
-            Vector3 tangentDirection = tangent / tangentLength;
-            if (tangentLength >= .25f)
-                direction = normal * away + tangentDirection * Mathf.Sqrt(1f - away * away);
-            else
-            {
-                // A hard .25 cutoff would jump75.52 degrees at the default cone. Blend the angle instead.
-                float ratio = Mathf.Clamp01(tangentLength / .25f);
-                float angle = ratio * ratio * (3f - 2f * ratio) * Mathf.Acos(away);
-                direction = normal * Mathf.Cos(angle) + tangentDirection * Mathf.Sin(angle);
-            }
-            return true;
+            Transform view = player.ViewPivot;
+            Vector3 tangent = Vector3.ProjectOnPlane(view.up, normal);
+            if (tangent.sqrMagnitude < .01f) tangent = Vector3.ProjectOnPlane(view.forward, normal);
+            if (tangent.sqrMagnitude < .01f) tangent = Vector3.ProjectOnPlane(view.right, normal);
+            return tangent.sqrMagnitude < .0001f ? Vector3.zero : tangent.normalized;
         }
 
         bool TryPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, bool work, out RaycastHit palmHit)
         {
             palmHit = default;
             Vector3 across = Vector3.ProjectOnPlane(player.ViewPivot.right, aimedHit.normal);
+            // MOVE-MECH-01: a wall straight to the side has no across axis from view right; spread the palms along
+            // the wall instead (view forward, then up). The re-ray and arm solver still decide whether they are real.
+            if (across.sqrMagnitude < .01f) across = Vector3.ProjectOnPlane(player.ViewPivot.forward, aimedHit.normal);
+            if (across.sqrMagnitude < .01f) across = Vector3.ProjectOnPlane(player.ViewPivot.up, aimedHit.normal);
             if (across.sqrMagnitude < .01f) return false;
             across.Normalize();
             float halfSpacing = .06f;
