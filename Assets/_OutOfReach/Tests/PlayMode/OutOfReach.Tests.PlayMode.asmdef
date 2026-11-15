@@ -10,6 +10,7 @@
     "OutOfReach.Simulation",
     "OutOfReach.Interaction",
     "OutOfReach.Player",
+    "OutOfReach.Composition",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],
