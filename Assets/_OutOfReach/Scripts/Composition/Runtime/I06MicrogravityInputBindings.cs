@@ -61,6 +61,8 @@ namespace OutOfReach.Composition
         ContactHand queuedHand;
         string queuedReason = string.Empty;
         float queuedUntil, nextPreviewAt;
+        Vector3 lastVisibleTravel;
+        float lastVisibleStrength;
 
         /// <summary>HUD text when a click finds no solid surface within hand reach (after its short wait).</summary>
         public const string NoSurfaceInReach = "No solid surface within reach. Drift closer to a wall, the floor or the ceiling.";
@@ -105,6 +107,7 @@ namespace OutOfReach.Composition
             player = actualPlayer; bridge = contactBridge; eye = unbobbedEye; suit = evaStatus;
             state = gameState; clock = simulationClock; currentSession = sessionIsCurrent; contactPermission = canContact;
             handStrength = pushStrength01; footStrength = footStrength01; bound = true;
+            bridge.PushReachGaveUp += OnPushReachGaveUp;
             if (isActiveAndEnabled) Subscribe();
         }
 
@@ -144,6 +147,7 @@ namespace OutOfReach.Composition
 
         public void ClearBinding()
         {
+            if (bridge) bridge.PushReachGaveUp -= OnPushReachGaveUp;
             Disarm(); Unsubscribe(); bound = false;
             player = null; bridge = null; eye = null; suit = null; state = null; clock = null;
             currentSession = contactPermission = null; LastRefusal = string.Empty; LastFootResult = null;
@@ -227,7 +231,8 @@ namespace OutOfReach.Composition
             if (player.HeldHandhold) { DispatchHand(hand, false, both); return true; }
             // A plain click aimed at a reachable registered rail grips it with that hand (Ctrl stays an alias).
             // Selection only: the bridge re-proves the rail, reach, pose and contact.
-            bool gripRail = !both && (grip || (!bridge.IsBusy && HasRailGrip && PreferRailGrip()));
+            bool gripRail = !both && (grip || (!bridge.IsBusy && HasRailGrip && PreferRailGrip(out RaycastHit railAim)
+                && bridge.CanArmReach(railAim.point, hand)));
             if (both || gripRail) DispatchHand(hand, gripRail, both);
             else
             {
@@ -237,11 +242,18 @@ namespace OutOfReach.Composition
             return true;
         }
 
-        /// <summary>W/S only: towards or away from the view direction. A/D lean the view in the Player and never push.</summary>
+        /// <summary>
+        /// MOVE-MECH-02 (Alex's playtest 6895779523): W/S choose towards/away from the view and A/D choose left/right
+        /// (the view's own right axis, which the A/D lean tilts), for every push: one hand, both hands, Space legs or
+        /// hands, and a push off a held rail. Still no thrust: nothing moves until a real contact push.
+        /// </summary>
         Vector3 ReadTravelIntent()
         {
-            float along = source.Move.y;
-            return Mathf.Abs(along) > .5f ? eye.forward * Mathf.Sign(along) : Vector3.zero;
+            Vector2 move = source.Move;
+            Vector3 intent = Vector3.zero;
+            if (Mathf.Abs(move.y) > .3f) intent += eye.forward * Mathf.Sign(move.y);
+            if (Mathf.Abs(move.x) > .3f) intent += eye.right * Mathf.Sign(move.x);
+            return intent.sqrMagnitude > .01f ? intent.normalized : Vector3.zero;
         }
 
         void DispatchHand(ContactHand hand, bool grip, bool pair)
@@ -266,24 +278,37 @@ namespace OutOfReach.Composition
                 if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
                 return;
             }
-            // Drifting towards a wall: a click made just before it comes within reach waits for it (one press only).
+            float strength = pair ? Mathf.Min(1f, handStrength * 2f) : handStrength;
             if (!bridge.TrySelectPushSurface(eye.forward, pair ? (ContactHand?)null : hand, out _, out _))
             {
+                // MOVE-MECH-02: a surface behind or above the view (the ceiling while looking down where you want to
+                // go) is pushed off without a visible hand; only with nothing in reach at all does the click wait.
+                if (bridge.TryPushUnseen(travel, strength)) return;
                 Queue(hand, false, pair, false, bridge.NoSurfaceReason());
                 return;
             }
+            lastVisibleTravel = travel; lastVisibleStrength = strength;
             bool accepted = pair ? bridge.TryPushPairContext(eye.forward, travel, handStrength)
                 : bridge.TryPushContext(hand, eye.forward, travel, handStrength);
+            string refusal = accepted ? null : bridge.LastRefusal;
             if (!accepted && pair)
             {
                 // Two separate palm spots did not fit (edge, strut, reach): one strong push with a single hand.
-                string pairRefusal = bridge.LastRefusal;
-                float single = Mathf.Min(1f, handStrength * 2f);
-                accepted = bridge.TryPushContext(ContactHand.Left, eye.forward, travel, single)
-                    || bridge.TryPushContext(ContactHand.Right, eye.forward, travel, single);
-                if (!accepted) { Refuse(pairRefusal); return; }
+                accepted = bridge.TryPushContext(ContactHand.Left, eye.forward, travel, strength)
+                    || bridge.TryPushContext(ContactHand.Right, eye.forward, travel, strength);
             }
-            if (!accepted) Refuse(bridge.LastRefusal);
+            // The visible arm could not take any spot in view (pose, wrist, reach): push off the nearest surface
+            // anyway, out of view, so a click next to a wall or the ceiling never does nothing.
+            if (!accepted) accepted = bridge.TryPushUnseen(travel, strength);
+            if (!accepted) Refuse(refusal ?? bridge.LastRefusal);
+        }
+
+        // The visible reach was accepted but the arm presenter gave up mid-reach: push off unseen instead.
+        void OnPushReachGaveUp()
+        {
+            if (!HasInputLease || !Permission() || player.HeldHandhold) return;
+            if (!bridge.TryPushUnseen(lastVisibleTravel, lastVisibleStrength > 0f ? lastVisibleStrength : handStrength))
+                Refuse(bridge.LastRefusal);
         }
 
         void PushOffHeldRail(ContactHand hand, Vector3 travel, bool strong)
@@ -350,7 +375,7 @@ namespace OutOfReach.Composition
             }
             if (player.HeldHandhold) return;
             StrongPushUsesLegs = player.TryGetFootSupport(out _);
-            if (HasRailGrip && !bridge.IsBusy && PreferRailGrip(out RaycastHit rail))
+            if (HasRailGrip && !bridge.IsBusy && PreferRailGrip(out RaycastHit rail) && bridge.CanArmReach(rail.point, null))
             {
                 Preview = ContactPreview.Grip; PreviewSurface = rail.collider; PreviewPoint = rail.point; PreviewAimed = true;
                 return;

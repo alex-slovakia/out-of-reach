@@ -64,6 +64,15 @@ namespace OutOfReach.Composition
         public event Action HandPushCompleted;
 
         /// <summary>
+        /// MOVE-MECH-02: a visible push reach that was accepted gave up before its push (the arm presenter refused the
+        /// spot during the reach). The input owner answers with <see cref="TryPushUnseen"/>, so a click never does nothing.
+        /// </summary>
+        public event Action PushReachGaveUp;
+
+        /// <summary>Read-only: can the bare WORK arm (either hand when none is given) reach this point? Gloves: true.</summary>
+        public bool CanArmReach(Vector3 point, ContactHand? hand) => bound && ArmCanReach(point, hand, false);
+
+        /// <summary>
         /// Call after body.ConfigureSession and gloves.ConfigureSession. Root policy must read the current
         /// session identity and exclude cargo, rest, terminal leases, menus, cinematics and transitions.
         /// Configure does not enter float or enable contact mode. This adapter exclusively owns contact bindings.
@@ -198,6 +207,52 @@ namespace OutOfReach.Composition
                 if (first == null) first = LastRefusal;
             }
             return Refuse(first);
+        }
+
+        /// <summary>
+        /// MOVE-MECH-02 (Alex's playtest 6895779523 item 3): a push off the nearest solid surface within reach in ANY
+        /// direction, for surfaces the hands cannot visibly reach (behind or above the view, for example the ceiling
+        /// while looking down). The body leaves towards the travel intent, or where the view points without one, limited
+        /// to the outward cone of the real surface. No hand animation; the Player still verifies the surface, reach,
+        /// line of sight, direction, cooldown and caps. Owned colliders, triggers and small decorative colliders never count.
+        /// </summary>
+        public bool TryPushUnseen(Vector3 desiredTravelWorld, float strength01)
+        {
+            LastRefusal = string.Empty; LastCommandResult = null;
+            if (!ModeAllowed()) return Refuse("Contact mode is unavailable.");
+            if (pending || player.HeldHandhold) return Refuse("Release the current contact first.");
+            if (!Finite(strength01) || strength01 <= 0f || strength01 > 1f || !Finite(desiredTravelWorld))
+                return Refuse("Invalid push request.");
+            Vector3 origin = player.ViewPivot.position;
+            RaycastHit best = default;
+            float bestDistance = float.PositiveInfinity;
+            foreach (Vector3 direction in SphereDirections)
+            {
+                if (!Nearest(origin, direction, Reach, out RaycastHit hit) || !Pushable(hit.collider)) continue;
+                if (hit.distance < bestDistance) { bestDistance = hit.distance; best = hit; }
+            }
+            if (bestDistance == float.PositiveInfinity) return Refuse(NoSurfaceText);
+            Vector3 intent = desiredTravelWorld.sqrMagnitude > .0001f ? desiredTravelWorld : player.ViewPivot.forward;
+            if (!MicrogravityLocomotion.TryOutwardDirection(best.normal, intent, player.Microgravity.MinimumAwayDot, out Vector3 away))
+                return Refuse("Invalid push direction.");
+            FloatActionResult result = player.TryPushOff(best.collider, best.point, away, strength01);
+            LastCommandResult = result;
+            if (result != FloatActionResult.Done) return Refuse("Push refused: " + result + ".");
+            HandPushCompleted?.Invoke();
+            return true;
+        }
+
+        // 26 world directions: the 6 axes, the 12 edge and the 8 corner diagonals.
+        static readonly Vector3[] SphereDirections = BuildSphereDirections();
+
+        static Vector3[] BuildSphereDirections()
+        {
+            var list = new System.Collections.Generic.List<Vector3>();
+            for (int x = -1; x <= 1; x++)
+                for (int y = -1; y <= 1; y++)
+                    for (int z = -1; z <= 1; z++)
+                        if (x != 0 || y != 0 || z != 0) list.Add(new Vector3(x, y, z).normalized);
+            return list.ToArray();
         }
 
         /// <summary>How many candidate spots one click may try when the arm presenter refuses the best one.</summary>
@@ -413,15 +468,24 @@ namespace OutOfReach.Composition
             if (secondPush.Surface)
             {
                 HandContactStage other = ContactStageFor(ContactHand.Right);
-                if (!actionSent && (!IsApproaching(stage) || !IsApproaching(other))) CancelOwnedContact();
+                if (!actionSent && (!IsApproaching(stage) || !IsApproaching(other))) CancelPushThatGaveUp();
                 else if ((stage == HandContactStage.None && other == HandContactStage.None)
-                    || Time.unscaledTime - requestStarted > 1.5f) CancelOwnedContact();
+                    || Time.unscaledTime - requestStarted > 1.5f) CancelPushThatGaveUp();
                 return;
             }
             if (!pendingSuited && kind == HandContactKind.Grip && stage == HandContactStage.Returning && !gripReturning)
             { gripReturning = true; requestStarted = Time.unscaledTime; }
             if (stage == HandContactStage.None || (ownedGrip && stage != HandContactStage.Holding)
-                || (stage != HandContactStage.Holding && Time.unscaledTime - requestStarted > 1.5f)) CancelOwnedContact();
+                || (stage != HandContactStage.Holding && Time.unscaledTime - requestStarted > 1.5f)) CancelPushThatGaveUp();
+        }
+
+        // Cancels like CancelOwnedContact; when it was a push whose impulse never ran while the mode still allows
+        // contact, it also tells the input owner (PushReachGaveUp) so the click can fall back to an unseen push.
+        void CancelPushThatGaveUp()
+        {
+            bool gaveUp = pending && kind == HandContactKind.Push && !actionSent && ModeAllowed();
+            CancelOwnedContact();
+            if (gaveUp) PushReachGaveUp?.Invoke();
         }
 
         HandContactStage ContactStageFor(ContactHand selectedHand) => pendingSuited
@@ -480,6 +544,7 @@ namespace OutOfReach.Composition
             contact = default;
             bool barePush = requestedKind == HandContactKind.Push && !suit.IsSuitOn;
             // Both hands need separate unobstructed spots on the aimed surface.
+            twoHandsPalm = twoHands;
             if ((barePush || twoHands) && !TryPalmPoint(selectedHand, hit, barePush, out hit))
                 return Refuse("No verified palm point on the aimed surface within reach.");
             // MOVE-MECH-01: a level view against a ceiling (or any surface whose normal is along view up) has no
@@ -575,12 +640,30 @@ namespace OutOfReach.Composition
                 if (Vector3.Distance(naturalPoint, aimedZone) > .25f) return false;
                 proposed = naturalPoint;
             }
+            if (PalmSpotOnSurface(aimedHit, proposed, out palmHit)) return true;
+            // MOVE-MECH-02 (Alex: slanted walls, some flat walls and objects refuse): on a faceted, curved or narrow
+            // surface the shoulder-width spot can land on another facet or past an edge. Move the spot back towards
+            // the aimed point in steps; a single hand may use the aimed point itself, a pair keeps half the spacing.
+            Vector3 offset = proposed - aimedHit.point;
+            foreach (float factor in work && !twoHandsPalm ? HandSpotSteps : PairSpotSteps)
+                if (PalmSpotOnSurface(aimedHit, aimedHit.point + offset * factor, out palmHit)) return true;
+            return false;
+        }
+
+        static readonly float[] HandSpotSteps = { .66f, .33f, 0f };
+        static readonly float[] PairSpotSteps = { .75f, .5f };
+        bool twoHandsPalm;
+
+        bool PalmSpotOnSurface(RaycastHit aimedHit, Vector3 proposed, out RaycastHit palmHit)
+        {
+            palmHit = default;
             Vector3 delta = proposed - player.ViewPivot.position;
             float distance = delta.magnitude;
             if (!Finite(proposed) || distance < .001f || distance > Reach
                 || !Nearest(player.ViewPivot.position, delta / distance, Mathf.Min(Reach, distance + PointTolerance), out palmHit)) return false;
-            // Do not jump an edge, find a second object, expand the envelope, or apply force after refusal.
-            return palmHit.collider == aimedHit.collider && Vector3.Dot(palmHit.normal, aimedHit.normal) > .999f
+            // Do not jump an edge, find a second object, expand the envelope, or apply force after refusal. A facet of
+            // the same collider within about 5 degrees counts as the same face (meshes split flat walls into triangles).
+            return palmHit.collider == aimedHit.collider && Vector3.Dot(palmHit.normal, aimedHit.normal) > .996f
                 && Vector3.Distance(palmHit.point, proposed) <= PointTolerance;
         }
 
