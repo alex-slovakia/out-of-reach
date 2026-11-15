@@ -1,6 +1,8 @@
 using OutOfReach.Contracts;
+using OutOfReach.Player;
 using OutOfReach.Presentation.UI;
 using OutOfReach.Presentation.UI.Report;
+using OutOfReach.Presentation.UI.Startup;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -51,7 +53,7 @@ namespace OutOfReach.Composition
         private Button secondary;
         private Toggle reduced;
         private Label feedback;
-        private Label controlsHint;
+        private PauseControlsView pauseControls;
         private Label communications;
         private VisualElement reportHost;
         private FlightRecorderPresenter recorder;
@@ -198,13 +200,18 @@ namespace OutOfReach.Composition
             modal.style.display = menuShown ? DisplayStyle.Flex : DisplayStyle.None;
             // A hidden menu keeps no keyboard/gamepad focus, so play input (gamepad South is Interact) cannot reach it.
             if (!menuShown) BlurFocusWithin(modal);
-            controlsHint.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
+            pauseControls.style.display = paused && !showingOutcome ? DisplayStyle.Flex : DisplayStyle.None;
             if (paused && !showingOutcome)
             {
+                // Pictograms come from the live input map; the text hints above stay as the plain-language contract.
                 var player = composition.Runtime.Player;
                 var eva = composition.Runtime.Eva;
-                controlsHint.text = ControlsHintFor(player && player.IsFloating, player && player.IsOnRoute,
-                    composition.HasInteriorRailGrip || (eva != null && eva.IsSuitOn));
+                bool floating = player && player.IsFloating;
+                bool onRoute = player && player.IsOnRoute;
+                pauseControls.SetControls(
+                    floating ? PauseControlsMode.Floating : onRoute ? PauseControlsMode.TetherRoute : PauseControlsMode.Walking,
+                    composition.HasInteriorRailGrip || (eva != null && eva.IsSuitOn),
+                    (player ? player.InputSource as PlayerInputActions : null)?.Map);
             }
             if (!visible) feedback.style.display = DisplayStyle.None;
             RefreshCommunications();
@@ -267,9 +274,10 @@ namespace OutOfReach.Composition
             feedback.AddToClassList("session-menu-feedback");
             feedback.style.display = DisplayStyle.None;
             panel.Add(feedback);
-            controlsHint = new Label(WalkingControlsHint) { pickingMode = PickingMode.Ignore };
-            controlsHint.AddToClassList("session-menu-controls");
-            panel.Add(controlsHint);
+            // The controls card sits beside the menu panel, not under its buttons (pause-only style sheet).
+            pauseControls = new PauseControlsView();
+            pauseControls.style.display = DisplayStyle.None;
+            modal.Add(pauseControls);
             communications = new Label { pickingMode = PickingMode.Ignore };
             communications.style.position = Position.Absolute;
             communications.style.right = 28;
@@ -286,6 +294,10 @@ namespace OutOfReach.Composition
             reportHost.style.display = DisplayStyle.None;
             root.Add(reportHost);
             RefreshQuitButtons();
+            // R01: black startup cards over the opening menu, once per launch. They sit on top of this document root and
+            // swallow input until they finish or are skipped; the menu is already composed and silent underneath.
+            if (!StartupCardPresenter.HasPlayedThisLaunch)
+                StartupCardPresenter.PlayOnce(host, composition && composition.Cinematics && composition.Cinematics.ReducedEffects, font);
         }
 
         private void RefreshCommunications()
@@ -475,7 +487,8 @@ namespace OutOfReach.Composition
             if (root != null) root.RemoveFromHierarchy();
             root = modal = panel = null;
             viewHydrated = false;
-            heading = detail = feedback = controlsHint = communications = null;
+            heading = detail = feedback = communications = null;
+            pauseControls = null;
             reportHost = null;
             primary = secondary = quit = recordQuit = null;
             reduced = null;
