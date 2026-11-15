@@ -1,0 +1,211 @@
+{
+ "units": {
+  "LSS_LandSurroundings": {
+   "fbx": "LSS_LandSurroundings.fbx",
+   "objects": {
+    "LSS_GroundBreakup": {
+     "triangles": 2400,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -1328.45284,
+      -36.58,
+      -1496.53769
+     ],
+     "bounds_max": [
+      1388.54027,
+      -36.16816,
+      1132.4119
+     ],
+     "per_material": {
+      "LSS_GrassDry": 2400
+     }
+    },
+    "LSS_Scrub": {
+     "triangles": 3360,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -833.87529,
+      -36.58,
+      -791.59423
+     ],
+     "bounds_max": [
+      888.05902,
+      -34.90057,
+      921.69111
+     ],
+     "per_material": {
+      "LSS_Scrub": 3360
+     }
+    },
+    "LSS_TreeLines": {
+     "triangles": 5230,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -2546.25925,
+      -36.6,
+      -2157.65383
+     ],
+     "bounds_max": [
+      2223.97811,
+      -18.60542,
+      2347.63398
+     ],
+     "per_material": {
+      "LSS_Canopy": 5230
+     }
+    },
+    "LSS_Berms": {
+     "triangles": 660,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -626.05424,
+      -36.6,
+      -427.56781
+     ],
+     "bounds_max": [
+      568.40622,
+      -32.60664,
+      607.60303
+     ],
+     "per_material": {
+      "LSS_GrassDry": 660
+     }
+    },
+    "LSS_Drainage": {
+     "triangles": 1548,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -102.03577,
+      -36.9764,
+      -40.2
+     ],
+     "bounds_max": [
+      190.2,
+      -35.5,
+      250.2
+     ],
+     "per_material": {
+      "LSS_Rock": 1340,
+      "LS_Concrete": 48,
+      "A7_PaintGraphite": 160
+     }
+    },
+    "LSS_Fence": {
+     "triangles": 2712,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      -200.045,
+      -36.6,
+      -200.045
+     ],
+     "bounds_max": [
+      200.045,
+      -34.1,
+      330.045
+     ],
+     "per_material": {
+      "A7_Aluminum": 2712
+     }
+    },
+    "LSS_UtilityPoles": {
+     "triangles": 1122,
+     "origin": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "bounds_min": [
+      110.8,
+      -36.6,
+      -910.13856
+     ],
+     "bounds_max": [
+      113.2,
+      -25.6,
+      -69.86144
+     ],
+     "per_material": {
+      "LS_ConcreteBarrier": 270,
+      "A7_PaintGraphite": 852
+     }
+    }
+   },
+   "anchors": {
+    "LSS_FenceGate_North": {
+     "point": [
+      20.0,
+      -36.6,
+      -200.0
+     ]
+    },
+    "LSS_FenceCorner_SW": {
+     "point": [
+      -200.0,
+      -36.6,
+      330.0
+     ]
+    },
+    "LSS_FenceCorner_NE": {
+     "point": [
+      200.0,
+      -36.6,
+      -200.0
+     ]
+    },
+    "LSS_PoleLine_North": {
+     "point": [
+      112.0,
+      -36.6,
+      -910.0
+     ]
+    },
+    "LSS_PoleLine_South": {
+     "point": [
+      112.0,
+      -36.6,
+      -70.0
+     ]
+    },
+    "LSS_Drainage_West_Mid": {
+     "point": [
+      -100.0,
+      -36.6,
+      105.0
+     ]
+    },
+    "LSS_Drainage_South_Mid": {
+     "point": [
+      119.0,
+      -36.6,
+      150.0
+     ]
+    }
+   }
+  }
+ },
+ "triangles_total": 17032
+}

@@ -1,0 +1,2 @@
+BakeOn: root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 7 anchors 7 | best map Unity=(+x+y+z) max err 0.0003 m  <- identity, matches the manifest
+   triangles total: manifest 17032, Unity 17032
