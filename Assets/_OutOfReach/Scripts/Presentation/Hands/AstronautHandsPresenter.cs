@@ -829,6 +829,8 @@ namespace OutOfReach.Presentation.Hands
         [SerializeField] private bool useToolSleeve;
         public const float ToolUpperSleeveMetres = .35f;
         public const float ToolForearmMetres = .32f;
+        /// <summary>How far the padded upper sleeve may lengthen when the worksite is just beyond the fixed 350/320 mm reach.</summary>
+        public const float ToolUpperSleeveStretchMetres = .06f;
         public Transform ToolSleeveShoulder => toolSleeveShoulder;
         public Vector3 ToolElbowWorldPosition => toolArm != null && toolArm.Joint
             ? toolArm.Joint.TransformPoint(new Vector3(0f, 0f, -ToolForearmMetres)) : Vector3.zero;
@@ -955,15 +957,20 @@ namespace OutOfReach.Presentation.Hands
                 if (clock.IsPaused && hasToolSample && Vector3.Distance(previousToolShoulder, actualShoulder) > .00002f) return RejectToolHold("Actual shoulder changed during pause.");
                 Vector3 axis = wristPosition - actualShoulder;
                 float distance = axis.magnitude;
-                if (distance < .10f || distance >= ToolUpperSleeveMetres + ToolForearmMetres) return RejectToolHold("Fixed350/320 reach rejected: " + distance + "");
+                if (distance < .10f || distance >= ToolUpperSleeveMetres + ToolForearmMetres + ToolUpperSleeveStretchMetres) return RejectToolHold("Fixed350/320 reach rejected: " + distance + "");
                 axis /= distance;
                 // A predominantly downward elbow avoids the old outward-heavy pole's 84-degree initial wrist twist.
                 // Original fixed lengths, grip and 80-degree wrist guard are unchanged.
                 Vector3 bend = Vector3.ProjectOnPlane(motionMount.right * .10f - motionMount.up * .9949874f, axis);
                 if (bend.sqrMagnitude < .01f) return RejectToolHold("Elbow pole projection degenerate.");
-                float along = (ToolUpperSleeveMetres * ToolUpperSleeveMetres - ToolForearmMetres * ToolForearmMetres
+                // P0 #7 6901402393: with the view tilted about 25 degrees below the worksite the body's shoulder sits
+                // 2.6 mm beyond the fixed 670 mm reach in the middle of the work clip, which dropped the tool half way
+                // through the repair. Inside the fixed reach nothing changes; just beyond it only the padded upper
+                // sleeve lengthens (by at most ToolUpperSleeveStretchMetres), never the hand or its 320 mm forearm.
+                float upperSleeve = Mathf.Max(ToolUpperSleeveMetres, distance - ToolForearmMetres + .004f);
+                float along = (upperSleeve * upperSleeve - ToolForearmMetres * ToolForearmMetres
                     + distance * distance) / (2f * distance);
-                float heightSquared = ToolUpperSleeveMetres * ToolUpperSleeveMetres - along * along;
+                float heightSquared = upperSleeve * upperSleeve - along * along;
                 if (heightSquared <= 0f) return RejectToolHold("Fixed-segment elbow has no real solution.");
                 Vector3 elbow = actualShoulder + axis * along + bend.normalized * Mathf.Sqrt(heightSquared);
                 forearm = wristPosition - elbow;
