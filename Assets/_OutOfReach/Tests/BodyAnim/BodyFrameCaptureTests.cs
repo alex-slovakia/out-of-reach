@@ -563,7 +563,8 @@ namespace OutOfReach.Tests.BodyAnim
             });
             Debug.Log("[BODYANIM] berth ordinary wake: released in " + frames / 60f + " s; phases " + string.Join(",", b.Phases));
             Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
-            Assert.That(frames / 60f, Is.InRange(1.2f, 1.5f), "ordinary unstrap and exit");
+            // SLEEP-SEQ timeline (fallback path, camera cut by an older composition): eyes open 0.5 s, unbuckle 0.95 s, exit.
+            Assert.That(frames / 60f, Is.InRange(2.5f, 3.7f), "ordinary wake, unstrap and exit");
             Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"), "props must be gone");
             CollectionAssert.AreEqual(new[] { RestPhase.Entering, RestPhase.Held, RestPhase.Releasing, RestPhase.None }, b.Phases);
             s.Body.AdvancePresentation(1f / 60f);
@@ -585,10 +586,14 @@ namespace OutOfReach.Tests.BodyAnim
             s.Resting = false; s.LastStop = RestStopReason.CarbonDioxideDanger;
             CameraHome(s);
             int frames = 0;
-            RunUntil(s, RestPhase.None, 120, i => frames = i + 1);
-            Debug.Log("[BODYANIM] berth hazard wake (CO2): released in " + frames / 60f + " s");
-            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            while (s.Body.RestBlocksControl && frames < 120) { s.Body.AdvancePresentation(1f / 60f); frames++; }
+            Transform straps = s.Body.VisualRoot.Find("Berth restraint");
+            Debug.Log("[BODYANIM] berth hazard wake (CO2): straps open and input back in " + frames / 60f + " s");
             Assert.LessOrEqual(frames / 60f, .3f, "hazard release must take at most 0.3 s");
+            Assert.IsFalse(straps && straps.gameObject.activeSelf, "the straps have sprung open");
+            RunUntil(s, RestPhase.None, 120, i => frames++);
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.LessOrEqual(frames / 60f, 1f, "the quick float out ends within a second");
         }
 
         [Test]
@@ -610,6 +615,141 @@ namespace OutOfReach.Tests.BodyAnim
             s.Body.ClearBinding();
             Assert.AreEqual(RestPhase.None, s.Body.RestPhase, "a cleared binding releases at once");
             Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"));
+        }
+
+        // SLEEP-SEQ: the composition's rest camera lease, replayed. The live eye is the player's own (feet + 1.62 m, the
+        // player's heading); the presenter turns it into this frame's view on the berth path, and the camera goes there.
+        private static bool LeaseStep(Stage s, float pitch = 0f)
+        {
+            Vector3 livePosition = s.Player.TransformPoint(new Vector3(0f, 1.62f, 0f));
+            Quaternion liveRotation = s.Player.rotation * Quaternion.Euler(pitch, 0f, 0f);
+            bool leased = s.Body.TryGetRestView(livePosition, liveRotation, out Vector3 position, out Quaternion rotation);
+            if (leased) s.Eye.transform.SetPositionAndRotation(position, rotation);
+            else s.Eye.transform.SetPositionAndRotation(livePosition, liveRotation);
+            s.Body.AdvancePresentation(1f / 60f);
+            return leased;
+        }
+
+        [Test]
+        public void BerthSequenceFloatsInStrapsHoldsUnbucklesAndFloatsOutWithoutACut()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            // The player in front of the berth looking at its target, as when pressing E (SleepEntry, facing the berth).
+            s.Player.SetPositionAndRotation(b.EntryPoint + b.EntryForward * -.25f, Quaternion.LookRotation(b.EntryForward, Vector3.up));
+            for (int i = 0; i < 6; i++) LeaseStep(s, 12f);
+            Vector3 liveEye = s.Eye.transform.position;
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.IsFalse(s.Body.RestBlocksControl);
+            s.Resting = true;
+            Vector3 lastEye = s.Eye.transform.position; Quaternion lastRot = s.Eye.transform.rotation;
+            float maxStep = 0f, maxTurn = 0f, maxBodyGap = 0f;
+            int frames = 0, leasedFrames = 0;
+            bool pausedChecked = false;
+            void Track(string where)
+            {
+                maxStep = Mathf.Max(maxStep, Vector3.Distance(s.Eye.transform.position, lastEye));
+                maxTurn = Mathf.Max(maxTurn, Quaternion.Angle(s.Eye.transform.rotation, lastRot));
+                lastEye = s.Eye.transform.position; lastRot = s.Eye.transform.rotation;
+                // First person: the body's own eyes stay with the camera (the head is hidden; nothing floats ahead).
+                if (s.Body.RestPhase != RestPhase.None && s.Body.RestDockWeight > .99f)
+                    maxBodyGap = Mathf.Max(maxBodyGap, Vector3.Distance(s.Body.VisualRoot.position, b.Frame.position));
+            }
+            while (s.Body.RestPhase != RestPhase.Held && frames < 600)
+            {
+                if (LeaseStep(s, 12f)) leasedFrames++;
+                frames++;
+                Track("enter");
+                Assert.IsTrue(s.Body.RestBlocksControl || s.Body.RestPhase == RestPhase.None);
+                if (frames == 2)
+                    Assert.Less(Vector3.Distance(s.Eye.transform.position, liveEye), .02f, "the approach starts at the live eye, no cut");
+                if (frames == 45 && !pausedChecked)
+                {
+                    pausedChecked = true;
+                    s.Clock.Paused = true;
+                    // The lease is one frame behind the presenter: the first paused frame lands the view on the last playhead.
+                    LeaseStep(s, 12f);
+                    float before = s.Body.RestPhaseSeconds; Vector3 eyeBefore = s.Eye.transform.position; Vector3 bodyBefore = s.Body.VisualRoot.position;
+                    for (int k = 0; k < 30; k++) LeaseStep(s, 12f);
+                    Assert.AreEqual(before, s.Body.RestPhaseSeconds, 1e-6f, "pause must freeze the rest playhead");
+                    Assert.Less(Vector3.Distance(eyeBefore, s.Eye.transform.position), 1e-4f, "pause freezes the view");
+                    Assert.Less(Vector3.Distance(bodyBefore, s.Body.VisualRoot.position), 1e-4f, "pause freezes the body");
+                    s.Clock.Paused = false;
+                    lastEye = s.Eye.transform.position; lastRot = s.Eye.transform.rotation;
+                }
+                if (frames % 15 == 0) { Shot(s, b.Eye, "seq_eye_enter_" + (frames / 15), 480, 270); Shot(s, b.Aisle, "seq_aisle_enter_" + (frames / 15)); }
+            }
+            Assert.IsTrue(pausedChecked);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase, "the approach and strap sequence must finish");
+            Debug.Log("[SLEEPSEQ] entering took " + frames / 60f + " s, max camera step " + maxStep + " m/frame, max turn " + maxTurn + " deg/frame");
+            Assert.That(frames / 60f, Is.InRange(3.2f, 4.5f), "float in, turn, back in, then both straps");
+            Assert.Greater(leasedFrames, frames - 3, "the camera follows the presenter's view from the first frames");
+            Assert.Less(Vector3.Distance(s.Eye.transform.position, b.CameraPosition), .02f, "the view ends on the authored SleepCamera");
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, b.Frame.position), 1e-3f, "body on the berth frame");
+            Transform restraint = s.Body.VisualRoot.Find("Berth restraint");
+            Assert.IsTrue(restraint && restraint.gameObject.activeSelf, "visible buckled straps");
+            for (int i = 0; i < 90; i++) { LeaseStep(s); Track("held"); }
+            Shot(s, b.Eye, "seq_eye_held", 960, 540); Shot(s, b.Aisle, "seq_aisle_held", 960, 540);
+
+            s.Resting = false; s.LastStop = RestStopReason.Woken;
+            int release = 0; bool strapsSeenUnbuckling = false; float inBerthUntil = 0f;
+            while (s.Body.RestPhase != RestPhase.None && release < 400)
+            {
+                LeaseStep(s, 12f);
+                release++;
+                Track("release");
+                if (s.Body.RestPhase == RestPhase.Releasing && Vector3.Distance(s.Eye.transform.position, b.CameraPosition) < .02f) inBerthUntil = release / 60f;
+                if (release == 50) strapsSeenUnbuckling = restraint && restraint.gameObject.activeSelf;
+                if (s.Body.RestPhase != RestPhase.None) Assert.IsTrue(s.Body.RestBlocksControl, "input waits until the body is out");
+                if (release % 12 == 0) { Shot(s, b.Eye, "seq_eye_release_" + (release / 12), 480, 270); Shot(s, b.Aisle, "seq_aisle_release_" + (release / 12)); }
+            }
+            Debug.Log("[SLEEPSEQ] ordinary wake took " + release / 60f + " s, in the berth until " + inBerthUntil + " s, max camera step " + maxStep
+                      + " m/frame, max turn " + maxTurn + " deg/frame, body off the berth frame while docked " + maxBodyGap + " m; phases " + string.Join(",", b.Phases));
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.That(release / 60f, Is.InRange(2.6f, 3.8f), "eyes open, unbuckle, float out");
+            Assert.That(inBerthUntil, Is.GreaterThan(1.35f), "the unbuckling happens in the berth, not after a cut");
+            Assert.IsTrue(strapsSeenUnbuckling, "the straps are still drawn while the hand unclips them");
+            Assert.Less(maxStep, .06f, "no camera cut or pop anywhere (metres per 1/60 s frame)");
+            Assert.Less(maxTurn, 6.5f, "no view snap anywhere (degrees per 1/60 s frame)");
+            Assert.IsFalse(s.Body.RestBlocksControl, "normal controls after the exit");
+            Assert.IsFalse(s.Body.VisualRoot.Find("Berth restraint"), "props must be gone");
+            CollectionAssert.AreEqual(new[] { RestPhase.Entering, RestPhase.Held, RestPhase.Releasing, RestPhase.None }, b.Phases);
+            Vector3 home = s.Player.TransformPoint(new Vector3(0f, 1.62f, 0f));
+            Assert.Less(Vector3.Distance(s.Eye.transform.position, home), 1e-3f, "the exit ends exactly on the live eye");
+            s.Body.AdvancePresentation(1f / 60f);
+            Assert.AreEqual(EmbodiedBodyPresenter.BodyPose.Floating, s.Body.CurrentPose);
+            Vector3 expected = s.Player.position + s.Player.rotation * s.Body.GetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Floating);
+            Assert.Less(Vector3.Distance(s.Body.VisualRoot.position, expected), .01f, "presentation pose restored at the player");
+        }
+
+        [Test]
+        public void BerthSequenceHazardWakeSpringsOutWithinAQuarterSecondThroughTheLease()
+        {
+            Stage s = Build();
+            Berth b = BuildBerth(s);
+            s.Player.SetPositionAndRotation(b.EntryPoint + b.EntryForward * -.25f, Quaternion.LookRotation(b.EntryForward, Vector3.up));
+            for (int i = 0; i < 6; i++) LeaseStep(s);
+            s.Resting = true;
+            for (int i = 0; i < 600 && s.Body.RestPhase != RestPhase.Held; i++) LeaseStep(s);
+            Assert.AreEqual(RestPhase.Held, s.Body.RestPhase);
+            s.Resting = false; s.LastStop = RestStopReason.CarbonDioxideDanger;
+            int frames = 0;
+            while (s.Body.RestBlocksControl && frames < 120) { LeaseStep(s); frames++; }
+            Transform straps = s.Body.VisualRoot.Find("Berth restraint");
+            float released = frames / 60f;
+            Assert.LessOrEqual(released, .3f, "hazard release (straps open, input back) must take at most 0.3 s");
+            Assert.IsFalse(straps && straps.gameObject.activeSelf, "the straps have sprung open");
+            Vector3 lastEye = s.Eye.transform.position; float maxStep = 0f;
+            while (s.Body.RestPhase != RestPhase.None && frames < 120)
+            {
+                LeaseStep(s); frames++;
+                maxStep = Mathf.Max(maxStep, Vector3.Distance(lastEye, s.Eye.transform.position)); lastEye = s.Eye.transform.position;
+            }
+            Debug.Log("[SLEEPSEQ] hazard wake (CO2) through the lease: released in " + released + " s, out in " + frames / 60f + " s, max step " + maxStep + " m/frame");
+            Assert.AreEqual(RestPhase.None, s.Body.RestPhase);
+            Assert.LessOrEqual(frames / 60f, 1f, "the quick float out ends within a second");
+            Assert.Less(maxStep, .1f, "a quick float, not a cut (metres per 1/60 s frame)");
+            Assert.Less(Vector3.Distance(s.Eye.transform.position, s.Player.TransformPoint(new Vector3(0f, 1.62f, 0f))), 1e-3f, "back on the live eye");
         }
 
         private const string TransportPath = "Assets/_OutOfReach/Visuals/Models/MarinePrologue/Transport/Models/TransportLaunch.fbx";
