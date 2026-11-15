@@ -119,6 +119,40 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(presenter.View.StripAction.enabledSelf, Is.True, "strip action before " + what + ": " + ui.Text("chapter-strip-detail"));
             CommandResult started = presenter.RequestContinueRoutine();
             Assert.That(started.Succeeded, Is.True, what + ": " + started.Explanation);
+            yield return MontageUntilTheStop(what);
+        }
+
+        /// <summary>CHAPTER-PACING-01: E on the berth is the story sleep; the montage then runs to the routine's stop.</summary>
+        private IEnumerator StorySleepThroughTheBerth(string what)
+        {
+            yield return Use(harness.Sleep);
+            Assert.That(Flow.IsRoutineRunning, Is.True, "the berth started the routine: " + what);
+            Assert.That(Session.SurvivalRecovery.IsResting, Is.True, "its first night begins at once");
+            Assert.That(Session.ChapterFlow.TrySleepInteraction().Succeeded, Is.False, "a second press cannot skip twice");
+            yield return MontageUntilTheStop(what);
+        }
+
+        /// <summary>R through the UI until the next beat, through the post-news steps of at most 3 days.</summary>
+        private IEnumerator StepsToTheNextBeat(string what, List<int> stops)
+        {
+            MissionChapter from = Flow.Chapter;
+            for (int step = 0; step < 8; step++)
+            {
+                yield return RoutineThroughTheUi(what + " step " + step);
+                stops.Add(ChapterCopy.DayAt(Flow.RoutineStoppedAtSimulationSeconds.Value));
+                if (!Session.ChapterFlow.LastStopWasStep) yield break;
+                presenter.Tick(.1f);
+                Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Report), "a step ends with its report");
+                Assert.That(ui.Text("chapter-report-kicker"), Is.EqualTo("ROUTINE STEP DONE"));
+                Assert.That(Flow.Chapter, Is.EqualTo(from), "a step never enters the beat");
+                presenter.DismissCard();
+            }
+
+            Assert.Fail(what + ": the steps did not reach the next beat");
+        }
+
+        private IEnumerator MontageUntilTheStop(string what)
+        {
             seenMontageDays.Clear();
             presenter.Tick(0f);
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Montage), what);
@@ -158,14 +192,13 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Get through the first days"), "HUD objective from Core's refusal");
             Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Prepare and eat the first stored ration first."));
             yield return Use(harness.Ration);
-            yield return Use(harness.Sleep);
-            yield return RunUntil(() => !Session.SurvivalRecovery.IsResting, 30d, "the first rest completes");
             presenter.Tick(.3f);
             Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Continue the routine"));
-            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · press R"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · sleep in the berth or press R"));
+            Assert.That(ui.Text("chapter-strip-detail"), Does.StartWith(ChapterCopy.SleepHint + ": "));
 
-            // Days 2 -> 5.
-            yield return RoutineThroughTheUi("days 2 to 5");
+            // The first story sleep: day 1 -> day 5 (Alex's pacing).
+            yield return StorySleepThroughTheBerth("day 1 to 5");
             Assert.That(Flow.Chapter, Is.EqualTo(MissionChapter.Consequences));
             Assert.That(seenMontageDays, Is.SupersetOf(new[] { "DAY 3", "DAY 4" }), "the montage counted the days: " + string.Join(", ", seenMontageDays));
             Assert.That(ui.Text("chapter-beat-summary"), Is.EqualTo("After "
@@ -210,15 +243,17 @@ namespace OutOfReach.Tests.ChapterUi
             Assert.That(ui.Text("chapter-card-body"), Does.Contain("dock on mission day 30"));
             presenter.DismissCard();
 
-            // Days 14 -> 20: the final power and supply decision.
-            yield return RoutineThroughTheUi("days 14 to 20");
+            // Days 14 -> 20 in steps of at most 3 days: the final power and supply decision.
+            var stops = new List<int>();
+            yield return StepsToTheNextBeat("days 14 to 20", stops);
             yield return ExpectBeat("LAST RESERVES");
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Decision));
             Assert.That(presenter.View.CardOptions[0].enabledSelf, Is.False, "nothing grows: Core refuses the shutdown");
             Assert.That(presenter.ChooseOption(1).Succeeded, Is.True);
 
-            // Days 20 -> 30: the beacon request and the docking.
-            yield return RoutineThroughTheUi("days 20 to 30");
+            // Days 20 -> 30 in steps of at most 3 days: the beacon request and the docking.
+            yield return StepsToTheNextBeat("days 20 to 30", stops);
+            Assert.That(stops, Is.EqualTo(new[] { 17, 20, 23, 26, 29, 30 }), "Alex's pacing after the news");
             yield return ExpectBeat("RENDEZVOUS");
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Beacon));
             Assert.That(ui.Text("chapter-card-meta"), Is.EqualTo("Window closes Day 30, 16:00 (mission clock)."));
@@ -240,8 +275,7 @@ namespace OutOfReach.Tests.ChapterUi
             presenter.Tick(.1f);
             yield return Present(MissionChapterPresenter.BeatSeconds + .2f);
             yield return Use(harness.Ration);
-            yield return Use(harness.Sleep);
-            yield return RunUntil(() => !Session.SurvivalRecovery.IsResting, 30d, "the first rest completes");
+            presenter.Tick(.1f);
             Assert.That(presenter.RequestContinueRoutine().Succeeded, Is.True);
             for (int i = 0; i < 25; i++) Frame();
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Montage));

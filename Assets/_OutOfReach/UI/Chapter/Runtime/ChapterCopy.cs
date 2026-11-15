@@ -187,6 +187,30 @@ namespace OutOfReach.Presentation.UI.Chapter
             }
         }
 
+        /// <summary>Authored mission day of a beat in the approved loop (the actual day comes from Core's clock).</summary>
+        public static int AuthoredDay(MissionChapter chapter)
+        {
+            switch (chapter)
+            {
+                case MissionChapter.Accident: return 1;
+                case MissionChapter.Consequences: return 5;
+                case MissionChapter.Contact: return 9;
+                case MissionChapter.RescueFailed: return 14;
+                case MissionChapter.FinalDecision: return 20;
+                case MissionChapter.Rendezvous: return 30;
+                default: return 0;
+            }
+        }
+
+        /// <summary>
+        /// True when Core's next routine stop is one step of the post-news pacing (at most 3 days), not the next beat itself:
+        /// the stop's day comes before the beat's authored day.
+        /// </summary>
+        public static bool IsStepStop(MissionChapter next, double? stopAt) =>
+            next != MissionChapter.None && stopAt.HasValue && Finite(stopAt.Value) && DayAt(stopAt.Value) < AuthoredDay(next);
+
+        public const string SleepHint = "Sleep in the berth (E) or press R";
+
         /// <summary>Short name of the beat the next routine would reach, for the request strip.</summary>
         public static string NextName(MissionChapter chapter)
         {
@@ -205,7 +229,7 @@ namespace OutOfReach.Presentation.UI.Chapter
         {
             switch (reason)
             {
-                case RoutineStopReason.ReachedChapter: return "CHAPTER REACHED";
+                case RoutineStopReason.ReachedChapter: return "ROUTINE STEP DONE";
                 case RoutineStopReason.PlayerCancelled: return "ROUTINE STOPPED BY THE CREW";
                 case RoutineStopReason.Danger: return "ROUTINE STOPPED · DANGER";
                 case RoutineStopReason.ResourceShortage: return "ROUTINE STOPPED · SUPPLIES";

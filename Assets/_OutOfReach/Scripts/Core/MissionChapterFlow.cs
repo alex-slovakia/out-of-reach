@@ -43,6 +43,18 @@ namespace OutOfReach.Core
         /// <summary>GAME ASSUMPTION: the in-transit craft asks for the beacon this long before it docks.</summary>
         public const double BeaconRequestBeforeArrivalHours = 10d;
 
+        /// <summary>
+        /// GAME ASSUMPTION (Alex, 15 Nov 2026): after the day-14 news each routine step covers at most this many days
+        /// (it ends at <see cref="BeatStartHour"/> of that day), so days 14 to 30 pass in short, observable steps.
+        /// </summary>
+        public const int MaximumStepDaysAfterNews = 3;
+
+        /// <summary>
+        /// GAME ASSUMPTION: a new night starts only after the crew has been up this long since it last woke (morning meal
+        /// and systems checks). It also keeps repeated berth presses from chaining nights.
+        /// </summary>
+        public const double MinimumAwakeHoursBeforeNight = 1d;
+
         public const int AccidentDay = 1;
         public const int ConsequencesDay = 5;
         public const int ContactDay = 9;
@@ -75,6 +87,7 @@ namespace OutOfReach.Core
         private bool running;
         private double scaleBeforeRoutine;
         private double routineTarget;
+        private bool routineTargetIsBeat = true;
         private GrowModuleStage cropAtRoutineStart;
         private double? dispatchDueAt;
         private double dispatchSentAt;
@@ -142,6 +155,12 @@ namespace OutOfReach.Core
 
         public ChapterDecision PendingDecision { get; private set; }
 
+        /// <summary>
+        /// True when the last routine stop was one step of the post-news pacing (<see cref="MaximumStepDaysAfterNews"/>):
+        /// reported as <see cref="RoutineStopReason.ReachedChapter"/> with the chapter unchanged.
+        /// </summary>
+        public bool LastStopWasStep { get; private set; }
+
         public RescuePlan Rescue { get; private set; }
 
         public MissionDispatch LatestDispatch { get; private set; }
@@ -184,12 +203,16 @@ namespace OutOfReach.Core
             }
         }
 
-        private static MissionChapter Next(MissionChapter chapter)
+        /// <summary>
+        /// The beat after <paramref name="chapter"/>. Once Earth's reply has arrived (contact made early), the day-9 stop has
+        /// nothing left to do, so the routine from day 5 runs on to the day-14 news (Alex's pacing: second story sleep to 14).
+        /// </summary>
+        private MissionChapter Next(MissionChapter chapter)
         {
             switch (chapter)
             {
                 case MissionChapter.Accident: return MissionChapter.Consequences;
-                case MissionChapter.Consequences: return MissionChapter.Contact;
+                case MissionChapter.Consequences: return Rescue == RescuePlan.None ? MissionChapter.Contact : MissionChapter.RescueFailed;
                 case MissionChapter.Contact: return MissionChapter.RescueFailed;
                 case MissionChapter.RescueFailed: return MissionChapter.FinalDecision;
                 case MissionChapter.FinalDecision: return MissionChapter.Rendezvous;
@@ -270,6 +293,84 @@ namespace OutOfReach.Core
 
         public CommandResult TryContinueRoutine()
         {
+            return ContinueRoutine(false);
+        }
+
+        /// <summary>
+        /// The berth in the chapter loop. When the routine may continue it is the STORY SLEEP: the night begins at once and
+        /// the routine runs on to its next stop (one step of the pacing). Otherwise an ordinary rest, only at the end of an
+        /// ordinary waking day. A resting crew is woken. A running routine refuses, so no press can skip time twice.
+        /// </summary>
+        public CommandResult CheckSleepInteraction()
+        {
+            if (IsRoutineRunning)
+            {
+                return Fail(CommandFailure.AlreadyComplete, "The routine is already under way.");
+            }
+
+            if (recovery.IsResting)
+            {
+                return recovery.CheckWake();
+            }
+
+            CommandResult routine = CheckContinueRoutine();
+            double now0 = state.ElapsedSimulationSeconds;
+            double awake = Math.Max(0d, now0 - AwakeSince());
+            double? woke = recovery.LastRestEndedAtSimulationSeconds;
+            if (routine.Succeeded)
+            {
+                // After a real wake the crew is up for the morning meal and checks before the next night: a repeated press
+                // right after waking (or during the body's release) cannot chain nights.
+                double sinceWake = woke.HasValue ? Math.Max(0d, now0 - woke.Value) : double.PositiveInfinity;
+                if (sinceWake < MinimumAwakeHoursBeforeNight * Hour)
+                {
+                    return Fail(CommandFailure.PreconditionsNotMet, string.Format(CultureInfo.InvariantCulture,
+                        "The crew woke {0} ago: morning meal and checks first; the next night can start in {1}.",
+                        FormatSpan(sinceWake), FormatSpan((MinimumAwakeHoursBeforeNight * Hour) - sinceWake)));
+                }
+
+                CommandResult rest = recovery.CheckRest(SurvivalRecovery.MaximumRestHours);
+                if (!rest.Succeeded)
+                {
+                    return rest;
+                }
+
+                double target = RoutineTarget().Value;
+                double now = state.ElapsedSimulationSeconds;
+                return Ok(string.Format(CultureInfo.InvariantCulture, "Sleep and continue to {0}, mission day {1} ({2} of meals, checks and ordinary sleep)",
+                    IsBeatTarget(target) ? Describe(NextOrArrival()) : "the next routine stop",
+                    MissionCalendar.DayNumberAt(target), FormatSpan(Math.Max(0d, target - now))));
+            }
+
+            if (awake < RoutineAwakeHours * Hour)
+            {
+                return Fail(CommandFailure.PreconditionsNotMet, string.Format(CultureInfo.InvariantCulture,
+                    "Not tired yet: awake {0} of an ordinary {1:0.#} h day. {2}", FormatSpan(awake), RoutineAwakeHours, routine.Explanation));
+            }
+
+            return recovery.CheckRest(SurvivalRecovery.MaximumRestHours);
+        }
+
+        public CommandResult TrySleepInteraction()
+        {
+            CommandResult check = CheckSleepInteraction();
+            if (!check.Succeeded)
+            {
+                return check;
+            }
+
+            if (recovery.IsResting)
+            {
+                return recovery.TryWake();
+            }
+
+            return CheckContinueRoutine().Succeeded
+                ? ContinueRoutine(true)
+                : recovery.TryBeginRest(SurvivalRecovery.MaximumRestHours);
+        }
+
+        private CommandResult ContinueRoutine(bool sleepNow)
+        {
             CommandResult check = CheckContinueRoutine();
             if (!check.Succeeded)
             {
@@ -283,6 +384,7 @@ namespace OutOfReach.Core
                 RoutineRations = 0;
                 RoutineDrinks = 0;
                 RoutineRests = 0;
+                LastStopWasStep = false;
                 RoutineStartedAtSimulationSeconds = now;
                 RoutineStoppedAtSimulationSeconds = null;
                 LastRoutineStop = RoutineStopReason.None;
@@ -298,10 +400,18 @@ namespace OutOfReach.Core
 
                 running = true;
                 routineTarget = target;
+                routineTargetIsBeat = IsBeatTarget(target);
                 cropAtRoutineStart = survival.GrowStage;
                 scaleBeforeRoutine = clock.TimeScale;
                 clock.TrySetTimeScale(RoutineTimeScale);
                 log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Routine began on mission day {0}: {1}.", MissionCalendar.DayNumberAt(now), check.Explanation));
+                if (sleepNow && recovery.CheckRest(SurvivalRecovery.MaximumRestHours).Succeeded)
+                {
+                    // The story sleep: the berth's night is the routine's first night (same accounting as every night).
+                    recovery.BeginRest(SurvivalRecovery.MaximumRestHours, clock.TimeScale, true);
+                    RoutineRests++;
+                }
+
                 Notify();
                 RunSchedule();
             }
@@ -608,6 +718,20 @@ namespace OutOfReach.Core
                     {
                         StopRoutine(RoutineStopReason.PrerequisiteMissing, "Earth's message is due but the link cannot receive it (antenna or power)");
                     }
+                }
+                else if (!routineTargetIsBeat && (recovery.Stage == RecoveryStage.BeaconRequested || PendingDecision != ChapterDecision.None))
+                {
+                    // A time-critical request at the step's end (e.g. the second beacon window) is the stop, not the step.
+                    StopRoutine(RoutineStopReason.DecisionRequired, recovery.Stage == RecoveryStage.BeaconRequested
+                        ? "the recovery craft asks for the beacon" : DescribeDecision(PendingDecision));
+                }
+                else if (!routineTargetIsBeat)
+                {
+                    // One step of the post-news pacing ended; the beat itself is still ahead.
+                    LastStopWasStep = true;
+                    StopRoutine(RoutineStopReason.ReachedChapter, string.Format(CultureInfo.InvariantCulture,
+                        "this routine step ended (at most {0} days per step); next: {1} on mission day {2}",
+                        MaximumStepDaysAfterNews, Describe(NextOrArrival()), MissionCalendar.DayNumberAt(BeatTarget() ?? state.ElapsedSimulationSeconds)));
                 }
                 else
                 {
@@ -924,11 +1048,7 @@ namespace OutOfReach.Core
                         return "Prepare and eat the first stored ration first.";
                     }
 
-                    if (recovery.CompletedRestCount < 1)
-                    {
-                        return "Secure the sleeping place and complete one rest first.";
-                    }
-
+                    // The first night is the story sleep itself (Alex's pacing): it carries the crew to day 5.
                     return null;
                 case MissionChapter.Consequences:
                     return null;
@@ -947,7 +1067,44 @@ namespace OutOfReach.Core
             }
         }
 
+        /// <summary>The routine's next stop: the next beat, capped at one step after the day-14 news.</summary>
         private double? RoutineTarget()
+        {
+            double? beat = BeatTarget();
+            if (!beat.HasValue)
+            {
+                return null;
+            }
+
+            double? step = StepLimit();
+            return step.HasValue && step.Value < beat.Value ? step : beat;
+        }
+
+        private bool IsBeatTarget(double target)
+        {
+            double? beat = BeatTarget();
+            return !beat.HasValue || target >= beat.Value - SurvivalRules.TimeToleranceSeconds;
+        }
+
+        /// <summary>
+        /// After the day-14 news is acknowledged (the in-transit craft is committed) a step ends at most
+        /// <see cref="MaximumStepDaysAfterNews"/> days later, at <see cref="BeatStartHour"/>; null before that.
+        /// </summary>
+        private double? StepLimit()
+        {
+            if (Rescue != RescuePlan.InTransitCraftCommitted)
+            {
+                return null;
+            }
+
+            double now = state.ElapsedSimulationSeconds;
+            int day = MissionCalendar.DayNumberAt(now) + MaximumStepDaysAfterNews;
+            double limit = ((day - 1) * Day) + (BeatStartHour * Hour);
+            return limit > now ? limit : (double?)null;
+        }
+
+        /// <summary>The next beat's start (or the overdue message, or the docking), without the step cap.</summary>
+        private double? BeatTarget()
         {
             if (Chapter == MissionChapter.Rendezvous)
             {

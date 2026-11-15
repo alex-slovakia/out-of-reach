@@ -578,6 +578,7 @@ namespace OutOfReach.Presentation.UI.Chapter
             ChapterView.SetText(view.MontageDay, "DAY " + ChapterCopy.DayAt(now).ToString(CultureInfo.InvariantCulture));
             ChapterView.SetText(view.MontageClock, ChapterCopy.ClockAt(now));
             string targetName = flow.Chapter == MissionChapter.Rendezvous ? "docking of the recovery craft"
+                : ChapterCopy.IsStepStop(flow.NextChapter, montageTarget) ? "routine step (at most 3 days)"
                 : ChapterCopy.NextName(flow.NextChapter).ToLowerInvariant();
             ChapterView.SetText(view.MontageRange, ChapterCopy.DayAndClock(montageStart) + "  →  "
                 + ChapterCopy.DayAndClock(montageTarget) + " · " + targetName);
@@ -786,7 +787,8 @@ namespace OutOfReach.Presentation.UI.Chapter
 
         private bool FillStrip(double now, float realSeconds)
         {
-            if (state.Phase == GamePhase.Eva) return false;
+            // An ordinary rest has its own overlay (day and time left); the chapter strip waits until the crew is up.
+            if (state.Phase == GamePhase.Eva || (recovery != null && recovery.IsResting && !flow.IsRoutineRunning)) return false;
             if (stripFeedbackSeconds > 0f) stripFeedbackSeconds = Mathf.Max(0f, stripFeedbackSeconds - realSeconds);
             string feedback = stripFeedbackSeconds > 0f ? stripFeedback : string.Empty;
             ChapterDecision pending = flow.PendingDecision;
@@ -817,14 +819,18 @@ namespace OutOfReach.Presentation.UI.Chapter
             bool rendezvous = flow.Chapter == MissionChapter.Rendezvous;
             if (!target.HasValue || (!rendezvous && flow.NextChapter == MissionChapter.None)) return false;
             if (rendezvous && recovery != null && recovery.Stage == RecoveryStage.Arrived) return false;
+            bool step = !rendezvous && ChapterCopy.IsStepStop(flow.NextChapter, target);
             ChapterView.SetTone(view.Strip, lastCheck.Succeeded ? ChapterTone.Neutral : ChapterTone.Attention);
-            ChapterView.SetText(view.StripKicker, rendezvous ? "NEXT · DOCKING" : "NEXT CHAPTER");
+            ChapterView.SetText(view.StripKicker, rendezvous ? "NEXT · DOCKING" : step ? "NEXT · ROUTINE STEP" : "NEXT CHAPTER");
             ChapterView.SetText(view.StripTitle, rendezvous
                 ? ChapterCopy.DayAndClock(target.Value) + " — the recovery craft docks"
-                : "Day " + ChapterCopy.DayAt(target.Value).ToString(CultureInfo.InvariantCulture) + " — " + ChapterCopy.NextName(flow.NextChapter));
+                : step
+                    ? "Day " + ChapterCopy.DayAt(target.Value).ToString(CultureInfo.InvariantCulture) + " — up to 3 ordinary days"
+                    : "Day " + ChapterCopy.DayAt(target.Value).ToString(CultureInfo.InvariantCulture) + " — " + ChapterCopy.NextName(flow.NextChapter));
             string detail = lastCheck.Succeeded
                 ? (target.Value > now
-                    ? ChapterCopy.Span(target.Value - now) + " of routine: meals, systems checks and ordinary sleep."
+                    ? ChapterCopy.SleepHint + ": " + ChapterCopy.Span(target.Value - now) + " of meals, checks and ordinary sleep."
+                      + (step ? " Then day " + ChapterCopy.AuthoredDay(flow.NextChapter).ToString(CultureInfo.InvariantCulture) + ": " + ChapterCopy.NextName(flow.NextChapter).ToLowerInvariant() + "." : string.Empty)
                     : "Due now.")
                 : ChapterCopy.Sentence(lastCheck.Explanation);
             ChapterView.SetText(view.StripDetail, feedback.Length > 0 ? feedback : detail);
@@ -857,6 +863,12 @@ namespace OutOfReach.Presentation.UI.Chapter
             if (phase == GamePhase.Eva || phase == GamePhase.Transmission || phase == GamePhase.Emergency)
             {
                 SetObjective(string.Empty, string.Empty);
+                return;
+            }
+
+            if (recovery != null && recovery.IsResting && !flow.IsRoutineRunning)
+            {
+                SetObjective("Resting", "An ordinary night of at most " + ChapterCopy.NightLimit + "; the story continues with the next sleep");
                 return;
             }
 
@@ -899,10 +911,11 @@ namespace OutOfReach.Presentation.UI.Chapter
             double? next = flow.NextChapterAtSimulationSeconds;
             if (flow.Chapter == MissionChapter.Rendezvous)
                 SetObjective("Wait for the docking", (next.HasValue ? "The craft docks " + ChapterCopy.DayAndClock(next.Value) + " · " : string.Empty)
-                    + "R continues the routine");
+                    + "sleep in the berth or press R");
             else if (next.HasValue && flow.NextChapter != MissionChapter.None)
                 SetObjective("Continue the routine", "Next: day " + ChapterCopy.DayAt(next.Value).ToString(CultureInfo.InvariantCulture) + ", "
-                    + ChapterCopy.NextName(flow.NextChapter).ToLowerInvariant() + " · press R");
+                    + (ChapterCopy.IsStepStop(flow.NextChapter, next) ? "routine step" : ChapterCopy.NextName(flow.NextChapter).ToLowerInvariant())
+                    + " · sleep in the berth or press R");
             else
                 SetObjective(string.Empty, string.Empty);
         }

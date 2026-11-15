@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OutOfReach.Contracts;
 using OutOfReach.Core;
@@ -33,7 +34,7 @@ namespace OutOfReach.Tests.EditMode
             return session;
         }
 
-        /// <summary>Repairs, the first meal and water, one complete rest: the day 1-2 beat is done.</summary>
+        /// <summary>Repairs, the first meal and water, and one ordinary rest (the day-1 beat needs only the repairs and the meal).</summary>
         private static void CompleteAccidentBeat(MissionSession session)
         {
             Fixtures.RepairOrFail(session, ShipSystemId.Power);
@@ -59,6 +60,7 @@ namespace OutOfReach.Tests.EditMode
             public double RestedBefore;
             public double RestedAfter;
             public int Frames;
+            public int Rations;
         }
 
         /// <summary>
@@ -68,13 +70,40 @@ namespace OutOfReach.Tests.EditMode
         private static Segment RunRoutine(MissionSession session)
         {
             MissionChapterFlow flow = session.ChapterFlow;
+            Segment total = RunSegment(session, true);
+            int steps = 1;
+            while (flow.LastStopWasStep)
+            {
+                // CHAPTER-PACING-01: after the day-14 news a routine runs in steps of at most 3 days up to the next beat.
+                Assert.That(flow.Rescue, Is.EqualTo(RescuePlan.InTransitCraftCommitted), "3-day steps only after the news");
+                Assert.That(steps++, Is.LessThan(12), "the steps end at the beat");
+                Segment next = RunSegment(session, true);
+                total = new Segment
+                {
+                    Before = total.Before, After = next.After, StartedAt = total.StartedAt, RestedBefore = total.RestedBefore,
+                    RestedAfter = next.RestedAfter, Frames = total.Frames + next.Frames, Rations = total.Rations + next.Rations,
+                };
+            }
+
+            return total;
+        }
+
+        /// <summary>One routine segment in real frames (<paramref name="start"/> false: already started, e.g. by the berth).</summary>
+        private static Segment RunSegment(MissionSession session, bool start)
+        {
+            MissionChapterFlow flow = session.ChapterFlow;
             var segment = new Segment
             {
                 Before = session.Resources.Snapshot,
-                StartedAt = session.State.ElapsedSimulationSeconds,
+                StartedAt = flow.RoutineStartedAtSimulationSeconds ?? session.State.ElapsedSimulationSeconds,
                 RestedBefore = session.SurvivalRecovery.RestedSimulationSeconds,
             };
-            Require(flow.TryContinueRoutine());
+            if (start)
+            {
+                segment.StartedAt = session.State.ElapsedSimulationSeconds;
+                Require(flow.TryContinueRoutine());
+            }
+
             ResourceSnapshot previous = session.Resources.Snapshot;
             while (flow.IsRoutineRunning)
             {
@@ -93,7 +122,14 @@ namespace OutOfReach.Tests.EditMode
 
             segment.After = session.Resources.Snapshot;
             segment.RestedAfter = session.SurvivalRecovery.RestedSimulationSeconds;
+            segment.Rations = flow.RoutineRations;
             Assert.That(session.Clock.TimeScale, Is.Not.EqualTo(MissionChapterFlow.RoutineTimeScale), "the routine scale ends with the routine");
+            if (flow.LastStopWasStep)
+            {
+                Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value - flow.RoutineStartedAtSimulationSeconds.Value,
+                    Is.LessThanOrEqualTo((MissionChapterFlow.MaximumStepDaysAfterNews * Day) + Tolerance), "a step covers at most 3 days");
+            }
+
             return segment;
         }
 
@@ -101,7 +137,7 @@ namespace OutOfReach.Tests.EditMode
         private static void AssertFoodReconciles(MissionSession session, Segment segment)
         {
             double rested = segment.RestedAfter - segment.RestedBefore;
-            double expected = (session.ChapterFlow.RoutineRations * session.Survival.RationFoodKg)
+            double expected = (segment.Rations * session.Survival.RationFoodKg)
                 + (rested * CrewMetabolicAssumptions.FoodKgPerCrewDay * session.Definition.CrewCount / Day);
             Assert.That(segment.Before.FoodKg - segment.After.FoodKg, Is.EqualTo(expected).Within(1e-6), "food = rations + rest draw");
         }
@@ -170,7 +206,7 @@ namespace OutOfReach.Tests.EditMode
         }
 
         [Test]
-        public void Day1_RoutineIsRefusedUntilRepairsMealAndOneCompleteRest_AndEvaWaitsForDay9()
+        public void Day1_RoutineIsRefusedUntilRepairsAndTheFirstMeal_AndEvaIsNotDateGated()
         {
             using (MissionSession session = Accident())
             {
@@ -179,14 +215,16 @@ namespace OutOfReach.Tests.EditMode
                 Fixtures.RepairOrFail(session, ShipSystemId.Power);
                 Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
                 Assert.That(flow.CheckContinueRoutine().Explanation, Does.Contain("ration"));
-                Require(session.Survival.TryConsumeRation());
-                Assert.That(flow.CheckContinueRoutine().Explanation, Does.Contain("rest"));
                 Assert.That(session.Eva.CheckPrepareSuit().Succeeded, Is.True, "no date-only EVA gate: early exterior work is allowed");
 
                 double before = session.State.ElapsedSimulationSeconds;
                 Assert.That(flow.TryContinueRoutine().Succeeded, Is.False);
+                Assert.That(flow.TrySleepInteraction().Succeeded, Is.False, "the berth explains what is missing");
                 Assert.That(flow.IsRoutineRunning, Is.False);
+                Assert.That(session.SurvivalRecovery.IsResting, Is.False);
                 Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(before), "a refusal changes nothing");
+                Require(session.Survival.TryConsumeRation());
+                Assert.That(flow.CheckContinueRoutine().Succeeded, Is.True, "no completed rest is needed: the first night is the story sleep");
             }
         }
 
@@ -621,6 +659,12 @@ namespace OutOfReach.Tests.EditMode
                 RunRoutine(session);
                 Require(flow.TryChoose(ChapterChoice.KeepGrowRunning));
                 double requestAt = recovery.ArrivalAtSimulationSeconds.Value - (MissionChapterFlow.BeaconRequestBeforeArrivalHours * Hour);
+                while (flow.NextChapterAtSimulationSeconds.Value < requestAt - Tolerance)
+                {
+                    // CHAPTER-PACING-01: the 3-day steps up to the last one before the request.
+                    RunSegment(session, true);
+                    Assert.That(flow.LastStopWasStep, Is.True, flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
+                }
 
                 OneFrameRoutine(session, 1000d);
                 Assert.That(recovery.Stage, Is.EqualTo(RecoveryStage.BeaconRequested));
@@ -847,9 +891,7 @@ namespace OutOfReach.Tests.EditMode
                 Require(session.AdvanceSimulation(SurvivalRecovery.MaximumRestHours * Hour));
                 RunRoutine(session);
                 Require(flow.TryChoose(ChapterChoice.PreserveScience));
-                RunRoutine(session);
-                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Contact));
-                Assert.That(flow.CheckContinueRoutine().Succeeded, Is.True, "contact is already done: nothing is replayed");
+                Assert.That(flow.NextChapter, Is.EqualTo(MissionChapter.RescueFailed), "contact is done: the day-9 stop has nothing left");
                 Assert.That(flow.LatestDispatch.Id, Is.Null, "no news before it can arrive");
                 RunRoutine(session);
                 Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.RescueFailed), flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
@@ -917,6 +959,187 @@ namespace OutOfReach.Tests.EditMode
                 Assert.That(session.Clock.TimeScale, Is.EqualTo(session.Survival.Spec.TimeScale));
                 Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Accident), "no beat skipped");
                 Assert.That(segment.Frames, Is.GreaterThan(0));
+            }
+        }
+
+        /// <summary>Repairs and the first paid meal and water of day 1, without any rest.</summary>
+        private static void RepairsAndFirstMeal(MissionSession session)
+        {
+            Fixtures.RepairOrFail(session, ShipSystemId.Power);
+            Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
+            double due = session.Survival.Spec.PortionSeconds - (session.State.ElapsedSimulationSeconds - session.Survival.ActivatedAtSimulationSeconds.Value);
+            if (due > 0d)
+            {
+                Require(session.AdvanceSimulation(due));
+            }
+
+            Require(session.Survival.TryConsumeRation());
+            Require(session.Survival.TryDrinkWater());
+        }
+
+        private static IInteractable Berth(MissionSession session)
+        {
+            Assert.That(session.Interactions.TryGet(InteractionIds.SurvivalSleep, out IInteractable berth), Is.True);
+            return berth;
+        }
+
+        /// <summary>The berth after a stop: waits out the morning hour if the crew has just woken, then sleeps.</summary>
+        private static Segment StorySleep(MissionSession session, IInteractable berth)
+        {
+            if (!berth.CanInteract && berth.Prompt.Contains("morning meal and checks first"))
+            {
+                double woke = session.SurvivalRecovery.LastRestEndedAtSimulationSeconds.Value;
+                Require(session.AdvanceSimulation((woke + (MissionChapterFlow.MinimumAwakeHoursBeforeNight * Hour)) - session.State.ElapsedSimulationSeconds + 1d));
+            }
+
+            Assert.That(berth.CanInteract, Is.True, berth.Prompt);
+            Assert.That(berth.Prompt, Does.StartWith("Sleep and continue to"));
+            ResourceSnapshot before = session.Resources.Snapshot;
+            double restedBefore = session.SurvivalRecovery.RestedSimulationSeconds;
+            double at = session.State.ElapsedSimulationSeconds;
+            Require(berth.TryInteract());
+            MissionChapterFlow flow = session.ChapterFlow;
+            Assert.That(flow.IsRoutineRunning, Is.True, "the berth started the routine");
+            Assert.That(session.SurvivalRecovery.IsResting, Is.True, "the story sleep's night begins at once");
+
+            // Spam: every further press and R during the routine is refused and changes nothing.
+            int revision = flow.Revision;
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.That(berth.TryInteract().Succeeded, Is.False, "no second start while the routine runs");
+                Assert.That(flow.TryContinueRoutine().Succeeded, Is.False);
+            }
+
+            Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(at), "refused presses advance nothing");
+            Assert.That(flow.Revision, Is.EqualTo(revision), "refused presses commit nothing");
+            Segment segment = RunSegment(session, false);
+            segment.Before = before;
+            segment.RestedBefore = restedBefore;
+            segment.StartedAt = at;
+            return segment;
+        }
+
+        [Test]
+        public void TheBerthIsTheStorySleep_Day1To5_ThenTo14_ThenStepsOfAtMostThreeDaysTo30_WithoutADoubleSkip()
+        {
+            using (MissionSession session = Accident())
+            {
+                MissionChapterFlow flow = session.ChapterFlow;
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                IInteractable berth = Berth(session);
+                Fixtures.RepairOrFail(session, ShipSystemId.Power);
+                Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
+                ReachContact(session);
+                Assert.That(MissionCalendar.DayNumberAt(session.State.ElapsedSimulationSeconds), Is.EqualTo(1), "contact made early");
+                Require(session.Survival.TryConsumeRation());
+                var stops = new List<int>();
+                var chapters = new List<MissionChapter>();
+
+                // First story sleep: day 1 -> day 5.
+                Segment first = StorySleep(session, berth);
+                AssertFoodReconciles(session, first);
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Consequences), flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
+                Assert.That(MissionCalendar.DayNumberAt(session.State.ElapsedSimulationSeconds), Is.EqualTo(5));
+                Assert.That(berth.CanInteract, Is.False, "the day-5 decision comes first");
+                Require(flow.TryChoose(ChapterChoice.PreserveScience));
+
+                // Second story sleep: day 5 -> the day-14 news (no day-9 stop: contact was made).
+                Segment second = StorySleep(session, berth);
+                AssertFoodReconciles(session, second);
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.RescueFailed), flow.LastRoutineStop + ": " + flow.LastRoutineStopText);
+                Assert.That(MissionCalendar.DayNumberAt(session.State.ElapsedSimulationSeconds), Is.EqualTo(14));
+                AssertCausalDispatch(session, flow.LatestDispatch);
+                Require(flow.TryChoose(ChapterChoice.AcknowledgeRescueFailure));
+
+                // After the news: steps of at most three days up to the rendezvous on day 30.
+                int transitions = 0;
+                MissionChapter chapter = flow.Chapter;
+                while (recovery.Stage != RecoveryStage.BeaconRequested)
+                {
+                    Assert.That(stops.Count, Is.LessThan(10), "the steps reach day 30");
+                    if (flow.PendingDecision == ChapterDecision.GrowOrBeacon)
+                    {
+                        Require(flow.TryChoose(ChapterChoice.KeepGrowRunning));
+                    }
+
+                    Segment step = StorySleep(session, berth);
+                    AssertFoodReconciles(session, step);
+                    Assert.That(flow.RoutineStoppedAtSimulationSeconds.Value - step.StartedAt, Is.LessThanOrEqualTo((3d * Day) + Tolerance), "at most 3 days per step");
+                    stops.Add(MissionCalendar.DayNumberAt(session.State.ElapsedSimulationSeconds));
+                    if (flow.Chapter != chapter)
+                    {
+                        transitions++;
+                        chapters.Add(flow.Chapter);
+                        chapter = flow.Chapter;
+                    }
+                }
+
+                Assert.That(stops, Is.EqualTo(new[] { 17, 20, 23, 26, 29, 30 }), "Alex's pacing after the news");
+                Assert.That(chapters, Is.EqualTo(new[] { MissionChapter.FinalDecision, MissionChapter.Rendezvous }), "each beat is entered exactly once");
+                Assert.That(transitions, Is.EqualTo(2));
+                Require(recovery.TryPowerBeacon());
+                Segment docking = RunSegment(session, true);
+                AssertFoodReconciles(session, docking);
+                Assert.That(session.State.Outcome, Is.EqualTo(MissionOutcome.Recovered));
+                Assert.That(MissionCalendar.DayNumberAt(recovery.RecoveredAtSimulationSeconds.Value), Is.EqualTo(30));
+            }
+        }
+
+        [Test]
+        public void WithoutContact_TheSecondStepStopsAtDay9_WhereTheExteriorWorkIsStillDue()
+        {
+            using (MissionSession session = Accident())
+            {
+                MissionChapterFlow flow = session.ChapterFlow;
+                IInteractable berth = Berth(session);
+                RepairsAndFirstMeal(session);
+                StorySleep(session, berth);
+                Require(flow.TryChoose(ChapterChoice.PreserveScience));
+                Assert.That(flow.NextChapter, Is.EqualTo(MissionChapter.Contact), "no contact yet: the day-9 stop stays");
+                StorySleep(session, berth);
+                Assert.That(flow.Chapter, Is.EqualTo(MissionChapter.Contact));
+                Assert.That(MissionCalendar.DayNumberAt(session.State.ElapsedSimulationSeconds), Is.EqualTo(9));
+                Assert.That(flow.CheckContinueRoutine().Explanation, Does.Contain("antenna"));
+            }
+        }
+
+        [Test]
+        public void AnOrdinaryRestNeedsAFullWakingDay_TheBerthSaysWhy_AndAWakeCannotChainNights()
+        {
+            using (MissionSession session = Accident())
+            {
+                MissionChapterFlow flow = session.ChapterFlow;
+                SurvivalRecovery recovery = session.SurvivalRecovery;
+                IInteractable berth = Berth(session);
+                Fixtures.RepairOrFail(session, ShipSystemId.Power);
+                Fixtures.RepairOrFail(session, ShipSystemId.LifeSupport);
+
+                // No story sleep before the first meal, and the crew is not tired yet: refused with the reason, nothing changes.
+                Assert.That(berth.CanInteract, Is.False);
+                Assert.That(berth.Prompt, Does.Contain("Not tired yet").And.Contain("Prepare and eat the first stored ration first."));
+                double before = session.State.ElapsedSimulationSeconds;
+                Assert.That(berth.TryInteract().Succeeded, Is.False);
+                Assert.That(recovery.IsResting, Is.False);
+                Assert.That(session.State.ElapsedSimulationSeconds, Is.EqualTo(before));
+
+                // After a full ordinary waking day an ordinary rest is allowed (it is not a routine).
+                double awakeSince = session.Survival.ActivatedAtSimulationSeconds.Value;
+                Require(session.AdvanceSimulation((awakeSince + (MissionChapterFlow.RoutineAwakeHours * 3600d)) - session.State.ElapsedSimulationSeconds + 1d));
+                Assert.That(berth.CanInteract, Is.True, berth.Prompt);
+                Require(berth.TryInteract());
+                Assert.That(recovery.IsResting, Is.True);
+                Assert.That(flow.IsRoutineRunning, Is.False, "an ordinary rest, not a routine");
+                Require(berth.TryInteract());
+                Assert.That(recovery.IsResting, Is.False, "the berth wakes the crew");
+
+                // Right after the wake neither an ordinary rest nor (after the meal) a story sleep can start.
+                Assert.That(berth.CanInteract, Is.False, berth.Prompt);
+                Require(session.Survival.TryConsumeRation());
+                Assert.That(berth.CanInteract, Is.False, "morning hour after the wake");
+                Assert.That(berth.Prompt, Does.Contain("morning meal and checks first"));
+                Require(session.AdvanceSimulation((MissionChapterFlow.MinimumAwakeHoursBeforeNight * 3600d) + 1d));
+                Assert.That(berth.CanInteract, Is.True, berth.Prompt);
+                Assert.That(berth.Prompt, Does.StartWith("Sleep and continue to the inspection of the repairs and reserves, mission day 5"));
             }
         }
     }

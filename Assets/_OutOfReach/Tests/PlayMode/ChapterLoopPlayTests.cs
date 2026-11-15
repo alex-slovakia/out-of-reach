@@ -80,17 +80,13 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(done(), Is.True, what + " within " + maxRealSeconds.ToString("0.#") + " real seconds");
         }
 
-        /// <summary>Stabilized; first meal and one full rest through the harness targets.</summary>
+        /// <summary>Stabilized; the first meal through its harness target (the first night is the story sleep).</summary>
         private IEnumerator CompleteDayOne()
         {
             Assert.That(harness.Runtime.ChapterFlow, Is.Not.Null, "the runtime built a chapter session");
             harness.ReachStabilized();
             yield return Use(harness.Ration);
             Assert.That(Session.Survival.RationsEaten, Is.EqualTo(1), "first packaged meal through its target");
-            yield return Use(harness.Sleep);
-            Assert.That(Session.SurvivalRecovery.IsResting, Is.True);
-            yield return RunUntil(() => !Session.SurvivalRecovery.IsResting, 30d, "the rest completes");
-            Assert.That(Session.SurvivalRecovery.LastRestStop, Is.EqualTo(RestStopReason.Completed));
         }
 
         [UnityEngine.TestTools.UnityTest]
@@ -101,9 +97,13 @@ namespace OutOfReach.Tests.PlayMode
             double interiorScale = Session.Definition.Scenario.Pacing.InteriorTimeScale;
             double jumped = Session.JumpedSimulationSeconds;
 
-            CommandResult started = flow.TryContinueRoutine();
-            Assert.That(started.Succeeded, Is.True, started.Explanation);
+            // CHAPTER-PACING-01: E on the berth is the story sleep: the night begins and the routine runs to day 5.
+            yield return Use(harness.Sleep);
+            Assert.That(flow.IsRoutineRunning, Is.True, "the berth started the routine");
+            Assert.That(Session.SurvivalRecovery.IsResting, Is.True, "its first night begins at once");
             Assert.That(Session.IsPlayerControlAllowed, Is.False, "no walking during the montage");
+            harness.Resolver.Refresh();
+            Assert.That(flow.TrySleepInteraction().Succeeded, Is.False, "a second press cannot start a second skip");
             yield return RunUntil(() => !flow.IsRoutineRunning, 60d, "the routine stops");
 
             Assert.That(flow.LastRoutineStop, Is.EqualTo(RoutineStopReason.ReachedChapter), flow.LastRoutineStopText);

@@ -93,7 +93,11 @@ namespace OutOfReach.Core
                 Interactions.Add(new DelegatedInteraction(InteractionIds.PlantSeedlings, survival.CheckPlant, survival.TryPlant));
                 Interactions.Add(new DelegatedInteraction(InteractionIds.HarvestCrop, survival.CheckHarvest, survival.TryHarvest));
                 SurvivalRecovery recovery = Director.SurvivalRecovery;
-                Interactions.Add(new DelegatedInteraction(InteractionIds.SurvivalSleep, recovery.CheckSleepInteraction, recovery.TrySleepInteraction));
+                MissionChapterFlow chapterFlow = Director.ChapterFlow;
+                // In the chapter loop the berth is the story sleep (CHAPTER-PACING-01); otherwise the ordinary rest toggle.
+                Interactions.Add(chapterFlow != null
+                    ? new DelegatedInteraction(InteractionIds.SurvivalSleep, chapterFlow.CheckSleepInteraction, chapterFlow.TrySleepInteraction)
+                    : new DelegatedInteraction(InteractionIds.SurvivalSleep, recovery.CheckSleepInteraction, recovery.TrySleepInteraction));
                 Interactions.Add(new DelegatedInteraction(InteractionIds.RecoveryBeacon, recovery.CheckPowerBeacon, recovery.TryPowerBeacon));
             }
 

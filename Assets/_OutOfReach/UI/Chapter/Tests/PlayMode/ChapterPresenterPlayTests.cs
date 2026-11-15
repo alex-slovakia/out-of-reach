@@ -91,7 +91,7 @@ namespace OutOfReach.Tests.ChapterUi
             mission.ElapsedSimulationSeconds = FakeMission.At(2, 8, 30);
             Tick();
             Assert.That(presenter.View.StripAction.enabledSelf, Is.True);
-            Assert.That(ui.Text("chapter-strip-detail"), Does.StartWith("2 d 23 h of routine"));
+            Assert.That(ui.Text("chapter-strip-detail"), Is.EqualTo(ChapterCopy.SleepHint + ": 2 d 23 h of meals, checks and ordinary sleep."));
             Assert.That(presenter.RequestContinueRoutine().Succeeded, Is.True);
             Tick();
             Assert.That(presenter.CurrentScreen, Is.EqualTo(ChapterScreen.Montage));
@@ -417,7 +417,7 @@ namespace OutOfReach.Tests.ChapterUi
             flow.ContinueCheck = new CommandResult(true, CommandFailure.None, "Routine days until the inspection");
             Tick(.3f);
             Assert.That(presenter.ObjectiveTitle, Is.EqualTo("Continue the routine"));
-            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · press R"));
+            Assert.That(presenter.ObjectiveDetail, Is.EqualTo("Next: day 5, inspection of the repairs and reserves · sleep in the berth or press R"));
 
             flow.StartRoutine();
             Tick();
