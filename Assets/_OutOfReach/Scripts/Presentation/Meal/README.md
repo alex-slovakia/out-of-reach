@@ -44,7 +44,8 @@ E on the existing `survival-ration` target (the galley ration drawer) starts a m
 
 1. Merge `feature/meal-pres` (new files only).
 2. Apply `Integration~/composition-meal.patch` (I01MissionComposition + one asmdef reference):
-   `git apply --3way Assets/_OutOfReach/Scripts/Presentation/Meal/Integration~/composition-meal.patch`.
+   `git apply --3way Assets/_OutOfReach/Scripts/Presentation/Meal/Integration~/composition-meal.patch` (generated against
+   `claude/integration@4853b05`; if its context has drifted, `Integration~/apply_composition_meal.py` makes the same edit by exact anchors).
    It adds the `meal` field and `ConfigureMeal`, binds the meal after the habitat and the body in `BindSession`, clears it
    before the habitat in `UnbindSession`, adds `meal.BlocksMovement` to the player's control gate, keeps the opening-menu
    sway and the Earth viewer off during a meal, releases rail grips when a meal starts and routes the stage lines and
