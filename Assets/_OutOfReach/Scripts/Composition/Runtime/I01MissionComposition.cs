@@ -14,6 +14,7 @@ using OutOfReach.Presentation.Lighting;
 using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.Meal;
+using OutOfReach.Presentation.Rescue;
 using OutOfReach.Presentation.Terminal;
 using OutOfReach.Presentation.UI;
 using OutOfReach.Presentation.UI.Chapter;
@@ -31,6 +32,7 @@ namespace OutOfReach.Composition
         [SerializeField] private MissionRuntime runtime;
         [SerializeField] private MissionFlightBoard flightBoard;
         [SerializeField] private MissionCinematicPresenter cinematics;
+        [SerializeField] private RescueEndingPresenter rescueEnding;
         [SerializeField] private MissionAudioPresenter audioPresenter;
         [SerializeField] private FootstepAudioPresenter footsteps;
         [SerializeField] private PreflightTensionPresenter preflightTension;
@@ -594,6 +596,7 @@ namespace OutOfReach.Composition
             interaction.InteractionAttempted.AddListener(OnInteractionAttempted);
             audioPresenter.SubtitleChanged += OnSubtitleChanged;
             cinematics.CaptionChanged += OnCinematicCaption;
+            if (rescueEnding) rescueEnding.PresentationChanged += OnRescuePresentation;
             attached = true;
             controls.Configure(this);
             if (runtime.Session != null) BindSession(runtime.Session);
@@ -616,6 +619,7 @@ namespace OutOfReach.Composition
             }
             if (audioPresenter) audioPresenter.SubtitleChanged -= OnSubtitleChanged;
             if (cinematics) cinematics.CaptionChanged -= OnCinematicCaption;
+            if (rescueEnding) rescueEnding.PresentationChanged -= OnRescuePresentation;
             UnbindSession();
             if (controls) controls.ClearBinding();
         }
@@ -706,7 +710,9 @@ namespace OutOfReach.Composition
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
             flightBoard.enabled = true;
-            cinematics.Configure(boundEvents, runtime.GameState, runtime.Clock);
+            // R42: the rescue ending answers RecoveryArrival; the existing presenter sees every other request.
+            if (rescueEnding) rescueEnding.Configure(boundEvents, runtime.GameState, runtime.Clock);
+            cinematics.Configure(rescueEnding ? rescueEnding.FilterFor(boundEvents) : boundEvents, runtime.GameState, runtime.Clock);
             cinematics.enabled = true;
             if (footsteps && runtime.Player)
                 footsteps.Configure(runtime.Player.GetComponent<CharacterController>(), runtime.GameState,
@@ -891,6 +897,7 @@ namespace OutOfReach.Composition
                 flightBoard.ConfigurePhysicalPlanning(false, null);
             }
             // Disabling the presenter restores all offsets and acknowledges a pending request once.
+            if (rescueEnding) rescueEnding.Release();
             if (cinematics) cinematics.enabled = false;
             if (audioPresenter) audioPresenter.StopAllPresentation();
             if (airlockDoors) airlockDoors.ClearBinding();
@@ -937,6 +944,7 @@ namespace OutOfReach.Composition
         {
             if (marine) marine.SetReducedMotion(reduced);
             if (cinematics) cinematics.ReducedEffects = reduced;
+            if (rescueEnding) rescueEnding.ReducedEffects = reduced;
             if (firstPersonMotion) firstPersonMotion.SetReducedMotion(reduced);
             if (openingMenuMotion) openingMenuMotion.SetReducedMotion(reduced);
             if (preflightTension) preflightTension.SetReducedEffects(reduced);
@@ -1285,6 +1293,12 @@ namespace OutOfReach.Composition
         }
 
         private void OnSubtitleChanged(DialogueSubtitle subtitle) => RefreshSubtitle();
+        private void OnRescuePresentation()
+        {
+            RefreshCinematicHud();
+            RefreshSubtitle();
+        }
+
         private void OnCinematicCaption(string caption)
         {
             cinematicCaption = caption ?? string.Empty;
@@ -1367,7 +1381,8 @@ namespace OutOfReach.Composition
         {
             if (flightBoard && attached && boundSession != null)
             {
-                flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying) || EarthViewerOwnsInput);
+                flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying)
+                    || (rescueEnding && rescueEnding.IsPlaying) || EarthViewerOwnsInput);
                 flightBoard.SetPhysicalTerminalPresentation(EarthViewerOwnsInput);
             }
         }
@@ -1375,7 +1390,9 @@ namespace OutOfReach.Composition
         private void RefreshSubtitle()
         {
             if (!flightBoard) return;
-            if (audioPresenter && audioPresenter.CurrentSubtitle.IsVisible)
+            if (rescueEnding && rescueEnding.IsPlaying && !string.IsNullOrEmpty(rescueEnding.CurrentCaption))
+                flightBoard.ShowSubtitle(rescueEnding.CurrentCaption, rescueEnding.CurrentSpeaker);
+            else if (audioPresenter && audioPresenter.CurrentSubtitle.IsVisible)
                 flightBoard.ShowSubtitle(audioPresenter.CurrentSubtitle.Text,
                     audioPresenter.CurrentSubtitle.CueId == LaunchRadioCountdown.CueId ? "LAUNCH CONTROL · RADIO" : dialogueSpeaker);
             else if (!string.IsNullOrEmpty(cinematicCaption)) flightBoard.ShowSubtitle(cinematicCaption, "SHIP STATUS");
