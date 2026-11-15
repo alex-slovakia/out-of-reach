@@ -44,10 +44,13 @@ namespace OutOfReach.Core
         public const double BeaconRequestBeforeArrivalHours = 10d;
 
         /// <summary>
-        /// GAME ASSUMPTION (Alex, 15 Nov 2026): after the day-14 news each routine step covers at most this many days
-        /// (it ends at <see cref="BeatStartHour"/> of that day), so days 14 to 30 pass in short, observable steps.
+        /// GAME ASSUMPTION (Alex's schedule, #7 6896895693): after the day-14 news the routine stops on these mission days
+        /// (at <see cref="BeatStartHour"/>) before the rendezvous beat on <see cref="RendezvousDay"/>.
         /// </summary>
-        public const int MaximumStepDaysAfterNews = 3;
+        public static readonly int[] StopDaysAfterNews = { 21, 25, 29 };
+
+        /// <summary>Content id of Earth's day-1 reply ("the rescue rocket is expected on day 14") for the radio scene.</summary>
+        public const string Day1ReplyContentId = "radio.day1.rescue-expected-day14";
 
         /// <summary>
         /// GAME ASSUMPTION: a new night starts only after the crew has been up this long since it last woke (morning meal
@@ -60,7 +63,7 @@ namespace OutOfReach.Core
         public const int ContactDay = 9;
         public const int RescueFailedDay = 14;
         public const int FinalDecisionDay = 20;
-        public const int RendezvousDay = 30;
+        public const int RendezvousDay = 31;
 
         /// <summary>Dispatch id of the day-14 message.</summary>
         public const string RescueFailedDispatchId = "rescue-1-failed";
@@ -88,6 +91,7 @@ namespace OutOfReach.Core
         private double scaleBeforeRoutine;
         private double routineTarget;
         private bool routineTargetIsBeat = true;
+        private int choresRationsAtStart, choresDrinksAtStart;
         private GrowModuleStage cropAtRoutineStart;
         private double? dispatchDueAt;
         private double dispatchSentAt;
@@ -156,7 +160,7 @@ namespace OutOfReach.Core
         public ChapterDecision PendingDecision { get; private set; }
 
         /// <summary>
-        /// True when the last routine stop was one step of the post-news pacing (<see cref="MaximumStepDaysAfterNews"/>):
+        /// True when the last routine stop was one step of the post-news pacing (<see cref="StopDaysAfterNews"/>):
         /// reported as <see cref="RoutineStopReason.ReachedChapter"/> with the chapter unchanged.
         /// </summary>
         public bool LastStopWasStep { get; private set; }
@@ -212,9 +216,9 @@ namespace OutOfReach.Core
             switch (chapter)
             {
                 case MissionChapter.Accident: return MissionChapter.Consequences;
-                case MissionChapter.Consequences: return Rescue == RescuePlan.None ? MissionChapter.Contact : MissionChapter.RescueFailed;
+                case MissionChapter.Consequences: return MissionChapter.RescueFailed;
                 case MissionChapter.Contact: return MissionChapter.RescueFailed;
-                case MissionChapter.RescueFailed: return MissionChapter.FinalDecision;
+                case MissionChapter.RescueFailed: return MissionChapter.Rendezvous;
                 case MissionChapter.FinalDecision: return MissionChapter.Rendezvous;
                 default: return MissionChapter.None;
             }
@@ -593,7 +597,7 @@ namespace OutOfReach.Core
             dispatchSentAt = Math.Max(beat - OneWayLightSecondsAt(beat), contactAt);
             dispatchDueAt = dispatchSentAt + OneWayLightSecondsAt(dispatchSentAt);
             log?.Invoke(string.Format(CultureInfo.InvariantCulture,
-                "Earth relays concrete hope: a first rescue attempt is under way, an uncrewed fictional support vehicle already near Mars that will try to reach the ship. Mission control will report its progress (about mission day {0}).",
+                "Earth replies with concrete hope: a fictional rescue rocket already near Mars is on its way and is expected on mission day {0}.",
                 MissionCalendar.DayNumberAt(dispatchDueAt.Value)));
             Notify();
 
@@ -660,6 +664,74 @@ namespace OutOfReach.Core
             ConsequencesResolution = string.Format(CultureInfo.InvariantCulture, "Grow module built on mission day {0}", builtDay);
             log?.Invoke(string.Format(CultureInfo.InvariantCulture,
                 "Day-5 decision already taken: the crew built the grow module on mission day {0}, before the inspection.", builtDay));
+        }
+
+        /// <summary>Alex's day-5 chores, each counted since the beat began.</summary>
+        public bool ChoreAte => Chapter != MissionChapter.Consequences || survival.RationsEaten > choresRationsAtStart;
+
+        public bool ChoreDrank => Chapter != MissionChapter.Consequences || survival.DrinksTaken > choresDrinksAtStart;
+
+        /// <summary>
+        /// Planted when the crop grows, is ready, harvested or failed. If this ship can neither build nor salvage for the grow
+        /// module (no spare part aboard and nothing to salvage) the item cannot block the story and counts as done.
+        /// </summary>
+        public bool ChorePlanted
+        {
+            get
+            {
+                if (Chapter != MissionChapter.Consequences) return true;
+                GrowModuleStage stage = survival.GrowStage;
+                if (stage == GrowModuleStage.Growing || stage == GrowModuleStage.HarvestReady || stage == GrowModuleStage.Harvested
+                    || stage == GrowModuleStage.Failed)
+                {
+                    return true;
+                }
+
+                return stage == GrowModuleStage.Unbuilt && !survival.CheckBuildGrowModule().Succeeded && modifications.SalvageablePartsNow == 0
+                    && survival.CheckBuildGrowModule().Failure == CommandFailure.InsufficientResources;
+            }
+        }
+
+        /// <summary>The open day-5 chores with their reasons, or null when all are done (Core's refusal text = the checklist).</summary>
+        private string DescribeOpenChores()
+        {
+            bool ate = ChoreAte, drank = ChoreDrank, planted = ChorePlanted;
+            if (ate && drank && planted)
+            {
+                return null;
+            }
+
+            return "Day-5 chores before the next sleep: "
+                + Chore(ate, "eat a ration", survival.CheckConsumeRation()) + " · "
+                + Chore(drank, "drink water", survival.CheckDrinkWater()) + " · "
+                + Chore(planted, "plant the seedlings", PlantStep()) + ".";
+        }
+
+        private CommandResult PlantStep()
+        {
+            if (survival.GrowStage == GrowModuleStage.Unbuilt)
+            {
+                CommandResult build = survival.CheckBuildGrowModule();
+                if (!build.Succeeded && modifications.SalvageablePartsNow > 0)
+                {
+                    return Fail(build.Failure, "build the grow module first; it needs a spare part: salvage the science payload");
+                }
+
+                return build.Succeeded ? Fail(CommandFailure.PreconditionsNotMet, "build the grow module first") : build;
+            }
+
+            return survival.CheckPlant();
+        }
+
+        private static string Chore(bool done, string label, CommandResult check)
+        {
+            if (done)
+            {
+                return label + " (done)";
+            }
+
+            string why = check.Succeeded ? "open" : "open: " + check.Explanation.Trim().TrimEnd('.');
+            return label + " (" + why + ")";
         }
 
         private string DescribeConserveReserves()
@@ -730,8 +802,8 @@ namespace OutOfReach.Core
                     // One step of the post-news pacing ended; the beat itself is still ahead.
                     LastStopWasStep = true;
                     StopRoutine(RoutineStopReason.ReachedChapter, string.Format(CultureInfo.InvariantCulture,
-                        "this routine step ended (at most {0} days per step); next: {1} on mission day {2}",
-                        MaximumStepDaysAfterNews, Describe(NextOrArrival()), MissionCalendar.DayNumberAt(BeatTarget() ?? state.ElapsedSimulationSeconds)));
+                        "mission day {0} reached; next: {1} on mission day {2}",
+                        Calendar(), Describe(NextOrArrival()), MissionCalendar.DayNumberAt(BeatTarget() ?? state.ElapsedSimulationSeconds)));
                 }
                 else
                 {
@@ -915,10 +987,12 @@ namespace OutOfReach.Core
             switch (next)
             {
                 case MissionChapter.Consequences:
+                    // Alex's day 5: eat, drink and plant, each done by the crew after this beat began.
+                    choresRationsAtStart = survival.RationsEaten;
+                    choresDrinksAtStart = survival.DrinksTaken;
                     log?.Invoke(string.Format(CultureInfo.InvariantCulture,
-                        "Mission day {0}: the crew inspects the repairs and the actual reserves. {1}",
+                        "Mission day {0}: the day's chores: eat, drink water and plant the seedlings. {1}",
                         Calendar(), DescribeReserves()));
-                    OpenConsequencesDecision();
                     break;
                 case MissionChapter.Contact:
                     log?.Invoke(string.Format(CultureInfo.InvariantCulture, state.Phase == GamePhase.Survival
@@ -926,12 +1000,7 @@ namespace OutOfReach.Core
                         : "Mission day {0}: time for the exterior work. Suit up, repair the antenna and call Earth.", Calendar()));
                     break;
                 case MissionChapter.RescueFailed:
-                    log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Mission day {0}: waiting for news of the rescue attempt.", Calendar()));
-                    break;
-                case MissionChapter.FinalDecision:
-                    PendingDecision = ChapterDecision.GrowOrBeacon;
-                    log?.Invoke(string.Format(CultureInfo.InvariantCulture,
-                        "Mission day {0}: final power and supply decision before the rendezvous. {1}", Calendar(), DescribeReserves()));
+                    log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Mission day {0}: a message from Earth about the rescue rocket.", Calendar()));
                     break;
                 case MissionChapter.Rendezvous:
                     log?.Invoke(string.Format(CultureInfo.InvariantCulture, "Mission day {0}: the recovery craft is close.", Calendar()));
@@ -948,7 +1017,7 @@ namespace OutOfReach.Core
             double beaconAt = arrival - (BeaconRequestBeforeArrivalHours * Hour);
             Rescue = RescuePlan.InTransitCraftCommitted;
             recovery.CommitChapterRescue(beaconAt, arrival, string.Format(CultureInfo.InvariantCulture,
-                "Acknowledged. A fictional cargo craft already in transit nearby is diverted to the ship: it will ask for the beacon on mission day {0} and dock on mission day {1} if the crew is still alive. No new launch from Earth could reach the ship in time. {2}",
+                "Acknowledged. The rescue rocket crashed. Another fictional craft already in transit nearby is diverted to the ship: rescue is promised for mission day {1}; it will ask for the beacon on mission day {0}. No new launch from Earth could reach the ship in time. {2}",
                 MissionCalendar.DayNumberAt(beaconAt), MissionCalendar.DayNumberAt(arrival), DescribeReserves()));
         }
 
@@ -970,7 +1039,7 @@ namespace OutOfReach.Core
             Rescue = RescuePlan.FirstRescueFailed;
             PendingDecision = ChapterDecision.AcknowledgeRescueFailure;
             log?.Invoke(string.Format(CultureInfo.InvariantCulture,
-                "Message from Earth received on mission day {0}, sent {1} earlier: the first rescue attempt failed; the support vehicle was lost before it could reach the ship.",
+                "Message from Earth received on mission day {0}, sent {1} earlier: the rescue rocket crashed before it could reach the ship.",
                 MissionCalendar.DayNumberAt(now), CommunicationSystem.FormatDuration(now - dispatchSentAt)));
             Notify();
             return true;
@@ -1043,15 +1112,18 @@ namespace OutOfReach.Core
                         return "Repair power and life support first.";
                     }
 
-                    if (survival.RationsEaten < 1)
+                    if (Rescue == RescuePlan.None)
                     {
-                        return "Prepare and eat the first stored ration first.";
+                        // Alex's day 1: the antenna by EVA and the call; Earth's reply must have arrived (real light time).
+                        return state.Phase == GamePhase.Transmission
+                            ? "Wait for Earth's reply: it is still on its way at the speed of light."
+                            : "Repair the antenna outside, return, and call Earth first.";
                     }
 
-                    // The first night is the story sleep itself (Alex's pacing): it carries the crew to day 5.
+                    // Then the first night is the story sleep itself: it carries the crew to day 5.
                     return null;
                 case MissionChapter.Consequences:
-                    return null;
+                    return DescribeOpenChores();
                 case MissionChapter.Contact:
                     return state.Phase == GamePhase.Survival ? null : "Repair the antenna outside, return, and reach Earth first.";
                 case MissionChapter.RescueFailed:
@@ -1087,8 +1159,8 @@ namespace OutOfReach.Core
         }
 
         /// <summary>
-        /// After the day-14 news is acknowledged (the in-transit craft is committed) a step ends at most
-        /// <see cref="MaximumStepDaysAfterNews"/> days later, at <see cref="BeatStartHour"/>; null before that.
+        /// After the day-14 news is acknowledged (the in-transit craft is committed) the next of
+        /// <see cref="StopDaysAfterNews"/> at <see cref="BeatStartHour"/>; null before that or after the last one.
         /// </summary>
         private double? StepLimit()
         {
@@ -1098,9 +1170,16 @@ namespace OutOfReach.Core
             }
 
             double now = state.ElapsedSimulationSeconds;
-            int day = MissionCalendar.DayNumberAt(now) + MaximumStepDaysAfterNews;
-            double limit = ((day - 1) * Day) + (BeatStartHour * Hour);
-            return limit > now ? limit : (double?)null;
+            foreach (int day in StopDaysAfterNews)
+            {
+                double stop = ((day - 1) * Day) + (BeatStartHour * Hour);
+                if (stop > now + SurvivalRules.TimeToleranceSeconds)
+                {
+                    return stop;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>The next beat's start (or the overdue message, or the docking), without the step cap.</summary>
@@ -1221,9 +1300,9 @@ namespace OutOfReach.Core
             switch (chapter)
             {
                 case MissionChapter.Accident: return "the accident";
-                case MissionChapter.Consequences: return "the inspection of the repairs and reserves";
+                case MissionChapter.Consequences: return "the day-5 chores";
                 case MissionChapter.Contact: return "the exterior repair and the call to Earth";
-                case MissionChapter.RescueFailed: return "news of the rescue attempt";
+                case MissionChapter.RescueFailed: return "news of the rescue rocket";
                 case MissionChapter.FinalDecision: return "the final power and supply decision";
                 case MissionChapter.Rendezvous: return "the rendezvous";
                 default: return "nothing";

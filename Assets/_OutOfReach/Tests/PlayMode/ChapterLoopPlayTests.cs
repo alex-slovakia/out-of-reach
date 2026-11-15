@@ -80,11 +80,12 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(done(), Is.True, what + " within " + maxRealSeconds.ToString("0.#") + " real seconds");
         }
 
-        /// <summary>Stabilized; the first meal through its harness target (the first night is the story sleep).</summary>
+        /// <summary>Alex's day 1: stabilized, the antenna EVA and Earth's reply (domain shortcut); a meal through its target.</summary>
         private IEnumerator CompleteDayOne()
         {
             Assert.That(harness.Runtime.ChapterFlow, Is.Not.Null, "the runtime built a chapter session");
-            harness.ReachStabilized();
+            harness.ReachContact();
+            Assert.That(harness.Runtime.ChapterFlow.Rescue, Is.EqualTo(RescuePlan.FirstRescuePlanned), "the reply: rescue expected on day 14");
             yield return Use(harness.Ration);
             Assert.That(Session.Survival.RationsEaten, Is.EqualTo(1), "first packaged meal through its target");
         }
@@ -113,7 +114,8 @@ namespace OutOfReach.Tests.PlayMode
             Assert.That(Session.JumpedSimulationSeconds, Is.EqualTo(jumped), "no jump: the routine ran in frames");
             Assert.That(Session.Clock.TimeScale, Is.EqualTo(interiorScale));
             Assert.That(Session.IsPlayerControlAllowed, Is.True, "control returns at the beat");
-            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.ScienceOrSalvage), "the harness binds the payload rack");
+            Assert.That(flow.PendingDecision, Is.EqualTo(ChapterDecision.None), "day 5 is the chores checklist");
+            Assert.That(flow.CheckContinueRoutine().Explanation, Does.Contain("Day-5 chores"));
         }
 
         [UnityEngine.TestTools.UnityTest]
