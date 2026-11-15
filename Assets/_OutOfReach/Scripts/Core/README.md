@@ -611,3 +611,55 @@ is additive; `TryPushOff` and its callers are unchanged, and there is no Contrac
   full push and the speed to `MaxSpeed` (`MicrogravityLocomotion.PushPair`); the hold is released, the cooldown
   starts and `Pushed` is raised once. Two partial hands are stronger than one, never stronger than one full push.
 - The caller (Codex) owns the two-hand contact animation and input and calls it only after both real contacts.
+
+## CORE-CHAPTER-LOOP: approved day 1-30 chapters (opt-in, contract `IMissionChapterFlow` 2e3e2b3)
+
+Spec: `docs/APPROVED-CHAPTER-LOOP-2026-11-15.md`; root semantics 6894610619. Off unless
+`new MissionSession(..., survivalExtension: true, chapterLoop: true)`; then `session.ChapterFlow` (implements
+`IMissionChapterFlow`) is non-null. Everything below is Core; presentation only reads it and calls the commands.
+
+**Beats** (thresholds on the one mission calendar; day N starts at (N-1) x 86,400 s, beats at 08:00):
+Accident (day 1) -> Consequences (5) -> Contact (9) -> RescueFailed (14) -> FinalDecision (20) -> Rendezvous (30).
+`TryContinueRoutine()` is accepted only when the current beat is done:
+
+| Beat | Done when | Decision |
+|---|---|---|
+| Accident | power + life support repaired, >= 1 ration eaten, >= 1 rest completed | - |
+| Consequences | decision settled | `ScienceOrSalvage`: existing `salvage-payload` interaction, or `PreserveScience`. Without a salvageable payload no decision opens yet (CHAPTER-CONTRACT-02 `GrowOrConserve` proposed) |
+| Contact | `Phase == Survival` (EVA, antenna, transmission, Earth's reply; may already be done earlier) | - |
+| RescueFailed | dispatch received and `AcknowledgeRescueFailure` chosen | `AcknowledgeRescueFailure` |
+| FinalDecision | decision settled | `GrowOrBeacon`: `StopGrowForBeacon` (only while growing; crop forfeited, no credit or refund) or `KeepGrowRunning` |
+| Rendezvous | beacon powered (routine then runs to the docking) | the existing beacon request (`TryPowerBeacon`) |
+
+**Accounting.** Needs and hand portions start once when the impact ends (Emergency): continuous provisioning stops
+at that instant (`ActivatedAtSimulationSeconds`). The first packaged meal may be eaten once before the 6 h gate at
+the full ration cost; its unused part is a satiation credit (negative hunger), so the next ration comes due later.
+Ration/drink/sleep are refused in the suit, outside or with the airlock not closed.
+
+**Routine.** `RoutineTimeScale` 21,600 (6 h per real second) on the ordinary step loop. Core issues the real
+`TryDrinkWater` / `TryConsumeRation` when each is due and, after 15.5 h awake, an ordinary rest of 8.5 h (rest
+accounting, needs paused). Stops (synchronously, actual time kept in `RoutineStoppedAtSimulationSeconds`):
+`Danger` (power lost, CO2 margin), `ResourceShortage` (store empty or a due portion unaffordable), `MissionEnded`,
+`DispatchReceived`, `DecisionRequired` (pending decision or beacon request), `CropReady`/`CropFailed`,
+`ReachedChapter`, `PlayerCancelled` (also when the runtime is disabled), `PrerequisiteMissing` (a scheduled command was
+refused, or Earth's message is due with no powered link). A danger wins every tie. Each stop restores the scale the
+clock had before (and wakes a resting crew). Pause suspends a routine; restart/dispose drops it. During a routine
+`IsPlayerControlAllowed` is false and the 32-split fallback yields instead of skipping. Montage tally:
+`RoutineRations`, `RoutineDrinks`, `RoutineRests` (current/last segment).
+
+**Story (fictional GAME ASSUMPTIONS).** Earth's reply = `FirstRescuePlanned`. At that moment Core fixes the
+day-14 dispatch: send `S = max(day14 08:00 - OWLT(day14), reply received)`, earliest receipt `S + OWLT(S)` from the
+packaged Horizons snapshot; actual receipt = first step at or after that with a powered link (`TransmittedAt` stays
+S). Dispatch id `rescue-1-failed`, content id `dispatch.rescue-1-failed`; deduplicate by id. The RescueFailed beat
+starts at `max(day14 08:00, earliest receipt)`. Acknowledging commits a craft already in transit nearby:
+`ISurvivalRecovery.Stage` becomes `Inbound`, beacon request at day 30 08:00 (never earlier than ack + 1 h), window 8 h,
+0.4 kWh, docking 10 h after the request. A missed window opens ONE second paid window 3 days later
+(`SecondBeaconWindowOffered`, stage `Delayed`); a second miss ends `Lost` ("Missed rendezvous ..."). Nothing docks
+without a powered beacon. In chapter mode the legacy +12-day plan after contact is not used.
+
+**For root wiring:** objective/decision UI from `Chapter`, `PendingDecision`, `CheckChoose(...)`'s explanation
+(forecast text) and `TryChoose`; montage card from `IsRoutineRunning`, `NextChapter`/`NextChapterAtSimulationSeconds`,
+`RoutineStartedAt`/`StoppedAt`, the tally and `LastRoutineStop`/`LastRoutineStopText`; subtitles from
+`LatestDispatch`. `Changed`/`Revision` fire on every committed change (also on each routine meal/rest).
+
+Evidence: `Tests/EditMode/SurvivalExtension/ChapterLoopTests.cs` (15 tests).
