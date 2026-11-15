@@ -54,6 +54,8 @@ namespace OutOfReach.Composition
         private const float MicrogravityHelpSeconds = 20f;
         private const string MicrogravityHelp = "MICROGRAVITY\nAim at a nearby wall, floor or ceiling.\nLeft / right click · Push with that hand\nBoth buttons · Push with both hands\nSpace · Push off the floor with your feet\nHold WASD while pushing to steer.";
         private const string RailGripHelp = "Ctrl + click · Grip this rail";
+        private static readonly Vector3 PreflightStandingFit = new Vector3(0f, 0f, -.285f);
+        private static readonly Vector3 InFlightStandingFit = new Vector3(0f, 0f, -.197f);
         private float microgravityHelpRemaining;
         private float nextRailHintProbe;
         private bool railHintVisible;
@@ -292,6 +294,13 @@ namespace OutOfReach.Composition
 
         private bool CanPresentGroundedStepAudio() => !orbitalLocationReached && CanPresentWalkMotion() && modeChosen
             && !menuPresentationVisible && !(boundSession.SurvivalRecovery?.IsResting ?? false);
+
+        private void RefreshStandingBodyFit()
+        {
+            if (embodiedBody)
+                embodiedBody.SetVisualFeetOffset(EmbodiedBodyPresenter.BodyPose.Standing,
+                    orbitalLocationReached ? InFlightStandingFit : PreflightStandingFit);
+        }
 
         // This is queried by the visual presenter in LateUpdate, after camera sequences update.
         // Read the real controller's gate; never replace it or introduce another input/movement authority.
@@ -593,6 +602,7 @@ namespace OutOfReach.Composition
             {
                 embodiedBody.ConfigureSession(runtime.EvaStatus, runtime.Clock, CanPresentBody,
                     () => runtime && runtime.Player && runtime.Player.IsFloating, BodyArmMask);
+                RefreshStandingBodyFit();
                 embodiedBody.ConfigureGroundLocomotion(runtime.Player.GetComponent<CharacterController>(),
                     CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting);
             }
@@ -777,7 +787,11 @@ namespace OutOfReach.Composition
 
         private void OnPhaseChanged(PhaseChanged message)
         {
-            if (!marine && message.Current == GamePhase.Intro) orbitalLocationReached = true;
+            if (!marine && message.Current == GamePhase.Intro)
+            {
+                orbitalLocationReached = true;
+                RefreshStandingBodyFit();
+            }
             if (marine && message.Previous == GamePhase.Planning && message.Current == GamePhase.Intro)
             {
                 flightBoard.SetDeparturePresentation(true);
@@ -854,6 +868,7 @@ namespace OutOfReach.Composition
         private void OnTransportTransferred()
         {
             orbitalLocationReached = true;
+            RefreshStandingBodyFit();
             transferredSession = boundSession;
             if (flightBoard) flightBoard.SetDeparturePresentation(false);
             if (cargoPresentation) cargoPresentation.SetAboardDepartureVisible(false);

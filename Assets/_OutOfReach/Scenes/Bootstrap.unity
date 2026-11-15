@@ -13844,7 +13844,7 @@ MonoBehaviour:
   visualRoot: {fileID: 1225210199}
   playerFeet: {fileID: 614218385}
   playerCamera: {fileID: 1520165613}
-  feetVisualOffset: {x: 0, y: 0, z: -0.285}
+  feetVisualOffset: {x: 0, y: 0, z: -0.197}
   floatingFeetVisualOffset: {x: 0, y: 0, z: 0}
   seatedFeetVisualOffset: {x: 0, y: 0, z: -0.33}
   work:
