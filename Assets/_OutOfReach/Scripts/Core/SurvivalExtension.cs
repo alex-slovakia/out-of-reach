@@ -52,9 +52,41 @@ namespace OutOfReach.Core
 
         public SurvivalExtensionSpec Spec { get; }
         public bool Enabled { get; }
-        public bool IsActive => Enabled && !disposed && !state.IsClosed && ContactRestoredAtSimulationSeconds.HasValue && state.Phase == GamePhase.Survival;
+        public bool IsActive => Enabled && !disposed && !state.IsClosed && (ChapterMode
+            ? ActivatedAtSimulationSeconds.HasValue && IsChapterPhase(state.Phase)
+            : ContactRestoredAtSimulationSeconds.HasValue && state.Phase == GamePhase.Survival);
+
+        /// <summary>
+        /// Approved chapter loop: needs and hand-issued portions start once, when the impact sequence ends (day 1), not
+        /// at contact. Set by the director before launch; false keeps the legacy post-contact activation.
+        /// </summary>
+        internal bool ChapterMode { get; set; }
+
+        /// <summary>When portion accounting began (chapter mode: end of the impact; legacy: contact), or null.</summary>
+        public double? ActivatedAtSimulationSeconds => ChapterMode ? chapterActivatedAt : ContactRestoredAtSimulationSeconds;
+
+        /// <summary>When the one grow module was built, simulation seconds, or null.</summary>
+        public double? GrowModuleBuiltAtSimulationSeconds { get; private set; }
+
+        /// <summary>Rations eaten and water portions drunk so far (each one real ledger debit).</summary>
+        public int RationsEaten { get; private set; }
+        public int DrinksTaken { get; private set; }
+
+        /// <summary>
+        /// Set by the chapter routine around the portions it issues: the debit is identical, only the per-portion journal
+        /// line is left out (the routine records one summary line per segment instead of hundreds of report lines).
+        /// </summary>
+        internal bool QuietJournal { get; set; }
+
+        /// <summary>Why the crew cannot use the galley or bunk right now (in the suit, outside), or null.</summary>
+        internal Func<string> CabinBlocker { get; set; }
+
+        private double? chapterActivatedAt;
+
+        private static bool IsChapterPhase(GamePhase phase) => phase == GamePhase.Emergency || phase == GamePhase.Repair
+            || phase == GamePhase.Eva || phase == GamePhase.Transmission || phase == GamePhase.Survival;
         public double? ContactRestoredAtSimulationSeconds { get; private set; }
-        public double Hunger01 => Math.Min(1d, hungerSeconds / Spec.HungerLimitSeconds);
+        public double Hunger01 => Math.Max(0d, Math.Min(1d, hungerSeconds / Spec.HungerLimitSeconds));
         public double Thirst01 => Math.Min(1d, thirstSeconds / Spec.ThirstLimitSeconds);
         public GrowModuleStage GrowStage { get; private set; }
         public double CropAgeSimulationDays => GrowStage == GrowModuleStage.Unbuilt || GrowStage == GrowModuleStage.ReadyToPlant
@@ -75,10 +107,55 @@ namespace OutOfReach.Core
         /// </summary>
         internal bool NeedsPaused { get; set; }
 
+        /// <summary>
+        /// Chapter mode only, once: the one switch from continuous provisioning to hand-issued portions. Needs start at
+        /// zero because the continuous draw has already charged every second until now; nothing is charged twice.
+        /// </summary>
+        internal void ActivateForChapter()
+        {
+            if (!Enabled || disposed || !ChapterMode || chapterActivatedAt.HasValue || !IsChapterPhase(state.Phase)) return;
+            chapterActivatedAt = state.ElapsedSimulationSeconds;
+            log?.Invoke("After the accident the automatic galley schedule is gone: from now on the crew takes each stored ration and water portion by hand.");
+            modified?.Invoke();
+            Notify();
+        }
+
+        /// <summary>Simulated seconds until a ration (food) or water portion is due; 0 when due now; +Infinity when inactive or resting.</summary>
+        internal double TimeUntilPortionDue(bool food)
+        {
+            if (!IsActive || NeedsPaused) return double.PositiveInfinity;
+            return Math.Max(0d, Spec.PortionSeconds - (food ? hungerSeconds : thirstSeconds));
+        }
+
+        /// <summary>
+        /// Chapter decision: stops a growing module. Its light/fan load and irrigation end now and the crop is forfeited:
+        /// no food is credited and nothing spent on it is refunded.
+        /// </summary>
+        internal CommandResult StopGrowModule(string reason)
+        {
+            if (GrowStage != GrowModuleStage.Growing) return Fail(CommandFailure.PreconditionsNotMet, "No crop is growing.");
+            using (events.DeferDispatch())
+            {
+                GrowStage = GrowModuleStage.Failed;
+                log?.Invoke(reason);
+                modified?.Invoke();
+                Notify();
+            }
+            return Ok(reason);
+        }
+
         internal void Begin()
         {
             if (!Enabled || disposed || state.Phase != GamePhase.Survival || ContactRestoredAtSimulationSeconds.HasValue) return;
             ContactRestoredAtSimulationSeconds = state.ElapsedSimulationSeconds;
+            if (ChapterMode)
+            {
+                log?.Invoke("Contact restored. Earth now relays the rescue planning; the crew keeps rationing by hand.");
+                modified?.Invoke();
+                Notify();
+                return;
+            }
+
             log?.Invoke("Contact restored. Survival continues while a nearby fictional recovery vehicle's rendezvous is assessed; no arrival is guaranteed. Rations and drinking now require crew actions.");
             modified?.Invoke();
             Notify();
@@ -121,7 +198,15 @@ namespace OutOfReach.Core
             Notify();
         }
 
-        public CommandResult CheckConsumeRation() => CheckPortion(hungerSeconds, rationCost, "Eat stored ration", "No ration is needed yet.");
+        public CommandResult CheckConsumeRation() => CheckPortion(IsFirstMeal ? Spec.PortionSeconds : hungerSeconds, rationCost,
+            IsFirstMeal ? "Prepare and eat the first packaged meal" : "Eat stored ration", "No ration is needed yet.");
+
+        /// <summary>
+        /// Chapter mode: the first packaged meal after the accident may be eaten before the 6 h portion gate, once, at the
+        /// full ration cost. The unused part of the portion becomes a satiation credit (negative hunger), so the next ration
+        /// comes due that much later: no reset, no free food, no double debit.
+        /// </summary>
+        private bool IsFirstMeal => ChapterMode && RationsEaten == 0;
         public CommandResult CheckDrinkWater() => CheckPortion(thirstSeconds, drinkCost, "Drink stored water", "No water portion is needed yet.");
 
         private CommandResult CheckPortion(double need, ResourceAmount[] cost, string action, string satisfied)
@@ -144,9 +229,9 @@ namespace OutOfReach.Core
             {
                 CommandResult spent = resources.TryConsume(food ? rationCost : drinkCost);
                 if (!spent.Succeeded) return spent;
-                if (food) hungerSeconds = Math.Max(0d, hungerSeconds - Spec.PortionSeconds);
-                else thirstSeconds = Math.Max(0d, thirstSeconds - Spec.PortionSeconds);
-                log?.Invoke(check.Explanation + ".");
+                if (food) { hungerSeconds = IsFirstMeal ? hungerSeconds - Spec.PortionSeconds : Math.Max(0d, hungerSeconds - Spec.PortionSeconds); RationsEaten++; }
+                else { thirstSeconds = Math.Max(0d, thirstSeconds - Spec.PortionSeconds); DrinksTaken++; }
+                if (!QuietJournal) log?.Invoke(check.Explanation + ".");
                 Notify();
             }
             return check;
@@ -170,6 +255,7 @@ namespace OutOfReach.Core
                 CommandResult spent = resources.TryConsume(buildCost);
                 if (!spent.Succeeded) return spent;
                 GrowStage = GrowModuleStage.ReadyToPlant;
+                GrowModuleBuiltAtSimulationSeconds = state.ElapsedSimulationSeconds;
                 log?.Invoke(check.Explanation + ". One pre-grown seedling kit is available as scenario equipment.");
                 modified?.Invoke();
                 Notify();
@@ -233,8 +319,12 @@ namespace OutOfReach.Core
 
         private CommandResult CheckActive()
         {
-            if (!IsActive) return Fail(CommandFailure.WrongPhase, "This action belongs to the enabled post-contact survival chapter.");
+            if (!IsActive) return Fail(CommandFailure.WrongPhase, ChapterMode
+                ? "Rations and water are taken by hand once the accident is over."
+                : "This action belongs to the enabled post-contact survival chapter.");
             if (clock.IsPaused || cinematics.IsWaiting) return Fail(CommandFailure.PreconditionsNotMet, "Resume crew control before acting.");
+            string blocked = CabinBlocker?.Invoke();
+            if (blocked != null) return Fail(CommandFailure.PreconditionsNotMet, blocked);
             if (NeedsPaused) return Fail(CommandFailure.PreconditionsNotMet, "The crew is resting. Wake up first.");
             return Ok("Survival action available.");
         }
