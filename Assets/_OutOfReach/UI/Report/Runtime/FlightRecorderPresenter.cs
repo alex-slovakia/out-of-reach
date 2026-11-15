@@ -12,6 +12,8 @@ namespace OutOfReach.Presentation.UI.Report
         private readonly VisualElement endCard, detail, summary, marsCredits, rollControls;
         private readonly Label endHeadline, endSummary, endEyebrow, endElapsed, detailTitle, headline, reason, elapsed;
         private readonly ScrollView record, sources;
+        private readonly VisualElement sourceLayout, nasaPage, artPage, assumptionsPage;
+        private readonly Button nasaTab, artTab, assumptionsTab;
         private readonly Button recordButton, sourcesButton, restartButton, backButton, marsSourceButton, rollPauseButton, rollSkipButton;
         private bool hasReport, hasSources, showingSources, canRestart, restartPending, disposed;
         private bool reducedMotion;
@@ -30,15 +32,10 @@ namespace OutOfReach.Presentation.UI.Report
             Root.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             Root.Add(new ReportShade());
             endCard = Element("reportEndCard", "recorder-end-card");
-            var masthead = Element("reportMasthead", "recorder-end-masthead");
-            masthead.Add(FlightRecorderElements.Text("OUT OF REACH", "recorder-brand"));
-            masthead.Add(FlightRecorderElements.Text("AURORA-7  /  FLIGHT RECORDER", "recorder-vessel"));
-            endCard.Add(masthead);
             var hero = Element("reportHero", "recorder-end-hero");
             endEyebrow = FlightRecorderElements.Text(string.Empty, "recorder-end-eyebrow");
             endHeadline = FlightRecorderElements.Text(string.Empty, "recorder-end-headline");
             endSummary = FlightRecorderElements.Text(string.Empty, "recorder-end-summary");
-            hero.Add(endEyebrow);
             hero.Add(endHeadline);
             hero.Add(endSummary);
             var actions = Element("reportEndActions", "recorder-end-actions");
@@ -53,7 +50,6 @@ namespace OutOfReach.Presentation.UI.Report
             hero.Add(actions);
             endCard.Add(hero);
             endElapsed = FlightRecorderElements.Text(string.Empty, "recorder-end-elapsed");
-            endCard.Add(endElapsed);
             Root.Add(endCard);
 
             detail = Element("reportDetail", "recorder-detail");
@@ -74,6 +70,18 @@ namespace OutOfReach.Presentation.UI.Report
             record.RegisterCallback<WheelEvent>(OnRecordWheel, TrickleDown.TrickleDown);
             record.RegisterCallback<PointerDownEvent>(OnRecordPointerDown, TrickleDown.TrickleDown);
             sources = Scroll("reportSources");
+            sourceLayout = Element("reportSourceLayout", "recorder-source-layout");
+            var sourceNav = Element("reportSourceNavigation", "recorder-source-navigation");
+            sourceNav.Add(FlightRecorderElements.Text("SOURCES", "recorder-source-title"));
+            nasaTab = SourceTab("NASA DATA", "reportNasaTab", 0);
+            artTab = SourceTab("MUSIC & ART", "reportArtTab", 1);
+            assumptionsTab = SourceTab("ASSUMPTIONS", "reportAssumptionsTab", 2);
+            sourceNav.Add(nasaTab); sourceNav.Add(artTab); sourceNav.Add(assumptionsTab);
+            nasaPage = Element("reportNasaPage", "recorder-source-page");
+            artPage = Element("reportArtPage", "recorder-source-page");
+            assumptionsPage = Element("reportAssumptionsPage", "recorder-source-page");
+            sources.Add(nasaPage); sources.Add(artPage); sources.Add(assumptionsPage);
+            sourceLayout.Add(sourceNav); sourceLayout.Add(sources);
             marsCredits = Element("marsImageryCredits", "recorder-section");
             marsCredits.Add(FlightRecorderElements.Text("Mars surface imagery", "recorder-section-title"));
             marsCredits.Add(FlightRecorderElements.Text("NASA/Jet Propulsion Laboratory & Caltech", "recorder-classification"));
@@ -92,7 +100,7 @@ namespace OutOfReach.Presentation.UI.Report
             marsSourceButton.RegisterCallback<FocusInEvent>(OnMarsSourceFocusIn);
             marsCredits.Add(marsSourceButton);
             detail.Add(record);
-            detail.Add(sources);
+            detail.Add(sourceLayout);
             Root.Add(detail);
 
             summary = Element("reportFullSummary", "recorder-summary");
@@ -141,6 +149,7 @@ namespace OutOfReach.Presentation.UI.Report
             Root.EnableInClassList("recorder-recovery", report.IsFinal &&
                 (report.Outcome == MissionOutcome.Recovered || report.Outcome == MissionOutcome.RecoveryPossible));
             Root.EnableInClassList("recorder-lost", report.IsFinal && report.Outcome == MissionOutcome.Lost);
+            Root.EnableInClassList("recorder-contact", report.IsFinal && report.Outcome == MissionOutcome.RecoveryPossible);
             headline.text = string.IsNullOrWhiteSpace(report.Headline) ? endHeadline.text : report.Headline;
             reason.text = string.IsNullOrWhiteSpace(report.OutcomeReason)
                 ? (report.IsFinal ? "No outcome explanation recorded." : "The mission has not ended.") : report.OutcomeReason;
@@ -153,15 +162,11 @@ namespace OutOfReach.Presentation.UI.Report
                 {
                     MissionReportSection section = sections[i];
                     record.Add(FlightRecorderElements.Section(section, i + 1, OnReportSourceRequested));
-                    if (FlightRecorderElements.Classification(section.Id) == null) continue;
-                    sources.Add(FlightRecorderElements.Section(section, i + 1, OnReportSourceRequested));
-                    hasSources = true;
                 }
             }
             if (sections == null || sections.Count == 0)
                 record.Add(FlightRecorderElements.Text("No detailed facts were supplied with this report.", "recorder-empty"));
-            sources.Add(marsCredits);
-            sources.Add(FlightRecorderElements.Text("Departure music · Titan by Scott Buckley (CC BY 4.0)", "recorder-classification"));
+            BuildSources(report);
             marsSourceButton.SetEnabled(true);
             hasSources = true;
             canRestart = FlightRecorderEndCardCopy.CanRestart(report);
@@ -188,17 +193,19 @@ namespace OutOfReach.Presentation.UI.Report
             hasReport = hasSources = showingSources = canRestart = restartPending = false;
             finalRecord = false;
             record.Clear();
-            sources.Clear();
+            nasaPage.Clear(); artPage.Clear(); assumptionsPage.Clear();
             marsSourceButton.SetEnabled(false);
             endHeadline.text = endSummary.text = detailTitle.text = headline.text = reason.text = elapsed.text = string.Empty;
             endEyebrow.text = endElapsed.text = string.Empty;
             Root.RemoveFromClassList("recorder-recovery");
             Root.RemoveFromClassList("recorder-lost");
+            Root.RemoveFromClassList("recorder-contact");
             Show(Root, false);
             Show(detail, false);
             Show(rollControls, false);
             Show(record, false);
             Show(sources, false);
+            Show(sourceLayout, false);
             Show(endCard, true);
             restartButton.text = "Plan again";
             restartButton.SetEnabled(false);
@@ -264,6 +271,92 @@ namespace OutOfReach.Presentation.UI.Report
         private void OnSourcesRequested() { if (!disposed && hasReport && hasSources) OpenDetail(true); }
         private void OnBackRequested() { if (!disposed && hasReport) ShowEndCard(true); }
 
+        private Button SourceTab(string text, string name, int index)
+        {
+            var button = Button(text, name, () =>
+            {
+                if (!disposed && hasReport && showingSources && !detail.ClassListContains("recorder-hidden"))
+                    SelectSourceTab(index);
+            });
+            button.AddToClassList("recorder-source-tab");
+            RegisterFeedback(button);
+            return button;
+        }
+
+        private void SelectSourceTab(int index)
+        {
+            Show(nasaPage, index == 0); Show(artPage, index == 1); Show(assumptionsPage, index == 2);
+            nasaTab.EnableInClassList("recorder-source-selected", index == 0);
+            artTab.EnableInClassList("recorder-source-selected", index == 1);
+            assumptionsTab.EnableInClassList("recorder-source-selected", index == 2);
+            sources.scrollOffset = Vector2.zero;
+        }
+
+        private void BuildSources(IMissionReport report)
+        {
+            var orbitHost = Element("sources-orbit-host", "recorder-source-orbit");
+            orbitHost.Add(new ReferenceOrbitView(true));
+            nasaPage.Add(orbitHost);
+            nasaPage.Add(FlightRecorderElements.Text("NASA / JPL HORIZONS", "recorder-source-heading"));
+            nasaPage.Add(FlightRecorderElements.Text("The distance behind the delay.", "recorder-source-deck"));
+            nasaPage.Add(FlightRecorderElements.Text("Earth–Mars reference data sets the minimum time for a signal to reach Earth and return.", "recorder-source-description"));
+            var dataset = new Foldout { name = "reportDatasetDetails", text = "View dataset details", value = false };
+            dataset.AddToClassList("recorder-source-disclosure");
+            assumptionsPage.Add(FlightRecorderElements.Text("WHAT THE GAME SIMPLIFIES", "recorder-source-heading"));
+            assumptionsPage.Add(FlightRecorderElements.Text("One fictional mission. Explicit assumptions.", "recorder-source-deck"));
+            assumptionsPage.Add(FlightRecorderElements.Text("The ship, damage, recovery and compressed timing belong to the scenario. The complete recorded assumptions are below.", "recorder-source-description"));
+            bool primaryLinkAdded = false;
+            if (report.Sections != null)
+                for (int i = 0; i < report.Sections.Count; i++)
+                {
+                    MissionReportSection section = report.Sections[i];
+                    if (FlightRecorderElements.Classification(section.Id) == null) continue;
+                    var facts = FlightRecorderElements.Section(section, i + 1, OnReportSourceRequested);
+                    if (section.Id == "nasa-data" || section.Id == "derived-physics")
+                    {
+                        dataset.Add(facts);
+                        if (section.Id == "nasa-data" && !primaryLinkAdded)
+                            foreach (MissionReportLine line in section.Lines)
+                                if (line.Label == "NASA-01" && FlightRecorderElements.TrySourceUrl(line.Value, out string url))
+                                {
+                                    nasaPage.Add(SourceLink("Open NASA source", url, false));
+                                    primaryLinkAdded = true;
+                                    break;
+                                }
+                    }
+                    else assumptionsPage.Add(facts);
+                }
+            nasaPage.Add(dataset);
+            nasaPage.Add(FlightRecorderElements.Text("AURORA-7 is fictional. This is a distance reference, not its trajectory.", "recorder-source-note"));
+            artPage.Add(FlightRecorderElements.Text("MUSIC & ART", "recorder-source-heading"));
+            artPage.Add(FlightRecorderElements.Text("Cobalt — Scott Buckley", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Exploration music · Creative Commons Attribution 4.0. Edited loop with level adjustment and an eight-second crossfade.", "recorder-source-description"));
+            artPage.Add(SourceLink("Cobalt · original track", "https://www.scottbuckley.com.au/library/cobalt/", true));
+            artPage.Add(FlightRecorderElements.Text("Titan — Scott Buckley", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Departure music · Creative Commons Attribution 4.0. Excerpt from 10.9–45.4 seconds, with fades and gain adjusted.", "recorder-source-description"));
+            artPage.Add(SourceLink("Scott Buckley · original track", "https://www.scottbuckley.com.au/library/titan/", true));
+            artPage.Add(SourceLink("Read the CC BY 4.0 license", "https://creativecommons.org/licenses/by/4.0/", true));
+            artPage.Add(marsCredits);
+            artPage.Add(FlightRecorderElements.Text("Typography · Barlow Condensed Bold", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Copyright 2017 The Barlow Project Authors. Unmodified font distributed under the SIL Open Font License 1.1.", "recorder-source-description"));
+            artPage.Add(SourceLink("Barlow Condensed · font and license", "https://github.com/google/fonts/blob/60824dce48f7dd28fe7d65559f2da1f6e04e585b/ofl/barlowcondensed/OFL.txt", true));
+            SelectSourceTab(0);
+        }
+
+        private Button SourceLink(string caption, string url, bool attribution)
+        {
+            var button = Button(caption, "reportSourceLink", () =>
+            {
+                if (disposed || !hasReport || !showingSources || detail.ClassListContains("recorder-hidden")) return;
+                if (attribution) Application.OpenURL(url);
+                else OnReportSourceRequested(url);
+            });
+            button.tooltip = url;
+            button.AddToClassList("recorder-source-link");
+            RegisterFeedback(button);
+            return button;
+        }
+
         private void OpenDetail(bool sourceView)
         {
             StopRecordRoll();
@@ -272,8 +365,10 @@ namespace OutOfReach.Presentation.UI.Report
             Show(detail, true);
             Show(record, !sourceView);
             Show(sources, sourceView);
+            Show(sourceLayout, sourceView);
+            detail.EnableInClassList("recorder-sources-open", sourceView);
             Show(rollControls, !sourceView && finalRecord);
-            detailTitle.text = sourceView ? "Sources & assumptions" : "Mission record";
+            detailTitle.text = sourceView ? string.Empty : "Mission record";
             (sourceView ? sources : record).scrollOffset = Vector2.zero;
             backButton.Focus();
             if (!sourceView && finalRecord) StartRecordRoll();
@@ -285,6 +380,7 @@ namespace OutOfReach.Presentation.UI.Report
             Show(detail, false);
             Show(record, false);
             Show(sources, false);
+            Show(sourceLayout, false);
             Show(rollControls, false);
             Show(endCard, true);
             if (restoreFocus) (showingSources ? sourcesButton : recordButton).Focus();
@@ -431,8 +527,8 @@ namespace OutOfReach.Presentation.UI.Report
             if (report == null || !report.IsFinal) return "MISSION IN PROGRESS";
             switch (report.Outcome)
             {
-                case MissionOutcome.Recovered: return "You made it.";
-                case MissionOutcome.RecoveryPossible: return "A voice from Earth.";
+                case MissionOutcome.Recovered: return "SURVIVED";
+                case MissionOutcome.RecoveryPossible: return "CONTACT RESTORED";
                 case MissionOutcome.Lost: return IsRecordedCrewDeath(report) ? "YOU DIED" : "MISSION LOST";
                 default: return "MISSION ENDED";
             }
@@ -447,7 +543,7 @@ namespace OutOfReach.Presentation.UI.Report
             {
                 // Recovered is the actual crew-recovery outcome; Mars remains a destination,
                 // not a fabricated claim that an interplanetary transfer took no time.
-                return "Rescue reached Aurora-7. Your next destination: Mars.";
+                return "Rescue reached AURORA-7.";
             }
             if (report.Outcome == MissionOutcome.Lost)
             {

@@ -1,5 +1,11 @@
 # NASA data and scientific assumptions
 
+## Sources-menu heliocentric reference — 15 November 2026
+
+The Sources archive uses an explicitly dated Sun/Earth/Mars reference, independent of mission simulation. Two 701-sample daily heliocentric Horizons traces start at 2026-11-14 08:00 UTC, with Sun-centred geometric positions in kilometres. One uniform scale applies to distances and spherical mean radii. The top-down ecliptic XY projection omits depth; optional locator crosses do not represent physical size. Zoom reveals subpixel bodies without inflating them.
+
+Raw responses, physical-radius sources, query URLs, hashes, sampling/projection assumptions and verification are in [the reference dataset](docs/data/reference-orbits/README.md). `python tools/nasa/reference_orbits.py` verifies it offline. It does not replace the communications data or claim live spacecraft positions. The Mars cinematic uses NASA/JPL Viking imagery on an authored globe, not terrain-resolved navigation geometry.
+
 ## Marine prologue presentation boundary
 
 The fictional marine launch has an elevated boarding deck. Its 22-second, 90-metre authored ascent ends with a clearly separate “LATER · ABOARD AURORA-7” chapter. This is cinematic compression, not a calculated launch trajectory, orbital insertion or rendezvous. Orbit is not reached in 22 seconds; the intervening flight is omitted. The real-time loading deadline and loaded equipment remain authoritative before this presentation transition. The deep-space communications model below remains the separately documented Mars-vicinity reference approximation.

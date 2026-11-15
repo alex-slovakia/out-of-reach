@@ -1,0 +1,12 @@
+{
+  "pass": true,
+  "earth_samples": 701,
+  "mars_samples": 701,
+  "earth_sun_km": 148021859.03745073,
+  "mars_sun_km": 240578403.04619855,
+  "earth_mars_3d_km": 197707975.99085307,
+  "earth_mars_projected_xy_km": 197600084.84137115,
+  "sun_to_earth_mean_radius_ratio": 109.19778413728038,
+  "earth_to_mars_mean_radius_ratio": 1.8796307419973446,
+  "runtime_sha256": "f3f3e5bdff720a4b277b933f0b31d675d8f49a7429e1a42f12feb5704aecaffc"
+}

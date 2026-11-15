@@ -1,0 +1,90 @@
+{
+  "dataset_id": "oor-heliocentric-reference-20261114-v1",
+  "units": "km and seconds",
+  "time_scale": "UT (UTC in this epoch; future leap seconds subject to Horizons caveat)",
+  "epoch_utc": "2026-11-14T08:00:00+00:00",
+  "trace_end_utc": "2028-10-14T08:00:00+00:00",
+  "samples_per_body": 701,
+  "mean_radii_km": {
+    "Sun": 695700.0,
+    "Earth": 6371.0084,
+    "Mars": 3389.5
+  },
+  "radius_selection": "NASA physical table volumetric mean Earth/Mars radii and NASA Sun fact-sheet mean radius, manually checked 2026-11-15.",
+  "runtime_path": "Assets/_OutOfReach/UI/Report/Resources/OorReferenceOrbits.json",
+  "runtime_sha256": "f3f3e5bdff720a4b277b933f0b31d675d8f49a7429e1a42f12feb5704aecaffc",
+  "sources": {
+    "earth.raw.json": {
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27399%27&CENTER=%27500%4010%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272026-11-14+08%3A00%27&STOP_TIME=%272028-10-14+08%3A00%27&STEP_SIZE=%271+d%27&TIME_TYPE=%27UT%27&OUT_UNITS=%27KM-S%27&REF_SYSTEM=%27ICRF%27&REF_PLANE=%27ECLIPTIC%27&VEC_CORR=%27NONE%27&VEC_TABLE=%273%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27",
+      "parameters": {
+        "format": "json",
+        "COMMAND": "'399'",
+        "CENTER": "'500@10'",
+        "MAKE_EPHEM": "'YES'",
+        "EPHEM_TYPE": "'VECTORS'",
+        "START_TIME": "'2026-11-14 08:00'",
+        "STOP_TIME": "'2028-10-14 08:00'",
+        "STEP_SIZE": "'1 d'",
+        "TIME_TYPE": "'UT'",
+        "OUT_UNITS": "'KM-S'",
+        "REF_SYSTEM": "'ICRF'",
+        "REF_PLANE": "'ECLIPTIC'",
+        "VEC_CORR": "'NONE'",
+        "VEC_TABLE": "'3'",
+        "CSV_FORMAT": "'YES'",
+        "OBJ_DATA": "'YES'"
+      },
+      "sha256": "7c4e61a454f589e799e66bfea08cd74f174dc5aeeb6e5f3b21392ebc50a270f1",
+      "signature": {
+        "source": "NASA/JPL Horizons API",
+        "version": "1.2"
+      },
+      "retrieved_utc": "2026-11-15T09:49:39.754702+00:00"
+    },
+    "mars.raw.json": {
+      "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27499%27&CENTER=%27500%4010%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27VECTORS%27&START_TIME=%272026-11-14+08%3A00%27&STOP_TIME=%272028-10-14+08%3A00%27&STEP_SIZE=%271+d%27&TIME_TYPE=%27UT%27&OUT_UNITS=%27KM-S%27&REF_SYSTEM=%27ICRF%27&REF_PLANE=%27ECLIPTIC%27&VEC_CORR=%27NONE%27&VEC_TABLE=%273%27&CSV_FORMAT=%27YES%27&OBJ_DATA=%27YES%27",
+      "parameters": {
+        "format": "json",
+        "COMMAND": "'499'",
+        "CENTER": "'500@10'",
+        "MAKE_EPHEM": "'YES'",
+        "EPHEM_TYPE": "'VECTORS'",
+        "START_TIME": "'2026-11-14 08:00'",
+        "STOP_TIME": "'2028-10-14 08:00'",
+        "STEP_SIZE": "'1 d'",
+        "TIME_TYPE": "'UT'",
+        "OUT_UNITS": "'KM-S'",
+        "REF_SYSTEM": "'ICRF'",
+        "REF_PLANE": "'ECLIPTIC'",
+        "VEC_CORR": "'NONE'",
+        "VEC_TABLE": "'3'",
+        "CSV_FORMAT": "'YES'",
+        "OBJ_DATA": "'YES'"
+      },
+      "sha256": "230c9a1dbbc8ac790d3e68705825f79dd2180f562b7ce3f762a6340a07cb2df9",
+      "signature": {
+        "source": "NASA/JPL Horizons API",
+        "version": "1.2"
+      },
+      "retrieved_utc": "2026-11-15T09:49:41.256771+00:00"
+    },
+    "planet-physical-parameters.html": {
+      "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+      "sha256": "e49a487947295c389ba6e5833dd8fb04b63e826d39f70c123881882096e5e68b",
+      "retrieved_utc": "2026-11-15T09:49:42.250469+00:00"
+    },
+    "sun-fact-sheet.html": {
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html",
+      "sha256": "bcc186a518298636340e7975bf5a32da660cd656b90081f2e7c8aa7ec2b6561a",
+      "retrieved_utc": "2026-11-15T09:49:43.694283+00:00"
+    }
+  },
+  "assumptions": [
+    "Static dated reference, not mission live state or fictional spacecraft trajectory.",
+    "Positions are geometric, heliocentric body centres, no aberration/light-time corrections.",
+    "Top-down display projects ecliptic XY; Z remains in data and3D range readout.",
+    "Daily points connected by straight segments approximate orbital traces over700 days.",
+    "Bodies are mean-radius spheres; no terrain, atmosphere, oblateness or true-colour rendering.",
+    "Same pixels-per-km scale for radii and position; optional locator marks are not physical size."
+  ]
+}

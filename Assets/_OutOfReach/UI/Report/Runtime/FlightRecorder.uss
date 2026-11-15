@@ -16,28 +16,29 @@
 .recorder-end-masthead { flex-direction: row; justify-content: space-between; align-items: center; flex-shrink: 0; min-height: 28px; }
 .recorder-brand { font-size: 14px; letter-spacing: 3px; color: #e2e3dc; }
 .recorder-vessel { font-size: 11px; letter-spacing: 1.6px; color: #9da8a6; }
-.recorder-end-hero { flex-grow: 1; min-height: 0; justify-content: center; align-items: flex-start; max-width: 520px; padding-top: 20px; padding-bottom: 20px; }
+.recorder-end-hero { flex-grow: 1; min-height: 0; justify-content: center; align-items: center; padding-top: 20px; padding-bottom: 20px; }
 .recorder-end-eyebrow { font-size: 12px; letter-spacing: 2.5px; color: #d6b57a; border-left-width: 18px; border-left-color: #cfa968; padding-left: 12px; margin-bottom: 18px; }
-.recorder-end-headline { font-size: 64px; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/SourceSans3-Semibold.otf"); letter-spacing: -1px; white-space: normal; -unity-text-align: middle-left; margin-left: -3px; margin-bottom: 12px; }
-.recorder-end-summary { max-width: 430px; font-size: 18px; white-space: normal; -unity-text-align: middle-left; margin-bottom: 32px; color: #bec6c2; }
-.recorder-end-actions { flex-direction: column; align-items: flex-start; }
-.recorder-end-actions .recorder-button { background-color: rgba(0, 0, 0, 0); color: #aab4b2; border-width: 0; border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0); border-radius: 0; font-size: 21px; margin: 0 0 3px -15px; padding: 5px 16px 5px 13px; min-height: 42px; -unity-text-align: middle-left; translate: 0 0; scale: 1 1; transform-origin: left center; transition-property: color, translate, scale, border-left-color; transition-duration: 0.16s; transition-timing-function: ease-out; }
-.recorder-end-actions .recorder-primary-action { color: #eceee8; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/SourceSans3-Semibold.otf"); font-size: 24px; }
-.recorder-end-actions .recorder-button:hover, .recorder-end-actions .recorder-button:focus { background-color: rgba(0, 0, 0, 0); color: #edcb8e; border-width: 0; border-left-width: 2px; border-left-color: #d6b57a; translate: 8px 0; scale: 1.025 1.025; }
+.recorder-end-headline { font-size: 180px; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); letter-spacing: 3px; white-space: normal; -unity-text-align: middle-center; margin: 0 0 12px 0; }
+.recorder-end-summary { max-width: 640px; font-size: 20px; white-space: normal; -unity-text-align: middle-center; margin-bottom: 34px; color: #c6c5c0; }
+.recorder-end-actions { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; }
+.recorder-end-actions .recorder-button { -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); background-color: rgba(0, 0, 0, 0); color: #aab4b2; border-width: 0; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 0); border-radius: 0; font-size: 27px; margin: 4px 6px; padding: 8px 12px; min-height: 42px; -unity-text-align: middle-center; transition-duration: 0.16s; }
+.recorder-end-actions .recorder-primary-action { color: #eceee8; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-end-actions .recorder-button:hover, .recorder-end-actions .recorder-button:focus { background-color: rgba(0, 0, 0, 0); color: #edcb8e; border-width: 0; border-bottom-width: 2px; border-bottom-color: #d6b57a; }
 .recorder-end-actions .recorder-button:active { color: #ffffff; }
 .recorder-end-elapsed { font-size: 11px; color: #8b9997; letter-spacing: 1.4px; white-space: normal; border-top-width: 1px; border-top-color: rgba(165, 181, 176, 0.16); padding-top: 16px; }
 .recorder-reduced .recorder-end-card, .recorder-reduced .recorder-end-actions .recorder-button { transition-duration: 0s; translate: 0 0; scale: 1 1; }
 .recorder-lost { background-color: rgba(7, 8, 10, 0.58); }
 .recorder-lost .recorder-end-hero { max-width: none; align-items: center; }
 .recorder-lost .recorder-end-eyebrow { display: none; }
-.recorder-lost .recorder-end-headline { color: #d85045; font-size: 110px; letter-spacing: 5px; -unity-text-align: middle-center; margin: 0 0 12px 0; white-space: nowrap; }
+.recorder-lost .recorder-end-headline { color: #d85045; font-size: 180px; letter-spacing: 3px; -unity-text-align: middle-center; margin: 0 0 12px 0; white-space: nowrap; }
 .recorder-lost .recorder-end-summary { max-width: 640px; font-size: 20px; -unity-text-align: middle-center; color: #c6c5c0; margin-bottom: 34px; }
 .recorder-lost .recorder-end-actions { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; }
-.recorder-lost .recorder-end-actions .recorder-button { margin: 4px 6px; padding: 8px 12px; border-left-width: 0; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 0); font-size: 18px; -unity-text-align: middle-center; transform-origin: center; }
-.recorder-lost .recorder-end-actions .recorder-primary-action { color: #eee8dc; font-size: 18px; }
+.recorder-lost .recorder-end-actions .recorder-button { margin: 4px 6px; padding: 8px 12px; border-left-width: 0; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 0); font-size: 27px; -unity-text-align: middle-center; transform-origin: center; }
+.recorder-lost .recorder-end-actions .recorder-primary-action { color: #eee8dc; font-size: 27px; }
 .recorder-lost .recorder-end-actions .recorder-button:hover, .recorder-lost .recorder-end-actions .recorder-button:focus { color: #fff0e9; border-left-width: 0; border-bottom-color: #d85045; translate: 0 0; scale: 1 1; }
 .recorder-lost .recorder-end-elapsed { -unity-text-align: middle-center; }
 .recorder-recovery .recorder-end-headline { color: #e9eee4; }
+.recorder-recovery { background-color: rgba(7, 8, 10, 0.38); }
 .recorder-detail { flex-grow: 1; min-height: 0; min-width: 0; padding: 16px 22px; background-color: rgba(15, 19, 20, 0.92); border-width: 1px; border-color: #48504f; }
 .recorder-detail-navigation { flex-direction: row; align-items: center; flex-shrink: 0; padding-bottom: 10px; }
 .recorder-detail-title { font-size: 20px; color: #d5d7ce; margin-left: 12px; }
@@ -134,14 +135,65 @@
 .recorder-compact .recorder-end-hero { padding-top: 12px; padding-bottom: 12px; }
 .recorder-compact .recorder-end-headline { font-size: 36px; }
 .recorder-compact .recorder-end-summary { font-size: 17px; }
-.recorder-compact .recorder-end-actions { flex-direction: column; align-items: flex-start; }
+.recorder-compact .recorder-end-actions { flex-direction: row; align-items: center; }
 .recorder-compact .recorder-detail { padding: 10px 12px; }
 .recorder-compact .recorder-headline { font-size: 26px; }
 .recorder-compact .recorder-fact { flex-direction: column; }
 .recorder-compact .recorder-label { flex-basis: auto; margin-right: 0; margin-bottom: 2px; font-size: 17px; }
 .recorder-compact .recorder-value { flex-basis: auto; }
 .recorder-compact .recorder-linked-value { flex-basis: auto; }
-.recorder-lost.recorder-loss-compact .recorder-end-headline { font-size: 68px; letter-spacing: 3px; }
+.recorder-lost.recorder-loss-compact .recorder-end-headline { font-size: 120px; letter-spacing: 3px; }
 .recorder-lost.recorder-loss-compact .recorder-end-summary { font-size: 18px; margin-bottom: 22px; }
-.recorder-lost.recorder-compact .recorder-end-headline { font-size: 42px; letter-spacing: 2px; }
+.recorder-lost.recorder-compact .recorder-end-headline { font-size: 72px; letter-spacing: 2px; }
 .recorder-lost.recorder-compact .recorder-end-actions { flex-direction: row; align-items: center; }
+.recorder-loss-compact .recorder-end-headline { font-size: 120px; letter-spacing: 3px; }
+.recorder-compact .recorder-end-card .recorder-end-headline { font-size: 72px; letter-spacing: 2px; }
+.recorder-source-layout { flex-direction: row; flex-grow: 1; min-height: 0; min-width: 0; }
+.recorder-source-navigation { width: 235px; flex-shrink: 0; margin-right: 42px; }
+.recorder-source-title { font-size: 50px; letter-spacing: 2px; margin-bottom: 36px; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); }
+.recorder-source-tab { -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); background-color: rgba(0, 0, 0, 0); border-width: 0; border-left-width: 2px; border-left-color: rgba(0, 0, 0, 0); border-radius: 0; margin: 0 0 14px 0; padding: 9px 12px; min-height: 44px; font-size: 21px; letter-spacing: 1px; -unity-text-align: middle-left; }
+.recorder-source-tab:hover, .recorder-source-tab:focus { background-color: rgba(255, 255, 255, 0.04); border-width: 0; border-left-width: 2px; border-left-color: #efd19a; }
+.recorder-source-tab.recorder-source-selected { color: #edbc72; border-left-color: #edbc72; }
+.recorder-source-page { min-width: 0; flex-shrink: 0; padding: 12px 0 32px 0; }
+.recorder-source-heading { font-size: 38px; letter-spacing: 1px; white-space: normal; -unity-font: url("project://database/Assets/_OutOfReach/UI/Typography/BarlowCondensed-Bold.ttf"); margin-bottom: 8px; }
+.recorder-source-deck { font-size: 25px; color: #c5c6c2; white-space: normal; margin-bottom: 24px; }
+.recorder-source-description { font-size: 21px; white-space: normal; margin-bottom: 20px; max-width: 720px; }
+.recorder-source-note { color: #aeb5b2; font-size: 17px; white-space: normal; margin-top: 24px; }
+.recorder-source-page .recorder-source-link { background-color: rgba(0, 0, 0, 0); border-width: 0; border-bottom-width: 1px; border-bottom-color: #8c7b54; border-radius: 0; color: #e5cfaa; padding: 8px 0; margin: 4px 0; font-size: 19px; }
+.recorder-source-page .recorder-source-link:hover, .recorder-source-page .recorder-source-link:focus { color: #fff0ce; border-bottom-color: #efd19a; }
+.recorder-source-disclosure { flex-shrink: 0; margin: 16px 0 0 0; }
+.recorder-source-disclosure > .unity-toggle { min-height: 44px; font-size: 20px; color: #e5cfaa; }
+.recorder-source-disclosure > .unity-foldout__content { margin-left: 0; }
+.recorder-source-orbit { height: auto; flex-shrink: 0; margin-bottom: 18px; }
+.recorder-detail.recorder-sources-open { padding: 0; background-color: rgba(8, 11, 12, 0.65); border-width: 0; }
+.recorder-sources-open .recorder-detail-navigation { padding: 0 0 24px 0; }
+.recorder-sources-open .recorder-section { border-top-color: rgba(184, 193, 188, 0.18); }
+.recorder-sources-open .recorder-fact { flex-direction: column; }
+.recorder-sources-open .recorder-label { flex-basis: auto; margin-bottom: 4px; color: #d7be85; }
+.recorder-sources-open .recorder-value, .recorder-sources-open .recorder-linked-value { flex-basis: auto; }
+.recorder-loss-compact .recorder-source-navigation { width: 175px; margin-right: 24px; }
+.recorder-loss-compact .recorder-source-title { font-size: 36px; }
+.recorder-loss-compact .recorder-source-tab { font-size: 17px; padding: 8px; }
+.recorder-loss-compact .recorder-source-heading { font-size: 29px; }
+.recorder-loss-compact .recorder-source-description { font-size: 18px; }
+.recorder-compact .recorder-source-layout { flex-direction: column; }
+.recorder-compact .recorder-source-navigation { width: auto; flex-direction: row; flex-wrap: wrap; margin: 0 0 12px 0; }
+.recorder-compact .recorder-source-title { width: 100%; margin-bottom: 8px; }
+.recorder-compact .recorder-source-tab { margin: 0 8px 0 0; }
+.recorder-contact .recorder-end-headline { font-size: 108px; }
+.recorder-contact.recorder-loss-compact .recorder-end-headline { font-size: 78px; }
+.recorder-contact.recorder-compact .recorder-end-card .recorder-end-headline { font-size: 52px; }
+
+.recorder-sources-open .recorder-detail-navigation { padding-bottom: 8px; }
+.recorder-source-page { padding-top: 0; }
+.recorder-source-orbit { margin-bottom: 15px; }
+.recorder-source-heading { font-size: 44px; }
+.recorder-source-deck { margin-bottom: 20px; }
+.recorder-source-description { font-size: 20px; margin-bottom: 10px; }
+.recorder-source-note { font-size: 13px; margin-top: 12px; }
+.recorder-source-page .recorder-source-link { border-width: 0; -unity-text-align: middle-left; padding: 5px 0; margin: 0; }
+.recorder-source-disclosure { margin-top: 5px; }
+.recorder-sources-open .unity-scroller--vertical { width: 8px; }
+.recorder-sources-open .unity-scroller__low-button, .recorder-sources-open .unity-scroller__high-button { display: none; }
+.recorder-sources-open .unity-base-slider__tracker { background-color: rgba(150, 165, 157, 0.12); border-width: 0; }
+.recorder-sources-open .unity-base-slider__dragger { background-color: #8b8f84; border-width: 0; border-radius: 0; }

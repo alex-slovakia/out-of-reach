@@ -47,7 +47,7 @@ namespace OutOfReach.Composition
             bool pausedView = state.Phase == GamePhase.Report
                 || (clock.IsPaused && state.Phase != GamePhase.Outcome);
             // Resume restores crisp gameplay immediately; only the menu entrance eases in.
-            float weight = state.Phase == GamePhase.Report ? .5f : 1f;
+            float weight = 1f;
             volume.weight = pausedView ? Mathf.MoveTowards(volume.weight, weight, Time.unscaledDeltaTime * 5f) : 0f;
             cameraData.renderPostProcessing = originalPostProcessing || volume.weight > 0f;
         }
