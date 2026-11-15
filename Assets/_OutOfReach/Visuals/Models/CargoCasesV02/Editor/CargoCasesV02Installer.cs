@@ -174,7 +174,9 @@ namespace OutOfReach.Visuals.CargoCasesV02.Editor
             float row = (local.y - CellFloor0) / CellPitch;
             if (!column || Mathf.Abs(row - Mathf.Round(row)) > .03f || Mathf.Abs(local.z - CellZ) > .01f)
                 report.AppendLine("WARNING: " + def.Key + " supply case is not on an authored rack cell: " + local.ToString("F3"));
-            Place(prefab, supplyCase, CellPrefix + def.EquipmentId);
+            // Same half turn as the case model: the cell is authored in its container's own frame.
+            Place(prefab, supplyCase, CellPrefix + def.EquipmentId).transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            report.AppendLine("rack cell " + def.Key + " -> " + PathOf(supplyCase));
         }
 
         private static void InstallRack(Transform supply, Transform dock, StringBuilder report)
@@ -184,8 +186,8 @@ namespace OutOfReach.Visuals.CargoCasesV02.Editor
             if (!supply.Find(RackName))
             {
                 GameObject rack = Place(prefab, supply, RackName);
-                // Same convention as the cases: yawed 180 in the dock frame, so the model's front (+Z) faces the aisle.
-                rack.transform.SetPositionAndRotation(dock.TransformPoint(RackOrigin), dock.rotation * Quaternion.Euler(0f, 180f, 0f));
+                // The frame is authored in dock axes (its front, local -Z, is the aisle side at dock -Z): no yaw.
+                rack.transform.SetPositionAndRotation(dock.TransformPoint(RackOrigin), dock.rotation);
                 report.AppendLine("rack frame -> " + PathOf(rack.transform));
             }
             foreach (Transform child in supply)
