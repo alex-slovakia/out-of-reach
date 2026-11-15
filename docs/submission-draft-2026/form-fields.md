@@ -88,6 +88,32 @@ TOOLS, LANGUAGES, HARDWARE, SOFTWARE
 Unity 6000.3.28f1 with the Universal Render Pipeline, Input System, Timeline, UI Toolkit and the Unity Test Framework; C#; Windows x64. Blender 5.3 and 3.6 driven by Python for the original 3D models; Python 3 with NumPy and Pillow for procedural textures and data checks; FFmpeg for audio; Git, Git LFS and GitHub. AI coding assistants Claude Code (Anthropic) and OpenAI Codex helped write code, procedural assets and documentation under our direction; all dialogue uses synthetic voices from Google Gemini text-to-speech. Third-party music, models, textures and fonts are credited in the references. Developed and tested on Windows PCs.
 ```
 
+Short version (≈560 words), only if the form refuses the full text:
+
+```text
+WHAT IT DOES
+OUT OF REACH is a first-person space-survival game in which the mission you design is the mission you must survive. You are Houston, the only crew member of AURORA-7, a fictional research ship bound for Mars.
+1. Design: at launch complex LC-7 you carry crates onto the transport within real limits (600 kg payload, 800 credits, power load versus generation, supplies for 30 crew-days) in 60 seconds. A science load carries a 90 kg spectrometer and exactly the spare parts the repairs will need; a redundancy load trades science for battery, oxygen and parts.
+2. Launch, then later, deep in space, a debris strike: power 20 percent, life support and antenna down, CO2 rising.
+3. Repair with the parts and energy you packed. Every prompt shows the exact cost; a refused action spends nothing.
+4. Spacewalk to the antenna: preparation, airlock, tether, a 3-hour suit oxygen supply.
+5. Call Earth once from a terminal that shows a real NASA EPIC photograph of Earth. On day 1 Earth is 197,707,976 km away, so no reply can arrive before 31 min 59 s of mission time; reserves drain while you wait.
+6. Survive 30 days in chapters (days 1, 5, 9, 14, 20, 30): meals, sleep, hard choices, a day-14 message delayed by real light time, and a rescue window you must power.
+7. A mission record explains why you lived or died; restart with a different design.
+
+WHAT PLAYERS LEARN
+Mass, power, money and consumables compete. Communication is limited by light speed. Life support is several separate jobs: with scrubbers down, CO2 reaches the ISS emergency level in about 20.5 hours, long before the oxygen runs out. Spacewalks cost time, oxygen and risk. Time itself is a consumable.
+
+HOW IT WORKS
+A deterministic C# simulation owns one mission clock and one resource ledger in real units; spending is all-or-nothing. An offline NASA/JPL Horizons snapshot (32 daily Earth-Mars vectors, SHA-256 checked) gives distance / speed of light, both ways, plus 600 s of assumed processing. NASA BVAD rates (0.84 kg O2, 1.01 kg CO2, 2.5 kg water, 1.83 kg food per crew-day) drive consumption; cabin CO2 uses the ideal gas law; spacewalk costs follow BVAD EVA values. Time compression is always shown; the routine montage never skips a danger. AURORA-7, its position proxy, the rescue and the prices are labelled fiction. More than 320 automated EditMode tests plus PlayMode scene tests and human playtests.
+
+WHAT WE HOPE TO ACHIEVE
+A complete half-hour mission that students can lose for an understandable reason and replay with a better design; next, team play for up to four roles, new destinations, a launch-date picker with fresh Horizons data and teacher notes.
+
+TOOLS
+Unity 6000.3.28f1 (URP), C#, Windows x64; Blender and Python for original 3D models; NumPy, Pillow, FFmpeg, Git LFS. AI coding assistants Claude Code and OpenAI Codex under our direction; dialogue voices by Google Gemini text-to-speech. Third-party assets are credited in the references.
+```
+
 Fallbacks (use the matching one if a feature is missing from the build you submit):
 - **No day 1–30 chapter loop:** replace item 7 with *"7. Survive after contact. Contact is the midpoint, not the win: you eat and drink from the actual stores, can salvage the science instrument for spare parts, may build and harvest one small grow module, sleep up to 8.5 hours per rest, and power a recovery beacon when a fictional rescue craft that was already in transit asks for it."* Also delete *"The same model times the day-14 message."* and the "six hours per second in the routine montage" clause.
 - **No visible tether climbing:** item 5 already says only "follow the tether"; keep it.
