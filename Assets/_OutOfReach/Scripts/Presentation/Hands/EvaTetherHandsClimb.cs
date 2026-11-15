@@ -313,9 +313,25 @@ namespace OutOfReach.Presentation.Hands
                     rotation = Quaternion.Slerp(joint.NeutralRotation, joint.GripRotation, tetherGrip[index]);
                 }
 
-                joint.Joint.SetLocalPositionAndRotation(
-                    Vector3.Lerp(joint.GestureStartPosition, position, blend),
-                    Quaternion.Slerp(joint.GestureStartRotation, rotation, blend));
+                // Re-grip in two stages: the gloves first come back in front of the chest (the rig's neutral pose), then
+                // reach to the new grip. A straight blend between two far grips (turning round by the antenna) could
+                // sweep an arm through nearby hardware.
+                Vector3 blendedPosition;
+                Quaternion blendedRotation;
+                if (blend < 0.5f)
+                {
+                    float t = blend * 2f;
+                    blendedPosition = Vector3.Lerp(joint.GestureStartPosition, joint.NeutralPosition, t);
+                    blendedRotation = Quaternion.Slerp(joint.GestureStartRotation, joint.NeutralRotation, t);
+                }
+                else
+                {
+                    float t = (blend - 0.5f) * 2f;
+                    blendedPosition = Vector3.Lerp(joint.NeutralPosition, position, t);
+                    blendedRotation = Quaternion.Slerp(joint.NeutralRotation, rotation, t);
+                }
+
+                joint.Joint.SetLocalPositionAndRotation(blendedPosition, blendedRotation);
             }
 
             return true;
