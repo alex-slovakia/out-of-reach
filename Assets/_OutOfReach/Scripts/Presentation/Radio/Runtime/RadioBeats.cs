@@ -114,12 +114,31 @@ namespace OutOfReach.Presentation.Radio
         public const string EarthReplyDay14 = "radio.earth-reply-day14";
         public const string Day14Call = "radio.day14-call";
         /// <summary>
-        /// Voiced Day-14 announcement at the console. The voice is the day-neutral cut of Codex's approved vo23
-        /// (Voices/PROVENANCE.md): the sentence naming the new rendezvous day is removed, so the line never
-        /// contradicts Core's schedule.
+        /// Voiced Day-14 announcement at the console: a fresh take of exactly the subtitle text (Voices/voices.json),
+        /// so the spoken line names no rendezvous day and never contradicts Core's schedule.
         /// </summary>
         public const string Day14Announcement = "radio.day14-announcement";
-        public const string RescueLostCue = "vo23_mc_rescue_lost_dayneutral";
+        public const string RescueLostCue = "vo40_mc_rescue_lost_day14";
+
+        // One recorded take per line (Voices/voices.json: Gemini TTS, AI-generated). A line whose clip is not bound
+        // falls back to its subtitle with the radio sound only.
+        public const string AuroraRadioCheckCue = "vo30_mc_aurora_radio_check";
+        public const string AuroraLoudAndClearCue = "vo31_crew_aurora_loud_clear";
+        public const string PadRadioCheckCue = "vo32_pad_radio_check";
+        public const string PadLoudAndClearCue = "vo33_crew_pad_loud_clear";
+        public const string PadStrapInCue = "vo34_pad_strap_in";
+        public const string MaydayCue = "vo35_crew_mayday";
+        public const string RequestingRescueCue = "vo36_crew_requesting_rescue";
+        public const string EarthWeHearYouCue = "vo37_mc_earth_we_hear_you";
+        public const string EarthRescueDay14Cue = "vo38_mc_earth_rescue_day14";
+        public const string PriorityTrafficCue = "vo39_mc_priority_traffic";
+
+        /// <summary>Every recorded cue, in script order (installer binding and tests).</summary>
+        public static readonly string[] VoiceCues =
+        {
+            AuroraRadioCheckCue, AuroraLoudAndClearCue, PadRadioCheckCue, PadLoudAndClearCue, PadStrapInCue, MaydayCue,
+            RequestingRescueCue, EarthWeHearYouCue, EarthRescueDay14Cue, PriorityTrafficCue, RescueLostCue,
+        };
 
         public const string PadSpeaker = "PAD CONTROL · RADIO";
         public const string PlayerSpeaker = "YOU · RADIO";
@@ -129,22 +148,21 @@ namespace OutOfReach.Presentation.Radio
         private static readonly Dictionary<string, RadioBeat> Beats = new Dictionary<string, RadioBeat>(StringComparer.Ordinal)
         {
             [AuroraBoarding] = new RadioBeat(AuroraBoarding, true,
-                new RadioLine(ControlSpeaker, "Aurora Seven, Mission Control. We show you aboard. Radio check, how do you read?", RadioLineKind.Receive),
-                new RadioLine(PlayerSpeaker, "Loud and clear, Control. Aboard and floating. Starting cockpit checks.", RadioLineKind.Transmit)),
+                new RadioLine(ControlSpeaker, "Aurora Seven, Mission Control. We show you aboard. Radio check, how do you read?", RadioLineKind.Receive, AuroraRadioCheckCue),
+                new RadioLine(PlayerSpeaker, "Loud and clear, Control. Aboard and floating. Starting cockpit checks.", RadioLineKind.Transmit, AuroraLoudAndClearCue)),
             [PadBoarding] = new RadioBeat(PadBoarding, false,
-                new RadioLine(PadSpeaker, "Aurora, Pad. Radio check before boarding. How copy?", RadioLineKind.Receive),
-                new RadioLine(PlayerSpeaker, "Pad, Aurora. Loud and clear. Boarding now.", RadioLineKind.Transmit),
-                new RadioLine(PadSpeaker, "Copy, Aurora. Strap in for the count. Pad out.", RadioLineKind.Receive)),
+                new RadioLine(PadSpeaker, "Aurora, Pad. Radio check before boarding. How copy?", RadioLineKind.Receive, PadRadioCheckCue),
+                new RadioLine(PlayerSpeaker, "Pad, Aurora. Loud and clear. Boarding now.", RadioLineKind.Transmit, PadLoudAndClearCue),
+                new RadioLine(PadSpeaker, "Copy, Aurora. Strap in for the count. Pad out.", RadioLineKind.Receive, PadStrapInCue)),
             [DistressCall] = new RadioBeat(DistressCall, false,
-                new RadioLine(PlayerSpeaker, "Mayday, mayday. Earth, this is Aurora. Debris strike. Antenna repaired, crew alive.", RadioLineKind.Transmit),
-                new RadioLine(PlayerSpeaker, "Requesting rescue. Aurora standing by for your reply. Over.", RadioLineKind.Transmit)),
+                new RadioLine(PlayerSpeaker, "Mayday, mayday. Earth, this is Aurora. Debris strike. Antenna repaired, crew alive.", RadioLineKind.Transmit, MaydayCue),
+                new RadioLine(PlayerSpeaker, "Requesting rescue. Aurora standing by for your reply. Over.", RadioLineKind.Transmit, RequestingRescueCue)),
             [EarthReplyDay14] = new RadioBeat(EarthReplyDay14, true,
-                new RadioLine(EarthSpeaker, "Aurora, Earth. We hear you. Good work on that antenna.", RadioLineKind.Receive),
-                new RadioLine(EarthSpeaker, "A rescue rocket is being readied. Expect rescue on day fourteen. Ration carefully. Earth out.", RadioLineKind.Receive)),
+                new RadioLine(EarthSpeaker, "Aurora, Earth. We hear you. Good work on that antenna.", RadioLineKind.Receive, EarthWeHearYouCue),
+                new RadioLine(EarthSpeaker, "A rescue rocket is being readied. Expect rescue on day fourteen. Ration carefully. Earth out.", RadioLineKind.Receive, EarthRescueDay14Cue)),
             [Day14Call] = new RadioBeat(Day14Call, true,
-                new RadioLine(EarthSpeaker, "Aurora, Earth. Priority traffic. Go to the console, Aurora.", RadioLineKind.Receive)),
-            // Transcript exactly as spoken by the day-neutral cut (Voices/vo23_mc_rescue_lost_dayneutral.txt): the
-            // approved recording without "New rendezvous: mission day thirty-one.".
+                new RadioLine(EarthSpeaker, "Aurora, Earth. Priority traffic. Go to the console, Aurora.", RadioLineKind.Receive, PriorityTrafficCue)),
+            // The fresh take speaks exactly this text (Voices/vo40_mc_rescue_lost_day14.txt): no rendezvous day.
             [Day14Announcement] = new RadioBeat(Day14Announcement, true,
                 new RadioLine(ControlSpeaker, "Aurora Seven... Mission Control. The rescue vehicle has crashed. We lost it on final approach. "
                     + "I'm sorry. A second craft is already in transit. "

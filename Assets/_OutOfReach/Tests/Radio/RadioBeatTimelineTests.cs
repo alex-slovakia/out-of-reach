@@ -139,19 +139,19 @@ namespace OutOfReach.Tests.Radio
         }
 
         [Test]
-        public void Day14AnnouncementUsesTheDayNeutralCutAndNamesNoDate()
+        public void Day14AnnouncementUsesTheFreshTakeAndNamesNoDate()
         {
             RadioBeat beat = Beat(RadioBeats.Day14Announcement);
             Assert.AreEqual(RadioBeats.RescueLostCue, beat.Lines[0].CueId);
-            Assert.AreEqual("vo23_mc_rescue_lost_dayneutral", RadioBeats.RescueLostCue);
+            Assert.AreEqual("vo40_mc_rescue_lost_day14", RadioBeats.RescueLostCue);
             StringAssert.Contains("crashed", beat.Lines[0].Text);
             StringAssert.Contains("A second craft is already in transit.", beat.Lines[0].Text);
             // Core owns the schedule (second rescue on day 30): the spoken line and its subtitle name no day.
             foreach (string dated in new[] { "thirty", "rendezvous", "day " })
                 StringAssert.DoesNotContain(dated, beat.Lines[0].Text.ToLowerInvariant());
-            // The subtitle is exactly the transcript of the derived clip.
+            // The subtitle is exactly the transcript of the recorded take.
             string transcript = System.IO.File.ReadAllText(
-                "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/vo23_mc_rescue_lost_dayneutral.txt").Trim();
+                "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/vo40_mc_rescue_lost_day14.txt").Trim();
             Assert.AreEqual(transcript, beat.Lines[0].Text);
             RadioBeat timed = beat.WithVoiceLengths(cue => cue == RadioBeats.RescueLostCue ? 17.5f : (float?)null);
             Assert.AreEqual(17.85f, timed.Lines[0].Seconds, 1e-4f, "A recorded line lasts as long as its clip");

@@ -44,3 +44,21 @@ See `vo23_mc_rescue_lost_dayneutral.txt`.
 The source take is approved by Alex (15 November 2026). This derived cut is **pending Alex's approval**. If it is
 rejected: clear the `voiceClips` entry on "Handheld radio V01" (or delete this WAV and re-run the installer); the
 Day-14 announcement then plays as subtitles with the radio sound only.
+
+---
+
+# vo30 - vo40: AI-generated radio takes (15 November 2026)
+
+Alex asked for the radio lines that had no voice, and for a fresh Day-14 crash take. These eleven clips are
+**synthetic speech generated with Google Gemini TTS** (`gemini-3.8-flash-lite-tts`); no human recording is used.
+`voices.json` lists every clip with transcript, voice, model, style prompt, SHA-256, duration and levels.
+
+- **Casting:** Orus for Mission Control, Earth and Pad Control (the voice of the approved Clean, Story02 and
+  Departure masters). Iapetus for the player: the project had no player voice before.
+- **Processing:** none. Each WAV is the exact generated master (24 kHz, mono, 16-bit PCM, dry).
+  `HandheldRadioPresenter` band-limits the voice at runtime (high-pass 300 Hz, low-pass 3400 Hz, distortion 0.12).
+- **Day-14 announcement:** `vo40_mc_rescue_lost_day14` speaks exactly the subtitle text, so it names no rendezvous
+  day. It replaces the day-neutral cut above as the bound clip; the cut and the approved vo23 master stay in the
+  repository, unbound.
+- **Review state:** not listened to and not transcript-audited when committed (`listening_audited: false`).
+  Delete a WAV and re-run the installer to fall back to subtitles with the radio sound only for that line.

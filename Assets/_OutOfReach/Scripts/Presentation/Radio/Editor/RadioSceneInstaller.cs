@@ -20,10 +20,11 @@ namespace OutOfReach.Presentation.Radio.Editor
         /// <summary>Existing Core content id of the Day-14 dispatch (MissionChapterFlow.RescueFailedContentId).</summary>
         public const string Day14DispatchContentId = "dispatch.rescue-1-failed";
         /// <summary>
-        /// Day-neutral cut of Codex's approved vo23 (Voices/PROVENANCE.md), bound when present. Delete the WAV and
-        /// re-run the installer to fall back to subtitles with the radio sound only.
+        /// Recorded takes, one WAV per <see cref="RadioBeats.VoiceCues"/> entry, bound when present. Delete a WAV and
+        /// re-run the installer to fall back to subtitles with the radio sound only for that line.
         /// </summary>
-        public const string RescueLostVoicePath = "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices/vo23_mc_rescue_lost_dayneutral.wav";
+        public const string VoiceFolder = "Assets/_OutOfReach/Scripts/Presentation/Radio/Voices";
+        public static string VoicePath(string cueId) => VoiceFolder + "/" + cueId + ".wav";
 
         public static string LastReport { get; private set; }
 
@@ -65,13 +66,15 @@ namespace OutOfReach.Presentation.Radio.Editor
             bindings.arraySize = 1;
             bindings.GetArrayElementAtIndex(0).FindPropertyRelative("contentId").stringValue = Day14DispatchContentId;
             bindings.GetArrayElementAtIndex(0).FindPropertyRelative("beatId").stringValue = RadioBeats.Day14Call;
-            AudioClip rescueLost = AssetDatabase.LoadAssetAtPath<AudioClip>(RescueLostVoicePath);
+            var recorded = RadioBeats.VoiceCues
+                .Select(cue => (cue, clip: AssetDatabase.LoadAssetAtPath<AudioClip>(VoicePath(cue))))
+                .Where(v => v.clip).ToArray();
             SerializedProperty voices = so.FindProperty("voiceClips");
-            voices.arraySize = rescueLost ? 1 : 0;
-            if (rescueLost)
+            voices.arraySize = recorded.Length;
+            for (int i = 0; i < recorded.Length; i++)
             {
-                voices.GetArrayElementAtIndex(0).FindPropertyRelative("cueId").stringValue = RadioBeats.RescueLostCue;
-                voices.GetArrayElementAtIndex(0).FindPropertyRelative("clip").objectReferenceValue = rescueLost;
+                voices.GetArrayElementAtIndex(i).FindPropertyRelative("cueId").stringValue = recorded[i].cue;
+                voices.GetArrayElementAtIndex(i).FindPropertyRelative("clip").objectReferenceValue = recorded[i].clip;
             }
             so.ApplyModifiedPropertiesWithoutUndo();
 
@@ -79,7 +82,8 @@ namespace OutOfReach.Presentation.Radio.Editor
             if (after != colliders) throw new InvalidOperationException("Radio install changed the collider count.");
             LastReport = "object=" + ObjectName + " prefab=" + RadioV01Authoring.PrefabPath + " threshold=" + Path(threshold)
                 + " placement=AuroraArrival day14Dispatch=" + Day14DispatchContentId
-                + " voice=" + (rescueLost ? RadioBeats.RescueLostCue + " bound (" + rescueLost.length.ToString("F1") + " s)" : "vo23 not in this checkout (subtitles and radio sound only)")
+                + " voices=" + recorded.Length + "/" + RadioBeats.VoiceCues.Length
+                + (recorded.Length > 0 ? " (" + string.Join(",", recorded.Select(v => v.cue + ":" + v.clip.length.ToString("F1") + "s")) + ")" : " (subtitles and radio sound only)")
                 + " colliders=" + after + " (unchanged)";
             return presenter;
         }
