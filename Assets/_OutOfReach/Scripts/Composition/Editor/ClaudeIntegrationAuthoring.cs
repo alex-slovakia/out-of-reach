@@ -153,6 +153,98 @@ namespace OutOfReach.Composition.Editor
             Debug.Log("CLAUDE_INTEGRATION_SET6 " + (changed ? "SAVED" : "VERIFIED") + " falseSignalSeconds " + before.ToString("F2") + " -> " + FalseSignalShotSeconds.ToString("F2"));
         }
 
+        // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplySet7
+        // Alex P1 item 2 (visible rails vs registered 30 mm capsules), from the native per-rail probe frames on aec862b:
+        // 22 of 23 registered capsules sit inside a visible bar. "Existing ECLSS vertical bar" has its stand-offs but no
+        // visible shaft, so it gets the same amber shaft root's rails use (no collider moved). The Earth terminal's
+        // visible "Left handhold" had no capsule; it gets one fitted to its mesh and joins the registered rails.
+        public const string AmberPath = "Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat";
+        private const string EclssBarName = "Existing ECLSS vertical bar";
+        private const string VisibleShaftName = "Visible shaft (claude/integration)";
+        private const string TerminalHandholdPath = "MissionTerminal/Hardware/Left handhold";
+        private const string TerminalCapsuleName = "Handhold capsule (claude/integration)";
+
+        public static void ApplySet7()
+        {
+            if (Application.unityVersion != "6000.3.28f1" || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Run on Unity 6000.3.28f1 outside Play mode.");
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            GameObject[] roots = scene.GetRootGameObjects();
+            var report = new StringBuilder();
+            bool changed = ApplyEclssShaft(roots, report);
+            changed |= ApplyTerminalHandhold(roots, report);
+            if (changed)
+            {
+                EditorSceneManager.MarkSceneDirty(scene);
+                if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save Bootstrap.");
+            }
+            Debug.Log("CLAUDE_INTEGRATION_SET7 " + (changed ? "SAVED" : "VERIFIED") + "\n" + report);
+        }
+
+        private static bool ApplyEclssShaft(GameObject[] roots, StringBuilder report)
+        {
+            var handholds = ExactlyOne<I06InteriorHandholds>(roots);
+            Transform bar = roots.SelectMany(r => r.GetComponentsInChildren<Transform>(true)).Single(t => t.name == EclssBarName);
+            var capsule = bar.GetComponent<CapsuleCollider>() ?? throw new InvalidOperationException("ECLSS bar has no capsule.");
+            if (!handholds.Rails.Contains(capsule)) throw new InvalidOperationException("ECLSS bar capsule is not a registered rail.");
+            if (bar.Find(VisibleShaftName)) { report.AppendLine("eclssShaft=already"); return false; }
+            var amber = Required<Material>(AmberPath);
+            float length = capsule.height - capsule.radius * 2f;
+            Vector3 axis = capsule.direction == 0 ? Vector3.right : capsule.direction == 1 ? Vector3.up : Vector3.forward;
+            GameObject shaft = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            Object.DestroyImmediate(shaft.GetComponent<Collider>());
+            shaft.name = VisibleShaftName;
+            shaft.transform.SetParent(bar, false);
+            shaft.transform.localPosition = capsule.center;
+            shaft.transform.localRotation = Quaternion.FromToRotation(Vector3.up, axis);
+            shaft.transform.localScale = new Vector3(capsule.radius * 2f, length * .5f, capsule.radius * 2f);
+            var renderer = shaft.GetComponent<MeshRenderer>();
+            renderer.sharedMaterial = amber; renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            report.AppendLine("eclssShaft=added amber shaft r=" + capsule.radius.ToString("F3") + " length=" + length.ToString("F3") + " at " + bar.TransformPoint(capsule.center).ToString("F3"));
+            return true;
+        }
+
+        private static bool ApplyTerminalHandhold(GameObject[] roots, StringBuilder report)
+        {
+            var handholds = ExactlyOne<I06InteriorHandholds>(roots);
+            Transform[] all = roots.SelectMany(r => r.GetComponentsInChildren<Transform>(true)).ToArray();
+            Transform[] matches = all.Where(t => Path(t).EndsWith("/" + TerminalHandholdPath, StringComparison.Ordinal)).ToArray();
+            if (matches.Length != 1) throw new InvalidOperationException("Expected one " + TerminalHandholdPath + ", found " + matches.Length);
+            Transform handle = matches[0];
+            var filter = handle.GetComponent<MeshFilter>();
+            if (!filter || !filter.sharedMesh) throw new InvalidOperationException("Terminal handhold has no mesh.");
+            Transform probe = handle.Find(TerminalCapsuleName);
+            CapsuleCollider capsule = probe ? probe.GetComponent<CapsuleCollider>() : null;
+            bool changed = false;
+            if (!capsule)
+            {
+                Bounds local = filter.sharedMesh.bounds;
+                if ((handle.lossyScale - Vector3.one).sqrMagnitude > 1e-4f) throw new InvalidOperationException("Terminal handhold is not metre scale: " + handle.lossyScale);
+                Vector3 size = local.size;
+                int axis = size.x >= size.y && size.x >= size.z ? 0 : size.y >= size.z ? 1 : 2;
+                var go = new GameObject(TerminalCapsuleName);
+                go.layer = handle.gameObject.layer;
+                go.transform.SetParent(handle, false);
+                capsule = go.AddComponent<CapsuleCollider>();
+                capsule.center = local.center; capsule.direction = axis; capsule.isTrigger = false;
+                capsule.radius = .015f;
+                capsule.height = (axis == 0 ? local.size.x : axis == 1 ? local.size.y : local.size.z);
+                changed = true;
+            }
+            if (!handholds.Rails.Contains(capsule))
+            {
+                var serialized = new SerializedObject(handholds);
+                SerializedProperty rails = serialized.FindProperty("rails");
+                rails.arraySize++;
+                rails.GetArrayElementAtIndex(rails.arraySize - 1).objectReferenceValue = capsule;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+                changed = true;
+            }
+            report.AppendLine("terminalHandhold=" + Path(handle) + " capsule world " + capsule.bounds.center.ToString("F3") + " size " + capsule.bounds.size.ToString("F3")
+                + " registered rails " + handholds.Rails.Count + (changed ? " (added)" : " (already)"));
+            return changed;
+        }
+
         public const string LaunchFxPrefabPath = "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab";
         private const string TrenchExitName = "LS_TrenchExit_Ground";
 
