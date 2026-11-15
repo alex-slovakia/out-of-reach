@@ -25,6 +25,7 @@ Published to Claude in [issue #7 comment 6893693954](https://github.com/alex-slo
 - Floor push must visibly plant, bend and extend the legs in the chosen valid direction. Both original-reference suits must preserve a convincing body without torso distortion.
 - Reproduce reported wall clipping and classify whether it is the player capsule, camera/limbs, or tether-route movement. Fix the demonstrated cause and verify in actual play; tests alone cannot establish that clipping is resolved.
 - Preserve the corrected single-hand/paired push, W + Space with top-right hint and A/D tilt requirements above. Context determines whether a mouse action grips a handle or pushes from a surface.
+- Polish ordinary ground WALKING in BOTH suits as well: visibly planted feet, natural hip/leg motion and cadence, no sliding or torso clipping. Verify actual playback in each suit; animation-file existence and tests are insufficient.
 
 - Claude gameplay: movement mechanics + body/hand animations first. Root Codex releases its two composition movement adapters for a coordinated Claude proposal (separate branch; integrator reviews). Avoid two writers on the same file. No merge/promotion without exact-revision checks.
 - Claude character work: use ORIGINAL male references only: docs/art-direction/astronaut-reference-v01/cabin-front-back.png and eva-front-back.png. Preserve agreed rig/164-bone contract; coordinate body owner. No substitute random female character or rejected EVA concept. Sitting, fastening/unfastening harness, resting and wake body animations are still needed.

@@ -1,0 +1,94 @@
+saved scene | Hidden batch focus setup: real controller focus-regain callback; no OS foreground/input play claim.
+opt-in session setup | PASS StartSession disposes the old authority and binds a fresh one.
+opt-in session setup | PASS New session starts behind the real mode-choice control gate.
+opt-in session setup | PASS Fresh planning session contains no visible old survival state.
+opt-in session setup | PASS Submit enabled, visible real button: Practice · no deadline.
+opt-in session setup | PASS One NavigationSubmit produces exactly one actual click ().
+opt-in session setup | PASS Actual Practice button releases the composed gate without a deadline.
+disclosed domain-command journey | PASS Launch actual valid planner loadout | AURORA-7 launched with 7 equipment line(s).
+disclosed domain-command journey | PASS Disclosed real transport skip for UI setup
+disclosed domain-command journey | PASS Actual cockpit check | Cockpit check complete. Impact detected.
+disclosed domain-command journey | PASS Real saved presentation receives Impact.
+disclosed domain-command journey | PASS Disclosed setup skip acknowledges Impact through its real presenter.
+disclosed domain-command journey | PASS Actual power repair costs | power distribution repaired (2 spare parts).
+disclosed domain-command journey | PASS Actual life-support repair costs | life support repaired (2 spare parts, 1 kWh).
+disclosed domain-command journey | PASS Actual suit preparation | EVA suit on. Tank: 0.3 kg oxygen.
+disclosed domain-command journey | PASS Actual airlock cycle | Inner hatch sealed. Depressurizing.
+disclosed domain-command journey | PASS Real depressurization time and resource accounting | Simulation advanced.
+disclosed domain-command journey | PASS Actual exterior domain command (no movement claim) | Outside on the tether.
+disclosed domain-command journey | PASS Actual antenna repair costs | high-gain antenna repaired (3 spare parts, 0.5 kWh).
+disclosed domain-command journey | PASS Actual return-inside domain command | Inside the airlock.
+disclosed domain-command journey | PASS Actual repressurization command | Outer hatch closed. Repressurizing.
+disclosed domain-command journey | PASS Real repressurization time and resource accounting | Simulation advanced.
+disclosed domain-command journey | PASS Actual communications diagnostic | Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+disclosed domain-command journey | PASS Real saved presentation receives FalseSignal.
+disclosed domain-command journey | PASS Disclosed setup skip acknowledges FalseSignal through its real presenter.
+disclosed domain-command journey | PASS Actual distress transmission | Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+disclosed domain-command journey | PASS Reply is pending after transmission, not instant.
+disclosed domain-command journey | PASS Advance the actual outbound/return reply interval | Simulation advanced.
+disclosed domain-command journey | PASS Actual communication service reports the received reply.
+disclosed domain-command journey | PASS Initial binding and contact setup do not invent a wake event
+disclosed domain-command journey | PASS Real contact starts survival for scoped presentation checks
+disclosed domain-command journey | PASS Actual serialized water station is bound and visible
+disclosed domain-command journey | PASS Locator distance matches actual water station
+disclosed domain-command journey | PASS Front marker projects to target and reports metric distance
+disclosed domain-command journey | PASS Behind target becomes screen-edge arrow
+disclosed domain-command journey | PASS Absent target immediately requests hidden marker
+disclosed domain-command journey | PASS Capture uses the actual camera/document at 1280x720: 01-water-direction.
+actual rest, pause and Wake | PASS Begin a real two-hour rest | Rest up to 2 h: about 0.153 kg food and 0.208 L water at the BVAD crew-day rates; any danger wakes the crew
+actual rest, pause and Wake | PASS Capture uses the actual camera/document at 1280x720: 02a-curved-rest-blink.
+actual rest, pause and Wake | PASS Rest UI appears only while the real service is resting.
+actual rest, pause and Wake | PASS Composition blocks actual player controls/cursor capture during rest after frames.
+actual rest, pause and Wake | PASS Rest releases the actual cursor for Wake.
+actual rest, pause and Wake | PASS Rest day matches the authoritative mission calendar.
+actual rest, pause and Wake | PASS Rest countdown reflects the service's exact initial two hours.
+actual rest, pause and Wake | PASS Advance ten simulated rest minutes through the same resource model | Simulation advanced.
+actual rest, pause and Wake | PASS Rest remaining time and food/water ledger advance together.
+actual rest, pause and Wake | PASS Rest UI follows the actual remaining time after advancement.
+actual rest, pause and Wake | PASS Rest eyelids attached
+actual rest, pause and Wake | PASS Real rest reaches closed eyes
+actual rest, pause and Wake | PASS Rest hides water marker
+actual rest, pause and Wake | PASS Wake panel draws above eyelids
+actual rest, pause and Wake | PASS Capture uses the actual camera/document at 1280x720: 02-rest.
+actual rest, pause and Wake | PASS Dark rest shows the larger genuine-font day heading
+actual rest, pause and Wake | PASS Rest entry and repeated service refreshes emit no wake event
+actual rest, pause and Wake | PASS Paused eyes freeze presentation progression
+actual rest, pause and Wake | PASS Real runtime Update while paused freezes mission clock, rest and food/water consumption.
+actual rest, pause and Wake | PASS Pause hides survival HUD and disables Wake.
+actual rest, pause and Wake | PASS Paused UI submission and authoritative Wake guard cannot wake the crew.
+actual rest, pause and Wake | PASS Capture uses the actual camera/document at 1280x720: 02b-paused-rest.
+actual rest, pause and Wake | PASS Resume retains the real rest and its player lock.
+actual rest, pause and Wake | PASS Submit enabled, visible real button: Wake.
+actual rest, pause and Wake | PASS One NavigationSubmit produces exactly one actual click (survival-wake).
+actual rest, pause and Wake | PASS One actual Wake button click wakes the same session.
+actual rest, pause and Wake | PASS Wake restores the prior simulation scale and actual player control/cursor intent.
+actual rest, pause and Wake | PASS Wake immediately removes the rest overlay.
+actual rest, pause and Wake | PASS One actual Wake emits one event with the true captured mission day and Woken reason
+actual rest, pause and Wake | PASS Wake title uses actual exit-day snapshot without incrementing the day
+actual rest, pause and Wake | PASS Capture uses the actual camera/document at 1280x720: 03-wake-title-opening.
+actual rest, pause and Wake | PASS Actual pause freezes wake-title progress and hides it
+actual rest, pause and Wake | PASS Resume continues the same wake-title presentation
+actual rest, pause and Wake | PASS Wake title fades and clears after its real presentation duration
+actual rest, pause and Wake | PASS Existing left objective is visible after wake overlay clears
+actual rest, pause and Wake | PASS Title completion and ordinary UI refreshes do not duplicate wake event
+actual rest, pause and Wake | PASS Capture uses the actual camera/document at 1280x720: 04-fully-awake.
+actual rest, pause and Wake | PASS Compact hunger/hydration bars are attached and visible in actual Survival.
+actual rest, pause and Wake | PASS Both displayed needs equal their authoritative services (remaining hunger satisfaction / remaining hydration).
+actual rest, pause and Wake | PASS One needs subtree and one hunger bar; no duplicate binding.
+actual rest, pause and Wake | PASS Wake fully reopens eyes
+actual rest, pause and Wake | PASS Wake restores water guidance
+actual rest, pause and Wake | PASS Reduced motion reaches full closure
+actual rest, pause and Wake | PASS Reduced motion wake clears darkness
+actual reduced-motion rest and wake title | PASS Begin real short rest for reduced-motion acceptance | Rest up to 0.01 h: about 0.001 kg food and 0.001 L water at the BVAD crew-day rates; any danger wakes the crew
+actual reduced-motion rest and wake title | PASS Submit enabled, visible real button: Wake.
+actual reduced-motion rest and wake title | PASS One NavigationSubmit produces exactly one actual click (survival-wake).
+actual reduced-motion rest and wake title | PASS Reduced actual Wake emits exactly one correctly dated event/title
+actual reduced-motion rest and wake title | Reduced wake layout: enabled=True playing=True inlineOffset=0 resolvedTop=0 renderedCenterError=0
+actual reduced-motion rest and wake title | PASS Reduced-motion wake title fades without any downward offset and stays visually centered
+actual reduced-motion rest and wake title | PASS Capture uses the actual camera/document at 1280x720: 05-reduced-wake-title.
+actual reduced-motion rest and wake title | PASS Reduced wake clears title and eyes without persistent overlay
+actual reduced-motion rest and wake title | PASS Composition rebind retains the actual session and emits no wake event
+actual reduced-motion rest and wake title | PASS Rebind does not invent a wake title
+actual reduced-motion rest and wake title | PASS Disable removes owned overlay
+actual reduced-motion rest and wake title | PASS Re-enable creates one overlay
+actual reduced-motion rest and wake title | PASS Disable/re-enable emits no additional wake event

@@ -1,0 +1,31 @@
+phase=Survival
+outcome=None
+simulationSeconds=12118.965642496936
+resting=False
+controlAllowed=True
+missionDay=1
+wakeEventCount=1
+eyesClosure=0.9659155
+wakeTitleProgress=0.0443031341
+cursor=None
+visibleLabels=
+Survive until rescue
+Manage your food, water and ship systems.
+
+Food & water: galley beside the crew berth.
+You woke from rest.
+300× simulation
+Mission 03:21:58
+Space · Push off   WASD · Aim
+O₂ reserve
+Water stores
+Food stores
+Battery
+Fed
+Hydrated
+MISSION CONTROL · EARTH · DELAYED REPLY
+Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.
+
+WATER  ·  14.5 m
+BEHIND YOU
+DAY 1
