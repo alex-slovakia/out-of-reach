@@ -1,0 +1,28 @@
+{
+  "name": "OutOfReach.Tests.LaunchFailure.EditMode",
+  "rootNamespace": "OutOfReach.Tests.LaunchFailure",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Inventory",
+    "OutOfReach.Simulation",
+    "OutOfReach.Presentation.LaunchFailure"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
