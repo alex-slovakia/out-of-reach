@@ -1,0 +1,18 @@
+{
+  "name": "OutOfReach.Presentation.Meal",
+  "rootNamespace": "OutOfReach.Presentation.Meal",
+  "references": [
+    "OutOfReach.Contracts",
+    "OutOfReach.Interaction",
+    "OutOfReach.Presentation.Motion"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

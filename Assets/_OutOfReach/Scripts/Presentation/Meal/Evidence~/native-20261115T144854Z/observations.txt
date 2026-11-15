@@ -1,0 +1,74 @@
+installer: installed 'Meal presentation (MEAL-PRES-01)' under 'I06 authored Storage habitat': target Gameplay target - survival-ration, drawer RationInteractionSurface, water WaterInteractionSurface, pouch GC_MealPouch, clasp WORK_Clasp_Meal_R; assigned to I01 mission composition.meal; saved=True
+11,024 | == marine boarding W
+16,476 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+51,299 | ACTUAL MARINE TRANSFER
+51,366 | Arrival phase Intro; floating True
+51,366 | == SHORTCUT domain commands to contact
+51,369 | SHORTCUT start phase=Intro
+51,423 | domain impact: True Cockpit check complete. Impact detected.
+51,569 | domain power repair: True power distribution repaired (2 spare parts).
+51,572 | domain life-support repair: True life support repaired (2 spare parts, 1 kWh).
+51,597 | domain suit: True EVA suit on. Tank: 0.3 kg oxygen.
+51,617 | domain begin EVA: True Inner hatch sealed. Depressurizing.
+51,623 | domain depressurize: True Simulation advanced.
+51,626 | domain go outside: True Outside on the tether.
+51,628 | domain antenna repair: True high-gain antenna repaired (3 spare parts, 0.5 kWh).
+51,630 | domain return inside: True Inside the airlock.
+51,632 | domain end EVA: True Outer hatch closed. Repressurizing.
+51,639 | domain repressurize: True Simulation advanced.
+51,661 | domain link diagnostic: True Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.
+51,697 | domain transmit: True Distress call transmitted. Earliest reply in 31 min 59 s: 2 x 10 min 59 s light time + 10 min 00 s on Earth.
+51,713 | domain reply: True Simulation advanced.
+51,847 | SHORTCUT end phase=Survival suit=False outside=False
+51,849 | == SHORTCUT teleport to the galley aisle
+52,779 | At galley: feet=(-1.08, 0.02, 14.40) eye=(-1.08, 1.67, 14.40) floating=True body visible=True eva=False arms=Both
+54,173 | == meal 1 Warmed
+54,175 | domain SHORTCUT wait until a ration is due: True Simulation advanced.
+54,178 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+54,239 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True eye-drawer=0,56
+54,255 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+54,256 | INTERACTION True Meal started: thermostabilised, warmed, 8.8 s
+55,361 | 01-1-take-Warmed: stage=Take p=0,80 pouch=(-1.461, 1.625, 14.430) visible=True opened=False hand=True headErr=0,0mm reachShort=47mm eye-pouch=0,39
+55,740 | MEAL STATUS Warming the thermostabilised pouch in the food warmer
+57,096 | 01-2-prepare-Warmed: stage=Prepare p=0,52 pouch=(-1.433, 1.521, 14.495) visible=True opened=False hand=True headErr=0,0mm reachShort=22mm eye-pouch=0,40
+58,370 | MEAL STATUS Opening the pouch
+59,270 | 01-3-open-Warmed: stage=Open p=0,90 pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,34
+59,455 | MEAL STATUS Eating the ration
+60,435 | 01-4-eat-Warmed: stage=Eat p=0,35 pouch=(-1.304, 1.575, 14.405) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,24
+62,288 | MEAL STATUS Stowing the empty pouch
+63,662 | == meal 2 Rehydrated
+63,664 | domain SHORTCUT wait until a ration is due: True Simulation advanced.
+63,666 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+63,732 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True eye-drawer=0,56
+63,743 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+63,744 | INTERACTION True Meal started: rehydratable, water added, 9.0 s
+64,858 | 02-1-take-Rehydrated: stage=Take p=0,80 pouch=(-1.462, 1.624, 14.430) visible=True opened=False hand=True headErr=0,0mm reachShort=45mm eye-pouch=0,39
+65,351 | MEAL STATUS Rehydrating the pouch at the water dispenser
+66,803 | 02-2-prepare-Rehydrated: stage=Prepare p=0,52 pouch=(-1.451, 1.527, 14.585) visible=True opened=False hand=True headErr=0,0mm reachShort=3mm eye-pouch=0,44
+68,222 | MEAL STATUS Opening the pouch
+69,125 | 02-3-open-Rehydrated: stage=Open p=0,90 pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,34
+69,428 | MEAL STATUS Eating the ration
+70,410 | 02-4-eat-Rehydrated: stage=Eat p=0,35 pouch=(-1.304, 1.575, 14.405) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,24
+72,385 | MEAL STATUS Stowing the empty pouch
+73,577 | == meal 3 ReadyToEat
+73,579 | domain SHORTCUT wait until a ration is due: True Simulation advanced.
+73,581 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+73,638 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True eye-drawer=0,56
+73,646 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+73,646 | INTERACTION True Meal started: ready to eat, 7.0 s
+74,759 | 03-1-take-ReadyToEat: stage=Take p=0,80 pouch=(-1.461, 1.625, 14.429) visible=True opened=False hand=True headErr=0,0mm reachShort=48mm eye-pouch=0,39
+75,115 | MEAL STATUS Ready to eat: no preparation needed
+75,529 | 03-2-prepare-ReadyToEat: stage=Prepare p=0,52 pouch=(-1.400, 1.573, 14.455) visible=True opened=False hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,34
+76,002 | MEAL STATUS Opening the pouch
+76,910 | 03-3-open-ReadyToEat: stage=Open p=0,91 pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,34
+77,143 | MEAL STATUS Eating the ration
+78,125 | 03-4-eat-ReadyToEat: stage=Eat p=0,35 pouch=(-1.304, 1.575, 14.405) visible=True opened=True hand=True headErr=0,0mm reachShort=0mm eye-pouch=0,24
+80,055 | MEAL STATUS Stowing the empty pouch
+81,272 | == meal 4: pause and restart interrupt safely
+81,274 | domain SHORTCUT wait until a ration is due: True Simulation advanced.
+81,276 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+81,344 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+81,345 | INTERACTION True Meal started: thermostabilised, warmed, 9.5 s
+82,740 | MEAL STATUS Warming the thermostabilised pouch in the food warmer
+85,266 | Restart during meal 4 at Prepare 0,50
+86,202 | Meal events: started Warmed | eaten Eat stored ration: 0.4575 kg | finished Eat stored ration: 0.4575 kg | started Rehydrated | eaten Eat stored ration: 0.4575 kg | finished Eat stored ration: 0.4575 kg | started ReadyToEat | eaten Eat stored ration: 0.4575 kg | finished Eat stored ration: 0.4575 kg | started Warmed | cancelled False: The meal was interrupted. Nothing was eaten.

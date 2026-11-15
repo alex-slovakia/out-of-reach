@@ -1,0 +1,139 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+index a9e5d08..0676d72 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs
+@@ -13,6 +13,7 @@ using OutOfReach.Presentation.Cinematics.Preflight;
+ using OutOfReach.Presentation.Lighting;
+ using OutOfReach.Presentation.Motion;
+ using OutOfReach.Presentation.Hands;
++using OutOfReach.Presentation.Meal;
+ using OutOfReach.Presentation.Terminal;
+ using OutOfReach.Presentation.UI;
+ using OutOfReach.Presentation.UI.Chapter;
+@@ -70,6 +71,8 @@ namespace OutOfReach.Composition
+         private bool orbitalLocationReached;
+         private MissionSession transferredSession;
+         [SerializeField] private I06HabitatBindings habitat;
++        // MEAL-PRES-01: the physical galley meal around the existing survival-ration target (presentation only).
++        [SerializeField] private MealPresenter meal;
+         [SerializeField] private I06MarineBindings marine;
+         [SerializeField] private AudioClip departureScore;
+         private bool departureRestraintCuePlayed;
+@@ -181,7 +184,8 @@ namespace OutOfReach.Composition
+         private bool EarthViewerOwnsInput => earthTerminal && earthTerminal.BlocksPlayerInput;
+         private bool CanPresentEarthViewer() => MicroSessionCurrent() && modeChosen && orbitalLocationReached
+             && !menuPresentationVisible && cinematics && !cinematics.IsPlaying
+-            && !IsTransportDeparturePlaying && !(antennaRepair && antennaRepair.BlocksMovement);
++            && !IsTransportDeparturePlaying && !(antennaRepair && antennaRepair.BlocksMovement)
++            && !(meal && meal.IsEating);
+         private void PrepareEarthViewer()
+         {
+             if (microgravityBridge) microgravityBridge.Release();
+@@ -292,6 +296,48 @@ namespace OutOfReach.Composition
+                 runtime.Player.ExitFloat(); // Roll back only our new zero-motion entry; never a prior owner's flight.
+         }
+         public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
++        public void ConfigureMeal(MealPresenter presenter)
++        {
++            if (Application.isPlaying && attached) throw new InvalidOperationException("Configure the meal before binding.");
++            meal = presenter;
++        }
++        public MealPresenter Meal => meal;
++
++        // Same valid context while paused; never Player.ControlAllowed (the meal owns its movement lock).
++        private bool CanPresentMeal() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
++            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
++            && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
++            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
++            && !(antennaRepair && antennaRepair.IsWorking);
++
++        private void OnMealStarted(MealPreparation preparation)
++        {
++            // Let go of any rail first, as for the Earth viewer: the hand that eats must be free.
++            if (microgravityBridge) microgravityBridge.Release();
++            if (embodiedBody) embodiedBody.RefreshPresentation();
++            OnMealStatus(meal ? meal.StatusLine : string.Empty);
++        }
++
++        private void OnMealStatus(string line)
++        {
++            if (!flightBoard || string.IsNullOrWhiteSpace(line)) return;
++            flightBoard.ShowInteractionPrompt(line, true);
++            rejectionUntil = 0f;
++        }
++
++        private void OnMealFinished(CommandResult result)
++        {
++            if (!flightBoard) return;
++            flightBoard.ShowInteractionPrompt(string.IsNullOrWhiteSpace(result.Explanation) ? "Meal finished." : result.Explanation, true);
++            rejectionUntil = Time.unscaledTime + 3f;
++        }
++
++        private void OnMealCancelled(string reason, bool eaten)
++        {
++            if (!flightBoard || string.IsNullOrWhiteSpace(reason)) return;
++            flightBoard.ShowInteractionPrompt(reason, false);
++            rejectionUntil = Time.unscaledTime + 4f;
++        }
+         public void ConfigureMarine(I06MarineBindings bindings) => marine = bindings;
+         public void ConfigureDepartureScore(AudioClip score) => departureScore = score;
+ 
+@@ -335,6 +381,7 @@ namespace OutOfReach.Composition
+         private bool CanPresentOpeningMenuMotion() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
+             && !IsTransportDeparturePlaying
+             && !(antennaRepair && antennaRepair.IsWorking)
++            && !(meal && meal.IsEating)
+             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+             && runtime.Player && runtime.Player.isActiveAndEnabled && !runtime.Player.ControlAllowed
+             && cinematics && !cinematics.IsPlaying;
+@@ -457,6 +504,7 @@ namespace OutOfReach.Composition
+             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
+             && !IsTransportDeparturePlaying
+             && !(antennaRepair && antennaRepair.BlocksMovement)
++            && !(meal && meal.BlocksMovement)
+             && domainControlGate != null && domainControlGate()
+             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+             && !(chapterUi && chapterUi.BlocksPlayerControl)
+@@ -691,6 +739,15 @@ namespace OutOfReach.Composition
+                 antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
+                 throw new InvalidOperationException("The antenna worksite could not bind to the current session.");
+             if (antennaRepair) antennaRepair.WorkCancelled += OnAntennaWorkCancelled;
++            if (meal && habitat && runtime.TryGetInteractable(InteractionIds.ConsumeRation, out IInteractable rationForMeal)
++                && meal.ConfigureSession(rationForMeal, runtime.Clock, runtime.GameState, runtime.EvaStatus, boundEvents,
++                    presentationCamera ? presentationCamera.transform : runtime.Player.ViewPivot, embodiedBody, CanPresentMeal))
++            {
++                meal.Started += OnMealStarted;
++                meal.StatusChanged += OnMealStatus;
++                meal.Finished += OnMealFinished;
++                meal.Cancelled += OnMealCancelled;
++            }
+             if (antennaProgress && antennaRepair)
+                 antennaProgress.Configure(antennaProgressDocument, () => antennaRepair.IsWorking,
+                     () => antennaRepair.Progress01, () => CanPresentAntennaWork() && !menuPresentationVisible,
+@@ -765,6 +822,14 @@ namespace OutOfReach.Composition
+                 marine.DepartureEnded -= OnDepartureAudioEnded;
+                 marine.Transferred -= OnTransportTransferred;
+             }
++            if (meal)
++            {
++                meal.Started -= OnMealStarted;
++                meal.StatusChanged -= OnMealStatus;
++                meal.Finished -= OnMealFinished;
++                meal.Cancelled -= OnMealCancelled;
++                meal.ClearBinding();
++            }
+             if (habitat) habitat.ClearBinding();
+             if (embodiedBody) embodiedBody.ClearBinding();
+             if (footsteps) footsteps.ClearBinding();
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+index 96dc62c..1a98c31 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+@@ -16,6 +16,7 @@
+     "OutOfReach.Presentation.Motion",
+     "OutOfReach.Presentation.Hands",
+     "OutOfReach.Presentation.Habitat",
++    "OutOfReach.Presentation.Meal",
+     "OutOfReach.MarineOcean",
+     "OutOfReach.LaunchFXV03",
+     "OutOfReach.Presentation.Cargo",
