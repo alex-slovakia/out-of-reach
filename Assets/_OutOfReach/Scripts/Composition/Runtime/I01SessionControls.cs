@@ -165,7 +165,8 @@ namespace OutOfReach.Composition
             }
             bool visible = showingMode || paused || showingOutcome;
             // An armed quit belongs to the menu it was pressed in: any other or no menu disarms it.
-            int menuContext = !visible ? 0 : showRecord ? 4 : showingOutcome ? 3 : showingMode ? 1 : 2;
+            int menuContext = !visible ? 0 : showRecord ? (recordQuit != null && IsShown(recordQuit) ? 4 : 5)
+                : showingOutcome ? 3 : showingMode ? 1 : 2;
             if (menuContext != quitMenuContext)
             {
                 quitMenuContext = menuContext;

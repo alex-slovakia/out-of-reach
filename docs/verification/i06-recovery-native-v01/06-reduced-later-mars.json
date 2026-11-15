@@ -1,0 +1,49 @@
+{
+    "name": "06-reduced-later-mars",
+    "scope": "Actual saved Bootstrap player camera + existing UI, 1280x720; UGUI overlay excluded. No diagnostic camera or image composite.",
+    "phase": "Outcome",
+    "outcome": "Recovered",
+    "cinematic": "MarsDeparture",
+    "caption": "LATER · MARS TRANSFER",
+    "visibleLabels": "SHIP STATUS\nLATER · MARS TRANSFER",
+    "audioCue": "",
+    "audioSubtitle": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.\n",
+    "bodyVisible": false,
+    "glovesVisible": false,
+    "cargoHandsVisible": false,
+    "sequence": 8,
+    "simulationSeconds": 1048318.965642497,
+    "cinematicSeconds": 3.038290500640869,
+    "blackout": 0.0,
+    "fov": 48.0,
+    "far": 900.0,
+    "mean": 0.060024019330739978,
+    "deviation": 0.13589921593666078,
+    "paused": false,
+    "reduced": true,
+    "control": false,
+    "resolver": false,
+    "arrivalVisible": false,
+    "marsVisible": true,
+    "cameraPosition": {
+        "x": 2186.0,
+        "y": 5.0,
+        "z": -7.0
+    },
+    "arrivalPosition": {
+        "x": 15.0,
+        "y": 5.0,
+        "z": 36.0
+    },
+    "marsPosition": {
+        "x": 2190.29443359375,
+        "y": -2.0,
+        "z": 19.030508041381837
+    },
+    "cameraRotation": {
+        "x": 0.014857474714517594,
+        "y": 0.05365324392914772,
+        "z": -0.0007983901305124164,
+        "w": 0.9984487891197205
+    }
+}

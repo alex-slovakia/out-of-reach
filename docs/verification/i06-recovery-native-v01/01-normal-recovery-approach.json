@@ -1,0 +1,49 @@
+{
+    "name": "01-normal-recovery-approach",
+    "scope": "Actual saved Bootstrap player camera + existing UI, 1280x720; UGUI overlay excluded. No diagnostic camera or image composite.",
+    "phase": "Outcome",
+    "outcome": "Recovered",
+    "cinematic": "RecoveryArrival",
+    "caption": "RECOVERY · AURORA-7\nRecovery craft on approach. Prepare for crew transfer.",
+    "visibleLabels": "SHIP STATUS\nRECOVERY · AURORA-7\nRecovery craft on approach. Prepare for crew transfer.",
+    "audioCue": "",
+    "audioSubtitle": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.\n",
+    "bodyVisible": false,
+    "glovesVisible": false,
+    "cargoHandsVisible": false,
+    "sequence": 3,
+    "simulationSeconds": 1048318.965642497,
+    "cinematicSeconds": 3.9699044227600099,
+    "blackout": 0.0,
+    "fov": 55.0,
+    "far": 350.0,
+    "mean": 0.02550608478486538,
+    "deviation": 0.12264824658632279,
+    "paused": false,
+    "reduced": false,
+    "control": false,
+    "resolver": false,
+    "arrivalVisible": true,
+    "marsVisible": false,
+    "cameraPosition": {
+        "x": 29.623676300048829,
+        "y": 14.623675346374512,
+        "z": -22.49470329284668
+    },
+    "arrivalPosition": {
+        "x": 13.682865142822266,
+        "y": 4.62367582321167,
+        "z": 34.871028900146487
+    },
+    "marsPosition": {
+        "x": 2190.0,
+        "y": -2.0,
+        "z": 18.0
+    },
+    "cameraRotation": {
+        "x": 0.1326131969690323,
+        "y": -0.335753858089447,
+        "z": 0.047819703817367557,
+        "w": 0.9313412308692932
+    }
+}

@@ -1,0 +1,161 @@
+{
+  "files": [
+    {
+      "path": "Assets/Editor/RecoveryNativeQa.meta",
+      "sha256": "e59e308269b7e6d2e999d59890a8445ce1aa1c37942f3365503ee528cb9c44f9"
+    },
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/OutOfReach.RecoveryNativeQa.Editor.asmdef",
+      "sha256": "98e0e18b35606c68385c8a1a62325d5f20661d698a242fbe129c526e0d1c1cca"
+    },
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/OutOfReach.RecoveryNativeQa.Editor.asmdef.meta",
+      "sha256": "0e725337d6a4ea89a42c70f68245f19d88d9a7fe4d18474eab6ddceb582ef9be"
+    },
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/RecoveryNativeQa.cs",
+      "sha256": "88d6443db01788f73ef3333c7f03ed4883cfa30de7bfa537ecd0aed1ae6f95f3"
+    },
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/RecoveryNativeQa.cs.meta",
+      "sha256": "9d4c5dbd03d60352a2679c40d6f775310fcc0ae4e444475859f55387ce2b0163"
+    },
+    {
+      "path": "Assets/_OutOfReach/Audio/Music/mx04_recovery.wav",
+      "sha256": "581c45929ba152604862789297dd162f5b48446cef1b1d930a408f6704e3c59b"
+    },
+    {
+      "path": "Assets/_OutOfReach/Audio/Music/mx04_recovery.wav.meta",
+      "sha256": "31dc9869d75bcabf8973e1c5506ed8ebab2271da3df8e0b230f4ffe87ee83a08"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "sha256": "c58d460508166a72d9d1e3ffd4bfc190a63b1af32952ce945b70541092440e60"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity.meta",
+      "sha256": "685b22fc448837868362ec03ec712ae0f55c357bc19868d32f1fa9ce834232e7"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs",
+      "sha256": "dda779ac3b0dcbdb96a33d60dd2994391b993ca54e2b6167c7043ef7b6734b3e"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs.meta",
+      "sha256": "1f6dfdee4ff900487dc1f425aa1fd68d0a567cd75ff1e520f223230d89de32aa"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06RecoveryAuthoring.cs",
+      "sha256": "60e3ab089aebc1238d1d422cc9d74b6143f35c310cb38c373c43a42c031ca977"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06RecoveryAuthoring.cs.meta",
+      "sha256": "b191c8298dbc439e2fb2e3ce4ebb04b6ba1cfdd80c7bbc13332abc632eb393de"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs",
+      "sha256": "8dc3ec1454093d66d77aaec0a05d219d3c0bb7ccf3ad81bfd6c0c90a82b18ea2"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs.meta",
+      "sha256": "c9e01ae3d9e2e12a2cc518ed2da2f57207b640ee88770a2cfa8918db2522b807"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Contracts/ISurvivalRecovery.cs",
+      "sha256": "fb1845aa47d9fc8e074d6ef81235bbd15be28d718bff9b2ec592680b78f6f527"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Contracts/ISurvivalRecovery.cs.meta",
+      "sha256": "5cf580d4a45f09e07722dc00642462bd87ac582aa893646020c26f37b7306f34"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Core/SurvivalRecovery.cs",
+      "sha256": "236c3f5fbbe8ad6a396013d23885fb9c7dbb7aeb688820b79bd38564155fa24f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Core/SurvivalRecovery.cs.meta",
+      "sha256": "0f468e89ff25a6eac6fb25fbb700c114e84baf47792fa2780be125e1e757cb6a"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery.meta",
+      "sha256": "720827e8607ac785a5802c57a9ac7247a26981b6456b7e41b8d5e1710073a477"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/PROVENANCE.md",
+      "sha256": "09bf6345292004c96bd15ea117e9647d3c0ddb511cee1dad2957ca6471513327"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/PROVENANCE.md.meta",
+      "sha256": "304c7882d2d42688892a9958279f14e45d35c5740d82e2f35e7c632e1ea7d93f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryMars.shader",
+      "sha256": "b6cab839517c08bf41be55efafe4996c0ef6fec899e2a142209e647653ca5303"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryMars.shader.meta",
+      "sha256": "1e90b6f312a6160989dab706a7cab07787bec6b20351ac83737057725615b353"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryShotProvider.cs",
+      "sha256": "33f335633603acbb61b6ea86988d0ad4b11a0803fed9ced141496c63323f0ec2"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryShotProvider.cs.meta",
+      "sha256": "a68156855009416fff4695d59ae028985b8139f8328c450ab1b8d7cd521f86e3"
+    },
+    {
+      "path": "Assets/_OutOfReach/Tests/EditMode/SurvivalExtension/SurvivalRecoveryTests.cs",
+      "sha256": "995624e22e0069f050350879e0838c823f4fa2eba5b96a447ac4d56b0f3b9fcb"
+    },
+    {
+      "path": "Assets/_OutOfReach/Tests/EditMode/SurvivalExtension/SurvivalRecoveryTests.cs.meta",
+      "sha256": "dc09bcfd131b080af841c47c86b55ec7bf6e226d499a4abf5f97fdd145bd90b4"
+    },
+    {
+      "path": "Assets/_OutOfReach/Tests/PlayMode/SurvivalRecoveryLifecyclePlayTests.cs",
+      "sha256": "19e341ee529f3ad685fb6dc79236502b5e344f151fe721d84e00942b748672fb"
+    },
+    {
+      "path": "Assets/_OutOfReach/Tests/PlayMode/SurvivalRecoveryLifecyclePlayTests.cs.meta",
+      "sha256": "6ce45c121cf9060274c71c51374b2da6376f22a079f18168527b78d941f44506"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs",
+      "sha256": "b2bdd3073cdf8110e46fd577d629e364cfffa903bcd28ad919f90e89efdab477"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs.meta",
+      "sha256": "f0154f3a1ac8ada54c5885415fdca9fac9db40e369c7beab638d0350a913613f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars.meta",
+      "sha256": "020ffc8064ab44a04b9df1adc4308a5ef20a77f63064211e05770bda8d141422"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/MarsSphere.asset",
+      "sha256": "f11127831a36d90974beb67e9460560ffc2729d5eedcb8551708969025d7bef4"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/MarsSphere.asset.meta",
+      "sha256": "e751c875c80d78e22414d493a303098377b068f0347d6b26a3d095cc2617f921"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/Mars_NASA_Viking.jpg",
+      "sha256": "12ec6bf02ebd42a246edc778cb2ce8c595b4d9f0892badf0bfff8abb2303c780"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/Mars_NASA_Viking.jpg.meta",
+      "sha256": "891d7e3e988a6756a8df0e7b9d3dd7662ef7a02e5c0083cd41e3bf023ab879cd"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/SOURCE.json",
+      "sha256": "37099c72de105b3de6d6319aa44684c42401c6f1ad502472535c27e0019c1197"
+    },
+    {
+      "path": "Assets/_OutOfReach/Visuals/Celestial/RecoveryMars/SOURCE.json.meta",
+      "sha256": "83657dc8d1ce3719126fef4735abcf192d8363bdef50e3f6ea5cb4bda0bc45aa"
+    }
+  ],
+  "scope": "Exact captured dirty candidate on1470871 before antenna bindings. Native run20261114T224725353Z."
+}

@@ -1,0 +1,8 @@
+{
+  "name": "OutOfReach.Terminal.Editor",
+  "rootNamespace": "OutOfReach.Presentation.Terminal.Editor",
+  "references": ["OutOfReach.Terminal", "OutOfReach.Presentation"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

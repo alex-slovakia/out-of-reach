@@ -1,0 +1,7 @@
+{
+  "name": "OutOfReach.Terminal",
+  "rootNamespace": "OutOfReach.Presentation.Terminal",
+  "references": ["OutOfReach.Presentation"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

@@ -1,0 +1,15 @@
+{
+  "task": "LAND-INTEGRATION01",
+  "sourceCommit": "2f8dd22e6b026d7e4504efab4264df3f630c0553",
+  "sourcePackage": "docs/art-direction/land-launch-site-v01",
+  "originalBinaryBytesPreserved": true,
+  "provenance": {
+    "author": "Claude Opus 5.5 (AI) for Apoliak7777's team",
+    "ai_generated": true,
+    "method": "procedural Blender 5.3 and Python scripts in source/",
+    "third_party": "none; lettering rasterised from Inter (SIL OFL 1.1, shipped with Blender), pixels only",
+    "branding": "fictional LC-7 and AURORA-7 marks only; no agency logos or insignia"
+  },
+  "productionChange": "Pinned authored FBX/maps; five reused ship materials remain unchanged; five exact non-convex mesh colliders preserve exhaust slot. No camera/light/gameplay/crew-deck changes.",
+  "nativeValidation": "Pending root Unity import, geometry/raycast and graphics validation. Source package Blender evidence is not Unity proof."
+}

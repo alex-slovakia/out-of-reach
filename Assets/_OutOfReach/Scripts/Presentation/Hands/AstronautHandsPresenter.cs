@@ -161,6 +161,7 @@ namespace OutOfReach.Presentation.Hands
         /// <summary>Cancels the gesture and restores neutral joints, without moving the model root or mount.</summary>
         public void ResetToNeutral()
         {
+            ForgetToolHold();
             ForgetContact();
             gesture = Gesture.None;
             gestureElapsed = gestureBlend = 0f;
@@ -171,7 +172,7 @@ namespace OutOfReach.Presentation.Hands
         private bool TryStartGesture(Gesture requested, bool left)
         {
             RefreshPresentation();
-            if (!IsVisible || clock.IsPaused || ContactStage != HandContactStage.None
+            if (!IsVisible || clock.IsPaused || toolHoldActive || ContactStage != HandContactStage.None
                 || (IsGesturePlaying && !(requested == Gesture.Press && gesture == Gesture.Grip)))
                 return false; // Press may smoothly replace a glove flex; no queue or delayed feedback.
             foreach (JointBinding binding in bindings)
@@ -243,6 +244,7 @@ namespace OutOfReach.Presentation.Hands
 
         public void ClearBinding()
         {
+            ForgetToolHold();
             ForgetContact();
             contactOrigin = null;
             contactModeAllowed = null;
@@ -270,6 +272,7 @@ namespace OutOfReach.Presentation.Hands
         {
             RefreshPresentation();
             if (!IsVisible || clock.IsPaused) return; // Keep the last visible pose; never advance while paused.
+            if (toolHoldActive) { AdvanceToolHold(Time.unscaledDeltaTime); return; }
             if (ContactStage != HandContactStage.None) { AdvanceContact(Time.unscaledDeltaTime); return; }
             SampleRouteTravel();
             AdvanceGesture(Time.unscaledDeltaTime);
@@ -299,8 +302,9 @@ namespace OutOfReach.Presentation.Hands
                 HideModel();
                 return;
             }
+            if (toolHoldActive && !TryToolPose(out _, out _, out _)) ResetToNeutral();
             if (clock.IsPaused) { CancelContact(); return; } // Cancel pending actions; freeze the visible pose until resume.
-            if (firstPersonViewAllowed == null || !firstPersonViewAllowed())
+            if (!toolHoldActive && (firstPersonViewAllowed == null || !firstPersonViewAllowed()))
             {
                 ResetToNeutral(); // Cinematic/menu/control lock cancels rather than queues a hidden gesture.
                 HideModel();
@@ -469,7 +473,7 @@ namespace OutOfReach.Presentation.Hands
             Func<HandContactSample, bool> tryActionAtContact, Func<HandContactTarget?> readAuthoritativeGrip = null)
         {
             RefreshPresentation();
-            if (!CanPresentContact() || ContactStage != HandContactStage.None || tryActionAtContact == null
+            if (!CanPresentContact() || toolHoldActive || ContactStage != HandContactStage.None || tryActionAtContact == null
                 || (hand != ContactHand.Left && hand != ContactHand.Right)
                 || (kind != HandContactKind.Push && kind != HandContactKind.Grip)
                 || (kind == HandContactKind.Grip && readAuthoritativeGrip == null)) return false;
@@ -666,6 +670,215 @@ namespace OutOfReach.Presentation.Hands
                 return true;
             }
             catch (Exception error) { Debug.LogException(error, this); return false; }
+        }
+
+        // Tool-only calibration of the original rigid rig against the actual 35 mm antenna wrench.
+        // No ordinary Grip/Press/Neutral data is changed. The root owns the tool animation and repair command.
+        private static readonly Vector3 ToolGripCentre = new Vector3(0f, -.0426f, .086f);
+        private const float ToolReachSeconds = .20f;
+        private Transform toolGripFrame;
+        private Func<bool> toolLeaseStillValid;
+        [SerializeField, Tooltip("Actual EVA upperarm01.R, read only. Optional fixed 350/320 mm view-arm fit, not a copy of the shorter body skeleton.")]
+        private Transform toolSleeveShoulder;
+        [SerializeField] private EvaToolSleevePresenter toolSleeveVisual;
+        [SerializeField] private bool useToolSleeve;
+        public const float ToolUpperSleeveMetres = .35f;
+        public const float ToolForearmMetres = .32f;
+        public Transform ToolSleeveShoulder => toolSleeveShoulder;
+        public Vector3 ToolElbowWorldPosition => toolArm != null && toolArm.Joint
+            ? toolArm.Joint.TransformPoint(new Vector3(0f, 0f, -ToolForearmMetres)) : Vector3.zero;
+        public Vector3 ToolWristWorldPosition => toolWrist != null && toolWrist.Joint ? toolWrist.Joint.position : Vector3.zero;
+        public bool IsToolHoldPaused => clock != null && clock.IsPaused;
+        private Vector3 previousToolShoulder;
+
+        /// <summary>Explicit scene binding; never discovers or writes body bones. Rebinding cancels an old visual lease.</summary>
+        public void ConfigureToolSleeveShoulder(Transform actualEvaShoulder, EvaToolSleevePresenter sleeve)
+        {
+            EndToolHold();
+            toolSleeveShoulder = actualEvaShoulder; toolSleeveVisual = sleeve; useToolSleeve = true;
+        }
+
+        private JointBinding toolArm, toolWrist;
+        private int toolLeaseVersion;
+        private float toolReachElapsed;
+        private bool toolHoldActive, hasToolSample;
+        private Vector3 previousToolPoint, previousToolOrigin;
+        private Quaternion previousToolRotation;
+        public bool IsToolHoldActive => toolHoldActive;
+        public bool IsToolHoldSettled => toolHoldActive && toolReachElapsed >= ToolReachSeconds && ToolHoldReferenceErrorMetres <= .002f;
+        public float ToolHoldReferenceErrorMetres { get; private set; } = float.NaN;
+        public static Vector3 ToolGripCentreInHand => ToolGripCentre;
+
+        /// <summary>
+        /// Begins a right-hand visual lease, not a repair. Bind before applying the root movement lock.
+        /// Frame position is the actual 35 mm tube centre; +X is its axis, +Z calibrated hand forward.
+        /// Hold the tool at its initial frame until IsToolHoldSettled, then animate the real source.
+        /// Read-only validity must exclude menus/cinematics/session changes but remain true on valid pause.
+        /// It must validate the live worksite/reach/collider paths; this presenter owns no physics command.
+        /// </summary>
+        public bool TryBeginToolHold(Transform gripFrame, Func<bool> leaseStillValid)
+        {
+            RefreshPresentation();
+            LastToolHoldRejection = string.Empty;
+            if (!IsVisible || clock == null || clock.IsPaused || toolHoldActive || ContactStage != HandContactStage.None
+                || !gripFrame || leaseStillValid == null || state.Phase != GamePhase.Eva || !suit.IsOutside) return RejectToolHold("Acquisition precondition; visible=" + IsVisible + ", contact=" + ContactStage + ", existingLease=" + toolHoldActive);
+            foreach (JointBinding joint in bindings)
+            {
+                if (!joint.Joint) { ClearBinding(); return RejectToolHold("Missing original joint."); }
+                if (joint.Joint.name == "R_Arm") toolArm = joint;
+                if (joint.Joint.name == "R_Hand") toolWrist = joint;
+                joint.GestureStartPosition = joint.Joint.localPosition;
+                joint.GestureStartRotation = joint.Joint.localRotation;
+            }
+            if (toolArm == null || toolWrist == null || toolWrist.AuthoredPosition != Vector3.zero) return RejectToolHold("Invalid original arm/wrist binding.");
+            toolGripFrame = gripFrame; toolLeaseStillValid = leaseStillValid;
+            toolHoldActive = true; hasToolSample = false; toolReachElapsed = 0f; toolLeaseVersion++;
+            if (!TryToolPose(out _, out _, out _)) { ForgetToolHold(); return false; }
+            gesture = Gesture.None; gestureElapsed = gestureBlend = 0f; ResetTravelSample();
+            return true;
+        }
+
+        /// <summary>
+        /// Applies a newly sampled tool frame through this same owner, without advancing reach or work time.
+        /// The caller must already hold a settled lease. Pause freezes; a final stale/invalid contact cannot succeed.
+        /// </summary>
+        public bool RefreshToolHoldFrame()
+        {
+            if (!toolHoldActive || !IsToolHoldSettled || !IsVisible || clock == null || clock.IsPaused) return false;
+            int version = toolLeaseVersion;
+            if (!TryToolPose(out _, out _, out _)) { EndToolHold(); return false; }
+            AdvanceToolHold(0f);
+            if (version != toolLeaseVersion || !toolHoldActive || !IsToolHoldSettled) return false;
+            if (!TryToolPose(out _, out _, out _)) { EndToolHold(); return false; }
+            if (version != toolLeaseVersion || !toolHoldActive || !toolWrist.Joint || !toolGripFrame) return false;
+            float actual = Vector3.Distance(toolWrist.Joint.TransformPoint(ToolGripCentre), toolGripFrame.position);
+            ToolHoldReferenceErrorMetres = actual;
+            if (!Finite(actual) || actual > .002f) { EndToolHold(); return false; }
+            return true;
+        }
+
+        /// <summary>Idempotent visual cancellation. Never repairs, consumes, releases Player or completes an interaction.</summary>
+        public void EndToolHold()
+        {
+            if (!toolHoldActive) return;
+            ResetToNeutral();
+        }
+
+        private void ForgetToolHold()
+        {
+            toolLeaseVersion++; toolHoldActive = false; toolGripFrame = null; toolLeaseStillValid = null;
+            toolArm = toolWrist = null; toolReachElapsed = 0f; hasToolSample = false;
+            ToolHoldReferenceErrorMetres = float.NaN;
+        }
+
+        // Read-only last rejection, retained after cancellation so native QA can identify the actual guard.
+        public string LastToolHoldRejection { get; private set; } = string.Empty;
+        private bool RejectToolHold(string reason) { LastToolHoldRejection = reason; return false; }
+
+        private bool TryToolPose(out Vector3 wristPosition, out Quaternion armRotation, out Quaternion handRotation)
+        {
+            wristPosition = default; armRotation = handRotation = Quaternion.identity;
+            if (!toolHoldActive || !bound || !isActiveAndEnabled || !toolGripFrame || !toolGripFrame.gameObject.activeInHierarchy
+                || !motionMount || !modelRoot || toolArm == null || !toolArm.Joint || toolWrist == null || !toolWrist.Joint
+                || toolGripFrame == modelRoot || toolGripFrame.IsChildOf(modelRoot)
+                || state == null || state.Phase != GamePhase.Eva || suit == null || !suit.IsSuitOn || !suit.IsOutside
+                || (toolGripFrame.lossyScale - Vector3.one).sqrMagnitude > .000001f
+                || (modelRoot.lossyScale - Vector3.one).sqrMagnitude > .000001f) return RejectToolHold("Session, source, rig or scale invalid.");
+            int version = toolLeaseVersion; bool valid;
+            try { valid = toolLeaseStillValid != null && toolLeaseStillValid(); }
+            catch (Exception error) { Debug.LogException(error, this); return RejectToolHold("Root validity callback threw."); }
+            if (!valid || version != toolLeaseVersion || !toolHoldActive || !toolGripFrame) return RejectToolHold("Root validity callback or lease identity rejected.");
+            Vector3 point = toolGripFrame.position, origin = motionMount.position;
+            handRotation = toolGripFrame.rotation;
+            if (!FiniteVector(point) || !FiniteVector(origin) || !Finite(handRotation.x) || !Finite(handRotation.y)
+                || !Finite(handRotation.z) || !Finite(handRotation.w)) return RejectToolHold("Non-finite source frame.");
+            if (hasToolSample && (Vector3.Distance(previousToolPoint, point) > .12f || Vector3.Distance(previousToolOrigin, origin) > .25f)) return RejectToolHold("Source or view origin jumped.");
+            if (clock.IsPaused && hasToolSample && (Vector3.Distance(previousToolPoint, point) > .00002f
+                || Quaternion.Angle(previousToolRotation, handRotation) > .02f)) return RejectToolHold("Tool frame changed during pause.");
+            Vector3 delta = point - origin, local = Quaternion.Inverse(motionMount.rotation) * delta;
+            if (delta.magnitude > .8f || local.z < .12f || Mathf.Abs(local.x) > .55f || local.y < -.55f || local.y > .45f) return RejectToolHold("Eye envelope rejected: distance=" + delta.magnitude + ", local=" + local + "");
+            wristPosition = point - handRotation * ToolGripCentre;
+            Vector3 shoulder = origin + motionMount.rotation * new Vector3(.18f, -.28f, -.08f);
+            Vector3 forearm = wristPosition - shoulder;
+            if (forearm.magnitude < .18f || forearm.magnitude > .72f) return RejectToolHold("Original camera-shoulder reach rejected: " + forearm.magnitude + "");
+            // Preserve the existing camera/reach and wrist-angle guards. Only this explicit view-arm fit adds
+            // a real bent upper segment; neither the original hand nor its 320 mm forearm is scaled.
+            if (useToolSleeve)
+            {
+                if (!toolSleeveShoulder || !toolSleeveVisual || !toolSleeveVisual.IsReady || !toolSleeveShoulder.gameObject.activeInHierarchy || !FiniteVector(toolSleeveShoulder.position)) return RejectToolHold("Explicit sleeve/shoulder is unavailable or inactive.");
+                Vector3 actualShoulder = toolSleeveShoulder.position;
+                if (clock.IsPaused && hasToolSample && Vector3.Distance(previousToolShoulder, actualShoulder) > .00002f) return RejectToolHold("Actual shoulder changed during pause.");
+                Vector3 axis = wristPosition - actualShoulder;
+                float distance = axis.magnitude;
+                if (distance < .10f || distance >= ToolUpperSleeveMetres + ToolForearmMetres) return RejectToolHold("Fixed350/320 reach rejected: " + distance + "");
+                axis /= distance;
+                // A predominantly downward elbow avoids the old outward-heavy pole's 84-degree initial wrist twist.
+                // Original fixed lengths, grip and 80-degree wrist guard are unchanged.
+                Vector3 bend = Vector3.ProjectOnPlane(motionMount.right * .10f - motionMount.up * .9949874f, axis);
+                if (bend.sqrMagnitude < .01f) return RejectToolHold("Elbow pole projection degenerate.");
+                float along = (ToolUpperSleeveMetres * ToolUpperSleeveMetres - ToolForearmMetres * ToolForearmMetres
+                    + distance * distance) / (2f * distance);
+                float heightSquared = ToolUpperSleeveMetres * ToolUpperSleeveMetres - along * along;
+                if (heightSquared <= 0f) return RejectToolHold("Fixed-segment elbow has no real solution.");
+                Vector3 elbow = actualShoulder + axis * along + bend.normalized * Mathf.Sqrt(heightSquared);
+                forearm = wristPosition - elbow;
+                if (!clock.IsPaused) previousToolShoulder = actualShoulder;
+            }
+            Vector3 up = Vector3.ProjectOnPlane(handRotation * Vector3.up, forearm.normalized);
+            if (up.sqrMagnitude < .01f) return RejectToolHold("Forearm up projection degenerate.");
+            armRotation = Quaternion.LookRotation(forearm, up);
+            if (Quaternion.Angle(armRotation, handRotation) > 80f) return RejectToolHold("Wrist angle exceeds unchanged80deg: " + Quaternion.Angle(armRotation, handRotation) + "");
+            if (!clock.IsPaused)
+            {
+                previousToolPoint = point; previousToolOrigin = origin; previousToolRotation = handRotation; hasToolSample = true;
+            }
+            return true;
+        }
+
+        private void AdvanceToolHold(float seconds)
+        {
+            if (!TryToolPose(out Vector3 wristPosition, out Quaternion armRotation, out Quaternion handRotation)) { EndToolHold(); return; }
+            if (!Finite(seconds) || seconds < 0f) { EndToolHold(); return; }
+            // Ignore animation time from a hitch; keep the live geometric lease rather than skipping its reach.
+            if (seconds <= .1f) toolReachElapsed = Mathf.Min(ToolReachSeconds, toolReachElapsed + seconds);
+            float blend = Mathf.SmoothStep(0f, 1f, toolReachElapsed / ToolReachSeconds);
+            foreach (JointBinding joint in bindings)
+            {
+                if (!joint.Joint) { ClearBinding(); return; }
+                if (joint.Left)
+                {
+                    joint.Joint.SetLocalPositionAndRotation(Vector3.Lerp(joint.GestureStartPosition, joint.NeutralPosition, blend),
+                        Quaternion.Slerp(joint.GestureStartRotation, joint.NeutralRotation, blend));
+                    continue;
+                }
+                if (joint == toolArm || joint == toolWrist) continue;
+                joint.Joint.SetLocalPositionAndRotation(Vector3.Lerp(joint.GestureStartPosition, joint.AuthoredPosition, blend),
+                    Quaternion.Slerp(joint.GestureStartRotation, ToolFingerRotation(joint), blend));
+            }
+            toolArm.Joint.SetLocalPositionAndRotation(Vector3.Lerp(toolArm.GestureStartPosition, modelRoot.InverseTransformPoint(wristPosition), blend),
+                Quaternion.Slerp(toolArm.GestureStartRotation, Quaternion.Inverse(modelRoot.rotation) * armRotation, blend));
+            toolWrist.Joint.SetLocalPositionAndRotation(toolWrist.AuthoredPosition,
+                Quaternion.Slerp(toolWrist.GestureStartRotation, Quaternion.Inverse(armRotation) * handRotation, blend));
+            ToolHoldReferenceErrorMetres = Vector3.Distance(toolWrist.Joint.TransformPoint(ToolGripCentre), toolGripFrame.position);
+        }
+
+        private static Quaternion ToolFingerRotation(JointBinding joint)
+        {
+            switch (joint.Joint.name)
+            {
+                case "R_Thumb1": return Quaternion.AngleAxis(23f, new Vector3(0.47499f, 0.54297f, 0.69251f)) * joint.GripRotation;
+                case "R_Thumb2": return Quaternion.AngleAxis(16f, new Vector3(0.47499f, 0.54297f, 0.69251f)) * joint.GripRotation;
+                case "R_Thumb3": return Quaternion.AngleAxis(-13.25f, new Vector3(0.47499f, 0.54297f, 0.69251f)) * joint.GripRotation;
+                case "R_Index1": return Quaternion.AngleAxis(-8f, new Vector3(0.99756f, 0f, 0.06976f)) * joint.GripRotation;
+                case "R_Index2": return Quaternion.AngleAxis(-15f, new Vector3(0.99756f, 0f, 0.06976f)) * joint.GripRotation;
+                case "R_Middle1": return Quaternion.AngleAxis(-16f, new Vector3(0.99985f, 0f, 0.01745f)) * joint.GripRotation;
+                case "R_Ring1": return Quaternion.AngleAxis(-10f, new Vector3(0.99939f, 0f, -0.0349f)) * joint.GripRotation;
+                case "R_Ring2": return Quaternion.AngleAxis(-15.5f, new Vector3(0.99939f, 0f, -0.0349f)) * joint.GripRotation;
+                case "R_Little1": return Quaternion.AngleAxis(-32f, new Vector3(0.99452f, 0f, -0.10453f)) * joint.GripRotation;
+                case "R_Little2": return Quaternion.AngleAxis(-16f, new Vector3(0.99452f, 0f, -0.10453f)) * joint.GripRotation;
+                case "R_Little3": return Quaternion.AngleAxis(-14f, new Vector3(0.99452f, 0f, -0.10453f)) * joint.GripRotation;
+                default: return joint.GripRotation;
+            }
         }
 
         private static bool FiniteVector(Vector3 value) => Finite(value.x) && Finite(value.y) && Finite(value.z);

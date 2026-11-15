@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using OutOfReach.Contracts;
+using OutOfReach.Presentation.Cinematics.Recovery;
 using UnityEngine;
 
 namespace OutOfReach.Presentation.Cinematics
@@ -23,6 +24,9 @@ namespace OutOfReach.Presentation.Cinematics
         [SerializeField] private CanvasGroup blackoutOverlay;
         [Tooltip("Restrained red-tinted artwork. Configure as non-interactive; alpha only is animated.")]
         [SerializeField] private CanvasGroup emergencyOverlay;
+        [Tooltip("Optional recovered-outcome tableau. Its camera pose is applied only by this presenter.")]
+        [SerializeField] private RecoveryShotProvider recoveryShots;
+        [SerializeField] private Camera presentationCamera;
 
         [Header("Real seconds; pauses follow the optional authoritative clock")]
         [SerializeField, Range(0.25f, MaximumDurationSeconds)] private float impactSeconds = 4.5f;
@@ -62,6 +66,11 @@ namespace OutOfReach.Presentation.Cinematics
         private float blackoutAlpha;
         private float emergencyAlpha;
         private readonly List<LightSnapshot> capturedLights = new List<LightSnapshot>();
+        private RecoveryShotProvider capturedRecoveryShots;
+        private Camera capturedCamera;
+        private Vector3 cameraRelativePosition;
+        private Quaternion cameraRelativeRotation;
+        private float cameraFieldOfView, cameraFarClip;
 
         private struct LightSnapshot
         {
@@ -86,6 +95,17 @@ namespace OutOfReach.Presentation.Cinematics
                 reducedEffects = value;
                 if (active) ApplyFrame();
             }
+        }
+
+        /// <summary>Explicit scene wiring only. Unconfigured scenes retain their existing ending behavior.
+        /// Root must use the single existing camera below this presenter's dedicated offset pivot.</summary>
+        public void ConfigureRecoveryShots(RecoveryShotProvider shots, Camera existingCamera)
+        {
+            if (active) throw new InvalidOperationException("Configure recovery views while no cinematic is active.");
+            if (shots && (!existingCamera || !cameraOffsetPivot || !existingCamera.transform.IsChildOf(cameraOffsetPivot)
+                || (cameraOffsetPivot.lossyScale - Vector3.one).sqrMagnitude > .000001f))
+                throw new ArgumentException("Recovery shots require the existing camera below the metre-scale cinematic pivot.");
+            recoveryShots = shots; presentationCamera = existingCamera;
         }
 
         /// <summary>Bind explicitly from the composition root. Reconfiguration cancels/restores the previous sequence.</summary>
@@ -195,7 +215,13 @@ namespace OutOfReach.Presentation.Cinematics
                 CompleteActive(true);
                 return;
             }
-            if (simulationClock != null && simulationClock.IsPaused) return;
+            if (simulationClock != null && simulationClock.IsPaused)
+            {
+                // Keep the sampled world shot if a player ancestor is restored by another view on pause.
+                // The sole playhead does not advance, and the provider has no clock of its own.
+                if (capturedRecoveryShots) ApplyFrame();
+                return;
+            }
             float delta = Time.unscaledDeltaTime;
             if (float.IsNaN(delta) || float.IsInfinity(delta) || delta < 0) return;
             elapsedRealSeconds = Mathf.Min(durationSeconds, elapsedRealSeconds + delta);
@@ -240,6 +266,8 @@ namespace OutOfReach.Presentation.Cinematics
 
         private float DurationFor(CinematicId cinematic)
         {
+            if (recoveryShots && presentationCamera && RecoveryShotProvider.Supports(cinematic))
+                return RecoveryShotProvider.Duration(cinematic);
             float value;
             switch (cinematic)
             {
@@ -276,6 +304,16 @@ namespace OutOfReach.Presentation.Cinematics
             foreach (var light in effectLights ?? Array.Empty<Light>())
                 if (light && uniqueLights.Add(light))
                     capturedLights.Add(new LightSnapshot { Light = light, Color = light.color, Intensity = light.intensity, Enabled = light.enabled });
+            capturedRecoveryShots = null; capturedCamera = null;
+            if (capturedPivot && presentationCamera && presentationCamera.transform.IsChildOf(capturedPivot)
+                && recoveryShots && RecoveryShotProvider.Supports(activeRequest.Cinematic)
+                && recoveryShots.TryBegin(activeRequest.Cinematic))
+            {
+                capturedRecoveryShots = recoveryShots; capturedCamera = presentationCamera;
+                cameraRelativePosition = capturedPivot.InverseTransformPoint(capturedCamera.transform.position);
+                cameraRelativeRotation = Quaternion.Inverse(capturedPivot.rotation) * capturedCamera.transform.rotation;
+                cameraFieldOfView = capturedCamera.fieldOfView; cameraFarClip = capturedCamera.farClipPlane;
+            }
         }
 
         private void ApplyFrame()
@@ -283,6 +321,17 @@ namespace OutOfReach.Presentation.Cinematics
             if (!active) return;
             float t = Mathf.Clamp01(elapsedRealSeconds / durationSeconds);
             RestoreVisualValues();
+            if (capturedRecoveryShots && capturedPivot && capturedCamera
+                && capturedRecoveryShots.TrySample(activeRequest.Cinematic, t, reducedEffects, out RecoveryShotProvider.Frame shot))
+            {
+                // The provider supplies data only. This remains the sole writer of the camera chain.
+                Quaternion rotation = shot.CameraRotation * Quaternion.Inverse(cameraRelativeRotation);
+                capturedPivot.SetPositionAndRotation(shot.CameraPosition - rotation * cameraRelativePosition, rotation);
+                capturedCamera.fieldOfView = shot.FieldOfView; capturedCamera.farClipPlane = shot.FarClip;
+                if (capturedBlackout) capturedBlackout.alpha = Mathf.Lerp(blackoutAlpha, 1f, shot.Blackout);
+                SetCaption(shot.Caption);
+                return;
+            }
             string caption;
             switch (activeRequest.Cinematic)
             {
@@ -353,6 +402,7 @@ namespace OutOfReach.Presentation.Cinematics
             }
             if (capturedBlackout) capturedBlackout.alpha = blackoutAlpha;
             if (capturedEmergency) capturedEmergency.alpha = emergencyAlpha;
+            if (capturedCamera) { capturedCamera.fieldOfView = cameraFieldOfView; capturedCamera.farClipPlane = cameraFarClip; }
         }
 
         private void CompleteActive(bool skipped)
@@ -362,7 +412,9 @@ namespace OutOfReach.Presentation.Cinematics
             var completionBus = activeRequestBus;
             active = false;
             activeRequestBus = null;
+            if (capturedRecoveryShots) capturedRecoveryShots.EndShot();
             RestoreVisualValues();
+            capturedRecoveryShots = null; capturedCamera = null;
             capturedPivot = null;
             capturedBlackout = null;
             capturedEmergency = null;

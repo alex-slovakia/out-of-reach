@@ -1,0 +1,7 @@
+Actual saved Bootstrap UIDocument/session menus. No fake UI, outcome/report assignment, scene save or Player teleport.
+All menu actions are actual UI Toolkit NavigationSubmit events. Hidden-toggle tests target the real hidden element directly.
+Public StartPractice/Planner launch, actual transport/Impact/ending Skip, and up to5 accounted86400s resource-loss inputs create a real final report. DriveFromUpdate=false during this disclosed setup.
+Public ConfigureDocument(reportStyle=null) temporarily exercises supported Mission ended fallback, then restores exact stylesheet.
+Public ConfigureQuitAction uses only a counting callback, reset between independent confirmation cases. NEVER real Application.Quit.
+Actual Refresh focus blur, hidden submits, expiry, context changes, restart/disable/rebind and existing GPU menu geometry are checked.
+Read-only reflection locates existing scene references only. No original editor interaction; isolated batch process exits after QA.180s watchdog.

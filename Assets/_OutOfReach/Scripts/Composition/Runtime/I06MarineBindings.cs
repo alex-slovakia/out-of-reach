@@ -76,7 +76,7 @@ namespace OutOfReach.Composition
             departure.CaptionChanged += ForwardCaption; departure.CueRaised += ForwardCue; departure.Finished += OnDepartureEnd;
             departure.Configure(owner.GameState, owner.Clock, departureOffset, playerCamera, vehicle, hatch, arm, seatCamera);
             SetReducedMotion(reducedMotion);
-            ocean.BindClock(owner.Clock);
+            if (ocean) ocean.BindClock(owner.Clock);
             if (departureFx) departureFx.ConfigureViews(nozzleFrame, deckPlane, fxExhaust, fxSteam);
             if (owner.GameState.Phase == GamePhase.Planning)
             {

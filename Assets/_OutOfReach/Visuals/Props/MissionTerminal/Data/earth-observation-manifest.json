@@ -1,0 +1,72 @@
+{
+  "package_id": "earth-terminal-observation-v01",
+  "status": "Staged offline data and display proposal; not integrated into Unity",
+  "image": {
+    "file": "image/epic_1b_20261111110606.jpg",
+    "bytes": 223720,
+    "sha256": "d5a5fc0ce1505848b9ddd8fd1e6b020d21d44d532d24f05ee083202c8d8c9463",
+    "mime_type": "image/jpeg",
+    "width_pixels": 1080,
+    "height_pixels": 1080,
+    "pixel_modifications": "None; original NASA archive JPEG bytes"
+  },
+  "observation": {
+    "provider": "NASA EPIC Team",
+    "instrument": "Earth Polychromatic Imaging Camera (EPIC)",
+    "platform": "NOAA DSCOVR",
+    "collection": "natural",
+    "processing_version": "04",
+    "identifier": "20261111110606",
+    "image_name": "epic_1b_20261111110606",
+    "api_date_verbatim": "2026-11-11 11:01:17",
+    "observed_at_utc": "2026-11-11T11:01:17Z",
+    "timestamp_source": "EPIC API date field; not the identifier or filename timestamp",
+    "utc_basis": "NASA EPIC Data Format Control Book v4, 2025-09-15, L1B dataset attributes, printed page 3-7 documents image time in UTC; preserve API date verbatim",
+    "centroid_degrees": {
+      "lat": -11.257324,
+      "lon": 0.446777
+    },
+    "centroid_meaning": "Geographical centre of the Earth view, not spacecraft navigation coordinates",
+    "is_live": false,
+    "is_forecast": false,
+    "is_onboard_vessel_view": false
+  },
+  "sources": {
+    "image_url": "https://epic.gsfc.nasa.gov/archive/natural/2026/11/11/jpg/epic_1b_20261111110606.jpg",
+    "metadata_url": "https://epic.gsfc.nasa.gov/api/natural/date/2026-11-11",
+    "latest_endpoint_checked": "https://epic.gsfc.nasa.gov/api/natural",
+    "latest_available_day_at_review": "2026-11-11",
+    "api_documentation": "https://epic.gsfc.nasa.gov/about/api",
+    "imagery_and_reuse_policy": "https://epic.gsfc.nasa.gov/about",
+    "nasa_media_guidelines": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "time_format_reference": "https://asdc.larc.nasa.gov/documents/dscovr/EPIC_Data_Format_Control_Book.pdf"
+  },
+  "rights": {
+    "basis": "NASA EPIC Image Use Policy (specific agency permission; not an invented Creative Commons licence)",
+    "summary": "NASA EPIC Team material may be reproduced/reused, including commercial purposes; credit the NASA EPIC Team and follow NASA media guidelines.",
+    "display_attribution": "Image: NASA EPIC Team / NOAA DSCOVR",
+    "credit_short": "NASA EPIC Team",
+    "endorsement": "No NASA endorsement is stated or implied.",
+    "third_party_credit_detected_in_record": false,
+    "identifiable_people_or_agency_logo_in_image": false
+  },
+  "mission_time": {
+    "example_only_mission_utc": "2026-11-14T08:00:00Z",
+    "observation_age_seconds_at_example": 248323.0,
+    "observation_age_display_at_example": "2 d 20 h 58 min 43 s",
+    "runtime_binding": "MissionRuntime.Calendar.NowUtc; read only. Do not use DateTime.UtcNow or accumulate another mission clock.",
+    "image_refresh_policy": "Pinned offline observation. Do not relabel it as current when mission time advances."
+  },
+  "download": {
+    "keyless": true,
+    "new_dependencies": false,
+    "total_bytes_including_metadata_and_policy_pages": 598241,
+    "limit_bytes": 10000000,
+    "retrieved_at_utc": "2026-11-14T14:47:14.813814+00:00"
+  },
+  "verification": {
+    "image_decoded_and_visually_inspected": true,
+    "visual_description": "Full illuminated Earth disk, Africa, Atlantic and surrounding cloud patterns, black space background; no decorative overlays added.",
+    "unity_import_playtest_or_terminal_render": false
+  }
+}

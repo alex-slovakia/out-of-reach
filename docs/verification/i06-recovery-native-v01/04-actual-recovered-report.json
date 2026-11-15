@@ -1,0 +1,49 @@
+{
+    "name": "04-actual-recovered-report",
+    "scope": "Actual saved Bootstrap player camera + existing UI, 1280x720; UGUI overlay excluded. No diagnostic camera or image composite.",
+    "phase": "Report",
+    "outcome": "Recovered",
+    "cinematic": "None",
+    "caption": "",
+    "visibleLabels": "OUT OF REACH\nAURORA-7  /  FLIGHT RECORDER\nCREW RECOVERED\nYou made it.\nRescue reached Aurora-7. Your next destination: Mars.\nELAPSED SIMULATION TIME  12D 03H 11M 58S",
+    "audioCue": "",
+    "audioSubtitle": "Aurora Seven, we received your position. We're assessing recovery options. Conserve power and life support. Rescue is not yet confirmed.\n",
+    "bodyVisible": false,
+    "glovesVisible": false,
+    "cargoHandsVisible": false,
+    "sequence": 0,
+    "simulationSeconds": 1048318.965642497,
+    "cinematicSeconds": 0.0,
+    "blackout": 0.0,
+    "fov": 68.0,
+    "far": 100.0,
+    "mean": 0.06273428350687027,
+    "deviation": 0.09796074777841568,
+    "paused": false,
+    "reduced": false,
+    "control": false,
+    "resolver": false,
+    "arrivalVisible": false,
+    "marsVisible": false,
+    "cameraPosition": {
+        "x": -0.000023278469598153606,
+        "y": 1.7000043392181397,
+        "z": 0.800000011920929
+    },
+    "arrivalPosition": {
+        "x": 15.0,
+        "y": 5.0,
+        "z": 36.0
+    },
+    "marsPosition": {
+        "x": 2190.0,
+        "y": -2.0,
+        "z": 18.0
+    },
+    "cameraRotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": -0.0000063919292188074909
+    }
+}

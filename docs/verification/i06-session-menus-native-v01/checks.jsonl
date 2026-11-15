@@ -1,0 +1,82 @@
+{"utc":"2026-11-14T23:41:15.1062561Z","stage":"opening saved Bootstrap","message":"Saved scene has the actual cinematic owner.","pass":true}
+{"utc":"2026-11-14T23:41:21.2421748Z","stage":"actual Bootstrap recovery","message":"Actual saved session controls, attached UIDocument, camera and cinematic owner exist.","pass":true}
+{"utc":"2026-11-14T23:41:21.3599062Z","stage":"actual Bootstrap recovery","message":"Actual unchosen Planning shows real mode menu.","pass":true}
+{"utc":"2026-11-14T23:41:21.3624127Z","stage":"actual Bootstrap recovery","message":"Actual visible enabled Quit button before confirmation: 01-planning-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:21.3639291Z","stage":"actual Bootstrap recovery","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:21.4210089Z","stage":"actual Bootstrap recovery","message":"First actual navigation submit only arms quit: 01-planning-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:22.2597821Z","stage":"actual Bootstrap recovery","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:22.2752720Z","stage":"actual Bootstrap recovery","message":"Second submit dispatches exactly one injected quit: 01-planning-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:22.2833714Z","stage":"actual Bootstrap recovery","message":"Further submits cannot dispatch again or close this native session.","pass":true}
+{"utc":"2026-11-14T23:41:22.2838771Z","stage":"actual Bootstrap recovery","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:22.2891189Z","stage":"actual Bootstrap recovery","message":"Planning quit first press arms the actual confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:22.6912738Z","stage":"actual Bootstrap recovery","message":"Confirmation expires using real unscaled time without quitting.","pass":true}
+{"utc":"2026-11-14T23:41:22.6922826Z","stage":"actual Bootstrap recovery","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:22.6962363Z","stage":"actual Bootstrap recovery","message":"Planning confirmation armed before context change.","pass":true}
+{"utc":"2026-11-14T23:41:22.7035592Z","stage":"actual Bootstrap recovery","message":"Real visible reduced toggle owns actual focus before hide.","pass":true}
+{"utc":"2026-11-14T23:41:22.7070772Z","stage":"actual Bootstrap recovery","message":"Actual StartPractice/Refresh hides menu and disarms its confirmation synchronously.","pass":true}
+{"utc":"2026-11-14T23:41:22.7808296Z","stage":"actual Bootstrap recovery","message":"Actual Refresh hides then BlurFocusWithin removes keyboard/gamepad focus.","pass":true}
+{"utc":"2026-11-14T23:41:22.7863647Z","stage":"actual Bootstrap recovery","message":"Actual NavigationSubmit sent to hidden reduced toggle changes neither setting nor shown value.","pass":true}
+{"utc":"2026-11-14T23:41:22.7889909Z","stage":"actual Bootstrap recovery","message":"Hidden planning Quit submit cannot rearm or dispatch.","pass":true}
+{"utc":"2026-11-14T23:41:22.8856094Z","stage":"real paused menu","message":"Actual public pause shows existing session menu.","pass":true}
+{"utc":"2026-11-14T23:41:22.8871231Z","stage":"real paused menu","message":"Actual visible enabled Quit button before confirmation: 02-pause-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:22.8871231Z","stage":"real paused menu","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:22.8916745Z","stage":"real paused menu","message":"First actual navigation submit only arms quit: 02-pause-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:23.0991454Z","stage":"real paused menu","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:23.1112969Z","stage":"real paused menu","message":"Second submit dispatches exactly one injected quit: 02-pause-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:23.1173696Z","stage":"real paused menu","message":"Further submits cannot dispatch again or close this native session.","pass":true}
+{"utc":"2026-11-14T23:41:23.1183809Z","stage":"real paused menu","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:23.1225219Z","stage":"real paused menu","message":"Paused confirmation armed before resume.","pass":true}
+{"utc":"2026-11-14T23:41:23.1347935Z","stage":"real paused menu","message":"Actual resume hides/disarms/clears menu focus.","pass":true}
+{"utc":"2026-11-14T23:41:23.1395590Z","stage":"real paused menu","message":"Hidden pause Toggle/Quit navigation submit is inert.","pass":true}
+{"utc":"2026-11-14T23:41:23.1502152Z","stage":"pause to new Planning session","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:23.1532478Z","stage":"pause to new Planning session","message":"Pause confirmation armed before actual restart.","pass":true}
+{"utc":"2026-11-14T23:41:23.5864253Z","stage":"pause to new Planning session","message":"Actual restart disarms old pause confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:23.5880750Z","stage":"pause to new Planning session","message":"Actual saved session controls, attached UIDocument, camera and cinematic owner exist.","pass":true}
+{"utc":"2026-11-14T23:41:23.5986873Z","stage":"pause to new Planning session","message":"Actual new Planning mode menu restored.","pass":true}
+{"utc":"2026-11-14T23:41:23.6240953Z","stage":"disclosed real loss setup","message":"Real valid Planner launch for report setup | AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-14T23:41:23.6679474Z","stage":"disclosed real loss setup","message":"Disclosed real transport skip","pass":true}
+{"utc":"2026-11-14T23:41:24.5696027Z","stage":"disclosed real loss setup","message":"Actual incident with no repairs | Cockpit check complete. Impact detected.","pass":true}
+{"utc":"2026-11-14T23:41:24.5741401Z","stage":"disclosed real loss setup","message":"Disclosed public Impact skip","pass":true}
+{"utc":"2026-11-14T23:41:24.6045420Z","stage":"disclosed real loss setup","message":"Accounted unrepaired resource depletion | Simulation advanced.","pass":true}
+{"utc":"2026-11-14T23:41:24.6055468Z","stage":"disclosed real loss setup","message":"Actual depleted resources produce Lost.","pass":true}
+{"utc":"2026-11-14T23:41:24.6421935Z","stage":"disclosed real loss setup","message":"Disclosed public loss ending skip","pass":true}
+{"utc":"2026-11-14T23:41:24.7134987Z","stage":"actual report end card","message":"Actual final Lost report from accounted resource depletion, no outcome assignment.","pass":true}
+{"utc":"2026-11-14T23:41:24.7150825Z","stage":"actual report end card","message":"Actual report end-card Quit occupies real action column; plain session modal hidden.","pass":true}
+{"utc":"2026-11-14T23:41:24.7165981Z","stage":"actual report end card","message":"Actual visible enabled Quit button before confirmation: 03-report-endcard-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:24.7165981Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:24.7211210Z","stage":"actual report end card","message":"First actual navigation submit only arms quit: 03-report-endcard-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:24.9096015Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:24.9233521Z","stage":"actual report end card","message":"Second submit dispatches exactly one injected quit: 03-report-endcard-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:24.9278988Z","stage":"actual report end card","message":"Further submits cannot dispatch again or close this native session.","pass":true}
+{"utc":"2026-11-14T23:41:24.9278988Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:24.9317820Z","stage":"actual report end card","message":"Actual end-card confirmation armed before opening report detail.","pass":true}
+{"utc":"2026-11-14T23:41:24.9327915Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.0267622Z","stage":"actual report end card","message":"Actual Mission record navigation hides end-card Quit.","pass":true}
+{"utc":"2026-11-14T23:41:25.0272790Z","stage":"actual report end card","message":"Opening the actual Mission record disarms the now-hidden end-card confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:25.0313055Z","stage":"actual report end card","message":"Hidden end-card Quit cannot dispatch from actual NavigationSubmit in record detail.","pass":true}
+{"utc":"2026-11-14T23:41:25.1637958Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.1786284Z","stage":"actual report end card","message":"Actual Back restores the end card.","pass":true}
+{"utc":"2026-11-14T23:41:25.1796358Z","stage":"actual report end card","message":"Actual visible enabled Quit button before confirmation: 05-report-returned-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.1796358Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.1842883Z","stage":"actual report end card","message":"First actual navigation submit only arms quit: 05-report-returned-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.2998078Z","stage":"actual report end card","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.3118991Z","stage":"actual report end card","message":"Second submit dispatches exactly one injected quit: 05-report-returned-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.3159591Z","stage":"actual report end card","message":"Further submits cannot dispatch again or close this native session.","pass":true}
+{"utc":"2026-11-14T23:41:25.3169658Z","stage":"actual Mission ended fallback","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.3205779Z","stage":"actual Mission ended fallback","message":"Record confirmation armed before switching supported menu configuration.","pass":true}
+{"utc":"2026-11-14T23:41:25.3279339Z","stage":"actual Mission ended fallback","message":"Public no-report-styles fallback changes context and disarms record confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:25.3279339Z","stage":"actual Mission ended fallback","message":"Actual fallback heading is Mission ended.","pass":true}
+{"utc":"2026-11-14T23:41:25.3294503Z","stage":"actual Mission ended fallback","message":"Actual visible enabled Quit button before confirmation: 06-mission-ended-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.3294503Z","stage":"actual Mission ended fallback","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.3326261Z","stage":"actual Mission ended fallback","message":"First actual navigation submit only arms quit: 06-mission-ended-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.4545996Z","stage":"actual Mission ended fallback","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.4662124Z","stage":"actual Mission ended fallback","message":"Second submit dispatches exactly one injected quit: 06-mission-ended-quit-armed","pass":true}
+{"utc":"2026-11-14T23:41:25.4719501Z","stage":"actual Mission ended fallback","message":"Further submits cannot dispatch again or close this native session.","pass":true}
+{"utc":"2026-11-14T23:41:25.4729499Z","stage":"actual Mission ended fallback","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.4945863Z","stage":"actual Mission ended fallback","message":"Restoring exact original report style/context disarms fallback confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:25.4963245Z","stage":"actual Mission ended fallback","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-14T23:41:25.5043464Z","stage":"actual Mission ended fallback","message":"Actual component disable releases view and armed confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:25.5170724Z","stage":"actual Mission ended fallback","message":"Enable rebuilds real report view without stale confirmation.","pass":true}
+{"utc":"2026-11-14T23:41:25.6352281Z","stage":"actual Mission ended fallback","message":"Exactly five independent confirmed cases invoked only the injected callback; native Play/session continued.","pass":true}
+{"utc":"2026-11-14T23:41:25.6731184Z","stage":"actual Mission ended fallback","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-14T23:41:31.3347492Z","stage":"actual Mission ended fallback","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}

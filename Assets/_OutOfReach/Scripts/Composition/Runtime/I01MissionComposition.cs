@@ -39,6 +39,18 @@ namespace OutOfReach.Composition
         [SerializeField] private ShipLightingPresenter shipLighting;
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
         [SerializeField] private EmbodiedBodyPresenter embodiedBody;
+        [SerializeField] private I06MicrogravityBridge microgravityBridge;
+        [SerializeField] private I06MicrogravityInputBindings microgravityInput;
+        [SerializeField] private BareArmContactPresenter bareArmContacts;
+        [SerializeField] private I06InteriorHandholds interiorHandholds;
+        [SerializeField] private I06AntennaRepairBindings antennaRepair;
+        [SerializeField] private Transform antennaInteractionOrigin;
+        [SerializeField] private AntennaWorkProgressPresenter antennaProgress;
+        [SerializeField] private UIDocument antennaProgressDocument;
+        [SerializeField] private Font antennaProgressFont;
+        [SerializeField] private EvaWorkLampPresenter evaWorkLamp;
+        private bool orbitalLocationReached;
+        private MissionSession transferredSession;
         [SerializeField] private I06HabitatBindings habitat;
         [SerializeField] private I06MarineBindings marine;
         [SerializeField] private Transform firstPersonMotionPivot;
@@ -137,6 +149,75 @@ namespace OutOfReach.Composition
         public void ConfigureFootsteps(FootstepAudioPresenter presenter) => footsteps = presenter;
 
         public void ConfigureBody(EmbodiedBodyPresenter presenter) => embodiedBody = presenter;
+        public void ConfigureEvaWorkLamp(EvaWorkLampPresenter presenter) => evaWorkLamp = presenter;
+        public void ConfigureAntennaRepair(I06AntennaRepairBindings bindings, Transform interactionOrigin)
+        {
+            if (Application.isPlaying && attached) throw new InvalidOperationException("Configure antenna work before binding.");
+            antennaRepair = bindings;
+            antennaInteractionOrigin = interactionOrigin;
+        }
+        public void ConfigureAntennaProgress(AntennaWorkProgressPresenter presenter, UIDocument document, Font font)
+        {
+            if (Application.isPlaying && attached) throw new InvalidOperationException("Configure antenna feedback before binding.");
+            antennaProgress = presenter;
+            antennaProgressDocument = document;
+            antennaProgressFont = font;
+        }
+
+        // The tool owns its movement lock. A legitimate pause freezes the same work rather than invalidating it.
+        private bool CanPresentAntennaWork() => MicroSessionCurrent() && modeChosen
+            && runtime.Player && runtime.Player.isActiveAndEnabled
+            && runtime.GameState.Phase == GamePhase.Eva && runtime.GameState.Outcome == MissionOutcome.None
+            && runtime.EvaStatus.IsOutside && runtime.EvaStatus.IsSuitOn
+            && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
+            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && (!menuPresentationVisible || runtime.IsPaused);
+
+        public void ConfigureMicrogravity(I06MicrogravityBridge bridge, I06MicrogravityInputBindings input,
+            BareArmContactPresenter bareArms, I06InteriorHandholds handholds)
+        {
+            if (Application.isPlaying && attached) throw new InvalidOperationException("Configure microgravity before binding.");
+            microgravityBridge = bridge;
+            microgravityInput = input;
+            bareArmContacts = bareArms;
+            interiorHandholds = handholds;
+        }
+
+        private bool MicroSessionCurrent() => isActiveAndEnabled && attached && boundSession != null
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session);
+
+        private bool CanUseMicroContacts() => MicroSessionCurrent() && modeChosen && orbitalLocationReached
+            && runtime.Player && runtime.Player.ControlAllowed && !runtime.IsPaused && !menuPresentationVisible
+            && !runtime.Player.IsOnRoute && !runtime.EvaStatus.IsOutside
+            && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
+            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId)
+            && runtime.GameState.Outcome == MissionOutcome.None
+            && runtime.GameState.Phase != GamePhase.Planning;
+
+        private void MaintainMicrogravity()
+        {
+            if (!microgravityInput || !microgravityBridge || !microgravityBridge.IsBound || !MicroSessionCurrent()) return;
+            // The real EVA route owns its exterior motion. Pause/menu keeps the input lease
+            // so a resume click cannot leak into the resolver's default LMB binding.
+            if (runtime.EvaStatus.IsOutside || runtime.Player.IsOnRoute
+                || runtime.GameState.Outcome != MissionOutcome.None)
+            {
+                microgravityInput.Disarm();
+                return;
+            }
+            if (!CanUseMicroContacts()) return;
+            bool enteredHere = false;
+            if (!runtime.Player.IsFloating)
+            {
+                // No air entry or fabricated support. This also handles the real return
+                // from EVA, whose existing route places the feet back inside the airlock.
+                if (runtime.Player.EnterFloatFromFootSupport() != FloatActionResult.Done) return;
+                enteredHere = true;
+            }
+            if (!microgravityInput.ContactRoutingRequested && !microgravityInput.Arm() && enteredHere)
+                runtime.Player.ExitFloat(); // Roll back only our new zero-motion entry; never a prior owner's flight.
+        }
         public void ConfigureHabitat(I06HabitatBindings bindings) => habitat = bindings;
         public void ConfigureMarine(I06MarineBindings bindings) => marine = bindings;
 
@@ -172,6 +253,7 @@ namespace OutOfReach.Composition
 
         private bool CanPresentOpeningMenuMotion() => isActiveAndEnabled && attached && boundSession != null
             && !IsTransportDeparturePlaying
+            && !(antennaRepair && antennaRepair.IsWorking)
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && runtime.Player.isActiveAndEnabled && !runtime.Player.ControlAllowed
             && cinematics && !cinematics.IsPlaying;
@@ -231,7 +313,9 @@ namespace OutOfReach.Composition
         // EVA is allowed here: these gloves depict an actually worn suit, including its exterior phase.
         private bool CanPresentHands() => isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
-            && runtime.Player && runtime.Player.ControlAllowed && cinematics && !cinematics.IsPlaying;
+            && runtime.Player && (runtime.Player.ControlAllowed
+                || (antennaRepair && antennaRepair.BlocksMovement && CanPresentAntennaWork()))
+            && cinematics && !cinematics.IsPlaying;
 
         public void ConfigureCargoPresentation(CargoVisualPresenter presenter)
         {
@@ -276,8 +360,9 @@ namespace OutOfReach.Composition
         }
 
         private bool CanUsePlanningControls() => isActiveAndEnabled && attached && boundSession != null
-            && runtime && ReferenceEquals(boundSession, runtime.Session)
+            && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && !IsTransportDeparturePlaying
+            && !(antennaRepair && antennaRepair.BlocksMovement)
             && domainControlGate != null && domainControlGate()
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
@@ -308,7 +393,9 @@ namespace OutOfReach.Composition
 
         private void Update()
         {
+            MaintainMicrogravity();
             if (astronautHands && CanPresentHands() && runtime && !runtime.IsPaused
+                && !(microgravityInput && microgravityInput.ContactRoutingRequested)
                 && string.IsNullOrEmpty(runtime.Cargo?.CarriedEquipmentId))
             {
                 var mouse = UnityEngine.InputSystem.Mouse.current;
@@ -384,6 +471,9 @@ namespace OutOfReach.Composition
             UnbindSession();
             boundSession = session;
             boundEvents = runtime.Events;
+            orbitalLocationReached = ReferenceEquals(session, transferredSession)
+                || (!marine && runtime.GameState.Phase != GamePhase.Planning);
+            if (!ReferenceEquals(session, transferredSession)) transferredSession = null;
             modeChosen = runtime.GameState.Phase != GamePhase.Planning || runtime.PlanningDeadline.IsEnabled;
             BindPlanningControlGate();
             flightBoard.Configure(runtime.Planner, runtime.Resources, runtime.GameState, boundEvents);
@@ -432,6 +522,24 @@ namespace OutOfReach.Composition
             if (embodiedBody)
                 embodiedBody.ConfigureSession(runtime.EvaStatus, runtime.Clock, CanPresentBody,
                     () => runtime && runtime.Player && runtime.Player.IsFloating, BodyArmMask);
+            if (microgravityBridge && microgravityInput && bareArmContacts)
+            {
+                if (!interiorHandholds || !interiorHandholds.Bind(runtime.Player))
+                    throw new InvalidOperationException("The interior contact rails could not bind to the current Player.");
+                microgravityBridge.Configure(runtime.Player, embodiedBody, astronautHands, bareArmContacts,
+                    runtime.EvaStatus, runtime.GameState, runtime.Clock, CanUseMicroContacts);
+                microgravityInput.Configure(runtime.Player, microgravityBridge, runtime.Player.ViewPivot,
+                    runtime.EvaStatus, runtime.GameState, runtime.Clock, MicroSessionCurrent, CanUseMicroContacts);
+            }
+            if (antennaRepair && !antennaRepair.ConfigureSession(runtime, astronautHands,
+                antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
+                throw new InvalidOperationException("The antenna worksite could not bind to the current session.");
+            if (antennaProgress && antennaRepair)
+                antennaProgress.Configure(antennaProgressDocument, () => antennaRepair.IsWorking,
+                    () => antennaRepair.Progress01, () => CanPresentAntennaWork() && !menuPresentationVisible,
+                    antennaProgressFont, () => runtime.IsPaused);
+            if (evaWorkLamp)
+                evaWorkLamp.ConfigureSession(runtime.EvaStatus, runtime.GameState, runtime.Clock, CanPresentAntennaWork);
             if (firstPersonMotion && firstPersonMotionPivot && runtime.Player)
             {
                 firstPersonMotion.Configure(runtime.Player.GetComponent<CharacterController>(), firstPersonMotionPivot,
@@ -468,10 +576,18 @@ namespace OutOfReach.Composition
             }
             UpdateSystemLights();
             controls.Refresh();
+            MaintainMicrogravity(); // Rebind a previously transferred session before its next input update.
         }
 
         private void UnbindSession()
         {
+            if (evaWorkLamp) evaWorkLamp.ClearBinding();
+            if (antennaProgress) antennaProgress.ClearBinding();
+            if (antennaRepair) antennaRepair.ClearBinding();
+            if (microgravityInput) microgravityInput.ClearBinding();
+            if (microgravityBridge) microgravityBridge.Clear();
+            if (interiorHandholds) interiorHandholds.Unbind();
+            orbitalLocationReached = false;
             if (marine)
             {
                 marine.Unbind();
@@ -584,6 +700,7 @@ namespace OutOfReach.Composition
 
         private void OnPhaseChanged(PhaseChanged message)
         {
+            if (!marine && message.Current == GamePhase.Intro) orbitalLocationReached = true;
             if (marine && message.Previous == GamePhase.Planning && message.Current == GamePhase.Intro)
             {
                 flightBoard.SetDeparturePresentation(true);
@@ -659,12 +776,15 @@ namespace OutOfReach.Composition
 
         private void OnTransportTransferred()
         {
+            orbitalLocationReached = true;
+            transferredSession = boundSession;
             if (flightBoard) flightBoard.SetDeparturePresentation(false);
             if (cargoPresentation) cargoPresentation.SetAboardDepartureVisible(false);
             if (boundSession == null || !runtime) return;
             RestorePlayerFraming();
             ApplyPhasePresentation(runtime.GameState.Phase, true);
             controls.Refresh();
+            MaintainMicrogravity(); // Transfer finishes in LateUpdate: acquire before the next device event.
         }
 
         private void OnCinematicRequested(CinematicRequested request)
@@ -801,6 +921,8 @@ namespace OutOfReach.Composition
         // These are local glove acknowledgements; no target placement, command delay or implied contact.
         private void PresentSuccessfulHandAction()
         {
+            if (antennaRepair && antennaRepair.IsWorking) return;
+            if (microgravityInput && microgravityInput.ContactRoutingRequested) return;
             if (!astronautHands || !interaction || !interaction.CurrentTarget) return;
             switch (interaction.CurrentTarget.InteractionId)
             {
@@ -836,7 +958,16 @@ namespace OutOfReach.Composition
         private void OnCinematicCaption(string caption)
         {
             cinematicCaption = caption ?? string.Empty;
+            RefreshCinematicHud();
             RefreshSubtitle();
+        }
+
+        private void LateUpdate() => RefreshCinematicHud();
+
+        private void RefreshCinematicHud()
+        {
+            if (flightBoard && attached && boundSession != null)
+                flightBoard.SetDeparturePresentation(IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying));
         }
 
         private void RefreshSubtitle()

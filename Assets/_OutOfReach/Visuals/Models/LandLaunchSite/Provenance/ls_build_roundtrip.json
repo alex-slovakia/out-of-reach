@@ -1,0 +1,224 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "LS_LandLaunchSite": {
+   "fbx": "LS_LandLaunchSite.fbx",
+   "objects_in_file": 27,
+   "checks": [
+    {
+     "object": "LS_PadDeck_Optional",
+     "ok": true,
+     "triangles": 36,
+     "expected": 36
+    },
+    {
+     "object": "LS_LaunchFoundation",
+     "ok": true,
+     "triangles": 124,
+     "expected": 124
+    },
+    {
+     "object": "LS_FlameTrench",
+     "ok": true,
+     "triangles": 80,
+     "expected": 80
+    },
+    {
+     "object": "LS_LaunchMount",
+     "ok": true,
+     "triangles": 108,
+     "expected": 108
+    },
+    {
+     "object": "LS_Umbilicals",
+     "ok": true,
+     "triangles": 2840,
+     "expected": 2840
+    },
+    {
+     "object": "LS_Barriers",
+     "ok": true,
+     "triangles": 840,
+     "expected": 840
+    },
+    {
+     "object": "LS_FloodTowers",
+     "ok": true,
+     "triangles": 1144,
+     "expected": 1144
+    },
+    {
+     "object": "LS_WaterTower",
+     "ok": true,
+     "triangles": 1208,
+     "expected": 1208
+    },
+    {
+     "object": "LS_Markings",
+     "ok": true,
+     "triangles": 84,
+     "expected": 84
+    },
+    {
+     "object": "LS_Crawlerway",
+     "ok": true,
+     "triangles": 48,
+     "expected": 48
+    },
+    {
+     "object": "LS_AssemblyBuilding",
+     "ok": true,
+     "triangles": 50,
+     "expected": 50
+    },
+    {
+     "anchor": "LS_PadTop_Centre",
+     "ok": true,
+     "point": [
+      0.0,
+      -32.6,
+      -2.0
+     ]
+    },
+    {
+     "anchor": "LS_NozzleAxis_PadTop",
+     "ok": true,
+     "point": [
+      0.0,
+      -32.6,
+      0.0
+     ]
+    },
+    {
+     "anchor": "LS_TrenchFloor_UnderNozzle",
+     "ok": true,
+     "point": [
+      0.0,
+      -39.6,
+      0.0
+     ]
+    },
+    {
+     "anchor": "LS_DeflectorPeak",
+     "ok": true,
+     "point": [
+      0.0,
+      -35.0,
+      -3.0
+     ]
+    },
+    {
+     "anchor": "LS_TrenchExit_Ground",
+     "ok": true,
+     "point": [
+      0.0,
+      -36.6,
+      72.0
+     ]
+    },
+    {
+     "anchor": "LS_GroundLevel_SlopeFoot_West",
+     "ok": true,
+     "point": [
+      -72.0,
+      -36.6,
+      0.0
+     ]
+    },
+    {
+     "anchor": "LS_CableTray_MastEnd",
+     "ok": true,
+     "point": [
+      -1.4,
+      -31.4,
+      -10.6
+     ]
+    },
+    {
+     "anchor": "LS_PadTerminal_Door",
+     "ok": true,
+     "point": [
+      -26.0,
+      -32.6,
+      -30.98
+     ]
+    },
+    {
+     "anchor": "LS_PipeRack_MastEnd",
+     "ok": true,
+     "point": [
+      1.4,
+      -30.36,
+      -10.6
+     ]
+    },
+    {
+     "anchor": "LS_PropellantSphere_Centre",
+     "ok": true,
+     "point": [
+      42.0,
+      -23.6,
+      -42.0
+     ]
+    },
+    {
+     "anchor": "LS_FloodLamp_West",
+     "ok": true,
+     "point": [
+      -46.0,
+      -4.0,
+      45.7
+     ]
+    },
+    {
+     "anchor": "LS_FloodLamp_East",
+     "ok": true,
+     "point": [
+      46.0,
+      -4.0,
+      45.7
+     ]
+    },
+    {
+     "anchor": "LS_WaterTower_Base",
+     "ok": true,
+     "point": [
+      -46.0,
+      -32.6,
+      -38.0
+     ]
+    },
+    {
+     "anchor": "LS_Crawlerway_PadEnd",
+     "ok": true,
+     "point": [
+      0.0,
+      -32.6,
+      -50.0
+     ]
+    },
+    {
+     "anchor": "LS_Crawlerway_FarEnd",
+     "ok": true,
+     "point": [
+      0.0,
+      -36.6,
+      -880.0
+     ]
+    },
+    {
+     "anchor": "LS_AssemblyBuilding_Door",
+     "ok": true,
+     "point": [
+      0.0,
+      -36.6,
+      -925.0
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}

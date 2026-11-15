@@ -102,7 +102,7 @@ namespace OutOfReach.Composition
             return Begin(selectedHand, HandContactKind.Push, aimDirection, strength01, desiredTravelWorld);
         }
 
-        /// <summary>Suited glove only; nearest hit must be a registered straight capsule rail with actual 12–17mm radius.</summary>
+        /// <summary>Suited glove only; nearest hit must be a registered straight capsule rail with actual 12â€“17mm radius.</summary>
         public bool TryGrab(ContactHand selectedHand, Vector3 aimDirection) => Begin(selectedHand, HandContactKind.Grip, aimDirection, 0f);
 
         /// <summary>Release dispatched by the same input owner. Cancels pending animation and only this bridge's held grip.</summary>
@@ -171,9 +171,13 @@ namespace OutOfReach.Composition
                 && !TryWorkPalmPoint(selectedHand, hit, out hit))
                 return Refuse("No verified same-surface WORK palm point within the original reach.");
             Vector3 tangent = Vector3.ProjectOnPlane(player.ViewPivot.up, hit.normal).normalized;
+            // Looking up projects eye.up backward across a ceiling. WORK fingers need a stable forward
+            // tangent there; retain the existing frame for every wall, glove and rail Grip.
+            if (requestedKind == HandContactKind.Push && !suit.IsSuitOn && Vector3.Dot(hit.normal, Vector3.down) > .95f)
+                tangent = Vector3.ProjectOnPlane(player.ViewPivot.forward, hit.normal).normalized;
             float radius = 0f;
             if (requestedKind == HandContactKind.Grip && !RailFrame(hit.collider, hit.point, hit.normal, out tangent, out radius))
-                return Refuse("Grip needs a registered 12–17mm straight capsule rail.");
+                return Refuse("Grip needs a registered 12â€“17mm straight capsule rail.");
             if (tangent.sqrMagnitude < .99f) return Refuse("No stable contact frame.");
             // A cylinder axis is an unoriented line. Pick the authored grip hemisphere once,
             // rather than letting an equivalent +axis/-axis model flip the wrist upside down.
@@ -199,8 +203,11 @@ namespace OutOfReach.Composition
                 ? gloves.TryReachContact(hand, kind, target, AtContact, kind == HandContactKind.Grip ? ReadHeld : (Func<HandContactTarget?>)null)
                 : bare.TryReachPush(hand, target, AtContact);
             if (accepted) return true;
+            string reason = !pendingSuited && bare && !string.IsNullOrEmpty(bare.LastRefusalReason)
+                ? "WORK contact: " + (string.IsNullOrEmpty(bare.LastRefusalDiagnostic) ? bare.LastRefusalReason : bare.LastRefusalDiagnostic)
+                : "The actual hand pose, arm reach or approach path refused this contact.";
             CancelOwnedContact();
-            return Refuse("The actual hand pose, arm reach or approach path refused this contact.");
+            return Refuse(reason);
         }
 
         bool TryWorkPalmPoint(ContactHand selectedHand, RaycastHit aimedHit, out RaycastHit palmHit)
@@ -401,6 +408,9 @@ namespace OutOfReach.Composition
         void CancelOwnedContact()
         {
             if (cancelling) return;
+            // Preserve asynchronous presenter refusal before cancellation disposes its calibrated rig facts.
+            if (pending && !pendingSuited && bare && !string.IsNullOrEmpty(bare.LastRefusalReason))
+                LastRefusal = "WORK contact: " + (string.IsNullOrEmpty(bare.LastRefusalDiagnostic) ? bare.LastRefusalReason : bare.LastRefusalDiagnostic);
             cancelling = true;
             try
             {

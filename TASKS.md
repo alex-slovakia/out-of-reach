@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current checkpoint — 15 November 2026, 01:05 CET
+
+The isolated I06 integration now includes land-launch art, enabled physical microgravity, metre-correct standing body, delayed recovery/Mars presentation, two-step Quit, antenna work/lamp and terminal hardware. **Not yet promoted.** Component native evidence and known failures are recorded in [the overnight checkpoint](docs/verification/i06-overnight-checkpoint.md). Whole-ship float traversal, antenna continuous sleeve, terminal scene binding, complete candidate suite/build and second-PC verification remain acceptance gates. Original project stays33f474f. Older checkpoints below are historical.
+
 ## Current checkpoint — 14 November 2026, 22:35 CET
 
 The isolated `codex/i01-integration` candidate now contains the physical marine loading/boarding scene, actual loaded transport cargo, a bounded departure presentation, C06 habitat/survival UI and contact adapters. [Native evidence and genuine images](docs/verification/i06-marine-survival-contact/README.md): marine flow 177 assertions, revised survival UI 1740, direct hand bridge 398, departure FX lifecycle 157; each exited 0 in Unity 6000.3.28f1. These counts are assertions, not fixed bugs or complete human playthroughs. Exact source manifests and setup limitations accompany each run.

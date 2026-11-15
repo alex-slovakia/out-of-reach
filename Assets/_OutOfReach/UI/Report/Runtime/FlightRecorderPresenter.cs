@@ -8,10 +8,11 @@ namespace OutOfReach.Presentation.UI.Report
     /// <summary>Optional record behind a quiet end card. Core/root own outcomes, ending timing and restart.</summary>
     public sealed class FlightRecorderPresenter : IDisposable
     {
-        private readonly VisualElement endCard, detail, summary;
+        private const string MarsSourceUrl = "https://science.nasa.gov/3d-resources/mars/";
+        private readonly VisualElement endCard, detail, summary, marsCredits;
         private readonly Label endHeadline, endSummary, endEyebrow, endElapsed, detailTitle, headline, reason, elapsed;
         private readonly ScrollView record, sources;
-        private readonly Button recordButton, sourcesButton, restartButton, backButton;
+        private readonly Button recordButton, sourcesButton, restartButton, backButton, marsSourceButton;
         private bool hasReport, hasSources, showingSources, canRestart, restartPending, disposed;
         private bool reducedMotion;
         private float lastMenuFeedback = -1f;
@@ -61,6 +62,23 @@ namespace OutOfReach.Presentation.UI.Report
             detail.Add(navigation);
             record = Scroll("missionRecord");
             sources = Scroll("reportSources");
+            marsCredits = Element("marsImageryCredits", "recorder-section");
+            marsCredits.Add(FlightRecorderElements.Text("Mars surface imagery", "recorder-section-title"));
+            marsCredits.Add(FlightRecorderElements.Text("NASA/Jet Propulsion Laboratory & Caltech", "recorder-classification"));
+            marsCredits.Add(FlightRecorderElements.Text(
+                "Historical Viking imagery processed at USGS; JPL/Caltech planetary maps database. Not a live observation.",
+                "recorder-empty"));
+            marsCredits.Add(FlightRecorderElements.Text(
+                "Lighting and framing are authored for OUT OF REACH. The later Mars shot is a cinematic time jump, not a real-time trajectory. No NASA endorsement is implied.",
+                "recorder-empty"));
+            marsSourceButton = new Button(OnMarsSourceRequested)
+            {
+                name = "marsSourceButton", text = "NASA Mars image source (opens browser)", tooltip = MarsSourceUrl
+            };
+            marsSourceButton.AddToClassList("recorder-button");
+            marsSourceButton.RegisterCallback<PointerEnterEvent>(OnMarsSourcePointerEnter);
+            marsSourceButton.RegisterCallback<FocusInEvent>(OnMarsSourceFocusIn);
+            marsCredits.Add(marsSourceButton);
             detail.Add(record);
             detail.Add(sources);
             Root.Add(detail);
@@ -125,6 +143,9 @@ namespace OutOfReach.Presentation.UI.Report
             }
             if (sections == null || sections.Count == 0)
                 record.Add(FlightRecorderElements.Text("No detailed facts were supplied with this report.", "recorder-empty"));
+            sources.Add(marsCredits);
+            marsSourceButton.SetEnabled(true);
+            hasSources = true;
             canRestart = FlightRecorderEndCardCopy.CanRestart(report);
             recordButton.SetEnabled(true);
             restartButton.SetEnabled(canRestart);
@@ -148,6 +169,7 @@ namespace OutOfReach.Presentation.UI.Report
             hasReport = hasSources = showingSources = canRestart = restartPending = false;
             record.Clear();
             sources.Clear();
+            marsSourceButton.SetEnabled(false);
             endHeadline.text = endSummary.text = detailTitle.text = headline.text = reason.text = elapsed.text = string.Empty;
             endEyebrow.text = endElapsed.text = string.Empty;
             Root.RemoveFromClassList("recorder-recovery");
@@ -181,6 +203,9 @@ namespace OutOfReach.Presentation.UI.Report
             sourcesButton.clicked -= OnSourcesRequested;
             restartButton.clicked -= OnRestartRequested;
             backButton.clicked -= OnBackRequested;
+            marsSourceButton.clicked -= OnMarsSourceRequested;
+            marsSourceButton.UnregisterCallback<PointerEnterEvent>(OnMarsSourcePointerEnter);
+            marsSourceButton.UnregisterCallback<FocusInEvent>(OnMarsSourceFocusIn);
             RestartRequested = null;
             MenuFeedbackRequested = null;
             Root.RemoveFromHierarchy();
@@ -198,6 +223,15 @@ namespace OutOfReach.Presentation.UI.Report
             if (!confirm && Time.unscaledTime - lastMenuFeedback < .08f) return;
             lastMenuFeedback = Time.unscaledTime;
             MenuFeedbackRequested?.Invoke(confirm);
+        }
+        private void OnMarsSourcePointerEnter(PointerEnterEvent evt) => MenuFeedback(marsSourceButton, false);
+        private void OnMarsSourceFocusIn(FocusInEvent evt) => MenuFeedback(marsSourceButton, false);
+        private void OnMarsSourceRequested()
+        {
+            if (disposed || !hasReport || sources.ClassListContains("recorder-hidden")) return;
+            MenuFeedback(marsSourceButton, true);
+            if (disposed || !hasReport || sources.ClassListContains("recorder-hidden")) return;
+            Application.OpenURL(MarsSourceUrl);
         }
         private void OnRecordRequested() { if (!disposed && hasReport) OpenDetail(false); }
         private void OnSourcesRequested() { if (!disposed && hasReport && hasSources) OpenDetail(true); }

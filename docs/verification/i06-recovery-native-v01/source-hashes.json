@@ -1,0 +1,117 @@
+{
+  "scope": "Exact captured sources before native run; isolated uncommitted candidate, not a clean Git revision.",
+  "files": [
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/RecoveryNativeQa.cs",
+      "sha256": "74affc782b6af6f0c088f63c4828b2ca3727178c6a57f5e2387767c4b6dd5738"
+    },
+    {
+      "path": "Assets/Editor/RecoveryNativeQa/RecoveryNativeQa.cs.meta",
+      "sha256": "9d4c5dbd03d60352a2679c40d6f775310fcc0ae4e444475859f55387ce2b0163"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity",
+      "sha256": "7f3aed38ec9de49b3dd22534d34b7c867e7bb3323ea9ccbf494e912d2e092b57"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scenes/Bootstrap.unity.meta",
+      "sha256": "685b22fc448837868362ec03ec712ae0f55c357bc19868d32f1fa9ce834232e7"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs",
+      "sha256": "5dc2c059248892201fc9c55980d11fe558013cfb12f012090743c7878f4ee112"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I01BootstrapBuilder.cs.meta",
+      "sha256": "1f6dfdee4ff900487dc1f425aa1fd68d0a567cd75ff1e520f223230d89de32aa"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06RecoveryAuthoring.cs",
+      "sha256": "d2fd73380d1066fb697664ed25ac55911395320daa57188280f7931c5226f96d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Editor/I06RecoveryAuthoring.cs.meta",
+      "sha256": "b191c8298dbc439e2fb2e3ce4ebb04b6ba1cfdd80c7bbc13332abc632eb393de"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs",
+      "sha256": "f1fff7aab0f8957c9fc71a1bc8837a148a05a0b6a859016829765d5d634827f0"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Composition/Runtime/I01MissionComposition.cs.meta",
+      "sha256": "c9e01ae3d9e2e12a2cc518ed2da2f57207b640ee88770a2cfa8918db2522b807"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/MissionCinematicPresenter.cs",
+      "sha256": "b57ee28d24fdae923b4542eb20bc8fe324594a31cb8d7148a07978f45802532d"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/MissionCinematicPresenter.cs.meta",
+      "sha256": "b40c4d71eed8cced460f60ed2db7018a7ac8f5a3e927f8cd0594dbfd232c3099"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/PROVENANCE.md",
+      "sha256": "bf0ae64d83d3b7f8c3180d24a5ed72c1c6341300961cda28ba85a9f0c6612946"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/PROVENANCE.md.meta",
+      "sha256": "304c7882d2d42688892a9958279f14e45d35c5740d82e2f35e7c632e1ea7d93f"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryMars.shader",
+      "sha256": "0f8b94c63233dcb5ca57ce0370675c8827cf55fd40b5246aba6ca92a8196ad12"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryMars.shader.meta",
+      "sha256": "1e90b6f312a6160989dab706a7cab07787bec6b20351ac83737057725615b353"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryShotProvider.cs",
+      "sha256": "f3d975a4bfd0872b55368ec15457f73fd7bf543df5a51301444b2f736b934de4"
+    },
+    {
+      "path": "Assets/_OutOfReach/Scripts/Presentation/Cinematics/Recovery/RecoveryShotProvider.cs.meta",
+      "sha256": "a68156855009416fff4695d59ae028985b8139f8328c450ab1b8d7cd521f86e3"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Generated/MissionFlightBoard.prefab",
+      "sha256": "4a8ea10f9212bddd395aff1aef46786ca5af22a3368b0a3a331e26eb25c2c216"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Generated/MissionFlightBoard.prefab.meta",
+      "sha256": "dfddc45517c279e2451e4fea076ca77bcc24ba6e4deba1115911c4a7b1637218"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs",
+      "sha256": "52ccdea5adc08f2a6bfe234c3c0651fbe089570ba7f600a0b00a2e490a666bc3"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs.meta",
+      "sha256": "f0154f3a1ac8ada54c5885415fdca9fac9db40e369c7beab638d0350a913613f"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs",
+      "sha256": "bf664ce6ef26ec3dbe6177e5188cef755b9f4aebbad3189913fbb99d1934c044"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Runtime/FlightBoardView.cs.meta",
+      "sha256": "062a22aadc4935ea259694ea119048dd4de35d1962837c97633fbe31e9164cda"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Runtime/MissionFlightBoard.cs",
+      "sha256": "da2f3b0e4f02236a72928f7e1bd7e54cf76d1de92611c7a58d3c7f7b14c4b300"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Runtime/MissionFlightBoard.cs.meta",
+      "sha256": "6d664ee036301b29b7c19774d4584bec3f77d5278b68fdab6747eab07292a3c0"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Styles/MissionFlightBoard.uss",
+      "sha256": "15e8298e1ad78d12c1d5ad695821fffc8d265efb328bcfbb1df5b03a5b9068c7"
+    },
+    {
+      "path": "Assets/_OutOfReach/UI/Styles/MissionFlightBoard.uss.meta",
+      "sha256": "e3009febe2ac7272baf95285a72ba1d332a97c83332105f38b1fb774389e3d97"
+    }
+  ]
+}

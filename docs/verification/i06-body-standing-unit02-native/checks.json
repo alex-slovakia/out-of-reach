@@ -1,0 +1,794 @@
+{
+    "checks": [
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Unsaved additive EditorOnly fixture, separate from saved Bootstrap."
+        },
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Saved Bootstrap remains active for existing render/lighting settings."
+        },
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Source camera culling includes imported body layer 2."
+        },
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Six actual skins across two outfits."
+        },
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Feet and wrapper use unit metre scale."
+        },
+        {
+            "pass": true,
+            "stage": "setup",
+            "message": "Actual source ViewPivot eye height is 1.65m."
+        },
+        {
+            "pass": true,
+            "stage": "WORK import",
+            "message": "Generic unoptimized skeleton and expected CPU readability."
+        },
+        {
+            "pass": true,
+            "stage": "WORK import",
+            "message": "Three real named Generic held clips, at least .9s each."
+        },
+        {
+            "pass": true,
+            "stage": "WORK import",
+            "message": "Three imported skins have nonempty bone arrays and complete real mesh/root references."
+        },
+        {
+            "pass": true,
+            "stage": "WORK import",
+            "message": "All 164 authored shared-skeleton joints survive native import uniquely."
+        },
+        {
+            "pass": true,
+            "stage": "EVA import",
+            "message": "Generic unoptimized skeleton and expected CPU readability."
+        },
+        {
+            "pass": true,
+            "stage": "EVA import",
+            "message": "Three real named Generic held clips, at least .9s each."
+        },
+        {
+            "pass": true,
+            "stage": "EVA import",
+            "message": "Three imported skins have nonempty bone arrays and complete real mesh/root references."
+        },
+        {
+            "pass": true,
+            "stage": "EVA import",
+            "message": "All 164 authored shared-skeleton joints survive native import uniquely."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "V02 metre units, unit importer scale, preserved hierarchy and uncompressed Generic curves."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "Exactly the new V02 Generic held standing clip."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "Every authored scale key stays one; joint-only cancellation cannot hide a 100x rig."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "work binds the exact new V02 standing asset."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "work preserves exact V04 floating and original seated bindings."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "eva binds the exact new V02 standing asset."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "eva preserves exact V04 floating and original seated bindings."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "Actual native camera vertical FOV 68 and near plane .05m; capture remains 16:9."
+        },
+        {
+            "pass": true,
+            "stage": "Standing V02 exact clip and skin units",
+            "message": "Controlled readonly suit fixture bound exactly once."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000476m at lowerarm02.L"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_L retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_L ALL 8310 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00108707137m at 6053"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_L full native skin bounds remain within 2mm of source: Center: (-0.20, 1.14, 0.00), Extents: (0.07, 0.36, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_R retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_R ALL 8310 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00108671491m at 7363"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_Arm_R full native skin bounds remain within 2mm of source: Center: (0.20, 1.14, 0.00), Extents: (0.07, 0.36, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_TorsoLegs retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_TorsoLegs ALL 11583 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.0005065378m at 2565"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "A7_WORK_TorsoLegs full native skin bounds remain within 2mm of source: Center: (0.00, 0.77, 0.04), Extents: (0.29, 0.77, 0.20)"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "Standing soles remain within original 2mm floor allowance; minimum model y=-0.00151062012"
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "GPU PNG written: 01-work-standing-body-only.png (761289 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "GPU PNG written: 01-work-standing-body-only-diagnostic-body-only-no-occlusion.png (59463 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "GPU PNG written: 01-work-standing-body-only-pitch-0.png (442602 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "GPU PNG written: 01-work-standing-body-only-pitch-45.png (905101 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "01-work-standing-body-only",
+            "message": "GPU PNG written: 01-work-standing-body-only-pitch-60.png (924859 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000476m at lowerarm02.L"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_L retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_L ALL 8310 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00048873m at 3654"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_L full native skin bounds remain within 2mm of source: Center: (-0.20, 1.14, 0.00), Extents: (0.07, 0.36, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_R retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_R ALL 8310 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.000488406629m at 5843"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_Arm_R full native skin bounds remain within 2mm of source: Center: (0.20, 1.14, 0.00), Extents: (0.07, 0.36, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583)."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_TorsoLegs retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_TorsoLegs ALL 11583 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.0005065378m at 2565"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "A7_WORK_TorsoLegs full native skin bounds remain within 2mm of source: Center: (0.00, 0.77, 0.04), Extents: (0.29, 0.77, 0.20)"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "Standing soles remain within original 2mm floor allowance; minimum model y=-0.00151062012"
+        },
+        {
+            "pass": true,
+            "stage": "02-work-standing-with-arms",
+            "message": "GPU PNG written: 02-work-standing-with-arms.png (758546 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000476m at lowerarm02.L"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_L retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_L ALL 990 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.000736371m at 738"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_L full native skin bounds remain within 2mm of source: Center: (-0.20, 1.22, -0.01), Extents: (0.07, 0.29, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_R retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_R ALL 990 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.0007366094m at 451"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_Arm_R full native skin bounds remain within 2mm of source: Center: (0.20, 1.22, -0.01), Extents: (0.07, 0.29, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_TorsoLegs retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_TorsoLegs ALL 12093 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00048984366m at 7677"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "A7_EVA_TorsoLegs full native skin bounds remain within 2mm of source: Center: (0.00, 0.78, 0.03), Extents: (0.30, 0.78, 0.20)"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "Standing soles remain within original 2mm floor allowance; minimum model y=-0.00151062012"
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "GPU PNG written: 03-eva-standing-body-only.png (789731 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "GPU PNG written: 03-eva-standing-body-only-diagnostic-body-only-no-occlusion.png (99265 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "GPU PNG written: 03-eva-standing-body-only-pitch-0.png (442602 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "GPU PNG written: 03-eva-standing-body-only-pitch-45.png (905101 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "03-eva-standing-body-only",
+            "message": "GPU PNG written: 03-eva-standing-body-only-pitch-60.png (924740 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000476m at lowerarm02.L"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_L retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_L ALL 990 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.000487447222m at 559"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_L full native skin bounds remain within 2mm of source: Center: (-0.20, 1.22, -0.01), Extents: (0.07, 0.29, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_R retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_R ALL 990 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00048771326m at 484"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_Arm_R full native skin bounds remain within 2mm of source: Center: (0.20, 1.22, -0.01), Extents: (0.07, 0.29, 0.10)"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093)."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_TorsoLegs retains every mapped imported skin vertex."
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_TorsoLegs ALL 12093 skin vertices agree with independently re-imported Blender V02 within 2mm; max=0.00048984366m at 7677"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "A7_EVA_TorsoLegs full native skin bounds remain within 2mm of source: Center: (0.00, 0.78, 0.03), Extents: (0.30, 0.78, 0.20)"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "Standing soles remain within original 2mm floor allowance; minimum model y=-0.00151062012"
+        },
+        {
+            "pass": true,
+            "stage": "04-eva-standing-arms-no-gloves",
+            "message": "GPU PNG written: 04-eva-standing-arms-no-gloves.png (790406 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000478m at toe3-1.R"
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583)."
+        },
+        {
+            "pass": true,
+            "stage": "05-work-floating-contact-fit",
+            "message": "GPU PNG written: 05-work-floating-contact-fit.png (729986 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000478m at toe3-1.R"
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093)."
+        },
+        {
+            "pass": true,
+            "stage": "06-eva-floating-body-only",
+            "message": "GPU PNG written: 06-eva-floating-body-only.png (853088 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000363m at upperleg01.L"
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "A7_WORK_Arm_L produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "A7_WORK_Arm_R produces finite, nonempty actual skinned vertices (8310)."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "A7_WORK_TorsoLegs produces finite, nonempty actual skinned vertices (11583)."
+        },
+        {
+            "pass": true,
+            "stage": "07-work-seated-fitting-pose",
+            "message": "GPU PNG written: 07-work-seated-fitting-pose.png (861031 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "Outfit, authored pose and explicit arm policy selected."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "Only expected torso/arms enabled; no duplicate outfit or camera hands."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "Correct explicit visual setback for current pose."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "Visual wrapper follows feet and yaw without moving camera/player."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "Sampled bone positions match independent Blender export basis within 2mm; max=0.000363m at upperleg01.L"
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "A7_EVA_Arm_L produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "A7_EVA_Arm_R produces finite, nonempty actual skinned vertices (990)."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "A7_EVA_TorsoLegs produces finite, nonempty actual skinned vertices (12093)."
+        },
+        {
+            "pass": true,
+            "stage": "08-eva-seated-fitting-pose",
+            "message": "GPU PNG written: 08-eva-seated-fitting-pose.png (876639 bytes; human inspection still required)."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Passive body follows a separate proxy translation/yaw; real player untouched."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Pause retains visible pose/root and revision despite proxy motion and requested floating pose."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Unchanged presentation frames preserve an external leased wrist rotation."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "PoseWillReset cancels the lease before resampling; revision advances afterward."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Explicit seated request is active before rebind reset check."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Rebind unsubscribes previous suit and clears explicit seated state."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Old suit events cannot alter the new binding."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Disable releases suit subscription and all skins."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Enable alone does not resurrect the old session."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Explicit rebind restores a usable visible body."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Explicit visibility policy hides both outfits."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Final ClearBinding releases all session references/subscriptions."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "ClearBinding restores authored visual wrapper position/rotation/scale."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Original player world/local position, rotation and scale unchanged."
+        },
+        {
+            "pass": true,
+            "stage": "pause, follow, contact reset and rebind",
+            "message": "Original camera world/local position, rotation and scale unchanged."
+        }
+    ]
+}

@@ -79,6 +79,10 @@ namespace OutOfReach.Composition.Editor
             var habitat = I06HabitatAuthoring.Create(deliveredModelRoot, ShipNode("A7_Storage"),
                 ShipNode("COL_Storage_LockersL").GetComponent<Collider>(),
                 ShipNode("COL_Storage_LockersR").GetComponent<Collider>(), font);
+            var handholds = I06InteriorHandholdAuthoring.Create(deliveredModelRoot,
+                Required<Material>("Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintAmber.mat"),
+                Required<Material>("Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_Aluminum.mat"),
+                Required<Material>("Assets/_OutOfReach/Visuals/Models/Aurora7/Materials/A7_PaintGraphite.mat"));
 
             GameObject playerObject = (GameObject)PrefabUtility.InstantiatePrefab(playerAsset, scene);
             FirstPersonController player = playerObject.GetComponent<FirstPersonController>();
@@ -141,7 +145,18 @@ namespace OutOfReach.Composition.Editor
                 Target(anchors.EvaReturn, InteractionIds.EvaReturn, new Vector3(0, 1.4f, 0)),
                 Target(anchors.AntennaRepair, InteractionIds.RepairAntenna, new Vector3(0, 0, -.12f))
             };
-            var marine = I06MarineAuthoring.Create(null, new Vector3(10000, 100, 0));
+            var marine = I06MarineAuthoring.Create(null, new Vector3(10000, 100, 0), includeOcean: false);
+            // The approved land launch site replaces only the former solid barge.
+            // Preserve the elevated crew deck, mast, access arm and transport route.
+            Transform barge = marine.SiteRoot.Find("LaunchBarge");
+            if (!barge) throw new InvalidOperationException("Pinned transport must contain its original LaunchBarge.");
+            marine.TransportColliders = marine.TransportColliders
+                .Where(c => c && !c.transform.IsChildOf(barge)).ToArray();
+            UnityEngine.Object.DestroyImmediate(barge.gameObject);
+            var land = I06LandSiteAuthoring.Create(marine.SiteRoot);
+            var landHorizon = I06LandHorizonAuthoring.Create(marine.SiteRoot, 0f);
+            I06LandHorizonAuthoring.Validate(landHorizon, marine.SiteRoot, 0f);
+            I06LandSiteAuthoring.Validate(land, marine.SiteRoot);
             var cargoStage = I06MarineCargoAuthoring.Create(marine, cameraTransform, font);
             var habitatTargets = new[]
             {
@@ -221,6 +236,9 @@ namespace OutOfReach.Composition.Editor
             SetArray(cinematicFields, "effectLights", new Object[] { cockpitEffect, engineeringEffect });
             cinematicFields.ApplyModifiedPropertiesWithoutUndo();
 
+            var recoveryShots = I06RecoveryAuthoring.Create(presentationRoot, deliveredModelRoot);
+            cinematics.ConfigureRecoveryShots(recoveryShots, camera);
+
             Transform missionRoot = Child("I01 mission composition", null);
             MissionRuntime runtime = missionRoot.gameObject.AddComponent<MissionRuntime>();
             runtime.Configure(player, anchors.PlayerSpawn, allTargets);
@@ -253,7 +271,35 @@ namespace OutOfReach.Composition.Editor
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-latch-motor.wav"),
                 Required<AudioClip>("Assets/_OutOfReach/Audio/Original/Airlock/airlock-safe-chirp.wav"));
             composition.ConfigureHands(hands);
-            composition.ConfigureBody(I06BodyAuthoring.Create(presentationRoot, player.transform, camera));
+            var antennaWork = I06AntennaRepairAuthoring.Create(anchors.AntennaRepair,
+                targets.Single(target => target.InteractionId == InteractionIds.RepairAntenna));
+            ValidateAntennaApproach(route, player);
+            composition.ConfigureAntennaRepair(antennaWork.Bindings, cinematicPivot);
+            composition.ConfigureAntennaProgress(presentationRoot.gameObject.AddComponent<AntennaWorkProgressPresenter>(),
+                document, font);
+            Transform helmetLampMount = Child("EVA helmet work light", camera.transform);
+            helmetLampMount.localPosition = new Vector3(.08f, .12f, .06f);
+            Light helmetLamp = helmetLampMount.gameObject.AddComponent<Light>();
+            helmetLamp.type = LightType.Spot; helmetLamp.range = 2.5f;
+            helmetLamp.spotAngle = 58f; helmetLamp.innerSpotAngle = 38f;
+            helmetLamp.color = new Color(.88f, .94f, 1f); helmetLamp.intensity = 1.35f;
+            helmetLamp.bounceIntensity = 0f; helmetLamp.shadows = LightShadows.Soft;
+            helmetLamp.shadowStrength = 1f; helmetLamp.enabled = false;
+            var helmetLightView = presentationRoot.gameObject.AddComponent<EvaWorkLampPresenter>();
+            helmetLightView.ConfigureViews(helmetLamp, camera);
+            composition.ConfigureEvaWorkLamp(helmetLightView);
+            var body = I06BodyAuthoring.Create(presentationRoot, player.transform, camera);
+            composition.ConfigureBody(body);
+            Transform evaOutfit = body.VisualRoot.GetComponentsInChildren<Transform>(true)
+                .Single(t => t.name == "Body EVA - Generic held poses");
+            Transform toolShoulder = evaOutfit.GetComponentsInChildren<Transform>(true)
+                .Single(t => t.name == "upperarm01.R");
+            var toolSleeve = Child("EVA tool upper sleeve", hands.MotionMount).gameObject.AddComponent<EvaToolSleevePresenter>();
+            toolSleeve.Configure(hands, toolShoulder, Required<Material>(
+                "Assets/_OutOfReach/Visuals/Models/Aurora7/Props/AstronautHands/Materials/AH_AstronautHands.mat"));
+            composition.ConfigureMicrogravity(presentationRoot.gameObject.AddComponent<I06MicrogravityBridge>(),
+                presentationRoot.gameObject.AddComponent<I06MicrogravityInputBindings>(),
+                presentationRoot.gameObject.AddComponent<BareArmContactPresenter>(), handholds.Registry);
             I06HabitatBindings habitatBindings = missionRoot.gameObject.AddComponent<I06HabitatBindings>();
             habitatBindings.ConfigureViews(habitat.Status, habitatTargets[2], habitatTargets);
             composition.ConfigureHabitat(habitatBindings);
@@ -265,11 +311,8 @@ namespace OutOfReach.Composition.Editor
             marineBindings.ConfigureViews(marine.Root, marine.VehicleRoot, marine.HatchFrame, marine.AccessArmFrame,
                 marine.SeatedCamera, seatTarget, departurePivot, camera, targets[0], marine.Ocean,
                 presentationRoot.gameObject.AddComponent<TransportDeparturePresenter>(), PrepareMarineSky(), transferFade);
-            BoxCollider bargeDeck = marine.TransportColliders.Single(c => c.name == "COL_BargeDeck");
-            Transform fxDeck = Child("Actual barge top plane for ignition", bargeDeck.transform);
-            fxDeck.localPosition = bargeDeck.center + Vector3.up * (bargeDeck.size.y * .5f);
             marineBindings.ConfigureLaunchEffects(presentationRoot.gameObject.AddComponent<MarineDepartureFxPresenter>(),
-                MarineDepartureFxPresenter.CalculateAnchor(marine.TransportAnchors), fxDeck,
+                MarineDepartureFxPresenter.CalculateAnchor(marine.TransportAnchors), land.DeflectorContactPlane,
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/Exhaust.mat"),
                 Required<Material>(I06MarineAuthoring.AssetRoot + "/FX/IgnitionSteam.mat"));
             composition.ConfigureMarine(marineBindings);
@@ -317,8 +360,9 @@ namespace OutOfReach.Composition.Editor
         public static void BuildI04Windows() => BuildWindowsCheckpoint("I04");
         public static void BuildI05Windows() => BuildWindowsCheckpoint("I05");
         public static void BuildI06Windows() => BuildWindowsCheckpoint("I06");
+        public static void BuildI06WindowsPlayer() => BuildWindowsCheckpoint("I06Player", false);
 
-        private static void BuildWindowsCheckpoint(string checkpoint)
+        private static void BuildWindowsCheckpoint(string checkpoint, bool development = true)
         {
             RequireVerificationProject();
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
@@ -330,13 +374,13 @@ namespace OutOfReach.Composition.Editor
                 scenes = new[] { ScenePath },
                 locationPathName = output,
                 target = BuildTarget.StandaloneWindows64,
-                options = BuildOptions.Development
+                options = development ? BuildOptions.Development : BuildOptions.None
             };
             BuildReport report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
                 throw new InvalidOperationException(checkpoint + " Windows build failed: " + report.summary.result);
             Debug.Log(checkpoint + "_WINDOWS_BUILD_PASS output=" + output + " bytes=" + report.summary.totalSize
-                + " | Development Windows x64, Bootstrap only. Executable launch/playthrough not established by this build.");
+                + " | " + (development ? "Development" : "Player") + " Windows x64, Bootstrap only. Executable launch/playthrough not established by this build.");
         }
 
         public static void BuildAndCapture()
@@ -721,7 +765,8 @@ namespace OutOfReach.Composition.Editor
             var route = root.gameObject.AddComponent<TetheredRoute>();
             Vector3[] positions = { anchors.EvaStart.position, new Vector3(0, 1.2f, 22.8f),
                 new Vector3(3.8f, 1.2f, 22.8f), new Vector3(4.35f, .9f, 21.7f),
-                new Vector3(4.35f, .9f, 14.35f), new Vector3(3.9f, .9f, 14.1f) };
+                new Vector3(4.35f, .9f, 14.35f), new Vector3(3.9f, .9f, 14.1f),
+                I06AntennaRepairAuthoring.ProposedRouteEnd };
             var points = new Transform[positions.Length];
             for (int i = 0; i < positions.Length; i++)
             {
@@ -738,15 +783,36 @@ namespace OutOfReach.Composition.Editor
             guide.SetPositions(positions.Select(point => point + Vector3.up * .75f).ToArray());
             guide.shadowCastingMode = ShadowCastingMode.Off;
             guide.receiveShadows = false;
-            // The route is beyond the aft cap before moving outboard, then entirely beyond the radius-3 m hull.
+            // Keep the original broad hull clearance except the closer final work approach.
+            // That segment is checked against the actual capsule and housing after authoring.
             for (int segment = 1; segment < positions.Length; segment++)
                 for (int sample = 0; sample <= 40; sample++)
                 {
                     Vector3 feet = Vector3.Lerp(positions[segment - 1], positions[segment], sample / 40f);
-                    if (feet.z < 21.6f && feet.x < 3.8f)
+                    if (feet.z < 21.6f && feet.x < 3.8f && segment != positions.Length - 1)
                         throw new InvalidOperationException("EVA route or its allowed drift would cross the delivered hull.");
                 }
             return route;
+        }
+
+        private static void ValidateAntennaApproach(TetheredRoute route, FirstPersonController player)
+        {
+            // FirstPersonController.MoveAlongRoute keeps feet exactly on PointAt(distance).
+            // Test the real final centreline rather than relaxing collision or changing the player.
+            CharacterController capsule = player.GetComponent<CharacterController>();
+            if (!capsule) throw new InvalidOperationException("Antenna approach requires the actual player capsule.");
+            Physics.SyncTransforms();
+            float from = route.LengthMetres - Vector3.Distance(new Vector3(3.9f, .9f, 14.1f), route.EndPosition);
+            float half = Mathf.Max(0f, capsule.height * .5f - capsule.radius);
+            for (int sample = 0; sample <= 80; sample++)
+            {
+                Vector3 feet = route.PointAt(Mathf.Lerp(from, route.LengthMetres, sample / 80f));
+                Vector3 center = feet + capsule.center;
+                foreach (Collider blocker in Physics.OverlapCapsule(center - Vector3.up * half,
+                    center + Vector3.up * half, capsule.radius, ~0, QueryTriggerInteraction.Ignore))
+                    if (blocker != capsule && !blocker.transform.IsChildOf(player.transform))
+                        throw new InvalidOperationException("Actual antenna approach capsule intersects " + blocker.name + " at " + feet);
+            }
         }
 
         private static void CreateShipLighting(GameObject fallback, Transform parent, out Light[] working, out Light[] emergency)

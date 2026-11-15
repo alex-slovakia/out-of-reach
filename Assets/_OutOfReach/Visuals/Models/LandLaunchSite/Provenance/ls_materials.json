@@ -1,0 +1,95 @@
+{
+ "materials": [
+  {
+   "name": "LS_Concrete",
+   "set": "LS_Concrete",
+   "tint": "#E2E0DA",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "new": true,
+   "unity": "URP Lit; maps LS_Concrete_BaseColor / _Normal / _MODS (R metallic, G occlusion, A smoothness); tiling 0.25 per metre (4 m tile)"
+  },
+  {
+   "name": "LS_ConcreteSoot",
+   "set": "LS_Concrete",
+   "tint": "#77726C",
+   "tiling": 0.25,
+   "normal": 0.6,
+   "new": true,
+   "unity": "same maps as LS_Concrete, darker tint for the trench and deflector"
+  },
+  {
+   "name": "LS_ConcreteBarrier",
+   "set": "LS_Concrete",
+   "tint": "#EFEDE7",
+   "tiling": 0.5,
+   "normal": 0.5,
+   "new": true,
+   "unity": "same maps as LS_Concrete, lighter tint, tiling 0.5"
+  },
+  {
+   "name": "LS_Gravel",
+   "set": "LS_Gravel",
+   "tint": "#FFFFFF",
+   "tiling": 0.5,
+   "normal": 0.8,
+   "new": true,
+   "unity": "URP Lit; maps LS_Gravel_*; tiling 0.5 per metre (2 m tile)"
+  },
+  {
+   "name": "LS_Markings",
+   "atlas": "LS_Markings",
+   "surface": "cutout",
+   "metallic": 0.0,
+   "smoothness": 0.25,
+   "new": true,
+   "unity": "URP Lit alpha clip 0.5 on LS_Markings.png (UVs are atlas UVs)"
+  },
+  {
+   "name": "A7_PaintGray",
+   "set": "A7_Paint",
+   "tint": "#8A8884",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_PaintGraphite",
+   "set": "A7_Paint",
+   "tint": "#2B2B2C",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_PaintWhite",
+   "set": "A7_Paint",
+   "tint": "#B5B3AE",
+   "tiling": 1.0,
+   "normal": 0.35,
+   "shared_with_ship": true,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_Aluminum",
+   "set": "A7_Brushed",
+   "tint": "#C3C6C9",
+   "tiling": 2.0,
+   "normal": 0.6,
+   "shared_with_ship": true,
+   "unity": "the ship's existing material of this name"
+  },
+  {
+   "name": "A7_Glass",
+   "tint": "#A9C0CC",
+   "surface": "transparent",
+   "alpha": 0.1,
+   "metallic": 0.0,
+   "smoothness": 0.96,
+   "shared_with_ship": true,
+   "unity": "the ship's existing material of this name"
+  }
+ ]
+}

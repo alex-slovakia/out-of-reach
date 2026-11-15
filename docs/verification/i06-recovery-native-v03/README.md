@@ -1,0 +1,7 @@
+# Recovery native checkpoint 03
+
+Unity6000.3.28f1 GPU run20261114T224725353Z passed5,932 assertions with8 actual1280x720 captures. Two reviewers inspected the mapped Mars, approach, settled success/loss cards and NASA Sources card: accepted for this checkpoint, not a claim of AAA quality.
+
+Actual domain recovery follows real contact, supplies, beacon and12-day waiting. The fixture uses disclosed public commands, setup skips and accounted time acceleration. It does not prove continuous physical gameplay. Full lifecycle checks include normal/reduced effects, pause/resume, skip, restart, loss, one camera and restoration. The historical Viking Mars map is texture-bound at its original1440x720 size; its Sources attribution is visible. The external URL was not opened by the test.
+
+The isolated revision was dirty on1470871 before antenna runtime binding. Exact captured source hashes are attached; do not apply this pass to later changes. Earlier failed runs remain preserved locally. One Editor SearchDatabase startup exception is recorded separately; no recovery runtime exception or shader compiler error was observed. UGUI fade is excluded from render-texture captures and checked independently. Continuous motion/audio and other resolutions remain unverified.

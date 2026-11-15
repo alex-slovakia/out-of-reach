@@ -1,0 +1,9 @@
+EDITOR-ONLY CONTROLLED PRESENTATION FIXTURE; not domain, input, physics-contact or gameplay proof.
+Existing saved Bootstrap geometry, materials, lights, volumes and static flags retained. No global lighting edits.
+Before Play: suspend scene OutOfReach scripts, MissionRuntime automatic start/update, controllers, UI and audio. No mission starts.
+Additive unsaved fixture has a feet proxy, cloned capture camera and two real imported body outfits. Original player/camera transforms remain unchanged.
+Fixture camera: same source FOV/URP data, at source feet + actual ViewPivot eye height, looking down 80 degrees. Seated eye height subtracts authored .3734443m, pitch 65.
+Controlled IEvaStatus/ISimulationClock exercise presentation only. Pause visibility gate deliberately stays true.
+3 skins + 3 Generic held clips per outfit, source-derived bone-position comparison, finite baked vertices, arm masks, pause/rebind/reset.
+StandingIdleV02 at .197m anatomical setback, V04 centered floating clip, original rest bind and relaxed idle arms; independent source bone expectations. Capture assesses native clipping, not validated physical contact. No walk clip, external glove rig or contact adapter used.
+Sixteen real GPU PNG captures including forward/45/60/80 standing comparisons. PASS means assertions/capture completed; human image review is still required. 100-second wall watchdog.

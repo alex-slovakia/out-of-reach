@@ -1,0 +1,49 @@
+{
+    "name": "07-actual-failure-report",
+    "scope": "Actual saved Bootstrap player camera + existing UI, 1280x720; UGUI overlay excluded. No diagnostic camera or image composite.",
+    "phase": "Report",
+    "outcome": "Lost",
+    "cinematic": "None",
+    "caption": "",
+    "visibleLabels": "OUT OF REACH\nAURORA-7  /  FLIGHT RECORDER\nFLIGHT ENDED\nOut of time.\nCarbon dioxide: the cabin reached the emergency level.\nELAPSED SIMULATION TIME  0D 20H 29M 28S",
+    "audioCue": "",
+    "audioSubtitle": "Power fault. Life support degraded. Communications offline. Check engineering diagnostics.\n",
+    "bodyVisible": false,
+    "glovesVisible": false,
+    "cargoHandsVisible": false,
+    "sequence": 0,
+    "simulationSeconds": 73768.55945691775,
+    "cinematicSeconds": 0.0,
+    "blackout": 0.0,
+    "fov": 68.0,
+    "far": 100.0,
+    "mean": 0.061190325766801837,
+    "deviation": 0.0928124338388443,
+    "paused": false,
+    "reduced": false,
+    "control": false,
+    "resolver": false,
+    "arrivalVisible": false,
+    "marsVisible": false,
+    "cameraPosition": {
+        "x": -0.000013482112990459427,
+        "y": 1.7000024318695069,
+        "z": 0.800000011920929
+    },
+    "arrivalPosition": {
+        "x": 15.0,
+        "y": 5.0,
+        "z": 36.0
+    },
+    "marsPosition": {
+        "x": 2190.0,
+        "y": -2.0,
+        "z": 18.0
+    },
+    "cameraRotation": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 0.0,
+        "w": -0.000003720387212524656
+    }
+}

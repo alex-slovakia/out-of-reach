@@ -1,0 +1,37 @@
+{
+  "asset": "Mars_NASA_Viking.jpg",
+  "page": "https://science.nasa.gov/3d-resources/mars/",
+  "download": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/image/mars/Mars.jpg",
+  "credit": "NASA/Jet Propulsion Laboratory & Caltech",
+  "processing": "Viking images processed at USGS; JPL/Caltech planetary maps database.",
+  "releaseDate": "2025-06-02",
+  "observationEpoch": "Historical composite; exact acquisition epochs not specified on release page. Not current weather or a live observation.",
+  "bytes": 972896,
+  "dimensions": [
+    1440,
+    720
+  ],
+  "sha256": "12ec6bf02ebd42a246edc778cb2ce8c595b4d9f0892badf0bfff8abb2303c780",
+  "originalBytesUnmodified": true,
+  "policyUrls": [
+    "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "https://www.jpl.nasa.gov/jpl-image-use-policy/",
+    "https://github.com/nasa/NASA-3D-Resources"
+  ],
+  "rightsBasis": "NASA official 3D texture release credits NASA/JPL & Caltech, with no third-party copyright restriction on that item. NASA media guidelines generally permit factual/informational use of its texture/model content with attribution and no implied endorsement. JPL policy allows image use absent an indicated exception; item-specific credit takes precedence. No NASA/JPL logos, people, endorsement claims or merchandise-branding permission included.",
+  "useDisclosure": "Real historical NASA texture on an original mathematical sphere; scene/lighting/framing/transit timing are authored by OUT OF REACH. No NASA endorsement or review. This is not elevation data or a flight/trajectory simulation.",
+  "import": {
+    "sRGB": true,
+    "mipmaps": true,
+    "maxSize": 2048,
+    "npot": "None",
+    "filter": "Trilinear",
+    "aniso": 4,
+    "wrapU": "Repeat",
+    "wrapV": "Clamp",
+    "compression": "Uncompressed",
+    "alpha": "None",
+    "readable": false
+  },
+  "nativeValidation": "Pending root Unity import/GPU check; exact managed C# reference compilation only."
+}

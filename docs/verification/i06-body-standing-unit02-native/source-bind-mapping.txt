@@ -1,0 +1,6 @@
+A7_WORK_Arm_L Unity vertices=8310 source covered=7807 worst bind error m=3.20980831E-07
+A7_WORK_Arm_R Unity vertices=8310 source covered=7807 worst bind error m=3.084928E-07
+A7_WORK_TorsoLegs Unity vertices=11583 source covered=10451 worst bind error m=2.90978335E-07
+A7_EVA_Arm_L Unity vertices=990 source covered=954 worst bind error m=2.69871521E-07
+A7_EVA_Arm_R Unity vertices=990 source covered=954 worst bind error m=2.913358E-07
+A7_EVA_TorsoLegs Unity vertices=12093 source covered=10853 worst bind error m=2.89543976E-07
