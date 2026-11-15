@@ -1,0 +1,14 @@
+{
+    "name": "OutOfReach.CargoCasesV02",
+    "rootNamespace": "OutOfReach.Visuals.CargoCasesV02",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
