@@ -70,3 +70,14 @@ User explicitly retracted the antenna repair defect: the repair works when close
 ### Music
 
 New cinematic score generation through Krea failed with INSUFFICIENT_BALANCE; no new track was generated or downloaded and no audio replacement is claimed. Existing audio improvement remains open. No paid top-up or new dependency was performed.
+
+
+## Death-card delivery — I06-DEATH-CARD
+
+Runtime `7666094` on `codex/i01-integration` changes only `Assets/_OutOfReach/UI/Report/Runtime/FlightRecorderPresenter.cs` and `FlightRecorder.uss`, retaining metadata. Loss uses a centered red YOU DIED headline in the existing real Adobe Source Sans 3 Semibold (SIL OFL), concise cause and horizontal wrapping actions. A nonfatal unrecoverable contact objective remains MISSION LOST. Full canonical cause is retained in Mission record; successful recovery presentation is unchanged.
+
+Unity6000.3.28f1 isolated GPU run TestResults/i06-death-card-02.log exited0 with [34 scoped checks](death-checks.jsonl) and [machine result](death-check-result.json). [Exact runtime source hashes](death-source-hashes.json). Actual public launch/cinematic skips and accounted unrepaired resource depletion create the canonical Lost report; this is explicitly a targeted UI probe, not a complete gameplay route. It verifies headline centering and action bounds at1280x720/960x540, Mission record/Sources/Back navigation, first-press Quit confirmation using a counting callback, and actual Plan again scene restart. No real desktop Quit. All Assets bytes stayed unchanged during the probe. The prior run failed only because its final assertion read the destroyed old runtime after restart; the corrected probe rebinds the new scene. No runtime error is claimed from that first probe exception.
+
+Repository verification passed1269 GUIDs; offline NASA verification passed32 samples. No new Windows build or live-editor acceptance is claimed. Original Play stays untouched; original disk delivery is for the next reload.
+
+![Actual verified1280 death screen](death-verified-1280.png)

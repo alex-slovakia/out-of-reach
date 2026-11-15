@@ -1,0 +1,34 @@
+{"utc":"2026-11-15T09:40:17.4701969Z","stage":"opening saved Bootstrap","message":"Saved scene has the actual cinematic owner.","pass":true}
+{"utc":"2026-11-15T09:40:24.2727418Z","stage":"actual Bootstrap recovery","message":"Actual saved session controls, attached UIDocument, camera and cinematic owner exist.","pass":true}
+{"utc":"2026-11-15T09:40:24.4845828Z","stage":"disclosed real loss setup","message":"Real valid Planner launch for report setup | AURORA-7 launched with 7 equipment line(s).","pass":true}
+{"utc":"2026-11-15T09:40:24.5501877Z","stage":"disclosed real loss setup","message":"Disclosed real transport skip","pass":true}
+{"utc":"2026-11-15T09:40:25.4699452Z","stage":"disclosed real loss setup","message":"Actual incident with no repairs | Cockpit check complete. Impact detected.","pass":true}
+{"utc":"2026-11-15T09:40:25.4750506Z","stage":"disclosed real loss setup","message":"Disclosed public Impact skip","pass":true}
+{"utc":"2026-11-15T09:40:25.5837357Z","stage":"disclosed real loss setup","message":"Accounted unrepaired resource depletion | Simulation advanced.","pass":true}
+{"utc":"2026-11-15T09:40:25.5847347Z","stage":"disclosed real loss setup","message":"Actual depleted resources produce Lost.","pass":true}
+{"utc":"2026-11-15T09:40:25.6351632Z","stage":"disclosed real loss setup","message":"Disclosed public loss ending skip","pass":true}
+{"utc":"2026-11-15T09:40:26.5251869Z","stage":"disclosed real loss setup","message":"Canonical final Lost report","pass":true}
+{"utc":"2026-11-15T09:40:26.5267607Z","stage":"disclosed real loss setup","message":"Loss headline reads YOU DIED","pass":true}
+{"utc":"2026-11-15T09:40:27.4864913Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Mission record at 1280x720","pass":true}
+{"utc":"2026-11-15T09:40:27.4870263Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Sources at 1280x720","pass":true}
+{"utc":"2026-11-15T09:40:27.4885329Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Plan again at 1280x720","pass":true}
+{"utc":"2026-11-15T09:40:27.4895402Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Quit to desktop at 1280x720","pass":true}
+{"utc":"2026-11-15T09:40:27.4895402Z","stage":"disclosed real loss setup","message":"Loss headline horizontally centered","pass":true}
+{"utc":"2026-11-15T09:40:27.6451475Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Mission record at 960x540","pass":true}
+{"utc":"2026-11-15T09:40:27.6451475Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Sources at 960x540","pass":true}
+{"utc":"2026-11-15T09:40:27.6467522Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Plan again at 960x540","pass":true}
+{"utc":"2026-11-15T09:40:27.6482885Z","stage":"disclosed real loss setup","message":"Report action inside viewport: Quit to desktop at 960x540","pass":true}
+{"utc":"2026-11-15T09:40:27.6493620Z","stage":"disclosed real loss setup","message":"Loss headline horizontally centered","pass":true}
+{"utc":"2026-11-15T09:40:27.6926622Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:27.8366124Z","stage":"disclosed real loss setup","message":"Mission record opens","pass":true}
+{"utc":"2026-11-15T09:40:27.8371309Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:27.8537877Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:27.8845908Z","stage":"disclosed real loss setup","message":"Sources opens","pass":true}
+{"utc":"2026-11-15T09:40:27.8855907Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:27.8994561Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:27.9049784Z","stage":"disclosed real loss setup","message":"Quit first press only arms confirmation","pass":true}
+{"utc":"2026-11-15T09:40:27.9054843Z","stage":"disclosed real loss setup","message":"Actual UI submit target exists.","pass":true}
+{"utc":"2026-11-15T09:40:28.4453134Z","stage":"disclosed real loss setup","message":"Actual saved session controls, attached UIDocument, camera and cinematic owner exist.","pass":true}
+{"utc":"2026-11-15T09:40:28.4580290Z","stage":"disclosed real loss setup","message":"Plan again restarts canonical session","pass":true}
+{"utc":"2026-11-15T09:40:28.5069326Z","stage":"disclosed real loss setup","message":"Probe did not add/remove any Assets file.","pass":true}
+{"utc":"2026-11-15T09:40:35.0683704Z","stage":"disclosed real loss setup","message":"Every Assets file, saved scene, source, shader, material and metadata retains exact SHA-256.","pass":true}
