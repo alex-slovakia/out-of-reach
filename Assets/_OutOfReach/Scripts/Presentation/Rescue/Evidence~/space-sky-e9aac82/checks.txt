@@ -1,0 +1,171 @@
+PASS [opening actual saved Bootstrap] Saved root composition is present.
+PASS [opening actual saved Bootstrap] Saved MissionRuntime is present.
+PASS [opening actual saved Bootstrap] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
+PASS [native actual Bootstrap] Saved composition, runtime, player, resolver, default input and marine bindings exist (startup).
+PASS [menu] SPACE-SKY: SpaceSkyKeeper installed itself in the Bootstrap scene
+PASS [menu] Enter + Space pressed during the startup cards activate nothing behind them (mode chosen False -> False, timed deadline False -> False, cards still shown False)
+PASS [menu] A second Enter right after the skip still activates nothing (cards shown False, menu Start timed · 60 s | Practice · no deadline | Quit to desktop)
+PASS [menu] Startup cards end and the mode menu with Practice appears (2,8 s, skipped by the Enter/Space press)
+PASS [menu] Mode menu offers the timed mission: Start timed · 60 s | Practice · no deadline | Quit to desktop
+PASS [menu] A fresh session starts in Planning: Planning
+PASS [menu] Exactly one enabled AudioListener at the menu
+PASS [menu] Mode button visible: Practice
+PASS [menu] Practice choice releases control
+PASS [menu] The mode menu closes after the choice
+PASS [marine boarding W] The view stays level on foot: max camera roll 0,00 deg while walking W to the seat, 0,00 deg while strafing D/A (limit 0.1 deg)
+PASS [marine boarding W] seat E launches: prompt allows it: 'Begin mission: 546 of 600 kg, 720 of 800 credits'
+PASS [marine boarding W] Single E: seat E launches [cockpit-console] prompt 'Begin mission: 546 of 600 kg, 720 of 800 credits' -> OK 'AURORA-7 launched with 7 equipment line(s).'
+PASS [marine boarding W] Seat E launch succeeded
+PASS [departure] Escape pauses during the departure
+PASS [departure] Departure timeline frozen while paused: 4,00 -> 4,00
+PASS [departure] Mission clock frozen while paused
+PASS [departure] Pause menu shows Resume: Resume | Restart mission | Quit to desktop
+PASS [departure] Resumed after pause
+PASS [departure] Departure + transfer took 37,1 real s
+PASS [arrival] Arrival enters interior float
+PASS [arrival] Arrival is inside the ship
+PASS [arrival] After arrival the phase is Intro (cockpit check pending): Intro
+PASS [arrival] Exactly one enabled AudioListener aboard
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: rail grip available (suit=False)
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: LMB aimed at rail Console lower grips it (preview Grip, refusal '')
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: the grip holds the body still (v=0,000)
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: a click while holding pushes off the rail (refusal '')
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: the push off the rail lets go
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: D alone moves the body to the right (pushes +1, sideways 1,13 m/s, |v| 1,32, refusal '')
+PASS [movement probe: WORK clothes at arrival] WORK clothes at arrival: A alone moves the body to the left (pushes +1, sideways 0,60 m/s, |v| 1,13, refusal '')
+PASS [wall push probe: WORK clothes at arrival] WORK clothes at arrival: a push off a wall the body drifts into sends it away from the wall (AURORA-7 delivered Blender models/CollisionProxies/COL_Engineering_CeilingRuns_L: inward 1,08 m/s before the LMB push, 0,83 m/s away after it; gap 0,62 -> 0,58 m in 0.5 s)
+SOFT-FAIL [cockpit check -> impact] Real input reaches 'arrival -> cockpit console' (fell back to QA teleport)
+PASS [cockpit check -> impact] After the QA teleport the target is in focus: cockpit-console (current cockpit-console)
+PASS [cockpit check -> impact] cockpit systems check: prompt allows it: 'Run cockpit systems check'
+PASS [cockpit check -> impact] Single E: cockpit systems check [cockpit-console] prompt 'Run cockpit systems check' -> OK 'Cockpit check complete. Impact detected.'
+PASS [cockpit check -> impact] Cockpit check E accepted
+PASS [cockpit check -> impact] The cockpit check triggers the accident
+PASS [cockpit check -> impact] impact cinematic completes in 7,2 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [cockpit check -> impact] Impact ends in Emergency/Repair (Emergency)
+PASS [cockpit check -> impact] Control returns after the impact
+SOFT-FAIL [repair Power] Real input reaches 'to repair-power' (fell back to QA teleport)
+PASS [repair Power] After the QA teleport the target is in focus: repair-power (current repair-power)
+PASS [repair Power] repair Power: prompt allows it: 'Repair power distribution: 2 spare parts.'
+PASS [repair Power] Single E: repair Power [repair-power] prompt 'Repair power distribution: 2 spare parts.' -> OK 'power distribution repaired (2 spare parts).'
+PASS [repair Power] Power repaired (condition 1,00)
+PASS [repair Power] Power: a repeated E charges nothing more
+PASS [repair LifeSupport] repair LifeSupport: prompt allows it: 'Repair life support: 2 spare parts, 1 kWh.'
+PASS [repair LifeSupport] Single E: repair LifeSupport [repair-life-support] prompt 'Repair life support: 2 spare parts, 1 kWh.' -> OK 'life support repaired (2 spare parts, 1 kWh).'
+PASS [repair LifeSupport] LifeSupport repaired (condition 1,00)
+PASS [repair LifeSupport] LifeSupport: a repeated E charges nothing more
+PASS [repair LifeSupport] Both interior repairs complete
+PASS [pause check: interior repair phase] Escape pauses (interior repair phase)
+PASS [pause check: interior repair phase] No simulated time passes while paused
+PASS [pause check: interior repair phase] Pause menu: Resume | Restart mission | Quit to desktop
+PASS [pause check: interior repair phase] Resume returns control
+PASS [pause check: interior repair phase] The clock advances again after resume
+PASS [pause check: interior repair phase] No catch-up drain after the pause (345 sim s)
+PASS [chapter day 1 meal + sleep (phase Repair)] Day-1 packaged meal through its real target in phase Repair (rations 1, prompt '', colliders enabled 1)
+PASS [chapter day 1 meal + sleep (phase Repair)] After the day 1 berth sequence the player can move again within 3 s (0,00 s after it ended; whole sequence 12,4 real s; Alex 6896428491)
+PASS [chapter day 1 meal + sleep (phase Repair)] Controls are blocked during the whole day 1 berth sequence (frames with control 0/2053, W then D pressed during it: pushes +0, phases Entering@0.0 > Held@4.7 > Releasing@8.5)
+PASS [chapter day 1 meal + sleep (phase Repair)] No camera pop during the day 1 berth sequence (largest per-frame step 0,15 m in a 5 ms frame)
+PASS [chapter day 1 meal + sleep (phase Repair)] The player wakes at the berth exit after the day 1 rest: feet 0,45 m (horizontal) from the berth target, 2,13 m from where the rest began
+PASS [chapter day 1 meal + sleep (phase Repair)] A push works right after waking (day 1): pushes +1 refusal ''
+PASS [chapter day 1 meal + sleep (phase Repair)] Day-1 rest completed through the real sleep target in phase Repair (completed rests 1, last stop Completed)
+PASS [chapter UI loop (before EVA)] R on the chapter strip starts the routine from Accident (screen Montage, strip '3 d 20 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (before EVA)] No walking during the montage
+PASS [chapter UI loop (before EVA)] Esc pauses a running routine: no simulated time passes (screen None)
+PASS [chapter UI loop (before EVA)] Esc resumes the routine
+PASS [chapter UI loop (before EVA)] R stops the routine at the actual time (PlayerCancelled at 105247,942870578, screen Report, report 'Stopped at Day 2, 05:14 (mission clock)')
+PASS [chapter UI loop (before EVA)] R on the chapter strip starts the routine from Accident (screen Montage, strip '3 d 2 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (before EVA)] No walking during the montage
+PASS [chapter UI loop (before EVA)] Routine segment stops within 150 real s
+PASS [chapter UI loop (before EVA)] Decision ScienceOrSalvage settled by key 1 on the chapter card ('Keep the instrument')
+PASS [chapter UI loop (before EVA)] R on the chapter strip starts the routine from Consequences (screen Montage, strip '3 d 23 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (before EVA)] No walking during the montage
+PASS [chapter UI loop (before EVA)] Routine segment stops within 150 real s
+SOFT-FAIL [EVA suit] Real input reaches 'to suit locker' (fell back to QA teleport)
+PASS [EVA suit] After the QA teleport the target is in focus: suit-locker (current suit-locker)
+PASS [EVA suit] suit up: prompt allows it: 'Put on EVA suit: 0.84 kg oxygen, 2 h 20 min of preparation.'
+PASS [EVA suit] Single E: suit up [suit-locker] prompt 'Put on EVA suit: 0.84 kg oxygen, 2 h 20 min of preparation.' -> OK 'EVA suit on. Tank: 0.3 kg oxygen.'
+PASS [EVA suit] Suit on
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: rail grip available (suit=True)
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: LMB aimed at rail Existing outer portal inside 1 grips it (preview Grip, refusal '')
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: the grip holds the body still (v=0,000)
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: a click while holding pushes off the rail (refusal '')
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: the push off the rail lets go
+SOFT-FAIL [movement probe: EVA suit inside the ship] EVA suit inside the ship: LMB hand push off AURORA-7 delivered Blender models/CollisionProxies/COL_Airlock_SuitStation (refusal 'The actual hand pose, arm reach or approach path refused this contact.')
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: D alone moves the body to the right (pushes +1, sideways 0,36 m/s, |v| 0,57, refusal 'The actual hand pose, arm reach or approach path refused this contact.')
+PASS [movement probe: EVA suit inside the ship] EVA suit inside the ship: A alone moves the body to the left (pushes +1, sideways 0,83 m/s, |v| 0,85, refusal 'The actual hand pose, arm reach or approach path refused this contact.')
+PASS [EVA airlock depressurize] cycle airlock out: prompt allows it: 'Seal inner hatch and depressurize: 0.11 kg oxygen, 0.2 kWh.'
+PASS [EVA airlock depressurize] Single E: cycle airlock out [airlock-controls] prompt 'Seal inner hatch and depressurize: 0.11 kg oxygen, 0.2 kWh.' -> OK 'Inner hatch sealed. Depressurizing.'
+PASS [EVA airlock depressurize] Airlock depressurizes to OuterOpen (Depressurizing)
+PASS [EVA exit] go outside: prompt allows it: 'Clip tether and go outside.'
+PASS [EVA exit] Single E: go outside [eva-exit] prompt 'Clip tether and go outside.' -> OK 'Outside on the tether.'
+PASS [EVA exit] Outside on the tether route
+PASS [EVA route out] Tether route travelled to the end by W in 15,6 real s (at 15,33 of 15,33 m)
+PASS [EVA antenna repair] start antenna repair: prompt allows it: 'Repair high-gain antenna: 3 spare parts, 0.5 kWh.'
+PASS [EVA antenna repair] Single E: start antenna repair [repair-antenna] prompt 'Repair high-gain antenna: 3 spare parts, 0.5 kWh.' -> OK 'Work started: 3.0 s'
+PASS [EVA antenna repair] Antenna repaired by the timed work (3,3 real s)
+PASS [EVA route back] Tether route travelled to the start by W in 15,5 real s (at 0,00 of 15,33 m)
+PASS [EVA route back] return inside: prompt allows it: 'Enter the airlock.'
+PASS [EVA route back] Single E: return inside [eva-return] prompt 'Enter the airlock.' -> OK 'Inside the airlock.'
+PASS [EVA route back] Back inside the airlock
+PASS [EVA airlock repressurize] cycle airlock in: prompt allows it: 'Close outer hatch and repressurize.'
+PASS [EVA airlock repressurize] Single E: cycle airlock in [airlock-controls] prompt 'Close outer hatch and repressurize.' -> OK 'Outer hatch closed. Repressurizing.'
+PASS [EVA airlock repressurize] Airlock repressurizes to InnerOpen (Repressurizing)
+PASS [link diagnostic] run link diagnostic: prompt allows it: 'Run communications diagnostic'
+PASS [link diagnostic] Single E: run link diagnostic [cockpit-console] prompt 'Run communications diagnostic' -> OK 'Link diagnostic: a signal is in the receive buffer. It is an old local recording replaying, not a reply from Earth.'
+PASS [link diagnostic] Player keeps control during the buffer-diagnostic presentation (Alex 6896392077): locked 0,0 s of 0,0 s
+PASS [link diagnostic] false-signal cinematic completes in 0,0 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [transmit] transmit distress call: prompt allows it: 'Transmit distress call: 0.5 kWh. Earth is 187,437,000 km away; earliest reply in 30 min 50 s.'
+PASS [transmit] Single E: transmit distress call [cockpit-console] prompt 'Transmit distress call: 0.5 kWh. Earth is 187,437,000 km away; earliest reply in 30 min 50 s.' -> OK 'Distress call transmitted. Earliest reply in 30 min 50 s: 2 x 10 min 25 s light time + 10 min 00 s on Earth.'
+PASS [transmit] Transmission starts the reply wait (AwaitingReply)
+PASS [transmit] Player keeps control while waiting for Earth's reply (Alex 6896392077): locked 0 of 30 samples
+PASS [transmit] Earth's reply arrives
+PASS [transmit] The reply does not precede outbound+inbound light time + processing: received 1850,4 s after the transmission, minimum 1850,4 sim s (driver-observed 1851)
+PASS [transmit] contact-restored cinematic completes in 0,0 real s (last completion OutOfReach.Core.CinematicCompletion)
+PASS [chapter UI loop (after contact)] R30: the water arrow is shown before the first drink and gone after it (shown before the first drink: True; samples after it: 2, arrow shown in any: False; drinks now 21)
+PASS [chapter UI loop (after contact)] R on the chapter strip starts the routine from Contact (screen Montage, strip '4 d 16 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (after contact)] No walking during the montage
+PASS [chapter UI loop (after contact)] Routine segment stops within 150 real s
+PASS [chapter UI loop (after contact)] Key 1 on the delayed message acknowledges the failed rescue (rescue FirstRescueFailed -> InTransitCraftCommitted)
+PASS [chapter UI loop (after contact)] R on the chapter strip starts the routine from RescueFailed (screen Montage, strip '5 d 23 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (after contact)] No walking during the montage
+PASS [chapter UI loop (after contact)] Routine segment stops within 150 real s
+PASS [chapter UI loop (after contact)] Decision GrowOrBeacon settled by key 2 on the chapter card ('Keep the current power plan')
+PASS [chapter UI loop (after contact)] R on the chapter strip starts the routine from FinalDecision (screen Montage, strip '9 d 23 h of routine: meals, systems checks and ordinary sleep.')
+PASS [chapter UI loop (after contact)] No walking during the montage
+PASS [chapter UI loop (after contact)] Routine segment stops within 150 real s
+PASS [chapter beacon (day 30)] power the beacon: prompt allows it: 'Power the recovery beacon: 0.4 kWh; the window closes in 6 h 55 min'
+PASS [chapter beacon (day 30)] Single E: power the beacon [recovery-beacon] prompt 'Power the recovery beacon: 0.4 kWh; the window closes in 6 h 55 min' -> OK 'Recovery beacon powered: the rendezvous stays on schedule.'
+PASS [chapter beacon (day 30)] Beacon powered at day 30 through a real E
+PASS [chapter UI loop] R on the chapter strip starts the routine from Rendezvous (screen Montage, strip 'Power the recovery beacon at the cockpit console.')
+PASS [chapter UI loop] No walking during the montage
+PASS [chapter UI loop] Routine segment stops within 150 real s
+PASS [ending cinematics] Outcome Recovered (expected Recovered): After the first rescue attempt failed, a fictional craft already in transit nearby docked on mission day 30 (on schedule with the beacon powered); the crew transferred aboard. This timeline is a game assumption, not derived from the NASA Earth-Mars data.
+PASS [R42 rescue ending (no input)] R42: the rescue ending finishes (still playing after 41 real s: False)
+PASS [R42 rescue ending (no input)] R42: only the first-person ending answers RecoveryArrival; the old tableau presenter stays idle (frames with it playing: 0 of 3141)
+PASS [R42 rescue ending (no input)] R42: no player control during the ending (frames with control: 0 of 3141)
+PASS [R42 rescue ending (no input)] R42 shots in order: cabin window from 0.03 s, aft docking camera from 14.10 s (cut 14,1), airlock hatch from 24.91 s (cut 24,9)
+PASS [R42 rescue ending (no input)] R42 voices: VO24a starts at 1.61 s, VO24b at 20.02 s, after the visible contact at 19.39 s (vo24a_rescue_approach, vo24b_rescue_docked)
+PASS [R42 rescue ending (no input)] R42 'Contact.' follows the visible contact: craft stops at the contact pose at 19.39 s, docking readout CONTACT at 19.42 s, subtitle 'Contact.' at 20.27 s (on screen 20.27 s)
+PASS [R42 rescue ending (no input)] R42 'Capture confirmed.' follows the visible capture: readout CAPTURE · LATCHED (collar lamps cyan) at 21.36 s, subtitle 'Capture confirmed.' at 21.62 s (on screen 21.62 s)
+PASS [R42 rescue ending (no input)] R42 'Hard dock.' follows the visible hard dock: craft pulled in to the docked pose at 23.23 s, subtitle 'Hard dock.' at 23.45 s (on screen 23.45 s)
+PASS [R42 rescue ending (no input)] R42 subtitle order: 'Contact.' 20.27 s < 'Capture confirmed.' 21.62 s < 'Hard dock.' 23.45 s
+PASS [R42 rescue ending (no input)] R42: a short Space tap at 33.01 s (2 frames, below the 0,6 s hold) does not skip the ending
+PASS [R42 rescue ending (no input)] R42 plays to its end without input and acknowledges once: playhead 37.50 s of 37,5 s in 40,6 real s; Core completion RecoveryArrival #3 skipped=False timedOut=False; stale/duplicate acknowledgements +0
+PASS [R42 rescue ending (no input)] R42: after the rescue ending Core requests the existing MarsDeparture, then the Report
+PASS [ending cinematics] R42: the first-person rescue ending played before the Report (presenter present)
+PASS [ending cinematics] The ending reaches the Report phase in 51 real s
+PASS [report] Report headline: RECOVERED
+PASS [report] The end card on screen says SURVIVED (visible headline: SURVIVED; mission record headline: RECOVERED)
+PASS [report] End card offers a restart (Plan again / Restart): Mission record | Sources | Plan again | Quit to desktop
+PASS [restart] A Restart button is reachable: Mission record | Sources | Plan again | Quit to desktop
+PASS [restart] Saved composition, runtime, player, resolver, default input and marine bindings exist (after restart).
+PASS [restart] Restart builds a new session
+PASS [restart] Fresh session in Planning with no outcome
+PASS [restart] Restart restores the initial reserves exactly
+PASS [restart] Restart clock at zero
+PASS [restart] Mode menu shown after restart
+PASS [restart] Exactly one enabled AudioListener after restart
+PASS [restart] Practice works after restart
+PASS [restart] W walks after restart: 2,51 m
+PASS [restart] No stray interaction after restart
+PASS [restart] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )
+PASS [restart] Saved Bootstrap and every Assets file keep exact hashes (changed: ; created: )

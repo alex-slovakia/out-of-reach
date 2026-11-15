@@ -1,0 +1,10 @@
+PlayMode, Unity 6000.3.28f1 -batchmode -nographics -runTests -testPlatform PlayMode (full suite)
+
+On 2251766 (the code commit), 15 Nov 2026 21:33:57Z-21:35:05Z: total=159 passed=159 failed=0 inconclusive=0 skipped=0
+  RescueEndingPresenterPlayTests total=12 passed=12 failed=0 (unchanged file)
+  SpaceSkyKeeperPlayTests        total=4  passed=4  failed=0 (new)
+
+On e9aac82 (same code, before the README section), 21:17:07Z-21:17:44Z, run started by the routine-montage lane in the same worktree: total=159 passed=159 failed=0
+
+EditMode was not re-run: no EditMode code or test changed.
+Native run: see README.md, checks.txt, run-verdict.txt (167 PASS / 4 SOFT-FAIL / 0 FAIL, 0 game errors).

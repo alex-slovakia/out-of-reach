@@ -1,0 +1,93 @@
+00-startup-card meanLuma=0.085 nearBlack=35% phase=Planning sim=0
+00-menu-SKY-BEFORE meanLuma=0.302 nearBlack=9% phase=Planning sim=0
+00-menu meanLuma=0.302 nearBlack=9% phase=Planning sim=0
+01-practice-start meanLuma=0.298 nearBlack=9% phase=Planning sim=0
+02-boarding-walk-SKY-BEFORE meanLuma=0.284 nearBlack=11% phase=Planning sim=0
+02-boarding-walk meanLuma=0.284 nearBlack=11% phase=Planning sim=0
+03-departure-paused meanLuma=0.151 nearBlack=20% phase=Intro sim=4
+04-departure-countdown-SKY-BEFORE meanLuma=0.166 nearBlack=20% phase=Intro sim=9
+04-departure-countdown meanLuma=0.166 nearBlack=20% phase=Intro sim=9
+05-ignition meanLuma=0.166 nearBlack=20% phase=Intro sim=10
+06-liftoff meanLuma=0.413 nearBlack=1% phase=Intro sim=11
+07-climb-SKY-BEFORE meanLuma=0.343 nearBlack=0% phase=Intro sim=15
+07-climb meanLuma=0.343 nearBlack=0% phase=Intro sim=16
+08-orbit-SKY-BEFORE meanLuma=0.040 nearBlack=93% phase=Intro sim=23
+08-orbit meanLuma=0.041 nearBlack=93% phase=Intro sim=23
+09-boarding-aurora-SKY-BEFORE meanLuma=0.151 nearBlack=30% phase=Intro sim=31
+09-boarding-aurora meanLuma=0.144 nearBlack=31% phase=Intro sim=31
+10-arrival-float-SKY-BEFORE meanLuma=0.087 nearBlack=41% phase=Intro sim=36
+10-arrival-float meanLuma=0.087 nearBlack=41% phase=Intro sim=36
+probe-work-rail-grip meanLuma=0.169 nearBlack=36% phase=Intro sim=38
+probe-work-push-off meanLuma=0.101 nearBlack=31% phase=Intro sim=39
+11-impact meanLuma=0.049 nearBlack=53% phase=Intro sim=50
+12-emergency-SKY-BEFORE meanLuma=0.073 nearBlack=49% phase=Emergency sim=255
+12-emergency meanLuma=0.072 nearBlack=49% phase=Emergency sim=314
+13-repair-power meanLuma=0.139 nearBlack=25% phase=Repair sim=5143
+14-repair-life-support meanLuma=0.147 nearBlack=33% phase=Repair sim=5702
+15-pause-menu meanLuma=0.134 nearBlack=24% phase=Repair sim=5738
+27-meal-in-progress meanLuma=0.123 nearBlack=34% phase=Repair sim=8059
+27-day1-meal meanLuma=0.116 nearBlack=36% phase=Repair sim=9279
+27-water-arrow-before-first-drink meanLuma=0.130 nearBlack=34% phase=Repair sim=9518
+28-sleep-day-1-1 meanLuma=0.118 nearBlack=38% phase=Repair sim=13389
+28-sleep-day-1-2 meanLuma=0.268 nearBlack=9% phase=Repair sim=18296
+28-sleep-day-1-3 meanLuma=0.063 nearBlack=79% phase=Repair sim=28386
+28-sleep-day-1-4 meanLuma=0.095 nearBlack=65% phase=Repair sim=40718
+29-wake-day-1 meanLuma=0.127 nearBlack=39% phase=Repair sim=41834
+30-montage-day1 meanLuma=0.169 nearBlack=15% phase=Repair sim=68402
+30-routine-paused meanLuma=0.119 nearBlack=34% phase=Repair sim=71309
+31-routine-stopped-report meanLuma=0.182 nearBlack=32% phase=Repair sim=105291
+ui-00-Report-day2 meanLuma=0.172 nearBlack=31% phase=Repair sim=105523
+ui-01-Decision-day5 meanLuma=0.095 nearBlack=41% phase=Repair sim=376238
+45-contact-beat-day9 meanLuma=0.174 nearBlack=25% phase=Repair sim=720026
+16-suit-on-SKY-BEFORE meanLuma=0.133 nearBlack=22% phase=Repair sim=734145
+16-suit-on meanLuma=0.133 nearBlack=22% phase=Repair sim=734251
+probe-suit-rail-grip meanLuma=0.070 nearBlack=47% phase=Repair sim=734718
+probe-suit-push-off meanLuma=0.138 nearBlack=27% phase=Repair sim=735013
+17-airlock-outer-open-SKY-BEFORE meanLuma=0.056 nearBlack=39% phase=Eva sim=740582
+17-airlock-outer-open meanLuma=0.056 nearBlack=39% phase=Eva sim=740597
+18-eva-outside-SKY-BEFORE meanLuma=0.022 nearBlack=89% phase=Eva sim=740839
+18-eva-outside meanLuma=0.023 nearBlack=89% phase=Eva sim=740849
+19-eva-route-end-SKY-BEFORE meanLuma=0.095 nearBlack=63% phase=Eva sim=741797
+19-eva-route-end meanLuma=0.098 nearBlack=61% phase=Eva sim=741804
+20-antenna-work-SKY-BEFORE meanLuma=0.319 nearBlack=33% phase=Eva sim=741936
+20-antenna-work meanLuma=0.324 nearBlack=33% phase=Eva sim=741949
+21-antenna-repaired-SKY-BEFORE meanLuma=0.335 nearBlack=35% phase=Eva sim=742016
+21-antenna-repaired meanLuma=0.348 nearBlack=35% phase=Eva sim=742032
+22-eva-back-inside-SKY-BEFORE meanLuma=0.185 nearBlack=32% phase=Eva sim=742975
+22-eva-back-inside meanLuma=0.177 nearBlack=33% phase=Eva sim=742994
+23-after-eva-SKY-BEFORE meanLuma=0.099 nearBlack=32% phase=Transmission sim=743606
+23-after-eva meanLuma=0.099 nearBlack=32% phase=Transmission sim=743617
+24-false-signal meanLuma=0.107 nearBlack=36% phase=Transmission sim=744643
+25-awaiting-reply meanLuma=0.156 nearBlack=39% phase=Transmission sim=744721
+26-contact-restored meanLuma=0.108 nearBlack=40% phase=Survival sim=746842
+ui-02-Message-day9 meanLuma=0.108 nearBlack=40% phase=Survival sim=747079
+46-water-arrow-after-contact meanLuma=0.157 nearBlack=24% phase=Survival sim=747301
+ui-03-Message-day14 meanLuma=0.090 nearBlack=43% phase=Survival sim=1153827
+ui-04-Message-day14 meanLuma=0.088 nearBlack=46% phase=Survival sim=1154070
+ui-05-Decision-day20 meanLuma=0.093 nearBlack=40% phase=Survival sim=1672227
+38-beacon-request-hud meanLuma=0.139 nearBlack=38% phase=Survival sim=2535624
+38-beacon-target-aimed meanLuma=0.174 nearBlack=22% phase=Survival sim=2535996
+38-beacon-console-aimed meanLuma=0.170 nearBlack=26% phase=Survival sim=2536135
+40-beacon-day30 meanLuma=0.168 nearBlack=23% phase=Survival sim=2538327
+60-r42-01-window-approach meanLuma=0.034 nearBlack=71% r42Playhead=3.00 shot=Window subtitle='Aurora Seven, rescue crew.' readout='' craftToDocked=149.726m
+60-r42-02-window-braking-burn meanLuma=0.033 nearBlack=73% r42Playhead=5.00 shot=Window subtitle='We have you in sight.' readout='' craftToDocked=91.735m
+60-r42-03-window-near meanLuma=0.035 nearBlack=72% r42Playhead=9.32 shot=Window subtitle='We're coming alongside.' readout='' craftToDocked=56.957m
+60-r42-04-window-aside meanLuma=0.033 nearBlack=71% r42Playhead=12.50 shot=Window subtitle='' readout='' craftToDocked=42.620m
+60-r42-05-dock-closing meanLuma=0.023 nearBlack=92% r42Playhead=16.01 shot=DockingCamera subtitle='Docking port in view.' readout='RANGE 9.8 m' craftToDocked=9.844m
+60-r42-06-dock-before-contact meanLuma=0.084 nearBlack=68% r42Playhead=19.01 shot=DockingCamera subtitle='Docking port in view.' readout='RANGE 0.2 m' craftToDocked=0.182m
+60-r42-07-dock-contact meanLuma=0.086 nearBlack=68% r42Playhead=19.51 shot=DockingCamera subtitle='Docking port in view.' readout='CONTACT' craftToDocked=0.050m
+60-r42-08-dock-subtitle-contact meanLuma=0.086 nearBlack=68% r42Playhead=20.35 shot=DockingCamera subtitle='Contact.' readout='CONTACT' craftToDocked=0.050m
+60-r42-09-dock-capture meanLuma=0.086 nearBlack=68% r42Playhead=21.42 shot=DockingCamera subtitle='Contact.' readout='CAPTURE · LATCHED' craftToDocked=0.050m
+60-r42-10-dock-subtitle-capture meanLuma=0.087 nearBlack=68% r42Playhead=21.77 shot=DockingCamera subtitle='Capture confirmed.' readout='CAPTURE · LATCHED' craftToDocked=0.050m
+60-r42-11-dock-hard-dock meanLuma=0.087 nearBlack=68% r42Playhead=23.30 shot=DockingCamera subtitle='Capture confirmed.' readout='CAPTURE · LATCHED' craftToDocked=0.000m
+60-r42-12-dock-subtitle-hard-dock meanLuma=0.087 nearBlack=68% r42Playhead=23.60 shot=DockingCamera subtitle='Hard dock.' readout='CAPTURE · LATCHED' craftToDocked=0.000m
+60-r42-13-hatch-latches meanLuma=0.100 nearBlack=34% r42Playhead=26.60 shot=Hatch subtitle='Stay clear while we equalize the hatch.' readout='' craftToDocked=0.000m
+60-r42-14-hatch-opening meanLuma=0.141 nearBlack=25% r42Playhead=30.44 shot=Hatch subtitle='Aurora Seven... you're not alone anymore.' readout='' craftToDocked=0.000m
+60-r42-15-hatch-open-light meanLuma=0.151 nearBlack=28% r42Playhead=31.91 shot=Hatch subtitle='Aurora Seven... you're not alone anymore.' readout='' craftToDocked=0.000m
+60-r42-16-fade-rescued meanLuma=0.137 nearBlack=30% r42Playhead=35.01 shot=Hatch subtitle='RESCUED' readout='' craftToDocked=0.000m
+65-ending-MarsDeparture meanLuma=0.079 nearBlack=78% phase=Outcome sim=2570400
+70-report-SKY-BEFORE meanLuma=0.139 nearBlack=40% phase=Report sim=2570400
+70-report meanLuma=0.139 nearBlack=40% phase=Report sim=2570400
+80-restart-menu-SKY-BEFORE meanLuma=0.302 nearBlack=9% phase=Planning sim=0
+80-restart-menu meanLuma=0.302 nearBlack=9% phase=Planning sim=0
+81-restart-walk meanLuma=0.201 nearBlack=15% phase=Planning sim=0

@@ -1,0 +1,53 @@
+import io, sys
+p = r'C:\Users\alexp\NASA\_qa\space-sky\MissionE2ENativeQa.cs'
+s = io.open(p, encoding='utf-8').read()
+old = "    IEnumerator Capture(string name)\n    {\n        Camera view = Camera.main;"
+if old not in s:
+    old = old.replace("\n", "\r\n")
+assert old in s, 'capture head not found'
+nl = "\r\n" if "\r\n" in old else "\n"
+wrapper = '''    // SPACE-SKY QA: before/after pairs of the same frame by toggling SpaceSkyKeeper.Enabled (reflection: no asmdef reference).
+    static readonly string[] SkyPairNames = { "00-menu", "02-boarding-walk", "04-departure-countdown", "07-climb", "08-orbit", "09-boarding-aurora", "10-arrival-float", "12-emergency", "16-suit-on", "17-airlock-outer-open", "18-eva-outside", "19-eva-route-end", "20-antenna-work", "21-antenna-repaired", "22-eva-back-inside", "23-after-eva", "27-survival", "70-report", "80-restart-menu" };
+    static bool skyKeeperChecked;
+    static void SkyEnabled(bool on)
+    {
+        MonoBehaviour keeper = Behaviour("SpaceSkyKeeper");
+        if (!keeper) return;
+        keeper.GetType().GetField("Enabled", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static).SetValue(null, on);
+    }
+    static string SkyState()
+    {
+        Material m = RenderSettings.skybox;
+        MonoBehaviour keeper = Behaviour("SpaceSkyKeeper"); MonoBehaviour ending = Behaviour("RescueEndingPresenter");
+        var probe = RenderSettings.ambientProbe;
+        return "skybox=" + (m ? m.name : "none") + " exposure=" + (m && m.HasProperty("_Exposure") ? m.GetFloat("_Exposure").ToString("F3", CultureInfo.InvariantCulture) : "-")
+            + " keeper=" + (keeper ? "present holding=" + RFlag(keeper, "IsHolding") : "MISSING")
+            + " endingRaised=" + (ending ? RFlag(ending, "DeepSkyRaised").ToString() : "-")
+            + " ambientMode=" + RenderSettings.ambientMode + " ambientLight=" + RenderSettings.ambientLight.ToString("F3") + " ambientSky=" + RenderSettings.ambientSkyColor.ToString("F3")
+            + " ambientIntensity=" + RenderSettings.ambientIntensity.ToString("F3", CultureInfo.InvariantCulture) + " reflectionIntensity=" + RenderSettings.reflectionIntensity.ToString("F3", CultureInfo.InvariantCulture)
+            + " reflectionMode=" + RenderSettings.defaultReflectionMode + " probeL00=" + probe[0, 0].ToString("F4", CultureInfo.InvariantCulture) + "/" + probe[1, 0].ToString("F4", CultureInfo.InvariantCulture) + "/" + probe[2, 0].ToString("F4", CultureInfo.InvariantCulture)
+            + " fog=" + RenderSettings.fog + " sun=" + (RenderSettings.sun ? RenderSettings.sun.intensity.ToString("F2", CultureInfo.InvariantCulture) : "-");
+    }
+    static void SkyLog(string text) => File.AppendAllText(Path.Combine(Output, "sky.txt"), text + Environment.NewLine);
+    IEnumerator Capture(string name)
+    {
+        if (!skyKeeperChecked) { skyKeeperChecked = true; Check(Behaviour("SpaceSkyKeeper") != null, "SPACE-SKY: SpaceSkyKeeper installed itself in the Bootstrap scene"); }
+        if (Array.IndexOf(SkyPairNames, name) >= 0)
+        {
+            SkyEnabled(false); yield return Frames(2);
+            SkyLog(name + " BEFORE " + SkyState());
+            yield return CaptureRaw(name + "-SKY-BEFORE");
+            SkyEnabled(true); yield return Frames(2);
+            SkyLog(name + " AFTER  " + SkyState());
+        }
+        else SkyLog(name + " (single) " + SkyState());
+        yield return CaptureRaw(name);
+    }
+'''.replace("\n", nl)
+s = s.replace(old, wrapper + old.replace("IEnumerator Capture(string name)", "IEnumerator CaptureRaw(string name)"), 1)
+# log the sky on every live shot too (the R42 ending frames are live shots)
+old2 = "    void LiveShot(string name, string label)" + nl + "    {" + nl
+assert old2 in s, 'liveshot head not found'
+s = s.replace(old2, old2 + "        SkyLog(name + \" (live) \" + SkyState());" + nl, 1)
+io.open(p, 'w', encoding='utf-8', newline='').write(s)
+print('patched', len(s))

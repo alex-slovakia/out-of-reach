@@ -1,0 +1,97 @@
+"""SPACE-SKY evidence: before/after pairs of the same frame from one native run (SpaceSkyKeeper.Enabled toggled).
+
+Usage: python -I assemble_evidence.py <run dir> <evidence dir>
+Writes side-by-side pair images, one overview sheet, and pairs.txt (star-like dots and pixel differences).
+"""
+import os
+import sys
+
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, r'C:\Users\alexp\NASA\_qa\rescue-stars')
+import star_dots  # noqa: E402
+
+PAIRS = [
+    ('08-orbit', 'Earth-orbit shot (LATER IN EARTH ORBIT)'),
+    ('17-airlock-outer-open', 'EVA: at the outer hatch'),
+    ('18-eva-outside', 'EVA: outside'),
+    ('19-eva-route-end', 'EVA: end of the rope route'),
+    ('20-antenna-work', 'EVA: at the antenna'),
+    ('21-antenna-repaired', 'EVA: antenna repaired'),
+    ('00-menu', 'Mode menu at the launch site'),
+    ('02-boarding-walk', 'Launch site on Earth'),
+    ('04-departure-countdown', 'Launch site: countdown'),
+    ('07-climb', 'Departure: climb / upper air'),
+    ('09-boarding-aurora', 'Boarding Aurora-7'),
+    ('10-arrival-float', 'Interior: arrival'),
+    ('12-emergency', 'Interior: emergency'),
+    ('16-suit-on', 'Interior: suit on'),
+    ('22-eva-back-inside', 'Interior: back inside'),
+    ('23-after-eva', 'Interior: after the EVA'),
+    ('27-survival', 'Interior: survival'),
+    ('70-report', 'Report'),
+    ('80-restart-menu', 'After restart: mode menu'),
+]
+SHEET = ['08-orbit', '17-airlock-outer-open', '18-eva-outside', '19-eva-route-end', '20-antenna-work']
+
+
+def font(size):
+    for name in ('arialbd.ttf', 'arial.ttf'):
+        try:
+            return ImageFont.truetype(name, size)
+        except OSError:
+            pass
+    return ImageFont.load_default()
+
+
+def label(image, text):
+    draw = ImageDraw.Draw(image)
+    f = font(22)
+    box = draw.textbbox((0, 0), text, font=f)
+    draw.rectangle((8, 8, 8 + box[2] + 16, 8 + box[3] + 14), fill=(0, 0, 0))
+    draw.text((16, 12), text, font=f, fill=(255, 255, 255))
+
+
+def main(run, out):
+    os.makedirs(out, exist_ok=True)
+    lines = ['pair | star-like dots >=24/255 before -> after | changed pixels (any channel differs by > 2/255) | mean abs difference (0..255)']
+    rows = {}
+    for name, title in PAIRS:
+        before = os.path.join(run, name + '-SKY-BEFORE.png')
+        after = os.path.join(run, name + '.png')
+        if not (os.path.exists(before) and os.path.exists(after)):
+            lines.append('%-24s | missing in this run' % name)
+            continue
+        a = Image.open(before).convert('RGB')
+        b = Image.open(after).convert('RGB')
+        da, _ = star_dots.count(before)
+        db, _ = star_dots.count(after)
+        x = np.asarray(a, dtype=np.int16)
+        y = np.asarray(b, dtype=np.int16)
+        diff = np.abs(x - y)
+        changed = 100.0 * (diff.max(axis=2) > 2).mean()
+        lines.append('%-24s | %5d -> %5d | %6.2f %% | %.3f | %s' % (name, da[0], db[0], changed, diff.mean(), title))
+        pair = Image.new('RGB', (2560, 720))
+        la, lb = a.copy(), b.copy()
+        label(la, 'BEFORE (saved exposure 0.15)  ' + title)
+        label(lb, 'AFTER (deep view 0.45)  ' + title)
+        pair.paste(la, (0, 0))
+        pair.paste(lb, (1280, 0))
+        pair.save(os.path.join(out, 'pair-' + name + '.jpg'), quality=88)
+        rows[name] = (la, lb)
+    picked = [n for n in SHEET if n in rows]
+    if picked:
+        sheet = Image.new('RGB', (1280, 360 * len(picked)))
+        for i, n in enumerate(picked):
+            la, lb = rows[n]
+            sheet.paste(la.resize((640, 360), Image.LANCZOS), (0, 360 * i))
+            sheet.paste(lb.resize((640, 360), Image.LANCZOS), (640, 360 * i))
+        sheet.save(os.path.join(out, 'overview-before-after.jpg'), quality=88)
+    with open(os.path.join(out, 'pairs.txt'), 'w', encoding='utf-8') as handle:
+        handle.write('\n'.join(lines) + '\n')
+    print('\n'.join(lines))
+
+
+if __name__ == '__main__':
+    main(sys.argv[1], sys.argv[2])

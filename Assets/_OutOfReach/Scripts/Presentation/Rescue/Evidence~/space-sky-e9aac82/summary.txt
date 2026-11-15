@@ -1,0 +1,54 @@
+QA-E2E-01 scenario=success chapter=scene
+captures=93 teleports=6 realLegs=8 interactions=18 pushes=25
+
+Pacing (real seconds):
+  phase Planning (real s): 12.6
+  departure (real s): 37.1
+  phase Intro (real s): 59.3
+  impact cinematic (real s): 8.4
+  phase Emergency (real s): 16.5
+  phase Repair (real s): 111.4
+  phase Eva (real s): 60.4
+  reply wait (real s): 30.8
+  phase Transmission (real s): 48.4
+  chapter loop (real s): 112.9
+  phase Survival (real s): 114.2
+  R42 rescue ending (real s): 40.6
+  phase Outcome (real s): 50.5
+  ending to report (real s): 50.6
+  phase Report (real s): 12.8
+
+Timeline:
+  35.4s menu | phase=Planning sim=0
+  40.5s practice boarding | phase=Planning sim=0
+  40.5s marine boarding W | phase=Planning sim=0
+  48.0s departure | phase=Intro sim=0
+  85.1s arrival | phase=Intro sim=36
+  86.0s movement probe: WORK clothes at arrival | phase=Intro sim=36
+  95.4s wall push probe: WORK clothes at arrival | phase=Intro sim=46
+  97.5s cockpit check -> impact | phase=Intro sim=48
+  108.3s repair Power | phase=Emergency sim=314
+  124.6s repair LifeSupport | phase=Repair sim=5226
+  126.3s pause check: interior repair phase | phase=Repair sim=5736
+  129.3s chapter day 1 meal + sleep (phase Repair) | phase=Repair sim=6081
+  155.9s chapter UI loop (before EVA) | phase=Repair sim=42087
+  200.1s EVA suit | phase=Repair sim=721064
+  216.3s movement probe: EVA suit inside the ship | phase=Repair sim=734251
+  224.5s EVA airlock depressurize | phase=Repair sim=736744
+  245.8s EVA exit | phase=Eva sim=740597
+  249.9s EVA route out | phase=Eva sim=740849
+  265.8s EVA antenna repair | phase=Eva sim=741804
+  269.6s EVA route back | phase=Eva sim=742032
+  285.6s EVA airlock repressurize | phase=Eva sim=742994
+  296.1s link diagnostic | phase=Transmission sim=743617
+  313.2s transmit | phase=Transmission sim=744643
+  345.3s chapter UI loop (after contact) | phase=Survival sim=746842
+  443.0s beacon diagnostics (day 30) | phase=Survival sim=2534400
+  449.3s chapter UI loop (after contact) | phase=Survival sim=2536135
+  449.3s chapter beacon (day 30) | phase=Survival sim=2536135
+  456.7s chapter UI loop | phase=Survival sim=2538327
+  458.2s ending cinematics | phase=Outcome sim=2570400
+  458.2s R42 rescue ending (no input) | phase=Outcome sim=2570400
+  498.9s ending cinematics | phase=Outcome sim=2570400
+  508.8s report | phase=Report sim=2570400
+  511.2s restart | phase=Report sim=2570400

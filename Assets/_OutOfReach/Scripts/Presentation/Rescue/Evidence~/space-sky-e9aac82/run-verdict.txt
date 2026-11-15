@@ -1,0 +1,4 @@
+QA-E2E-01 success run completed; see soft checks, shortcuts and captures.
+soft failures: 4
+game errors: 0
+shortcuts: 7

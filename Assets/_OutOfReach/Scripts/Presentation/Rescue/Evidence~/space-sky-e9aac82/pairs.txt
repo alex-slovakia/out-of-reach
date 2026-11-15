@@ -1,0 +1,20 @@
+pair | star-like dots >=24/255 before -> after | changed pixels (any channel differs by > 2/255) | mean abs difference (0..255)
+08-orbit                 |     1 ->   318 |   2.73 % | 0.794 | Earth-orbit shot (LATER IN EARTH ORBIT)
+17-airlock-outer-open    |     3 ->     3 |   0.01 % | 0.015 | EVA: at the outer hatch
+18-eva-outside           |     6 ->   389 |   2.56 % | 0.620 | EVA: outside
+19-eva-route-end         |     2 ->   345 |   9.22 % | 0.779 | EVA: end of the rope route
+20-antenna-work          |     3 ->     3 |   6.68 % | 2.659 | EVA: at the antenna
+21-antenna-repaired      |     2 ->     2 |  10.17 % | 5.666 | EVA: antenna repaired
+00-menu                  |     5 ->     8 |  16.87 % | 3.315 | Mode menu at the launch site
+02-boarding-walk         |    14 ->    14 |   3.38 % | 0.351 | Launch site on Earth
+04-departure-countdown   |     6 ->     6 |   0.00 % | 0.000 | Launch site: countdown
+07-climb                 |     0 ->     0 |  36.47 % | 3.105 | Departure: climb / upper air
+09-boarding-aurora       |     7 ->    10 |  50.84 % | 8.731 | Boarding Aurora-7
+10-arrival-float         |   100 ->   103 |   0.18 % | 0.014 | Interior: arrival
+12-emergency             |    38 ->    47 |   2.98 % | 1.959 | Interior: emergency
+16-suit-on               |    34 ->    34 |   0.02 % | 0.013 | Interior: suit on
+22-eva-back-inside       |     6 ->     7 |  12.87 % | 10.386 | Interior: back inside
+23-after-eva             |    17 ->    21 |   0.02 % | 0.007 | Interior: after the EVA
+27-survival              | missing in this run
+70-report                |     1 ->     1 |  10.26 % | 0.691 | Report
+80-restart-menu          |     8 ->     8 |   0.41 % | 0.034 | After restart: mode menu
