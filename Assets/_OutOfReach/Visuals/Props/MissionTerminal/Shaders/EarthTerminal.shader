@@ -10,6 +10,9 @@ Shader "OutOfReach/PhysicalEarthTerminal"
         _DiscRadius ("Approximate observed disc radius / image width", Float) = .405
         _StaticImage ("R33 static flat image mode", Float) = 0
         _StaticRect ("Static image panel UV min.xy / max.xy", Vector) = (.025,.245,.515625,.865)
+        _Inset ("R33 dated Slovakia inset (MODIS Terra)", 2D) = "black" {}
+        _InsetAvailable ("-1 none: EPIC original inset / 0 pending / 1 shown", Float) = -1
+        _InsetRect ("Slovakia inset UV min.xy / max.xy (1280x1012 aspect)", Vector) = (.545,.10,.725,.3277)
     }
     SubShader
     {
@@ -26,9 +29,10 @@ Shader "OutOfReach/PhysicalEarthTerminal"
             struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; };
             struct Varyings { float4 positionCS : SV_POSITION; float2 uv : TEXCOORD0; };
             TEXTURE2D(_Observation); SAMPLER(sampler_Observation);
+            TEXTURE2D(_Inset); SAMPLER(sampler_Inset);
             CBUFFER_START(UnityPerMaterial)
-            float4 _GlobeRotation, _Pointer, _Ripple, _StaticRect;
-            float _ObservationAvailable, _DiscRadius, _StaticImage;
+            float4 _GlobeRotation, _Pointer, _Ripple, _StaticRect, _InsetRect;
+            float _ObservationAvailable, _DiscRadius, _StaticImage, _InsetAvailable;
             CBUFFER_END
             Varyings Vert(Attributes input)
             {
@@ -40,7 +44,7 @@ Shader "OutOfReach/PhysicalEarthTerminal"
             half4 Frag(Varyings input) : SV_Target
             {
                 float2 uv=input.uv;
-                half3 color=half3(.006,.014,.019);
+                half3 color=half3(.014,.026,.033); // R33: lifted graphite so the idle screen reads in the cockpit.
                 float rule=1-smoothstep(.001,.002,abs(uv.y-.88));
                 color+=half3(.07,.14,.17)*rule;
                 if(_StaticImage>.5)
@@ -59,7 +63,8 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                     color+=half3(.02,.12,.18)*(1-smoothstep(.0015,.004,abs(border)));
                     return half4(color,1);
                 }
-                float2 disc=(uv-float2(.29,.51))*float2(1.6,1)/.30;
+                // R33: larger globe; presenter IsOverGlobe uses the same centre (.285,.525) and radius .32.
+                float2 disc=(uv-float2(.285,.525))*float2(1.6,1)/.32;
                 float radius=length(disc);
                 if(radius<1)
                 {
@@ -69,7 +74,7 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                     float latitude=asin(clamp(sourceNormal.y,-1,1));
                     float lines=min(abs(sin(longitude*6)),abs(sin(latitude*6)));
                     float grid=1-smoothstep(.015,.035,lines);
-                    color=half3(.022,.040,.048)+grid*half3(.06,.09,.10);
+                    color=half3(.030,.052,.062)+grid*half3(.07,.11,.12);
                     // Orthographic projection of the visible EPIC disc, never treated as an equirectangular map.
                     // SourceNormal.z<=0 is an unobserved hemisphere: neutral graticule only.
                     if(sourceNormal.z>.01 && _ObservationAvailable>.5)
@@ -77,21 +82,33 @@ Shader "OutOfReach/PhysicalEarthTerminal"
                         float2 observationUv=.5+sourceNormal.xy*_DiscRadius;
                         half3 observed=SAMPLE_TEXTURE2D(_Observation,sampler_Observation,observationUv).rgb;
                         float mask=smoothstep(.01,.06,sourceNormal.z);
-                        color=lerp(color,observed*.85,mask);
+                        color=lerp(color,observed,mask);
                     }
-                    color*=.65+.35*viewNormal.z;
+                    color*=.78+.22*viewNormal.z;
                 }
                 color+=half3(.02,.12,.18)*(1-smoothstep(.004,.012,abs(radius-1)));
-                // The small square inset always shows the original image with its original framing.
-                float2 inset=(uv-float2(.72,.20))/float2(.18/1.6,.18)+.5;
-                if(all(inset>=0) && all(inset<=1))
+                if(_InsetAvailable<-.5)
                 {
-                    color=_ObservationAvailable>.5 ? SAMPLE_TEXTURE2D(_Observation,sampler_Observation,inset).rgb*.85 : half3(.018,.028,.034);
+                    // Without the Slovakia image the small square inset shows the original EPIC disc, original framing.
+                    float2 inset=(uv-float2(.72,.20))/float2(.18/1.6,.18)+.5;
+                    if(all(inset>=0) && all(inset<=1))
+                        color=_ObservationAvailable>.5 ? SAMPLE_TEXTURE2D(_Observation,sampler_Observation,inset).rgb : half3(.018,.028,.034);
+                }
+                else
+                {
+                    // Dated MODIS Terra Slovakia image, whole frame, unmodified pixels, its own aspect; dark until its pass ends.
+                    float2 inset=(uv-_InsetRect.xy)/(_InsetRect.zw-_InsetRect.xy);
+                    float2 edge=min(inset,1-inset)*(_InsetRect.zw-_InsetRect.xy)*float2(1.6,1);
+                    if(all(inset>=0) && all(inset<=1))
+                        color=_InsetAvailable>.5 ? SAMPLE_TEXTURE2D(_Inset,sampler_Inset,inset).rgb : half3(.018,.028,.034);
+                    color+=half3(.02,.12,.18)*(1-smoothstep(.0012,.003,abs(min(edge.x,edge.y))));
                 }
                 float2 d=(uv-_Pointer.xy)*float2(1.6,1);
                 float pointerRadius=length(d);
-                float cursor=(1-smoothstep(.0015,.003,abs(pointerRadius-.012)))*_Pointer.z;
-                color+=cursor*half3(.07,.35,.52);
+                // Cursor-as-hand: open ring while hovering, filled grab disc while held.
+                float cursor=(1-smoothstep(.0015,.003,abs(pointerRadius-.014)))*_Pointer.z;
+                float grab=(1-smoothstep(.007,.009,pointerRadius))*_Pointer.w*_Pointer.z;
+                color+=cursor*half3(.10,.45,.62)+grab*half3(.05,.22,.30);
                 float age=_Ripple.z;
                 float ringRadius=.013+age*.13;
                 float ring=(1-smoothstep(.002,.005,abs(length((uv-_Ripple.xy)*float2(1.6,1))-ringRadius)));

@@ -39,8 +39,8 @@ namespace OutOfReach.Presentation.Terminal
         [SerializeField] private Texture observationTexture;
         [SerializeField, Min(0)] private float hoverDistance = .012f;
         [SerializeField, Range(.03f,.3f)] private float pressSeconds = .11f;
-        [Tooltip("R33: static archived Slovakia image. Removes glove reach, touch, drag and the globe projection.")]
-        [SerializeField] private bool staticImageMode = true;
+        [Tooltip("R33 fallback: look-only Slovakia image instead of the draggable EPIC globe. Off by default.")]
+        [SerializeField] private bool staticImageMode = false;
         [SerializeField] private Texture staticObservationTexture;
         // NASA GIBS MODIS_Terra_CorrectedReflectance_TrueColor, 2026-11-14. Slovakia lies wholly inside Terra MODIS
         // granule MOD03.A2026318.0815 (08:15:00-08:20:00 UTC, CMR LANCEMODIS:3101040922). Gate and age use the granule
@@ -71,6 +71,8 @@ namespace OutOfReach.Presentation.Terminal
         private static readonly int AvailableId=Shader.PropertyToID("_ObservationAvailable");
         private static readonly int StaticImageId=Shader.PropertyToID("_StaticImage");
         private static readonly int StaticRectId=Shader.PropertyToID("_StaticRect");
+        private static readonly int InsetId=Shader.PropertyToID("_Inset");
+        private static readonly int InsetAvailableId=Shader.PropertyToID("_InsetAvailable");
         private Func<bool> tryAcquireSession, mustCloseSession;
         private Action releaseSession, acquiredRelease;
         private Func<DateTime> readMissionUtc;
@@ -78,7 +80,7 @@ namespace OutOfReach.Presentation.Terminal
         private bool pointerReachable;
         private readonly TerminalGlovePose glove = new TerminalGlovePose();
         private MaterialPropertyBlock properties, previousProperties;
-        private bool active, transitioning, pointerValid, dragging, held, observationAvailable;
+        private bool active, transitioning, pointerValid, dragging, held, observationAvailable, cursorHand, insetAvailable;
         private int configurationGeneration;
         private Vector2 pointerUv = new Vector2(.35f,.50f), previousPointer, rippleUv;
         private Vector3 targetTip, currentTip;
@@ -86,6 +88,8 @@ namespace OutOfReach.Presentation.Terminal
         private float contactAge=10, rippleAge=10, displayRefresh;
 
         public bool IsEntered => active;
+        /// <summary>True while entered without the glove: the on-screen cursor is the hand that grabs the globe.</summary>
+        public bool UsesCursorHand => active && cursorHand;
         /// <summary>True when the terminal is a look-only static image: no touch, drag, glove or pointer.</summary>
         public bool IsStaticImage => staticImageMode && staticObservationTexture;
         public bool TouchReachable => pointerValid && pointerReachable;
@@ -124,7 +128,7 @@ namespace OutOfReach.Presentation.Terminal
             tryAcquireSession=acquire; releaseSession=release; mustCloseSession=close; readMissionUtc=missionUtc;
             if(acquire==null) readReach=null;
             ApplyReadableLabels();
-            if(IsStaticImage) RefreshStatic(true);
+            if(IsStaticImage) RefreshStatic(true); else RefreshIdle(true);
         }
 
         /// <summary>Builder/composition hook for the committed static image asset.</summary>
@@ -150,7 +154,7 @@ namespace OutOfReach.Presentation.Terminal
         {
             if (active) return true;
             if (IsStaticImage) return TryEnterStatic();
-            if (transitioning || !isActiveAndEnabled || !ReferencesValid() || tryAcquireSession == null ||
+            if (transitioning || !isActiveAndEnabled || !CoreReferencesValid() || tryAcquireSession == null ||
                 releaseSession == null || mustCloseSession == null || readMissionUtc == null) return false;
             int generation=configurationGeneration;
             var release=releaseSession;
@@ -162,16 +166,20 @@ namespace OutOfReach.Presentation.Terminal
                 // Snapshot before acquire: root legitimately hides/resets the body from that callback.
                 TerminalReachFrame actualReach=readReach!=null?readReach():default;
                 if(generation!=configurationGeneration) return false;
-                if(!actualReach.IsValid) { LastTouchRefusal="Actual body reach is unavailable."; return false; }
-                ActiveReachFrame=actualReach;
+                // R33: an unreadable body rig no longer blocks the terminal. Without valid reach or glove hooks the
+                // cursor itself is the hand (cursorHand); the glove is used only when its existing hooks succeed.
+                cursorHand=!actualReach.IsValid || !separateGloveInstance || !rigJson;
+                ActiveReachFrame=cursorHand?default:actualReach;
                 acquired=tryAcquireSession();
                 if (!acquired) return false;
-                if (generation != configurationGeneration || !isActiveAndEnabled || !ReferencesValid() || mustCloseSession())
+                if (generation != configurationGeneration || !isActiveAndEnabled || !CoreReferencesValid() || mustCloseSession())
                     return false;
-                if (generation != configurationGeneration) return false;
-                if (!glove.Bind(separateGloveInstance, rigJson) || !glove.Begin(actualReach,viewCamera)) return false;
-                if(!glove.Place(PointOnScreen(new Vector2(.35f,.5f),hoverDistance),displayFrame.rotation))
-                { LastTouchRefusal="Move into a reachable stance before opening the terminal."; return false; }
+                if (!cursorHand && (!glove.Bind(separateGloveInstance, rigJson) || !glove.Begin(actualReach,viewCamera)
+                    || !glove.Place(PointOnScreen(new Vector2(.35f,.5f),hoverDistance),displayFrame.rotation)))
+                {
+                    try { glove.Restore(); } catch (Exception exception) { Debug.LogException(exception,this); }
+                    cursorHand=true; ActiveReachFrame=default;
+                }
                 if (properties == null) properties=new MaterialPropertyBlock();
                 if (previousProperties == null) previousProperties=new MaterialPropertyBlock();
                 displayRenderer.GetPropertyBlock(previousProperties);
@@ -182,7 +190,7 @@ namespace OutOfReach.Presentation.Terminal
                 contactAge=rippleAge=10; displayRefresh=0;
                 pointerUv=new Vector2(.35f,.5f);
                 targetTip=currentTip=PointOnScreen(pointerUv,hoverDistance);
-                RefreshTime(); ApplyDisplay(); PlaceHands(0);
+                RefreshTime(); ApplyDisplay(); if(!cursorHand) PlaceHands(0);
             }
             catch (Exception exception) { Debug.LogException(exception,this); Exit(TerminalExitReason.Fault); }
             finally
@@ -238,6 +246,7 @@ namespace OutOfReach.Presentation.Terminal
         {
             if (!active) return;
             active=false; pointerValid=false; pointerReachable=false; dragging=false; held=false; ActiveReachFrame=default;
+            cursorHand=false;
             var release=acquiredRelease; acquiredRelease=null;
             // Restore before callbacks. Even synchronous re-entry cannot inherit the previous pose or screen state.
             bool wasTransitioning=transitioning;
@@ -248,7 +257,7 @@ namespace OutOfReach.Presentation.Terminal
                 else
                 {
                     glove.Restore();
-                    if (displayRenderer && previousProperties != null) displayRenderer.SetPropertyBlock(previousProperties);
+                    RefreshIdle(true); // R33: the screen stays lit and readable after focus ends.
                 }
             }
             catch (Exception exception) { Debug.LogException(exception,this); }
@@ -270,7 +279,8 @@ namespace OutOfReach.Presentation.Terminal
             }
             pointerValid=true; pointerUv=uv;
             Vector3 proposed=PointOnScreen(uv,(pressed||isHeld)?.001f:hoverDistance);
-            pointerReachable=glove.Place(proposed,displayFrame.rotation,false);
+            // Cursor-hand mode: the on-screen cursor is the hand, so every screen point is reachable.
+            pointerReachable=cursorHand || glove.Place(proposed,displayFrame.rotation,false);
             if(!pointerReachable)
             {
                 held=dragging=false; contactAge=10;
@@ -284,7 +294,7 @@ namespace OutOfReach.Presentation.Terminal
                 previousPointer=uv; dragging=IsOverGlobe(uv);
                 // Contact and its ripple share the exact screen point; smoothing applies to hover and release only.
                 currentTip=PointOnScreen(uv,.001f);
-                if (!glove.Place(currentTip,displayFrame.rotation))
+                if (!cursorHand && !glove.Place(currentTip,displayFrame.rotation))
                 { Exit(TerminalExitReason.Invalidated); return; }
                 Notify(ContactPressed,uv);
                 if (!active || transitioning) return;
@@ -316,13 +326,18 @@ namespace OutOfReach.Presentation.Terminal
 
         private void OnEnable()
         {
-            if (IsStaticImage) RefreshStatic(true);
+            if (IsStaticImage) RefreshStatic(true); else RefreshIdle(true);
         }
 
         private void Update()
         {
             if (IsStaticImage) { UpdateStatic(); return; }
-            if (!active) return;
+            if (!active)
+            {
+                displayRefresh-=Mathf.Min(Time.unscaledDeltaTime,.05f);
+                if (displayRefresh<=0) { RefreshIdle(false); displayRefresh=.25f; }
+                return;
+            }
             try
             {
                 if (!ReferencesValid()) { Exit(TerminalExitReason.Invalidated); return; }
@@ -331,7 +346,8 @@ namespace OutOfReach.Presentation.Terminal
                 float dt=Mathf.Min(Time.unscaledDeltaTime,.05f);
                 contactAge+=dt; rippleAge+=dt; displayRefresh-=dt;
                 if (displayRefresh<=0) { RefreshTime(); displayRefresh=.25f; }
-                PlaceHands(dt); ApplyDisplay();
+                if (!cursorHand) PlaceHands(dt);
+                ApplyDisplay();
             }
             catch (Exception exception) { Debug.LogException(exception,this); Exit(TerminalExitReason.Fault); }
         }
@@ -398,9 +414,50 @@ namespace OutOfReach.Presentation.Terminal
         private Vector3 PointOnScreen(Vector2 uv,float frontOffset) => displayFrame.TransformPoint(
             new Vector3((uv.x-.5f)*activeSizeMetres.x,(uv.y-.5f)*activeSizeMetres.y,-frontOffset));
 
+        /// <summary>R33: lit, readable globe while nobody is using the terminal. Reads the mission calendar only.</summary>
+        private void RefreshIdle(bool logFault)
+        {
+            if (active || !displayRenderer || !observationTexture) return;
+            try
+            {
+                if (readMissionUtc != null) RefreshTime();
+                else
+                {
+                    observationAvailable=false;
+                    SetLabel(missionLabel,"MISSION UTC\nAwaiting mission calendar");
+                    SetLabel(ageLabel,"IMAGE AGE\nAwaiting mission calendar");
+                }
+            }
+            catch (Exception exception)
+            {
+                observationAvailable=false;
+                if (logFault) Debug.LogException(exception,this);
+            }
+            WriteDisplay(false);
+        }
+
         private void ApplyDisplay()
         {
             if (!active || !displayRenderer) return;
+            WriteDisplay(true);
+        }
+
+        private void WriteDisplay(bool interactive)
+        {
+            if (properties == null) properties=new MaterialPropertyBlock();
+            properties.SetFloat(StaticImageId,0);
+            if (staticObservationTexture) properties.SetTexture(InsetId,staticObservationTexture);
+            properties.SetFloat(InsetAvailableId,staticObservationTexture?(insetAvailable?1:0):-1);
+            if (!interactive)
+            {
+                properties.SetTexture(ObservationId,observationTexture);
+                properties.SetVector(RotationId,new Vector4(globeRotation.x,globeRotation.y,globeRotation.z,globeRotation.w));
+                properties.SetVector(PointerId,Vector4.zero);
+                properties.SetVector(RippleId,new Vector4(0,0,10,0));
+                properties.SetFloat(AvailableId,observationAvailable?1:0);
+                displayRenderer.SetPropertyBlock(properties);
+                return;
+            }
             properties.SetTexture(ObservationId,observationTexture);
             properties.SetVector(RotationId,new Vector4(globeRotation.x,globeRotation.y,globeRotation.z,globeRotation.w));
             properties.SetVector(PointerId,new Vector4(pointerUv.x,pointerUv.y,pointerValid?(pointerReachable?1:.20f):0,held?1:0));
@@ -446,12 +503,24 @@ namespace OutOfReach.Presentation.Terminal
                     if(staticBinder) staticBinder.RefreshAtlas();
                     continue;
                 }
+                if(label.name=="OriginalInset" && staticObservationTexture)
+                {
+                    label.text="SLOVAKIA  /  MODIS TERRA  14 NOV 08:15-08:20 UTC";
+                    label.anchor=TextAnchor.UpperLeft; label.alignment=TextAlignment.Left;
+                    label.transform.localPosition=new Vector3(.029f,-.040f,-.0004f);
+                    label.characterSize=.0021f;
+                }
+                if(label.name=="Credit" && staticObservationTexture)
+                {
+                    label.text="Globe: NASA EPIC Team / NOAA DSCOVR, 2026-11-11\nSlovakia: NASA GIBS / ESDIS, MODIS Terra, 2026-11-14";
+                    label.characterSize=.0020f;
+                }
                 if(label.name=="Mode")
                 { label.text="EARTH IMAGE"; label.transform.localPosition=new Vector3(-.296f,-.130f,-.0004f); }
                 if(label.name=="Truth")
                 {
                     label.transform.localPosition=new Vector3(-.296f,-.149f,-.0004f);
-                    label.text="Visual projection, not a coordinate map.\nReverse side not observed.\nDim pointer: out of reach.";
+                    label.text="Grab and drag the globe to turn it.\nVisual projection; reverse side not observed.\nDim pointer: out of the glove's reach.";
                     label.characterSize=.0021f;
                 }
                 var binder=label.GetComponent<ShipLabelAtlasBinder>();
@@ -478,6 +547,7 @@ namespace OutOfReach.Presentation.Terminal
                 return;
             }
             observationAvailable=utc>=ObservationUtc;
+            insetAvailable=utc>=StaticPassEndUtc;
             SetLabel(missionLabel,"MISSION UTC\n"+utc.ToString("yyyy-MM-dd HH:mm:ss",CultureInfo.InvariantCulture));
             SetLabel(observationLabel,"OBSERVED UTC\n2026-11-11 11:01:17");
             var age=utc-ObservationUtc;
@@ -493,13 +563,15 @@ namespace OutOfReach.Presentation.Terminal
             var binder=label.GetComponent<ShipLabelAtlasBinder>();
             if (binder) binder.RefreshAtlas();
         }
-        private bool ReferencesValid() => viewCamera && displayFrame && displayRenderer && observationTexture &&
-            separateGloveInstance && rigJson && activeSizeMetres.x>.01f && activeSizeMetres.y>.01f &&
+        private bool ReferencesValid() => CoreReferencesValid() && (cursorHand || (separateGloveInstance && rigJson));
+        private bool CoreReferencesValid() => viewCamera && displayFrame && displayRenderer && observationTexture &&
+            activeSizeMetres.x>.01f && activeSizeMetres.y>.01f &&
             Finite(activeSizeMetres.x) && Finite(activeSizeMetres.y) &&
             (displayFrame.lossyScale-Vector3.one).sqrMagnitude<.00001f;
         private bool StaticReferencesValid() => viewCamera && displayFrame && displayRenderer && staticObservationTexture &&
             activeSizeMetres.x>.01f && activeSizeMetres.y>.01f && Finite(activeSizeMetres.x) && Finite(activeSizeMetres.y);
-        private static bool IsOverGlobe(Vector2 uv) => new Vector2((uv.x-.29f)*1.6f,uv.y-.51f).sqrMagnitude<.30f*.30f;
+        // Matches EarthTerminal.shader disc centre (.285,.525) and radius .32.
+        private static bool IsOverGlobe(Vector2 uv) => new Vector2((uv.x-.285f)*1.6f,uv.y-.525f).sqrMagnitude<.32f*.32f;
         private static bool Finite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
         private void OnDisable() => Exit(TerminalExitReason.Disabled);
         private void OnDestroy() => Exit(TerminalExitReason.Disabled);

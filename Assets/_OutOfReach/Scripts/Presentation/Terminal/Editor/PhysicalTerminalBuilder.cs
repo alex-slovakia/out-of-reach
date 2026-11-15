@@ -116,10 +116,10 @@ namespace OutOfReach.Presentation.Terminal.Editor
                 var presenter=root.AddComponent<PhysicalEarthTerminalPresenter>();
                 presenter.ConfigureScene(null,frame,new Vector2(.64f,.4f),screen,null,null,grip);
                 presenter.ConfigureDisplay(AssetDatabase.LoadAssetAtPath<Texture2D>(ImagePath),mission,observed,age,status);
-                // R33: look-only Slovakia image is the default; the EPIC globe path stays available with staticImageMode off.
+                // R33: dated MODIS Terra Slovakia image, shown as the inset of the interactive EPIC terminal.
                 var staticImage=AssetDatabase.LoadAssetAtPath<Texture2D>(StaticImagePath);
                 Require(staticImage && Hash(StaticImagePath)==StaticImageHash,"R33 static NASA GIBS image missing or changed.");
-                presenter.ConfigureStaticImage(staticImage);
+                presenter.ConfigureStaticImage(staticImage,false); // Slovakia inset beside the draggable EPIC globe; static mode stays off.
                 Validate(root,screen);
                 PrefabUtility.SaveAsPrefabAsset(root,PrefabPath,out bool saved);
                 Require(saved,"Prefab save failed.");
