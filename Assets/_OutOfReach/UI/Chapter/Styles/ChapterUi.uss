@@ -186,6 +186,7 @@
     border-top-width: 1px; border-top-color: rgba(155, 229, 232, 0.3);
 }
 .chapter-layer .chapter-strip-source { margin-top: 1px; font-size: 12px; color: rgb(170, 177, 170); }
+.chapter-layer .chapter-strip-dose { margin-top: 4px; font-size: 12px; color: rgb(207, 216, 212); }
 
 /* ---------- shared actions and key caps ---------- */
 .chapter-layer .chapter-action {
