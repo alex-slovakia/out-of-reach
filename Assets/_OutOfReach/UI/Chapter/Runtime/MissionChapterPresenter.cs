@@ -86,6 +86,10 @@ namespace OutOfReach.Presentation.UI.Chapter
         private string dataLine = string.Empty, dataSource = string.Empty;
         private long doseMinute = long.MinValue;
         private string doseLine = string.Empty;
+        private Func<DateTime?> missionDate;
+        private DateTime dsnStep;
+        private bool dsnKnown;
+        private string dsnLine = string.Empty;
 
         /// <summary>The screen presented in the last frame (None while hidden).</summary>
         public ChapterScreen CurrentScreen => presentable ? screen : ChapterScreen.None;
@@ -135,11 +139,18 @@ namespace OutOfReach.Presentation.UI.Chapter
         /// exactly as Core holds them (the mission date's sample until the call is sent, the transmitted one afterwards).
         /// Optional: call it after <see cref="Configure"/>, which clears it. Null hides the line.
         /// </summary>
-        public void ConfigureMissionData(ICommunicationSystem communication)
+        /// <param name="missionDateUtc">
+        /// Optional: the mission date (the UTC epoch Core selects the Horizons sample with). With it the strip also names
+        /// the Deep Space Network complex that has Mars in view (DsnVisibility). Null hides that line.
+        /// </param>
+        public void ConfigureMissionData(ICommunicationSystem communication, Func<DateTime?> missionDateUtc = null)
         {
             link = communication;
             dataKm = dataLight = double.NaN;
             dataLine = dataSource = string.Empty;
+            missionDate = missionDateUtc;
+            dsnKnown = false;
+            dsnLine = string.Empty;
         }
 
         /// <summary>Releases the session: hides and forgets every card, deferral and observation (restart, unbind).</summary>
@@ -422,6 +433,7 @@ namespace OutOfReach.Presentation.UI.Chapter
 
             bool strip = (screen == ChapterScreen.None || screen == ChapterScreen.Beat) && FillStrip(now, realSeconds);
             if (strip) FillMissionData();
+            if (strip) FillDsn();
             if (strip) FillRadiationEstimate(now);
             ChapterView.Show(view.Strip, strip);
         }
@@ -449,7 +461,8 @@ namespace OutOfReach.Presentation.UI.Chapter
                 {
                     // The data line is optional: it must never take the routine strip down with it.
                     Debug.LogException(error, this);
-                    ConfigureMissionData(null);
+                    link = null;
+                    dataLine = dataSource = string.Empty;
                 }
             }
 
@@ -489,6 +502,44 @@ namespace OutOfReach.Presentation.UI.Chapter
             }
 
             ChapterView.SetText(view.StripDose, doseLine);
+        }
+
+        /// <summary>
+        /// MISSION-DATA: which Deep Space Network complex has Mars above its horizon at the mission date (DsnVisibility,
+        /// derived from the committed Horizons vectors). Static text, re-read once per ten simulated minutes; display only.
+        /// </summary>
+        private void FillDsn()
+        {
+            if (missionDate != null)
+            {
+                try
+                {
+                    DateTime? utc = missionDate();
+                    if (!utc.HasValue)
+                    {
+                        dsnKnown = false;
+                        dsnLine = string.Empty;
+                    }
+                    else
+                    {
+                        DateTime step = ChapterCopy.DsnStep(utc.Value);
+                        if (!dsnKnown || step != dsnStep)
+                        {
+                            dsnKnown = true;
+                            dsnStep = step;
+                            dsnLine = ChapterCopy.DsnLine(step);
+                        }
+                    }
+                }
+                catch (Exception error)
+                {
+                    // Optional like the Horizons line: it must never take the routine strip down with it.
+                    Debug.LogException(error, this);
+                    missionDate = null;
+                }
+            }
+
+            ChapterView.SetText(view.StripDsn, missionDate != null ? dsnLine : string.Empty);
         }
 
         // ---------- beat card ----------

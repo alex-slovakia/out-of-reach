@@ -79,6 +79,8 @@ namespace OutOfReach.Presentation.UI.Chapter
         public Label StripData { get; }
         /// <summary>MISSION-DATA: the source and what the number stands for.</summary>
         public Label StripSource { get; }
+        /// <summary>MISSION-DATA: the Deep Space Network complex that has Mars in view at the mission date.</summary>
+        public Label StripDsn { get; }
         /// <summary>MISSION-DATA: informational radiation estimate (elapsed days x the MSL RAD cruise rate).</summary>
         public Label StripDose { get; }
 
@@ -239,6 +241,9 @@ namespace OutOfReach.Presentation.UI.Chapter
             Show(StripData, false);
             Show(StripSource, false);
             Strip.Add(StripData);
+            StripDsn = Text("chapter-strip-dsn", "chapter-strip-dsn");
+            Show(StripDsn, false);
+            Strip.Add(StripDsn);
             Strip.Add(StripSource);
             StripDose = Text("chapter-strip-dose", "chapter-strip-dose");
             Show(StripDose, false);
