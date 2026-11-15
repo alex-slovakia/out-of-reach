@@ -35,7 +35,7 @@ namespace OutOfReach.Presentation.Hands
         public EvaTetherRope TetherRope => tetherRope;
 
         /// <summary>True while the gloves are posed on the tether rope.</summary>
-        public bool IsTetherClimbActive => tetherActive;
+        public bool IsTetherClimbActive => tetherActive && !toolHoldActive && ContactStage == HandContactStage.None;
 
         /// <summary>+1 while the gloves reach towards the route end, -1 towards the start.</summary>
         public int TetherFacingSense => tetherFacing;
