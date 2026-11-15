@@ -2145,6 +2145,61 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52656490}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &55031544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 55031545}
+  - component: {fileID: 55031546}
+  m_Layer: 0
+  m_Name: Meal presentation (MEAL-PRES-01)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &55031545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55031544}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1831581258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &55031546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55031544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e5e5d143634f3689fc22c54a0400a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: OutOfReach.Presentation.Meal::OutOfReach.Presentation.Meal.MealPresenter
+  rationTarget: {fileID: 849459520}
+  drawerFrame: {fileID: 1961247757}
+  waterFrame: {fileID: 1173626959}
+  pouchModel: {fileID: 919132149155446097, guid: 957398f7aa2145c898c01f787842b1ae, type: 3}
+  claspData: {fileID: 4900000, guid: e921b540629e426ab7c88e8413c38ef9, type: 3}
+  labelByPreparation:
+  - {fileID: 2100000, guid: 1eac19abe39f40f19af2df83b41ff490, type: 2}
+  - {fileID: 2100000, guid: a611d721ce574f3697e3e49cf962662e, type: 2}
+  - {fileID: 2100000, guid: ad389daee22144ef85c10b02a676546a, type: 2}
+  maximumDrawerDistance: 1.05
+  fallbackReachMetres: 0.68
 --- !u!1 &55747961
 GameObject:
   m_ObjectHideFlags: 0
@@ -61411,7 +61466,7 @@ MonoBehaviour:
   recoveryShots: {fileID: 26574458}
   presentationCamera: {fileID: 1520165613}
   impactSeconds: 8.360001
-  falseSignalSeconds: 11.4800005
+  falseSignalSeconds: 1.5
   communicationRestoredSeconds: 12.96
   endingPullbackSeconds: 8
   reducedEffects: 0
@@ -77944,6 +77999,7 @@ MonoBehaviour:
   antennaProgressFont: {fileID: 12800000, guid: cf1a200d76aa47f186e6829be456d0e5, type: 3}
   evaWorkLamp: {fileID: 1105916637}
   habitat: {fileID: 1378250813}
+  meal: {fileID: 55031546}
   marine: {fileID: 1378250812}
   departureScore: {fileID: 8300000, guid: 827915f725a152f396bf51b2b2ecf184, type: 3}
   firstPersonMotionPivot: {fileID: 102945821}
@@ -103524,6 +103580,7 @@ Transform:
   - {fileID: 1783990925}
   - {fileID: 211704646}
   - {fileID: 2100646803}
+  - {fileID: 55031545}
   m_Father: {fileID: 447992518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1831581259
