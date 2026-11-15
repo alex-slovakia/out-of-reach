@@ -826,7 +826,8 @@ namespace OutOfReach.Player
             }
 
             Look(input.LookDegrees);
-            UpdateLean(floating && ActiveRoute == null ? input.Move.x : 0f, Time.deltaTime);
+            // Alex 15 Nov: no camera roll from A/D (felt like a tilt bug); the view always stays level.
+            UpdateLean(0f, Time.deltaTime);
             sprinting = false;
             float motionFraction;
             ExertionActivity activity;
