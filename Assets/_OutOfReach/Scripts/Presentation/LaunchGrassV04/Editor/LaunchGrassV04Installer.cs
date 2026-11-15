@@ -30,6 +30,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         public const string PlumeTexturePath = Folder + "/PampasPlumesV04.png";
         public const string ClumpTexturePath = Folder + "/PampasClumpsV04.png";
         public const string TopTexturePath = Folder + "/PampasTopsV04.png";
+        public const string TuftTexturePath = Folder + "/PampasTuftsV04.png";
+        public const string ModelPath = Folder + "/PampasClumpV04.fbx";
         public const string FieldName = "Launch grass V04 - pampas field";
         public const string LookName = "Launch look V04 - grade, haze and thruster gust";
         public const string ShellMeadowName = "Launch grass V03 - dense meadow";
@@ -62,10 +64,10 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
         }
 
         public static string CostLine(PampasGrassField f) =>
-            "LAUNCH_GRASS_V04_COST instances=" + f.InstanceCount + " chunks=" + f.ChunkCount + " nearTris=" + f.NearTriangles
-            + " cardTris=" + f.CardTriangles + " buildMs=" + f.BuildMilliseconds.ToString("F1") + " lastDrawCalls=" + f.LastDrawCalls
-            + " lastNearInstances=" + f.LastNearInstances + " lastCardInstances=" + f.LastCardInstances + " lastTriangles=" + f.LastTriangles
-            + " reduced=" + f.ReducedEffects;
+            "LAUNCH_GRASS_V04_COST instances=" + f.InstanceCount + " chunks=" + f.ChunkCount + " detailTris=" + f.DetailTriangles
+            + " modelTris=" + f.ModelTriangles + " cardTris=" + f.CardTriangles + " buildMs=" + f.BuildMilliseconds.ToString("F1")
+            + " lastDrawCalls=" + f.LastDrawCalls + " lastDetailInstances=" + f.LastDetailInstances + " lastModelInstances=" + f.LastModelInstances
+            + " lastCardInstances=" + f.LastCardInstances + " lastTriangles=" + f.LastTriangles + " reduced=" + f.ReducedEffects;
 
         /// <summary>Integrator batch entry: -executeMethod OutOfReach.Presentation.LaunchGrassV04.Editor.LaunchGrassV04Installer.InstallIntoBootstrap</summary>
         public static void InstallIntoBootstrap()
@@ -93,6 +95,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             grass.SetTexture("_PlumeTex", EnsureTexture(PlumeTexturePath));
             grass.SetTexture("_ClumpTex", EnsureTexture(ClumpTexturePath));
             grass.SetTexture("_TopTex", EnsureTexture(TopTexturePath));
+            grass.SetTexture("_TuftTex", EnsureTexture(TuftTexturePath));
+            Mesh detail = EnsureModelMesh("PampasClump_LOD0"), simple = EnsureModelMesh("PampasClump_LOD1");
             Material haze = EnsureMaterial(HazeMaterialPath, HazeShaderPath);
             VolumeProfile profile = EnsureProfile();
             Vector4[] footprints = Footprints(site, inner);
@@ -102,7 +106,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             var fieldGo = new GameObject(FieldName);
             fieldGo.transform.SetParent(site, false);
             var field = fieldGo.AddComponent<PampasGrassField>();
-            field.Configure(grass, inner, footprints);
+            field.Configure(grass, inner, footprints, detail, simple);
 
             var switchedOff = new List<string>();
             Transform shells = site.Find(ShellMeadowName);
@@ -129,7 +133,8 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             if (!collidersBefore.SequenceEqual(ActiveColliders(scene)))
                 throw new InvalidOperationException("Installer changed the set of active colliders.");
             LastReport = "field=" + FieldName + " instances=" + field.InstanceCount + " chunks=" + field.ChunkCount
-                + " nearTris=" + field.NearTriangles + " cardTris=" + field.CardTriangles + " buildMs=" + field.BuildMilliseconds.ToString("F1")
+                + " detailTris=" + field.DetailTriangles + " modelTris=" + field.ModelTriangles + " cardTris=" + field.CardTriangles
+                + " buildMs=" + field.BuildMilliseconds.ToString("F1")
                 + " footprintsCleared=" + footprints.Length + " departureBound=" + (departure ? departure.name : "NONE(" + departures.Length + ")")
                 + " gustOrigin=" + origin.name + " switchedOff=[" + string.Join("; ", switchedOff) + "] collidersChanged=0";
             Debug.Log("LAUNCH_GRASS_V04_READY " + LastReport);
@@ -184,6 +189,36 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             material.enableInstancing = false;
             EditorUtility.SetDirty(material);
             return material;
+        }
+
+        /// <summary>The modeled clump: import settings for a static, material-less instanced mesh, then one LOD by
+        /// name. Checks that the mesh is the unit-height, Y-up clump with the three UV channels the shader reads.</summary>
+        private static Mesh EnsureModelMesh(string name)
+        {
+            var importer = AssetImporter.GetAtPath(ModelPath) as ModelImporter;
+            if (!importer) throw new InvalidOperationException("Missing model: " + ModelPath);
+            bool ok = importer.materialImportMode == ModelImporterMaterialImportMode.None && !importer.importAnimation
+                && !importer.importBlendShapes && !importer.importCameras && !importer.importLights
+                && importer.importNormals == ModelImporterNormals.Import && importer.importTangents == ModelImporterTangents.None
+                && importer.meshCompression == ModelImporterMeshCompression.Off && !importer.generateSecondaryUV
+                && Mathf.Approximately(importer.globalScale, 1f) && importer.useFileScale && !importer.isReadable;
+            if (!ok)
+            {
+                importer.materialImportMode = ModelImporterMaterialImportMode.None; importer.importAnimation = false;
+                importer.importBlendShapes = false; importer.importCameras = false; importer.importLights = false;
+                importer.importNormals = ModelImporterNormals.Import; importer.importTangents = ModelImporterTangents.None;
+                importer.meshCompression = ModelImporterMeshCompression.Off; importer.generateSecondaryUV = false;
+                importer.globalScale = 1f; importer.useFileScale = true; importer.isReadable = false;
+                importer.SaveAndReimport();
+            }
+            Mesh mesh = AssetDatabase.LoadAllAssetsAtPath(ModelPath).OfType<Mesh>().FirstOrDefault(m => m.name == name);
+            if (!mesh) throw new InvalidOperationException("Model mesh '" + name + "' not found in " + ModelPath);
+            if (!PampasGrassMeshes.HasClumpChannels(mesh))
+                throw new InvalidOperationException(name + " lacks the normal/uv0/uv1/uv2 channels the grass shader reads.");
+            Bounds b = mesh.bounds;
+            if (b.min.y < -.03f || b.max.y < .95f || b.max.y > 1.05f || b.size.x > 2.4f || b.size.z > 2.4f)
+                throw new InvalidOperationException(name + " is not the unit-height Y-up clump (bounds " + b + ").");
+            return mesh;
         }
 
         /// <summary>Alpha-tested atlas import: mip-maps that preserve coverage, clamped, sRGB.</summary>

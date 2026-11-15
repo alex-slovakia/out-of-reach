@@ -7,6 +7,7 @@ Outputs (next to the shaders, sRGB, alpha = coverage):
   PampasPlumesV04.png  1024x512   4 plume heads (256x512 cells), base at the bottom centre of each cell
   PampasClumpsV04.png  1024x1024  4 whole clumps (512x512 cells): leaf fountain, bare stalks, plume heads
   PampasTopsV04.png    512x512    4 clumps seen from above (256x256 cells): radiating leaves and seed heads
+  PampasTuftsV04.png   512x256    4 feathery branch tufts (128x256 cells) for the modeled seed heads' branch cards
 
 Usage:  python make_pampas_textures.py <output folder>
 Needs numpy and Pillow only.
@@ -200,6 +201,16 @@ def top_cell(seed):
     return cv.finish()
 
 
+def tuft_cell(seed):
+    """One drooping branch of a seed head with its spikelets: the sprite on each modeled branch card."""
+    rng = np.random.default_rng(seed)
+    cv = Canvas(128, 256)
+    side = 1 if seed % 2 else -1
+    plume(cv, rng, 64, 3, rng.uniform(232, 246), rng.uniform(40, 46), -side * np.radians(rng.uniform(0, 4)),
+          side * np.radians(rng.uniform(8, 20)), density=.2, fine=1.7)
+    return cv.finish()
+
+
 def save(cells, cols, path):
     rows = [np.concatenate(cells[r * cols:(r + 1) * cols], axis=1) for r in range(len(cells) // cols)]
     img = np.concatenate(rows, axis=0)
@@ -212,3 +223,4 @@ if __name__ == '__main__':
     save([plume_cell(s) for s in (11, 12, 13, 14)], 4, out + '/PampasPlumesV04.png')
     save([clump_cell(s) for s in (21, 22, 23, 24)], 2, out + '/PampasClumpsV04.png')
     save([top_cell(s) for s in (31, 32, 33, 34)], 2, out + '/PampasTopsV04.png')
+    save([tuft_cell(s) for s in (41, 42, 43, 44)], 4, out + '/PampasTuftsV04.png')
