@@ -425,8 +425,10 @@ namespace OutOfReach.Presentation.UI.Report
             artPage.Add(FlightRecorderElements.Text("Slovakia archive — Terra MODIS · 14 Nov 2026", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).", "recorder-source-description"));
             artPage.Add(SourceLink("NASA Worldview · Earth observation archive", "https://worldview.earthdata.nasa.gov/", true));
+            artPage.Add(FlightRecorderElements.Text("Launch effects — Particle Pack by Unity Technologies", "recorder-source-deck"));
+            artPage.Add(SourceLink("Unity Asset Store · Particle Pack", "https://assetstore.unity.com/packages/vfx/particles/particle-pack-starter-assets-127325", true));
             artPage.Add(FlightRecorderElements.Text("Synthetic voices — Google Gemini text-to-speech", "recorder-source-deck"));
-            artPage.Add(FlightRecorderElements.Text("Voices Orus and Kore. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants.", "recorder-source-description"));
+            artPage.Add(FlightRecorderElements.Text("Voices Orus, Kore and Iapetus. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants.", "recorder-source-description"));
             artPage.Add(marsCredits);
             artPage.Add(FlightRecorderElements.Text("Typography · Barlow Condensed Bold", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Copyright 2017 The Barlow Project Authors. Unmodified font distributed under the SIL Open Font License 1.1.", "recorder-source-description"));
