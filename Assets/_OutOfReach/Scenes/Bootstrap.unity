@@ -73085,9 +73085,7 @@ MonoBehaviour:
   dispatchBeats:
   - contentId: dispatch.rescue-1-failed
     beatId: radio.day14-call
-  voiceClips:
-  - cueId: vo23_mc_rescue_lost_dayneutral
-    clip: {fileID: 8300000, guid: c4a8e83073e24d17a5d9a27e3aceb9e8, type: 3}
+  voiceClips: []
   heldPosition: {x: 0.125, y: -0.152, z: 0.31}
   heldEuler: {x: -10, y: -26, z: 8}
   hiddenPosition: {x: 0.2, y: -0.47, z: 0.24}
