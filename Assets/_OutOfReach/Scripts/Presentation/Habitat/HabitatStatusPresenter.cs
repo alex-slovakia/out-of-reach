@@ -14,6 +14,10 @@ namespace OutOfReach.Presentation.Habitat
         private ShipLabelAtlasBinder dayAtlas, growAtlas;
         // R23: runtime-built mature crop beside the authored seedlings; shown only at Core's HarvestReady stage.
         private GameObject matureCrop, matureCropFor;
+        // R36: read-only stored-portion row driven by Core's FoodKg (bound through ConfigureResources).
+        private IResourceSystem resources;
+        private HabitatStoredRations storedRations;
+        private float nextRationPoll;
         private ISurvivalExtension survival;
         private ISurvivalRecovery recovery;
         private bool subscribed;
@@ -41,12 +45,36 @@ namespace OutOfReach.Presentation.Habitat
 
         public void ClearBinding()
         {
-            Unsubscribe(); survival = null; recovery = null; ResetPresentation();
+            Unsubscribe(); survival = null; recovery = null; resources = null;
+            storedRations?.Clear();
+            ResetPresentation();
+        }
+
+        /// <summary>R36: optional read-only food view. Call after ConfigureSession, which clears it.</summary>
+        public void ConfigureResources(IResourceSystem actualResources)
+        {
+            resources = actualResources;
+            storedRations?.Bind(resources);
+            nextRationPoll = 0f;
+        }
+
+        private void Update()
+        {
+            if (resources == null || Time.unscaledTime < nextRationPoll) return;
+            nextRationPoll = Time.unscaledTime + .25f;
+            if (storedRations == null)
+            {
+                // The meal presentation instantiates its pouch after the habitat binds; build once it exists.
+                storedRations = HabitatStoredRations.Build(transform);
+                if (storedRations == null) { nextRationPoll = Time.unscaledTime + 1f; return; }
+            }
+            if (!storedRations.IsBound) storedRations.Bind(resources);
+            storedRations.Refresh();
         }
         private void Awake() => ResetPresentation();
         private void OnEnable() { if (IsBound) { Subscribe(); Refresh(); } else ResetPresentation(); }
         private void OnDisable() => ClearBinding();
-        private void OnDestroy() => ClearBinding();
+        private void OnDestroy() { ClearBinding(); storedRations?.Destroy(); storedRations = null; }
         private void Subscribe()
         {
             if (subscribed || !IsBound) return;

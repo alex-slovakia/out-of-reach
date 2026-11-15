@@ -1,0 +1,13 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06HabitatBindings.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06HabitatBindings.cs
+index cdc2908..a47630b 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I06HabitatBindings.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I06HabitatBindings.cs
+@@ -42,6 +42,8 @@ namespace OutOfReach.Composition
+             if (!actualRuntime || actualRuntime.Survival == null || actualRuntime.SurvivalRecovery == null) return;
+             runtime = actualRuntime; survival = runtime.Survival; recovery = runtime.SurvivalRecovery;
+             if (status) status.ConfigureSession(survival, recovery);
++            // R36: read-only FoodKg for the stored-portion row; after ConfigureSession, which clears it.
++            if (status) status.ConfigureResources(runtime.Resources);
+             survival.Changed += Refresh;
+             recovery.Changed += Refresh;
+             Refresh();
