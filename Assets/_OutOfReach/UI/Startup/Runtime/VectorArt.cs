@@ -14,7 +14,6 @@ namespace OutOfReach.Presentation.UI.Startup
     {
         public readonly List<Vector2[]> Subpaths = new List<Vector2[]>();
         public readonly List<bool> Closed = new List<bool>();
-        public readonly List<Vector2[]> Wobbled = new List<Vector2[]>();   // second, hand-held pencil pass
         public float[][] Cumulative;                                       // per subpath cumulative length
         public float Length;                                               // total length of all subpaths
         public bool HasFill;
@@ -22,6 +21,7 @@ namespace OutOfReach.Presentation.UI.Startup
         public bool EvenOdd;
         public Color Stroke;
         public float StrokeWidth;                                          // fraction of the unit-box height
+        public float Taper;                                                // fraction of an open stroke tapered at each end (0 = none)
         public bool SketchedFromFill;                                      // no stroke in the art: outlined in pencil gold
         public float RevealStart, RevealEnd;                               // sketch progress window, 0..1
     }
@@ -40,6 +40,8 @@ namespace OutOfReach.Presentation.UI.Startup
         public static readonly Color PencilGold = new Color(.91f, .71f, .33f, 1f);
         public const float DefaultStrokeWidth = .0058f;
         private const float GapBetweenStrokes = .012f;
+        private const float MaxTotalGap = .1f;
+        public const float DefaultTaper = .28f;
 
         public float Aspect = 1f;
         public readonly List<ArtShape> Shapes = new List<ArtShape>();
@@ -91,7 +93,7 @@ namespace OutOfReach.Presentation.UI.Startup
         }
 
         /// <summary>Visible prefix of a shape for a sketch progress 0..1. Writes each visible subpath into <paramref name="output"/>.</summary>
-        public static void VisibleSubpaths(ArtShape shape, bool wobbled, float sketch01, List<List<Vector2>> output, Stack<List<Vector2>> pool)
+        public static void VisibleSubpaths(ArtShape shape, float sketch01, List<List<Vector2>> output, Stack<List<Vector2>> pool)
         {
             for (int i = 0; i < output.Count; i++) { output[i].Clear(); pool.Push(output[i]); }
             output.Clear();
@@ -99,7 +101,7 @@ namespace OutOfReach.Presentation.UI.Startup
             float local = Mathf.Clamp01((sketch01 - shape.RevealStart) / span);
             if (local <= 0f || shape.Length <= 0f) return;
             float target = shape.Length * local, consumed = 0f;
-            var source = wobbled ? shape.Wobbled : shape.Subpaths;
+            var source = shape.Subpaths;
             for (int s = 0; s < source.Count && consumed < target; s++)
             {
                 var points = source[s];
@@ -126,14 +128,13 @@ namespace OutOfReach.Presentation.UI.Startup
 
         private void Build(List<RawShape> raw, float vbx, float vby, float vbh)
         {
-            var rng = new System.Random(4711);
             var stroked = new List<ArtShape>();
             foreach (var r in raw)
             {
                 bool hasStroke = r.StrokeColor.a > .01f && r.StrokeWidth > 0f;
                 bool hasFill = r.FillColor.a > .01f;
                 if (!hasStroke && !hasFill) continue;
-                var shape = new ArtShape { HasFill = hasFill, Fill = r.FillColor, EvenOdd = r.EvenOdd };
+                var shape = new ArtShape { HasFill = hasFill, Fill = r.FillColor, EvenOdd = r.EvenOdd, Taper = r.Taper };
                 if (hasStroke)
                 {
                     shape.Stroke = r.StrokeColor;
@@ -164,7 +165,6 @@ namespace OutOfReach.Presentation.UI.Startup
                     for (int i = 1; i < points.Length; i++) cumulative[i] = cumulative[i - 1] + Vector2.Distance(points[i - 1], points[i]);
                     shape.Cumulative[s] = cumulative;
                     shape.Length += cumulative[cumulative.Length - 1];
-                    shape.Wobbled.Add(Wobble(points, rng));
                 }
                 if (shape.Length < .004f) continue;
                 Shapes.Add(shape);
@@ -173,35 +173,20 @@ namespace OutOfReach.Presentation.UI.Startup
             // Sketch windows: long shapes take longer (sub-linear so small details are not instant), a pen lift between them.
             float weightSum = 0f;
             foreach (var shape in stroked) weightSum += Weight(shape);
-            float usable = Mathf.Max(.1f, 1f - GapBetweenStrokes * Mathf.Max(0, stroked.Count - 1));
+            float gap = Mathf.Min(GapBetweenStrokes, MaxTotalGap / Mathf.Max(1, stroked.Count - 1));
+            float usable = Mathf.Max(.1f, 1f - gap * Mathf.Max(0, stroked.Count - 1));
             float cursor = 0f;
             foreach (var shape in stroked)
             {
                 float width = usable * Weight(shape) / Mathf.Max(.0001f, weightSum);
                 shape.RevealStart = cursor;
                 shape.RevealEnd = cursor + width;
-                cursor += width + GapBetweenStrokes;
+                cursor += width + gap;
                 TotalLength += shape.Length;
             }
         }
 
         private static float Weight(ArtShape shape) => Mathf.Pow(shape.Length, .75f) + .02f;
-
-        private static Vector2[] Wobble(Vector2[] points, System.Random rng)
-        {
-            var result = new Vector2[points.Length];
-            float phaseA = (float)rng.NextDouble() * 6.28f, phaseB = (float)rng.NextDouble() * 6.28f;
-            for (int i = 0; i < points.Length; i++)
-            {
-                Vector2 prev = points[Mathf.Max(0, i - 1)], next = points[Mathf.Min(points.Length - 1, i + 1)];
-                Vector2 tangent = next - prev;
-                tangent = tangent.sqrMagnitude < 1e-9f ? Vector2.right : tangent.normalized;
-                var perp = new Vector2(-tangent.y, tangent.x);
-                float drift = Mathf.Sin(i * .31f + phaseA) * .6f + Mathf.Sin(i * .77f + phaseB) * .4f;
-                result[i] = points[i] + perp * ((drift + ((float)rng.NextDouble() - .5f) * .5f) * .0018f);
-            }
-            return result;
-        }
 
         // ------------------------------------------------------------------ SVG walk
 
@@ -213,18 +198,19 @@ namespace OutOfReach.Presentation.UI.Startup
             public readonly List<bool> Closed = new List<bool>();
             public Color FillColor, StrokeColor;
             public float StrokeWidth;
+            public float Taper;
             public bool EvenOdd;
         }
 
         private struct Style
         {
             public string Fill, Stroke;
-            public float StrokeWidth, Opacity, FillOpacity, StrokeOpacity;
+            public float StrokeWidth, Opacity, FillOpacity, StrokeOpacity, Taper;
             public bool EvenOdd;
             public Affine Transform;
             public static Style Default => new Style
             {
-                Fill = "#000000", Stroke = null, StrokeWidth = 1f, Opacity = 1f, FillOpacity = 1f, StrokeOpacity = 1f,
+                Fill = "#000000", Stroke = null, StrokeWidth = 1f, Opacity = 1f, FillOpacity = 1f, StrokeOpacity = 1f, Taper = DefaultTaper,
                 Transform = Affine.Identity
             };
         }
@@ -270,13 +256,14 @@ namespace OutOfReach.Presentation.UI.Startup
             if (declarations.TryGetValue("fill-opacity", out value)) s.FillOpacity = Mathf.Clamp01(ParseLength(value, 1f));
             if (declarations.TryGetValue("stroke-opacity", out value)) s.StrokeOpacity = Mathf.Clamp01(ParseLength(value, 1f));
             if (declarations.TryGetValue("fill-rule", out value)) s.EvenOdd = value == "evenodd";
+            if (declarations.TryGetValue("data-taper", out value)) s.Taper = Mathf.Clamp(ParseLength(value, DefaultTaper), 0f, .5f);
             if (declarations.TryGetValue("transform", out value)) s.Transform = parent.Transform.Multiply(Affine.Parse(value));
             return s;
         }
 
         private static RawShape NewShape(Style style)
         {
-            var shape = new RawShape { EvenOdd = style.EvenOdd };
+            var shape = new RawShape { EvenOdd = style.EvenOdd, Taper = style.Taper };
             shape.FillColor = ResolveColor(style.Fill, style.Opacity * style.FillOpacity);
             shape.StrokeColor = ResolveColor(style.Stroke, style.Opacity * style.StrokeOpacity);
             shape.StrokeWidth = style.StrokeWidth * style.Transform.UniformScale;
