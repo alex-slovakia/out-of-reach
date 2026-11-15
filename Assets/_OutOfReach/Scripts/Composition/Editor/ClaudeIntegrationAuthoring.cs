@@ -71,6 +71,58 @@ namespace OutOfReach.Composition.Editor
             Debug.Log("CLAUDE_INTEGRATION_SET3 " + (changed ? "SAVED" : "VERIFIED") + "\n" + report);
         }
 
+        // Unity -batchmode -quit -projectPath <clone> -executeMethod OutOfReach.Composition.Editor.ClaudeIntegrationAuthoring.ApplySet4
+        public static void ApplySet4()
+        {
+            if (Application.unityVersion != "6000.3.28f1" || EditorApplication.isPlayingOrWillChangePlaymode)
+                throw new InvalidOperationException("Run on Unity 6000.3.28f1 outside Play mode.");
+            Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            GameObject[] roots = scene.GetRootGameObjects();
+            var report = new StringBuilder();
+            bool changed = ApplyRestBerth(roots, report);
+            if (changed)
+            {
+                EditorSceneManager.MarkSceneDirty(scene);
+                if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save Bootstrap.");
+            }
+            Debug.Log("CLAUDE_INTEGRATION_SET4 " + (changed ? "SAVED" : "VERIFIED") + "\n" + report);
+        }
+
+        // BODY-REST-HOOK berth: SleepBodyFrame beside the habitat's SleepCamera (the body writer's own authoring math),
+        // plus the composition's two references for the rest hook and the sleep camera lease. No camera, anchor or
+        // collider is moved.
+        private static bool ApplyRestBerth(GameObject[] roots, StringBuilder report)
+        {
+            var composition = ExactlyOne<I01MissionComposition>(roots);
+            Transform[] cameras = roots.SelectMany(r => r.GetComponentsInChildren<Transform>(true)).Where(t => t.name == "SleepCamera").ToArray();
+            if (cameras.Length != 1) throw new InvalidOperationException("Expected one habitat SleepCamera anchor, found " + cameras.Length);
+            Transform sleepCamera = cameras[0];
+            var serialized = new SerializedObject(composition);
+            SerializedProperty bodyProperty = serialized.FindProperty("sleepBodyFrame") ?? throw new InvalidOperationException("No sleepBodyFrame field.");
+            SerializedProperty cameraProperty = serialized.FindProperty("sleepCameraAnchor") ?? throw new InvalidOperationException("No sleepCameraAnchor field.");
+            Transform existing = sleepCamera.parent ? sleepCamera.parent.Find(OutOfReach.Presentation.Motion.Editor.ModelGaitBerthAuthoring.FrameName) : null;
+            Vector3 before = existing ? existing.localPosition : Vector3.positiveInfinity;
+            Quaternion beforeRotation = existing ? existing.localRotation : Quaternion.identity;
+            Transform frame = OutOfReach.Presentation.Motion.Editor.ModelGaitBerthAuthoring.CreateOrUpdate(sleepCamera);
+            bool frameChanged = !existing || (frame.localPosition - before).sqrMagnitude > 1e-10f || Quaternion.Angle(frame.localRotation, beforeRotation) > .001f;
+            bool referencesChanged = bodyProperty.objectReferenceValue != frame || cameraProperty.objectReferenceValue != sleepCamera;
+            if (referencesChanged)
+            {
+                bodyProperty.objectReferenceValue = frame;
+                cameraProperty.objectReferenceValue = sleepCamera;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+            }
+            Vector3 habitatLocal = sleepCamera.parent ? sleepCamera.parent.InverseTransformPoint(frame.position) : frame.position;
+            float yaw = (Quaternion.Inverse(sleepCamera.parent ? sleepCamera.parent.rotation : Quaternion.identity) * frame.rotation).eulerAngles.y;
+            // Body writer's measured berth convention: (-2.2326, 0.3086, 13.03), yaw 90 in habitat space.
+            if (Vector3.Distance(habitatLocal, new Vector3(-2.2326f, .3086f, 13.03f)) > .03f || Mathf.Abs(Mathf.DeltaAngle(yaw, 90f)) > 1f)
+                throw new InvalidOperationException("SleepBodyFrame differs from the measured berth convention: " + habitatLocal.ToString("F4") + " yaw " + yaw.ToString("F2"));
+            report.AppendLine("sleepBodyFrame=" + Path(frame) + " habitat " + habitatLocal.ToString("F4") + " yaw " + yaw.ToString("F2")
+                + (frameChanged ? " (created/updated)" : " (already)") + "; sleepCameraAnchor=" + Path(sleepCamera)
+                + (referencesChanged ? " (assigned)" : " (already)"));
+            return frameChanged || referencesChanged;
+        }
+
         public const string LaunchFxPrefabPath = "Assets/_OutOfReach/Visuals/LaunchFX_V03/LaunchFX_V03.prefab";
         private const string TrenchExitName = "LS_TrenchExit_Ground";
 

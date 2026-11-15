@@ -15,6 +15,7 @@
     "OutOfReach.Cinematics",
     "OutOfReach.Presentation.Lighting",
     "OutOfReach.Presentation.Motion",
+    "OutOfReach.Presentation.Motion.Editor",
     "OutOfReach.Presentation.Hands",
     "OutOfReach.Presentation.Habitat",
     "OutOfReach.Presentation.Cargo",
