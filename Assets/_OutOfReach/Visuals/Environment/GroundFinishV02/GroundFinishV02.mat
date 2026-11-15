@@ -19,7 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties:
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -58,10 +58,25 @@ Material:
     m_Ints: []
     m_Floats:
     - _Cull: 2
-    - _NormalStrength: 0.75
+    - _DatumY: -36.6
+    - _DetailHue: 0.12
+    - _DetailStrength: 0.7
+    - _GreenAmount: 0.5
+    - _HazeDensity: 0.00009
+    - _HazeFloor: 1400
+    - _NormalStrength: 0.7
+    - _Sheen: 0.25
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GrassDry: {r: 0.61, g: 0.57, b: 0.43, a: 1}
+    - _GrassGreen: {r: 0.44, g: 0.48, b: 0.3, a: 1}
+    - _GrassLush: {r: 0.33, g: 0.4, b: 0.22, a: 1}
+    - _HazeColor: {r: 0.42, g: 0.48, b: 0.58, a: 1}
+    - _HazeSunColor: {r: 0.85, g: 0.8, b: 0.72, a: 1}
+    - _Rock: {r: 0.58, g: 0.45, b: 0.34, a: 1}
+    - _RockDark: {r: 0.35, g: 0.28, b: 0.23, a: 1}
+    - _Scrub: {r: 0.3, g: 0.31, b: 0.19, a: 1}
     - _SiteOriginWS: {r: 10000, g: 100, b: 0, a: 0}
-    - _TileMetres: {r: 3.4, g: 2.6, b: 0, a: 0}
+    - _TileMetres: {r: 3.1, g: 11.7, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
