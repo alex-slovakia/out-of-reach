@@ -60,5 +60,7 @@ Alex asked for the radio lines that had no voice, and for a fresh Day-14 crash t
 - **Day-14 announcement:** `vo40_mc_rescue_lost_day14` speaks exactly the subtitle text, so it names no rendezvous
   day. It replaces the day-neutral cut above as the bound clip; the cut and the approved vo23 master stay in the
   repository, unbound.
-- **Review state:** not listened to and not transcript-audited when committed (`listening_audited: false`).
+- **Review state:** every transcript is machine-checked word for word (`transcript_audit` in `voices.json`); no clip
+  has been listened to by a human (`listening_audited: false`). The Day-14 take is the second one: the first was
+  transcribed as "is crashed" and discarded.
   Delete a WAV and re-run the installer to fall back to subtitles with the radio sound only for that line.

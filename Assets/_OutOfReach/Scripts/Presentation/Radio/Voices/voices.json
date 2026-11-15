@@ -1,5 +1,5 @@
 {
-  "status": "AI-generated radio voices for STORY-RADIO-01 (requested by Alex, 15 Nov 2026). Not yet listened to or approved by a human.",
+  "status": "AI-generated radio voices for STORY-RADIO-01 (requested by Alex, 15 Nov 2026). Every transcript is machine-checked word for word; no clip has been listened to or approved by a human yet.",
   "ai_generated": true,
   "disclosure": "Every clip in this manifest is synthetic speech generated with Google Gemini TTS. No human voice recording is used.",
   "processing": "None: each WAV is the exact generated master (24 kHz mono PCM16, dry). HandheldRadioPresenter band-limits the voice at runtime (high-pass 300 Hz, low-pass 3400 Hz, distortion 0.12) and adds squelch, key-up and the noise bed.",
@@ -35,9 +35,14 @@
       "speech_start_seconds": 0.302,
       "speech_end_seconds": 6.533,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true,
+        "note": "A second transcriber (gemini-flash-latest) heard \"abort\" for \"aboard\": listen to this one first."
+      }
     },
     {
       "cue": "vo31_crew_aurora_loud_clear",
@@ -65,9 +70,13 @@
       "speech_start_seconds": 0.223,
       "speech_end_seconds": 5.248,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-flash-latest, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo32_pad_radio_check",
@@ -95,9 +104,13 @@
       "speech_start_seconds": 0.323,
       "speech_end_seconds": 4.386,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo33_crew_pad_loud_clear",
@@ -125,9 +138,13 @@
       "speech_start_seconds": 0.301,
       "speech_end_seconds": 4.216,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-flash-latest, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo34_pad_strap_in",
@@ -155,9 +172,13 @@
       "speech_start_seconds": 0.258,
       "speech_end_seconds": 3.477,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-flash-latest, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo35_crew_mayday",
@@ -185,9 +206,13 @@
       "speech_start_seconds": 0.272,
       "speech_end_seconds": 8.179,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-flash-latest, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo36_crew_requesting_rescue",
@@ -215,9 +240,13 @@
       "speech_start_seconds": 0.011,
       "speech_end_seconds": 5.958,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo37_mc_earth_we_hear_you",
@@ -245,9 +274,13 @@
       "speech_start_seconds": 0.297,
       "speech_end_seconds": 4.722,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-flash-latest, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo38_mc_earth_rescue_day14",
@@ -275,9 +308,13 @@
       "speech_start_seconds": 0.199,
       "speech_end_seconds": 7.939,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo39_mc_priority_traffic",
@@ -305,9 +342,13 @@
       "speech_start_seconds": 0.192,
       "speech_end_seconds": 5.063,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true
+      }
     },
     {
       "cue": "vo40_mc_rescue_lost_day14",
@@ -322,22 +363,27 @@
       "style": "A grounded professional mission controller in an intimate cinematic space survival drama. Mature, low-register, calm, human and quietly reassuring. Clear neutral American English, deliberate natural pauses, about 145 words per minute. Speak with restrained feeling, not a trailer announcer. Dry close microphone, no music, no radio filter, no sound effects. Read the provided transcript exactly. This is grave news: the rescue has failed. Deliver it slowly with restrained sorrow and steady resolve, with weighted pauses between sentences.",
       "source": "Google Gemini TTS",
       "ai_generated": true,
-      "generated_utc": "2026-11-15T21:22:00Z",
-      "sha256": "7df0d4b11f733bb6eff235b916f6c6709f910059fe27708dc6bf004f814bea86",
+      "generated_utc": "2026-11-15T21:38:07Z",
+      "sha256": "cb442f9bc997ea2cdb40b5d8982e64b28cd60f888ec4382d680425512976be2b",
       "sample_rate": 24000,
       "channels": 1,
       "sample_width_bytes": 2,
-      "frames": 442560,
-      "duration_seconds": 18.44,
-      "peak_dbfs": -2.36,
-      "rms_dbfs": -22.63,
+      "frames": 408960,
+      "duration_seconds": 17.04,
+      "peak_dbfs": -1.74,
+      "rms_dbfs": -21.96,
       "clipped_samples": 0,
-      "speech_start_seconds": 0.201,
-      "speech_end_seconds": 18.276,
+      "speech_start_seconds": 0.169,
+      "speech_end_seconds": 16.608,
       "exact_source_bytes": true,
-      "transcript_audited": false,
+      "transcript_audited": true,
       "listening_audited": false,
-      "user_approved": false
+      "user_approved": false,
+      "transcript_audit": {
+        "method": "machine transcription of the WAV by gemini-3.6-flash, compared word for word with the transcript; not human listening",
+        "exact_normalized_words": true,
+        "note": "Second take. The first take was transcribed as \"The rescue vehicle is crashed\" and was discarded."
+      }
     }
   ]
 }
