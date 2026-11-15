@@ -55,6 +55,7 @@ namespace OutOfReach.Composition
         private Toggle reduced;
         private Label feedback;
         private PauseControlsView pauseControls;
+        private StartupCardPresenter startupCards;
         private Label communications;
         private VisualElement reportHost;
         private FlightRecorderPresenter recorder;
@@ -139,6 +140,13 @@ namespace OutOfReach.Composition
             if (root == null || !composition || !composition.Runtime || composition.Runtime.GameState == null)
                 return;
             root.BringToFront();
+            if (startupCards == null)
+            {
+                VisualElement host = root.parent;
+                startupCards = host?.Q<StartupCardPresenter>() ?? StartupCardPresenter.PlayOnce(
+                    host, composition.Cinematics && composition.Cinematics.ReducedEffects, font);
+            }
+            if (startupCards?.IsPlaying == true) startupCards.BringToFront();
             var state = composition.Runtime.GameState;
             bool planning = state.Phase == GamePhase.Planning;
             bool paused = composition.Runtime.IsPaused;
@@ -295,10 +303,6 @@ namespace OutOfReach.Composition
             reportHost.style.display = DisplayStyle.None;
             root.Add(reportHost);
             RefreshQuitButtons();
-            // R01: black startup cards over the opening menu, once per launch. They sit on top of this document root and
-            // swallow input until they finish or are skipped; the menu is already composed and silent underneath.
-            if (!StartupCardPresenter.HasPlayedThisLaunch)
-                StartupCardPresenter.PlayOnce(host, composition && composition.Cinematics && composition.Cinematics.ReducedEffects, font);
         }
 
         private void RefreshCommunications()
@@ -348,7 +352,7 @@ namespace OutOfReach.Composition
         private void OnPrimary()
         {
             // A closed menu's focused button must not start, resume or restart from a stray Enter in play.
-            if (!composition || !IsShown(primary)) return;
+            if (!composition || !CanUseMenu(primary)) return;
             if (showingMode) composition.StartTimedPlanning();
             else if (showingOutcome) composition.Restart();
             else composition.Resume();
@@ -357,7 +361,7 @@ namespace OutOfReach.Composition
 
         private void OnSecondary()
         {
-            if (!composition || !IsShown(secondary)) return;
+            if (!composition || !CanUseMenu(secondary)) return;
             if (showingMode) composition.StartPractice();
             else composition.Restart();
             composition.PlayMenuCue(true);
@@ -367,7 +371,7 @@ namespace OutOfReach.Composition
         {
             // A stray submit into a closed menu flips the toggle: put the shown value back and change nothing.
             // Programmatic SetValueWithoutNotify (Refresh) sends no change event and is never affected.
-            if (reduced != null && !IsShown(reduced))
+            if (reduced != null && !CanUseMenu(reduced))
             {
                 reduced.SetValueWithoutNotify(change.previousValue);
                 return;
@@ -423,7 +427,7 @@ namespace OutOfReach.Composition
         private void OnQuit(Button source)
         {
             // A hidden menu keeps no say: a button that kept keyboard focus after its menu closed must not arm or quit.
-            if (quitRequested || source == null || !source.enabledInHierarchy || !IsShown(source)) return;
+            if (quitRequested || source == null || !source.enabledInHierarchy || !CanUseMenu(source)) return;
             if (!quitConfirmation.Press(Time.unscaledTime, quitConfirmSeconds))
             {
                 // The first press only arms: one stray click never closes the game.
@@ -446,6 +450,8 @@ namespace OutOfReach.Composition
         // UI Toolkit still delivers submit (Enter, gamepad South) to a focused button inside a hidden menu. The menus are
         // hidden by inline display (Refresh) or the record's "recorder-hidden" class; both are current immediately,
         // unlike resolved styles, so a press right after a menu opens is never refused.
+        private bool CanUseMenu(VisualElement element) => startupCards?.IsPlaying != true && IsShown(element);
+
         private static bool IsShown(VisualElement element)
         {
             for (VisualElement current = element; current != null; current = current.parent)
@@ -490,6 +496,7 @@ namespace OutOfReach.Composition
             viewHydrated = false;
             heading = detail = feedback = communications = null;
             pauseControls = null;
+            startupCards = null;
             reportHost = null;
             primary = secondary = quit = recordQuit = null;
             reduced = null;
