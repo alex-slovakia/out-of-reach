@@ -1,5 +1,9 @@
 # Execution plan and status
 
+## Current increment — water locator and rest eyes
+
+`2b4931c` adds actual water-station direction/distance, curved rest eyelids, Wake reopening and reduced-motion fade. Isolated Unity 6000.3.28f1 passed69 scoped checks; [evidence](docs/verification/i06-rest-water-20261115/README.md). No body/belt animation or movement completion claim. Both outcome screens and current Sources are user-approved. [HyperFrames trailer TODO #10](https://github.com/alex-slovakia/out-of-reach/issues/10) is deferred until gameplay polish. Poly Haven asset curation/import is now explicitly authorized (free + commercial-compatible license only); root owns new imports/placement/ground finish, with exact external coordination to avoid duplicate modeling.
+
 ## Latest override — Sources without planets
 
 `1eb4b15`: Alex dropped the planet/orbit diagram. Removed the UI/runtime resources, retained NASA source disclosure, replaced the right scrollbar with conditional centered scroll arrows and an unboxed bottom-left Back. Isolated Unity 6000.3.28f1 exited 0 with 68 scoped checks and a native capture. [Evidence](docs/verification/i06-player-feedback-20261115/README.md). Movement remains external Claude scope. Earlier orbit descriptions below are historical.

@@ -1,0 +1,8 @@
+Saved Bootstrap, actual bound services and UI. Runtime opt-in + fresh StartSession; scene is not modified.
+Direct real launch/repair/EVA/transmission commands and AdvanceSimulation set up the chapter. No player movement/E-key playthrough claim.
+Initial Impact/FalseSignal use the real presenter's SkipActive acknowledgement. Transport uses public Skip; no ending sequence is exercised.
+DriveFromUpdate is off for deterministic setup and snapshots; enabled during the paused-rest freeze check. No state/phase/resource grants.
+Only the contact setup, water projection and rest/pause/Wake checks execute; no recovery/loss/full route. Projection uses a temporary test target, restored before captures.
+Buttons receive one real NavigationSubmit event. Hidden batch focus is established through the controller's normal focus-regain callback.
+Captures: 1280x720 existing camera + actual UIDocument; excludes overlay UGUI. No final capsule/Mars art acceptance claim.
+150-second wall watchdog. Existing full mission/movement smoke remains separate.
