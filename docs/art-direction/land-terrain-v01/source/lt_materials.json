@@ -1,0 +1,31 @@
+{
+ "materials": [
+  {
+   "name": "LT_Terrain",
+   "object": "LT_TerrainInner",
+   "unity": "URP Lit (opaque, metallic workflow). Base Map LT_Terrain_Macro (sRGB, Clamp) on UV0, tiling 1 1, colour white; Metallic 0; Smoothness 0.1; no base Normal Map. Detail Inputs: Mask none; Base Map LT_TerrainDetail_Albedo (sRGB, Repeat), scale 1; Normal Map LT_TerrainDetail_Normal (Texture Type Normal map, Repeat), scale 1; Tiling 1280 1280, Offset 0 0 (one 5 m tile).",
+   "maps": ["LT_Terrain_Macro.png", "LT_TerrainDetail_Albedo.png", "LT_TerrainDetail_Normal.png"],
+   "detail_tiling": 1280,
+   "smoothness": 0.1,
+   "fallback": "Tiled BaseMap only: Base Map LT_TerrainTile_BaseColor (sRGB, Repeat), Tiling 400 400 (one 16 m tile), colour white; Normal Map LT_TerrainDetail_Normal, scale 0.6 (same 16 m tiling); no Detail Inputs."
+  },
+  {
+   "name": "LT_TerrainFar",
+   "object": "LT_TerrainFar",
+   "unity": "URP Lit. Base Map LT_Terrain_Macro (the same texture asset, Clamp) on UV0, tiling 1 1, colour white; Metallic 0; Smoothness 0.08; no Normal Map, no Detail Inputs. The far ring's UV0 lies in the map's outer band.",
+   "maps": ["LT_Terrain_Macro.png"],
+   "smoothness": 0.08,
+   "fallback": "Base Map none, Base Color #7C7F57, Smoothness 0.08."
+  },
+  {
+   "name": "LT_Rock",
+   "object": "LT_Rocks",
+   "set": "LS_Concrete",
+   "tint": "#8C8579",
+   "tiling": 0.5,
+   "normal": 1.0,
+   "unity": "URP Lit with LAND's LS_Concrete maps (BaseColor sRGB, Normal, MODS: R metallic, G occlusion, A smoothness), Base Color #8C8579, tiling 0.5 per UV unit (UVs are world-scale, 1 UV = 1 m, so one tile is 2 m).",
+   "fallback": "Base Color #8C8579, Smoothness 0.15, no maps."
+  }
+ ]
+}

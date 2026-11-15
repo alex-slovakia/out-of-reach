@@ -1,0 +1,68 @@
+{
+ "pass": true,
+ "tolerance_m": 0.001,
+ "units": {
+  "LT_LandTerrain": {
+   "fbx": "LT_LandTerrain.fbx",
+   "objects_in_file": 7,
+   "checks": [
+    {
+     "object": "LT_TerrainInner",
+     "ok": true,
+     "triangles": 48212,
+     "expected": 48212
+    },
+    {
+     "object": "LT_TerrainFar",
+     "ok": true,
+     "triangles": 6212,
+     "expected": 6212
+    },
+    {
+     "object": "LT_Rocks",
+     "ok": true,
+     "triangles": 9400,
+     "expected": 9400
+    },
+    {
+     "anchor": "LT_Footprint_NW",
+     "ok": true,
+     "point": [
+      -72.0,
+      -36.6,
+      -62.0
+     ]
+    },
+    {
+     "anchor": "LT_Footprint_NE",
+     "ok": true,
+     "point": [
+      72.0,
+      -36.6,
+      -62.0
+     ]
+    },
+    {
+     "anchor": "LT_Footprint_SE",
+     "ok": true,
+     "point": [
+      72.0,
+      -36.6,
+      72.0
+     ]
+    },
+    {
+     "anchor": "LT_Footprint_SW",
+     "ok": true,
+     "point": [
+      -72.0,
+      -36.6,
+      72.0
+     ]
+    }
+   ]
+  }
+ },
+ "failures": [],
+ "blender": "5.3.0"
+}
