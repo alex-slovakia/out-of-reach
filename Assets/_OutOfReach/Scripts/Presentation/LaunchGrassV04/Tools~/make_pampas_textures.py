@@ -7,7 +7,9 @@ Outputs (next to the shaders, sRGB, alpha = coverage):
   PampasPlumesV04.png  1024x512   4 plume heads (256x512 cells), base at the bottom centre of each cell
   PampasClumpsV04.png  1024x1024  4 whole clumps (512x512 cells): leaf fountain, bare stalks, plume heads
   PampasTopsV04.png    512x512    4 clumps seen from above (256x256 cells): radiating leaves and seed heads
-  PampasTuftsV04.png   512x256    4 feathery branch tufts (128x256 cells) for the modeled seed heads' branch cards
+  PampasTuftsV04.png   1024x256   left half: 4 feathery branch tufts (128x256 cells) for the modeled seed heads'
+                                  branch cards; right half: 2 ground mats (256x256), litter and short grass seen
+                                  from above, laid under every modeled clump so no bare soil shows between plants
 
 Usage:  python make_pampas_textures.py <output folder>
 Needs numpy and Pillow only.
@@ -211,6 +213,41 @@ def tuft_cell(seed):
     return cv.finish()
 
 
+LITTER = ((0.27, 0.22, 0.13), (0.45, 0.37, 0.21), (0.60, 0.51, 0.31))
+
+
+def mat_cell(seed):
+    """Ground cover seen from above: dead leaves and stems lying flat, denser towards the centre, with short
+    grass rosettes. Painted dark: it is lit like a seed head by the shader and sits in the plants' shade."""
+    rng = np.random.default_rng(seed)
+    cv = Canvas(256, 256)
+    cx = cy = 128
+    for _ in range(1500):
+        r = 120 * np.sqrt(rng.random()) * rng.uniform(.72, 1)
+        ang = rng.uniform(0, 2 * np.pi)
+        x0, y0 = cx + np.cos(ang) * r, cy + np.sin(ang) * r
+        heading = ang + rng.normal(0, .95)
+        length = rng.uniform(16, 50) * (1 - .4 * r / 120)
+        m = 6
+        s = np.linspace(0, 1, m)
+        a = heading + rng.uniform(-.5, .5) * s
+        x = x0 + np.cumsum(np.cos(a)) * length / m
+        y = y0 + np.cumsum(np.sin(a)) * length / m
+        col = np.array(LITTER[rng.choice(3, p=[.5, .35, .15])]) * rng.uniform(.85, 1.1)
+        cv.stroke(np.stack([x, y], 1), rng.uniform(3.0, 6.0), 1.2, .97, .92, col * .92, col)
+    for _ in range(36):
+        r = 104 * np.sqrt(rng.random())
+        ang = rng.uniform(0, 2 * np.pi)
+        x0, y0 = cx + np.cos(ang) * r, cy + np.sin(ang) * r
+        tone = rng.uniform(.85, 1.1)
+        for _ in range(int(rng.integers(7, 11))):
+            a = rng.uniform(0, 2 * np.pi)
+            length = rng.uniform(8, 20)
+            cv.stroke([(x0, y0), (x0 + np.cos(a) * length, y0 + np.sin(a) * length)], 1.7, .5, .95, .8,
+                      np.array((0.31, 0.32, 0.14)) * tone, np.array((0.48, 0.45, 0.22)) * tone)
+    return cv.finish()
+
+
 def save(cells, cols, path):
     rows = [np.concatenate(cells[r * cols:(r + 1) * cols], axis=1) for r in range(len(cells) // cols)]
     img = np.concatenate(rows, axis=0)
@@ -223,4 +260,6 @@ if __name__ == '__main__':
     save([plume_cell(s) for s in (11, 12, 13, 14)], 4, out + '/PampasPlumesV04.png')
     save([clump_cell(s) for s in (21, 22, 23, 24)], 2, out + '/PampasClumpsV04.png')
     save([top_cell(s) for s in (31, 32, 33, 34)], 2, out + '/PampasTopsV04.png')
-    save([tuft_cell(s) for s in (41, 42, 43, 44)], 4, out + '/PampasTuftsV04.png')
+    tufts = np.concatenate([tuft_cell(s) for s in (41, 42, 43, 44)], axis=1)
+    mats = np.concatenate([mat_cell(s) for s in (51, 52)], axis=1)
+    save([np.concatenate([tufts, mats], axis=1)], 1, out + '/PampasTuftsV04.png')

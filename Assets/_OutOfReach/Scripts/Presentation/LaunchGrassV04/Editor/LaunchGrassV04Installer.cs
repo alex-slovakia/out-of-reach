@@ -216,7 +216,7 @@ namespace OutOfReach.Presentation.LaunchGrassV04.Editor
             if (!PampasGrassMeshes.HasClumpChannels(mesh))
                 throw new InvalidOperationException(name + " lacks the normal/uv0/uv1/uv2 channels the grass shader reads.");
             Bounds b = mesh.bounds;
-            if (b.min.y < -.03f || b.max.y < .95f || b.max.y > 1.05f || b.size.x > 2.4f || b.size.z > 2.4f)
+            if (b.min.y < -.03f || b.max.y < .95f || b.max.y > 1.05f || b.size.x > 3f || b.size.z > 3f)
                 throw new InvalidOperationException(name + " is not the unit-height Y-up clump (bounds " + b + ").");
             return mesh;
         }

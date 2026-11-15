@@ -13,8 +13,9 @@ namespace OutOfReach.Presentation.LaunchGrassV04
     {
         public const float PartCap = .9f, PartCard = 1f;
 
-        /// <summary>Far card: two crossed vertical quads, three bend segments each, and a horizontal cap at 55 % of
-        /// the height that carries the plant seen from above (14 triangles). Unit height.</summary>
+        /// <summary>Far card: two crossed vertical quads, three bend segments each, a horizontal cap at 55 % of the
+        /// height that carries the plant seen from above, and the same rosette once more at ground level so no bare
+        /// soil shows between distant plants (16 triangles). Unit height.</summary>
         public static Mesh BuildFarCard()
         {
             var p = new List<Vector3>(); var uv = new List<Vector2>(); var attr = new List<Vector2>(); var bend = new List<Vector2>();
@@ -40,13 +41,19 @@ namespace OutOfReach.Presentation.LaunchGrassV04
                     t.Add(a); t.Add(a + 2); t.Add(a + 1); t.Add(a + 1); t.Add(a + 2); t.Add(a + 3);
                 }
             }
-            int cap = p.Count;
-            for (int k = 0; k < 4; k++)
+            for (int layer = 0; layer < 2; layer++)
             {
-                p.Add(new Vector3((k & 1) == 0 ? -.62f : .62f, .55f, (k & 2) == 0 ? -.62f : .62f));
-                uv.Add(new Vector2((k & 1) == 0 ? 0 : 1, (k & 2) == 0 ? 0 : 1)); attr.Add(new Vector2(PartCap, .37f)); bend.Add(new Vector2(1, 0));
+                // layer 0: the cap in the canopy; layer 1: a wider rosette lying on the ground.
+                float half = layer == 0 ? .62f : .8f, y = layer == 0 ? .55f : .015f;
+                int cap = p.Count;
+                for (int k = 0; k < 4; k++)
+                {
+                    p.Add(new Vector3((k & 1) == 0 ? -half : half, y, (k & 2) == 0 ? -half : half));
+                    uv.Add(new Vector2((k & 1) == 0 ? 0 : 1, (k & 2) == 0 ? 0 : 1));
+                    attr.Add(new Vector2(PartCap, layer == 0 ? .37f : .71f)); bend.Add(new Vector2(layer == 0 ? 1 : 0, 0));
+                }
+                t.Add(cap); t.Add(cap + 2); t.Add(cap + 1); t.Add(cap + 1); t.Add(cap + 2); t.Add(cap + 3);
             }
-            t.Add(cap); t.Add(cap + 2); t.Add(cap + 1); t.Add(cap + 1); t.Add(cap + 2); t.Add(cap + 3);
             var normals = new List<Vector3>(p.Count);
             for (int i = 0; i < p.Count; i++) normals.Add(Vector3.up);
             var mesh = new Mesh { name = "Pampas clump V04 (far card)", hideFlags = HideFlags.DontSave };

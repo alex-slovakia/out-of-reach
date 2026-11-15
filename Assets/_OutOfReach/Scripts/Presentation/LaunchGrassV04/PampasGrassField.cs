@@ -303,12 +303,13 @@ namespace OutOfReach.Presentation.LaunchGrassV04
             for (int k = list.Count - 1; k > 0; k--) { int swap = rng.Next(k + 1); (list[k], list[swap]) = (list[swap], list[k]); }
         }
 
-        /// <summary>World bounds of a group of clumps: roots plus the tallest clump (2.9 m) leaning fully over.</summary>
+        /// <summary>World bounds of a group of clumps: roots plus the tallest clump (2.9 m, ground cover out to
+        /// about 3.5 m) leaning fully over.</summary>
         private static Bounds PlantBounds(List<Vector4> roots)
         {
             var bounds = new Bounds(roots[0], Vector3.zero);
             foreach (Vector4 v in roots) bounds.Encapsulate(v);
-            bounds.Expand(new Vector3(6f, 0f, 6f));
+            bounds.Expand(new Vector3(8f, 0f, 8f));
             bounds.max += Vector3.up * 3.1f;
             return bounds;
         }

@@ -1,17 +1,22 @@
 """LAUNCH-GRASS-V04: the modeled pampas clump (original geometry, generated from scratch).
 
 Run with Blender 3.6 in background mode:
-    blender -b -P make_pampas_models.py -- <output folder> [<preview.png>]
+    blender -b -P make_pampas_models.py -- <output folder> [<preview.png> [<texture folder>]]
 Writes PampasClumpV04.fbx (objects PampasClump_LOD0 and PampasClump_LOD1) and PampasClumpV04.blend.
+With a preview path it renders the two models (Workbench); with the texture folder as well it also renders a
+scattered field with the real atlases in Eevee (<preview>_field_*.png), a stand-in for the engine look.
 
 The clump is modeled at unit height (the tallest seed head tip is at z = 1; the shader scales each instance):
   - a fountain of leaf blades: creased, twisting ribbons that climb, arch over and hang (plus a few dry ones);
+  - ground cover, so no bare soil shows between plants: mats of litter and short grass under the clump (flat
+    quads from the right half of PampasTuftsV04.png), dead leaves lying around it, and tufts of short
+    understory grass out to about one clump height from the centre;
   - bare culms (three-sided tubes) of different heights, nodding at the top;
   - seed heads modeled as a volume: two crossed core cards along the rachis and, spiralling around it at the
     golden angle, many small drooping branch cards that each carry one feathery tuft.
 Vertex data:
   UVMap  texture coordinates (atlas cells are chosen here, per card)
-  Attr   x = part: 0 leaf, .33 culm, .5 branch card (PampasTuftsV04.png), .66 core card (PampasPlumesV04.png)
+  Attr   x = part: 0 leaf, .33 culm, .5 branch card or ground mat (PampasTuftsV04.png), .66 core card (PampasPlumesV04.png)
          y = per-part random 0..1 (tone variation; leaves above .85 are dry)
   Bend   x = wind bend weight 0..1
 Normals: blades carry their creased surface normals; seed-head cards carry normals that radiate from the
@@ -68,9 +73,11 @@ def rotate(v, axis, angle):
     return Matrix.Rotation(angle, 3, axis) @ v
 
 
-def leaf(b, rng, az, r0, pitch0, length, bend_deg, w0, twist, segs, creased, rnd, wind):
+def leaf(b, rng, az, r0, pitch0, length, bend_deg, w0, twist, segs, creased, rnd, wind, origin=None):
     pts = []
     p = Vector((math.cos(az) * r0, math.sin(az) * r0, 0))
+    if origin is not None:
+        p = p + origin
     wander = math.radians(rng.uniform(-22, 22))
     for i in range(segs + 1):
         s = i / segs
@@ -188,12 +195,23 @@ def head(b, rng, base, direction, nod_dir, length, rnd, branch_cards, core_segs,
             hw = blen * .40 * (.3 + 1.4 * s - .85 * s * s)          # pointed base, widest past the middle
             nrm = radial * .75 + tg * .15 + Z * .3
             u0, u1 = (1, 0) if mirror else (0, 1)
-            rows.append((b.vert(q - w * hw, nrm, ((tuft + u0) / 4, s), PART_TUFT, tone, 1.0),
-                         b.vert(q + w * hw, nrm, ((tuft + u1) / 4, s), PART_TUFT, tone, 1.0)))
+            rows.append((b.vert(q - w * hw, nrm, ((tuft + u0) / 8, s), PART_TUFT, tone, 1.0),
+                         b.vert(q + w * hw, nrm, ((tuft + u1) / 8, s), PART_TUFT, tone, 1.0)))
             q = q + dd * (blen / card_segs)
         for i in range(card_segs):
             b.quad(rows[i][0], rows[i][1], rows[i + 1][1], rows[i + 1][0])
     return pts
+
+
+def ground_mat(b, rng, radius, z, cell, rnd):
+    """A flat quad of litter and short grass (one of the two mat cells in the right half of the tuft atlas)."""
+    yaw = rng.uniform(0, math.tau)
+    c, s = math.cos(yaw), math.sin(yaw)
+    corners = []
+    for cx, cy in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
+        p = Vector(((cx * c - cy * s) * radius, (cx * s + cy * c) * radius, z))
+        corners.append(b.vert(p, Z, (.5 + (cell + cx * .5 + .5) / 4, cy * .5 + .5), PART_TUFT, rnd, 0.0))
+    b.quad(*corners)
 
 
 def clump(seed, lod):
@@ -201,7 +219,7 @@ def clump(seed, lod):
     b = Builder()
     detailed = lod == 0
     # ---- leaves ----
-    count = 46 if detailed else 18
+    count = 56 if detailed else 22
     for i in range(count):
         az = (i + rng.uniform(0, 1)) / count * math.tau
         inner = rng.random()                                   # 0 = outer, long and hanging; 1 = inner, upright
@@ -218,6 +236,26 @@ def clump(seed, lod):
         leaf(b, rng, az, rng.uniform(.03, .1), rng.uniform(25, 50), rng.uniform(.35, .6), rng.uniform(70, 130),
              .011 * (1.0 if detailed else 1.75), math.radians(rng.uniform(-160, 160)),
              5 if detailed else 3, detailed, rng.uniform(.86, 1.0), .6)
+    # ---- ground cover: mats, litter (dead leaves lying flat) and short understory grass around the clump ----
+    ground_mat(b, rng, .66, .010, 0, rng.uniform(.25, .6))
+    if detailed:
+        ground_mat(b, rng, .50, .022, 1, rng.uniform(.4, .8))
+    for i in range(36 if detailed else 14):
+        az = rng.uniform(0, math.tau)
+        heading = az + rng.uniform(-.9, .9)
+        r0 = rng.uniform(.04, .5)
+        start = Vector((math.cos(az) * r0, math.sin(az) * r0, rng.uniform(.004, .02)))
+        leaf(b, rng, heading, 0.0, rng.uniform(1, 8), rng.uniform(.3, .62), rng.uniform(5, 30),
+             rng.uniform(.017, .027) * (1.0 if detailed else 1.5), math.radians(rng.uniform(-40, 40)),
+             3 if detailed else 2, False, rng.uniform(.3, 1.0), .12, origin=start)
+    for i in range(30 if detailed else 10):
+        az = rng.uniform(0, math.tau)
+        r = .20 + .62 * rng.random() ** .8
+        centre = Vector((math.cos(az) * r, math.sin(az) * r, -.012))
+        for k in range(6 if detailed else 3):
+            leaf(b, rng, rng.uniform(0, math.tau), rng.uniform(.0, .025), rng.uniform(52, 86), rng.uniform(.14, .34),
+                 rng.uniform(25, 95), rng.uniform(.007, .0105) * (1.0 if detailed else 1.9), math.radians(rng.uniform(-60, 60)),
+                 2 if detailed else 1, False, rng.uniform(0, .95), .8, origin=centre)
     # ---- culms and seed heads ----
     stems = 9 if detailed else 7
     tips = []
@@ -308,6 +346,144 @@ def preview(path, objects):
     bpy.data.objects.remove(cam)
 
 
+def field_preview(prefix, lod0, lod1, tex_dir):
+    """A scattered field with the real atlases in Eevee: checks ground cover, density and the look without Unity."""
+    scene = bpy.context.scene
+    scene.render.engine = 'BLENDER_EEVEE'
+    scene.eevee.use_gtao = True
+    scene.eevee.use_soft_shadows = True
+    scene.eevee.taa_render_samples = 24
+    scene.eevee.shadow_cascade_size = '2048'
+    scene.render.resolution_x, scene.render.resolution_y = 1600, 900
+    mat = bpy.data.materials.new("PampasPreview")
+    mat.use_nodes = True
+    mat.blend_method = 'CLIP'; mat.alpha_threshold = .4; mat.shadow_method = 'CLIP'; mat.use_backface_culling = False
+    nt = mat.node_tree; nodes = nt.nodes; links = nt.links
+    nodes.clear()
+    out = nodes.new('ShaderNodeOutputMaterial')
+    bsdf = nodes.new('ShaderNodeBsdfPrincipled')
+    bsdf.inputs['Roughness'].default_value = .9
+    bsdf.inputs['Specular'].default_value = .05
+    trans = nodes.new('ShaderNodeBsdfTranslucent')
+    mixs = nodes.new('ShaderNodeMixShader')
+    links.new(bsdf.outputs['BSDF'], mixs.inputs[1]); links.new(trans.outputs['BSDF'], mixs.inputs[2])
+    clear = nodes.new('ShaderNodeBsdfTransparent')
+    cut = nodes.new('ShaderNodeMixShader')                      # coverage: transparent where the atlas is empty
+    links.new(clear.outputs['BSDF'], cut.inputs[1]); links.new(mixs.outputs['Shader'], cut.inputs[2])
+    links.new(cut.outputs['Shader'], out.inputs['Surface'])
+    uv0 = nodes.new('ShaderNodeUVMap'); uv0.uv_map = "UVMap"
+    attr = nodes.new('ShaderNodeUVMap'); attr.uv_map = "Attr"
+    sep = nodes.new('ShaderNodeSeparateXYZ'); links.new(attr.outputs['UV'], sep.inputs[0])
+    sepuv = nodes.new('ShaderNodeSeparateXYZ'); links.new(uv0.outputs['UV'], sepuv.inputs[0])
+
+    def image(name):
+        n = nodes.new('ShaderNodeTexImage')
+        n.image = bpy.data.images.load(tex_dir + "/" + name)
+        n.extension = 'CLIP'
+        links.new(uv0.outputs['UV'], n.inputs['Vector'])
+        return n
+
+    def math_node(op, a, b=None, value=None):
+        n = nodes.new('ShaderNodeMath'); n.operation = op
+        links.new(a, n.inputs[0])
+        if b is not None: links.new(b, n.inputs[1])
+        if value is not None: n.inputs[1].default_value = value
+        return n.outputs[0]
+
+    def mix(fac, a, b):
+        n = nodes.new('ShaderNodeMixRGB')
+        links.new(fac, n.inputs['Fac'])
+        if isinstance(a, tuple): n.inputs['Color1'].default_value = a
+        else: links.new(a, n.inputs['Color1'])
+        if isinstance(b, tuple): n.inputs['Color2'].default_value = b
+        else: links.new(b, n.inputs['Color2'])
+        return n.outputs['Color']
+
+    tuft, plume = image("PampasTuftsV04.png"), image("PampasPlumesV04.png")
+    is_head = math_node('GREATER_THAN', sep.outputs['X'], value=.42)
+    is_core = math_node('GREATER_THAN', sep.outputs['X'], value=.58)
+    is_dry = math_node('GREATER_THAN', sep.outputs['Y'], value=.85)
+    head_col = mix(is_core, tuft.outputs['Color'], plume.outputs['Color'])
+    head_alpha = mix(is_core, tuft.outputs['Alpha'], plume.outputs['Alpha'])
+    ramp = nodes.new('ShaderNodeValToRGB')
+    ramp.color_ramp.elements[0].color = (.022, .020, .005, 1)
+    ramp.color_ramp.elements[1].color = (.12, .08, .025, 1)
+    links.new(sepuv.outputs['Y'], ramp.inputs['Fac'])
+    leaf_col = mix(is_dry, ramp.outputs['Color'], (.27, .19, .065, 1))
+    # self-shadowed bases: darker near the ground (object space z is the clump height fraction)
+    tc = nodes.new('ShaderNodeTexCoord')
+    sepo = nodes.new('ShaderNodeSeparateXYZ'); links.new(tc.outputs['Object'], sepo.inputs[0])
+    ao = nodes.new('ShaderNodeMapRange'); ao.inputs['From Min'].default_value = 0; ao.inputs['From Max'].default_value = .35
+    ao.inputs['To Min'].default_value = .42; ao.inputs['To Max'].default_value = 1
+    links.new(sepo.outputs['Z'], ao.inputs['Value'])
+    shaded = nodes.new('ShaderNodeMixRGB'); shaded.blend_type = 'MULTIPLY'; shaded.inputs['Fac'].default_value = 1
+    links.new(leaf_col, shaded.inputs['Color1']); links.new(ao.outputs['Result'], shaded.inputs['Color2'])
+    head_scaled = nodes.new('ShaderNodeMixRGB'); head_scaled.blend_type = 'MULTIPLY'; head_scaled.inputs['Fac'].default_value = 1
+    links.new(head_col, head_scaled.inputs['Color1']); head_scaled.inputs['Color2'].default_value = (.3, .29, .27, 1)
+    colour = mix(is_head, shaded.outputs['Color'], head_scaled.outputs['Color'])
+    alpha = mix(is_head, (1, 1, 1, 1), head_alpha)
+    links.new(colour, bsdf.inputs['Base Color']); links.new(colour, trans.inputs['Color'])
+    links.new(alpha, cut.inputs['Fac'])
+    half = math_node('MULTIPLY', is_head, value=.45)
+    links.new(half, mixs.inputs['Fac'])
+    for mesh in (lod0.data, lod1.data):
+        mesh.materials.clear(); mesh.materials.append(mat)
+
+    ground_mat = bpy.data.materials.new("Ground"); ground_mat.use_nodes = True
+    g = ground_mat.node_tree.nodes['Principled BSDF']
+    g.inputs['Base Color'].default_value = (.36, .28, .14, 1); g.inputs['Roughness'].default_value = 1; g.inputs['Specular'].default_value = 0
+    bpy.ops.mesh.primitive_plane_add(size=600, location=(0, 0, 0))
+    bpy.context.active_object.data.materials.append(ground_mat)
+
+    rng = random.Random(7)
+    lod0.hide_render = lod1.hide_render = True
+    spacing = 1.15
+    n = int(40 / spacing)
+    count = 0
+    for j in range(n):
+        for i in range(-n, n + 1):
+            x = (i + rng.random()) * spacing; y = (j + rng.random()) * spacing + .9
+            r = math.hypot(x, y)
+            if r > 38 or abs(math.atan2(x, y)) > math.radians(50) or rng.random() < .1:
+                continue
+            src = lod0 if r < 11 else lod1
+            o = bpy.data.objects.new("c", src.data)
+            height = lerp(1.05, 2.35, min(1.0, max(0.0, rng.random() * .4 + rng.random() * .75 - .1)))
+            if rng.random() > .88: height *= 1.22
+            o.location = (x, y, -.04)
+            o.rotation_euler = (rng.uniform(-.1, .1), rng.uniform(-.1, .1), rng.uniform(0, math.tau))
+            w = height * rng.uniform(.9, 1.15)
+            o.scale = (w, w, height)
+            scene.collection.objects.link(o)
+            count += 1
+    print("PAMPAS_FIELD_PREVIEW clumps=%d" % count)
+
+    scene.world = bpy.data.worlds.new("Sky"); scene.world.use_nodes = True
+    bg = scene.world.node_tree.nodes['Background']
+    bg.inputs['Color'].default_value = (.36, .50, .78, 1); bg.inputs['Strength'].default_value = 1.1
+    sun_data = bpy.data.lights.new("Sun", 'SUN'); sun_data.energy = 5.0; sun_data.color = (1, .87, .69); sun_data.angle = math.radians(3)
+    sun = bpy.data.objects.new("Sun", sun_data); scene.collection.objects.link(sun)
+    cam_data = bpy.data.cameras.new("Field"); cam_data.lens = 20; cam_data.clip_end = 2000
+    cam = bpy.data.objects.new("Field", cam_data); scene.collection.objects.link(cam); scene.camera = cam
+
+    def aim(obj, origin, target):
+        obj.location = origin
+        obj.rotation_euler = (Vector(target) - Vector(origin)).to_track_quat('-Z', 'Y').to_euler()
+
+    def sun_from(azimuth_deg):                                   # azimuth measured from +Y towards +X; elevation 18 degrees
+        az, el = math.radians(azimuth_deg), math.radians(18)
+        d = Vector((math.sin(az) * math.cos(el), math.cos(az) * math.cos(el), math.sin(el)))   # towards the sun
+        sun.rotation_euler = d.to_track_quat('Z', 'Y').to_euler()
+
+    shots = (("backlit", 12, (0, 0, 1.55), (0, 14, 1.9)), ("crosslit", 100, (0, 0, 1.55), (0, 12, 1.0)),
+             ("lookdown", 100, (0, 0, 1.6), (0, 3.6, 0.1)), ("frontlit", 190, (0, 0, 1.55), (0, 12, 1.0)))
+    for name, azimuth, origin, target in shots:
+        sun_from(azimuth)
+        aim(cam, origin, target)
+        scene.render.filepath = prefix + "_field_" + name + ".png"
+        bpy.ops.render.render(write_still=True)
+
+
 def main():
     args = sys.argv[sys.argv.index("--") + 1:]
     out = args[0]
@@ -330,6 +506,8 @@ def main():
     if len(args) > 1:
         preview(args[1], objects)
     bpy.ops.wm.save_as_mainfile(filepath=out + "/PampasClumpV04.blend", check_existing=False)
+    if len(args) > 2:
+        field_preview(args[1].rsplit('.', 1)[0], objects[0], objects[1], args[2])
 
 
 main()
