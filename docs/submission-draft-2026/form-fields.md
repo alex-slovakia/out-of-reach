@@ -88,7 +88,7 @@ TOOLS, LANGUAGES, HARDWARE, SOFTWARE
 Unity 6000.3.28f1 with the Universal Render Pipeline, Input System, Timeline, UI Toolkit and the Unity Test Framework; C#; Windows x64. Blender 5.3 and 3.6 driven by Python for the original 3D models; Python 3 with NumPy and Pillow for procedural textures and data checks; FFmpeg for audio; Git, Git LFS and GitHub. AI coding assistants Claude Code (Anthropic) and OpenAI Codex helped write code, procedural assets and documentation under our direction; all dialogue uses synthetic voices from Google Gemini text-to-speech. Third-party music, models, textures and fonts are credited in the references. Developed and tested on Windows PCs.
 ```
 
-Short version (≈560 words), only if the form refuses the full text:
+Short version (491 words, 2,948 characters), only if the form refuses the full text:
 
 ```text
 WHAT IT DOES
