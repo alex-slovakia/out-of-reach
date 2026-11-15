@@ -52,8 +52,13 @@ namespace OutOfReach.Core
             MissionPlanner planner,
             ResourceLedger resources,
             SimulationClock clock,
-            CinematicCoordinator cinematics, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null)
+            CinematicCoordinator cinematics, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null, bool chapterLoop = false)
         {
+            if (chapterLoop && !survivalExtension)
+            {
+                throw new ArgumentException("The chapter loop needs the survival extension.", nameof(chapterLoop));
+            }
+
             this.definition = definition ?? throw new ArgumentNullException(nameof(definition));
             this.events = events ?? throw new ArgumentNullException(nameof(events));
             this.state = state ?? throw new ArgumentNullException(nameof(state));
@@ -100,10 +105,19 @@ namespace OutOfReach.Core
                 IsLinkPowered,
                 events.DeferDispatch);
             Survival = new SurvivalExtension(survivalExtension, survivalSpec, definition.CrewCount, events, state,
-                resources, clock, cinematics, HasGrowingConditions, RefreshRates, Journal.Record);
+                resources, clock, cinematics, HasGrowingConditions, OnSurvivalModified, Journal.Record);
             SurvivalRecovery = survivalExtension
                 ? new SurvivalRecovery(definition.CrewCount, events, state, resources, clock, cinematics, Survival, Calendar,
                     () => IsBrownout, RefreshRates, Journal.Record, reason => TryEndMission(MissionOutcome.Recovered, reason))
+                : null;
+            if (chapterLoop)
+            {
+                SurvivalRecovery.EndMissedRendezvous = reason => TryEndMission(MissionOutcome.Lost, reason);
+            }
+
+            ChapterFlow = chapterLoop
+                ? new MissionChapterFlow(events, state, resources, clock, cinematics, Survival, SurvivalRecovery, Systems, Eva,
+                    FieldModifications, Calendar, IsLinkPowered, Journal.Record)
                 : null;
             state.SetTransitionGuard(CheckTransition);
             events.PhaseChanged += OnPhaseChanged;
@@ -123,6 +137,9 @@ namespace OutOfReach.Core
 
         /// <summary>Rest and the fictional recovery timeline; null when the survival extension is disabled.</summary>
         public SurvivalRecovery SurvivalRecovery { get; }
+
+        /// <summary>The approved day 1-30 chapter loop; null unless enabled.</summary>
+        public MissionChapterFlow ChapterFlow { get; }
 
         /// <summary>The link to Earth: reference distance, light time, the one transmission and the reply timer.</summary>
         public CommunicationSystem Communications { get; }
@@ -311,6 +328,11 @@ namespace OutOfReach.Core
                 boundary = Math.Min(boundary, SurvivalRecovery.TimeToNextBoundary());
             }
 
+            if (ChapterFlow != null)
+            {
+                boundary = Math.Min(boundary, ChapterFlow.TimeToNextBoundary());
+            }
+
             return Math.Min(boundary, Communications.TimeToNextBoundary());
         }
 
@@ -326,6 +348,7 @@ namespace OutOfReach.Core
             TrackPeakCarbonDioxide();
             EvaluateSurvival();
             SurvivalRecovery?.AfterStep();
+            ChapterFlow?.AfterStep();
             if (!state.IsSimulationRunning)
             {
                 return;
@@ -341,6 +364,7 @@ namespace OutOfReach.Core
                         Survival.Begin();
                         clock.TrySetTimeScale(Survival.Spec.TimeScale);
                         SurvivalRecovery?.BeginRecovery();
+                        ChapterFlow?.OnContact();
                     }
                 }
                 else TryEndMission(MissionOutcome.RecoveryPossible, DescribeRecovery());
@@ -355,6 +379,7 @@ namespace OutOfReach.Core
             }
 
             disposed = true;
+            ChapterFlow?.Dispose();
             Survival.Dispose();
             SurvivalRecovery?.Dispose();
             events.PhaseChanged -= OnPhaseChanged;
@@ -363,11 +388,19 @@ namespace OutOfReach.Core
             state.SetTransitionGuard(null);
         }
 
+        /// <summary>After a survival change (portion accounting started, module built/planted/stopped, crop event).</summary>
+        private void OnSurvivalModified()
+        {
+            RefreshRates();
+            ChapterFlow?.OnSurvivalModified();
+        }
+
         /// <summary>After a salvage, a built or an installed cartridge: same model, same rules, immediately.</summary>
         private void OnFieldModified()
         {
             RefreshRates();
             EvaluateSurvival();
+            ChapterFlow?.OnFieldModified();
         }
 
         private void OnFalseSignalFinished(CinematicCompletion completion)
@@ -378,9 +411,9 @@ namespace OutOfReach.Core
         private void OnImpactSequenceFinished(CinematicCompletion completion)
         {
             impactSequenceFinished = true;
-            if (state.Phase == GamePhase.Intro)
+            if (state.Phase == GamePhase.Intro && state.TryTransition(GamePhase.Emergency).Succeeded)
             {
-                state.TryTransition(GamePhase.Emergency);
+                ChapterFlow?.OnEmergencyBegan();
             }
         }
 
@@ -451,6 +484,7 @@ namespace OutOfReach.Core
         private void OnMissionEnded(MissionEnded message)
         {
             SurvivalRecovery?.OnMissionEnded();
+            ChapterFlow?.OnMissionEnded();
             double endedAt = state.EndedAtSimulationSeconds ?? state.ElapsedSimulationSeconds;
             Journal.Record(endedAt, message.Outcome == MissionOutcome.RecoveryPossible
                 ? "Mission outcome: recovery possible."

@@ -23,6 +23,7 @@ namespace OutOfReach.Presentation.UI
         private Camera guidanceCamera;
         private Transform waterTarget;
         private Func<bool> reducedMotion;
+        private Func<bool> restPresentationOwner;
         private VisualElement presentationLayer;
         private SurvivalRestEyes restEyes;
         private SurvivalWakeTitle wakeTitle;
@@ -66,6 +67,17 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
+        /// <summary>
+        /// Optional (CHAPTER-UI-01): while this returns true another presenter owns rest presentation (the chapter
+        /// routine montage). No rest overlay, eyelids, rest notice or wake title is shown, and no wake that happened
+        /// meanwhile is replayed afterwards. Null keeps the previous behaviour.
+        /// </summary>
+        public void ConfigureRestPresentationOwner(Func<bool> ownedElsewhere)
+        {
+            restPresentationOwner = ownedElsewhere;
+            RefreshPresentation();
+        }
+
         public void ClearBinding()
         {
             Unsubscribe();
@@ -79,6 +91,7 @@ namespace OutOfReach.Presentation.UI
             guidanceCamera = null;
             waterTarget = null;
             reducedMotion = null;
+            restPresentationOwner = null;
             state = null;
             clock = null;
             presentationAllowed = null;
@@ -122,16 +135,18 @@ namespace OutOfReach.Presentation.UI
 
         public void RefreshPresentation()
         {
-            ObserveRestTransition();
-            restNotice.Observe(survival != null && survival.Enabled && survival.IsActive
-                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None,
+            bool owned = RestOwnedElsewhere();
+            ObserveRestTransition(owned);
+            restNotice.Observe(!owned && survival != null && survival.Enabled && survival.IsActive
+                && state != null && SurvivalChapterReadout.InSurvivalPhase(state.Phase) && state.Outcome == MissionOutcome.None,
                 recovery != null && recovery.IsResting, recovery?.LastRestStop ?? RestStopReason.None);
             bool visible = CanPresent();
-            restEyes?.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
+            bool restShown = !owned && recovery != null && recovery.IsResting;
+            restEyes?.Observe(restShown, reducedMotion?.Invoke() ?? false);
             if (!visible) { HideViews(); return; }
             if (!EnsureViews()) return;
             Show(presentationLayer, true);
-            restEyes.Observe(recovery != null && recovery.IsResting, reducedMotion?.Invoke() ?? false);
+            restEyes.Observe(restShown, reducedMotion?.Invoke() ?? false);
             if (wakePending)
             {
                 wakePending = false;
@@ -145,10 +160,11 @@ namespace OutOfReach.Presentation.UI
             Show(alerts, true);
             RefreshNeedGuidance();
             restStop.text = restNotice.Text;
-            Show(restStop, restNotice.IsVisible);
+            Show(restStop, restNotice.IsVisible && recovery != null
+                && recovery.LastRestStop != RestStopReason.Completed && recovery.LastRestStop != RestStopReason.Woken);
 
-            bool resting = recovery != null && recovery.IsResting;
-            waterLocator.Present(guidanceCamera, waterTarget, !resting);
+            bool resting = restShown;
+            waterLocator.Present(guidanceCamera, waterTarget, !resting && !owned);
             Show(rest, resting);
             wake.SetEnabled(resting);
             if (resting)
@@ -238,10 +254,14 @@ namespace OutOfReach.Presentation.UI
             restDay = Text(string.Empty, "survival-rest-day");
             restDay.name = "survival-rest-day";
             restTime = Text(string.Empty, "survival-rest-time");
-            rest.Add(restDay);
-            rest.Add(restTime);
-            wake = new Button(OnWake) { name = "survival-wake", text = "Wake", pickingMode = PickingMode.Position };
+            var restHeading = Container("survival-rest-heading", "survival-rest-heading");
+            restHeading.Add(restDay);
+            restHeading.Add(restTime);
+            rest.Add(restHeading);
+            wake = new Button(OnWake) { name = "survival-wake", tooltip = "Wake up", pickingMode = PickingMode.Position };
             wake.AddToClassList("survival-wake");
+            wake.Add(FlightBoardView.MousePictogram("wake-mouse", true, false));
+            wake.Add(Text("Wake up", "survival-wake-copy"));
             rest.Add(wake);
             restFeedback = Text(string.Empty, "survival-rest-feedback");
             Show(restFeedback, false);
@@ -292,11 +312,11 @@ namespace OutOfReach.Presentation.UI
             RefreshPresentation();
         }
 
-        private void ObserveRestTransition()
+        private void ObserveRestTransition(bool owned)
         {
             bool active = survival != null && survival.Enabled && survival.IsActive && recovery != null
-                && state != null && state.Phase == GamePhase.Survival && state.Outcome == MissionOutcome.None;
-            if (!active) { ResetWakeObservation(); return; }
+                && state != null && SurvivalChapterReadout.InSurvivalPhase(state.Phase) && state.Outcome == MissionOutcome.None;
+            if (!active || owned) { ResetWakeObservation(); return; }
             bool nowResting = recovery.IsResting;
             if (!restObservationInitialized)
             {
@@ -317,6 +337,13 @@ namespace OutOfReach.Presentation.UI
             wakePending = true;
         }
 
+        private bool RestOwnedElsewhere()
+        {
+            if (restPresentationOwner == null) return false;
+            try { return restPresentationOwner(); }
+            catch (Exception error) { Debug.LogException(error, this); return false; }
+        }
+
         private void ResetWakeObservation()
         {
             restObservationInitialized = wasResting = wakePending = false;
@@ -334,6 +361,7 @@ namespace OutOfReach.Presentation.UI
                 : "Food & water: galley beside the crew berth.";
             waterGuidance.EnableInClassList("survival-need-urgent", thirsty);
             waterGuidance.EnableInClassList("survival-need-critical", survival.Thirst01 >= .8d);
+            Show(waterGuidance, thirsty);
             foodGuidance.text = hungry
                 ? NeedGuidance(rationAction, "Eat a ration", "Food locker", "galley beside the crew berth") : string.Empty;
             foodGuidance.EnableInClassList("survival-need-urgent", hungry);
@@ -406,6 +434,7 @@ namespace OutOfReach.Presentation.UI
         {
             private readonly VisualElement row;
             private readonly ProgressBar bar;
+            private readonly FlightBoardView.ReserveFill fill;
             private readonly NeedIcon icon;
             private readonly string label;
             public NeedRow(VisualElement parent, string title, string id, bool water)
@@ -418,6 +447,9 @@ namespace OutOfReach.Presentation.UI
                 row.Add(Text(title, "survival-need-label"));
                 bar = new ProgressBar { name = id, lowValue = 0, highValue = 1, title = string.Empty, pickingMode = PickingMode.Ignore };
                 bar.AddToClassList("survival-need-bar");
+                fill = new FlightBoardView.ReserveFill();
+                fill.AddToClassList("reserve-fill");
+                bar.Add(fill);
                 IgnorePicking(bar);
                 row.Add(bar);
                 parent.Add(row);
@@ -427,6 +459,9 @@ namespace OutOfReach.Presentation.UI
             {
                 bool known = SurvivalChapterReadout.ValidNeed(unmetNeed);
                 bar.value = (float)SurvivalChapterReadout.SatisfiedFraction(unmetNeed);
+                Color tint = known && unmetNeed >= .8d ? new Color(1f, .43f, .36f)
+                    : known && unmetNeed >= .5d ? new Color(.96f, .72f, .39f) : new Color(.95f, .94f, .89f);
+                fill.SetTarget(bar.value, known, tint, true);
                 // Presentation attention colours only; these do not define medical or gameplay thresholds.
                 row.EnableInClassList("survival-attention", known && unmetNeed >= .5d && unmetNeed < .8d);
                 row.EnableInClassList("survival-critical", known && unmetNeed >= .8d);
@@ -534,8 +569,16 @@ namespace OutOfReach.Presentation.UI
     internal static class SurvivalChapterReadout
     {
         public static bool CanShow(ISurvivalExtension needs, IGameState state, ISimulationClock clock) =>
-            needs != null && needs.Enabled && needs.IsActive && state != null && state.Phase == GamePhase.Survival
+            needs != null && needs.Enabled && needs.IsActive && state != null && InSurvivalPhase(state.Phase)
             && state.Outcome == MissionOutcome.None && clock != null && !clock.IsPaused;
+
+        /// <summary>
+        /// Survival after contact. In the opt-in chapter loop (CHAPTER-UI-01) the needs are already active from the end of
+        /// the impact, so the cabin phases before contact count too; EVA keeps its suit HUD. Without the chapter loop the
+        /// needs only become active at contact, so this changes nothing there.
+        /// </summary>
+        public static bool InSurvivalPhase(GamePhase phase) => phase == GamePhase.Survival || phase == GamePhase.Emergency
+            || phase == GamePhase.Repair || phase == GamePhase.Transmission;
 
         public static bool CanWake(ISurvivalExtension needs, ISurvivalRecovery rest, IGameState state, ISimulationClock clock) =>
             CanShow(needs, state, clock) && rest != null && rest.IsResting;

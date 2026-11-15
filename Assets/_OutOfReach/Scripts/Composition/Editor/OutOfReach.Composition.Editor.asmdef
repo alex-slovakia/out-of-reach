@@ -3,6 +3,7 @@
   "rootNamespace": "OutOfReach.Composition.Editor",
   "references": [
     "OutOfReach.Composition",
+    "OutOfReach.LaunchFXV03",
     "OutOfReach.MarineOcean",
     "OutOfReach.MarineOcean.Editor",
     "OutOfReach.Contracts",
@@ -14,6 +15,7 @@
     "OutOfReach.Cinematics",
     "OutOfReach.Presentation.Lighting",
     "OutOfReach.Presentation.Motion",
+    "OutOfReach.Presentation.Motion.Editor",
     "OutOfReach.Presentation.Hands",
     "OutOfReach.Presentation.Habitat",
     "OutOfReach.Presentation.Cargo",

@@ -79,6 +79,9 @@ namespace OutOfReach.Core.Runtime
         [Tooltip("Opt-in post-contact survival. Enable only with ration, water and grow-module presentation wired.")]
         [SerializeField] private bool survivalExtension;
 
+        [Tooltip("Approved day 1-30 chapter loop (CORE-CHAPTER-LOOP). Needs Survival Extension; off keeps every scene as before. Enable only with the chapter/montage/decision presentation wired.")]
+        [SerializeField] private bool chapterLoop;
+
         [Tooltip("Feet position and heading the player starts from during the physical preflight. Empty uses Player Spawn.")]
         [SerializeField] private Transform preflightSpawn;
 
@@ -181,6 +184,9 @@ namespace OutOfReach.Core.Runtime
 
         public ISurvivalExtension Survival => Session != null ? Session.Survival : null;
 
+        /// <summary>The approved chapter loop; null without a session or when the chapter loop is off.</summary>
+        public IMissionChapterFlow ChapterFlow => Session != null ? Session.ChapterFlow : null;
+
         /// <summary>Rest and the fictional recovery timeline; null without a session or when survival is disabled.</summary>
         public ISurvivalRecovery SurvivalRecovery => Session != null ? Session.SurvivalRecovery : null;
 
@@ -261,6 +267,19 @@ namespace OutOfReach.Core.Runtime
         }
 
         /// <summary>
+        /// Configures the approved day 1-30 chapter loop for the next session (StartSession or RestartMission). True also
+        /// enables the survival extension it needs. Default false preserves every existing scene.
+        /// </summary>
+        public void ConfigureChapterLoop(bool enabled)
+        {
+            chapterLoop = enabled;
+            if (enabled)
+            {
+                survivalExtension = true;
+            }
+        }
+
+        /// <summary>
         /// Explicit preflight wiring for code-built scenes; authored scenes use the serialized fields. Takes effect
         /// with the next session (StartSession or RestartMission).
         /// </summary>
@@ -334,7 +353,7 @@ namespace OutOfReach.Core.Runtime
             EndSession();
             string preset = string.IsNullOrWhiteSpace(startingPresetId) ? null : startingPresetId;
             Session = new MissionSession(AuroraMission.CreateDefinition(), Debug.LogException, preset, preflightWalk, allowMovementDuringImpact,
-                survivalExtension, null, boardAfterLoadingDeadline);
+                survivalExtension, null, boardAfterLoadingDeadline, survivalExtension && chapterLoop);
             BindScene();
             if (SessionStarted != null)
             {

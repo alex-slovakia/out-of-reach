@@ -382,9 +382,18 @@ namespace OutOfReach.Presentation.UI.Report
             artPage.Add(FlightRecorderElements.Text("Exploration music · Creative Commons Attribution 4.0. Edited loop with level adjustment and an eight-second crossfade.", "recorder-source-description"));
             artPage.Add(SourceLink("Cobalt · original track", "https://www.scottbuckley.com.au/library/cobalt/", true));
             artPage.Add(FlightRecorderElements.Text("Titan — Scott Buckley", "recorder-source-deck"));
-            artPage.Add(FlightRecorderElements.Text("Departure music · Creative Commons Attribution 4.0. Excerpt from 10.9–45.4 seconds, with fades and gain adjusted.", "recorder-source-description"));
+            artPage.Add(FlightRecorderElements.Text("Opening music · Creative Commons Attribution 4.0. Excerpt 48–132 s with added original percussion, gain staging and mastering.", "recorder-source-description"));
             artPage.Add(SourceLink("Scott Buckley · original track", "https://www.scottbuckley.com.au/library/titan/", true));
             artPage.Add(SourceLink("Read the CC BY 4.0 license", "https://creativecommons.org/licenses/by/4.0/", true));
+            // CLAUDE-INTEGRATION credits (claim #7 6896214560): texts from audio-opening (6896198045) and submit-pack-02 (credits §C).
+            artPage.Add(FlightRecorderElements.Text("Launch radio — NASA", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Apollo 11 launch commentary (public domain). Two excerpts, radio band-limited; the mission name is omitted. No NASA endorsement is implied.", "recorder-source-description"));
+            artPage.Add(SourceLink("NASA launch commentary · source", "https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3", true));
+            artPage.Add(FlightRecorderElements.Text("Space sky — NASA/Goddard Space Flight Center Scientific Visualization Studio", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Unmodified; public-domain reuse per NASA SVS.", "recorder-source-description"));
+            artPage.Add(SourceLink("NASA SVS · Deep Star Maps 2020", "https://svs.gsfc.nasa.gov/4851/", true));
+            artPage.Add(FlightRecorderElements.Text("Synthetic voices — Google Gemini text-to-speech", "recorder-source-deck"));
+            artPage.Add(FlightRecorderElements.Text("Voices Orus and Kore. AI-generated audio. Original score cues and sound effects synthesized by scripts written with AI coding assistants.", "recorder-source-description"));
             artPage.Add(marsCredits);
             artPage.Add(FlightRecorderElements.Text("Typography · Barlow Condensed Bold", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Copyright 2017 The Barlow Project Authors. Unmodified font distributed under the SIL Open Font License 1.1.", "recorder-source-description"));

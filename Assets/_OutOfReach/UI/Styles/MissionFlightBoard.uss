@@ -140,9 +140,14 @@
 .inspecting-systems .eva-telemetry .resource-cell, .inspecting-systems .expanded-telemetry .resource-cell { padding-left: 28px; }
 .inspecting-systems .suit-duration { flex-wrap: wrap; }
 .inspecting-systems .suit-seal { margin-left: 0; }
-.microgravity-move { flex-direction: row; align-items: center; margin-top: 8px; }
-.flight-board .microgravity-action { margin: 0 9px 0 0; color: rgb(249, 246, 233); font-size: 16px; }
-.mouse-pictogram { width: 24px; height: 29px; margin-left: 4px; }
+.microgravity-move { align-items: flex-end; margin-top: 12px; }
+.control-hint-row { flex-direction: row; align-items: center; margin-bottom: 5px; }
+.control-hint-inputs { width: 168px; flex-direction: row; align-items: center; justify-content: center; flex-shrink: 0; }
+.flight-board .control-hint-action { width: 72px; margin: 0 0 0 9px; font-size: 14px; color: rgb(238, 237, 225); -unity-text-align: middle-left; }
+.flight-board .control-hint-separator { margin: 0 5px; font-size: 12px; color: rgb(180, 191, 190); }
+.flight-board .control-key { width: 25px; height: 25px; margin: 0 0 0 5px; padding: 0; border-width: 1px; border-bottom-width: 2px; border-color: rgba(238, 237, 225, 0.78); border-radius: 3px; background-color: rgba(9, 12, 13, 0.7); color: rgb(238, 237, 225); font-size: 13px; -unity-text-align: middle-center; }
+.flight-board .control-key-wide { width: 52px; font-size: 10px; letter-spacing: 1px; }
+.mouse-pictogram { width: 24px; height: 29px; margin-left: 5px; flex-shrink: 0; }
 .flight-board .microgravity-rail-prompt { margin: 8px 0 0; color: rgb(249, 246, 233); font-size: 14px; }
 .interaction-prompt { position: absolute; left: 50%; top: 54%; max-width: 440px; margin-left: 18px; flex-direction: row; align-items: center; }
 .flight-board .interaction-key { flex-shrink: 0; font-size: 16px; width: 28px; height: 28px; color: rgb(23, 25, 23); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); -unity-text-align: middle-center; background-color: rgb(240, 238, 229); margin-right: 10px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); }

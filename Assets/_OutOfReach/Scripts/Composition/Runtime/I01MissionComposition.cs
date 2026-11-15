@@ -15,6 +15,7 @@ using OutOfReach.Presentation.Motion;
 using OutOfReach.Presentation.Hands;
 using OutOfReach.Presentation.Terminal;
 using OutOfReach.Presentation.UI;
+using OutOfReach.Presentation.UI.Chapter;
 using OutOfReach.Simulation;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -40,6 +41,16 @@ namespace OutOfReach.Composition
         [SerializeField] private ShipLightingPresenter shipLighting;
         [SerializeField] private FirstPersonMotionPresenter firstPersonMotion;
         [SerializeField] private EmbodiedBodyPresenter embodiedBody;
+        // BODY-REST-HOOK: berth body frame beside the habitat SleepCamera (Out of Reach > Avatar > Create berth body frame).
+        [SerializeField] private Transform sleepBodyFrame;
+        // CLAUDE-INTEGRATION camera lease (owned by claude/integration while root is paused): the habitat's authored
+        // SleepCamera. Only while Core's rest is active the planning framing pivot is leased so the actual camera sits
+        // there and the BODY-REST-HOOK berth is seen. No controller, collider, input or body authority changes.
+        [SerializeField] private Transform sleepCameraAnchor;
+        private bool restCameraLeased;
+        private Vector3 restLeaseLocalPosition;
+        private Quaternion restLeaseLocalRotation = Quaternion.identity;
+        public bool IsRestCameraLeased => restCameraLeased;
         [SerializeField] private I06MicrogravityBridge microgravityBridge;
         [SerializeField] private I06MicrogravityInputBindings microgravityInput;
         [SerializeField] private BareArmContactPresenter bareArmContacts;
@@ -77,6 +88,8 @@ namespace OutOfReach.Composition
         [SerializeField] private SurvivalChapterPresenter survivalUi;
         [SerializeField] private UIDocument survivalDocument;
         [SerializeField] private StyleSheet survivalStyle;
+        [SerializeField] private MissionChapterPresenter chapterUi;
+        [SerializeField] private StyleSheet chapterStyle;
         private bool menuPresentationVisible;
         [SerializeField] private Light[] workingLights = Array.Empty<Light>();
         [SerializeField] private Light[] emergencyLights = Array.Empty<Light>();
@@ -287,7 +300,7 @@ namespace OutOfReach.Composition
         private bool CanPresentBody() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && modeChosen && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && runtime.Player && cinematics && !cinematics.IsPlaying && !IsTransportDeparturePlaying
-            && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && (!(boundSession.SurvivalRecovery?.IsResting ?? false) || (embodiedBody && embodiedBody.PresentsRest))
             && runtime.GameState.Phase != GamePhase.Outcome && runtime.GameState.Phase != GamePhase.Report;
 
         private EmbodiedBodyPresenter.BodyArmVisibility BodyArmMask() =>
@@ -361,6 +374,12 @@ namespace OutOfReach.Composition
         private bool RequestPreflightPulse()
         {
             if (!CanPresentTimedPreflight() || !audioPresenter || audioPresenter.IsPresentationPaused) return false;
+            if (audioPresenter.OpeningOwnsMusic)
+            {
+                // The approved opening score carries the loading tension; never switch to a mood track over it.
+                preflightMusicOwned = false;
+                return true;
+            }
             MusicMood previous = audioPresenter.CurrentMood;
             if (!audioPresenter.SetMood(MusicMood.Tension, 3f)) return false;
             preflightPreviousMood = previous;
@@ -401,6 +420,13 @@ namespace OutOfReach.Composition
             survivalStyle = style;
         }
 
+        /// <summary>CHAPTER-UI-01: beat cards, routine montage, chapter decisions and messages (IMissionChapterFlow only).</summary>
+        public void ConfigureChapterUi(MissionChapterPresenter presenter, StyleSheet style)
+        {
+            chapterUi = presenter;
+            chapterStyle = style;
+        }
+
         private bool CanPresentSurvivalUi() => !EarthViewerOwnsInput && isActiveAndEnabled && attached && boundSession != null
             && runtime && runtime.isActiveAndEnabled && ReferenceEquals(boundSession, runtime.Session)
             && !menuPresentationVisible && cinematics && !cinematics.IsPlaying;
@@ -433,6 +459,7 @@ namespace OutOfReach.Composition
             && !(antennaRepair && antennaRepair.BlocksMovement)
             && domainControlGate != null && domainControlGate()
             && !(boundSession.SurvivalRecovery?.IsResting ?? false)
+            && !(chapterUi && chapterUi.BlocksPlayerControl)
             && (boundSession.State.Phase != GamePhase.Planning || modeChosen);
 
         private void ReleasePlanningControlGate()
@@ -463,6 +490,7 @@ namespace OutOfReach.Composition
         {
             MaintainMicrogravity();
             UpdateMicrogravityHelp();
+            MaintainOpeningMusic();
             if (rejectionUntil <= 0f && IsAntennaFocused()) RefreshInteractionPrompt();
             if (!departureRestraintCuePlayed && marine && marine.IsSeatedDeparture
                 && embodiedBody && embodiedBody.IsDepartureSeatLatched && audioPresenter)
@@ -487,6 +515,17 @@ namespace OutOfReach.Composition
             var next = dialogueQueue.Peek();
             dialogueSpeaker = next.Value;
             if (audioPresenter.PlayDialogue(next.Key.CleanClip, next.Key.SubtitleText, next.Key.CueId)) dialogueQueue.Dequeue();
+        }
+
+        // AUDIO-OPENING: one owner for the music from loading through the departure. The approved score starts when a
+        // mode is chosen (the menu stays silent) and, once the departure plays, follows its presented playhead.
+        private void MaintainOpeningMusic()
+        {
+            if (!audioPresenter || !attached || boundSession == null || !runtime || audioPresenter.IsPresentationPaused) return;
+            if (departureScore && modeChosen && runtime.GameState.Phase == GamePhase.Planning
+                && audioPresenter.OpeningState == OpeningMusicState.Idle)
+                audioPresenter.BeginOpeningLoading(departureScore);
+            if (marine && marine.IsDeparturePlaying) audioPresenter.TrackOpeningDeparture(marine.PresentedSeconds);
         }
 
         private void Attach()
@@ -600,6 +639,15 @@ namespace OutOfReach.Composition
                 survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
                 survivalUi.WakePresentationStarted += OnWakePresentationStarted;
             }
+            if (chapterUi)
+            {
+                // Same document and gate as the survival UI; the chapter flow is null (UI hidden) when the loop is off.
+                chapterUi.Configure(survivalDocument, chapterStyle, runtime.ChapterFlow, runtime.GameState, runtime.Clock,
+                    runtime.Resources, runtime.SurvivalRecovery, runtime.Survival, CanPresentSurvivalUi,
+                    () => cinematics && cinematics.ReducedEffects);
+                if (survivalUi)
+                    survivalUi.ConfigureRestPresentationOwner(() => chapterUi && chapterUi.RoutineOwnsRestPresentation);
+            }
             flightBoard.ConfigureCo2Scale(SurvivalRules.CarbonDioxideActionLevelPpm, SurvivalRules.CarbonDioxideLossLimitPpm);
             if (runtime.GameState.Phase != GamePhase.Planning)
                 flightBoard.ConfigureResourceReference(runtime.Configuration.InitialResources);
@@ -624,6 +672,9 @@ namespace OutOfReach.Composition
                 embodiedBody.ConfigureGroundLocomotion(runtime.Player.GetComponent<CharacterController>(),
                     CanPresentGroundedStepAudio, () => runtime && runtime.Player && runtime.Player.IsSprinting,
                     () => runtime && runtime.GameState.Phase == GamePhase.Planning && !orbitalLocationReached);
+                ISurvivalRecovery recovery = boundSession.SurvivalRecovery;
+                if (recovery != null && sleepBodyFrame)
+                    embodiedBody.ConfigureRest(() => recovery.IsResting, sleepBodyFrame, () => recovery.LastRestStop);
             }
             if (microgravityBridge && microgravityInput && bareArmContacts)
             {
@@ -634,6 +685,7 @@ namespace OutOfReach.Composition
                 microgravityBridge.HandPushCompleted += OnMicrogravityHandPushCompleted;
                 microgravityInput.Configure(runtime.Player, microgravityBridge, runtime.Player.ViewPivot,
                     runtime.EvaStatus, runtime.GameState, runtime.Clock, MicroSessionCurrent, CanUseMicroContacts);
+                if (embodiedBody) microgravityInput.LegPushPerformed += embodiedBody.PlayLegPush;
             }
             if (antennaRepair && !antennaRepair.ConfigureSession(runtime, astronautHands,
                 antennaInteractionOrigin, runtime.Player.transform, CanPresentAntennaWork))
@@ -686,6 +738,7 @@ namespace OutOfReach.Composition
 
         private void UnbindSession()
         {
+            ReleaseRestCamera();
             if (earthTerminal) earthTerminal.ClearBinding();
             if (evaWorkLamp) evaWorkLamp.ClearBinding();
             if (antennaProgress) antennaProgress.ClearBinding();
@@ -694,6 +747,7 @@ namespace OutOfReach.Composition
                 antennaRepair.WorkCancelled -= OnAntennaWorkCancelled;
                 antennaRepair.ClearBinding();
             }
+            if (microgravityInput && embodiedBody) microgravityInput.LegPushPerformed -= embodiedBody.PlayLegPush;
             if (microgravityInput) microgravityInput.ClearBinding();
             if (microgravityBridge)
             {
@@ -719,6 +773,7 @@ namespace OutOfReach.Composition
                 survivalUi.WakePresentationStarted -= OnWakePresentationStarted;
                 survivalUi.ClearBinding();
             }
+            if (chapterUi) chapterUi.ClearBinding();
             menuPresentationVisible = false;
             if (cargoHands) cargoHands.ClearBinding();
             if (preflightTension) preflightTension.ClearBinding();
@@ -835,6 +890,10 @@ namespace OutOfReach.Composition
                 if (!marine.BeginDeparture() && !marine.OwnsPresentation)
                     flightBoard.SetDeparturePresentation(false);
             }
+            // Launch without a departure cutscene: the loading score fades instead of running on under Intro.
+            if (message.Previous == GamePhase.Planning && audioPresenter
+                && audioPresenter.OpeningState == OpeningMusicState.Loading)
+                audioPresenter.EndOpeningDeparture(2f);
             if (preflightTension) preflightTension.RefreshPresentation();
             ApplyPhasePresentation(message.Current, true);
             controls.Refresh();
@@ -847,10 +906,13 @@ namespace OutOfReach.Composition
                 planningFramingPivot.SetPositionAndRotation(planningViewAnchor.position, planningViewAnchor.rotation);
             else if (!IsTransportDeparturePlaying) RestorePlayerFraming();
 
+            // The opening (loading, departure, arrival) owns the music until the mission leaves Intro.
+            if (phase != GamePhase.Planning && phase != GamePhase.Intro) audioPresenter.ReleaseOpeningMusic(.25f);
             switch (phase)
             {
                 case GamePhase.Planning:
-                    audioPresenter.SetMood(MusicMood.Isolation);
+                    // Menu is silent; loading belongs to the approved opening score (MaintainOpeningMusic).
+                    audioPresenter.SetMood(MusicMood.Silent, 0f);
                     break;
                 case GamePhase.Intro:
                     modeChosen = true;
@@ -898,18 +960,16 @@ namespace OutOfReach.Composition
             {
                 case TransportDepartureCue.Boarding:
                     departureRestraintCuePlayed = false;
-                    if (departureScore) audioPresenter.PlayDepartureMusic(departureScore);
-                    PlayDepartureVoice("departure-secure");
+                    // AUDIO-OPENING: the approved score enters on its launch downbeat; the NASA launch radio
+                    // ("Ignition sequence start ... zero" at liftoff) follows the playhead (MaintainOpeningMusic).
+                    // The flight-control voice lines are no longer called: they would talk over the countdown.
+                    if (departureScore)
+                        audioPresenter.BeginOpeningDeparture(departureScore, TransportDepartureTimeline.DurationSeconds);
                     break;
                 case TransportDepartureCue.HatchClosing:
                     audioPresenter.TryPlayDepartureEffectCue("departure-hatch-latch");
-                    PlayDepartureVoice("departure-sealing");
-                    break;
-                case TransportDepartureCue.ArmRetracting:
-                    PlayDepartureVoice("departure-hatch-secured");
                     break;
                 case TransportDepartureCue.Acceleration:
-                    PlayDepartureVoice("departure-ignition");
                     audioPresenter.TryPlayDepartureEffectCue("departure-ignition-ramp");
                     audioPresenter.TryPlayDepartureEffectCue("departure-engine-vibration");
                     break;
@@ -917,23 +977,12 @@ namespace OutOfReach.Composition
                     audioPresenter.StopDepartureEffects();
                     audioPresenter.TryPlayDepartureEffectCue("departure-pad-roar");
                     break;
-                case TransportDepartureCue.Ascent:
-                    PlayDepartureVoice("departure-liftoff");
-                    audioPresenter.TryPlayDepartureEffectCue("departure-liftoff-shock");
-                    break;
+                // Ascent: the user-cancelled departure-liftoff-shock is no longer played.
                 case TransportDepartureCue.UpperAtmosphere:
                     audioPresenter.StopDepartureEffects();
                     break;
-                case TransportDepartureCue.LaterAboard:
-                    audioPresenter.SetMood(MusicMood.Isolation, 1f);
-                    break;
+                // LaterAboard: no mood track; the opening score fades out with the departure (no "elevator music").
             }
-        }
-
-        private void PlayDepartureVoice(string cue)
-        {
-            dialogueSpeaker = "FLIGHT CONTROL";
-            audioPresenter.TryPlayDialogue(cue);
         }
 
         private void OnWakePresentationStarted(int missionDay, RestStopReason reason)
@@ -942,13 +991,16 @@ namespace OutOfReach.Composition
                 audioPresenter.PlaySfx(restWakeCue, .7f);
         }
 
-        private void OnDepartureAudioEnded(TransportDepartureEnd _)
+        private void OnDepartureAudioEnded(TransportDepartureEnd reason)
         {
             departureRestraintCuePlayed = false;
             if (!audioPresenter) return;
             audioPresenter.StopDepartureEffects();
             audioPresenter.StopDialogue();
             audioPresenter.StopDepartureMusic();
+            // Completed: the score has already faded with the last shot. Skip/cancel: short fade, radio stops at once.
+            audioPresenter.EndOpeningDeparture(reason == TransportDepartureEnd.Completed
+                ? .5f : MissionAudioPresenter.OpeningSkipFadeSeconds);
         }
 
         private void OnTransportTransferred()
@@ -1156,7 +1208,64 @@ namespace OutOfReach.Composition
             RefreshSubtitle();
         }
 
-        private void LateUpdate() => RefreshCinematicHud();
+        private void LateUpdate()
+        {
+            UpdateRestCamera();
+            RefreshCinematicHud();
+        }
+
+        // Lease only while the authoritative rest is active and the body is not yet releasing; hand the view back at
+        // once on wake (ordinary or hazard), stop, session replacement, mission end, cinematics or a missing anchor.
+        private bool RestCameraWanted()
+        {
+            if (!attached || !runtime || boundSession == null || !ReferenceEquals(boundSession, runtime.Session)) return false;
+            if (!sleepCameraAnchor || !sleepBodyFrame || !planningFramingPivot || !embodiedBody || !RestEye()) return false;
+            if (!sleepCameraAnchor.gameObject.activeInHierarchy || IsTransportDeparturePlaying || (cinematics && cinematics.IsPlaying))
+                return false;
+            GamePhase phase = runtime.GameState.Phase;
+            if (phase == GamePhase.Outcome || phase == GamePhase.Report || runtime.GameState.Outcome == MissionOutcome.Lost) return false;
+            if (!(boundSession.SurvivalRecovery?.IsResting ?? false)) return false;
+            return embodiedBody.RestPhase != RestPhase.Releasing;
+        }
+
+        private Camera RestEye() => presentationCamera ? presentationCamera : Camera.main;
+
+        private void UpdateRestCamera()
+        {
+            if (!RestCameraWanted()) { ReleaseRestCamera(); return; }
+            if (!restCameraLeased)
+            {
+                restLeaseLocalPosition = planningFramingPivot.localPosition;
+                restLeaseLocalRotation = planningFramingPivot.localRotation;
+                restCameraLeased = true;
+            }
+            // Keep every offset below the pivot (departure, cinematic, motion) and land the actual camera on SleepCamera,
+            // looking down at the hands drawing the straps while the body enters, then settling on the buckled body.
+            Transform eye = RestEye().transform;
+            Quaternion relative = Quaternion.Inverse(planningFramingPivot.rotation) * eye.rotation;
+            Vector3 offset = planningFramingPivot.InverseTransformPoint(eye.position);
+            Quaternion view = sleepCameraAnchor.rotation * Quaternion.Euler(RestPitchDegrees(), 0f, 0f);
+            Quaternion rotation = view * Quaternion.Inverse(relative);
+            planningFramingPivot.SetPositionAndRotation(sleepCameraAnchor.position - rotation * offset, rotation);
+        }
+
+        private float RestPitchDegrees()
+        {
+            float t = embodiedBody.RestPhaseSeconds;
+            switch (embodiedBody.RestPhase)
+            {
+                case RestPhase.Entering: return 46f * Mathf.SmoothStep(0f, 1f, t / .45f);
+                case RestPhase.Held: return Mathf.Lerp(46f, 18f, Mathf.SmoothStep(0f, 1f, t / 1.2f));
+                default: return 0f;
+            }
+        }
+
+        private void ReleaseRestCamera()
+        {
+            if (!restCameraLeased) return;
+            restCameraLeased = false;
+            if (planningFramingPivot) planningFramingPivot.SetLocalPositionAndRotation(restLeaseLocalPosition, restLeaseLocalRotation);
+        }
 
         private void RefreshCinematicHud()
         {
@@ -1171,7 +1280,8 @@ namespace OutOfReach.Composition
         {
             if (!flightBoard) return;
             if (audioPresenter && audioPresenter.CurrentSubtitle.IsVisible)
-                flightBoard.ShowSubtitle(audioPresenter.CurrentSubtitle.Text, dialogueSpeaker);
+                flightBoard.ShowSubtitle(audioPresenter.CurrentSubtitle.Text,
+                    audioPresenter.CurrentSubtitle.CueId == LaunchRadioCountdown.CueId ? "LAUNCH CONTROL · RADIO" : dialogueSpeaker);
             else if (!string.IsNullOrEmpty(cinematicCaption)) flightBoard.ShowSubtitle(cinematicCaption, "SHIP STATUS");
             else flightBoard.ClearSubtitle();
         }

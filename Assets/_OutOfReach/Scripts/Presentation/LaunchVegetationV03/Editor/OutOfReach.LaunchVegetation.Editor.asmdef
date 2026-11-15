@@ -1,0 +1,8 @@
+{
+  "name": "OutOfReach.LaunchVegetation.Editor",
+  "rootNamespace": "OutOfReach.Presentation.LaunchVegetation.Editor",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

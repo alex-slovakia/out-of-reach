@@ -1,0 +1,779 @@
+{
+ "poses": "dock at (0,-0.021,-9.9); hatch open 160 deg about (-0.72,0,-2.4); arm retracted = -90 deg about (-0.9,0,-6.9); sea-level dock pieces disabled",
+ "pairs": [
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "AccessMastTower",
+   "overlapping_triangle_pairs": 462,
+   "min_vertex_distance_m": 0.0,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -12.0,
+      -10.5
+     ],
+     "pairs": 34
+    },
+    {
+     "center_m": [
+      1.5,
+      -12.0,
+      -10.5
+     ],
+     "pairs": 31
+    },
+    {
+     "center_m": [
+      0.0,
+      -21.0,
+      -7.5
+     ],
+     "pairs": 14
+    },
+    {
+     "center_m": [
+      0.0,
+      -24.0,
+      -7.5
+     ],
+     "pairs": 14
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "CapsuleShell",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "BoosterStack",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "HatchOpen160",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "HatchClosed",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "AccessArmConnected",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 1.294,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "AccessArmRetracted",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.9426,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "DockDeckModule",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.249,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "AccessMastTower",
+   "overlapping_triangle_pairs": 380,
+   "min_vertex_distance_m": 0.0,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 53
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -13.5
+     ],
+     "pairs": 49
+    },
+    {
+     "center_m": [
+      1.5,
+      0.0,
+      -12.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -12.0
+     ],
+     "pairs": 42
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "CapsuleShell",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "BoosterStack",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "HatchOpen160",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "HatchClosed",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "AccessArmConnected",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.434,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "AccessArmRetracted",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.2506,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "DockDeckModule",
+   "overlapping_triangle_pairs": 376,
+   "min_vertex_distance_m": 0.0,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -12.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      1.5,
+      0.0,
+      -12.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      4.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 42
+    },
+    {
+     "center_m": [
+      -4.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 40
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "AccessMastTower",
+   "overlapping_triangle_pairs": 156,
+   "min_vertex_distance_m": 0.0004,
+   "where": [
+    {
+     "center_m": [
+      1.5,
+      -1.5,
+      -12.0
+     ],
+     "pairs": 50
+    },
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -12.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      3.0,
+      -1.5,
+      -10.5
+     ],
+     "pairs": 40
+    },
+    {
+     "center_m": [
+      3.0,
+      -1.5,
+      -9.0
+     ],
+     "pairs": 18
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "CapsuleShell",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "BoosterStack",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "HatchOpen160",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "HatchClosed",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "AccessArmConnected",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 1.8555,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "AccessArmRetracted",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 3.0,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "DockDeckModule",
+   "overlapping_triangle_pairs": 12,
+   "min_vertex_distance_m": 0.021,
+   "where": [
+    {
+     "center_m": [
+      3.0,
+      -1.5,
+      -10.5
+     ],
+     "pairs": 6
+    },
+    {
+     "center_m": [
+      3.0,
+      0.0,
+      -10.5
+     ],
+     "pairs": 6
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "AccessMastTower",
+   "overlapping_triangle_pairs": 184,
+   "min_vertex_distance_m": 0.0003,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 87
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 50
+    },
+    {
+     "center_m": [
+      0.0,
+      0.0,
+      -7.5
+     ],
+     "pairs": 21
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 20
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "CapsuleShell",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.5301,
+   "where": []
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "BoosterStack",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.8409,
+   "where": []
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "HatchOpen160",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.3698,
+   "where": []
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "HatchClosed",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.6986,
+   "where": []
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "AccessArmConnected",
+   "overlapping_triangle_pairs": 256,
+   "min_vertex_distance_m": 0.002,
+   "where": [
+    {
+     "center_m": [
+      1.5,
+      0.0,
+      -4.5
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      1.5,
+      0.0,
+      -6.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -6.0
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -4.5
+     ],
+     "pairs": 48
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@connected",
+   "existing": "DockDeckModule",
+   "overlapping_triangle_pairs": 26,
+   "min_vertex_distance_m": 0.0002,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 13
+    },
+    {
+     "center_m": [
+      0.0,
+      0.0,
+      -7.5
+     ],
+     "pairs": 11
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 1
+    },
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 1
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@retracted",
+   "existing": "AccessMastTower",
+   "overlapping_triangle_pairs": 237,
+   "min_vertex_distance_m": 0.0032,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 115
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 36
+    },
+    {
+     "center_m": [
+      0.0,
+      0.0,
+      -7.5
+     ],
+     "pairs": 20
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 18
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@retracted",
+   "existing": "AccessArmRetracted",
+   "overlapping_triangle_pairs": 260,
+   "min_vertex_distance_m": 0.002,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -4.5
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 48
+    },
+    {
+     "center_m": [
+      -4.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 47
+    },
+    {
+     "center_m": [
+      -3.0,
+      0.0,
+      -4.5
+     ],
+     "pairs": 37
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@retracted",
+   "existing": "DockDeckModule",
+   "overlapping_triangle_pairs": 26,
+   "min_vertex_distance_m": 0.001,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      0.0,
+      -7.5
+     ],
+     "pairs": 14
+    },
+    {
+     "center_m": [
+      0.0,
+      0.0,
+      -7.5
+     ],
+     "pairs": 9
+    },
+    {
+     "center_m": [
+      0.0,
+      0.0,
+      -6.0
+     ],
+     "pairs": 1
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 1
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_ArmDetail@retracted",
+   "existing": "CapsuleShell",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 2.1436,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "ArmDetail@retracted",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.3,
+   "where": []
+  },
+  {
+   "mine": "LTV2_TowerFacade",
+   "existing": "ArmDetail@connected",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 0.6457,
+   "where": []
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "ArmDetail@retracted",
+   "overlapping_triangle_pairs": 634,
+   "min_vertex_distance_m": 0.0,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 262
+    },
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -6.0
+     ],
+     "pairs": 156
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 138
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -6.0
+     ],
+     "pairs": 78
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_DeckSupport",
+   "existing": "ArmDetail@connected",
+   "overlapping_triangle_pairs": 642,
+   "min_vertex_distance_m": 0.0,
+   "where": [
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 200
+    },
+    {
+     "center_m": [
+      -1.5,
+      -1.5,
+      -6.0
+     ],
+     "pairs": 196
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -7.5
+     ],
+     "pairs": 141
+    },
+    {
+     "center_m": [
+      0.0,
+      -1.5,
+      -6.0
+     ],
+     "pairs": 105
+    }
+   ]
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "ArmDetail@retracted",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 2.8437,
+   "where": []
+  },
+  {
+   "mine": "LTV2_Deluge",
+   "existing": "ArmDetail@connected",
+   "overlapping_triangle_pairs": 0,
+   "min_vertex_distance_m": 1.9225,
+   "where": []
+  }
+ ],
+ "corridors": [
+  {
+   "corridor": "arm_walkway_x+-0.93_y0.02..2.2_z-6.9..-2.5",
+   "object": "LTV2_TowerFacade",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "arm_walkway_x+-0.93_y0.02..2.2_z-6.9..-2.5",
+   "object": "LTV2_DeckSupport",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "arm_walkway_x+-0.93_y0.02..2.2_z-6.9..-2.5",
+   "object": "LTV2_Deluge",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "arm_walkway_x+-0.93_y0.02..2.2_z-6.9..-2.5",
+   "object": "LTV2_ArmDetail@connected",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "deck_walking_area_x+-3.9_y0.05..2.5_z-12.8..-7.0",
+   "object": "LTV2_TowerFacade",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "deck_walking_area_x+-3.9_y0.05..2.5_z-12.8..-7.0",
+   "object": "LTV2_DeckSupport",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "deck_walking_area_x+-3.9_y0.05..2.5_z-12.8..-7.0",
+   "object": "LTV2_Deluge",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "deck_walking_area_x+-3.9_y0.05..2.5_z-12.8..-7.0",
+   "object": "LTV2_ArmDetail@connected",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "hatch_doorway_x+-0.95_y0.02..2.2_z-3.4..-2.3",
+   "object": "LTV2_TowerFacade",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "hatch_doorway_x+-0.95_y0.02..2.2_z-3.4..-2.3",
+   "object": "LTV2_DeckSupport",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "hatch_doorway_x+-0.95_y0.02..2.2_z-3.4..-2.3",
+   "object": "LTV2_Deluge",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  },
+  {
+   "corridor": "hatch_doorway_x+-0.95_y0.02..2.2_z-3.4..-2.3",
+   "object": "LTV2_ArmDetail@connected",
+   "vertices_inside": 0,
+   "surfaces_crossing": 0
+  }
+ ]
+}

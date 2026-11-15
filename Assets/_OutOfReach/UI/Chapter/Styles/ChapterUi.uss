@@ -1,0 +1,218 @@
+/* CHAPTER-UI-01 — graphite / amber / cyan / red, Source Sans 3 + Barlow Condensed from UI/Typography. */
+.chapter-layer {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Regular.otf");
+    font-size: 16px;
+}
+.chapter-layer Label { margin: 0; padding: 0; white-space: normal; }
+
+/* ---------- beat title card (upper middle, non-modal) ---------- */
+.chapter-layer .chapter-beat { position: absolute; left: 0; right: 0; top: 14%; align-items: center; }
+.chapter-layer .chapter-beat-days {
+    font-size: 20px; letter-spacing: 6px; color: rgb(245, 188, 116);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+    -unity-text-align: middle-center; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+.chapter-layer .chapter-beat-title {
+    margin-top: 2px; font-size: 64px; letter-spacing: 6px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+    -unity-text-align: middle-center; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+}
+.chapter-layer .chapter-beat-rule { width: 200px; height: 2px; margin: 10px 0 12px; background-color: rgb(232, 153, 77); }
+.chapter-layer .chapter-beat-line {
+    max-width: 760px; font-size: 19px; color: rgb(226, 228, 218);
+    -unity-text-align: middle-center; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.95);
+}
+.chapter-layer .chapter-beat-summary {
+    max-width: 760px; margin-top: 10px; font-size: 15px; color: rgb(155, 229, 232);
+    -unity-text-align: middle-center; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+}
+
+/* ---------- routine montage (full screen) ---------- */
+.chapter-layer .chapter-montage {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    align-items: flex-start; justify-content: flex-start;
+    padding: 78px 64px 0 316px;
+    background-color: rgba(7, 9, 9, 0.9);
+}
+/* Starts right of the HUD instruments (bottom left) and ends above the subtitles (bottom centre). */
+.chapter-layer .chapter-montage-column { width: 880px; max-width: 100%; }
+.chapter-layer .chapter-montage-kicker {
+    font-size: 16px; letter-spacing: 4px; color: rgb(155, 229, 232);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-montage-dayrow { flex-direction: row; align-items: flex-end; margin-top: 6px; }
+.chapter-layer .chapter-montage-day {
+    font-size: 76px; letter-spacing: 6px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-montage-clock {
+    margin-left: 18px; margin-bottom: 12px; font-size: 32px; letter-spacing: 2px; color: rgb(207, 216, 212);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-montage-range { font-size: 16px; color: rgb(207, 216, 212); }
+.chapter-layer .chapter-ruler {
+    position: relative; height: 8px; margin: 16px 0 26px;
+    background-color: rgba(242, 240, 227, 0.1);
+}
+.chapter-layer .chapter-ruler-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+    background-color: rgba(155, 229, 232, 0.78);
+}
+.chapter-layer .chapter-ruler-marker {
+    position: absolute; top: -7px; bottom: -7px; width: 2px; margin-left: -1px;
+    background-color: rgb(242, 240, 227);
+}
+.chapter-layer .chapter-ruler-tick {
+    position: absolute; top: -4px; bottom: -4px; width: 1px;
+    background-color: rgba(242, 240, 227, 0.5);
+}
+.chapter-layer .chapter-ruler-label {
+    position: absolute; top: 14px; left: -30px; width: 60px; font-size: 13px; letter-spacing: 1px;
+    color: rgb(177, 184, 177); -unity-text-align: upper-center; white-space: nowrap;
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-montage-elapsed { font-size: 15px; color: rgb(214, 217, 208); }
+.chapter-layer .chapter-montage-activity { margin-top: 6px; font-size: 16px; color: rgb(242, 240, 227); }
+.chapter-layer .chapter-montage-activity.chapter-asleep { color: rgb(155, 229, 232); }
+.chapter-layer .chapter-montage-tally { flex-direction: row; margin-top: 12px; }
+.chapter-layer .chapter-tally-cell { width: 170px; margin-right: 18px; padding-left: 12px; border-left-width: 2px; border-left-color: rgba(242, 240, 227, 0.22); }
+.chapter-layer .chapter-tally-value {
+    font-size: 30px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-tally-caption { font-size: 13px; color: rgb(177, 184, 177); }
+.chapter-layer .chapter-montage-lower { flex-direction: row; margin-top: 16px; }
+.chapter-layer .chapter-montage-reserves { width: 46%; margin-right: 4%; }
+.chapter-layer .chapter-montage-feed { width: 50%; }
+.chapter-layer .chapter-section-title {
+    margin-bottom: 6px; font-size: 13px; letter-spacing: 3px; color: rgb(177, 184, 177);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-reserve-row {
+    flex-direction: row; align-items: center; min-height: 22px;
+    border-bottom-width: 1px; border-bottom-color: rgba(242, 240, 227, 0.08);
+}
+.chapter-layer .chapter-reserve-name { width: 110px; font-size: 14px; color: rgb(177, 184, 177); }
+.chapter-layer .chapter-reserve-value { flex-grow: 1; font-size: 15px; color: rgb(242, 240, 227); }
+.chapter-layer .chapter-reserve-delta { width: 80px; font-size: 14px; color: rgb(207, 216, 212); -unity-text-align: middle-right; }
+.chapter-layer .chapter-feed-line { min-height: 21px; font-size: 14px; color: rgb(226, 228, 218); white-space: nowrap; overflow: hidden; }
+.chapter-layer .chapter-feed-line.chapter-feed-old { opacity: 0.55; }
+.chapter-layer .chapter-montage-stop { align-self: flex-start; margin-top: 14px; }
+
+/* ---------- routine report (non-modal) ---------- */
+.chapter-layer .chapter-report { position: absolute; left: 0; right: 0; top: 24%; align-items: center; }
+.chapter-layer .chapter-report-card {
+    width: 580px; max-width: 90%; padding: 16px 22px 12px 20px;
+    background-color: rgba(14, 16, 16, 0.92);
+    border-left-width: 4px; border-left-color: rgb(242, 240, 227);
+}
+.chapter-layer .chapter-report-kicker {
+    font-size: 15px; letter-spacing: 3px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-report-time {
+    margin-top: 4px; font-size: 26px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-report-reason { margin-top: 6px; font-size: 18px; color: rgb(242, 240, 227); }
+.chapter-layer .chapter-report-summary { margin-top: 6px; font-size: 14px; color: rgb(207, 216, 212); }
+.chapter-layer .chapter-report-dismiss { align-self: flex-end; margin-top: 8px; }
+
+/* ---------- modal message / decision card ---------- */
+.chapter-layer .chapter-modal {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    align-items: center; justify-content: center;
+    background-color: rgba(5, 7, 7, 0.72);
+}
+.chapter-layer .chapter-card {
+    width: 660px; max-width: 90%; padding: 24px 30px 18px;
+    background-color: rgba(17, 19, 19, 0.97);
+    border-top-width: 3px; border-top-color: rgb(242, 240, 227);
+}
+.chapter-layer .chapter-card-kicker {
+    font-size: 14px; letter-spacing: 3px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-card-title {
+    margin-top: 6px; margin-bottom: 8px; font-size: 30px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-card-meta { margin-bottom: 8px; font-size: 15px; color: rgb(155, 229, 232); }
+.chapter-layer .chapter-card-body { font-size: 17px; color: rgb(226, 228, 218); }
+.chapter-layer .chapter-card-facts { margin-top: 12px; font-size: 14px; color: rgb(190, 196, 188); }
+.chapter-layer .chapter-card-options { margin-top: 8px; }
+.chapter-layer .chapter-option {
+    flex-direction: row; align-items: center; margin: 10px 0 0; padding: 11px 14px;
+    background-color: rgb(29, 31, 30); border-width: 1px; border-radius: 2px;
+    border-color: rgba(242, 240, 227, 0.1); color: rgb(242, 240, 227);
+    -unity-text-align: middle-left;
+}
+.chapter-layer .chapter-option:hover { background-color: rgb(41, 44, 42); border-color: rgb(245, 188, 116); }
+.chapter-layer .chapter-option:active { background-color: rgb(52, 55, 52); }
+.chapter-layer .chapter-option:disabled { opacity: 0.5; background-color: rgb(29, 31, 30); border-color: rgba(242, 240, 227, 0.06); }
+.chapter-layer .chapter-option-copy { flex-grow: 1; flex-shrink: 1; min-width: 0; }
+.chapter-layer .chapter-option-title {
+    font-size: 18px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-option-detail { margin-top: 2px; font-size: 14px; color: rgb(207, 216, 212); }
+.chapter-layer .chapter-option-physical .chapter-option-title { color: rgb(155, 229, 232); }
+.chapter-layer .chapter-card-dismiss { align-self: flex-end; margin-top: 12px; }
+.chapter-layer .chapter-card-feedback { margin-top: 8px; font-size: 14px; color: rgb(245, 188, 116); }
+.chapter-layer .chapter-card-note { margin-top: 12px; font-size: 13px; color: rgb(170, 177, 170); }
+
+/* ---------- next-routine strip (bottom right, inside the HUD margin) ---------- */
+.chapter-layer .chapter-strip {
+    position: absolute; right: 36px; bottom: 30px; width: 372px; padding: 11px 14px 9px;
+    background-color: rgba(13, 15, 15, 0.84);
+    border-left-width: 3px; border-left-color: rgb(155, 229, 232);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+.chapter-layer .chapter-strip-kicker {
+    font-size: 13px; letter-spacing: 3px; color: rgb(155, 229, 232);
+    -unity-font-definition: url("../../Typography/BarlowCondensed-Bold.ttf");
+}
+.chapter-layer .chapter-strip-title {
+    margin-top: 2px; font-size: 17px; color: rgb(242, 240, 227);
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+.chapter-layer .chapter-strip-detail { margin-top: 2px; font-size: 14px; color: rgb(207, 216, 212); }
+.chapter-layer .chapter-strip-action { margin-top: 6px; }
+
+/* ---------- shared actions and key caps ---------- */
+.chapter-layer .chapter-action {
+    flex-direction: row; align-items: center; margin: 0; padding: 4px 4px;
+    background-color: rgba(0, 0, 0, 0); border-width: 0; border-radius: 0;
+    color: rgb(242, 240, 227); font-size: 15px;
+}
+.chapter-layer .chapter-action:hover { background-color: rgba(0, 0, 0, 0); color: rgb(249, 201, 137); }
+.chapter-layer .chapter-action:disabled { opacity: 0.45; background-color: rgba(0, 0, 0, 0); }
+.chapter-layer .chapter-action-text { font-size: 15px; color: rgb(242, 240, 227); }
+.chapter-layer .chapter-action:hover .chapter-action-text { color: rgb(249, 201, 137); }
+.chapter-layer .chapter-key {
+    min-width: 26px; height: 24px; margin-right: 10px; padding: 0 6px; flex-shrink: 0;
+    border-width: 1px; border-bottom-width: 2px; border-radius: 3px;
+    border-color: rgba(238, 237, 225, 0.78); background-color: rgba(9, 12, 13, 0.7);
+    color: rgb(238, 237, 225); font-size: 13px; -unity-text-align: middle-center; white-space: nowrap;
+    -unity-font-definition: url("../../Typography/SourceSans3-Semibold.otf");
+}
+
+/* ---------- tones (colour only; never a gameplay threshold) ---------- */
+.chapter-layer .chapter-tone-info.chapter-report-card, .chapter-layer .chapter-report.chapter-tone-info .chapter-report-card { border-left-color: rgb(155, 229, 232); }
+.chapter-layer .chapter-report.chapter-tone-info .chapter-report-kicker { color: rgb(155, 229, 232); }
+.chapter-layer .chapter-report.chapter-tone-attention .chapter-report-card { border-left-color: rgb(245, 188, 116); }
+.chapter-layer .chapter-report.chapter-tone-attention .chapter-report-kicker { color: rgb(245, 188, 116); }
+.chapter-layer .chapter-report.chapter-tone-danger .chapter-report-card { border-left-color: rgb(255, 137, 116); }
+.chapter-layer .chapter-report.chapter-tone-danger .chapter-report-kicker { color: rgb(255, 137, 116); }
+.chapter-layer .chapter-card.chapter-tone-info { border-top-color: rgb(155, 229, 232); }
+.chapter-layer .chapter-card.chapter-tone-info .chapter-card-kicker { color: rgb(155, 229, 232); }
+.chapter-layer .chapter-card.chapter-tone-attention { border-top-color: rgb(245, 188, 116); }
+.chapter-layer .chapter-card.chapter-tone-attention .chapter-card-kicker { color: rgb(245, 188, 116); }
+.chapter-layer .chapter-card.chapter-tone-danger { border-top-color: rgb(255, 137, 116); }
+.chapter-layer .chapter-card.chapter-tone-danger .chapter-card-kicker { color: rgb(255, 137, 116); }
+.chapter-layer .chapter-strip.chapter-tone-attention { border-left-color: rgb(245, 188, 116); }
+.chapter-layer .chapter-strip.chapter-tone-attention .chapter-strip-kicker { color: rgb(245, 188, 116); }
+.chapter-layer .chapter-strip.chapter-tone-danger { border-left-color: rgb(255, 137, 116); }
+.chapter-layer .chapter-strip.chapter-tone-danger .chapter-strip-kicker { color: rgb(255, 137, 116); }

@@ -1,0 +1,8 @@
+{
+  "name": "OutOfReach.LaunchLandscape.Editor",
+  "rootNamespace": "OutOfReach.Presentation.LaunchLandscape.Editor",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

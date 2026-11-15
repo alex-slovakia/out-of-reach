@@ -1,0 +1,448 @@
+{
+ "asset": "LaunchTowerV02",
+ "task": "TOWER/BOARDING-BRIDGE-V02",
+ "kind": "PASSIVE exterior detail, no colliders, no scripts, no scene edits",
+ "frame": "Unity metres, y up, root = the I06 prologue root (the same frame as MarinePrologue/Transport/TransportLaunch.fbx and MarineLayout.json). Instantiate the FBX at identity next to the TransportLaunch instance.",
+ "importer": {
+  "bakeAxisConversion": true,
+  "globalScale": 1,
+  "useFileScale": true,
+  "preserveHierarchy": true,
+  "importAnimation": false,
+  "materials": "TW_*.mat remapped through externalObjects (materialImportMode ImportViaMaterialDescription)"
+ },
+ "placement": {
+  "static": [
+   "LTV2_TowerFacade",
+   "LTV2_DeckSupport",
+   "LTV2_Deluge"
+  ],
+  "moving_with_arm": "LTV2_ArmDetail: origin = AccessArmPivot; make it a child of \"Access arm control +Y 0 connected to -90 retracted\" so it swings with AccessArm",
+  "colliders": "none. Existing COL_* boxes stay the only collision; nothing here is a gameplay surface",
+  "disabled_existing_pieces_assumed": "the 72 sea-level Support*/Marine fender*/Fender* dock pieces stay disabled as in I06MarineAuthoring.ApplyElevatedDeckVariant"
+ },
+ "measured_existing": {
+  "pad_top_y": -32.6,
+  "shaft": {
+   "x": [
+    -1.65,
+    1.65
+   ],
+   "z": [
+    -10.15,
+    -6.85
+   ],
+   "ribs_every_m": 3.0,
+   "top_slab_y": [
+    -0.67,
+    0.2
+   ]
+  },
+  "deck": {
+   "x": [
+    -4.0,
+    4.0
+   ],
+   "z": [
+    -12.9,
+    -6.9
+   ],
+   "top_y": 0.0,
+   "dock_root": [
+    0,
+    -0.021,
+    -9.9
+   ]
+  },
+  "arm": {
+   "x": [
+    -0.98,
+    0.98
+   ],
+   "z": [
+    -6.9,
+    -2.48
+   ],
+   "pivot": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "floor_underside_y": -0.55,
+   "rail_top_y": 1.128
+  },
+  "hatch": {
+   "pivot": [
+    -0.72,
+    0.0,
+    -2.4
+   ],
+   "open_deg": 160,
+   "size": [
+    1.43,
+    2.11
+   ]
+  },
+  "capsule_shell_radius": 2.577,
+  "booster_radius": 2.895
+ },
+ "design_rules_kept": {
+  "facade_offset_from_shaft_m": 0.5,
+  "facade_min_gap_to_booster_m": ">=3.0 (clearance scan cap)",
+  "arm_walkway_keep_clear": "x +-0.93, y 0.02..2.2, z -6.9..-2.5",
+  "deck_keep_clear": "x +-3.9, y 0.05..2.5, z -12.8..-7.0",
+  "hatch_doorway_keep_clear": "x +-0.95, y 0.02..2.2, z -3.4..-2.3",
+  "rocket_side_legs_stop_at_y": -1.45,
+  "why": "the arm truss sweeps through them when the arm retracts (-90 deg)",
+  "fluid_lines_and_chain_side": "+x, so a retracted arm does not push them into the deck edge rails"
+ },
+ "objects": {
+  "LTV2_TowerFacade": {
+   "tris": 38384,
+   "verts": 71060,
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.2372,
+    -32.6,
+    -11.915
+   ],
+   "bounds_max": [
+    4.625,
+    -0.67,
+    -6.0
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 5248,
+    "TW_Galvanized": 31980,
+    "TW_OchrePaint": 876,
+    "TW_HazardStripe": 48,
+    "TW_PipeRed": 0,
+    "TW_Rubber": 168,
+    "TW_Grating": 36,
+    "TW_Labels": 28
+   }
+  },
+  "LTV2_DeckSupport": {
+   "tris": 5336,
+   "verts": 9810,
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -4.65,
+    -2.78,
+    -13.55
+   ],
+   "bounds_max": [
+    4.65,
+    0.682,
+    -6.1861
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 816,
+    "TW_Galvanized": 4112,
+    "TW_OchrePaint": 372,
+    "TW_HazardStripe": 0,
+    "TW_PipeRed": 0,
+    "TW_Rubber": 0,
+    "TW_Grating": 36,
+    "TW_Labels": 0
+   }
+  },
+  "LTV2_Deluge": {
+   "tris": 5588,
+   "verts": 8144,
+   "origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "bounds_min": [
+    -3.55,
+    -32.6,
+    -12.55
+   ],
+   "bounds_max": [
+    5.75,
+    -0.53,
+    -7.3
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 60,
+    "TW_Galvanized": 4180,
+    "TW_OchrePaint": 0,
+    "TW_HazardStripe": 0,
+    "TW_PipeRed": 1324,
+    "TW_Rubber": 0,
+    "TW_Grating": 24,
+    "TW_Labels": 0
+   }
+  },
+  "LTV2_ArmDetail": {
+   "tris": 5634,
+   "verts": 10684,
+   "origin": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "bounds_min": [
+    -1.52,
+    -1.27,
+    -7.48
+   ],
+   "bounds_max": [
+    1.28,
+    2.515,
+    -3.025
+   ],
+   "tris_by_material": {
+    "TW_SteelPainted": 840,
+    "TW_Galvanized": 3808,
+    "TW_OchrePaint": 0,
+    "TW_HazardStripe": 48,
+    "TW_PipeRed": 36,
+    "TW_Rubber": 900,
+    "TW_Grating": 0,
+    "TW_Labels": 2
+   }
+  }
+ },
+ "total_triangles": 54942,
+ "anchors": {
+  "ArmPivot": {
+   "point": [
+    -0.9,
+    0.0,
+    -6.9
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "note": "AccessArmPivot of TransportLaunch; LTV2_ArmDetail origin. Parent LTV2_ArmDetail under the \"Access arm control\" frame; it rotates with the arm (+Y 0 connected, -90 retracted)."
+  },
+  "ArmHoodCentre": {
+   "point": [
+    0,
+    1.0,
+    -3.36
+   ],
+   "forward": [
+    0,
+    0,
+    1
+   ],
+   "note": "crew connection hood around the arm head; clear opening x +-1.0, y -0.62..2.26 (boot rings) and the hatch is never covered"
+  },
+  "ArmChainStart": {
+   "point": [
+    1.14,
+    0.12,
+    -6.45
+   ],
+   "forward": [
+    0,
+    0,
+    1
+   ],
+   "note": "energy chain and fluid lines on the +x outside of the arm"
+  },
+  "DelugeRiserBase": {
+   "point": [
+    2.49,
+    -32.15,
+    -7.6
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "note": "DN200 riser foot on the pad; valve V-07 at +x"
+  },
+  "DelugeValveV07": {
+   "point": [
+    4.39,
+    -32.15,
+    -7.6
+   ],
+   "forward": [
+    1,
+    0,
+    0
+   ],
+   "note": "isolation valve with handwheel"
+  },
+  "DrencherHeaderCorner": {
+   "point": [
+    3.55,
+    -0.98,
+    -12.45
+   ],
+   "forward": [
+    0,
+    0,
+    1
+   ],
+   "note": "drencher header under the deck, 6 + 8 downward heads"
+  },
+  "ScupperPlusX": {
+   "point": [
+    3.25,
+    -0.58,
+    -12.35
+   ],
+   "forward": [
+    0,
+    -1,
+    0
+   ],
+   "note": "deck scupper, downpipe to the pad catch basin"
+  },
+  "ScupperMinusX": {
+   "point": [
+    -3.25,
+    -0.58,
+    -12.35
+   ],
+   "forward": [
+    0,
+    -1,
+    0
+   ],
+   "note": "deck scupper, downpipe to the pad catch basin"
+  },
+  "CatchBasinPlusX": {
+   "point": [
+    2.53,
+    -32.6,
+    -11.08
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "note": "grated catch basin at the foot of the downpipe"
+  },
+  "CatchBasinMinusX": {
+   "point": [
+    -2.53,
+    -32.6,
+    -11.08
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "note": "grated catch basin at the foot of the downpipe"
+  },
+  "LadderFoot": {
+   "point": [
+    -2.54,
+    -32.35,
+    -8.5
+   ],
+   "forward": [
+    -1,
+    0,
+    0
+   ],
+   "note": "caged service ladder on the -x face, passive"
+  },
+  "RearLandingL4": {
+   "point": [
+    0,
+    -20.6,
+    -11.34
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "grated landing, 2.5 x 1.1 m, ochre rails"
+  },
+  "RearLandingL7": {
+   "point": [
+    0,
+    -11.6,
+    -11.34
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "grated landing"
+  },
+  "RearLandingL10": {
+   "point": [
+    0,
+    -2.6,
+    -11.34
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "grated landing under the deck overhang"
+  },
+  "CableTrayFootMinusX": {
+   "point": [
+    -1.7,
+    -31.5,
+    -10.95
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "cable tray C-1, vertical, to a junction box under the deck"
+  },
+  "CableTrayFootPlusX": {
+   "point": [
+    1.7,
+    -31.5,
+    -10.95
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "cable tray, vertical"
+  },
+  "TowerSignPlate": {
+   "point": [
+    0,
+    -4.3,
+    -10.802
+   ],
+   "forward": [
+    0,
+    0,
+    -1
+   ],
+   "note": "AURORA-7 / CREW ACCESS TOWER plate, 2.6 m wide"
+  }
+ },
+ "clearance_scan": {
+  "file": "Models/LaunchTowerV02_clearance.json",
+  "poses": "dock at (0,-0.021,-9.9); hatch open 160 deg about (-0.72,0,-2.4); arm retracted = -90 deg about (-0.9,0,-6.9); sea-level dock pieces disabled",
+  "corridor_violations": 0,
+  "note": "overlapping triangle pairs listed there are by-design attachment contacts (seat plates, flanges, bearing ring, hanger rods, cladding battens on the shaft ribs); no walking corridor is touched"
+ },
+ "labels": "fictional AURORA-7 plates only; no agency logos"
+}

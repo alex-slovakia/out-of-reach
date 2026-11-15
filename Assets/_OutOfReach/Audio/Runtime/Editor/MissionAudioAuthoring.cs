@@ -47,6 +47,7 @@ namespace OutOfReach.Presentation.Audio.Editor
                         DepartureVoice("departure-liftoff", "Liftoff.")
                     }, effects);
                 presenter.ConfigureRecoveryMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/mx04_recovery.wav"));
+                presenter.ConfigureLaunchRadio(RequiredClip("Assets/_OutOfReach/Audio/LaunchRadio/launch-radio-countdown.wav"));
                 if (!presenter.ValidateConfiguration(out string reason)) throw new InvalidOperationException(reason);
                 if (!PrefabUtility.SaveAsPrefabAsset(root, PrefabPath))
                     throw new InvalidOperationException("Could not save owned audio prefab.");

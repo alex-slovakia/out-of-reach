@@ -1,0 +1,14 @@
+{
+  "name": "OutOfReach.UI.Chapter.Editor",
+  "rootNamespace": "OutOfReach.Presentation.UI.Chapter.Editor",
+  "references": ["OutOfReach.UI.Chapter", "OutOfReach.Contracts"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

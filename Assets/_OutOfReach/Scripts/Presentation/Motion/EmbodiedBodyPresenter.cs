@@ -63,8 +63,24 @@ namespace OutOfReach.Presentation.Motion
         private bool offsetResetRequested;
         private Vector3 previousFeetPosition, gaitDirection;
         private bool hasFeetPosition;
-        private float gaitPhase, gaitWeight, sprintWeight, walkingPace;
+        private float gaitPhase, gaitWeight, gaitSpeed, setback;
+        private bool groundPosed, gaitActive, hasYaw;
+        private Vector3 gaitVelocity;
+        private float yawRate, previousYaw, sinceMoved, ungroundedTime;
+        private ModelGaitGroundProbe groundProbe;
+        private readonly RaycastHit[] groundHits = new RaycastHit[8];
+        private float? deltaOverride;
         private DepartureSeatRestraint departureSeat;
+        private Func<bool> restQuery;
+        private Func<RestStopReason> restReasonQuery;
+        private Transform berthFrame;
+        private ModelRestRig restRig;
+        private RestPhase restPhase;
+        private BodyPose restNextPose;
+        private float restTime, releaseChest, releaseHip;
+        private bool restHazard, forcePoseReset;
+        // Where the gameplay camera sits in the body frame during ordinary play, and the body's own eyes in the bag.
+        private Vector3 normalCameraLocal = new Vector3(0f, 1.62f, .30f), restEyeLocal = new Vector3(0f, 1.65f, .09f);
 
         /// <summary>
         /// Synchronous lease cancellation before sampling, restoration, hide, clear or disable.
@@ -78,6 +94,14 @@ namespace OutOfReach.Presentation.Motion
         public BodyPose CurrentPose => pose;
         public BodyArmVisibility VisibleArms => visible ? armMask : BodyArmVisibility.None;
         public bool HasDepartureSeat => departureSeat != null;
+        /// <summary>Berth rest presentation phase; None outside a rest. Core's IsResting stays the authority.</summary>
+        public RestPhase RestPhase => restPhase;
+        /// <summary>Seconds into the current rest phase (frozen while paused).</summary>
+        public float RestPhaseSeconds => restTime;
+        /// <summary>Raised on every rest phase change, including the immediate release on reset, stale session or disable.</summary>
+        public event Action<RestPhase> RestPhaseChanged;
+        /// <summary>True while a berth rest is configured and its frame is live: root keeps the body visible while resting.</summary>
+        public bool PresentsRest => restQuery != null && berthFrame && berthFrame.gameObject.activeInHierarchy;
         public bool IsDepartureSeatLatched => departureSeat != null && departureSeat.IsLatched;
         public Transform VisualRoot => visualRoot;
         public Transform PlayerFeet => playerFeet;
@@ -178,8 +202,9 @@ namespace OutOfReach.Presentation.Motion
                 throw new InvalidOperationException("Bind a body session before configuring grounded presentation.");
             if (!controller || controller.transform != playerFeet || groundedModeAllowed == null || isSprinting == null)
                 throw new ArgumentException("Grounded presentation needs the bound player controller and both mode callbacks.");
-            workCache.PrepareGroundRig(usePreflightGait != null);
-            evaCache.PrepareGroundRig(false);
+            // Both outfits share the 164-bone rig and the same gait model; the preflight policy no longer selects art.
+            workCache.PrepareGroundRig();
+            evaCache.PrepareGroundRig();
             ResetGroundMotion(true);
             if (visible && pose == BodyPose.Standing)
                 (activeEva ? evaCache : workCache).Ground.CaptureStanding(visualRoot);
@@ -187,6 +212,30 @@ namespace OutOfReach.Presentation.Motion
             groundedQuery = groundedModeAllowed;
             sprintQuery = isSprinting;
             preflightGaitQuery = usePreflightGait;
+        }
+
+        /// <summary>
+        /// BODY-REST-HOOK (root ACK #7 6895081311). Call after ConfigureSession on every session binding.
+        /// <paramref name="isResting"/> is Core's authoritative ISurvivalRecovery.IsResting. <paramref name="berthBodyFrame"/>
+        /// is the body origin in the bag: +Y towards the head, +Z out of the chest into the aisle, +X body right, metre
+        /// scale, outside the body, player and camera. <paramref name="lastRestStop"/> (ISurvivalRecovery.LastRestStop)
+        /// lets a hazard wake release within 0.3 s. Entering settles into the bag and draws the chest and hip straps;
+        /// Held keeps them buckled; Releasing unclips and hands the body back. Pause freezes it; reset, stale session,
+        /// disable or a hidden body release it at once. Never changes the player, controller, resources, input or camera.
+        /// </summary>
+        public void ConfigureRest(Func<bool> isResting, Transform berthBodyFrame, Func<RestStopReason> lastRestStop = null)
+        {
+            if (!bound || notifyingReset)
+                throw new InvalidOperationException("Bind a body session before configuring the berth rest.");
+            if (isResting == null || !berthBodyFrame)
+                throw new ArgumentException("The berth rest needs Core's IsResting and a berth body frame.");
+            if (berthBodyFrame == visualRoot || berthBodyFrame.IsChildOf(visualRoot) || berthBodyFrame == playerFeet
+                || berthBodyFrame.IsChildOf(playerFeet) || berthBodyFrame == playerCamera.transform
+                || berthBodyFrame.IsChildOf(playerCamera.transform) || (berthBodyFrame.lossyScale - Vector3.one).sqrMagnitude > .000001f)
+                throw new ArgumentException("The berth body frame must be a metre-scale scene anchor outside the body, player and camera.");
+            CancelRest();
+            restQuery = isResting; restReasonQuery = lastRestStop; berthFrame = berthBodyFrame;
+            if (isActiveAndEnabled) Refresh();
         }
 
         /// <summary>Explicit visual pose request only. Never seats, teleports, rests or changes the player.</summary>
@@ -203,7 +252,7 @@ namespace OutOfReach.Presentation.Motion
         /// </summary>
         public bool TryBeginDepartureSeat(Transform seatBodyFrame)
         {
-            if (!Application.isPlaying || !bound || !isActiveAndEnabled || notifyingReset || departureSeat != null
+            if (!(Application.isPlaying || AllowEditModeDepartureSeat) || !bound || !isActiveAndEnabled || notifyingReset || departureSeat != null
                 || clock.IsPaused || suit.IsSuitOn || suit.IsOutside || !seatBodyFrame
                 || !seatBodyFrame.gameObject.activeInHierarchy || !seatBodyFrame.parent
                 || !visualRoot || !visualRoot.gameObject.activeInHierarchy || !playerFeet || !playerCamera
@@ -240,6 +289,9 @@ namespace OutOfReach.Presentation.Motion
             }
         }
 
+        /// <summary>Edit-mode harness only: lets the departure seat lease run outside Play mode. Never set in the game.</summary>
+        internal static bool AllowEditModeDepartureSeat;
+
         /// <summary>Call after the actual vehicle/camera frame. The departure owner supplies its held playhead.</summary>
         public bool PresentDepartureSeat(float presentedSeconds)
         {
@@ -262,6 +314,17 @@ namespace OutOfReach.Presentation.Motion
             if (bound && isActiveAndEnabled) Refresh();
         }
 
+        /// <summary>
+        /// Deterministic presentation step for tests and frame capture: behaves like one LateUpdate with the given
+        /// frame time instead of Time.deltaTime. Gameplay never calls this.
+        /// </summary>
+        public void AdvancePresentation(float deltaTime)
+        {
+            if (!bound || !isActiveAndEnabled || !(deltaTime > 0f)) return;
+            deltaOverride = deltaTime;
+            try { Refresh(true); } finally { deltaOverride = null; }
+        }
+
         /// <summary>Root may request immediate gate/state reconciliation; otherwise LateUpdate does this.</summary>
         public void RefreshPresentation()
         {
@@ -276,6 +339,8 @@ namespace OutOfReach.Presentation.Motion
             bound = false; suit = null; clock = null;
             visibleQuery = floatingQuery = null; armsQuery = null;
             groundController = null; groundedQuery = sprintQuery = preflightGaitQuery = null;
+            CancelRest();
+            restQuery = null; restReasonQuery = null; berthFrame = null;
             DisposeDepartureSeat();
             ResetOwnedVisuals();
             seatedRequested = wasPaused = offsetResetRequested = false;
@@ -312,25 +377,31 @@ namespace OutOfReach.Presentation.Motion
             int version = bindingVersion;
             bool permitted = visibleQuery();
             if (version != bindingVersion || !bound) return;
-            if (!permitted) { if (visible) ResetOwnedVisuals(); return; }
+            if (!permitted) { CancelRest(); if (visible) ResetOwnedVisuals(); return; }
             bool paused = clock.IsPaused;
             bool nextEva = suit.IsSuitOn;
             BodyPose nextPose = seatedRequested ? BodyPose.Seated : floatingQuery() ? BodyPose.Floating : BodyPose.Standing;
             if (version != bindingVersion || !bound) return;
             BodyArmVisibility nextArms = armsQuery() & BodyArmVisibility.Both;
             if (version != bindingVersion || !bound) return;
+            // Berth rest: Core's IsResting drives a presentation that owns the body until it hands it back.
+            if (visible && nextEva == activeEva && RestOwnsBody(paused, trackMovement, nextArms)) { wasPaused = paused; return; }
+            if (restPhase != RestPhase.None) CancelRest();
+            if (version != bindingVersion || !bound) return;
             // Existing pose/position freezes while paused. Outfit safety and visibility still reconcile.
             if (paused && visible && nextEva == activeEva) nextPose = pose;
             bool wasVisible = visible;
             bool poseChanged = !visible || nextEva != activeEva || nextPose != pose;
-            bool reset = poseChanged || nextArms != armMask
+            bool reset = poseChanged || nextArms != armMask || forcePoseReset
                 || (paused && !wasPaused) || (offsetResetRequested && !paused);
             if (reset)
             {
                 NotifyReset();
                 HideRenderers();
-                if (poseChanged || offsetResetRequested && !paused) ResetGroundMotion(false);
+                if (poseChanged || forcePoseReset || offsetResetRequested && !paused) ResetGroundMotion(false);
+                forcePoseReset = false;
                 workCache.Restore(); evaCache.Restore();
+                groundPosed = false;
                 Outfit selected = nextEva ? eva : work;
                 AnimationClip clip = nextPose == BodyPose.Seated ? selected.seated
                     : nextPose == BodyPose.Floating ? selected.floating : selected.standing;
@@ -339,6 +410,7 @@ namespace OutOfReach.Presentation.Motion
                 clip.SampleAnimation(selected.modelRoot.gameObject, 0f);
                 if (nextPose == BodyPose.Standing)
                     (nextEva ? evaCache : workCache).Ground?.CaptureStanding(visualRoot);
+                evaCache.Float?.CancelPush(); workCache.Float?.CancelPush();
                 activeEva = nextEva; pose = nextPose; armMask = nextArms;
                 selected.torsoLegs.enabled = true;
                 selected.leftArm.enabled = (armMask & BodyArmVisibility.Left) != 0;
@@ -347,16 +419,18 @@ namespace OutOfReach.Presentation.Motion
                 if (!paused) offsetResetRequested = false;
             }
             if (!paused || !wasVisible) FollowFeet();
+            if (!paused) normalCameraLocal = Quaternion.Inverse(visualRoot.rotation) * (playerCamera.transform.position - visualRoot.position);
+            if (pose == BodyPose.Floating) UpdateFloatingLegs(reset, paused, trackMovement);
             if (pose == BodyPose.Standing && groundController)
             {
                 if (paused || Time.timeScale <= 0f)
                 {
                     hasFeetPosition = false;
                     // The pause reset still releases presentation leases. Preserve the standing gait frame.
-                    if (reset && gaitWeight > 0f) ApplyGroundPose();
+                    if (reset) ApplyGroundPose(0f, gaitActive);
                 }
                 else if (trackMovement) UpdateGroundMotion();
-                else if (reset && gaitWeight > 0f) ApplyGroundPose();
+                else if (reset) ApplyGroundPose(0f, gaitActive);
             }
             wasPaused = paused;
         }
@@ -378,9 +452,25 @@ namespace OutOfReach.Presentation.Motion
 
         private void UpdateGroundMotion()
         {
-            if (!groundController.enabled || !groundController.isGrounded || suit.IsOutside || !groundedQuery())
+            ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
+            float elapsed = deltaOverride ?? Time.deltaTime;
+            UpdateLookDownSetback(rig, elapsed);
+            float yaw = visualRoot.eulerAngles.y;
+            if (hasYaw && elapsed > 0f && elapsed <= .25f)
+                yawRate = Mathf.Lerp(yawRate, Mathf.DeltaAngle(previousYaw, yaw) / elapsed, 1f - Mathf.Exp(-12f * elapsed));
+            previousYaw = yaw; hasYaw = true;
+
+            // AdvancePresentation (tests and frame capture) has no physics step: it trusts the supplied feet motion.
+            bool synthetic = deltaOverride.HasValue;
+            // CharacterController.isGrounded flickers on slopes and steps; a short flicker keeps the feet planted.
+            ungroundedTime = synthetic || groundController.isGrounded ? 0f : ungroundedTime + Mathf.Max(0f, elapsed);
+            bool walkable = groundController.enabled && ungroundedTime < .15f && !suit.IsOutside && groundedQuery();
+            if (!walkable)
             {
-                ResetGroundMotion(true);
+                // No stepping outside the grounded mode: the feet stay on their standing slots.
+                ResetGait();
+                rig.ResetFeet();
+                ApplyGroundPose(0f, false);
                 return;
             }
 
@@ -390,74 +480,356 @@ namespace OutOfReach.Presentation.Motion
             if (!hasFeetPosition)
             {
                 hasFeetPosition = true;
+                ApplyGroundPose(elapsed, false);
                 return;
             }
 
-            float elapsed = Time.deltaTime;
             float distance = displacement.magnitude;
-            Vector3 controllerTravel = Vector3.ProjectOnPlane(groundController.velocity, Vector3.up) * elapsed;
-            // A physics move and the observed feet delta must agree. Reject warps and hitches rather than cycle to catch up.
-            if (elapsed <= 0f || elapsed > .25f || !Finite(displacement) || !Finite(controllerTravel)
-                || distance > .65f || (displacement - controllerTravel).magnitude > .015f + distance * .2f)
+            Vector3 controllerTravel = synthetic ? displacement : Vector3.ProjectOnPlane(groundController.velocity, Vector3.up) * elapsed;
+            // A warp or a hitch re-plants the feet at the standing slots instead of cycling to catch up.
+            if (elapsed <= 0f || elapsed > .25f || !Finite(displacement) || !Finite(controllerTravel) || distance > .65f)
             {
-                ResetGroundMotion(true);
+                ResetGait();
+                rig.ResetFeet();
+                ApplyGroundPose(0f, false);
                 return;
             }
 
-            bool moved = distance > elapsed * .08f && Vector3.Dot(displacement, controllerTravel) > 0f;
-            float previousWeight = gaitWeight;
-            gaitWeight = Mathf.MoveTowards(gaitWeight, moved ? 1f : 0f, elapsed * (moved ? 9f : 11f));
+            // Motion the controller did not make (a push, a carrier) does not drive the gait; planted feet stay put.
+            bool consistent = (displacement - controllerTravel).magnitude <= .015f + distance * .2f;
+            bool moved = consistent && distance > elapsed * .08f && Vector3.Dot(displacement, controllerTravel) > 0f;
+            sinceMoved = moved ? 0f : sinceMoved + elapsed;
+            // A single still frame inside a walk does not end the gait.
+            bool moving = moved || (gaitActive && sinceMoved < .12f);
+            gaitWeight = Mathf.MoveTowards(gaitWeight, moving ? 1f : 0f, elapsed * (moving ? 9f : 7f));
             if (moved)
             {
                 Vector3 nextDirection = Quaternion.Inverse(visualRoot.rotation) * (displacement / distance);
-                gaitDirection = previousWeight <= 0f ? nextDirection
-                    : Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
-                sprintWeight = Mathf.MoveTowards(sprintWeight, sprintQuery() ? 1f : 0f, elapsed * 8f);
-                walkingPace = Mathf.MoveTowards(walkingPace, Mathf.Clamp01(distance / (elapsed * 2.5f)), elapsed * 7f);
-                gaitPhase = Mathf.Repeat(gaitPhase + distance / (2f * StepLengthMetres(UsePreflightGait())), 1f);
+                float measured = distance / elapsed;
+                if (!gaitActive)
+                {
+                    gaitDirection = nextDirection;
+                    gaitSpeed = measured;
+                    gaitVelocity = displacement / elapsed;
+                    gaitPhase = rig.StartPhase(ModelGait.Stance(Mathf.Max(gaitSpeed, .3f)));
+                    gaitActive = true;
+                }
+                else
+                {
+                    gaitDirection = Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
+                    gaitSpeed = Mathf.Lerp(gaitSpeed, measured, 1f - Mathf.Exp(-10f * elapsed));
+                    gaitVelocity = Vector3.Lerp(gaitVelocity, displacement / elapsed, 1f - Mathf.Exp(-12f * elapsed));
+                }
+                ModelGaitProfile profile = activeEva ? ModelGaitProfile.Eva : ModelGaitProfile.Work;
+                float stride = ModelGait.StrideLength(Mathf.Max(gaitSpeed, .3f), rig.LegLength, Mathf.Abs(gaitDirection.x)) * profile.StrideScale;
+                gaitPhase = Mathf.Repeat(gaitPhase + distance / stride, 1f);
             }
-            if (gaitWeight > 0f) ApplyGroundPose();
-            else
+            if (!moving)
             {
-                if (previousWeight > 0f) (activeEva ? evaCache : workCache).Ground.RestoreStanding();
-                gaitPhase = sprintWeight = walkingPace = 0f;
+                gaitActive = false;
+                gaitVelocity = Vector3.zero;
+                if (gaitWeight <= 0f) gaitSpeed = 0f;
             }
+            ApplyGroundPose(elapsed, gaitActive);
         }
 
-        private bool UsePreflightGait() => !activeEva && (preflightGaitQuery?.Invoke() ?? false);
-
-        private float StepLengthMetres(bool preflight)
+        private void UpdateFloatingLegs(bool reset, bool paused, bool trackMovement)
         {
-            float forwardStep = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.49f, .82f, walkingPace), 1.00f, sprintWeight)
-                : Mathf.Lerp(Mathf.Lerp(.40f, .72f, walkingPace), .92f, sprintWeight);
-            float sideStep = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.41f, .59f, walkingPace), .68f, sprintWeight)
-                : Mathf.Lerp(Mathf.Lerp(.34f, .49f, walkingPace), .60f, sprintWeight);
-            return Mathf.Lerp(forwardStep, sideStep, Mathf.Abs(gaitDirection.x));
+            ModelFloatRig rig = (activeEva ? evaCache : workCache).Float;
+            if (rig == null) return;
+            if (reset) rig.Capture(visualRoot);
+            float dt = deltaOverride ?? Time.deltaTime;
+            if (trackMovement && !paused && Time.timeScale > 0f) rig.Apply(visualRoot, Mathf.Clamp(dt, 0f, .1f));
+            else if (reset) rig.Apply(visualRoot, 0f);
         }
 
-        private void ApplyGroundPose()
+        /// <summary>
+        /// Presentation only: the legs plant on the deck behind the push, tuck, extend and release (about .7 s).
+        /// Ignored unless the body is visible, floating and not paused. Never changes velocity, cooldown or state.
+        /// </summary>
+        public void PlayLegPush(Vector3 worldDirection)
         {
-            GroundRig rig = (activeEva ? evaCache : workCache).Ground;
-            float running = sprintWeight;
-            bool preflight = UsePreflightGait();
-            float stepLength = StepLengthMetres(preflight);
-            float footLift = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.025f, .063f, walkingPace), .117f, running)
-                : Mathf.Lerp(Mathf.Lerp(.06f, .125f, walkingPace), .23f, running);
-            float stance = preflight ? Mathf.Lerp(.512f, .40f, running) : Mathf.Lerp(.60f, .46f, running);
-            float weight = Mathf.SmoothStep(0f, 1f, gaitWeight);
-            rig.Apply(visualRoot, gaitDirection, gaitPhase, stepLength, footLift, stance, weight,
-                preflight, running, armMask == BodyArmVisibility.Both);
+            if (!bound || !isActiveAndEnabled || !visible || pose != BodyPose.Floating || clock == null || clock.IsPaused
+                || !Finite(worldDirection)) return;
+            (activeEva ? evaCache : workCache).Float?.BeginPush(worldDirection);
         }
+
+        private void UpdateLookDownSetback(ModelGaitRig rig, float elapsed)
+        {
+            float pitchDown = Mathf.Asin(Mathf.Clamp(-playerCamera.transform.forward.y, -1f, 1f)) * Mathf.Rad2Deg;
+            float target = ModelGait.LookDownSetback(pitchDown, rig.LegLength);
+            setback = elapsed > 0f && elapsed <= .25f ? Mathf.Lerp(setback, target, 1f - Mathf.Exp(-9f * elapsed)) : target;
+        }
+
+        private void ResetGait()
+        {
+            gaitWeight = 0f;
+            gaitPhase = gaitSpeed = 0f;
+            hasFeetPosition = gaitActive = hasYaw = false;
+            gaitVelocity = Vector3.zero;
+            yawRate = sinceMoved = 0f;
+        }
+
+        // Poses the grounded rig every frame: planted feet, settle and turn steps, gait and the look-down setback.
+        private void ApplyGroundPose(float deltaTime, bool moving)
+        {
+            ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
+            groundProbe ??= ProbeGround;
+            var frame = new ModelGaitFrame
+            {
+                Direction = gaitDirection.sqrMagnitude > 1e-6f ? gaitDirection.normalized : Vector3.forward,
+                Phase = gaitPhase,
+                Speed = gaitSpeed,
+                Weight = gaitWeight,
+                Moving = moving,
+                Velocity = gaitVelocity,
+                YawRate = yawRate,
+                Pivot = playerFeet.position,
+                DeltaTime = deltaTime,
+                Setback = setback,
+                LeftArm = (armMask & BodyArmVisibility.Left) != 0,
+                RightArm = (armMask & BodyArmVisibility.Right) != 0,
+                Eva = activeEva,
+                Ground = groundProbe
+            };
+            rig.Apply(visualRoot, frame);
+            groundPosed = true;
+        }
+
+        // Nearest walkable surface straight below, ignoring the player capsule, triggers and the body itself.
+        private bool ProbeGround(Vector3 origin, float distance, out float height, out Vector3 normal)
+        {
+            height = 0f; normal = Vector3.up;
+            int count = Physics.RaycastNonAlloc(origin, Vector3.down, groundHits, distance, Physics.DefaultRaycastLayers,
+                QueryTriggerInteraction.Ignore);
+            float best = float.MaxValue;
+            for (int i = 0; i < count; i++)
+            {
+                RaycastHit hit = groundHits[i];
+                Collider surface = hit.collider;
+                if (!surface || surface == groundController || hit.normal.y < .55f || hit.distance >= best) continue;
+                Transform t = surface.transform;
+                if ((playerFeet && (t == playerFeet || t.IsChildOf(playerFeet))) || (visualRoot && t.IsChildOf(visualRoot))) continue;
+                best = hit.distance; height = hit.point.y; normal = hit.normal;
+            }
+            return best < float.MaxValue;
+        }
+
+        /// <summary>Test access to the active outfit grounded rig.</summary>
+        internal ModelGaitRig ActiveGroundRig => (activeEva ? evaCache : workCache)?.Ground;
 
         private void ResetGroundMotion(bool restoreStanding)
         {
-            if (restoreStanding && gaitWeight > 0f)
+            if (restoreStanding && groundPosed)
                 (activeEva ? evaCache : workCache).Ground.RestoreStanding();
-            hasFeetPosition = false;
-            gaitPhase = gaitWeight = sprintWeight = walkingPace = 0f;
+            groundPosed = false;
+            ResetGait();
+            setback = 0f;
+            workCache?.Ground?.ResetFeet();
+            evaCache?.Ground?.ResetFeet();
+        }
+
+        // Returns true while the berth rest presents the body this frame (the normal pose flow is skipped).
+        private bool RestOwnsBody(bool paused, bool trackMovement, BodyArmVisibility nextArms)
+        {
+            bool resting = false;
+            if (PresentsRest && !seatedRequested)
+            {
+                int version = bindingVersion;
+                try { resting = restQuery(); }
+                catch (Exception error) { Debug.LogException(error, this); resting = false; }
+                if (version != bindingVersion || !bound) return true;
+            }
+            if (restPhase == RestPhase.None)
+            {
+                if (!resting || paused || !BeginRest()) return false;
+            }
+            else if (!PresentsRest || seatedRequested) { CancelRest(); return false; }
+
+            float dt = paused || !trackMovement ? 0f : Mathf.Clamp(deltaOverride ?? Time.unscaledDeltaTime, 0f, .1f);
+            if (restPhase == RestPhase.Entering)
+            {
+                if (!resting) StartRelease();
+                else if ((restTime += dt) >= ModelRestTimeline.EnterDuration) { restTime = 0f; SetRestPhase(RestPhase.Held); }
+            }
+            else if (restPhase == RestPhase.Held)
+            {
+                if (!resting) StartRelease();
+                else restTime += dt;
+            }
+            else if ((restTime += dt) >= (restHazard ? ModelRestTimeline.HazardReleaseDuration : ModelRestTimeline.ReleaseDuration))
+            {
+                EndRest();
+                return false;
+            }
+            if (restPhase == RestPhase.None || restRig == null) return false;
+            Outfit selected = activeEva ? eva : work;
+            selected.leftArm.enabled = (nextArms & BodyArmVisibility.Left) != 0;
+            selected.rightArm.enabled = (nextArms & BodyArmVisibility.Right) != 0;
+            ApplyRestPose();
+            return true;
+        }
+
+        private bool BeginRest()
+        {
+            Outfit outfit = activeEva ? eva : work;
+            ModelCache cache = activeEva ? evaCache : workCache;
+            Shader lit = FindLit(outfit);
+            if (!lit || !outfit.standing || !berthFrame) return false;
+            NotifyReset();
+            ResetGroundMotion(false);
+            evaCache.Float?.CancelPush(); workCache.Float?.CancelPush();
+            Vector3 fromPosition = visualRoot.position;
+            Quaternion fromRotation = visualRoot.rotation;
+            var rig = new ModelRestRig(cache.Transforms, cache.Nodes, visualRoot, lit);
+            try
+            {
+                // From whatever the body shows now to the held standing sample, settled in the bag.
+                rig.CaptureFrom();
+                cache.Restore();
+                outfit.standing.SampleAnimation(outfit.modelRoot.gameObject, 0f);
+                visualRoot.SetPositionAndRotation(berthFrame.position, berthFrame.rotation);
+                rig.CaptureTo();
+                rig.Measure(visualRoot, new[] { outfit.torsoLegs, outfit.leftArm, outfit.rightArm }, cache.Nodes);
+                if (cache.Nodes.TryGetValue("eye.L", out Transform eyeLeft) && cache.Nodes.TryGetValue("eye.R", out Transform eyeRight))
+                    restEyeLocal = visualRoot.InverseTransformPoint((eyeLeft.position + eyeRight.position) * .5f);
+                rig.Blend(0f);
+                visualRoot.SetPositionAndRotation(fromPosition, fromRotation);
+            }
+            catch
+            {
+                rig.Dispose();
+                throw;
+            }
+            restRig = rig;
+            restTime = 0f; restHazard = false;
+            PoseRevision++;
+            SetRestPhase(RestPhase.Entering);
+            return restPhase == RestPhase.Entering;
+        }
+
+        private void StartRelease()
+        {
+            RestStopReason reason = RestStopReason.None;
+            if (restReasonQuery != null)
+            {
+                try { reason = restReasonQuery(); }
+                catch (Exception error) { Debug.LogException(error, this); }
+            }
+            restHazard = ModelRestTimeline.IsHazard(reason);
+            releaseChest = restRig.ChestClosure; releaseHip = restRig.HipClosure;
+            Outfit outfit = activeEva ? eva : work;
+            ModelCache cache = activeEva ? evaCache : workCache;
+            restNextPose = seatedRequested ? BodyPose.Seated : floatingQuery() ? BodyPose.Floating : BodyPose.Standing;
+            // From the bag pose on screen to the pose the body returns to.
+            restRig.CaptureFrom();
+            cache.Restore();
+            AnimationClip next = restNextPose == BodyPose.Floating ? outfit.floating
+                : restNextPose == BodyPose.Seated ? outfit.seated : outfit.standing;
+            next.SampleAnimation(outfit.modelRoot.gameObject, 0f);
+            restRig.CaptureTo();
+            restRig.Blend(0f);
+            restTime = 0f;
+            SetRestPhase(RestPhase.Releasing);
+        }
+
+        private void EndRest()
+        {
+            ModelRestRig rig = restRig;
+            restRig = null;
+            rig?.Dispose();
+            restTime = 0f;
+            forcePoseReset = true;
+            SetRestPhase(RestPhase.None);
+        }
+
+        // Immediate release (reset, stale session, disable, hidden body): straps and hand gone at once.
+        private void CancelRest()
+        {
+            ModelRestRig rig = restRig;
+            restRig = null;
+            rig?.Dispose();
+            restTime = 0f;
+            if (restPhase == RestPhase.None) return;
+            forcePoseReset = true;
+            SetRestPhase(RestPhase.None);
+        }
+
+        private void SetRestPhase(RestPhase next)
+        {
+            if (restPhase == next) return;
+            restPhase = next;
+            try { RestPhaseChanged?.Invoke(next); }
+            catch (Exception error) { Debug.LogException(error, this); }
+        }
+
+        // How far the actual camera has moved from the gameplay eye to the berth eye. The body goes where the eye is:
+        // a camera cut into the berth docks it at once, a camera move carries it along; it never floats in front of the eye.
+        private float RestDock(Vector3 followPosition, Quaternion followRotation)
+        {
+            Vector3 eye = playerCamera.transform.position;
+            float toBerth = Vector3.Distance(eye, berthFrame.TransformPoint(restEyeLocal));
+            float toPlayer = Vector3.Distance(eye, followPosition + followRotation * normalCameraLocal);
+            float sum = toBerth + toPlayer;
+            return sum < 1e-4f ? 1f : Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(.15f, .85f, toPlayer / sum));
+        }
+
+        private void ApplyRestPose()
+        {
+            float t = restTime, blend, chest, hip, hand = 0f;
+            bool onHip = false, atBuckle = false, releasing = restPhase == RestPhase.Releasing;
+            FollowPose(releasing ? restNextPose : pose, out Vector3 followPosition, out Quaternion followRotation);
+            if (releasing)
+            {
+                if (restHazard)
+                {
+                    float open = ModelRestTimeline.HazardOpen(t);
+                    chest = releaseChest * open; hip = releaseHip * open; blend = 1f - open;
+                }
+                else
+                {
+                    chest = releaseChest * ModelRestTimeline.ReleaseChest(t);
+                    hip = releaseHip * ModelRestTimeline.ReleaseHip(t);
+                    hand = releaseChest > .5f || releaseHip > .5f ? ModelRestTimeline.ReleaseHand(t) : 0f;
+                    onHip = ModelRestTimeline.ReleaseHandOnHip(t) || releaseChest <= .5f;
+                    atBuckle = true;
+                    blend = ModelRestTimeline.Exit(t);
+                }
+            }
+            else
+            {
+                bool entering = restPhase == RestPhase.Entering;
+                blend = entering ? ModelRestTimeline.Settle(t) : 1f;
+                chest = entering ? ModelRestTimeline.ChestClose(t) : 1f;
+                hip = entering ? ModelRestTimeline.HipClose(t) : 1f;
+                if (entering) { hand = ModelRestTimeline.EnterHand(t); onHip = ModelRestTimeline.EnterHandOnHip(t); }
+            }
+            float dock = RestDock(followPosition, followRotation);
+            visualRoot.SetPositionAndRotation(Vector3.Lerp(followPosition, berthFrame.position, dock),
+                Quaternion.Slerp(followRotation, berthFrame.rotation, dock));
+            restRig.Blend(blend);
+            // Straps and the strapping hand belong to the berth: shown only with the body in it.
+            if (dock < .9f) { chest = hip = hand = 0f; }
+            restRig.Present(visualRoot, chest, hip, hand, onHip, atBuckle);
+            RestDockWeight = dock;
+        }
+
+        /// <summary>0 = body at the gameplay eye, 1 = docked in the berth (follows where root's camera actually is).</summary>
+        public float RestDockWeight { get; private set; }
+
+        private void FollowPose(BodyPose forPose, out Vector3 position, out Quaternion rotation)
+        {
+            Vector3 forward = Vector3.ProjectOnPlane(playerFeet.forward, Vector3.up);
+            rotation = forward.sqrMagnitude < 1e-8f ? visualRoot.rotation : Quaternion.LookRotation(forward.normalized, Vector3.up);
+            position = playerFeet.position + rotation * GetVisualFeetOffset(forPose);
+        }
+
+        private static Shader FindLit(Outfit outfit)
+        {
+            if (outfit.torsoLegs)
+                foreach (Material material in outfit.torsoLegs.sharedMaterials)
+                    if (material && material.shader && material.shader.name == "Universal Render Pipeline/Lit") return material.shader;
+            return Shader.Find("Universal Render Pipeline/Lit");
         }
 
         private void FollowFeet()
@@ -479,6 +851,7 @@ namespace OutOfReach.Presentation.Motion
 
         private void ResetOwnedVisuals()
         {
+            CancelRest();
             if (cached)
             {
                 NotifyReset();
@@ -548,6 +921,7 @@ namespace OutOfReach.Presentation.Motion
                 if (clip.legacy || clip.humanMotion || clip.length <= 0f)
                     throw new InvalidOperationException("Use the reviewed non-Humanoid Generic held clips.");
             var cache = new ModelCache(outfit.modelRoot, outfit.semanticBindings);
+            cache.PrepareFloatRig();
             foreach (string name in new[] { "CharacterRoot", "upperarm01.L", "upperarm01.R", "lowerarm01.L", "lowerarm01.R", "wrist.L", "wrist.R" })
                 if (!cache.Nodes.ContainsKey(name)) throw new InvalidOperationException("Body is missing imported joint " + name);
             return cache;
@@ -596,8 +970,16 @@ namespace OutOfReach.Presentation.Motion
         private sealed class ModelCache
         {
             public readonly Dictionary<string, Transform> Nodes = new Dictionary<string, Transform>(StringComparer.Ordinal);
-            public GroundRig Ground { get; private set; }
+            public ModelGaitRig Ground { get; private set; }
+            public ModelFloatRig Float { get; private set; }
+            public void PrepareFloatRig()
+            {
+                if (Float != null) return;
+                try { Float = new ModelFloatRig(Nodes); }
+                catch (InvalidOperationException) { Float = null; }   // a rig without leg joints just has no float legs
+            }
             private readonly Transform[] transforms;
+            public Transform[] Transforms => transforms;
             private readonly Vector3[] positions, scales;
             private readonly Quaternion[] rotations;
             public ModelCache(Transform root, SemanticBinding[] bindings)
@@ -624,238 +1006,13 @@ namespace OutOfReach.Presentation.Motion
                     }
             }
 
-            public void PrepareGroundRig(bool prepareArms)
+            public void PrepareGroundRig()
             {
-                if (Ground == null) Ground = new GroundRig(Nodes);
-                if (prepareArms) Ground.PrepareArms(Nodes);
+                if (Ground == null) Ground = new ModelGaitRig(Nodes);
+                Ground.PrepareArms(Nodes);
             }
         }
 
-        private sealed class GroundRig
-        {
-            private readonly Transform hips;
-            private readonly GroundLeg left, right;
-            private GroundArm leftArm, rightArm;
-            private bool armsPosed;
-            private Vector3 standingHipsPosition;
-
-            public GroundRig(Dictionary<string, Transform> nodes)
-            {
-                hips = Find(nodes, "root");
-                left = new GroundLeg(nodes, "L", -1f);
-                right = new GroundLeg(nodes, "R", 1f);
-                if (!left.Thigh.IsChildOf(hips) || !right.Thigh.IsChildOf(hips))
-                    throw new InvalidOperationException("The body's visual hips must own both leg chains.");
-            }
-
-            public void CaptureStanding(Transform reference)
-            {
-                standingHipsPosition = hips.localPosition;
-                left.CaptureStanding(reference);
-                right.CaptureStanding(reference);
-                leftArm?.CaptureStanding();
-                rightArm?.CaptureStanding();
-                armsPosed = false;
-            }
-
-            public void PrepareArms(Dictionary<string, Transform> nodes)
-            {
-                if (leftArm != null) return;
-                leftArm = new GroundArm(nodes, "L");
-                rightArm = new GroundArm(nodes, "R");
-            }
-
-            public void RestoreStanding()
-            {
-                hips.localPosition = standingHipsPosition;
-                left.RestoreStanding();
-                right.RestoreStanding();
-                if (armsPosed)
-                {
-                    leftArm.RestoreStanding();
-                    rightArm.RestoreStanding();
-                    armsPosed = false;
-                }
-            }
-
-            public void Apply(Transform reference, Vector3 direction, float phase,
-                float stepLength, float footLift, float stance, float weight, bool preflight, float running, bool ownsBothArms)
-            {
-                RestoreStanding();
-                float rightPhase = Mathf.Repeat(phase + .5f, 1f);
-                Vector3 leftTarget = left.FootTarget(direction, phase, stepLength, footLift, stance, weight, preflight, out float leftPitch);
-                Vector3 rightTarget = right.FootTarget(direction, rightPhase,
-                    stepLength, footLift, stance, weight, preflight, out float rightPitch);
-
-                leftTarget = reference.TransformPoint(leftTarget);
-                rightTarget = reference.TransformPoint(rightTarget);
-                float leftDrop = left.DropToReach(leftTarget), rightDrop = right.DropToReach(rightTarget);
-                // Blend the reach envelope at the transfer between feet. It always stays above each
-                // leg's reach minimum, so pelvis easing cannot pull a planted sole off the deck.
-                float drop = preflight
-                    ? SmoothHigher(.027f * weight, SmoothHigher(leftDrop, rightDrop, .024f * weight), .024f * weight)
-                    : Mathf.Max(.021f * weight, Mathf.Max(leftDrop, rightDrop));
-                hips.position -= Vector3.up * Mathf.Min(.18f, drop);
-                left.Pose(reference, leftTarget, leftPitch, weight, preflight);
-                right.Pose(reference, rightTarget, rightPitch, weight, preflight);
-                // WORK arm skin only. Cargo/EVA or contact owners keep their existing renderer/motion lease.
-                if (preflight && ownsBothArms && leftArm != null && Mathf.Abs(direction.z) > .01f)
-                {
-                    leftArm.Apply(reference.right, phase, direction.z, running, weight);
-                    rightArm.Apply(reference.right, rightPhase, direction.z, running, weight);
-                    armsPosed = true;
-                }
-            }
-
-            private static float SmoothHigher(float a, float b, float width)
-            {
-                float overlap = Mathf.Max(0f, width - Mathf.Abs(a - b));
-                return Mathf.Max(a, b) + (width > 0f ? overlap * overlap / (4f * width) : 0f);
-            }
-
-            public static Transform Find(Dictionary<string, Transform> nodes, string name)
-            {
-                if (nodes.TryGetValue(name, out Transform bone)) return bone;
-                throw new InvalidOperationException("Grounded body is missing imported joint " + name);
-            }
-        }
-
-        private sealed class GroundArm
-        {
-            private readonly Transform upper, forearm;
-            private Quaternion upperIdle, forearmIdle;
-
-            public GroundArm(Dictionary<string, Transform> nodes, string suffix)
-            {
-                upper = GroundRig.Find(nodes, "upperarm01." + suffix);
-                forearm = GroundRig.Find(nodes, "lowerarm01." + suffix);
-                if (!forearm.IsChildOf(upper)) throw new InvalidOperationException("Invalid grounded body arm chain.");
-            }
-
-            public void CaptureStanding()
-            {
-                upperIdle = upper.localRotation;
-                forearmIdle = forearm.localRotation;
-            }
-
-            public void RestoreStanding()
-            {
-                upper.localRotation = upperIdle;
-                forearm.localRotation = forearmIdle;
-            }
-
-            public void Apply(Vector3 pitchAxis, float legPhase, float forwardTravel, float running, float weight)
-            {
-                // The same-side arm moves back as its foot leads. Forearm flex increases on the
-                // forward swing, with hands and fingers staying in the sampled WORK standing shape.
-                float swing = Mathf.Cos(2f * Mathf.PI * (legPhase - .045f)) * Mathf.Sign(forwardTravel);
-                float gain = Mathf.Abs(forwardTravel) * weight;
-                upper.rotation = Quaternion.AngleAxis(swing * Mathf.Lerp(12f, 19f, running) * gain, pitchAxis) * upper.rotation;
-                float bend = Mathf.Lerp(2f, Mathf.Lerp(9f, 15f, running), .5f * (1f - swing));
-                forearm.rotation = Quaternion.AngleAxis(-bend * gain, pitchAxis) * forearm.rotation;
-            }
-        }
-
-        private sealed class GroundLeg
-        {
-            private readonly Transform shin, ankle;
-            private readonly float side;
-            public readonly Transform Thigh;
-            private Quaternion thighRotation, shinRotation, ankleRotation, standingAnkleOrientation;
-            private Vector3 standingAnkle, standingKneePole;
-            private float thighLength, shinLength;
-
-            public GroundLeg(Dictionary<string, Transform> nodes, string suffix, float sideSign)
-            {
-                Thigh = GroundRig.Find(nodes, "upperleg01." + suffix);
-                shin = GroundRig.Find(nodes, "lowerleg01." + suffix);
-                ankle = GroundRig.Find(nodes, "foot." + suffix);
-                side = sideSign;
-                if (!shin.IsChildOf(Thigh) || !ankle.IsChildOf(shin))
-                    throw new InvalidOperationException("Invalid grounded body leg chain for side " + suffix);
-            }
-
-            public void CaptureStanding(Transform reference)
-            {
-                thighRotation = Thigh.localRotation;
-                shinRotation = shin.localRotation;
-                ankleRotation = ankle.localRotation;
-                standingAnkleOrientation = Quaternion.Inverse(reference.rotation) * ankle.rotation;
-                standingAnkle = reference.InverseTransformPoint(ankle.position);
-                Vector3 upper = shin.position - Thigh.position, lower = ankle.position - shin.position;
-                thighLength = upper.magnitude;
-                shinLength = lower.magnitude;
-                standingKneePole = reference.InverseTransformDirection(Vector3.ProjectOnPlane(upper, upper + lower).normalized);
-            }
-
-            public void RestoreStanding()
-            {
-                Thigh.localRotation = thighRotation;
-                shin.localRotation = shinRotation;
-                ankle.localRotation = ankleRotation;
-            }
-
-            public Vector3 FootTarget(Vector3 direction, float phase, float stepLength, float lift,
-                float stance, float weight, bool preflight, out float pitch)
-            {
-                float stanceReach = stepLength * stance;
-                float foreAft, height = 0f;
-                pitch = 0f;
-                if (phase < stance)
-                {
-                    // In straight, steady travel the supporting sole moves opposite actual displacement.
-                    foreAft = Mathf.Lerp(stanceReach, -stanceReach, phase / stance);
-                }
-                else
-                {
-                    float swing = (phase - stance) / (1f - stance);
-                    float liftShape = 4f * swing * (1f - swing);
-                    height = lift * liftShape * liftShape;
-                    pitch = (preflight ? 7f : 13f) * Mathf.Sin(2f * Mathf.PI * swing) * liftShape * liftShape * weight;
-                    // Match the horizontal tangent at lift-off and touchdown so the ankle does not snap.
-                    float stanceTangent = -2f * stepLength * (1f - stance);
-                    // Localize the velocity match near the support boundary. Otherwise the longer
-                    // swing drives the shoe too far back before it rises, forcing the hips down.
-                    float tangentWindow = preflight ? (1f - liftShape) * (1f - liftShape) : 1f;
-                    foreAft = Mathf.LerpUnclamped(-stanceReach, stanceReach, swing * swing * (3f - 2f * swing))
-                        + stanceTangent * swing * (1f - swing) * (1f - 2f * swing) * tangentWindow;
-                }
-
-                Vector3 target = standingAnkle + (direction * foreAft + Vector3.up * height) * weight;
-                target.x += side * (preflight ? .035f : .06f) * Mathf.Abs(direction.x) * weight;
-                // Keep the inside edge of a strafe from crossing the other boot.
-                target.x = side * Mathf.Max(.092f, side * target.x);
-                return target;
-            }
-
-            public float DropToReach(Vector3 target)
-            {
-                Vector3 offset = Thigh.position - target;
-                float reach = thighLength + shinLength - .006f;
-                float heightSquared = reach * reach - offset.x * offset.x - offset.z * offset.z;
-                return Mathf.Max(0f, offset.y - Mathf.Sqrt(Mathf.Max(0f, heightSquared)));
-            }
-
-            public void Pose(Transform reference, Vector3 target, float pitch, float weight, bool preflight)
-            {
-                Vector3 hip = Thigh.position;
-                Vector3 toAnkle = target - hip;
-                Vector3 axis = toAnkle.normalized;
-                float length = Mathf.Clamp(toAnkle.magnitude, Mathf.Abs(thighLength - shinLength) + .001f,
-                    thighLength + shinLength - .001f);
-                float kneeAlong = (thighLength * thighLength - shinLength * shinLength + length * length) / (2f * length);
-                float kneeOut = Mathf.Sqrt(Mathf.Max(0f, thighLength * thighLength - kneeAlong * kneeAlong));
-                Vector3 localPole = Vector3.Slerp(standingKneePole,
-                    new Vector3(side * (preflight ? .07f : .35f), 0f, 1f).normalized, weight);
-                Vector3 kneePole = Vector3.ProjectOnPlane(reference.TransformDirection(localPole), axis).normalized;
-                Vector3 knee = hip + axis * kneeAlong + kneePole * kneeOut;
-                Vector3 reachableAnkle = hip + axis * length;
-
-                Thigh.rotation = Quaternion.FromToRotation(shin.position - hip, knee - hip) * Thigh.rotation;
-                shin.rotation = Quaternion.FromToRotation(ankle.position - shin.position, reachableAnkle - shin.position) * shin.rotation;
-                ankle.rotation = reference.rotation * Quaternion.AngleAxis(pitch, Vector3.right) * standingAnkleOrientation;
-            }
-        }
         private static bool Finite(Vector3 v) => !float.IsNaN(v.x) && !float.IsInfinity(v.x)
             && !float.IsNaN(v.y) && !float.IsInfinity(v.y) && !float.IsNaN(v.z) && !float.IsInfinity(v.z);
     }

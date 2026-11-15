@@ -1,0 +1,20 @@
+{
+  "name": "OutOfReach.UI.Chapter.Tests.EditMode",
+  "rootNamespace": "OutOfReach.Tests.ChapterUi",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.UI.Chapter",
+    "OutOfReach.UI.Chapter.TestSupport"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -160,9 +160,9 @@ namespace OutOfReach.Presentation.Cargo
                 SetActive(slot.SupplyCase, planning && supply > 0);
                 SetActive(slot.AboardCase, loaded > 0 && (planning ||
                     (aboardDepartureVisible && state.Phase == GamePhase.Intro)));
-                if (slot.SupplyLabel) slot.SupplyLabel.text = slot.DisplayName + "\nSUPPLY x" + supply;
+                if (slot.SupplyLabel) slot.SupplyLabel.text = slot.DisplayName + (supply > 0 ? "\nSUPPLY x" + supply : "\nEMPTY");
                 if (slot.AboardLabel) slot.AboardLabel.text = slot.DisplayName + "\nABOARD x" + loaded;
-                if (slot.SupplyLabel) slot.SupplyLabel.gameObject.SetActive(planning && supply > 0 && showStationLabels);
+                if (slot.SupplyLabel) slot.SupplyLabel.gameObject.SetActive(planning && showStationLabels);
                 if (slot.AboardLabel) slot.AboardLabel.gameObject.SetActive(planning && loaded > 0 && showStationLabels);
             }
 

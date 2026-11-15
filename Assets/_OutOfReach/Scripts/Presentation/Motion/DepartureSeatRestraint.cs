@@ -151,8 +151,10 @@ namespace OutOfReach.Presentation.Motion
                 shoulder.Points[0] = new Vector3(side * .110f, 1.075f, -.346f);
                 shoulder.Points[1] = new Vector3(side * .154f, 1.123f, -.075f);
                 shoulder.Points[2] = new Vector3(side * .146f, 1.104f, .107f);
-                shoulder.Points[3] = new Vector3(side * Mathf.Lerp(.196f, .134f, action.Draw), .975f, .139f);
-                shoulder.Points[4] = new Vector3(side * Mathf.Lerp(.246f, .106f, action.Draw), .810f, .166f);
+                // These two chest bends sank up to 11 mm into the measured WORK skin when buckled (BODY-ANIM seat
+                // fit, signed distance along the skin normal); they now clear it by about 3 mm.
+                shoulder.Points[3] = new Vector3(side * Mathf.Lerp(.196f, .134f, action.Draw), .975f, .139f + .015f * action.Draw);
+                shoulder.Points[4] = new Vector3(side * Mathf.Lerp(.246f, .106f, action.Draw), .810f, .166f + .012f * action.Draw);
                 shoulder.Points[5] = end + new Vector3(side * .011f, .007f, -.029f);
                 shoulder.Apply();
 

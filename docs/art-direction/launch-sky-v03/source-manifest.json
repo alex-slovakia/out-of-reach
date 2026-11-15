@@ -1,0 +1,16 @@
+{
+  "asset": "Rocky Ridge (Pure Sky)",
+  "authors": [
+    "Greg Zaal",
+    "Jarod Guest"
+  ],
+  "source": "https://polyhaven.com/a/rocky_ridge_puresky",
+  "license": "CC0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "download": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/rocky_ridge_puresky_2k.hdr",
+  "bytes": 4909490,
+  "md5": "44c6f5dcc9eac1b3e4930541998b7e2f",
+  "sha256": "2d63359faefb2b20db02b8f03bd9642194dc777fa481ce12e8fd26cd41bb7b40",
+  "retrievedUtc": "2026-11-15T12:26:06.5368489Z",
+  "note": "Original 2048x1024 HDR source unchanged; game material exposure/rotation are presentation choices."
+}

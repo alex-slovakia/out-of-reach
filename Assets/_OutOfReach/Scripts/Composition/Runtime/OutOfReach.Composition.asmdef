@@ -17,11 +17,13 @@
     "OutOfReach.Presentation.Hands",
     "OutOfReach.Presentation.Habitat",
     "OutOfReach.MarineOcean",
+    "OutOfReach.LaunchFXV03",
     "OutOfReach.Presentation.Cargo",
     "OutOfReach.AirlockPanel",
     "OutOfReach.Audio",
     "OutOfReach.UI",
     "OutOfReach.UI.Report",
+    "OutOfReach.UI.Chapter",
     "OutOfReach.Terminal"
   ],
   "includePlatforms": [],

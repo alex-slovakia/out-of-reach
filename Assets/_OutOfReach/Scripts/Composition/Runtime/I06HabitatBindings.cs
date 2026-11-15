@@ -53,8 +53,13 @@ namespace OutOfReach.Composition
             if (runtime && controlsVisible != ShouldExposeControls()) Refresh();
         }
 
+        // CHAPTER-UI-01: in the opt-in chapter loop the needs, meals and sleep are active from the end of the impact
+        // (Core: survival.IsActive from Emergency), so the galley and the berth must be usable in the cabin phases before
+        // contact too; otherwise Core's day-1 prerequisites (first ration, one rest) can never be met. EVA stays excluded.
         private bool ShouldExposeControls() => isActiveAndEnabled && runtime && survival != null && survival.Enabled
-            && runtime.GameState != null && runtime.GameState.Phase == GamePhase.Survival;
+            && runtime.GameState != null && (runtime.GameState.Phase == GamePhase.Survival
+                || (runtime.ChapterFlow != null && survival.IsActive && (runtime.GameState.Phase == GamePhase.Emergency
+                    || runtime.GameState.Phase == GamePhase.Repair || runtime.GameState.Phase == GamePhase.Transmission)));
 
         private void Refresh()
         {

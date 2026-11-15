@@ -1,0 +1,18 @@
+{
+  "name": "OutOfReach.Presentation.Hands.Editor",
+  "rootNamespace": "OutOfReach.Presentation.Hands.Editor",
+  "references": [
+    "OutOfReach.Presentation.Hands"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

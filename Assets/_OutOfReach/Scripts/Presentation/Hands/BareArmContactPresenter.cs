@@ -119,6 +119,9 @@ namespace OutOfReach.Presentation.Hands
         private Quaternion palmFrame { get => Current.palmFrame; set => Current.palmFrame = value; }
         private Quaternion startWristRotation { get => Current.startWristRotation; set => Current.startWristRotation = value; }
         private bool overheadReach { get => Current.overheadReach; set => Current.overheadReach = value; }
+
+        /// <summary>Largest wrist rotation from rest for an overhead (ceiling) palm, degrees; other contacts keep 80.</summary>
+        public const float OverheadWristLimitDegrees = 100f;
         private float overheadFinalRoll { get => Current.overheadFinalRoll; set => Current.overheadFinalRoll = value; }
         private Quaternion[] baseline { get => Current.baseline; set => Current.baseline = value; }
         private Quaternion[] previousPose { get => Current.previousPose; set => Current.previousPose = value; }
@@ -763,7 +766,9 @@ namespace OutOfReach.Presentation.Hands
             if (!TryOverheadEndpoint(wrist, out Quaternion parent, out Vector3 axis)) return false;
             parent = Quaternion.AngleAxis(overheadFinalRoll, axis) * parent;
             Quaternion terminal = Quaternion.Inverse(parent) * rotation;
-            if (Quaternion.Angle(terminal, baseline[2]) > 80f) return RefuseDiagnostic("solve.terminalWristOver80");
+            // MOVE-MECH-01 native QA: with the head at the ceiling a flat overhead palm needs about 85-95 degrees of
+            // wrist extension; 80 made every ceiling push in WORK clothes impossible. Overhead only, still bounded.
+            if (Quaternion.Angle(terminal, baseline[2]) > OverheadWristLimitDegrees) return RefuseDiagnostic("solve.terminalWristOverLimit");
             Current.overheadTerminalWrist = terminal;
             return true;
         }
@@ -805,7 +810,7 @@ namespace OutOfReach.Presentation.Hands
             // Recomputed endpoint geometry keeps exact contact while the real shoulder drifts.
             if (overheadReach) wristLocal = Quaternion.Slerp(baseline[2], Current.overheadTerminalWrist, blend);
             diagnosticWristAngle = Quaternion.Angle(wristLocal, baseline[2]);
-            if (diagnosticWristAngle > 80f) { RefuseDiagnostic("solve.wristOver80"); Restore(baseline, 1f); return false; }
+            if (diagnosticWristAngle > (overheadReach ? OverheadWristLimitDegrees : 80f)) { RefuseDiagnostic("solve.wristOverLimit"); Restore(baseline, 1f); return false; }
             active.Wrist.localRotation = wristLocal;
             return Vector3.Distance(active.Wrist.position, wrist) <= .002f || RefuseDiagnostic("solve.wristResidualOver0.002");
         }
