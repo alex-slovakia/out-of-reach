@@ -65,6 +65,7 @@ namespace OutOfReach.Presentation.Hands
         private readonly List<Vector3> feet = new List<Vector3>();
         private readonly List<float> cumulative = new List<float>();
         private readonly List<Vector3> offsets = new List<Vector3>();
+        private readonly List<Vector3> segmentSides = new List<Vector3>();
         private readonly List<Vector3> segmentDirections = new List<Vector3>();
         private readonly List<float> anchorParams = new List<float>();
         private readonly List<Vector3> anchorPoints = new List<Vector3>();
@@ -301,6 +302,37 @@ namespace OutOfReach.Presentation.Hands
             return delta.sqrMagnitude > 1e-10f ? delta.normalized : SegmentDirection(d);
         }
 
+        /// <summary>
+        /// The rope station a glove holds for a grip station at a route distance: the point of the rope straight across
+        /// from that feet point (perpendicular to its segment). Mitred corners would otherwise shift grips along the rope;
+        /// round an inside corner several stations meet at the corner anchor, the glove holding it while the body turns.
+        /// Returned as a rope parameter for <see cref="PointAt"/> and <see cref="TangentAt"/>.
+        /// </summary>
+        public float GripParam(float routeDistance)
+        {
+            float d = float.IsNaN(routeDistance) ? 0f : routeDistance;
+            if (!IsGeometryReady || d <= 0f || d >= length)
+            {
+                return Mathf.Clamp(d, MinParam, MaxParam);
+            }
+
+            int i = SegmentIndex(d);
+            float start = cumulative[i];
+            float span = cumulative[i + 1] - start;
+            if (span < 1e-6f || i >= segmentSides.Count)
+            {
+                return d;
+            }
+
+            Vector3 across = FeetPointAt(d) + (Vector3.up * heightAboveFeetMetres) + (segmentSides[i] * lateralOffsetMetres);
+            Vector3 a = feet[i] + offsets[i];
+            Vector3 b = feet[i + 1] + offsets[i + 1];
+            Vector3 ab = b - a;
+            float lengthSquared = ab.sqrMagnitude;
+            float u = lengthSquared > 1e-8f ? Mathf.Clamp01(Vector3.Dot(across - a, ab) / lengthSquared) : 0f;
+            return start + (u * span);
+        }
+
         /// <summary>The feet-line point at a route distance (the gameplay line), extended straight past both ends.</summary>
         public Vector3 FeetPointAt(float routeDistance)
         {
@@ -384,6 +416,8 @@ namespace OutOfReach.Presentation.Hands
                 }
             }
 
+            segmentSides.Clear();
+            segmentSides.AddRange(sides);
             offsets.Clear();
             for (int i = 0; i < feet.Count; i++)
             {

@@ -184,10 +184,11 @@ namespace OutOfReach.Presentation.Hands
 
             float min = tetherRope.MinParam;
             float max = tetherRope.MaxGripParam;
-            float held = Mathf.Clamp(rung, min, max);
+            // Rungs are route distances; the glove holds the rope straight across from each (GripParam).
+            float held = Mathf.Clamp(tetherRope.GripParam(rung), min, max);
             float swing = EvaTetherClimbMath.SwingProgress(phase);
-            float from = Mathf.Clamp(rung - (facing * stroke), min, max);
-            float to = Mathf.Clamp(rung + (facing * stroke), min, max);
+            float from = Mathf.Clamp(tetherRope.GripParam(rung - (facing * stroke)), min, max);
+            float to = Mathf.Clamp(tetherRope.GripParam(rung + (facing * stroke)), min, max);
             float swingParam = Mathf.Lerp(from, to, swing);
             tetherParam[(int)holder] = held;
             tetherParam[(int)free] = swingParam;
@@ -207,7 +208,7 @@ namespace OutOfReach.Presentation.Hands
 
         /// <summary>
         /// Solves one glove on the rope at a rope station (route distance) for an eye position and view yaw frame:
-        /// shoulder from the view (reaching with the shoulder up to 12 cm when needed), an elbow bent outwards for the
+        /// shoulder from the view (reaching with the shoulder up to 30 cm when needed), an elbow bent outwards for the
         /// glove on the rope's side and downwards for the crossing glove, and the fist closed around the rope.
         /// <paramref name="lift"/> raises a swinging glove off the rope. Pure geometry, for this presenter and tests.
         /// </summary>
@@ -219,18 +220,29 @@ namespace OutOfReach.Presentation.Hands
                 + (forward * TetherShoulderInView.z);
             bool sameSide = Mathf.Approximately(handSide, ropeSide);
             Vector3 sideOut = right * ropeSide;
+            // Elbows out to the glove's own side, down and a little back, as when pulling a line; the sideways and
+            // backward parts keep the bend well defined even when the rope runs straight below the shoulder.
             Vector3 pole = sameSide
-                ? ((sideOut * 0.65f) - (up * 0.75f)).normalized
-                : ((-sideOut * 0.35f) - (up * 0.9f)).normalized;
+                ? ((sideOut * 0.65f) - (up * 0.6f) - (forward * 0.25f)).normalized
+                : ((-sideOut * 0.55f) - (up * 0.7f) - (forward * 0.2f)).normalized;
             Vector3 ropeForward = tetherRope.TangentAt(param) * facing;
+            // On a steep stretch (the hatch climb) the line runs down along the arm: swing the elbows further out
+            // so the forearm crosses the rope instead of lying along it.
+            float steep = Mathf.Clamp01((Mathf.Abs(Vector3.Dot(ropeForward, up)) - 0.3f) / 0.4f);
+            if (steep > 0f)
+            {
+                Vector3 outward = ((sameSide ? sideOut : -sideOut) - (forward * 0.3f)).normalized;
+                pole = Vector3.Slerp(pole, outward, steep);
+            }
+
             Vector3 centre = tetherRope.PointAt(param);
             float reach = TetherUpperArmMetres + ToolForearmMetres;
             Vector3 toward = centre - shoulder;
             float excess = toward.magnitude - (reach - 0.03f);
             if (excess > 0f)
             {
-                // Reach with the shoulder (protraction and a slight torso turn), at most 12 cm.
-                shoulder += toward.normalized * Mathf.Min(0.12f, excess);
+                // Reach with the shoulder (protraction and a torso turn), at most 30 cm (reaching across round a corner).
+                shoulder += toward.normalized * Mathf.Min(0.3f, excess);
             }
 
             EvaTetherArmPose pose = EvaTetherClimbMath.SolveGrip(centre, ropeForward, hand, shoulder, pole, up,

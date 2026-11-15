@@ -19,6 +19,8 @@ scene starts.
 - **Climb:** the gloves hold the rope hand over hand.
   - The leading glove closes on a grip station ("rung", every 0.5 m along the line) and stays fixed on the rope while the body moves.
   - The other glove opens, swings forward and closes on the next rung.
+  - Each rung is gripped straight across from its feet point (`EvaTetherRope.GripParam`). Round an inside corner several rungs meet at the corner anchor, so the glove holds the anchor while the body turns.
+  - Known limit: on the way back, the glove finishing its pull at an inside corner holds the anchor beside or behind the shoulder, out of the first-person view, with a sharply bent wrist for a moment. Reaching across a corner, the shoulder leans in by up to 30 cm.
   - Gameplay moves the body only by these pulls (`FirstPersonController.MoveAlongRoute`).
 - **Arms:** while climbing, padded upper sleeves and elbow covers join the delivered rigid glove forearms to the suit shoulders (the actual EVA `upperarm01.L/R` bones when the scene has them).
 - **Presentation only:** no collider and no physics. The old amber route guide line is turned off by the installer.
