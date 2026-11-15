@@ -14,7 +14,7 @@
     -unity-font-definition: url("../Typography/SourceSans3-Regular.otf");
     color: rgb(238, 237, 225);
 }
-.pc-head { flex-direction: row; align-items: baseline; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom-width: 1px; border-bottom-color: rgba(238, 237, 225, 0.22); }
+.pc-head { flex-direction: row; align-items: flex-end; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom-width: 1px; border-bottom-color: rgba(238, 237, 225, 0.22); }
 .pc-title { font-size: 13px; letter-spacing: 3px; color: rgb(245, 188, 116); -unity-font-definition: url("../Typography/SourceSans3-Semibold.otf"); }
 .pc-mode { font-size: 12px; letter-spacing: 2px; color: rgb(120, 205, 214); }
 .pc-rows { flex-direction: column; }
