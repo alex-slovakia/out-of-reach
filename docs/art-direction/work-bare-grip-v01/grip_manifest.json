@@ -24,8 +24,8 @@
    "bytes": 193724
   },
   "README.md": {
-   "sha256": "9379719cbe28bcf241f8a2ba29cb8d59ae318a97a5db8284f416b0bff6e7ed53",
-   "bytes": 7097
+   "sha256": "394c7948667ac7ec5b56389bc3fe82b79110c9b14f4117f5b878f38043fc5aff",
+   "bytes": 7101
   },
   "grip_anchors.json": {
    "sha256": "1d7fcb12fbc5bd95fd9f8a9aae2031650bf1c655777bcd1987fd3f9d329f3151",
@@ -39,7 +39,7 @@
    "sha256": "3277831a8da4c10a784fd45921359e0a0df15999e1c5eb28d8275c926f1b79fb",
    "bytes": 2666
   },
-  "grip_solve.log": {
+  "grip_solve_log.txt": {
    "sha256": "0a4bc9f7aed4f1eb6f7cb934ee5c47a7c91118a710d5a9fca8dec7b03af3f2b2",
    "bytes": 3182
   },
