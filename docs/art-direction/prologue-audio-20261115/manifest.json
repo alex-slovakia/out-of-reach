@@ -1,0 +1,143 @@
+{
+  "sample_rate": 48000,
+  "channels": 2,
+  "generated_by": "build_previews.py",
+  "audition_only": true,
+  "music_preview_seconds": 80,
+  "music_master_seconds": 120,
+  "no_added_drums": true,
+  "items": [
+    {
+      "file": "01-titan-deep-launch.mp3",
+      "kind": "music",
+      "direction": "Orchestral lift with deep continuous engine pressure; strongest cinematic option.",
+      "source": "Titan by Scott Buckley, CC BY 4.0, approved 10.9\u201335.9s phrase, 5s crossfade/20s phrase loop, original synthesized rumble added.",
+      "duration_seconds": 80.04,
+      "bytes": 1921581,
+      "sha256": "43ff1741a5493da01e6430b8178da31ba633103ab0af7e77dc60f9fd818e46ed",
+      "post_encode_levels": {
+        "input_i": -16.62,
+        "input_tp": -1.77,
+        "input_lra": 5.0,
+        "input_thresh": -26.69
+      },
+      "decoded_peak": 0.8160533308982849,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\01-titan-deep-launch-master.wav",
+      "master_seconds": 120.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false,
+      "loop_boundary_sample_step": 0.01812744140625,
+      "continuation": "120s continuous master without preview fades. Loop candidate; final musical seam listening and scene ducking remain to verify."
+    },
+    {
+      "file": "02-cobalt-pressure.mp3",
+      "kind": "music",
+      "direction": "Slower, darker pressure under the approved Cobalt theme; wide continuous low roar.",
+      "source": "Cobalt by Scott Buckley, CC BY 4.0; approved 120s game loop with original synthesized rumble added.",
+      "duration_seconds": 80.04,
+      "bytes": 1921581,
+      "sha256": "f7b0776f0f1be58d8214a72549a3271bc762761e7f198d05dbe749e38f667069",
+      "post_encode_levels": {
+        "input_i": -16.6,
+        "input_tp": -1.85,
+        "input_lra": 5.1,
+        "input_thresh": -26.67
+      },
+      "decoded_peak": 0.8082227110862732,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\02-cobalt-pressure-master.wav",
+      "master_seconds": 120.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false,
+      "loop_boundary_sample_step": 0.011474609375,
+      "continuation": "120s continuous master without preview fades. Loop candidate; final musical seam listening and scene ducking remain to verify."
+    },
+    {
+      "file": "03-threshold-original.mp3",
+      "kind": "music",
+      "direction": "Original deep harmonic tension: evolving minor chords, metallic air and sub pressure, no drums.",
+      "source": "Original deterministic synthesis by the OUT OF REACH team/Codex; no samples or third-party music.",
+      "duration_seconds": 80.04,
+      "bytes": 1921581,
+      "sha256": "c4c56dd43fca09c3b210a30ed8e05af53e32bc51dcaac73752ec5f6609bc7b9c",
+      "post_encode_levels": {
+        "input_i": -16.38,
+        "input_tp": -2.07,
+        "input_lra": 3.1,
+        "input_thresh": -26.48
+      },
+      "decoded_peak": 0.7877557873725891,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\03-threshold-original-master.wav",
+      "master_seconds": 120.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false,
+      "loop_boundary_sample_step": 0.002349853515625,
+      "continuation": "120s continuous master without preview fades. Loop candidate; final musical seam listening and scene ducking remain to verify."
+    },
+    {
+      "file": "sfx01-ignition-engine.mp3",
+      "kind": "sfx",
+      "direction": "18s ignition ramp into sustained Earth launch roar; no music.",
+      "source": "Original deterministic synthesis; Earth atmospheric launch sound, not vacuum propagation.",
+      "duration_seconds": 18.024,
+      "bytes": 433197,
+      "sha256": "46e803cc34f8bb5f493315f1a911ad71bd8bf62193879a5d7e138a9431262612",
+      "post_encode_levels": {
+        "input_i": -18.26,
+        "input_tp": -4.85,
+        "input_lra": 4.6,
+        "input_thresh": -28.86
+      },
+      "decoded_peak": 0.5717743635177612,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\sfx01-ignition-engine-master.wav",
+      "master_seconds": 18.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false
+    },
+    {
+      "file": "sfx02-opening-shockwave.mp3",
+      "kind": "sfx",
+      "direction": "Low shock front, short crack and decaying structural rumble; no added drum.",
+      "source": "Original deterministic synthesis; atmospheric shockwave on Earth OR suit/ship-contact impact in space, never sound crossing vacuum.",
+      "duration_seconds": 7.032,
+      "bytes": 169389,
+      "sha256": "1ad735c8ac55661efd6392ba31678684a5c830f07ac86427cadb356f5b8bc451",
+      "post_encode_levels": {
+        "input_i": -22.39,
+        "input_tp": -1.76,
+        "input_lra": 15.6,
+        "input_thresh": -34.03
+      },
+      "decoded_peak": 0.8153319358825684,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\sfx02-opening-shockwave-master.wav",
+      "master_seconds": 7.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false
+    },
+    {
+      "file": "sfx03-thruster-contact.mp3",
+      "kind": "sfx",
+      "direction": "Three short valve/jet pulses, increasing duration; machinery and transmitted pressure.",
+      "source": "Original deterministic synthesis; cabin/suit/contact-transmitted thruster cue only in space. This does not add player thrusters or physics.",
+      "duration_seconds": 6.024,
+      "bytes": 145197,
+      "sha256": "19016ece56105fbd7a039d0c364f094d5afdac8cc4d247b42f3e692bf5e00a51",
+      "post_encode_levels": {
+        "input_i": -18.26,
+        "input_tp": -7.99,
+        "input_lra": 1.2,
+        "input_thresh": -28.63
+      },
+      "decoded_peak": 0.39743077754974365,
+      "decoded_samples_at_or_over_full_scale": 0,
+      "pcm_master": "C:\\Users\\alexk\\Documents\\Projects\\OUT-OF-REACH-NASA-HACKATHON\\.local\\i01-integration\\.local\\prologue-audio-20261115\\sfx03-thruster-contact-master.wav",
+      "master_seconds": 6.0,
+      "subjective_listening": "Not claimed; awaiting Alex approval",
+      "runtime_integrated": false
+    }
+  ]
+}
