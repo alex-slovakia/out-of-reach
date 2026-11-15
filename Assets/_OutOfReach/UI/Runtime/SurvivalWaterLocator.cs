@@ -41,12 +41,16 @@ namespace OutOfReach.Presentation.UI
             IsBehind = viewport.z <= 0f;
             if (IsBehind) direction = -direction;
             if (direction.sqrMagnitude < .0001f) direction = Vector2.down;
-            float insetX = Mathf.Min(95f, w * .18f), insetY = Mathf.Min(65f, h * .18f);
-            IsEdgeMarker = IsBehind || point.x < insetX || point.x > w - insetX || point.y < insetY || point.y > h - insetY;
+            float insetX = Mathf.Min(95f, w * .18f);
+            float insetTop = Mathf.Min(65f, h * .18f);
+            // Allow room below the marker for its caption and the flight subtitle box.
+            float insetBottom = Mathf.Min(h * .29f, h * .05f + 130f);
+            IsEdgeMarker = IsBehind || point.x < insetX || point.x > w - insetX || point.y < insetTop || point.y > h - insetBottom;
             if (IsEdgeMarker)
             {
                 float scaleX = (center.x - insetX) / Mathf.Max(.0001f, Mathf.Abs(direction.x));
-                float scaleY = (center.y - insetY) / Mathf.Max(.0001f, Mathf.Abs(direction.y));
+                float verticalRoom = direction.y < 0f ? center.y - insetTop : center.y - insetBottom;
+                float scaleY = verticalRoom / Mathf.Max(.0001f, Mathf.Abs(direction.y));
                 anchor = center + direction * Mathf.Min(scaleX, scaleY);
             }
             else anchor = point;
