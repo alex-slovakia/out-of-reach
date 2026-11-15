@@ -1,0 +1,35 @@
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
+index 36ab122..7219145 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/I01SessionControls.cs
+@@ -1,6 +1,7 @@
+ using OutOfReach.Contracts;
+ using OutOfReach.Presentation.UI;
+ using OutOfReach.Presentation.UI.Report;
++using OutOfReach.Presentation.UI.Startup;
+ using System.Globalization;
+ using UnityEngine;
+ using UnityEngine.UIElements;
+@@ -286,6 +287,10 @@ namespace OutOfReach.Composition
+             reportHost.style.display = DisplayStyle.None;
+             root.Add(reportHost);
+             RefreshQuitButtons();
++            // R01: black startup cards over the opening menu, once per launch. They sit on top of this document root and
++            // swallow input until they finish or are skipped; the menu is already composed and silent underneath.
++            if (!StartupCardPresenter.HasPlayedThisLaunch)
++                StartupCardPresenter.PlayOnce(host, composition && composition.Cinematics && composition.Cinematics.ReducedEffects, font);
+         }
+ 
+         private void RefreshCommunications()
+diff --git a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+index 1a98c31..befa191 100644
+--- a/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
++++ b/Assets/_OutOfReach/Scripts/Composition/Runtime/OutOfReach.Composition.asmdef
+@@ -25,6 +25,7 @@
+     "OutOfReach.UI",
+     "OutOfReach.UI.Report",
+     "OutOfReach.UI.Chapter",
++    "OutOfReach.UI.Startup",
+     "OutOfReach.Terminal"
+   ],
+   "includePlatforms": [],
