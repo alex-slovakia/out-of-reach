@@ -43,7 +43,7 @@ namespace OutOfReach.Core
         /// C05-BOARDING-01, only with <paramref name="preflightWalk"/>: an expiring timed deadline seals the loading and
         /// the mission launches only from the cockpit console (the transport seat). False keeps the immediate launch.
         /// </param>
-        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null, bool boardAfterLoadingDeadline = false)
+        public MissionSession(MissionDefinition definition = null, Action<Exception> subscriberErrorSink = null, string startingPresetId = null, bool preflightWalk = false, bool allowMovementDuringImpact = false, bool survivalExtension = false, SurvivalExtensionSpec survivalSpec = null, bool boardAfterLoadingDeadline = false, bool chapterLoop = false)
         {
             PreflightWalkEnabled = preflightWalk;
             BoardingAfterDeadlineEnabled = preflightWalk && boardAfterLoadingDeadline;
@@ -60,7 +60,7 @@ namespace OutOfReach.Core
             Planner = new MissionPlanner(Definition, State, Resources, Events, startingLoadout);
             PlanningDeadline = new PlanningDeadline(Planner, State, BoardingAfterDeadlineEnabled);
             ClockView = new SimulationClockView(Clock, State);
-            Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics, survivalExtension, survivalSpec);
+            Director = new MissionDirector(Definition, Events, State, Planner, Resources, Clock, Cinematics, survivalExtension, survivalSpec, chapterLoop);
             Director.Eva.BindSimulationAdvance(AdvanceSimulation);
 
             Interactions = new InteractionCatalog();
@@ -152,6 +152,12 @@ namespace OutOfReach.Core
         /// </summary>
         public SurvivalRecovery SurvivalRecovery => Director.SurvivalRecovery;
 
+        /// <summary>
+        /// The approved day 1-30 chapter loop (implements IMissionChapterFlow): beats, interruptible routine, decisions
+        /// and the day-14 dispatch. Null unless the session was built with chapterLoop (which needs survivalExtension).
+        /// </summary>
+        public MissionChapterFlow ChapterFlow => Director.ChapterFlow;
+
         /// <summary>Preflight crate handling: the crate in hands and the carry speed. The bay itself is the planner's draft.</summary>
         public CargoLoading Cargo { get; }
 
@@ -230,7 +236,7 @@ namespace OutOfReach.Core
         {
             get
             {
-                if (IsDisposed || State.IsClosed || Clock.IsPaused
+                if (IsDisposed || State.IsClosed || Clock.IsPaused || (ChapterFlow != null && ChapterFlow.IsRoutineRunning)
                     || (Cinematics.IsWaiting && !(AllowMovementDuringImpact && Cinematics.ActiveCinematic == CinematicId.Impact)))
                 {
                     return false;
@@ -371,6 +377,12 @@ namespace OutOfReach.Core
                 while (remaining > 0d && State.IsSimulationRunning)
                 {
                     double step = remaining;
+                    if (splits >= MaxSplitsPerAdvance && Director.ChapterFlow != null && Director.ChapterFlow.IsRoutineRunning)
+                    {
+                        // A routine never relies on the unsplit fallback: it yields the rest of this budget instead.
+                        break;
+                    }
+
                     if (splits < MaxSplitsPerAdvance)
                     {
                         double boundary = Math.Min(Resources.TimeToNextDepletion(), Director.TimeToNextBoundary());
