@@ -1,0 +1,27 @@
+{
+  "name": "OutOfReach.Tests.BodyAnim",
+  "rootNamespace": "OutOfReach.Tests.BodyAnim",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Presentation.Motion",
+    "OutOfReach.Composition",
+    "OutOfReach.Composition.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

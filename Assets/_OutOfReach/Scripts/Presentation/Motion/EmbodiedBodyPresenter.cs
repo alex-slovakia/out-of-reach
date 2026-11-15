@@ -63,7 +63,9 @@ namespace OutOfReach.Presentation.Motion
         private bool offsetResetRequested;
         private Vector3 previousFeetPosition, gaitDirection;
         private bool hasFeetPosition;
-        private float gaitPhase, gaitWeight, sprintWeight, walkingPace;
+        private float gaitPhase, gaitWeight, gaitSpeed, setback;
+        private bool groundPosed;
+        private float? deltaOverride;
         private DepartureSeatRestraint departureSeat;
 
         /// <summary>
@@ -178,8 +180,9 @@ namespace OutOfReach.Presentation.Motion
                 throw new InvalidOperationException("Bind a body session before configuring grounded presentation.");
             if (!controller || controller.transform != playerFeet || groundedModeAllowed == null || isSprinting == null)
                 throw new ArgumentException("Grounded presentation needs the bound player controller and both mode callbacks.");
-            workCache.PrepareGroundRig(usePreflightGait != null);
-            evaCache.PrepareGroundRig(false);
+            // Both outfits share the 164-bone rig and the same gait model; the preflight policy no longer selects art.
+            workCache.PrepareGroundRig();
+            evaCache.PrepareGroundRig();
             ResetGroundMotion(true);
             if (visible && pose == BodyPose.Standing)
                 (activeEva ? evaCache : workCache).Ground.CaptureStanding(visualRoot);
@@ -262,6 +265,17 @@ namespace OutOfReach.Presentation.Motion
             if (bound && isActiveAndEnabled) Refresh();
         }
 
+        /// <summary>
+        /// Deterministic presentation step for tests and frame capture: behaves like one LateUpdate with the given
+        /// frame time instead of Time.deltaTime. Gameplay never calls this.
+        /// </summary>
+        public void AdvancePresentation(float deltaTime)
+        {
+            if (!bound || !isActiveAndEnabled || !(deltaTime > 0f)) return;
+            deltaOverride = deltaTime;
+            try { Refresh(true); } finally { deltaOverride = null; }
+        }
+
         /// <summary>Root may request immediate gate/state reconciliation; otherwise LateUpdate does this.</summary>
         public void RefreshPresentation()
         {
@@ -331,6 +345,7 @@ namespace OutOfReach.Presentation.Motion
                 HideRenderers();
                 if (poseChanged || offsetResetRequested && !paused) ResetGroundMotion(false);
                 workCache.Restore(); evaCache.Restore();
+                groundPosed = false;
                 Outfit selected = nextEva ? eva : work;
                 AnimationClip clip = nextPose == BodyPose.Seated ? selected.seated
                     : nextPose == BodyPose.Floating ? selected.floating : selected.standing;
@@ -339,6 +354,7 @@ namespace OutOfReach.Presentation.Motion
                 clip.SampleAnimation(selected.modelRoot.gameObject, 0f);
                 if (nextPose == BodyPose.Standing)
                     (nextEva ? evaCache : workCache).Ground?.CaptureStanding(visualRoot);
+                evaCache.Float?.CancelPush(); workCache.Float?.CancelPush();
                 activeEva = nextEva; pose = nextPose; armMask = nextArms;
                 selected.torsoLegs.enabled = true;
                 selected.leftArm.enabled = (armMask & BodyArmVisibility.Left) != 0;
@@ -347,16 +363,17 @@ namespace OutOfReach.Presentation.Motion
                 if (!paused) offsetResetRequested = false;
             }
             if (!paused || !wasVisible) FollowFeet();
+            if (pose == BodyPose.Floating) UpdateFloatingLegs(reset, paused, trackMovement);
             if (pose == BodyPose.Standing && groundController)
             {
                 if (paused || Time.timeScale <= 0f)
                 {
                     hasFeetPosition = false;
                     // The pause reset still releases presentation leases. Preserve the standing gait frame.
-                    if (reset && gaitWeight > 0f) ApplyGroundPose();
+                    if (reset) ApplyGroundPose();
                 }
                 else if (trackMovement) UpdateGroundMotion();
-                else if (reset && gaitWeight > 0f) ApplyGroundPose();
+                else if (reset) ApplyGroundPose();
             }
             wasPaused = paused;
         }
@@ -378,9 +395,17 @@ namespace OutOfReach.Presentation.Motion
 
         private void UpdateGroundMotion()
         {
-            if (!groundController.enabled || !groundController.isGrounded || suit.IsOutside || !groundedQuery())
+            ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
+            float elapsed = deltaOverride ?? Time.deltaTime;
+            UpdateLookDownSetback(rig, elapsed);
+
+            // AdvancePresentation (tests and frame capture) has no physics step: it trusts the supplied feet motion.
+            bool synthetic = deltaOverride.HasValue;
+            bool walkable = groundController.enabled && (synthetic || groundController.isGrounded) && !suit.IsOutside && groundedQuery();
+            if (!walkable)
             {
-                ResetGroundMotion(true);
+                ResetGait();
+                ApplyGroundPose();
                 return;
             }
 
@@ -390,17 +415,18 @@ namespace OutOfReach.Presentation.Motion
             if (!hasFeetPosition)
             {
                 hasFeetPosition = true;
+                ApplyGroundPose();
                 return;
             }
 
-            float elapsed = Time.deltaTime;
             float distance = displacement.magnitude;
-            Vector3 controllerTravel = Vector3.ProjectOnPlane(groundController.velocity, Vector3.up) * elapsed;
+            Vector3 controllerTravel = synthetic ? displacement : Vector3.ProjectOnPlane(groundController.velocity, Vector3.up) * elapsed;
             // A physics move and the observed feet delta must agree. Reject warps and hitches rather than cycle to catch up.
             if (elapsed <= 0f || elapsed > .25f || !Finite(displacement) || !Finite(controllerTravel)
                 || distance > .65f || (displacement - controllerTravel).magnitude > .015f + distance * .2f)
             {
-                ResetGroundMotion(true);
+                ResetGait();
+                ApplyGroundPose();
                 return;
             }
 
@@ -412,52 +438,85 @@ namespace OutOfReach.Presentation.Motion
                 Vector3 nextDirection = Quaternion.Inverse(visualRoot.rotation) * (displacement / distance);
                 gaitDirection = previousWeight <= 0f ? nextDirection
                     : Vector3.RotateTowards(gaitDirection, nextDirection, elapsed * 16f, 0f);
-                sprintWeight = Mathf.MoveTowards(sprintWeight, sprintQuery() ? 1f : 0f, elapsed * 8f);
-                walkingPace = Mathf.MoveTowards(walkingPace, Mathf.Clamp01(distance / (elapsed * 2.5f)), elapsed * 7f);
-                gaitPhase = Mathf.Repeat(gaitPhase + distance / (2f * StepLengthMetres(UsePreflightGait())), 1f);
+                float measured = distance / elapsed;
+                gaitSpeed = previousWeight <= 0f ? measured
+                    : Mathf.Lerp(gaitSpeed, measured, 1f - Mathf.Exp(-10f * elapsed));
+                float stride = ModelGait.StrideLength(gaitSpeed, rig.LegLength, Mathf.Abs(gaitDirection.x));
+                gaitPhase = Mathf.Repeat(gaitPhase + distance / stride, 1f);
             }
-            if (gaitWeight > 0f) ApplyGroundPose();
-            else
+            else if (gaitWeight <= 0f)
             {
-                if (previousWeight > 0f) (activeEva ? evaCache : workCache).Ground.RestoreStanding();
-                gaitPhase = sprintWeight = walkingPace = 0f;
+                gaitPhase = gaitSpeed = 0f;
             }
+            ApplyGroundPose();
         }
 
-        private bool UsePreflightGait() => !activeEva && (preflightGaitQuery?.Invoke() ?? false);
-
-        private float StepLengthMetres(bool preflight)
+        private void UpdateFloatingLegs(bool reset, bool paused, bool trackMovement)
         {
-            float forwardStep = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.49f, .82f, walkingPace), 1.00f, sprintWeight)
-                : Mathf.Lerp(Mathf.Lerp(.40f, .72f, walkingPace), .92f, sprintWeight);
-            float sideStep = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.41f, .59f, walkingPace), .68f, sprintWeight)
-                : Mathf.Lerp(Mathf.Lerp(.34f, .49f, walkingPace), .60f, sprintWeight);
-            return Mathf.Lerp(forwardStep, sideStep, Mathf.Abs(gaitDirection.x));
+            ModelFloatRig rig = (activeEva ? evaCache : workCache).Float;
+            if (rig == null) return;
+            if (reset) rig.Capture(visualRoot);
+            float dt = deltaOverride ?? Time.deltaTime;
+            if (trackMovement && !paused && Time.timeScale > 0f) rig.Apply(visualRoot, Mathf.Clamp(dt, 0f, .1f));
+            else if (reset) rig.Apply(visualRoot, 0f);
         }
 
+        /// <summary>
+        /// Presentation only: the legs plant on the deck behind the push, tuck, extend and release (about .7 s).
+        /// Ignored unless the body is visible, floating and not paused. Never changes velocity, cooldown or state.
+        /// </summary>
+        public void PlayLegPush(Vector3 worldDirection)
+        {
+            if (!bound || !isActiveAndEnabled || !visible || pose != BodyPose.Floating || clock == null || clock.IsPaused
+                || !Finite(worldDirection)) return;
+            (activeEva ? evaCache : workCache).Float?.BeginPush(worldDirection);
+        }
+
+        private void UpdateLookDownSetback(ModelGaitRig rig, float elapsed)
+        {
+            float pitchDown = Mathf.Asin(Mathf.Clamp(-playerCamera.transform.forward.y, -1f, 1f)) * Mathf.Rad2Deg;
+            float target = ModelGait.LookDownSetback(pitchDown, rig.LegLength);
+            setback = elapsed > 0f && elapsed <= .25f ? Mathf.Lerp(setback, target, 1f - Mathf.Exp(-9f * elapsed)) : target;
+        }
+
+        private void ResetGait()
+        {
+            gaitWeight = 0f;
+            gaitPhase = gaitSpeed = 0f;
+            hasFeetPosition = false;
+        }
+
+        // Poses the grounded rig from the current gait + posture state, or restores the standing sample when idle.
         private void ApplyGroundPose()
         {
-            GroundRig rig = (activeEva ? evaCache : workCache).Ground;
-            float running = sprintWeight;
-            bool preflight = UsePreflightGait();
-            float stepLength = StepLengthMetres(preflight);
-            float footLift = preflight
-                ? Mathf.Lerp(Mathf.Lerp(.025f, .063f, walkingPace), .117f, running)
-                : Mathf.Lerp(Mathf.Lerp(.06f, .125f, walkingPace), .23f, running);
-            float stance = preflight ? Mathf.Lerp(.512f, .40f, running) : Mathf.Lerp(.60f, .46f, running);
-            float weight = Mathf.SmoothStep(0f, 1f, gaitWeight);
-            rig.Apply(visualRoot, gaitDirection, gaitPhase, stepLength, footLift, stance, weight,
-                preflight, running, armMask == BodyArmVisibility.Both);
+            ModelGaitRig rig = (activeEva ? evaCache : workCache).Ground;
+            if (gaitWeight <= 0f && setback < .002f)
+            {
+                if (groundPosed) rig.RestoreStanding();
+                groundPosed = false;
+                return;
+            }
+            var frame = new ModelGaitFrame
+            {
+                Direction = gaitDirection.sqrMagnitude > 1e-6f ? gaitDirection.normalized : Vector3.forward,
+                Phase = gaitPhase,
+                Speed = gaitSpeed,
+                Weight = gaitWeight,
+                Setback = setback,
+                LeftArm = (armMask & BodyArmVisibility.Left) != 0,
+                RightArm = (armMask & BodyArmVisibility.Right) != 0
+            };
+            rig.Apply(visualRoot, frame);
+            groundPosed = true;
         }
 
         private void ResetGroundMotion(bool restoreStanding)
         {
-            if (restoreStanding && gaitWeight > 0f)
+            if (restoreStanding && groundPosed)
                 (activeEva ? evaCache : workCache).Ground.RestoreStanding();
-            hasFeetPosition = false;
-            gaitPhase = gaitWeight = sprintWeight = walkingPace = 0f;
+            groundPosed = false;
+            ResetGait();
+            setback = 0f;
         }
 
         private void FollowFeet()
@@ -548,6 +607,7 @@ namespace OutOfReach.Presentation.Motion
                 if (clip.legacy || clip.humanMotion || clip.length <= 0f)
                     throw new InvalidOperationException("Use the reviewed non-Humanoid Generic held clips.");
             var cache = new ModelCache(outfit.modelRoot, outfit.semanticBindings);
+            cache.PrepareFloatRig();
             foreach (string name in new[] { "CharacterRoot", "upperarm01.L", "upperarm01.R", "lowerarm01.L", "lowerarm01.R", "wrist.L", "wrist.R" })
                 if (!cache.Nodes.ContainsKey(name)) throw new InvalidOperationException("Body is missing imported joint " + name);
             return cache;
@@ -596,7 +656,14 @@ namespace OutOfReach.Presentation.Motion
         private sealed class ModelCache
         {
             public readonly Dictionary<string, Transform> Nodes = new Dictionary<string, Transform>(StringComparer.Ordinal);
-            public GroundRig Ground { get; private set; }
+            public ModelGaitRig Ground { get; private set; }
+            public ModelFloatRig Float { get; private set; }
+            public void PrepareFloatRig()
+            {
+                if (Float != null) return;
+                try { Float = new ModelFloatRig(Nodes); }
+                catch (InvalidOperationException) { Float = null; }   // a rig without leg joints just has no float legs
+            }
             private readonly Transform[] transforms;
             private readonly Vector3[] positions, scales;
             private readonly Quaternion[] rotations;
@@ -624,238 +691,13 @@ namespace OutOfReach.Presentation.Motion
                     }
             }
 
-            public void PrepareGroundRig(bool prepareArms)
+            public void PrepareGroundRig()
             {
-                if (Ground == null) Ground = new GroundRig(Nodes);
-                if (prepareArms) Ground.PrepareArms(Nodes);
+                if (Ground == null) Ground = new ModelGaitRig(Nodes);
+                Ground.PrepareArms(Nodes);
             }
         }
 
-        private sealed class GroundRig
-        {
-            private readonly Transform hips;
-            private readonly GroundLeg left, right;
-            private GroundArm leftArm, rightArm;
-            private bool armsPosed;
-            private Vector3 standingHipsPosition;
-
-            public GroundRig(Dictionary<string, Transform> nodes)
-            {
-                hips = Find(nodes, "root");
-                left = new GroundLeg(nodes, "L", -1f);
-                right = new GroundLeg(nodes, "R", 1f);
-                if (!left.Thigh.IsChildOf(hips) || !right.Thigh.IsChildOf(hips))
-                    throw new InvalidOperationException("The body's visual hips must own both leg chains.");
-            }
-
-            public void CaptureStanding(Transform reference)
-            {
-                standingHipsPosition = hips.localPosition;
-                left.CaptureStanding(reference);
-                right.CaptureStanding(reference);
-                leftArm?.CaptureStanding();
-                rightArm?.CaptureStanding();
-                armsPosed = false;
-            }
-
-            public void PrepareArms(Dictionary<string, Transform> nodes)
-            {
-                if (leftArm != null) return;
-                leftArm = new GroundArm(nodes, "L");
-                rightArm = new GroundArm(nodes, "R");
-            }
-
-            public void RestoreStanding()
-            {
-                hips.localPosition = standingHipsPosition;
-                left.RestoreStanding();
-                right.RestoreStanding();
-                if (armsPosed)
-                {
-                    leftArm.RestoreStanding();
-                    rightArm.RestoreStanding();
-                    armsPosed = false;
-                }
-            }
-
-            public void Apply(Transform reference, Vector3 direction, float phase,
-                float stepLength, float footLift, float stance, float weight, bool preflight, float running, bool ownsBothArms)
-            {
-                RestoreStanding();
-                float rightPhase = Mathf.Repeat(phase + .5f, 1f);
-                Vector3 leftTarget = left.FootTarget(direction, phase, stepLength, footLift, stance, weight, preflight, out float leftPitch);
-                Vector3 rightTarget = right.FootTarget(direction, rightPhase,
-                    stepLength, footLift, stance, weight, preflight, out float rightPitch);
-
-                leftTarget = reference.TransformPoint(leftTarget);
-                rightTarget = reference.TransformPoint(rightTarget);
-                float leftDrop = left.DropToReach(leftTarget), rightDrop = right.DropToReach(rightTarget);
-                // Blend the reach envelope at the transfer between feet. It always stays above each
-                // leg's reach minimum, so pelvis easing cannot pull a planted sole off the deck.
-                float drop = preflight
-                    ? SmoothHigher(.027f * weight, SmoothHigher(leftDrop, rightDrop, .024f * weight), .024f * weight)
-                    : Mathf.Max(.021f * weight, Mathf.Max(leftDrop, rightDrop));
-                hips.position -= Vector3.up * Mathf.Min(.18f, drop);
-                left.Pose(reference, leftTarget, leftPitch, weight, preflight);
-                right.Pose(reference, rightTarget, rightPitch, weight, preflight);
-                // WORK arm skin only. Cargo/EVA or contact owners keep their existing renderer/motion lease.
-                if (preflight && ownsBothArms && leftArm != null && Mathf.Abs(direction.z) > .01f)
-                {
-                    leftArm.Apply(reference.right, phase, direction.z, running, weight);
-                    rightArm.Apply(reference.right, rightPhase, direction.z, running, weight);
-                    armsPosed = true;
-                }
-            }
-
-            private static float SmoothHigher(float a, float b, float width)
-            {
-                float overlap = Mathf.Max(0f, width - Mathf.Abs(a - b));
-                return Mathf.Max(a, b) + (width > 0f ? overlap * overlap / (4f * width) : 0f);
-            }
-
-            public static Transform Find(Dictionary<string, Transform> nodes, string name)
-            {
-                if (nodes.TryGetValue(name, out Transform bone)) return bone;
-                throw new InvalidOperationException("Grounded body is missing imported joint " + name);
-            }
-        }
-
-        private sealed class GroundArm
-        {
-            private readonly Transform upper, forearm;
-            private Quaternion upperIdle, forearmIdle;
-
-            public GroundArm(Dictionary<string, Transform> nodes, string suffix)
-            {
-                upper = GroundRig.Find(nodes, "upperarm01." + suffix);
-                forearm = GroundRig.Find(nodes, "lowerarm01." + suffix);
-                if (!forearm.IsChildOf(upper)) throw new InvalidOperationException("Invalid grounded body arm chain.");
-            }
-
-            public void CaptureStanding()
-            {
-                upperIdle = upper.localRotation;
-                forearmIdle = forearm.localRotation;
-            }
-
-            public void RestoreStanding()
-            {
-                upper.localRotation = upperIdle;
-                forearm.localRotation = forearmIdle;
-            }
-
-            public void Apply(Vector3 pitchAxis, float legPhase, float forwardTravel, float running, float weight)
-            {
-                // The same-side arm moves back as its foot leads. Forearm flex increases on the
-                // forward swing, with hands and fingers staying in the sampled WORK standing shape.
-                float swing = Mathf.Cos(2f * Mathf.PI * (legPhase - .045f)) * Mathf.Sign(forwardTravel);
-                float gain = Mathf.Abs(forwardTravel) * weight;
-                upper.rotation = Quaternion.AngleAxis(swing * Mathf.Lerp(12f, 19f, running) * gain, pitchAxis) * upper.rotation;
-                float bend = Mathf.Lerp(2f, Mathf.Lerp(9f, 15f, running), .5f * (1f - swing));
-                forearm.rotation = Quaternion.AngleAxis(-bend * gain, pitchAxis) * forearm.rotation;
-            }
-        }
-
-        private sealed class GroundLeg
-        {
-            private readonly Transform shin, ankle;
-            private readonly float side;
-            public readonly Transform Thigh;
-            private Quaternion thighRotation, shinRotation, ankleRotation, standingAnkleOrientation;
-            private Vector3 standingAnkle, standingKneePole;
-            private float thighLength, shinLength;
-
-            public GroundLeg(Dictionary<string, Transform> nodes, string suffix, float sideSign)
-            {
-                Thigh = GroundRig.Find(nodes, "upperleg01." + suffix);
-                shin = GroundRig.Find(nodes, "lowerleg01." + suffix);
-                ankle = GroundRig.Find(nodes, "foot." + suffix);
-                side = sideSign;
-                if (!shin.IsChildOf(Thigh) || !ankle.IsChildOf(shin))
-                    throw new InvalidOperationException("Invalid grounded body leg chain for side " + suffix);
-            }
-
-            public void CaptureStanding(Transform reference)
-            {
-                thighRotation = Thigh.localRotation;
-                shinRotation = shin.localRotation;
-                ankleRotation = ankle.localRotation;
-                standingAnkleOrientation = Quaternion.Inverse(reference.rotation) * ankle.rotation;
-                standingAnkle = reference.InverseTransformPoint(ankle.position);
-                Vector3 upper = shin.position - Thigh.position, lower = ankle.position - shin.position;
-                thighLength = upper.magnitude;
-                shinLength = lower.magnitude;
-                standingKneePole = reference.InverseTransformDirection(Vector3.ProjectOnPlane(upper, upper + lower).normalized);
-            }
-
-            public void RestoreStanding()
-            {
-                Thigh.localRotation = thighRotation;
-                shin.localRotation = shinRotation;
-                ankle.localRotation = ankleRotation;
-            }
-
-            public Vector3 FootTarget(Vector3 direction, float phase, float stepLength, float lift,
-                float stance, float weight, bool preflight, out float pitch)
-            {
-                float stanceReach = stepLength * stance;
-                float foreAft, height = 0f;
-                pitch = 0f;
-                if (phase < stance)
-                {
-                    // In straight, steady travel the supporting sole moves opposite actual displacement.
-                    foreAft = Mathf.Lerp(stanceReach, -stanceReach, phase / stance);
-                }
-                else
-                {
-                    float swing = (phase - stance) / (1f - stance);
-                    float liftShape = 4f * swing * (1f - swing);
-                    height = lift * liftShape * liftShape;
-                    pitch = (preflight ? 7f : 13f) * Mathf.Sin(2f * Mathf.PI * swing) * liftShape * liftShape * weight;
-                    // Match the horizontal tangent at lift-off and touchdown so the ankle does not snap.
-                    float stanceTangent = -2f * stepLength * (1f - stance);
-                    // Localize the velocity match near the support boundary. Otherwise the longer
-                    // swing drives the shoe too far back before it rises, forcing the hips down.
-                    float tangentWindow = preflight ? (1f - liftShape) * (1f - liftShape) : 1f;
-                    foreAft = Mathf.LerpUnclamped(-stanceReach, stanceReach, swing * swing * (3f - 2f * swing))
-                        + stanceTangent * swing * (1f - swing) * (1f - 2f * swing) * tangentWindow;
-                }
-
-                Vector3 target = standingAnkle + (direction * foreAft + Vector3.up * height) * weight;
-                target.x += side * (preflight ? .035f : .06f) * Mathf.Abs(direction.x) * weight;
-                // Keep the inside edge of a strafe from crossing the other boot.
-                target.x = side * Mathf.Max(.092f, side * target.x);
-                return target;
-            }
-
-            public float DropToReach(Vector3 target)
-            {
-                Vector3 offset = Thigh.position - target;
-                float reach = thighLength + shinLength - .006f;
-                float heightSquared = reach * reach - offset.x * offset.x - offset.z * offset.z;
-                return Mathf.Max(0f, offset.y - Mathf.Sqrt(Mathf.Max(0f, heightSquared)));
-            }
-
-            public void Pose(Transform reference, Vector3 target, float pitch, float weight, bool preflight)
-            {
-                Vector3 hip = Thigh.position;
-                Vector3 toAnkle = target - hip;
-                Vector3 axis = toAnkle.normalized;
-                float length = Mathf.Clamp(toAnkle.magnitude, Mathf.Abs(thighLength - shinLength) + .001f,
-                    thighLength + shinLength - .001f);
-                float kneeAlong = (thighLength * thighLength - shinLength * shinLength + length * length) / (2f * length);
-                float kneeOut = Mathf.Sqrt(Mathf.Max(0f, thighLength * thighLength - kneeAlong * kneeAlong));
-                Vector3 localPole = Vector3.Slerp(standingKneePole,
-                    new Vector3(side * (preflight ? .07f : .35f), 0f, 1f).normalized, weight);
-                Vector3 kneePole = Vector3.ProjectOnPlane(reference.TransformDirection(localPole), axis).normalized;
-                Vector3 knee = hip + axis * kneeAlong + kneePole * kneeOut;
-                Vector3 reachableAnkle = hip + axis * length;
-
-                Thigh.rotation = Quaternion.FromToRotation(shin.position - hip, knee - hip) * Thigh.rotation;
-                shin.rotation = Quaternion.FromToRotation(ankle.position - shin.position, reachableAnkle - shin.position) * shin.rotation;
-                ankle.rotation = reference.rotation * Quaternion.AngleAxis(pitch, Vector3.right) * standingAnkleOrientation;
-            }
-        }
         private static bool Finite(Vector3 v) => !float.IsNaN(v.x) && !float.IsInfinity(v.x)
             && !float.IsNaN(v.y) && !float.IsInfinity(v.y) && !float.IsNaN(v.z) && !float.IsInfinity(v.z);
     }
