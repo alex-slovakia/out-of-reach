@@ -1,9 +1,9 @@
 {
  "unity": "6000.3.28f1",
- "hull_LOD0": {"triangles": 48916, "renderers": 8, "bounds_min": [-12.35, -2.949, -5.216], "bounds_max": [12.35, 9.539, 23.027]},
- "hull_LOD1": {"triangles": 24514, "renderers": 8, "bounds_min": [-12.35, -2.949, -5.216], "bounds_max": [12.35, 9.535, 23.027]},
+ "hull_LOD0": {"triangles": 50220, "renderers": 8, "bounds_min": [-12.35, -2.949, -5.216], "bounds_max": [12.35, 9.539, 23.027]},
+ "hull_LOD1": {"triangles": 25530, "renderers": 8, "bounds_min": [-12.35, -2.949, -5.216], "bounds_max": [12.35, 9.535, 23.027]},
  "hull_LOD2": {"triangles": 9804, "renderers": 8, "bounds_min": [-12.35, -2.948, -5.216], "bounds_max": [12.35, 9.535, 23.027]},
- "adapter": {"triangles": 6076, "renderers": 3, "bounds_min": [-1.61, -0.33, 21.148], "bounds_max": [1.617, 2.89, 25]},
- "distinct_materials": 21,
+ "adapter": {"triangles": 7658, "renderers": 3, "bounds_min": [-1.61, -0.33, 21.148], "bounds_max": [1.617, 2.89, 25]},
+ "distinct_materials": 22,
  "renderers_and_lod_groups_only": true
 }
