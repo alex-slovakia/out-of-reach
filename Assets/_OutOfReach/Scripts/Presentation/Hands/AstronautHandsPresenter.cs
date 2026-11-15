@@ -272,6 +272,7 @@ namespace OutOfReach.Presentation.Hands
         {
             RefreshPresentation();
             if (!IsVisible || clock.IsPaused) return; // Keep the last visible pose; never advance while paused.
+            ApplyLookDownLift(Time.unscaledDeltaTime);
             if (toolHoldActive) { AdvanceToolHold(Time.unscaledDeltaTime); return; }
             if (ContactStage != HandContactStage.None) { AdvanceContacts(Time.unscaledDeltaTime); return; }
             SampleRouteTravel();
@@ -318,9 +319,29 @@ namespace OutOfReach.Presentation.Hands
             visible = true;
         }
 
+        /// <summary>View pitch (degrees, down negative) below which the gloves start to lift towards the chest.</summary>
+        public const float LookDownLiftStartDegrees = 25f;
+        private float lookDownLift;
+
+        // Alex (#7 6896714256): looking steeply down in the EVA suit, the view-mounted gloves sank into the suit's waist.
+        // Below 25 degrees down the glove model swings up around the eye (its mount origin) by 0.75 of the extra pitch,
+        // smoothly, so the hands stay in front of the chest. Contact and tool solves read modelRoot.rotation every
+        // frame, so they stay exact; hiding the model restores the documented identity mount pose.
+        private void ApplyLookDownLift(float deltaSeconds)
+        {
+            if (!modelRoot) return;
+            Transform reference = contactOrigin ? contactOrigin : motionMount;
+            float pitch = reference ? Mathf.Asin(Mathf.Clamp(reference.forward.y, -1f, 1f)) * Mathf.Rad2Deg : 0f;
+            float target = Mathf.Max(0f, -pitch - LookDownLiftStartDegrees) * .75f;
+            lookDownLift = Mathf.MoveTowards(lookDownLift, target, 240f * Mathf.Max(0f, deltaSeconds));
+            modelRoot.localRotation = Quaternion.AngleAxis(-lookDownLift, Vector3.right);
+        }
+
         private void HideModel()
         {
             visible = false;
+            lookDownLift = 0f;
+            if (modelRoot && modelRoot != transform && !transform.IsChildOf(modelRoot)) modelRoot.localRotation = Quaternion.identity;
             // Never deactivate a parent of this component if a serialized reference was wired incorrectly.
             if (modelRoot && modelRoot != transform && !transform.IsChildOf(modelRoot))
                 modelRoot.gameObject.SetActive(false);

@@ -203,7 +203,42 @@ namespace OutOfReach.Composition
             if (HandleHandInput(mouse, left, right, grip)) return;
             if (strong) { hasQueued = false; DispatchStrong(); return; }
             RetryQueued();
+            SideStep(keyboard);
         }
+
+        /// <summary>How often a held A or D repeats its sideways push, seconds.</summary>
+        public const float SideStepSeconds = .45f;
+        float nextSideStepAt;
+        bool sideWasHeld;
+
+        // MOVE-MECH-03 (Alex: "A/D does not give usable left/right movement"): A or D, tapped or held, pushes the body
+        // left or right off the nearest solid surface in reach that lies on the other side (a hand or the feet behind
+        // the move), W/S adding forward/back. One push per tap, repeating while held; nothing with no surface in reach,
+        // so it is never thrust. The A/D lean still shows the side.
+        void SideStep(Keyboard keyboard)
+        {
+            bool held = keyboard != null && (keyboard.aKey.isPressed ^ keyboard.dKey.isPressed);
+            if (!held) { sideWasHeld = false; return; }
+            bool tapped = !sideWasHeld;
+            sideWasHeld = true;
+            if (!tapped && Time.unscaledTime < nextSideStepAt) return;
+            if (player.HeldHandhold || bridge.IsBusy || player.PushCooldownRemaining > 0f || hasQueued) return;
+            Vector3 travel = ReadTravelIntent();
+            if (travel == Vector3.zero) return;
+            nextSideStepAt = Time.unscaledTime + SideStepSeconds;
+            // Feet on the deck: the legs push sideways (outward cone of the real deck); otherwise a hand off the
+            // nearest surface behind the move.
+            if (player.TryGetFootSupport(out Vector3 deck)
+                && MicrogravityLocomotion.TryOutwardDirection(deck, travel, player.Microgravity.MinimumAwayDot, out Vector3 legs))
+            {
+                LastFootResult = player.TryPushFromFootContact(legs, handStrength);
+                if (LastFootResult == FloatActionResult.Done) { LegPushPerformed?.Invoke(legs); return; }
+            }
+            if (!bridge.TryPushUnseen(travel, handStrength)) LastRefusalQuiet(bridge.LastRefusal);
+        }
+
+        // A held key must not flood the HUD: keep the reason readable without bumping the refusal revision every repeat.
+        void LastRefusalQuiet(string reason) { if (LastRefusal != reason) Refuse(reason); }
 
         bool HandleHandInput(Mouse mouse, bool left, bool right, bool grip)
         {
@@ -231,8 +266,7 @@ namespace OutOfReach.Composition
             if (player.HeldHandhold) { DispatchHand(hand, false, both); return true; }
             // A plain click aimed at a reachable registered rail grips it with that hand (Ctrl stays an alias).
             // Selection only: the bridge re-proves the rail, reach, pose and contact.
-            bool gripRail = !both && (grip || (!bridge.IsBusy && HasRailGrip && PreferRailGrip(out RaycastHit railAim)
-                && bridge.CanArmReach(railAim.point, hand)));
+            bool gripRail = !both && (grip || (!bridge.IsBusy && PreferRailGrip()));
             if (both || gripRail) DispatchHand(hand, gripRail, both);
             else
             {
@@ -274,12 +308,14 @@ namespace OutOfReach.Composition
             if (bridge.IsBusy || (!grip && player.PushCooldownRemaining > 0f)) { Queue(hand, grip, pair, false); return; }
             if (grip)
             {
-                if (!suit.IsSuitOn && !bridge.WorkGripAvailable) { Refuse(BareGripUnavailable); return; }
-                if (!bridge.TryGrab(hand, eye.forward)) Refuse(bridge.LastRefusal);
+                // The visible hand when the pose exists and the real arm reaches; otherwise hold the rail unseen.
+                bool visible = (suit.IsSuitOn || bridge.WorkGripAvailable) && PreferRailGrip(out RaycastHit railHit)
+                    && bridge.CanArmReach(railHit.point, hand) && bridge.TryGrab(hand, eye.forward);
+                if (!visible && !bridge.TryGrabUnseen(hand, eye.forward)) Refuse(bridge.LastRefusal);
                 return;
             }
             float strength = pair ? Mathf.Min(1f, handStrength * 2f) : handStrength;
-            if (!bridge.TrySelectPushSurface(eye.forward, pair ? (ContactHand?)null : hand, out _, out _))
+            if (!bridge.TrySelectPushSurface(eye.forward, pair ? (ContactHand?)null : hand, travel, out _, out _))
             {
                 // MOVE-MECH-02: a surface behind or above the view (the ceiling while looking down where you want to
                 // go) is pushed off without a visible hand; only with nothing in reach at all does the click wait.
@@ -375,7 +411,7 @@ namespace OutOfReach.Composition
             }
             if (player.HeldHandhold) return;
             StrongPushUsesLegs = player.TryGetFootSupport(out _);
-            if (HasRailGrip && !bridge.IsBusy && PreferRailGrip(out RaycastHit rail) && bridge.CanArmReach(rail.point, null))
+            if (!bridge.IsBusy && PreferRailGrip(out RaycastHit rail))
             {
                 Preview = ContactPreview.Grip; PreviewSurface = rail.collider; PreviewPoint = rail.point; PreviewAimed = true;
                 return;
