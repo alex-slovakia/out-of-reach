@@ -2,14 +2,14 @@
 [WORK] CharacterRoot localScale new=(1.00, 1.00, 1.00) fit=(1.00, 1.00, 1.00) lossy new=(1.00, 1.00, 1.00) ; rig(armature node) lossyScale=(1.00, 1.00, 1.00)
 [WORK] transforms under CharacterRoot: new=164 fit=164
 [WORK] BINDPOSE compare vs FitV02: bones=164 missing=0 maxElementDiff=9,842E-05
-[WORK] POSE-TRANSFER TorsoLegs baked bounds new center=(0.000, -0.060, 0.832) size=(0.818, 0.645, 1.724) | FitV02 center=(0.000, -0.062, 0.829) size=(0.729, 0.619, 1.706)
+[WORK] POSE-TRANSFER TorsoLegs baked bounds new center=(0.000, -0.054, 0.832) size=(0.859, 0.659, 1.724) | FitV02 center=(0.000, -0.062, 0.829) size=(0.729, 0.619, 1.706)
 [WORK] SMR A7_SuitV03_WORK_Arm_L verts=8796 tris=16066 bindposes=164 smrBones=164 bounds.center=(-0.339, -0.139, 1.256) size=(0.379, 0.405, 0.502) baked.size=(0.319, 0.529, 0.643) mats=[MAT_V03_Shirt,MAT_V03_Skin]
 [WORK] SMR A7_SuitV03_WORK_Arm_R verts=8796 tris=16066 bindposes=164 smrBones=164 bounds.center=(0.339, -0.139, 1.256) size=(0.379, 0.405, 0.502) baked.size=(0.319, 0.529, 0.643) mats=[MAT_V03_Shirt,MAT_V03_Skin]
-[WORK] SMR A7_SuitV03_WORK_TorsoLegs verts=31417 tris=45368 bindposes=164 smrBones=164 bounds.center=(0.000, -0.059, 0.775) size=(0.641, 0.401, 1.542) baked.size=(0.818, 0.645, 1.724) mats=[MAT_V03_Trousers,MAT_V03_Shoe,MAT_V03_Sole,MAT_V03_Shirt,MAT_V03_Skin,MAT_V03_TrousersPanel,MAT_V03_Trim]
+[WORK] SMR A7_SuitV03_WORK_TorsoLegs verts=30911 tris=44368 bindposes=164 smrBones=164 bounds.center=(0.000, -0.050, 0.775) size=(0.660, 0.418, 1.542) baked.size=(0.859, 0.659, 1.724) mats=[MAT_V03_Trousers,MAT_V03_Shoe,MAT_V03_Sole,MAT_V03_Shirt,MAT_V03_Skin,MAT_V03_TrousersPanel,MAT_V03_Trim]
 [WORK] FITV02 SMR A7_WORK_Arm_L baked.size=(0.304, 0.523, 0.635) center=(-0.208, -0.146, 1.315)
 [WORK] FITV02 SMR A7_WORK_Arm_R baked.size=(0.304, 0.523, 0.635) center=(0.208, -0.146, 1.315)
 [WORK] FITV02 SMR A7_WORK_TorsoLegs baked.size=(0.729, 0.619, 1.706) center=(0.000, -0.062, 0.829)
-[WORK] TOTAL triangles (unity) = 77500 => PASS
+[WORK] TOTAL triangles (unity) = 76500 => PASS
 [EVA] bones new=164 fitv02=164 missingInNew=0 parentMismatch=0 maxBonePosErr_m=0,2867 maxBoneRotErr_deg=35,68 maxLocalScaleDev=1,422E-06
 [EVA] CharacterRoot localScale new=(1.00, 1.00, 1.00) fit=(1.00, 1.00, 1.00) lossy new=(1.00, 1.00, 1.00) ; rig(armature node) lossyScale=(1.00, 1.00, 1.00)
 [EVA] transforms under CharacterRoot: new=164 fit=164

@@ -7,7 +7,7 @@ Nothing existing was edited (FitV02, FloatNeutralV04, animators, prefabs, scenes
 ## Files
 | File | Content |
 |---|---|
-| `Meshes/A7_SuitV03_WORK.fbx` | WORK: navy shirt, charcoal cargo trousers (side zip pockets, knee/back-pocket panels), dark low shoes, existing bare hands. 77.5 k tris. Renderers `A7_SuitV03_WORK_TorsoLegs`, `_Arm_L`, `_Arm_R`. |
+| `Meshes/A7_SuitV03_WORK.fbx` | WORK: navy shirt, charcoal cargo trousers (side zip pockets, knee/back-pocket panels), dark low shoes, existing bare hands. 76.5 k tris (Unity count). Renderers `A7_SuitV03_WORK_TorsoLegs`, `_Arm_L`, `_Arm_R`. |
 | `Meshes/A7_SuitV03_EVA.fbx` | EVA: off-white layered suit, metal waist/neck/wrist rings, harness straps, red bands, gloves, chest control panel, PLSS, helmet, gold visor, lights. 107 k tris. Renderers `A7_SuitV03_EVA_TorsoLegs`, `_Arm_L`, `_Arm_R` (gloves inside), `_ChestPanel`, `_Plss`, `_Helmet`, `_Visor`. |
 | `Materials/MAT_V03_*.mat` | URP Lit materials (22). FBX importer = FitV02's (Generic, external materials, search by name). |
 | `Source~/` | Blender 5.3 scripts, `.blend` sources, Unity check script (`~` = Unity ignores it). |
@@ -28,5 +28,5 @@ Nothing existing was edited (FitV02, FloatNeutralV04, animators, prefabs, scenes
 
 ## Known limits (honest)
 - No head in WORK (FitV02 has none); a skin neck ends at z 1.512. The EVA helmet is a shell with a dark interior front and a gold visor: no head inside.
-- Trouser legs are somewhat slimmer than the reference's straight cut; detail is geometric (panels, hems, straps) with no baked wear textures or decals.
+- Trouser legs are close to but a little less straight than the reference; detail is geometric (panels, hems, straps) with no baked wear textures or decals.
 - Verified: Blender rig compare, Unity 6000.3.28f1 batch import of both FBX in an isolated project (no URP there, so materials load without the shader: names resolve). Not verified: URP look in the game scene, animation clips on these meshes, player/collision fit.

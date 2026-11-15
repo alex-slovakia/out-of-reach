@@ -3,8 +3,8 @@
  "bones": 164,
  "meshes": {
   "A7_SuitV03_WORK_TorsoLegs": {
-   "verts": 22039,
-   "tris": 45374,
+   "verts": 21751,
+   "tris": 44380,
    "materials": [
     "MAT_V03_Shirt",
     "MAT_V03_Trousers",
@@ -15,7 +15,7 @@
     "MAT_V03_Trim"
    ],
    "weights": {
-    "verts": 22039,
+    "verts": 21751,
     "bad_weight_sum": 0,
     "max_influences": 4,
     "groups": 59
@@ -60,5 +60,5 @@
    }
   }
  },
- "tris_total": 77506
+ "tris_total": 76512
 }

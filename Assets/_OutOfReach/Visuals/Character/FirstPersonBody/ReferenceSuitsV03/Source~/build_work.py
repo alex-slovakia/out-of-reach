@@ -69,11 +69,11 @@ def loose(v):
             d = max(0.006, d) if z < 1.38 else 0.006
     else:                                          # straight-cut trousers
         if z > 0.55:
-            d = 0.026 + 0.004 * (z - 0.55) / 0.35
+            d = 0.040 + 0.010 * (z - 0.55) / 0.35
         elif z > 0.15:
-            d = 0.022 + 0.004 * (z - 0.15) / 0.40
+            d = 0.034 + 0.006 * (z - 0.15) / 0.40
         else:
-            d = 0.030
+            d = 0.040
         inward = -sgn(v.co.x) * n.x
         if inward > 0:
             d *= (1.0 - 0.8 * min(1.0, inward))
@@ -134,7 +134,6 @@ raise_region(bm, [f for f in caps if fcenter(f).y < ymin + 0.016 and fcenter(f).
 raise_region(bm, region(0.40, 0.57, ylo=-9, yhi=-0.06), 0.006, PANEL)
 raise_region(bm, region(0.835, 0.915, ylo=0.06, xlo=0.035, xhi=0.16, absx=True), 0.004, PANEL)
 # waistband under the hem
-raise_region(bm, region(HEM_Z - 0.03, HEM_Z, mat=TROUS), 0.002, TRIM)
 
 finish_mesh(tl, bm, M, 38.0)
 log("TorsoLegs verts", len(tl.data.vertices), vg_weight_report(tl, arm))
