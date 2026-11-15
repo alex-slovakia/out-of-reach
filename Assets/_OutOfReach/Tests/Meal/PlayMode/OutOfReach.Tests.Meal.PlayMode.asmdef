@@ -1,0 +1,29 @@
+{
+  "name": "OutOfReach.Tests.Meal.PlayMode",
+  "rootNamespace": "OutOfReach.Tests.Meal.PlayMode",
+  "references": [
+    "UnityEngine.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Simulation",
+    "OutOfReach.Interaction",
+    "OutOfReach.Player",
+    "OutOfReach.Tests.PlayMode",
+    "OutOfReach.Presentation.Meal",
+    "OutOfReach.Presentation.Motion"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

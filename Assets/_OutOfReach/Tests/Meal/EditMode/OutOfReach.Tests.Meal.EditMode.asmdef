@@ -1,0 +1,25 @@
+{
+  "name": "OutOfReach.Tests.Meal.EditMode",
+  "rootNamespace": "OutOfReach.Tests.Meal.EditMode",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "OutOfReach.Contracts",
+    "OutOfReach.Presentation.Meal"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
