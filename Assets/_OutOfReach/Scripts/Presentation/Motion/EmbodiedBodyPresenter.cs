@@ -140,10 +140,23 @@ namespace OutOfReach.Presentation.Motion
             Vector3 toBerth = Vector3.ProjectOnPlane(berthExit.forward, Vector3.up);
             if (toBerth.sqrMagnitude < 1e-6f) return false;
             toBerth.Normalize();
-            feet = berthExit.position - toBerth * BerthApproachPath.ExitStandOff + Vector3.up * BerthApproachPath.ExitFeetLift;
+            feet = berthExit.position - toBerth * BerthApproachPath.ExitStandOff;
+            // The anchor may sit above the deck (the berth's interaction box): stand the feet on the deck itself, the
+            // nearest solid surface below (never the player's own capsule), so the exit never starts in mid-air.
+            Vector3 origin = new Vector3(feet.x, Mathf.Max(feet.y, berthExit.position.y) + .6f, feet.z);
+            int count = Physics.RaycastNonAlloc(origin, Vector3.down, exitHits, 3.5f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+            float best = float.PositiveInfinity;
+            for (int i = 0; i < count; i++)
+            {
+                Collider hit = exitHits[i].collider;
+                if (!hit || hit.transform.IsChildOf(playerFeet) || hit.transform.IsChildOf(visualRoot) || exitHits[i].normal.y < .7f) continue;
+                if (exitHits[i].distance < best) { best = exitHits[i].distance; feet.y = exitHits[i].point.y; }
+            }
+            feet += Vector3.up * BerthApproachPath.ExitFeetLift;
             yaw = Quaternion.LookRotation(-toBerth, Vector3.up).eulerAngles.y;
             return true;
         }
+        private readonly RaycastHit[] exitHits = new RaycastHit[12];
 
         /// <summary>The caller has moved the real controller to the berth exit: the sequence ends now and nothing pops back.</summary>
         public void ConfirmRestExit()

@@ -19,12 +19,12 @@ namespace OutOfReach.Presentation.Motion
         public const float WakeSeconds = .5f, UnbuckleSeconds = .95f;
         /// <summary>Hazard wake: the straps spring open and gameplay input is back within this time.</summary>
         public const float HazardControlSeconds = .25f;
-        /// <summary>Berth exit: feet this far in front of root's SleepEntry (clear of the berth face), just above the deck.</summary>
-        public const float ExitStandOff = .30f, ExitFeetLift = .03f;
+        /// <summary>Berth exit: feet this far in front of the berth anchor (body clear of the berth face), just above the deck.</summary>
+        public const float ExitStandOff = .45f, ExitFeetLift = .03f;
 
         /// <summary>Hazard wake: a quick float out to the live eye (input is already back after HazardControlSeconds).</summary>
         public static float HazardExitSeconds(Vector3 from, Vector3 mouth, Vector3 liveEye) =>
-            Mathf.Clamp(.35f + .2f * (Vector3.Distance(from, mouth) + Vector3.Distance(mouth, liveEye)), .5f, .9f);
+            Mathf.Clamp(.25f + .15f * (Vector3.Distance(from, mouth) + Vector3.Distance(mouth, liveEye)), .35f, .6f);
 
         public struct View
         {
