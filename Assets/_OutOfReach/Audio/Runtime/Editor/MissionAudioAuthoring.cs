@@ -46,7 +46,8 @@ namespace OutOfReach.Presentation.Audio.Editor
                         DepartureVoice("departure-ignition", "Ignition."),
                         DepartureVoice("departure-liftoff", "Liftoff.")
                     }, effects);
-                presenter.ConfigureRecoveryMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/mx04_recovery.wav"));
+                presenter.ConfigureRecoveryMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/FinaleR31/Thirty-One-Dawns-loop.wav"));
+                presenter.ConfigureFailureMusic(RequiredClip("Assets/_OutOfReach/Audio/Music/FinaleR31/Last-Carrier.wav"));
                 presenter.ConfigureLaunchRadio(RequiredClip("Assets/_OutOfReach/Audio/LaunchRadio/launch-radio-countdown.wav"));
                 if (!presenter.ValidateConfiguration(out string reason)) throw new InvalidOperationException(reason);
                 if (!PrefabUtility.SaveAsPrefabAsset(root, PrefabPath))
@@ -77,7 +78,9 @@ namespace OutOfReach.Presentation.Audio.Editor
                 if (clip && AssetDatabase.GetAssetPath(clip).Contains("/Voices/Radio/"))
                     throw new InvalidOperationException("Rejected radio variants must not be the default dialogue catalog.");
             }
-            Debug.Log("AUDIO_PREFAB_VALIDATION_PASS music=" + (serialized.FindProperty("recoveryMusic").objectReferenceValue ? 4 : 3)
+            Debug.Log("AUDIO_PREFAB_VALIDATION_PASS music=" + (3
+                + (serialized.FindProperty("recoveryMusic").objectReferenceValue ? 1 : 0)
+                + (serialized.FindProperty("failureMusic").objectReferenceValue ? 1 : 0))
                 + " sfx=" + serialized.FindProperty("sfxCues").arraySize
                 + " dialogueBindings=" + cues.arraySize + " listeners=0 authoredSources=0; runtime playback not tested by this check");
         }

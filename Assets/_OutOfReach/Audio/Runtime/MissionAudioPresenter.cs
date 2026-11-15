@@ -81,6 +81,7 @@ namespace OutOfReach.Presentation.Audio
         [SerializeField] private AudioClip tensionMusic;
         [SerializeField] private AudioClip emergencyMusic;
         [SerializeField] private AudioClip recoveryMusic; // Optional: old three-mood configurations remain valid.
+        [SerializeField] private AudioClip failureMusic; // Optional ending; does not replace emergency music.
         [Min(0)] [SerializeField] private float defaultCrossfadeSeconds = 1.25f;
 
         [Header("Opening program: NASA launch radio heard over the approved opening score")]
@@ -113,10 +114,10 @@ namespace OutOfReach.Presentation.Audio
         private AudioSource departureMusicSource;
         private bool departureMusicActive;
         private float lastMenuCueTime = -10f;
-        private readonly AudioSource[] musicSources = new AudioSource[4];
-        private readonly bool[] musicStarted = new bool[4];
-        private readonly float[] musicWeights = new float[4];
-        private readonly float[] fadeStartWeights = new float[4];
+        private readonly AudioSource[] musicSources = new AudioSource[5];
+        private readonly bool[] musicStarted = new bool[5];
+        private readonly float[] musicWeights = new float[5];
+        private readonly float[] fadeStartWeights = new float[5];
         private float fadeElapsed;
         private float fadeDuration;
         private float duckGain = 1f;
@@ -289,7 +290,7 @@ namespace OutOfReach.Presentation.Audio
         public bool SetMood(MusicMood mood, float fadeSeconds = -1f)
         {
             if (!Application.isPlaying || !isActiveAndEnabled) return Reject("Audio presenter is not active in Play mode.");
-            if ((int)mood < 0 || (int)mood > 4) return Reject("Unknown music mood.");
+            if ((int)mood < 0 || (int)mood > (int)MusicMood.Failure) return Reject("Unknown music mood.");
             if (!Finite(fadeSeconds)) return Reject("Crossfade duration must be finite.");
             AudioClip requestedClip = MusicClip(mood);
             if (mood != MusicMood.Silent && !PrepareClip(requestedClip)) return false;
@@ -647,6 +648,13 @@ namespace OutOfReach.Presentation.Audio
             recoveryMusic = recovery;
         }
 
+        /// <summary>Optional loss score, played once; existing mood and opening bindings are unchanged.</summary>
+        public void ConfigureFailureMusic(AudioClip failure)
+        {
+            if (CurrentMood == MusicMood.Failure) SetMood(MusicMood.Silent, 0);
+            failureMusic = failure;
+        }
+
         public bool ValidateConfiguration(out string reason)
         {
             if (!isolationMusic || !tensionMusic || !emergencyMusic)
@@ -834,6 +842,7 @@ namespace OutOfReach.Presentation.Audio
                 case MusicMood.Tension: return tensionMusic;
                 case MusicMood.Emergency: return emergencyMusic;
                 case MusicMood.Recovery: return recoveryMusic;
+                case MusicMood.Failure: return failureMusic;
                 default: return null;
             }
         }
@@ -848,7 +857,8 @@ namespace OutOfReach.Presentation.Audio
             if (!dialogueSource) dialogueSource = MakeSource("Clean dialogue", false, dialogueOutput, 32);
             if (!sfxSource) sfxSource = MakeSource("UI suit radio and contact SFX", false, sfxOutput, 64);
             for (int i = 0; i < musicSources.Length; i++)
-                if (!musicSources[i]) musicSources[i] = MakeSource("Score " + (MusicMood)(i + 1), true, musicOutput, 128);
+                if (!musicSources[i]) musicSources[i] = MakeSource("Score " + (MusicMood)(i + 1),
+                    (MusicMood)(i + 1) != MusicMood.Failure, musicOutput, 128);
         }
 
         private AudioSource MakeSource(string objectName, bool loop, AudioMixerGroup group, int priority)

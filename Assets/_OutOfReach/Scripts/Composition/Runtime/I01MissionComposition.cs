@@ -1005,7 +1005,8 @@ namespace OutOfReach.Composition
                 case GamePhase.Outcome:
                 case GamePhase.Report:
                     audioPresenter.SetMood(runtime.GameState.Outcome == MissionOutcome.Recovered
-                        ? MusicMood.Recovery : MusicMood.Silent);
+                        ? MusicMood.Recovery : runtime.GameState.Outcome == MissionOutcome.Lost
+                            ? MusicMood.Failure : MusicMood.Silent);
                     break;
                 default:
                     audioPresenter.SetMood(MusicMood.Silent);
@@ -1172,7 +1173,8 @@ namespace OutOfReach.Composition
             dialogueQueue.Clear();
             audioPresenter.StopDialogue();
             audioPresenter.SetMood(runtime.GameState.Outcome == MissionOutcome.Recovered
-                ? MusicMood.Recovery : MusicMood.Silent);
+                ? MusicMood.Recovery : runtime.GameState.Outcome == MissionOutcome.Lost
+                    ? MusicMood.Failure : MusicMood.Silent);
             rejectionUntil = 0f;
             latestPrompt = string.Empty;
             flightBoard.ClearInteractionPrompt();

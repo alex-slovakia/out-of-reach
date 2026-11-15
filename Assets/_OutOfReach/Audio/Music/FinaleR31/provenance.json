@@ -1,0 +1,26 @@
+{
+  "approved_by_user": "2026-11-15: both scores approved; final5s of win may be cut and repeated.",
+  "authorship": "Original composition and procedural synthesis by Codex for OUT OF REACH. No samples, paid API, or third-party composition.",
+  "win": {
+    "path": "Thirty-One-Dawns-loop.wav",
+    "sha256": "a1e6f301f5e2e748a9b70d3c525d5d385afc529deee3f58577f449ccf147bb44",
+    "duration_seconds": 51.25,
+    "source_sha256": "6d93200dcc2009a30dcaf15a9816c3e49d53299b46239e7486db67f9edac5fe9",
+    "edit": "Removed source52\u201357s; 0.75s cyclic crossfade; plays source0.75s forward, then blends into source0\u20130.75s at loop end. Result51.25s.",
+    "loop": true,
+    "seam_step_l_r": [
+      0.0,
+      0.0
+    ],
+    "clipped_samples": 0
+  },
+  "loss": {
+    "path": "Last-Carrier.wav",
+    "sha256": "7591df2dbba7a8731b3d8ec3c52d1f53aebae27886f401fbbeea60a5f3153861",
+    "duration_seconds": 45,
+    "source_unchanged": true,
+    "loop": false
+  },
+  "runtime": "Recovery mood loops win; Failure mood plays loss once. Existing authoritative Recovered/Lost outcomes choose music. Opening untouched.",
+  "verification": "PCM format/hash and numerical loop seam checked; no new human gameplay/audio-loop verification claimed."
+}
