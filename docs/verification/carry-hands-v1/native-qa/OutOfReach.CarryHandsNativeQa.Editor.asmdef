@@ -1,0 +1,19 @@
+{
+  "name": "OutOfReach.CarryHandsNativeQa.Editor",
+  "references": [
+    "OutOfReach.Composition",
+    "OutOfReach.Contracts",
+    "OutOfReach.Core",
+    "OutOfReach.Core.Runtime",
+    "OutOfReach.Player",
+    "OutOfReach.Interaction",
+    "OutOfReach.UI",
+    "OutOfReach.Presentation.Cargo",
+    "OutOfReach.Presentation.Motion",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}
