@@ -23,11 +23,8 @@ namespace OutOfReach.Presentation.Cargo
         public const string PlateName = "Printed manifest plate";
         private const string TargetPrefix = "cargo-supply:";
 
-        // Sign legibility: twice the glyph resolution, about 1.35x the previous world size (48 x .006).
-        public const int SignFontSize = 96;
-        public const float SignCharacterSize = .00405f;
         // Brackets sit at +/-.285 m with .012 m width: a .582 m plate meets both instead of floating between them.
-        private static readonly Vector3 RackPlateScale = new Vector3(.582f, .16f, .012f);
+        private static readonly Vector3 RackPlateScale = new Vector3(.582f, CargoSignText.PlateHeight, .012f);
 
         private sealed class Cell
         {
@@ -62,9 +59,17 @@ namespace OutOfReach.Presentation.Cargo
                 if (!t.GetComponent<PreflightRackDressing>()) t.gameObject.AddComponent<PreflightRackDressing>();
                 installed++;
             }
+            // Short, large, high-contrast manifest signs everywhere (rack, aboard, carried) and a matching name plate
+            // over each case's printed label window; the dock's modelled legend gets a readable overlay.
             foreach (GameObject root in scene.GetRootGameObjects())
             foreach (TextMesh label in root.GetComponentsInChildren<TextMesh>(true))
-                if (label.name == LabelName) SharpenText(label);
+                if (label.name == LabelName && !label.GetComponent<CargoSignText>()) label.gameObject.AddComponent<CargoSignText>();
+            foreach (GameObject root in scene.GetRootGameObjects())
+            foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
+                if (t.name == CargoCaseNamePlate.CaseName) CargoCaseNamePlate.Attach(t);
+            foreach (GameObject root in scene.GetRootGameObjects())
+            foreach (Transform t in root.GetComponentsInChildren<Transform>(true))
+                if (t.name == CargoSignText.DockLegendName) CargoSignText.OverlayLegend(t);
             return installed;
         }
 
@@ -134,12 +139,11 @@ namespace OutOfReach.Presentation.Cargo
             if (plate) plate.localScale = new Vector3(topRail.localScale.x - .008f, plateHeight, plateDepth);
             var text = header.GetComponent<TextMesh>();
             if (!text) return;
-            text.richText = true;
-            text.fontSize = SignFontSize;
-            text.characterSize = .0058f;
-            text.lineSpacing = .95f;
-            text.color = new Color(.95f, .94f, .89f);
-            text.text = "<size=118>PREFLIGHT SUPPLY RACK</size>\nCARRY EACH CASE ABOARD THE TRANSPORT";
+            // Not a manifest sign: stop the cloned formatter and set one big, short line.
+            var cloned = header.GetComponent<CargoSignText>();
+            if (cloned) { cloned.enabled = false; Destroy(cloned); }
+            CargoSignText.Style(text, .12f);
+            text.text = "SUPPLY RACK";
         }
 
         /// <summary>Each level's posts stood on the shelf below; run every post to the rack base instead.</summary>
@@ -181,14 +185,6 @@ namespace OutOfReach.Presentation.Cargo
                 if (d < bestDistance) { best = candidate; bestDistance = d; }
             }
             return best;
-        }
-
-        private static void SharpenText(TextMesh label)
-        {
-            if (!label || label.fontSize == SignFontSize) return;
-            label.fontSize = SignFontSize;
-            label.characterSize = SignCharacterSize;
-            label.lineSpacing = .92f;
         }
 
         // After CargoVisualPresenter (LateUpdate, default order) has applied Core's supply to the crates.
