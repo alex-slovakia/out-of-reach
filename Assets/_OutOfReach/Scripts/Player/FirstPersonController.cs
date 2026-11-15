@@ -439,6 +439,78 @@ namespace OutOfReach.Player
         }
 
         /// <summary>
+        /// MICRO-PAIR-PUSH (root 6889731362): one simultaneous push with both hands, for example off two walls or two
+        /// points of one wall. Everything is checked before anything changes: floating, control, finite input and a
+        /// positive strength for both hands, the cooldown, then each contact with exactly the verification of
+        /// <see cref="TryPushOff"/> (solid surface, reach, line of sight, direction away from that surface). A refusal
+        /// returns the first failing hand's result and changes nothing. On success each hand contributes like a single
+        /// push (capped by its strength), the sum is capped to one full push and the speed to the total cap; the hold is
+        /// released, the cooldown starts and <see cref="Pushed"/> is raised once.
+        /// </summary>
+        public FloatActionResult TryPushOffPair(Collider surfaceA, Vector3 pointA, Vector3 directionA, float strengthA,
+            Collider surfaceB, Vector3 pointB, Vector3 directionB, float strengthB)
+        {
+            if (!floating)
+            {
+                return FloatActionResult.NotFloating;
+            }
+
+            if (!ControlAllowed)
+            {
+                return FloatActionResult.ControlDenied;
+            }
+
+            if (!IsValidPushInput(pointA, directionA, strengthA) || !IsValidPushInput(pointB, directionB, strengthB))
+            {
+                return FloatActionResult.InvalidInput;
+            }
+
+            if (floatClock - lastPushAt < microgravity.PushCooldownSeconds)
+            {
+                return FloatActionResult.Cooldown;
+            }
+
+            FloatActionResult first = VerifyPushContact(surfaceA, pointA, directionA, out Vector3 awayA);
+            if (first != FloatActionResult.Done)
+            {
+                return first;
+            }
+
+            FloatActionResult second = VerifyPushContact(surfaceB, pointB, directionB, out Vector3 awayB);
+            if (second != FloatActionResult.Done)
+            {
+                return second;
+            }
+
+            ReleaseHold();
+            floatVelocity = microgravity.PushPair(floatVelocity, awayA, strengthA, awayB, strengthB);
+            lastPushAt = floatClock;
+            strandedFor = 0f;
+            Pushed?.Invoke(floatVelocity);
+            return FloatActionResult.Done;
+        }
+
+        private static bool IsValidPushInput(Vector3 point, Vector3 direction, float strength01)
+        {
+            return IsFinite(point) && IsFinite(direction) && direction.sqrMagnitude >= 1e-6f
+                && !float.IsNaN(strength01) && strength01 > 0f;
+        }
+
+        /// <summary>The per-contact part of <see cref="TryPushOff"/>'s verification; changes nothing.</summary>
+        private FloatActionResult VerifyPushContact(Collider surface, Vector3 point, Vector3 direction, out Vector3 away)
+        {
+            away = Vector3.zero;
+            FloatActionResult verified = VerifySurface(surface, point, out Vector3 normal);
+            if (verified != FloatActionResult.Done)
+            {
+                return verified;
+            }
+
+            away = direction.normalized;
+            return Vector3.Dot(away, normal) < microgravity.MinimumAwayDot ? FloatActionResult.IntoSurface : FloatActionResult.Done;
+        }
+
+        /// <summary>
         /// Grips a registered handhold the hand can reach in line of sight (same verification as a push); a smooth wall
         /// is not grippable (NotAHandhold, use TryBrace). The body is never moved to the handhold; while held, the
         /// drift settles to rest.

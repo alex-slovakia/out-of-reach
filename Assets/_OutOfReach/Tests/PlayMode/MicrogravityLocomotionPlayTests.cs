@@ -166,6 +166,100 @@ namespace OutOfReach.Tests.PlayMode
             yield return null;
         }
 
+        /// <summary>The side-wall point level with the eye, for the second hand.</summary>
+        private Vector3 SidePoint => new Vector3(-2f, Position.y + Eye, Position.z);
+
+        [UnityTest]
+        public IEnumerator APairPush_ChecksBothHandsFirst_AndAnyRefusalChangesNothing()
+        {
+            int pushes = 0;
+            Player.Pushed += _ => pushes++;
+            Place(new Vector3(-1.3f, 50.2f, 0.6f));
+            Assert.That(Player.TryPushOffPair(back, BackPoint, Vector3.forward, 1f, left, SidePoint, Vector3.right, 1f),
+                Is.EqualTo(FloatActionResult.NotFloating));
+            Done(Player.EnterFloat());
+            Vector3 point = BackPoint;
+            Vector3 side = SidePoint;
+
+            // Hand A is valid every time; each refusal below comes from hand B.
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, null, side, Vector3.right, 1f), Is.EqualTo(FloatActionResult.NoSurface));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.left, 1f), Is.EqualTo(FloatActionResult.IntoSurface));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, front, new Vector3(-1.3f, 50.2f + Eye, 6f), Vector3.back, 1f),
+                Is.EqualTo(FloatActionResult.OutOfReach));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.zero, 1f), Is.EqualTo(FloatActionResult.InvalidInput));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, 0f), Is.EqualTo(FloatActionResult.InvalidInput));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, new Vector3(float.NaN, 0f, 0f), Vector3.right, 1f),
+                Is.EqualTo(FloatActionResult.InvalidInput));
+            GameObject blocker = harness.AddWall(new Vector3(-1.7f, 50.2f + Eye, 0.6f), new Vector3(0.1f, 0.4f, 0.4f));
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, 1f), Is.EqualTo(FloatActionResult.Occluded));
+            blocker.SetActive(false);
+            Physics.SyncTransforms();
+
+            // A refused hand A is reported first even when hand B is fine; the control gate covers both.
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.back, 1f, left, side, Vector3.right, 1f), Is.EqualTo(FloatActionResult.IntoSurface));
+            gateOpen = false;
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, 1f), Is.EqualTo(FloatActionResult.ControlDenied));
+            gateOpen = true;
+
+            Assert.That(Player.FloatVelocity, Is.EqualTo(Vector3.zero), "no refusal changed the velocity");
+            Assert.That(pushes, Is.Zero, "no refusal raised Pushed");
+            Done(Player.TryPushOff(back, point, Vector3.forward, 0.5f));
+            Assert.That(pushes, Is.EqualTo(1), "no refusal started the cooldown");
+            Assert.That(Player.TryPushOffPair(back, point, Vector3.forward, 1f, left, side, Vector3.right, 1f), Is.EqualTo(FloatActionResult.Cooldown),
+                "single and pair pushes share one cooldown");
+            Assert.That(pushes, Is.EqualTo(1));
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator APairPush_AddsBothHands_CapsTheSumToOneFullPush_AndRaisesPushedOnce()
+        {
+            int pushes = 0;
+            Player.Pushed += _ => pushes++;
+            FloatAt(new Vector3(-1.3f, 50.2f, 0.6f));
+            float max = Player.Microgravity.MaxPushSpeed;
+
+            // Back wall pushing forward and side wall pushing right, both full: the diagonal sum is capped to one full push.
+            Done(Player.TryPushOffPair(back, BackPoint, Vector3.forward, 1f, left, SidePoint, Vector3.right, 1f));
+            Assert.That(pushes, Is.EqualTo(1), "one Pushed event");
+            Vector3 diagonal = new Vector3(1f, 0f, 1f).normalized * max;
+            Assert.That(Vector3.Distance(Player.FloatVelocity, diagonal), Is.LessThan(1e-5f));
+
+            MicrogravityLocomotion math = Player.Microgravity;
+            Assert.That(Vector3.Distance(math.PushPair(Vector3.zero, Vector3.forward, 0.35f, Vector3.forward, 0.35f), new Vector3(0f, 0f, 0.7f * max)),
+                Is.LessThan(1e-5f), "two partial hands are stronger than one");
+            Assert.That(Vector3.Distance(math.PushPair(Vector3.zero, Vector3.forward, 1f, Vector3.forward, 1f), new Vector3(0f, 0f, max)),
+                Is.LessThan(1e-5f), "never stronger than one full push");
+            Assert.That(math.PushPair(new Vector3(0f, 0f, 1.2f), Vector3.forward, 1f, Vector3.forward, 1f).magnitude,
+                Is.EqualTo(math.MaxSpeed).Within(1e-5f), "the total speed stays capped");
+            Assert.That(Vector3.Distance(math.PushPair(Vector3.zero, Vector3.forward, 1f, Vector3.back, 1f), Vector3.zero), Is.LessThan(1e-5f),
+                "opposite hands cancel");
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator APairPush_ReleasesAHeldHandholdOnce_OnlyWhenItSucceeds()
+        {
+            int released = 0;
+            Player.Released += _ => released++;
+            FloatAt(new Vector3(-1.3f, 50.2f, 1.5f));
+            Done(Player.TryGrab(handhold, new Vector3(-1.9f, 51.6f, 1.5f)));
+            float eye = Position.y + Eye;
+            Vector3 a = new Vector3(-2f, eye, 1.4f);
+            Vector3 b = new Vector3(-2f, eye, 1.6f);
+
+            Assert.That(Player.TryPushOffPair(left, a, Vector3.right, 1f, left, b, Vector3.left, 1f), Is.EqualTo(FloatActionResult.IntoSurface));
+            Assert.That(Player.HeldHandhold, Is.SameAs(handhold), "a refused pair keeps the grip");
+            Assert.That(released, Is.Zero);
+
+            Done(Player.TryPushOffPair(left, a, Vector3.right, 1f, left, b, Vector3.right, 1f));
+            Assert.That(Player.HeldHandhold, Is.Null);
+            Assert.That(released, Is.EqualTo(1), "released once");
+            Assert.That(Vector3.Distance(Player.FloatVelocity, new Vector3(Player.Microgravity.MaxPushSpeed, 0f, 0f)), Is.LessThan(1e-5f),
+                "two full hands on one wall give one full push");
+            yield return null;
+        }
+
         [UnityTest]
         public IEnumerator ADrift_KeepsItsSpeed_StopsInelasticallyAtAWall_AndNeverTunnelsWithLongFrames()
         {
