@@ -1,0 +1,76 @@
+{
+ "fbx": "A7_SuitV04_EVA.fbx",
+ "bones": 164,
+ "actions": [
+  "BODY_FloatNeutral",
+  "BODY_SeatedFit",
+  "BODY_StandRelaxed"
+ ],
+ "objects": {
+  "A7_EVA_TorsoLegs": {
+   "verts": 8346,
+   "tris": 15790,
+   "materials": [
+    "MAT_V04E_Skin",
+    "MAT_V04E_FlexGrey",
+    "MAT_V04E_Suit",
+    "MAT_V04E_Red",
+    "MAT_V04E_Panel",
+    "MAT_V04E_Titanium",
+    "MAT_V04E_Webbing",
+    "MAT_V04E_Hard",
+    "MAT_V04E_BootRubber",
+    "MAT_V04E_DarkPanel",
+    "MAT_V04E_Display",
+    "MAT_V04E_Yellow"
+   ],
+   "groups": 139
+  },
+  "A7_EVA_Arm_L": {
+   "verts": 3139,
+   "tris": 6158,
+   "materials": [
+    "MAT_V04E_Glove",
+    "MAT_V04E_FlexGrey",
+    "MAT_V04E_Suit",
+    "MAT_V04E_Red",
+    "MAT_V04E_Panel",
+    "MAT_V04E_Titanium",
+    "MAT_V04E_Webbing"
+   ],
+   "groups": 139
+  },
+  "A7_EVA_Arm_R": {
+   "verts": 3137,
+   "tris": 6156,
+   "materials": [
+    "MAT_V04E_Glove",
+    "MAT_V04E_FlexGrey",
+    "MAT_V04E_Suit",
+    "MAT_V04E_Red",
+    "MAT_V04E_Panel",
+    "MAT_V04E_Titanium",
+    "MAT_V04E_Webbing"
+   ],
+   "groups": 139
+  },
+  "A7_EVA_Head": {
+   "verts": 12011,
+   "tris": 23424,
+   "materials": [
+    "MAT_V04E_Skin",
+    "MAT_V04E_Hair",
+    "MAT_V04E_Eyes",
+    "MAT_V04E_Titanium",
+    "MAT_V04E_Panel",
+    "MAT_V04E_Glass",
+    "MAT_V04E_Visor",
+    "MAT_V04E_Hard",
+    "MAT_V04E_Red",
+    "MAT_V04E_Lamp"
+   ],
+   "groups": 139
+  }
+ },
+ "total_tris": 51528
+}

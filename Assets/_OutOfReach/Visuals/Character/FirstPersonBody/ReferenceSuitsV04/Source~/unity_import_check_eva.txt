@@ -1,0 +1,9 @@
+rig A7_ContinuousBody_Rig lossyScale (1.0000, 1.0000, 1.0000) bone transforms under rig 164
+OK   A7_EVA_TorsoLegs verts 12720 tris 15766 bones 164 submeshes 12 mats MAT_V04E_Skin,MAT_V04E_Suit,MAT_V04E_Red,MAT_V04E_Panel,MAT_V04E_FlexGrey,MAT_V04E_Webbing,MAT_V04E_Hard,MAT_V04E_BootRubber,MAT_V04E_DarkPanel,MAT_V04E_Display,MAT_V04E_Yellow,MAT_V04E_Titanium bakedBoundsMin (-0.303, -0.014, -0.342) max (0.303, 1.910, 0.319)
+OK   A7_EVA_Arm_L verts 3402 tris 6158 bones 164 submeshes 7 mats MAT_V04E_Glove,MAT_V04E_FlexGrey,MAT_V04E_Suit,MAT_V04E_Red,MAT_V04E_Panel,MAT_V04E_Titanium,MAT_V04E_Webbing bakedBoundsMin (-0.531, 1.003, -0.072) max (-0.096, 1.519, 0.345)
+OK   A7_EVA_Arm_R verts 3400 tris 6156 bones 164 submeshes 7 mats MAT_V04E_Glove,MAT_V04E_FlexGrey,MAT_V04E_Suit,MAT_V04E_Red,MAT_V04E_Panel,MAT_V04E_Titanium,MAT_V04E_Webbing bakedBoundsMin (0.096, 1.003, -0.072) max (0.531, 1.519, 0.345)
+OK   A7_EVA_Head verts 13264 tris 23424 bones 164 submeshes 10 mats MAT_V04E_Skin,MAT_V04E_Hair,MAT_V04E_Eyes,MAT_V04E_Titanium,MAT_V04E_Panel,MAT_V04E_Glass,MAT_V04E_Visor,MAT_V04E_Hard,MAT_V04E_Red,MAT_V04E_Lamp bakedBoundsMin (-0.218, 1.509, -0.132) max (0.218, 1.841, 0.252)
+OK   clip BODY_StandRelaxed length 1,000
+OK   clip BODY_FloatNeutral length 1,000
+OK   clip BODY_SeatedFit length 1,000
+SUITV04 EVA IMPORT CHECK PASS

@@ -99,6 +99,22 @@
   "system_assets/skins/young_caucasian_male/young_lightskinned_male_diffuse.png": {
    "sha256": "862a26e335e958b70534cb5f0d7c47ef30ab148a56c42b3e9da969cf76f12963",
    "bytes": 3693828
+  },
+  "system_assets/clothes/shoes03/shoes03.obj": {
+   "sha256": "b03f46c0b5cdc38e4472e4747ba267f101e1e8ae88656180b1334986646108b2",
+   "bytes": 177420
+  },
+  "system_assets/clothes/shoes03/shoes03.mhclo": {
+   "sha256": "5a388e18e6759db99bcc8c7d062a2b3bed02eecd32705731ba90063a6e35265b",
+   "bytes": 152873
+  },
+  "system_assets/clothes/shoes03/shoes03.mhw": {
+   "sha256": "5ea7e817c2db05da540a0d4a71c3fadb422b3560857b8b73873df39ad3e49b5f",
+   "bytes": 410069
   }
+ },
+ "used_by": {
+  "WORK": "base, weights, male targets, casualsuit02, shoes02, short02, high-poly eyes, young caucasian male skin",
+  "EVA": "base, weights, male targets, casualsuit02 (inflated), shoes03 (boot shell), short02, high-poly eyes, young caucasian male skin"
  }
 }
