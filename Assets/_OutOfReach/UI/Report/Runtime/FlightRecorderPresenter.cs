@@ -411,7 +411,7 @@ namespace OutOfReach.Presentation.UI.Report
             artPage.Add(FlightRecorderElements.Text("Apollo 11 launch commentary (public domain). Two excerpts, radio band-limited; the mission name is omitted. No NASA endorsement is implied.", "recorder-source-description"));
             artPage.Add(SourceLink("NASA launch commentary · source", "https://www.nasa.gov/wp-content/uploads/2015/01/590320main_ringtone_apollo11_countdown.mp3", true));
             artPage.Add(FlightRecorderElements.Text("Space sky — NASA/Goddard Space Flight Center Scientific Visualization Studio", "recorder-source-deck"));
-            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020; Gaia DR2: ESA/Gaia/DPAC. Unmodified; public-domain reuse per NASA SVS.", "recorder-source-description"));
+            artPage.Add(FlightRecorderElements.Text("Deep Star Maps 2020. Gaia DR2: ESA/Gaia/DPAC. The game adjusts the skybox exposure for presentation.", "recorder-source-description"));
             artPage.Add(SourceLink("NASA SVS · Deep Star Maps 2020", "https://svs.gsfc.nasa.gov/4851/", true));
             artPage.Add(FlightRecorderElements.Text("Earth archive — NASA EPIC Team / NOAA DSCOVR", "recorder-source-deck"));
             artPage.Add(FlightRecorderElements.Text("Natural-color Earth image observed 11 Nov 2026 at 11:01:17 UTC.", "recorder-source-description"));
