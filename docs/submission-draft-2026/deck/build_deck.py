@@ -4,9 +4,12 @@ Run from anywhere:  python docs/submission-draft-2026/deck/build_deck.py
 Needs: python-pptx, Pillow, and the Git LFS captures listed in CAPTURES
 (git lfs pull --include "docs/verification/**,docs/playtest-review/**").
 
-Every picture in the deck is a real in-game capture from docs/verification. No AI-generated image is used,
-so no SI watermark is needed on the pictures; the footer still says the project is AI-assisted.
+Every picture in the deck is a real in-game capture: docs/verification (earlier builds) and deck/captures
+(frames of the native full-mission QA run on the release candidate cf2224d). No AI-generated image is
+used, so no SI watermark is needed on the pictures; the footer still says the project is AI-assisted.
 Swap a capture by editing CAPTURES (e.g. after the final build is recorded).
+
+The deck has exactly 7 slides including the title (the Space Apps limit). Do not add a slide.
 """
 from __future__ import annotations
 
@@ -27,19 +30,25 @@ ROOT = HERE.parents[2]
 OUT = HERE / "OUT-OF-REACH_SpaceApps2026_deck.pptx"
 TMP = HERE / ".build"  # ignored scratch for cropped JPEGs (see .gitignore)
 
-# Set True only if the NASA radio countdown ships in the submitted build (lane audio-opening).
-COUNTDOWN_SHIPPED = False
+# Switches for the final SHA (see form-fields.md "Switch sentences for the final SHA").
+# The NASA radio countdown is in cf2224d (Audio/LaunchRadio, bound in MissionAudioPresenter.prefab).
+COUNTDOWN_SHIPPED = True
+# Set True only if the visual routine montage (R18) is in the submitted build; cf2224d shows the routine card.
+ROUTINE_MONTAGE_SHIPPED = False
+# Test counts of the release candidate (8665183 = cf2224d code, #7 6900862397). Update for the final SHA.
+TESTS_EDITMODE, TESTS_PLAYMODE = 470, 151
 
+_DECK = "docs/submission-draft-2026/deck/captures/"
 CAPTURES = {
     "title": "docs/verification/i06-land-bootstrap-native-v04/run/07-actual-aurora-return.png",
     "cargo": "docs/verification/i06-hud-cargo-20261115/00-cargo-placards.png",
-    "launch": "docs/verification/i06-land-bootstrap-native-v04/run/06b-actual-land-exterior-ascent.png",
-    "eva": "docs/verification/i06-antenna-sleeve-native-v06/03-actual-eva-repaired-antenna.png",
-    "day1": "docs/verification/i06-rest-wake-cinematic-20261115/02a-curved-rest-blink.png",
+    "launch": _DECK + "cf2224d-06-liftoff.png",              # native QA run on cf2224d
+    "eva": _DECK + "cf2224d-20-antenna-work.png",            # native QA run on cf2224d
+    "rescue": _DECK + "cf2224d-60-r42-hard-dock.png",        # native QA run on cf2224d (R42 ending)
     "epic": "docs/verification/i06-earth-terminal-native-v05/Evidence/01-actual-v2-focused.png",
     "death": "docs/verification/i06-player-feedback-20261115/death-verified-1280.png",
     "sources": "docs/verification/i06-player-feedback-20261115/sources-v03-native.png",
-    "hud": "docs/verification/i06-rest-wake-cinematic-20261115/04-fully-awake.png",
+    "hud": _DECK + "cf2224d-27-meal-in-progress.png",        # native QA run on cf2224d
 }
 
 # Palette: graphite / amber / cyan (+ red only for danger), matching the game's UI language.
@@ -273,25 +282,25 @@ def slide_loop(prs):
     heading(s, "One mission, from the launch pad to day 30")
     steps = [
         ("PLAN", "Carry crates within the limits in 60 s"),
-        ("LAUNCH", "Board, strap in, lift off from LC-7"),
+        ("LAUNCH", "Strap in; lift off from LC-7 to a real NASA countdown"),
         ("ACCIDENT", "Debris strike: power 20 %, life support and antenna down"),
         ("REPAIR", "Spend parts and kWh; a refused action costs nothing"),
-        ("SPACEWALK", "Suit, airlock, tether, antenna; 3 h of suit oxygen"),
+        ("SPACEWALK", "Suit, airlock, tether rope, antenna; 3 h of suit oxygen"),
         ("CALL EARTH", "One distress call; the reply waits for light"),
         ("SURVIVE", "Days 1–30: meals, sleep, decisions, rescue window"),
-        ("RECORD", "Why you lived or died; replay a new design"),
+        ("OUTCOME", "A rescue craft docks, or the loss names its cause; then the record"),
     ]
     x0, gap = 0.6, 0.09
     cw = (12.13 - gap * 7) / 8
     for i, (name, desc) in enumerate(steps):
         x = x0 + i * (cw + gap)
-        col = RED if name == "ACCIDENT" else (CYAN if name in ("CALL EARTH", "RECORD") else AMBER)
+        col = RED if name == "ACCIDENT" else (CYAN if name in ("CALL EARTH", "OUTCOME") else AMBER)
         rect(s, x, 1.85, cw, 0.05, fill=col)
         text(s, x, 1.97, cw, 0.32, [[R(f"{i + 1}  ", 11, col, HEAD), R(name, 12.5, TXT, BODY_SEMI, spc=0.5)]])
         text(s, x, 2.34, cw - 0.05, 1.0, [([R(desc, 10.5, TXT2)], None, 0, 1.05)])
-    shots = [("launch", "Vertical launch from launch complex LC-7", (0.5, 0.42)),
+    shots = [("launch", "Vertical launch from launch complex LC-7", (0.5, 0.5)),
              ("eva", "Spacewalk: the antenna repaired by hand", (0.5, 0.5)),
-             ("day1", "Day 1: rest and the survival chapters begin", (0.5, 0.5))]
+             ("rescue", "Day 30: the rescue craft hard-docks on the aft hull camera", (0.5, 0.5))]
     pw = (12.13 - 2 * 0.2) / 3
     for i, (key, cap, focus) in enumerate(shots):
         x = 0.6 + i * (pw + 0.2)
@@ -307,11 +316,12 @@ def slide_data(prs):
     blocks = [
         ("31 min 59 s", "earliest reply from Earth on mission day 1",
          "NASA/JPL Horizons: Earth is 197,707,976 km away → 10 min 59 s of light time each way, "
-         "+10 min processing (game assumption). The day-14 message obeys the same delay."),
+         "+10 min processing (game assumption). Call on day 9 and it is still over 30 minutes. "
+         "The day-14 message obeys the same delay."),
         ("0.84 · 1.01 · 2.5 · 1.83 kg", "oxygen used · CO₂ produced · water · food per crew-day",
          "NASA Life Support Baseline Values (BVAD, NASA/TP-2015-218570/REV2) drive every reserve, "
          "the cabin CO₂ and the spacewalk costs."),
-        ("8.5 h", "the longest sleep, in a secured sleeping bag",
+        ("8.5 h", "the longest sleep, strapped into the crew berth",
          "NASA crew practice for sleep and for ready-to-eat, rehydratable and thermostabilized food "
          "shapes the meals and the rest rules."),
     ]
@@ -325,11 +335,15 @@ def slide_data(prs):
     text(s, 7.05, 5.13, 5.68, 0.62,
          [([R("Earth on the cockpit terminal is a real NASA EPIC / NOAA DSCOVR image, observed 11 Nov 2026 "
               "and shown with its age on the mission clock — never as a live feed.", 11, TXT2)], None, 0, 1.06)])
-    rect(s, 7.05, 5.86, 5.68, 0.92, fill=PANEL)
-    text(s, 7.22, 5.94, 5.4, 0.8,
+    rect(s, 7.05, 5.83, 5.68, 1.0, fill=PANEL)
+    also = ("Space sky: NASA SVS Deep Star Maps (ESA Gaia DR2)  ·  Mars: NASA/JPL-Caltech Viking map  ·  "
+            "Slovakia inset: NASA GIBS, MODIS Terra")
+    if COUNTDOWN_SHIPPED:
+        also += "  ·  Launch radio: NASA audio, Apollo 11 commentary"
+    also += "  ·  Development: NASA GMAT star catalogue"
+    text(s, 7.22, 5.89, 5.4, 0.9,
          [([R("ALSO FROM NASA  ", 9, AMBER, BODY_SEMI, spc=1.2)], None, 2),
-          ([R("Space sky: NASA SVS Deep Star Maps (ESA Gaia DR2)  ·  Mars: NASA/JPL-Caltech Viking map  ·  "
-              "Development: NASA GMAT star catalogue (a challenge resource)", 10.5, TXT2)], None, 0, 1.05)])
+          ([R(also, 10, TXT2)], None, 0, 1.04)])
 
 
 def slide_learn(prs):
@@ -343,8 +357,9 @@ def slide_learn(prs):
         ("Help is never instant.", "No answer can arrive faster than light, both ways. Your reserves drain while you wait."),
         ("Spacewalks cost.", "2 h 20 min of preparation, purge oxygen, airlock losses and a 3-hour suit supply. "
                              "A solo spacewalk is itself an emergency."),
-        ("Time is a consumable.", "Ordinary days pass as a montage that spends real food, water, oxygen and power, "
-                                  "and stops at the first danger."),
+        ("Time is a consumable.", ("Ordinary days pass as a montage" if ROUTINE_MONTAGE_SHIPPED
+                                   else "Ordinary days pass in a compressed routine")
+                                  + " that spends real food, water, oxygen and power, and stops at the first danger."),
     ]
     y = 1.9
     for head, body in lessons:
@@ -368,8 +383,8 @@ def slide_built(prs):
         ("One authority.", "One mission clock and one ledger in real units (kg, L, kWh, W, ppm, parts); "
                            "spending is all-or-nothing and the visuals only show committed state."),
         ("Data you can check.", "The NASA/JPL snapshot ships offline and is verified by SHA-256 at mission start."),
-        ("Tested.", "Over 370 automated EditMode and 100 PlayMode tests, scripted full-mission runs, "
-                    "native Unity captures and human playtests throughout the hackathon."),
+        ("Tested.", f"{TESTS_EDITMODE} EditMode and {TESTS_PLAYMODE} PlayMode tests pass on the release candidate, "
+                    "plus scripted full-mission runs, native Unity captures and human playtests."),
         ("Honest fiction.", "AURORA-7, the rescue, prices and time compression are labelled. No NASA logos."),
     ]
     y = 1.86
@@ -378,7 +393,8 @@ def slide_built(prs):
         y += 0.8
     picture(s, "hud", 7.3, 1.86, 5.43, 3.05, focus=(0.5, 0.5))
     text(s, 7.3, 4.97, 5.43, 0.45,
-         [([R("Live reserves on the HUD — the same numbers the simulation spends.", 11, TXT2)], None, 0, 1.05)])
+         [([R("Day 1: warming a ration pouch. The HUD reserves are the same numbers the simulation spends.",
+              11, TXT2)], None, 0, 1.05)])
     rect(s, 0.6, 5.5, 12.13, 1.38, fill=PANEL)
     text(s, 0.82, 5.6, 6, 0.28, [[R("TEAM POLISH ALEX GOATS", 9.5, CYAN, BODY_SEMI, spc=2)]])
     members = [
@@ -411,22 +427,24 @@ def slide_next(prs):
         text(s, 0.92, y, 5.2, 0.9, [([R(t, 14.5, TXT)], None, 0, 1.08)])
         y += 0.98
     rect(s, 6.55, 1.88, 6.18, 4.95, fill=PANEL)
-    nasa_media = ("NASA/JPL Horizons · NASA BVAD · NASA EPIC Team / NOAA DSCOVR · NASA/GSFC SVS Deep Star Maps "
-                  "(ESA/Gaia/DPAC) · NASA/JPL-Caltech Viking Mars map")
+    nasa_media = ("NASA/JPL Horizons · NASA BVAD · NASA EPIC Team / NOAA DSCOVR · NASA GIBS / ESDIS (MODIS Terra) · "
+                  "NASA/GSFC SVS Deep Star Maps (ESA/Gaia/DPAC) · NASA/JPL-Caltech Viking Mars map")
     if COUNTDOWN_SHIPPED:
-        nasa_media += " · NASA audio (launch countdown)"
+        nasa_media += " · NASA audio (Apollo 11 launch commentary)"
     rows = [
-        ("MUSIC", "“Titan” and “Cobalt” by Scott Buckley (scottbuckley.com.au), CC BY 4.0, edited excerpts."),
+        ("MUSIC", "“Titan” and “Cobalt” by Scott Buckley (scottbuckley.com.au), CC BY 4.0, adapted excerpts. "
+                  "Ending themes and score cues: original."),
         ("NASA DATA AND MEDIA", nasa_media + ". No endorsement implied."),
         ("ASSETS", "Poly Haven, ambientCG and MakeHuman (CC0). Fonts: Barlow Condensed, Source Sans 3, Inter "
                    "(SIL OFL 1.1), DejaVu Sans Mono."),
-        ("AI USE", "Idea, story and design decisions: the team. Code, procedural models and textures: written with "
-                   "AI coding assistants (Claude Code, OpenAI Codex) under our direction. Dialogue: synthetic voices, "
-                   "Google Gemini text-to-speech. No AI-generated pictures in this deck."),
+        ("AI USE", "Idea, story and design decisions: the team. Code, procedural models and textures, original score "
+                   "cues and sound effects: written with AI coding assistants (Claude Code, OpenAI Codex) under our "
+                   "direction. All dialogue: AI-generated synthetic voices, Google Gemini text-to-speech. "
+                   "No AI-generated pictures in this deck."),
         ("FICTION", "AURORA-7, LC-7, the crew and the rescue are fictional. No NASA logos or insignia."),
     ]
-    heights = {"MUSIC": 0.78, "NASA DATA AND MEDIA": 1.12, "ASSETS": 0.95, "AI USE": 1.2, "FICTION": 0.7}
-    y = 2.06
+    heights = {"MUSIC": 0.8, "NASA DATA AND MEDIA": 1.14, "ASSETS": 0.82, "AI USE": 1.36, "FICTION": 0.62}
+    y = 2.02
     for head, body in rows:
         text(s, 6.78, y, 5.75, 0.26, [[R(head, 9, AMBER, BODY_SEMI, spc=1.5)]])
         text(s, 6.78, y + 0.26, 5.75, heights[head] - 0.26, [([R(body, 10.5, TXT2)], None, 0, 1.05)])

@@ -1,5 +1,7 @@
 # Demo video — 30 seconds, script and exact shot list
 
+> **STATUS 15 Nov 2026, 22:00 CET: NO VIDEO IS APPROVED.** Apoliak has not approved any cut; nothing is uploaded, linked or selected, and the hand-off of 6900216776 was withdrawn (#7 6900327551). The demo is Apoliak's decision at 23:00 CET: a video of 30 s or less **or** the 7-slide deck ([form-fields.md](form-fields.md) §3). This file is an **older script** (written for `claude/integration`, before the rescue ending, the NASA countdown and the berth sleep); the paragraph below about the `demo-video` session is history, not a plan. Use it only as a checklist of the rules if a video is made after all.
+
 **DRAFT.** Nothing was recorded or uploaded here.
 
 **Owner of the final video: the `demo-video` session** (claim #7 6895463698). It captures real footage from the frozen `claude/integration` build automatically (Unity batch mode, virtual input, nobody on camera), cuts it with ffmpeg and burned-in English captions, and delivers the MP4 outside the repo (`C:\Users\alexp\NASA\submission-video\`) around 22:00 CET. **Its shot list and caption text are authoritative**; the team only uploads it. This file keeps the official rules, the YouTube description and metadata, the upload checks, and a draft shot list that is the fallback if the video has to be recorded by hand.
