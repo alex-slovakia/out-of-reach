@@ -831,6 +831,8 @@ namespace OutOfReach.Presentation.Hands
         public const float ToolForearmMetres = .32f;
         /// <summary>How far the padded upper sleeve may lengthen when the worksite is just beyond the fixed 350/320 mm reach.</summary>
         public const float ToolUpperSleeveStretchMetres = .06f;
+        /// <summary>Keeps the lengthened sleeve slightly bent at the elbow; reserved inside the reach guard as well.</summary>
+        private const float ToolSleeveBendMarginMetres = .004f;
         public Transform ToolSleeveShoulder => toolSleeveShoulder;
         public Vector3 ToolElbowWorldPosition => toolArm != null && toolArm.Joint
             ? toolArm.Joint.TransformPoint(new Vector3(0f, 0f, -ToolForearmMetres)) : Vector3.zero;
@@ -957,7 +959,9 @@ namespace OutOfReach.Presentation.Hands
                 if (clock.IsPaused && hasToolSample && Vector3.Distance(previousToolShoulder, actualShoulder) > .00002f) return RejectToolHold("Actual shoulder changed during pause.");
                 Vector3 axis = wristPosition - actualShoulder;
                 float distance = axis.magnitude;
-                if (distance < .10f || distance >= ToolUpperSleeveMetres + ToolForearmMetres + ToolUpperSleeveStretchMetres) return RejectToolHold("Fixed350/320 reach rejected: " + distance + "");
+                // The 4 mm elbow-bend margin below is reserved here too, so the solved sleeve never exceeds the stretch
+                // limit the sleeve visual accepts (Codex, #7 6901850689): the practical cut-off is 726 mm.
+                if (distance < .10f || distance >= ToolUpperSleeveMetres + ToolForearmMetres + ToolUpperSleeveStretchMetres - ToolSleeveBendMarginMetres) return RejectToolHold("Fixed350/320 reach rejected: " + distance + "");
                 axis /= distance;
                 // A predominantly downward elbow avoids the old outward-heavy pole's 84-degree initial wrist twist.
                 // Original fixed lengths, grip and 80-degree wrist guard are unchanged.
@@ -967,7 +971,7 @@ namespace OutOfReach.Presentation.Hands
                 // 2.6 mm beyond the fixed 670 mm reach in the middle of the work clip, which dropped the tool half way
                 // through the repair. Inside the fixed reach nothing changes; just beyond it only the padded upper
                 // sleeve lengthens (by at most ToolUpperSleeveStretchMetres), never the hand or its 320 mm forearm.
-                float upperSleeve = Mathf.Max(ToolUpperSleeveMetres, distance - ToolForearmMetres + .004f);
+                float upperSleeve = Mathf.Max(ToolUpperSleeveMetres, distance - ToolForearmMetres + ToolSleeveBendMarginMetres);
                 float along = (upperSleeve * upperSleeve - ToolForearmMetres * ToolForearmMetres
                     + distance * distance) / (2f * distance);
                 float heightSquared = upperSleeve * upperSleeve - along * along;
