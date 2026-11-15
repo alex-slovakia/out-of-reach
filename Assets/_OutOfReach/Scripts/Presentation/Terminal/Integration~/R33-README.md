@@ -7,4 +7,7 @@ The presenter change works on its own. With `staticImageMode` on (prefab default
     git apply "Assets/_OutOfReach/Scripts/Presentation/Terminal/Integration~/R33-I06EarthTerminalBindings-static.patch"
 
 Caller impact: none. The patch reads only the new `PhysicalEarthTerminalPresenter.IsStaticImage` property.
+Credit lines for the credits/about screen are proposed in `R33-credits-proposal.md`. They are not applied.
+Held for the owner: do not apply this patch or the credit lines without the integrator.
+
 Rollback: set `staticImageMode` to false on the MissionTerminal prefab presenter. That restores the EPIC globe path unchanged.

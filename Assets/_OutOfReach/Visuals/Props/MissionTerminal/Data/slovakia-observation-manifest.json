@@ -43,8 +43,16 @@
   },
   "crop": {
     "crs": "EPSG:4326 (plate carree, lat/lon grid)",
-    "bbox_lat_lon": { "south": 46.9, "west": 16.3, "north": 50.45, "east": 23.1 },
-    "centre_lat_lon": [48.675, 19.7],
+    "bbox_lat_lon": {
+      "south": 46.9,
+      "west": 16.3,
+      "north": 50.45,
+      "east": 23.1
+    },
+    "centre_lat_lon": [
+      48.675,
+      19.7
+    ],
     "pixel_aspect_note": "Longitude spacing 0.0053125 deg/px and latitude 0.0035079 deg/px, so pixels are about square on the ground at the centre latitude (cos 48.675 = 0.660). The east-west scale error is under about 3.5 percent at the top and bottom edges.",
     "approx_ground_resolution_m_per_px": 390,
     "contents": "Slovakia with neighbouring Czechia, Poland, Ukraine, Hungary and Austria. Clouds cover the High Tatras and much of southern Poland; much of central and southern Slovakia is cloud-free."
@@ -78,6 +86,164 @@
   "verification": {
     "image_decoded_and_visually_inspected": true,
     "visual_description": "Natural-colour view of the Western Carpathians and Pannonian basin: Lake Neusiedl at lower left, Lake Balaton at bottom, the Danube bend, the brown Slovak ranges, bright cloud over the Tatras and southern Poland, and a cloud patch over north-east Hungary.",
-    "unity_import_playtest_or_terminal_render": false
+    "unity_import_playtest_or_terminal_render": false,
+    "weather_readout_decoded": true
+  },
+  "weather_readout": {
+    "status": "NASA-derived values decoded offline; shown on the terminal as fixed text. Nothing is live or simulated.",
+    "derivation_script": "Derivation~/derive_slovakia_weather.py (Python standard library; run: python -I derive_slovakia_weather.py Derivation~)",
+    "inputs": {
+      "cloud_fraction": {
+        "layer": "MODIS_Terra_Cloud_Fraction_Day",
+        "product": "MODIS Terra MOD06 cloud fraction (GIBS 2 km tiles, about 5 km science resolution)",
+        "units": "percent",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=MODIS_Terra_Cloud_Fraction_Day&STYLES=&CRS=EPSG:4326&BBOX=46.9,16.3,50.45,23.1&WIDTH=1280&HEIGHT=1012&FORMAT=image/png&TRANSPARENT=TRUE&TIME=2026-11-14",
+        "colormap_url": "https://gibs.earthdata.nasa.gov/colormaps/v1.3/MODIS_Cloud_Fraction.xml",
+        "file": "Derivation~/MODIS_Terra_Cloud_Fraction_Day.png"
+      },
+      "land_surface_temperature": {
+        "layer": "MODIS_Terra_Land_Surface_Temp_Day",
+        "product": "MODIS Terra MOD11 daytime land surface temperature (1 km)",
+        "units": "K, converted to C by subtracting 273.15",
+        "url": "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0&LAYERS=MODIS_Terra_Land_Surface_Temp_Day&STYLES=&CRS=EPSG:4326&BBOX=46.9,16.3,50.45,23.1&WIDTH=1280&HEIGHT=1012&FORMAT=image/png&TRANSPARENT=TRUE&TIME=2026-11-14",
+        "colormap_url": "https://gibs.earthdata.nasa.gov/colormaps/v1.3/MODIS_Land_Surface_Temp.xml",
+        "file": "Derivation~/MODIS_Terra_Land_Surface_Temp_Day.png",
+        "colormap_bin_width_k": 0.6
+      }
+    },
+    "method": "Each PNG pixel colour is matched exactly to its GIBS colormap entry and given the centre value of that bin. Per city, the readout is the median of a 5x5-pixel window (about 2.6 km x 2.0 km) around approximate city-centre coordinates. The whole-image cloud fraction is the area-weighted mean over the full crop. All matched: 0 unmatched pixels in either layer.",
+    "results": {
+      "points": [
+        {
+          "name": "BRATISLAVA",
+          "lat": 48.15,
+          "lon": 17.11,
+          "row": 655,
+          "col": 152,
+          "cloud_fraction_pct": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 0.0
+          },
+          "land_surface_temperature_k": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 277.7
+          },
+          "land_surface_temperature_c": 4.6
+        },
+        {
+          "name": "ZILINA",
+          "lat": 49.22,
+          "lon": 18.74,
+          "row": 350,
+          "col": 459,
+          "cloud_fraction_pct": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 0.0
+          },
+          "land_surface_temperature_k": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 274.7
+          },
+          "land_surface_temperature_c": 1.6
+        },
+        {
+          "name": "BANSKA BYSTRICA",
+          "lat": 48.74,
+          "lon": 19.15,
+          "row": 487,
+          "col": 536,
+          "cloud_fraction_pct": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 20.0
+          },
+          "land_surface_temperature_k": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 274.7
+          },
+          "land_surface_temperature_c": 1.6
+        },
+        {
+          "name": "POPRAD / TATRAS",
+          "lat": 49.06,
+          "lon": 20.3,
+          "row": 396,
+          "col": 752,
+          "cloud_fraction_pct": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 0.0
+          },
+          "land_surface_temperature_k": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 274.1
+          },
+          "land_surface_temperature_c": 1.0
+        },
+        {
+          "name": "KOSICE",
+          "lat": 48.72,
+          "lon": 21.26,
+          "row": 493,
+          "col": 933,
+          "cloud_fraction_pct": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 0.0
+          },
+          "land_surface_temperature_k": {
+            "valid": 25,
+            "of": 25,
+            "nodata": 0,
+            "unmatched": 0,
+            "median": 275.9
+          },
+          "land_surface_temperature_c": 2.8
+        }
+      ],
+      "crop": {
+        "cloud_fraction_pct": {
+          "valid_area_pct": 100.0,
+          "area_weighted_mean": 27.92,
+          "unmatched_pixels": 0
+        },
+        "land_surface_temperature_k": {
+          "valid_area_pct": 82.4,
+          "area_weighted_mean": 276.31,
+          "unmatched_pixels": 0
+        }
+      }
+    },
+    "caveats": [
+      "Land surface temperature is the radiative skin temperature of the ground, not the 2 m air temperature a forecast would quote.",
+      "Both layers are GIBS daily Terra daytime mosaics. For Slovakia they are expected to come from the same 08:15-08:20 UTC pass as the true-colour image, but per-pixel pass attribution is not verified (see the eastern-strip caveat above).",
+      "City points use approximate city-centre coordinates rounded to 0.01 degrees.",
+      "A Slovakia-wide average is not given: the GIBS Reference_Features border layers returned empty tiles at this scale, so no NASA-sourced country mask was available. The whole-image figure covers the full crop, including neighbouring countries.",
+      "No wind, precipitation, pressure or air-temperature values are shown, because no NASA source for them is committed."
+    ]
   }
 }

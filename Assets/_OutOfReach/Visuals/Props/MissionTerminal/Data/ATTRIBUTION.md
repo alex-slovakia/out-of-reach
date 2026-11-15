@@ -27,3 +27,7 @@ Crop: EPSG:4326 lat/lon grid, 46.90-50.45 N, 16.30-23.10 E, about 390 m per pixe
 Required acknowledgement: "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."
 
 This is an archived Earth-orbit observation. It is not live, not a forecast, and not taken by the fictional AURORA-7. No NASA endorsement is stated or implied. Full record: `slovakia-observation-manifest.json`.
+
+## Weather readout (R33 weather panel)
+
+The terminal's readout lists the surface temperature and cloud fraction for five Slovak cities, plus the cloud fraction for the whole image. These values were decoded from two NASA GIBS layers for 2026-11-14: `MODIS_Terra_Land_Surface_Temp_Day` (MOD11) and `MODIS_Terra_Cloud_Fraction_Day` (MOD06). The decoding uses each layer's published GIBS colormap. The input PNGs, colormaps and the script are in `Derivation~/`. Results and caveats are in `slovakia-observation-manifest.json` under `weather_readout`. Surface temperature here is ground skin temperature, not air temperature. No wind, rain or air-temperature values are shown. The same GIBS acknowledgement applies.

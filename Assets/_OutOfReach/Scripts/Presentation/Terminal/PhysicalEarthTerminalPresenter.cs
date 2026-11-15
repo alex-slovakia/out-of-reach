@@ -35,6 +35,7 @@ namespace OutOfReach.Presentation.Terminal
         [SerializeField] private TextAsset rigJson;
         [SerializeField] private Transform leftGripFrame;
         [SerializeField] private TextMesh missionLabel, observationLabel, ageLabel, statusLabel;
+        private TextMesh weatherLabel; // Found by name ("OriginalInset") in static mode; not serialized.
         [SerializeField] private Texture observationTexture;
         [SerializeField, Min(0)] private float hoverDistance = .012f;
         [SerializeField, Range(.03f,.3f)] private float pressSeconds = .11f;
@@ -48,6 +49,20 @@ namespace OutOfReach.Presentation.Terminal
         // 1280x1012 px plate carree crop, 46.90-50.45 N / 16.30-23.10 E. The panel keeps that pixel aspect on the .64x.40 m screen.
         private static readonly Vector4 StaticPanelUv = new Vector4(.025f,.245f,.515625f,.865f);
         private const string StaticStatus="ARCHIVED SATELLITE IMAGE\nNot live. Earth-orbit view,\nnot taken by AURORA-7.";
+        // Decoded offline from NASA GIBS MODIS Terra layers for 2026-11-14 by Data/Derivation~/derive_slovakia_weather.py:
+        // land surface temperature (MOD11, GIBS colormap bin centres, 5x5-px median) and MOD06 cloud fraction.
+        // Values and caveats: Data/slovakia-observation-manifest.json "weather_readout". No air temperature, wind or rain.
+        private const string StaticWeather=
+            "WEATHER READOUT  /  SAME TERRA PASS\n"+
+            "SURFACE TEMP  /  CLOUD FRACTION\n"+
+            "Bratislava         +4.6 C     0 %\n"+
+            "Zilina                +1.6 C     0 %\n"+
+            "Banska Bystrica  +1.6 C   20 %\n"+
+            "Poprad / Tatras   +1.0 C     0 %\n"+
+            "Kosice               +2.8 C     0 %\n"+
+            "Whole image cloud fraction 28 %.\n"+
+            "Ground skin temp, not air. No wind or rain data.";
+        private const string StaticWeatherPending="WEATHER READOUT\nAvailable after the Terra pass ends\n(2026-11-14 08:20 UTC).";
         private static readonly DateTime ObservationUtc = new DateTime(2026,11,11,11,1,17,DateTimeKind.Utc);
         private static readonly int ObservationId=Shader.PropertyToID("_Observation");
         private static readonly int RotationId=Shader.PropertyToID("_GlobeRotation");
@@ -350,6 +365,7 @@ namespace OutOfReach.Presentation.Terminal
                     SetLabel(observationLabel,"OBSERVED UTC\n2026-11-14 08:15-08:20");
                     SetLabel(ageLabel,"IMAGE AGE\nAwaiting mission calendar");
                     SetLabel(statusLabel,StaticStatus);
+                    SetLabel(weatherLabel,StaticWeatherPending);
                 }
             }
             catch (Exception exception)
@@ -412,7 +428,15 @@ namespace OutOfReach.Presentation.Terminal
                         label.text="46.9-50.45 N, 16.3-23.1 E. Lat/lon grid, unmodified pixels.\nTerra pass 08:15-08:20 UTC (09:15-09:20 CET). Static image.";
                         label.characterSize=.0021f;
                     }
-                    if(label.name=="OriginalInset") label.text=string.Empty;
+                    if(label.name=="Title") label.text="AURORA  /  SLOVAKIA WEATHER ARCHIVE";
+                    if(label.name=="OriginalInset")
+                    {
+                        // The EPIC inset is gone in static mode; this label becomes the NASA-derived weather readout.
+                        weatherLabel=label; label.anchor=TextAnchor.UpperLeft; label.alignment=TextAlignment.Left;
+                        label.transform.localPosition=new Vector3(.029f,-.040f,-.0004f);
+                        label.characterSize=.0019f;
+                        label.text=observationAvailable?StaticWeather:StaticWeatherPending;
+                    }
                     if(label.name=="Credit")
                     {
                         label.text="Imagery: NASA GIBS / ESDIS, MODIS Terra (LANCE NRT)\nworldview.earthdata.nasa.gov  /  2026-11-14";
@@ -450,6 +474,7 @@ namespace OutOfReach.Presentation.Terminal
                     "IMAGE AGE (FROM PASS END)\n{0}d {1:00}h {2:00}m {3:00}s",sincePass.Days,sincePass.Hours,sincePass.Minutes,sincePass.Seconds)
                     : "OBSERVATION UNAVAILABLE\nTerra pass not yet complete");
                 SetLabel(statusLabel,StaticStatus);
+                SetLabel(weatherLabel,observationAvailable?StaticWeather:StaticWeatherPending);
                 return;
             }
             observationAvailable=utc>=ObservationUtc;
