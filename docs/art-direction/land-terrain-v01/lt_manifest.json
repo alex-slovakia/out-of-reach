@@ -1,0 +1,857 @@
+{
+ "task": "LAND-TERRAIN-01",
+ "status": "original art package for root's native check; not imported into the game scene by this package",
+ "space": "Unity metres, y up, local to the prologue origin; every object's pivot is the prologue origin. FBX exported like the ship kit: bake_space_transform, -Z forward, Y up, FBX_SCALE_ALL. Import with Bake Axis Conversion ON (bakeAxisConversion 1, useFileUnits 1, useFileScale 1, globalScale 1, no cameras or lights); with it off everything lands at (-x, y, -z).",
+ "terrain": {
+  "fbx": "LT_LandTerrain.fbx",
+  "objects": {
+   "LT_TerrainInner": {
+    "triangles": 48212,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -3000.0,
+     -57.00762,
+     -2990.0
+    ],
+    "bounds_max": [
+     3000.0,
+     -10.10027,
+     3000.0
+    ],
+    "per_material": {
+     "LT_Terrain": 48212
+    }
+   },
+   "LT_TerrainFar": {
+    "triangles": 6212,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -8998.79492,
+     -57.43218,
+     -8998.79492
+    ],
+    "bounds_max": [
+     8998.79492,
+     11.95506,
+     8998.79492
+    ],
+    "per_material": {
+     "LT_TerrainFar": 6212
+    }
+   },
+   "LT_Rocks": {
+    "triangles": 9400,
+    "origin": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "bounds_min": [
+     -1343.5177,
+     -43.62445,
+     -1221.50288
+    ],
+    "bounds_max": [
+     1195.30065,
+     -28.10044,
+     1143.81035
+    ],
+    "per_material": {
+     "LT_Rock": 9400
+    }
+   }
+  },
+  "anchors": {
+   "LT_Footprint_NW": [
+    -72.0,
+    -36.6,
+    -62.0
+   ],
+   "LT_Footprint_NE": [
+    72.0,
+    -36.6,
+    -62.0
+   ],
+   "LT_Footprint_SE": [
+    72.0,
+    -36.6,
+    72.0
+   ],
+   "LT_Footprint_SW": [
+    -72.0,
+    -36.6,
+    72.0
+   ]
+  },
+  "triangles_total": 63824,
+  "verification": {
+   "blender_fbx_roundtrip": {
+    "pass": true,
+    "tolerance_m": 0.001,
+    "checks": 7,
+    "failed": 0,
+    "blender": "5.3.0"
+   },
+   "unity_6000_3_28f1_import": [
+    "root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 3 anchors 4",
+    "max world-bounds deviation 0.0004 m, max anchor deviation 0.0000 m, rotation 0 / scale 1 on every node: True",
+    "  LT_Rocks               Unity triangles   9400 (report   9400), vertices  16823, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LT_TerrainFar          Unity triangles   6212 (report   6212), vertices   3332, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "  LT_TerrainInner        Unity triangles  48212 (report  48212), vertices  24244, zero-area 0, submeshes 1, UInt16, normals True, uv0 True",
+    "triangles total: report 63824, Unity 63824",
+    "footprint edge: 16 vertices (16 unique positions), max |y + 36.6| 0.000000 m, vertices inside the footprint 0, set equals the 16 listed: True",
+    "RESULT PASS"
+   ],
+   "footprint_boundary_and_seam": {
+    "pass": true,
+    "checks": {
+     "edge_y_on_datum": true,
+     "edge_set_listed": true,
+     "edge_set_land": true,
+     "no_overlap": true,
+     "closed_inner_loop": true,
+     "seam": true,
+     "far_open_edges_only_seam_and_rim": true,
+     "rocks_clear": true,
+     "no_tiny_triangles": true
+    },
+    "results": {
+     "inner_vertices_on_footprint_edge": 16,
+     "max_abs_y_minus_datum_on_edge_m": 0.0,
+     "edge_set_equals_listed_16": true,
+     "inner_vertices_inside_footprint": 0,
+     "inner_triangles_inside_footprint": 0,
+     "inner_loop_edges": 16,
+     "inner_loop_length_m": 556.0,
+     "inner_outer_boundary_vertices": 260,
+     "far_inner_boundary_vertices": 260,
+     "far_outer_rim_vertices": 192,
+     "seam_max_distance_m": 0.0,
+     "far_outer_rim_min_radius_m": 9000.0,
+     "rock_vertices_in_footprint_or_corridors": 0,
+     "triangle_areas": {
+      "LT_Rocks": {
+       "triangles": 9400,
+       "min_area_m2": 0.0045182728208601475,
+       "below_1e-4_m2": 0
+      },
+      "LT_TerrainFar": {
+       "triangles": 6212,
+       "min_area_m2": 3463.3662109375,
+       "below_1e-4_m2": 0
+      },
+      "LT_TerrainInner": {
+       "triangles": 48212,
+       "min_area_m2": 3.0,
+       "below_1e-4_m2": 0
+      }
+     },
+     "land_fbx_edge_vertices_at_datum": 16,
+     "land_fbx_edge_vertices_by_object": {
+      "LS_FlameTrench": 4,
+      "LS_LaunchFoundation": 14
+     },
+     "edge_set_equals_land_fbx": true
+    },
+    "failures": [],
+    "listed_boundary_vertices_xz": [
+     [
+      -72.0,
+      -62.0
+     ],
+     [
+      -72.0,
+      -50.0
+     ],
+     [
+      -72.0,
+      60.0
+     ],
+     [
+      -72.0,
+      72.0
+     ],
+     [
+      -60.0,
+      -62.0
+     ],
+     [
+      -60.0,
+      72.0
+     ],
+     [
+      -4.0,
+      72.0
+     ],
+     [
+      -3.0,
+      72.0
+     ],
+     [
+      3.0,
+      72.0
+     ],
+     [
+      4.0,
+      72.0
+     ],
+     [
+      60.0,
+      -62.0
+     ],
+     [
+      60.0,
+      72.0
+     ],
+     [
+      72.0,
+      -62.0
+     ],
+     [
+      72.0,
+      -50.0
+     ],
+     [
+      72.0,
+      60.0
+     ],
+     [
+      72.0,
+      72.0
+     ]
+    ],
+    "blender": "5.3.0"
+   }
+  },
+  "kit_info": {
+   "LT_TerrainInner": {
+    "rings": 115,
+    "vertices": 24244,
+    "ring_sizes": [
+     16,
+     105,
+     109,
+     113,
+     116,
+     120,
+     123,
+     127,
+     130,
+     133,
+     136,
+     139,
+     142,
+     145,
+     148,
+     151,
+     154,
+     157,
+     159,
+     162,
+     164,
+     167,
+     169,
+     171,
+     174,
+     176,
+     178,
+     180,
+     182,
+     184,
+     186,
+     188,
+     190,
+     192,
+     194,
+     196,
+     197,
+     199,
+     201,
+     202,
+     204,
+     206,
+     207,
+     209,
+     210,
+     211,
+     213,
+     214,
+     216,
+     217,
+     218,
+     219,
+     221,
+     222,
+     223,
+     224,
+     225,
+     226,
+     227,
+     228,
+     229,
+     230,
+     231,
+     232,
+     233,
+     234,
+     235,
+     236,
+     237,
+     237,
+     238,
+     239,
+     240,
+     241,
+     241,
+     242,
+     243,
+     243,
+     244,
+     245,
+     245,
+     246,
+     247,
+     247,
+     248,
+     248,
+     249,
+     249,
+     250,
+     250,
+     251,
+     251,
+     252,
+     252,
+     253,
+     253,
+     254,
+     254,
+     255,
+     255,
+     256,
+     256,
+     256,
+     257,
+     257,
+     257,
+     258,
+     258,
+     258,
+     259,
+     259,
+     259,
+     260,
+     260,
+     260
+    ],
+    "ring_offsets_m": [
+     0.0,
+     6.0,
+     11.64,
+     17.41,
+     23.31,
+     29.34,
+     35.52,
+     41.83,
+     48.3,
+     54.91,
+     61.67,
+     68.59,
+     75.67,
+     82.91,
+     90.31,
+     97.89,
+     105.64,
+     113.57,
+     121.68,
+     129.98,
+     138.47,
+     147.16,
+     156.04,
+     165.13,
+     174.43,
+     183.94,
+     193.67,
+     203.62,
+     213.81,
+     224.23,
+     234.88,
+     245.79,
+     256.94,
+     268.35,
+     280.02,
+     291.96,
+     304.18,
+     316.67,
+     329.45,
+     342.53,
+     355.91,
+     369.6,
+     383.6,
+     397.92,
+     412.57,
+     427.56,
+     442.9,
+     458.58,
+     474.63,
+     491.05,
+     507.84,
+     525.02,
+     542.6,
+     560.58,
+     578.97,
+     597.78,
+     617.03,
+     636.73,
+     656.87,
+     677.48,
+     698.56,
+     720.13,
+     742.19,
+     764.76,
+     787.85,
+     811.47,
+     835.63,
+     860.35,
+     885.64,
+     911.51,
+     937.98,
+     965.05,
+     992.75,
+     1021.08,
+     1050.06,
+     1079.72,
+     1110.05,
+     1141.08,
+     1172.83,
+     1205.3,
+     1238.52,
+     1272.51,
+     1307.28,
+     1342.84,
+     1379.23,
+     1416.45,
+     1454.53,
+     1493.48,
+     1533.33,
+     1574.1,
+     1615.8,
+     1658.47,
+     1702.11,
+     1746.76,
+     1792.44,
+     1839.16,
+     1886.96,
+     1935.86,
+     1985.89,
+     2037.06,
+     2089.42,
+     2142.97,
+     2197.76,
+     2253.81,
+     2311.15,
+     2369.8,
+     2429.81,
+     2491.19,
+     2553.99,
+     2618.23,
+     2683.95,
+     2751.18,
+     2819.96,
+     2890.32,
+     2928.0
+    ]
+   },
+   "LT_TerrainFar": {
+    "rings": 17,
+    "vertices": 3332,
+    "ring_sizes": [
+     260,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192,
+     192
+    ],
+    "ring_radii_m": [
+     3124.8,
+     3353.2,
+     3598.2,
+     3861.1,
+     4143.2,
+     4445.9,
+     4770.8,
+     5119.4,
+     5493.5,
+     5894.9,
+     6325.6,
+     6787.8,
+     7283.8,
+     7816.0,
+     8387.2,
+     9000.0
+    ]
+   },
+   "LT_Rocks": {
+    "clusters": 62,
+    "rocks": 470
+   }
+  }
+ },
+ "materials": [
+  {
+   "name": "LT_Terrain",
+   "object": "LT_TerrainInner",
+   "unity": "URP Lit (opaque, metallic workflow). Base Map LT_Terrain_Macro (sRGB, Clamp) on UV0, tiling 1 1, colour white; Metallic 0; Smoothness 0.1; no base Normal Map. Detail Inputs: Mask none; Base Map LT_TerrainDetail_Albedo (sRGB, Repeat), scale 1; Normal Map LT_TerrainDetail_Normal (Texture Type Normal map, Repeat), scale 1; Tiling 1280 1280, Offset 0 0 (one 5 m tile).",
+   "maps": [
+    "LT_Terrain_Macro.png",
+    "LT_TerrainDetail_Albedo.png",
+    "LT_TerrainDetail_Normal.png"
+   ],
+   "detail_tiling": 1280,
+   "smoothness": 0.1,
+   "fallback": "Tiled BaseMap only: Base Map LT_TerrainTile_BaseColor (sRGB, Repeat), Tiling 400 400 (one 16 m tile), colour white; Normal Map LT_TerrainDetail_Normal, scale 0.6 (same 16 m tiling); no Detail Inputs."
+  },
+  {
+   "name": "LT_TerrainFar",
+   "object": "LT_TerrainFar",
+   "unity": "URP Lit. Base Map LT_Terrain_Macro (the same texture asset, Clamp) on UV0, tiling 1 1, colour white; Metallic 0; Smoothness 0.08; no Normal Map, no Detail Inputs. The far ring's UV0 lies in the map's outer band.",
+   "maps": [
+    "LT_Terrain_Macro.png"
+   ],
+   "smoothness": 0.08,
+   "fallback": "Base Map none, Base Color #7C7F57, Smoothness 0.08."
+  },
+  {
+   "name": "LT_Rock",
+   "object": "LT_Rocks",
+   "set": "LS_Concrete",
+   "tint": "#8C8579",
+   "tiling": 0.5,
+   "normal": 1.0,
+   "unity": "URP Lit with LAND's LS_Concrete maps (BaseColor sRGB, Normal, MODS: R metallic, G occlusion, A smoothness), Base Color #8C8579, tiling 0.5 per UV unit (UVs are world-scale, 1 UV = 1 m, so one tile is 2 m).",
+   "fallback": "Base Color #8C8579, Smoothness 0.15, no maps."
+  }
+ ],
+ "textures": {
+  "LT_Terrain_Macro.png": "2048 x 2048 sRGB, UV0, Clamp",
+  "LT_TerrainDetail_Albedo.png": "1024 x 1024 sRGB, tileable 5 m, URP Detail Albedo x2 (neutral mean linear 0.5)",
+  "LT_TerrainDetail_Normal.png": "1024 x 1024 normal map, OpenGL (+Y), tileable 5 m",
+  "LT_TerrainTile_BaseColor.png": "1024 x 1024 sRGB, tileable 16 m, fallback material only"
+ },
+ "height_field": {
+  "surface": "y = datum + h(x, z); h = M(d) * R(x, z) - 0.7 * ditch(x, z) * M24(d)",
+  "datum_y": -36.6,
+  "d": "smooth distance (polynomial smooth-min, k 24 m) to the union of the footprint and both corridors; 0 inside",
+  "M": "smootherstep((d - 6) / 64): 0 inside and within 6 m of every protected edge, 1 beyond 70 m",
+  "R": {
+   "dunes": "shore-parallel ridged value noise (cells 60 x 260 m and 30 x 100 m, domain-warped; the fine octave fades out over 350..1000 m and the field over 1400..3000 m), 4.8 m * dune(0..1) * (0.5 + 0.5 coast(x)) * hummock(0.55..1); coast = smoothstep(-1600, 2400, x)",
+   "swales": "down to -1.3 m (fbm, 190 m cells)",
+   "swells": "(1.2 + 4.3 smoothstep(200, 1300, r)) * 1.7 fbm(220 m, 2 octaves)",
+   "rolling": "a(r) * (1.7 fbm(620 m, 3 octaves) + 0.22), a(r) = 1.3 + 14.7 smoothstep(300, 2500, r) - 5 smoothstep(3200, 6500, r)",
+   "far": "8 m * smoothstep(2600, 4200, r) * 1.6 fbm(2300 m, 2 octaves)",
+   "rim": "smoothstep(6600, 8800, r) * (16 + 16 vnoise(1700 m)) m",
+   "graded_inside_fence": "dunes and swales * 0.75 inside x[-200, 200] z[-200, 330]"
+  },
+  "ditches": "0.7 m deep Gaussian (sigma about 2.5 m) along x -100 (z -40..250) and z 150 (x 48..190); fades in over d 6..30 m",
+  "normals": "vertex normals = normalised (-dh/dx, 1, -dh/dz) by central differences over eps = clip(0.5 (5.5 + 0.023 r), 1, 120) m (half the local mesh spacing)",
+  "noise": "value noise, quintic interpolation, 32-bit integer lattice hash, fixed seeds; see source/lt_height.py",
+  "flat_zones": {
+   "footprint": [
+    -72.0,
+    72.0,
+    -62.0,
+    72.0
+   ],
+   "corridors": {
+    "crawlerway_facility": [
+     -55.0,
+     95.0,
+     -1020.0,
+     -50.0
+    ],
+    "plume_outlet": [
+     -35.0,
+     35.0,
+     60.0,
+     320.0
+    ]
+   },
+   "flat_apron_m": 6.0,
+   "blend_margin_m": 64.0
+  },
+  "uv0": "u = U(x), v = U(z); U(c) = 0.5 + c / 6400 for |c| <= 3000 (planar); 3000..9000 m continue into the outer 0.03125 band of the map"
+ },
+ "kept_flat": {
+  "footprint": {
+   "x": [
+    -72,
+    72
+   ],
+   "z": [
+    -62,
+    72
+   ],
+   "edge_y": -36.6
+  },
+  "crawlerway_facility_corridor": {
+   "x": [
+    -55,
+    95
+   ],
+   "z": [
+    -1020,
+    -50
+   ]
+  },
+  "plume_outlet_corridor": {
+   "x": [
+    -35,
+    35
+   ],
+   "z": [
+    60,
+    320
+   ]
+  },
+  "h_zero_within_m_of_every_edge": 6.0,
+  "blend_margin_m": 64.0,
+  "rocks_clear_of_zones_m": "10 + rock size; also 6 m off the fence line, 9 m off the pole line, 7 m off the ditches"
+ },
+ "boundary_vertices_xz": [
+  [
+   -72.0,
+   -62.0
+  ],
+  [
+   -72.0,
+   -50.0
+  ],
+  [
+   -72.0,
+   60.0
+  ],
+  [
+   -72.0,
+   72.0
+  ],
+  [
+   -60.0,
+   -62.0
+  ],
+  [
+   -60.0,
+   72.0
+  ],
+  [
+   -4.0,
+   72.0
+  ],
+  [
+   -3.0,
+   72.0
+  ],
+  [
+   3.0,
+   72.0
+  ],
+  [
+   4.0,
+   72.0
+  ],
+  [
+   60.0,
+   -62.0
+  ],
+  [
+   60.0,
+   72.0
+  ],
+  [
+   72.0,
+   -62.0
+  ],
+  [
+   72.0,
+   -50.0
+  ],
+  [
+   72.0,
+   60.0
+  ],
+  [
+   72.0,
+   72.0
+  ]
+ ],
+ "budgets": {
+  "triangles_total": 63824,
+  "triangle_limit": 80000,
+  "textures": "one 2048^2 and three 1024^2 (one of them fallback only)"
+ },
+ "excluded": "no lights, cameras, colliders, water or mountains; PV_* preview objects (LAND kit, vehicle and mast proxies, sun, cameras) exist only in the .blend",
+ "provenance": {
+  "author": "Claude Opus 5.5 (AI) for Apoliak7777's team",
+  "ai_generated": true,
+  "method": "procedural Python (NumPy, Pillow, Blender 5.3 bpy); fixed seeds",
+  "third_party": "none",
+  "branding": "none"
+ },
+ "files": {
+  "ATTRIBUTION.md": {
+   "sha256": "122f72fcaafe34e4dba865b21ba565b60d4f9d7ed9d699d8ea6a2a64047c61ca",
+   "bytes": 1138
+  },
+  "LT_LandTerrain.blend": {
+   "sha256": "95ce096cdf5acfd795399dde0cf49834af3e1b117012933a9c5a105571e7890f",
+   "bytes": 2502128
+  },
+  "LT_LandTerrain.fbx": {
+   "sha256": "a39b99f80a5060491f4d042682ceace0c22475f76ef634abf0d353112e90e286",
+   "bytes": 1986060
+  },
+  "README.md": {
+   "sha256": "590ab541c58c20c469ec12a16dc213fc0b07ac10a75e0d9131b2a730d6b2dccc",
+   "bytes": 12658
+  },
+  "lt_boundary_check.json": {
+   "sha256": "ab27bb33b938b4b5397ab822b45e47b21666eecc2f5d0c164dfb51def30a6fab",
+   "bytes": 1805
+  },
+  "lt_build_report.json": {
+   "sha256": "186375ef4d4b415712fd7712b18fa292acf2fbef8a988d07e32d6526ee86a814",
+   "bytes": 8965
+  },
+  "lt_build_roundtrip.json": {
+   "sha256": "b33287a2fe9e93c613a21327d9c70b44fe21865ba9a0da7884a1274563992e92",
+   "bytes": 1015
+  },
+  "renders/LT_aerial.png": {
+   "sha256": "d8fc515f4a5c1055df9513e8713d35e3eaf5dda794b43ba30b1ccaa3fea22592",
+   "bytes": 767119
+  },
+  "renders/LT_deck_east.png": {
+   "sha256": "487be4b0fc0b2ee11a31d9f1f0736be3b17fed0490d8423ab5257ffce43b5646",
+   "bytes": 800654
+  },
+  "renders/LT_deck_north.png": {
+   "sha256": "41ab4b1c47d97c3898d8effbed7f100198c3bbf9471a9af2b918279808c16857",
+   "bytes": 732377
+  },
+  "renders/LT_ground.png": {
+   "sha256": "974c73a6185f43d91c6765b4941974f36847618f0af427605479b2be5a8641da",
+   "bytes": 845138
+  },
+  "renders/LT_sheet.png": {
+   "sha256": "561c24d38e7c33d1afa06eab3ee83c5724a42f36cd08cd189f36102833bb9f5f",
+   "bytes": 853265
+  },
+  "renders/LT_views.json": {
+   "sha256": "b5b8d4be7e5fa27ea9d520aafd493f8c76cfe9792ab1cc5a86b7d1148d7a142b",
+   "bytes": 615
+  },
+  "source/a7_textures.py": {
+   "sha256": "6eef19853ceb38947631cef7ec403745d79b83d8c09cc4cbe6e8242311652700",
+   "bytes": 47555
+  },
+  "source/a7kit.py": {
+   "sha256": "13bd12539c53d4c7cf4ae6f03951991f7605d1bef7b5f7f47418332feb0cc86b",
+   "bytes": 22736
+  },
+  "source/build_habitat.py": {
+   "sha256": "c1057d2558f30c5d0af6171e37fad07b264877c7cd08033b4ea52f8abbdbbd26",
+   "bytes": 20395
+  },
+  "source/build_terrain.py": {
+   "sha256": "9b824f13e7a1e54d2d354fb6813ac818d9b49c34793bddf10a6f2dd9ce8fdf60",
+   "bytes": 15570
+  },
+  "source/check_terrain.py": {
+   "sha256": "e2bbf0bed527e4fe74b56536a4a4d2640da0f12302887a0eec80fbbde46b47f6",
+   "bytes": 7495
+  },
+  "source/hb_kit.py": {
+   "sha256": "e016286b7a38e3122661fb827a18bdabb9511722bef86e2d4eb46d720b495da8",
+   "bytes": 35895
+  },
+  "source/lt_height.py": {
+   "sha256": "f29da0a9b72d3c917c99b76df490797adfec856232150318bc143eea78bf7b3a",
+   "bytes": 13064
+  },
+  "source/lt_kit.py": {
+   "sha256": "6fbc1ea82293df65819f4ec31680cd9e2ac9ad4957ee6f6fb4c1debb617bf54d",
+   "bytes": 10773
+  },
+  "source/lt_materials.json": {
+   "sha256": "8b82382c21dcf8a127f517fe7fd293875b9a046f45980d5f45dd72d6627afd45",
+   "bytes": 1680
+  },
+  "source/lt_textures.py": {
+   "sha256": "2fd81a96821d91f02c65edc4c8315af58bf29f67815bc851eff898e2f61dc04d",
+   "bytes": 11201
+  },
+  "source/make_manifest.py": {
+   "sha256": "ea0c0396616641ebc51d4119ca6245c95241453da977141cf0d74977e12e2cf8",
+   "bytes": 5748
+  },
+  "source/make_sheet.py": {
+   "sha256": "d051ec3fe55346ef13aa869d34b6b739108b2134fa4204f5b74286b21a2c8cb2",
+   "bytes": 1778
+  },
+  "source/roundtrip_habitat.py": {
+   "sha256": "60f4d01282a22b575baa6dac219f2bf27eec6b775af0bbd44e006802f2a7819a",
+   "bytes": 4118
+  },
+  "textures/LT_TerrainDetail_Albedo.png": {
+   "sha256": "2e35fd1c70ad555a5fc39ad8c0cd931077ed6c13abd135a8c0c02d384e994fbc",
+   "bytes": 1026181
+  },
+  "textures/LT_TerrainDetail_Normal.png": {
+   "sha256": "43073d3ec5b6dcc59407fa9206bfada18753a34e74250112b8917b1c0f82e62b",
+   "bytes": 2373343
+  },
+  "textures/LT_TerrainTile_BaseColor.png": {
+   "sha256": "90bb04bbb2776de0b006cbc1a43bc366871a5b70ae41b99a58a0defaa865473e",
+   "bytes": 814729
+  },
+  "textures/LT_Terrain_Macro.png": {
+   "sha256": "d839ab98cf1342f6c15d02719fc7e940adc64de76bd9b73b0884960b1a158771",
+   "bytes": 3737141
+  },
+  "unity_check/LTCheck.cs": {
+   "sha256": "c3ff945a6170e1ac48b1c637f5a31174ec4fc1bbdc296f58e59a55980cfa159f",
+   "bytes": 4999
+  },
+  "unity_check/lt_check.tsv": {
+   "sha256": "5c37191fc7bf489a2e3399446162deca8c04cd23d173b0754d2a5393fcd9355b",
+   "bytes": 1192
+  },
+  "unity_check/lt_compare.py": {
+   "sha256": "37830f213691ba6ae8ec9c75c641460055d73a0aff62e304cca3ec3ec91bc2d9",
+   "bytes": 3418
+  },
+  "unity_check/lt_compare.txt": {
+   "sha256": "61e324f8a3bed60ed9735833e318843c9c06038a6e524debadf790408363a23b",
+   "bytes": 798
+  }
+ }
+}

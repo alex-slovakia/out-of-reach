@@ -1,0 +1,120 @@
+{
+ "pass": true,
+ "checks": {
+  "edge_y_on_datum": true,
+  "edge_set_listed": true,
+  "edge_set_land": true,
+  "no_overlap": true,
+  "closed_inner_loop": true,
+  "seam": true,
+  "far_open_edges_only_seam_and_rim": true,
+  "rocks_clear": true,
+  "no_tiny_triangles": true
+ },
+ "results": {
+  "inner_vertices_on_footprint_edge": 16,
+  "max_abs_y_minus_datum_on_edge_m": 0.0,
+  "edge_set_equals_listed_16": true,
+  "inner_vertices_inside_footprint": 0,
+  "inner_triangles_inside_footprint": 0,
+  "inner_loop_edges": 16,
+  "inner_loop_length_m": 556.0,
+  "inner_outer_boundary_vertices": 260,
+  "far_inner_boundary_vertices": 260,
+  "far_outer_rim_vertices": 192,
+  "seam_max_distance_m": 0.0,
+  "far_outer_rim_min_radius_m": 9000.0,
+  "rock_vertices_in_footprint_or_corridors": 0,
+  "triangle_areas": {
+   "LT_Rocks": {
+    "triangles": 9400,
+    "min_area_m2": 0.0045182728208601475,
+    "below_1e-4_m2": 0
+   },
+   "LT_TerrainFar": {
+    "triangles": 6212,
+    "min_area_m2": 3463.3662109375,
+    "below_1e-4_m2": 0
+   },
+   "LT_TerrainInner": {
+    "triangles": 48212,
+    "min_area_m2": 3.0,
+    "below_1e-4_m2": 0
+   }
+  },
+  "land_fbx_edge_vertices_at_datum": 16,
+  "land_fbx_edge_vertices_by_object": {
+   "LS_FlameTrench": 4,
+   "LS_LaunchFoundation": 14
+  },
+  "edge_set_equals_land_fbx": true
+ },
+ "failures": [],
+ "listed_boundary_vertices_xz": [
+  [
+   -72.0,
+   -62.0
+  ],
+  [
+   -72.0,
+   -50.0
+  ],
+  [
+   -72.0,
+   60.0
+  ],
+  [
+   -72.0,
+   72.0
+  ],
+  [
+   -60.0,
+   -62.0
+  ],
+  [
+   -60.0,
+   72.0
+  ],
+  [
+   -4.0,
+   72.0
+  ],
+  [
+   -3.0,
+   72.0
+  ],
+  [
+   3.0,
+   72.0
+  ],
+  [
+   4.0,
+   72.0
+  ],
+  [
+   60.0,
+   -62.0
+  ],
+  [
+   60.0,
+   72.0
+  ],
+  [
+   72.0,
+   -62.0
+  ],
+  [
+   72.0,
+   -50.0
+  ],
+  [
+   72.0,
+   60.0
+  ],
+  [
+   72.0,
+   72.0
+  ]
+ ],
+ "blender": "5.3.0"
+}

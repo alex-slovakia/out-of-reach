@@ -1,0 +1,8 @@
+root ['0.0000,0.0000,0.0000', '1.0000,1.0000,1.0000'] | meshes 3 anchors 4
+max world-bounds deviation 0.0004 m, max anchor deviation 0.0000 m, rotation 0 / scale 1 on every node: True
+  LT_Rocks               Unity triangles   9400 (report   9400), vertices  16823, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LT_TerrainFar          Unity triangles   6212 (report   6212), vertices   3332, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+  LT_TerrainInner        Unity triangles  48212 (report  48212), vertices  24244, zero-area 0, submeshes 1, UInt16, normals True, uv0 True
+triangles total: report 63824, Unity 63824
+footprint edge: 16 vertices (16 unique positions), max |y + 36.6| 0.000000 m, vertices inside the footprint 0, set equals the 16 listed: True
+RESULT PASS
