@@ -111,14 +111,12 @@ namespace OutOfReach.Presentation.Hands
                 EvaTetherArmPose pose = hands.TetherPose((EvaTetherHand)i);
                 Transform bone = i == (int)EvaTetherHand.Right ? rightShoulder : leftShoulder;
                 Vector3 shoulder = bone && bone.gameObject.activeInHierarchy ? bone.position : pose.Shoulder;
-                // Join the rendered forearm wherever it is (also during a re-grip blend): its back end is the elbow.
-                Transform forearm = Forearm((EvaTetherHand)i);
-                Vector3 elbow = forearm ? forearm.TransformPoint(0f, 0f, -AstronautHandsPresenter.ToolForearmMetres) : pose.Elbow;
+                Vector3 elbow = pose.Elbow;
                 Vector3 upper = elbow - shoulder;
                 float length = upper.magnitude;
                 // The body's shoulder sits behind the camera (standing fit), so a long reach stretches the upper sleeve;
                 // keep the arm joined up to 1.1 m rather than leaving an open forearm end in view.
-                bool show = Finite(shoulder) && Finite(elbow) && length > 0.12f && length < MaxUpperSleeveMetres;
+                bool show = hands.TetherBlend > 0.98f && Finite(shoulder) && Finite(elbow) && length > 0.12f && length < MaxUpperSleeveMetres;
                 renderers[i * 2].enabled = show;
                 renderers[(i * 2) + 1].enabled = show;
                 if (!show)
@@ -134,28 +132,6 @@ namespace OutOfReach.Presentation.Hands
                 elbows[i].SetPositionAndRotation(elbow, rotation);
                 elbows[i].localScale = Vector3.one;
             }
-        }
-
-        private readonly Transform[] forearms = new Transform[2];
-
-        /// <summary>The delivered rig's rigid forearm joint of a glove (pivot at the wrist, forearm along -Z).</summary>
-        private Transform Forearm(EvaTetherHand hand)
-        {
-            int i = (int)hand;
-            if (!forearms[i] && hands && hands.ModelRoot)
-            {
-                string name = hand == EvaTetherHand.Right ? "R_Arm" : "L_Arm";
-                foreach (Transform node in hands.ModelRoot.GetComponentsInChildren<Transform>(true))
-                {
-                    if (node.name == name)
-                    {
-                        forearms[i] = node;
-                        break;
-                    }
-                }
-            }
-
-            return forearms[i];
         }
 
         private void Hide()
