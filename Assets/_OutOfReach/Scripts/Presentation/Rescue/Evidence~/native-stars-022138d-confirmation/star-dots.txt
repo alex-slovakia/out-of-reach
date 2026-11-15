@@ -1,0 +1,22 @@
+star-like dots (isolated local maxima) | >=24/255 | >=48/255 | >=96/255 | brightest dot
+00-cabin-before-the-ending.png                             |     44 |     29 |     24 | 242
+01-window-approach-far.png                                 |     92 |     33 |      6 | 237
+02-window-braking-burn.png                                 |    108 |     40 |     10 | 239
+03-window-floodlight-near.png                              |     65 |     25 |      4 | 225
+04-window-coming-alongside.png                             |     82 |     24 |      0 |  86
+05-docking-camera-closing.png                              |    494 |    152 |      7 | 242
+06-docking-camera-contact.png                              |    329 |    109 |      6 | 242
+07-docking-camera-capture.png                              |    338 |    119 |      4 | 214
+08-docking-camera-hard-dock.png                            |    331 |    110 |      4 | 214
+09-airlock-latched-pressure.png                            |     22 |     19 |     16 | 242
+10-hatch-opening-light.png                                 |     64 |     39 |     28 | 220
+11-hatch-open-light-floods.png                             |    139 |     69 |     38 | 222
+12-fade.png                                                |    139 |     62 |     26 | 222
+13-mars-departure-existing.png                             |    325 |     96 |      1 | 227
+13b-mars-departure-saved-exposure-0.15-for-comparison.png  |      1 |      1 |      1 | 227
+14-report.png                                              |      1 |      1 |      1 | 197
+sweep-docking-camera-exposure-0.15.png                     |     11 |     11 |      8 | 242
+sweep-docking-camera-exposure-0.30.png                     |    206 |     33 |      7 | 242
+sweep-docking-camera-exposure-0.45.png                     |    463 |    143 |      8 | 242
+sweep-docking-camera-exposure-0.60.png                     |    743 |    254 |     68 | 242
+sweep-docking-camera-exposure-0.80.png                     |    935 |    406 |    166 | 242

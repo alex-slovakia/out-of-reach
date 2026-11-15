@@ -1,0 +1,50 @@
+saved Bootstrap skybox: NasaDeepSky | shader Skybox/Panoramic | exposure 0.15 | map starmap_2020_4k | asset Assets/_OutOfReach/Visuals/Environment/NasaDeepSkyV01/NasaDeepSky.mat
+8,070 | startup attempt 0: practice=True modeChosen=True control=True
+8,072 | == marine boarding W
+13,490 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+48,281 | ACTUAL MARINE TRANSFER
+48,315 | Arrival phase Intro; player at (0.00, 0.05, 0.80)
+48,315 | == SHORTCUT impact and repairs (domain)
+48,332 | domain impact: True Cockpit check complete. Impact detected.
+56,869 | domain power repair: True power distribution repaired (2 spare parts).
+56,872 | domain life-support repair: True life support repaired (2 spare parts, 1 kWh).
+57,719 | sky before the ending: NasaDeepSky exposure 0.15 | camera clear Skybox
+57,721 | == SHORTCUT Core TryEndMission(Recovered); the real ending chain follows
+57,745 | domain end Recovered: True Mission ended: Recovered.
+57,749 | sky at the first frame: NasaDeepSky (rescue ending deep view) exposure 0.150
+60,649 | 01-window-approach-far t=3,00 shot=Window caption=[RESCUE CREW · RADIO] Aurora Seven, rescue crew. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+60,649 | 01-window-approach-far sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+62,278 | 02-window-braking-burn t=4,60 shot=Window caption=[RESCUE CREW · RADIO] We have you in sight. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+62,279 | 02-window-braking-burn sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+62,378 | == pause during the ending (runtime.SetPaused, as the pause menu)
+67,809 | == ending shots
+69,307 | 03-window-floodlight-near t=9,60 shot=Window caption=[RESCUE CREW · RADIO] We're coming alongside. voice=vo24a_rescue_approach playing cam=(0.86, 2.20, -2.42) fov=56
+69,307 | 03-window-floodlight-near sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+72,152 | 04-window-coming-alongside t=12,40 shot=Window caption=[]  voice=vo24a_rescue_approach cam=(0.86, 2.20, -2.42) fov=56
+72,153 | 04-window-coming-alongside sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+77,042 | 05-docking-camera-closing t=17,20 shot=DockingCamera caption=[AFT HULL CAMERA] Docking port in view. voice=vo24a_rescue_approach cam=(4.20, 4.60, 22.60) fov=52
+77,042 | 05-docking-camera-closing sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+79,507 | 06-docking-camera-contact t=19,55 shot=DockingCamera caption=[AFT HULL CAMERA] Docking port in view. voice=vo24a_rescue_approach cam=(4.20, 4.60, 22.60) fov=52
+79,507 | 06-docking-camera-contact sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+81,559 | 07-docking-camera-capture t=21,60 shot=DockingCamera caption=[RESCUE CREW · RADIO] Capture confirmed. voice=vo24b_rescue_docked playing cam=(4.20, 4.60, 22.60) fov=52
+81,559 | 07-docking-camera-capture sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+83,410 | 08-docking-camera-hard-dock t=23,45 shot=DockingCamera caption=[RESCUE CREW · RADIO] Hard dock. voice=vo24b_rescue_docked playing cam=(4.20, 4.60, 22.60) fov=52
+83,411 | 08-docking-camera-hard-dock sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+87,184 | 09-airlock-latched-pressure t=27,20 shot=Hatch caption=[RESCUE CREW · RADIO] Stay clear while we equalize the hatch. voice=vo24b_rescue_docked playing cam=(0.00, 1.62, 17.60) fov=62
+87,184 | 09-airlock-latched-pressure sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+89,887 | 10-hatch-opening-light t=29,90 shot=Hatch caption=[RESCUE CREW · RADIO] Aurora Seven... you're not alone anymore. voice=vo24b_rescue_docked playing cam=(0.00, 1.62, 17.62) fov=62
+89,887 | 10-hatch-opening-light sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+91,896 | 11-hatch-open-light-floods t=31,90 shot=Hatch caption=[RESCUE CREW · RADIO] Aurora Seven... you're not alone anymore. voice=vo24b_rescue_docked playing cam=(0.00, 1.61, 17.72) fov=62
+91,896 | 11-hatch-open-light-floods sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+95,380 | 12-fade t=35,30 shot=Hatch caption=[SHIP STATUS] RESCUED voice=vo24b_rescue_docked cam=(0.00, 1.59, 17.93) fov=62
+95,380 | 12-fade sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+95,646 | == hand-off to MarsDeparture and the report
+97,740 | after rescue: existing presenter playing=True seq=3 caption=LATER · MARS TRANSFER
+101,743 | MarsDeparture sky=NasaDeepSky (rescue ending deep view) exposure=0.450 raised=True
+110,557 | report sky=NasaDeepSky exposure=0.15 raised=False
+110,560 | CINEMATIC 48,33 requested Impact #1
+110,560 | CINEMATIC 56,63 finished Impact #1 skipped=False
+110,561 | CINEMATIC 57,75 requested RecoveryArrival #2
+110,561 | CINEMATIC 97,73 finished RecoveryArrival #2 skipped=False
+110,562 | CINEMATIC 97,73 requested MarsDeparture #3
+110,562 | CINEMATIC 107,73 finished MarsDeparture #3 skipped=False
