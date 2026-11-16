@@ -1,0 +1,121 @@
+GPU NVIDIA GeForce RTX 3070 | Direct3D12
+11.229 | == practice
+12.169 | == SHORTCUT teleport to the cockpit console, real E
+12.752 | console ray: cockpit-console prompt='Begin mission: 546 of 600 kg, 720 of 800 credits' can=True
+12.792 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+12.879 | console E: interactions 1 ok=True AURORA-7 launched with 7 equipment line(s).
+12.962 | == departure (hold Space to skip)
+14.632 | ACTUAL MARINE TRANSFER
+15.375 | Arrival phase Intro; floating True survival active False
+15.376 | == SHORTCUT domain commands until the ration is allowed
+15.378 | SHORTCUT start phase=Intro survival=False
+15.445 | domain impact: True Cockpit check complete. Impact detected.
+15.609 | == SHORTCUT teleport to the galley aisle
+16.558 | At galley: feet=(-1.08, 0.02, 14.40) eye=(-1.08, 1.67, 14.40) floating=True body visible=True eva=False arms=Both pose=Floating
+17.397 | == meal 1 stepped
+17.511 | Prompt before E: 'Prepare and eat the first packaged meal: 0.4575 kg' can=True target=Gameplay target - survival-ration
+17.532 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+17.533 | INTERACTION True Meal started: thermostabilised, warmed, 8.8 s
+17.579 | meal 1 Warmed timeline take 1.40 prepare 2.60 open 1.00 eat 2.80 stow 1.00 commit 5.00 total 8.80 labelCheck False
+18.047 | 01-00-take-30-Warmed: t=0.42 stage=Take pouch=(-1.670, 1.690, 14.395) visible=True opened=False hand=True reachShort=227mm eye-pouch=0.59 camPitch=-5.10
+18.610 | 01-01-take-50-Warmed: t=0.70 stage=Take pouch=(-1.475, 1.626, 14.405) visible=True opened=False hand=True reachShort=208mm eye-pouch=0.40 camPitch=-5.10
+19.313 | 01-02-take-80-Warmed: t=1.12 stage=Take pouch=(-1.462, 1.624, 14.430) visible=True opened=False hand=True reachShort=45mm eye-pouch=0.39 camPitch=-5.10
+19.810 | MEAL STATUS Warming the thermostabilised pouch in the food warmer
+21.170 | 01-03-prepare-50-Warmed: t=2.70 stage=Prepare pouch=(-1.433, 1.521, 14.495) visible=True opened=False hand=True reachShort=22mm eye-pouch=0.40 camPitch=-5.10
+22.203 | 01-04-prepare-80-Warmed: t=3.48 stage=Prepare pouch=(-1.440, 1.527, 14.494) visible=True opened=False hand=True reachShort=13mm eye-pouch=0.40 camPitch=-5.10
+22.927 | 01-05-prepare-97-Warmed: t=3.92 stage=Prepare pouch=(-1.437, 1.555, 14.481) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+23.246 | MEAL STATUS Opening the pouch
+23.393 | 01-06-open-08-Warmed: t=4.08 stage=Open pouch=(-1.435, 1.558, 14.478) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+23.800 | 01-07-open-20-Warmed: t=4.20 stage=Open pouch=(-1.427, 1.563, 14.469) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.37 camPitch=-5.10
+24.179 | 01-08-open-30-Warmed: t=4.30 stage=Open pouch=(-1.418, 1.569, 14.460) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.36 camPitch=-5.10
+24.568 | 01-09-open-40-Warmed: t=4.40 stage=Open pouch=(-1.410, 1.574, 14.451) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.35 camPitch=-5.10
+24.902 | 01-10-open-48-Warmed: t=4.48 stage=Open pouch=(-1.406, 1.578, 14.447) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+25.238 | 01-11-open-56-Warmed: t=4.56 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+25.567 | 01-12-open-64-Warmed: t=4.64 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+25.895 | 01-13-open-72-Warmed: t=4.72 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+26.252 | 01-14-open-82-Warmed: t=4.82 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+26.633 | 01-15-open-94-Warmed: t=4.94 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+26.910 | MEAL STATUS Eating the ration
+27.075 | 01-16-eat-04-Warmed: t=5.11 stage=Eat pouch=(-1.401, 1.580, 14.443) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+27.507 | 01-17-eat-10-Warmed: t=5.28 stage=Eat pouch=(-1.388, 1.586, 14.434) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.32 camPitch=-5.10
+27.957 | 01-18-eat-16-Warmed: t=5.45 stage=Eat pouch=(-1.371, 1.593, 14.424) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10
+28.479 | 01-19-eat-22-Warmed: t=5.62 stage=Eat pouch=(-1.359, 1.599, 14.416) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+28.952 | 01-20-eat-28-Warmed: t=5.78 stage=Eat pouch=(-1.333, 1.588, 14.410) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.27 camPitch=-5.10
+29.438 | 01-21-eat-34-Warmed: t=5.95 stage=Eat pouch=(-1.305, 1.575, 14.405) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.24 camPitch=-5.10
+30.209 | 01-22-eat-40-Warmed: t=6.12 stage=Eat pouch=(-1.320, 1.582, 14.408) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.26 camPitch=-5.10
+30.687 | 01-23-eat-46-Warmed: t=6.29 stage=Eat pouch=(-1.349, 1.596, 14.413) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.28 camPitch=-5.10
+31.127 | 01-24-eat-52-Warmed: t=6.46 stage=Eat pouch=(-1.310, 1.577, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.25 camPitch=-5.10
+31.568 | 01-25-eat-58-Warmed: t=6.62 stage=Eat pouch=(-1.310, 1.577, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.25 camPitch=-5.10
+32.001 | 01-26-eat-64-Warmed: t=6.79 stage=Eat pouch=(-1.349, 1.596, 14.413) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.28 camPitch=-5.10
+32.467 | 01-27-eat-70-Warmed: t=6.96 stage=Eat pouch=(-1.357, 1.599, 14.415) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+32.903 | 01-28-eat-76-Warmed: t=7.13 stage=Eat pouch=(-1.357, 1.599, 14.415) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+33.338 | 01-29-eat-82-Warmed: t=7.30 stage=Eat pouch=(-1.360, 1.598, 14.417) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+33.834 | 01-30-eat-90-Warmed: t=7.52 stage=Eat pouch=(-1.397, 1.578, 14.448) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.33 camPitch=-5.10
+34.239 | 01-31-eat-97-Warmed: t=7.72 stage=Eat pouch=(-1.432, 1.559, 14.476) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+34.494 | MEAL STATUS Stowing the empty pouch
+34.794 | 01-32-stow-25-Warmed: t=8.05 stage=Stow pouch=(-1.499, 1.329, 14.442) visible=True opened=True hand=True reachShort=141mm eye-pouch=0.54 camPitch=-5.10
+35.297 | 01-33-stow-55-Warmed: t=8.35 stage=Stow pouch=(-1.409, 1.149, 14.406) visible=True opened=True hand=True reachShort=729mm eye-pouch=0.62 camPitch=-5.10
+35.750 | 01-34-stow-80-Warmed: t=8.60 stage=Stow pouch=(-1.392, 1.135, 14.402) visible=False opened=False hand=True reachShort=858mm eye-pouch=0.62 camPitch=-5.10
+36.272 | == meal 2 real time
+36.274 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+36.319 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+36.369 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+36.419 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+36.420 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+36.469 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+36.519 | domain SHORTCUT domain water portion: True Drink stored water: 0.625 L
+36.635 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True target=Gameplay target - survival-ration
+36.653 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+36.653 | INTERACTION True Meal started: rehydratable, water added, 9.0 s
+38.052 | MEAL STATUS Rehydrating the pouch at the water dispenser
+40.836 | MEAL STATUS Opening the pouch
+41.853 | MEAL STATUS Eating the ration
+44.669 | MEAL STATUS Stowing the empty pouch
+45.719 | meal 2 Rehydrated real time: took 9.03 s for a 9.00 s timeline; worst right reach shortfall 858 mm; largest camera deviation 0.00 deg; camera back at rest within 0.000 deg
+45.720 | meal 2 beats: (none reported)
+45.724 | == meal 3 stepped
+45.725 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+45.769 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+45.819 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+45.869 | domain SHORTCUT domain water portion: True Drink stored water: 0.625 L
+45.986 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True target=Gameplay target - survival-ration
+46.002 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+46.003 | INTERACTION True Meal started: ready to eat, 7.0 s
+46.054 | meal 3 ReadyToEat timeline take 1.40 prepare 0.80 open 1.00 eat 2.80 stow 1.00 commit 3.20 total 7.00 labelCheck False
+46.520 | 03-00-take-30-ReadyToEat: t=0.42 stage=Take pouch=(-1.670, 1.690, 14.395) visible=True opened=False hand=True reachShort=227mm eye-pouch=0.59 camPitch=-5.10
+47.039 | 03-01-take-50-ReadyToEat: t=0.70 stage=Take pouch=(-1.475, 1.626, 14.405) visible=True opened=False hand=True reachShort=208mm eye-pouch=0.40 camPitch=-5.10
+47.692 | 03-02-take-80-ReadyToEat: t=1.12 stage=Take pouch=(-1.462, 1.624, 14.430) visible=True opened=False hand=True reachShort=45mm eye-pouch=0.39 camPitch=-5.10
+48.156 | MEAL STATUS Ready to eat: no preparation needed
+48.607 | 03-03-prepare-50-ReadyToEat: t=1.80 stage=Prepare pouch=(-1.400, 1.573, 14.455) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+49.137 | 03-04-prepare-80-ReadyToEat: t=2.04 stage=Prepare pouch=(-1.415, 1.566, 14.465) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.36 camPitch=-5.10
+49.578 | 03-05-prepare-97-ReadyToEat: t=2.18 stage=Prepare pouch=(-1.433, 1.558, 14.478) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+49.848 | MEAL STATUS Opening the pouch
+49.988 | 03-06-open-08-ReadyToEat: t=2.28 stage=Open pouch=(-1.435, 1.558, 14.478) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+50.392 | 03-07-open-20-ReadyToEat: t=2.40 stage=Open pouch=(-1.427, 1.563, 14.469) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.37 camPitch=-5.10
+50.703 | 03-08-open-30-ReadyToEat: t=2.50 stage=Open pouch=(-1.418, 1.569, 14.460) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.36 camPitch=-5.10
+51.052 | 03-09-open-40-ReadyToEat: t=2.60 stage=Open pouch=(-1.410, 1.574, 14.451) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.35 camPitch=-5.10
+51.364 | 03-10-open-48-ReadyToEat: t=2.68 stage=Open pouch=(-1.406, 1.578, 14.447) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+51.666 | 03-11-open-56-ReadyToEat: t=2.76 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+51.995 | 03-12-open-64-ReadyToEat: t=2.84 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+52.320 | 03-13-open-72-ReadyToEat: t=2.92 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+52.655 | 03-14-open-82-ReadyToEat: t=3.02 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+52.996 | 03-15-open-94-ReadyToEat: t=3.14 stage=Open pouch=(-1.404, 1.578, 14.445) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+53.227 | MEAL STATUS Eating the ration
+53.393 | 03-16-eat-04-ReadyToEat: t=3.31 stage=Eat pouch=(-1.401, 1.580, 14.443) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10
+53.798 | 03-17-eat-10-ReadyToEat: t=3.48 stage=Eat pouch=(-1.388, 1.586, 14.434) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.32 camPitch=-5.10
+54.202 | 03-18-eat-16-ReadyToEat: t=3.65 stage=Eat pouch=(-1.371, 1.593, 14.424) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10
+54.612 | 03-19-eat-22-ReadyToEat: t=3.82 stage=Eat pouch=(-1.359, 1.599, 14.416) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+55.024 | 03-20-eat-28-ReadyToEat: t=3.98 stage=Eat pouch=(-1.333, 1.588, 14.410) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.27 camPitch=-5.10
+55.452 | 03-21-eat-34-ReadyToEat: t=4.15 stage=Eat pouch=(-1.305, 1.575, 14.405) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.24 camPitch=-5.10
+55.897 | 03-22-eat-40-ReadyToEat: t=4.32 stage=Eat pouch=(-1.320, 1.582, 14.408) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.26 camPitch=-5.10
+56.284 | 03-23-eat-46-ReadyToEat: t=4.49 stage=Eat pouch=(-1.349, 1.596, 14.413) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.28 camPitch=-5.10
+56.670 | 03-24-eat-52-ReadyToEat: t=4.66 stage=Eat pouch=(-1.310, 1.577, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.25 camPitch=-5.10
+57.061 | 03-25-eat-58-ReadyToEat: t=4.82 stage=Eat pouch=(-1.310, 1.577, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.25 camPitch=-5.10
+57.469 | 03-26-eat-64-ReadyToEat: t=4.99 stage=Eat pouch=(-1.349, 1.596, 14.413) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.28 camPitch=-5.10
+57.852 | 03-27-eat-70-ReadyToEat: t=5.16 stage=Eat pouch=(-1.357, 1.599, 14.415) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+58.239 | 03-28-eat-76-ReadyToEat: t=5.33 stage=Eat pouch=(-1.357, 1.599, 14.415) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+58.633 | 03-29-eat-82-ReadyToEat: t=5.50 stage=Eat pouch=(-1.360, 1.598, 14.417) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10
+59.068 | 03-30-eat-90-ReadyToEat: t=5.72 stage=Eat pouch=(-1.397, 1.578, 14.448) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.33 camPitch=-5.10
+59.500 | 03-31-eat-97-ReadyToEat: t=5.92 stage=Eat pouch=(-1.432, 1.559, 14.476) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.38 camPitch=-5.10
+59.767 | MEAL STATUS Stowing the empty pouch
+60.067 | 03-32-stow-25-ReadyToEat: t=6.25 stage=Stow pouch=(-1.499, 1.329, 14.442) visible=True opened=True hand=True reachShort=141mm eye-pouch=0.54 camPitch=-5.10

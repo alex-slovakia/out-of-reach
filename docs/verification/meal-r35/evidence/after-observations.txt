@@ -1,0 +1,183 @@
+GPU NVIDIA GeForce RTX 3070 | Direct3D12
+7.105 | == practice
+8.215 | == SHORTCUT teleport to the cockpit console, real E
+8.798 | console ray: cockpit-console prompt='Begin mission: 546 of 600 kg, 720 of 800 credits' can=True
+8.831 | INTERACTION True AURORA-7 launched with 7 equipment line(s).
+8.907 | console E: interactions 1 ok=True AURORA-7 launched with 7 equipment line(s).
+8.990 | == departure (hold Space to skip)
+10.661 | ACTUAL MARINE TRANSFER
+11.433 | Arrival phase Intro; floating True survival active False
+11.434 | == SHORTCUT domain commands until the ration is allowed
+11.436 | SHORTCUT start phase=Intro survival=False
+11.493 | domain impact: True Cockpit check complete. Impact detected.
+11.627 | == SHORTCUT teleport to the galley aisle
+12.588 | At galley: feet=(-1.08, 0.02, 14.40) eye=(-1.08, 1.67, 14.40) floating=True body visible=True eva=False arms=Both pose=Floating
+13.211 | == meal 1 stepped
+13.330 | Prompt before E: 'Prepare and eat the first packaged meal: 0.4575 kg' can=True target=Gameplay target - survival-ration
+13.352 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+13.352 | INTERACTION True Meal started: thermostabilised, warmed, 8.8 s
+13.397 | meal 1 Warmed timeline take 1.40 prepare 2.60 open 1.00 eat 2.80 stow 1.00 commit 5.00 total 8.80 labelCheck False
+13.865 | 01-00-take-30-Warmed: t=0.42 stage=Take pouch=(-1.670, 1.690, 14.395) visible=True opened=False hand=True reachShort=227mm eye-pouch=0.59 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=NaN OffHandPinchGapMetres=NaN StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=0 ReducedMotion=False
+14.184 | BEAT 14.18 s (meal 0.52) Grasp (sound)
+14.413 | 01-01-take-50-Warmed: t=0.70 stage=Take pouch=(-1.475, 1.626, 14.405) visible=True opened=False hand=True reachShort=208mm eye-pouch=0.40 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=NaN OffHandPinchGapMetres=NaN StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+15.101 | 01-02-take-80-Warmed: t=1.12 stage=Take pouch=(-1.445, 1.645, 14.412) visible=True opened=False hand=True reachShort=59mm eye-pouch=0.37 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=NaN OffHandPinchGapMetres=NaN StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+15.589 | MEAL STATUS Warming the thermostabilised pouch in the food warmer
+16.953 | 01-03-prepare-50-Warmed: t=2.70 stage=Prepare pouch=(-1.433, 1.521, 14.495) visible=True opened=False hand=True reachShort=22mm eye-pouch=0.40 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=NaN OffHandPinchGapMetres=NaN StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+18.014 | 01-04-prepare-80-Warmed: t=3.48 stage=Prepare pouch=(-1.438, 1.533, 14.489) visible=True opened=False hand=True reachShort=14mm eye-pouch=0.39 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.076 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+18.721 | 01-05-prepare-97-Warmed: t=3.92 stage=Prepare pouch=(-1.426, 1.622, 14.433) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.35 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+19.007 | MEAL STATUS Opening the pouch
+19.141 | 01-06-open-08-Warmed: t=4.08 stage=Open pouch=(-1.414, 1.626, 14.424) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+19.522 | 01-07-open-20-Warmed: t=4.20 stage=Open pouch=(-1.382, 1.628, 14.407) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+19.789 | BEAT 19.79 s (meal 4.27) Pinch (silent)
+19.872 | 01-08-open-30-Warmed: t=4.30 stage=Open pouch=(-1.375, 1.628, 14.403) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+20.146 | BEAT 20.15 s (meal 4.37) Tear (sound)
+20.229 | 01-09-open-40-Warmed: t=4.40 stage=Open pouch=(-1.375, 1.628, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.016 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+20.567 | 01-10-open-48-Warmed: t=4.48 stage=Open pouch=(-1.375, 1.628, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.166 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+20.903 | 01-11-open-56-Warmed: t=4.56 stage=Open pouch=(-1.375, 1.628, 14.410) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.462 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+21.239 | 01-12-open-64-Warmed: t=4.64 stage=Open pouch=(-1.375, 1.628, 14.407) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=0.812 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+21.577 | 01-13-open-72-Warmed: t=4.72 stage=Open pouch=(-1.375, 1.626, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+21.937 | 01-14-open-82-Warmed: t=4.82 stage=Open pouch=(-1.375, 1.626, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+22.352 | 01-15-open-94-Warmed: t=4.94 stage=Open pouch=(-1.375, 1.628, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-5.10 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+22.628 | MEAL STATUS Eating the ration
+22.793 | 01-16-eat-04-Warmed: t=5.11 stage=Eat pouch=(-1.365, 1.627, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-5.10 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+23.234 | 01-17-eat-10-Warmed: t=5.28 stage=Eat pouch=(-1.335, 1.623, 14.405) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.26 camPitch=-5.10 TearProgress=1.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+23.684 | 01-18-eat-16-Warmed: t=5.45 stage=Eat pouch=(-1.302, 1.618, 14.404) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.23 camPitch=-4.68 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=3 ReducedMotion=False
+24.016 | BEAT 24.02 s (meal 5.58) Sip 1 (sound)
+24.116 | 01-19-eat-22-Warmed: t=5.62 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=4 ReducedMotion=False
+24.553 | 01-20-eat-28-Warmed: t=5.78 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-5.72 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=4 ReducedMotion=False
+24.991 | 01-21-eat-34-Warmed: t=5.95 stage=Eat pouch=(-1.242, 1.610, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-5.15 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=4 ReducedMotion=False
+25.229 | BEAT 25.23 s (meal 5.97) Swallow 1 (sound)
+25.436 | 01-22-eat-40-Warmed: t=6.12 stage=Eat pouch=(-1.275, 1.614, 14.402) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.20 camPitch=-4.68 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=5 ReducedMotion=False
+25.777 | BEAT 25.78 s (meal 6.25) Sip 2 (sound)
+25.877 | 01-23-eat-46-Warmed: t=6.29 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=6 ReducedMotion=False
+26.317 | 01-24-eat-52-Warmed: t=6.46 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-5.72 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=6 ReducedMotion=False
+26.756 | 01-25-eat-58-Warmed: t=6.62 stage=Eat pouch=(-1.242, 1.610, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-5.15 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=6 ReducedMotion=False
+26.986 | BEAT 26.99 s (meal 6.64) Swallow 2 (sound)
+27.192 | 01-26-eat-64-Warmed: t=6.79 stage=Eat pouch=(-1.275, 1.614, 14.402) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.20 camPitch=-4.68 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=7 ReducedMotion=False
+27.537 | BEAT 27.54 s (meal 6.93) Sip 3 (sound)
+27.637 | 01-27-eat-70-Warmed: t=6.96 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=8 ReducedMotion=False
+28.094 | 01-28-eat-76-Warmed: t=7.13 stage=Eat pouch=(-1.214, 1.606, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-5.72 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=8 ReducedMotion=False
+28.583 | 01-29-eat-82-Warmed: t=7.30 stage=Eat pouch=(-1.242, 1.610, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-5.15 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=8 ReducedMotion=False
+28.835 | BEAT 28.84 s (meal 7.31) Swallow 3 (sound)
+29.094 | 01-30-eat-90-Warmed: t=7.52 stage=Eat pouch=(-1.318, 1.619, 14.409) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.24 camPitch=-5.10 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=9 ReducedMotion=False
+29.555 | 01-31-eat-97-Warmed: t=7.72 stage=Eat pouch=(-1.410, 1.625, 14.427) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.33 camPitch=-5.10 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=9 ReducedMotion=False
+29.868 | MEAL STATUS Stowing the empty pouch
+30.168 | 01-32-stow-25-Warmed: t=8.05 stage=Stow pouch=(-1.492, 1.368, 14.413) visible=True opened=True hand=True reachShort=140mm eye-pouch=0.51 camPitch=-5.10 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=9 ReducedMotion=False
+30.722 | 01-33-stow-55-Warmed: t=8.35 stage=Stow pouch=(-1.409, 1.153, 14.403) visible=True opened=True hand=True reachShort=726mm eye-pouch=0.61 camPitch=-5.10 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=9 ReducedMotion=False
+31.076 | BEAT 31.08 s (meal 8.50) Stow (sound)
+31.226 | 01-34-stow-80-Warmed: t=8.60 stage=Stow pouch=(-1.392, 1.135, 14.402) visible=False opened=False hand=True reachShort=858mm eye-pouch=0.62 camPitch=-5.10 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=10 ReducedMotion=False
+31.813 | == SHORTCUT domain repairs (cabin light back on)
+31.819 | domain power repair: True power distribution repaired (2 spare parts).
+31.820 | domain life-support repair: True life support repaired (2 spare parts, 1 kWh).
+34.315 | At galley: feet=(-1.08, 0.04, 14.40) eye=(-1.08, 1.69, 14.40) floating=True body visible=True eva=False arms=Both pose=Floating
+34.443 | == meal 2 real time
+34.444 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+34.496 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+34.547 | domain SHORTCUT domain water portion (thirst would otherwise end the run): True Drink stored water: 0.625 L
+34.548 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+34.596 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+34.646 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+34.696 | domain SHORTCUT domain water portion: True Drink stored water: 0.625 L
+34.813 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True target=Gameplay target - survival-ration
+34.830 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+34.831 | INTERACTION True Meal started: rehydratable, water added, 9.0 s
+35.329 | BEAT 0.52 s (meal 0.52) Grasp (sound)
+36.212 | MEAL STATUS Rehydrating the pouch at the water dispenser
+38.462 | BEAT 3.65 s (meal 3.65) Knead (sound)
+39.013 | MEAL STATUS Opening the pouch
+39.279 | BEAT 4.47 s (meal 4.47) Pinch (silent)
+39.379 | BEAT 4.57 s (meal 4.57) Tear (sound)
+40.029 | MEAL STATUS Eating the ration
+40.613 | BEAT 5.80 s (meal 5.78) Sip 1 (sound)
+40.996 | BEAT 6.18 s (meal 6.17) Swallow 1 (sound)
+41.296 | BEAT 6.48 s (meal 6.47) Sip 2 (sound)
+41.662 | BEAT 6.85 s (meal 6.83) Swallow 2 (sound)
+41.962 | BEAT 7.15 s (meal 7.13) Sip 3 (sound)
+42.346 | BEAT 7.53 s (meal 7.52) Swallow 3 (sound)
+42.846 | MEAL STATUS Stowing the empty pouch
+43.529 | BEAT 8.72 s (meal 8.70) Stow (sound)
+43.896 | meal 2 Rehydrated real time: took 9.03 s for a 9.00 s timeline; worst right reach shortfall 868 mm; largest camera deviation 2.00 deg; camera back at rest within 0.000 deg
+43.897 | meal 2 beats: 0.52 s (meal 0.52) Grasp (sound) | 3.65 s (meal 3.65) Knead (sound) | 4.47 s (meal 4.47) Pinch (silent) | 4.57 s (meal 4.57) Tear (sound) | 5.80 s (meal 5.78) Sip 1 (sound) | 6.18 s (meal 6.17) Swallow 1 (sound) | 6.48 s (meal 6.47) Sip 2 (sound) | 6.85 s (meal 6.83) Swallow 2 (sound) | 7.15 s (meal 7.13) Sip 3 (sound) | 7.53 s (meal 7.52) Swallow 3 (sound) | 8.72 s (meal 8.70) Stow (sound)
+43.900 | == meal 3 stepped
+43.901 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+43.946 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+43.996 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+44.046 | domain SHORTCUT domain water portion: True Drink stored water: 0.625 L
+44.162 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True target=Gameplay target - survival-ration
+44.179 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+44.180 | INTERACTION True Meal started: ready to eat, 7.0 s
+44.231 | meal 3 ReadyToEat timeline take 1.40 prepare 0.80 open 1.00 eat 2.80 stow 1.00 commit 3.20 total 7.00 labelCheck False
+44.696 | 03-00-take-30-ReadyToEat: t=0.42 stage=Take pouch=(-1.670, 1.690, 14.395) visible=True opened=False hand=True reachShort=221mm eye-pouch=0.59 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=0 ReducedMotion=False
+44.992 | BEAT 10.18 s (meal 0.52) Grasp (sound)
+45.225 | 03-01-take-50-ReadyToEat: t=0.70 stage=Take pouch=(-1.479, 1.633, 14.404) visible=True opened=False hand=True reachShort=202mm eye-pouch=0.40 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+45.901 | 03-02-take-80-ReadyToEat: t=1.12 stage=Take pouch=(-1.450, 1.652, 14.412) visible=True opened=False hand=True reachShort=52mm eye-pouch=0.37 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=1 ReducedMotion=False
+46.374 | MEAL STATUS Ready to eat: no preparation needed
+46.707 | BEAT 11.89 s (meal 1.74) Knead (sound)
+46.823 | 03-03-prepare-50-ReadyToEat: t=1.80 stage=Prepare pouch=(-1.388, 1.651, 14.405) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.31 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=1.000 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+47.320 | 03-04-prepare-80-ReadyToEat: t=2.04 stage=Prepare pouch=(-1.402, 1.643, 14.415) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.33 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.588 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+47.719 | 03-05-prepare-97-ReadyToEat: t=2.18 stage=Prepare pouch=(-1.420, 1.635, 14.428) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.35 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.094 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+47.965 | MEAL STATUS Opening the pouch
+48.103 | 03-06-open-08-ReadyToEat: t=2.28 stage=Open pouch=(-1.412, 1.634, 14.424) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.34 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+48.490 | 03-07-open-20-ReadyToEat: t=2.40 stage=Open pouch=(-1.380, 1.636, 14.407) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=2 ReducedMotion=False
+48.753 | BEAT 13.94 s (meal 2.47) Pinch (silent)
+48.837 | 03-08-open-30-ReadyToEat: t=2.50 stage=Open pouch=(-1.373, 1.637, 14.403) visible=True opened=False hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=3 ReducedMotion=False
+49.100 | BEAT 14.29 s (meal 2.57) Tear (sound)
+49.183 | 03-09-open-40-ReadyToEat: t=2.60 stage=Open pouch=(-1.373, 1.637, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.016 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+49.513 | 03-10-open-48-ReadyToEat: t=2.68 stage=Open pouch=(-1.373, 1.637, 14.406) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.166 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+49.840 | 03-11-open-56-ReadyToEat: t=2.76 stage=Open pouch=(-1.373, 1.637, 14.410) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.462 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+50.166 | 03-12-open-64-ReadyToEat: t=2.84 stage=Open pouch=(-1.373, 1.637, 14.407) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=0.812 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+50.504 | 03-13-open-72-ReadyToEat: t=2.92 stage=Open pouch=(-1.373, 1.635, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+50.856 | 03-14-open-82-ReadyToEat: t=3.02 stage=Open pouch=(-1.373, 1.635, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+51.262 | 03-15-open-94-ReadyToEat: t=3.14 stage=Open pouch=(-1.373, 1.637, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.30 camPitch=-3.19 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+51.544 | MEAL STATUS Eating the ration
+51.711 | 03-16-eat-04-ReadyToEat: t=3.31 stage=Eat pouch=(-1.363, 1.636, 14.403) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.29 camPitch=-3.19 TearProgress=1.000 StripVisible=True IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+52.160 | 03-17-eat-10-ReadyToEat: t=3.48 stage=Eat pouch=(-1.333, 1.633, 14.405) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.26 camPitch=-3.19 TearProgress=1.000 StripVisible=False IsOffHandHolding=True OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=4 ReducedMotion=False
+52.599 | 03-18-eat-16-ReadyToEat: t=3.65 stage=Eat pouch=(-1.300, 1.630, 14.404) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.23 camPitch=-2.76 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=4 ReducedMotion=False
+52.927 | BEAT 18.11 s (meal 3.78) Sip 1 (sound)
+53.027 | 03-19-eat-22-ReadyToEat: t=3.82 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-1.33 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=5 ReducedMotion=False
+53.460 | 03-20-eat-28-ReadyToEat: t=3.98 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.81 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=5 ReducedMotion=False
+53.891 | 03-21-eat-34-ReadyToEat: t=4.15 stage=Eat pouch=(-1.240, 1.623, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=5 ReducedMotion=False
+54.138 | BEAT 19.33 s (meal 4.17) Swallow 1 (sound)
+54.345 | 03-22-eat-40-ReadyToEat: t=4.32 stage=Eat pouch=(-1.273, 1.627, 14.402) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.20 camPitch=-2.76 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=6 ReducedMotion=False
+54.673 | BEAT 19.86 s (meal 4.45) Sip 2 (sound)
+54.773 | 03-23-eat-46-ReadyToEat: t=4.49 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-1.33 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=7 ReducedMotion=False
+55.208 | 03-24-eat-52-ReadyToEat: t=4.66 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.81 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=7 ReducedMotion=False
+55.657 | 03-25-eat-58-ReadyToEat: t=4.82 stage=Eat pouch=(-1.240, 1.623, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=7 ReducedMotion=False
+55.878 | BEAT 21.07 s (meal 4.84) Swallow 2 (sound)
+56.085 | 03-26-eat-64-ReadyToEat: t=4.99 stage=Eat pouch=(-1.273, 1.627, 14.402) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.20 camPitch=-2.76 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.426 BeatsPlayed=8 ReducedMotion=False
+56.410 | BEAT 21.60 s (meal 5.13) Sip 3 (sound)
+56.510 | 03-27-eat-70-ReadyToEat: t=5.16 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-1.33 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.372 NodDegrees=1.862 BeatsPlayed=9 ReducedMotion=False
+56.951 | 03-28-eat-76-ReadyToEat: t=5.33 stage=Eat pouch=(-1.212, 1.620, 14.399) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.15 camPitch=-3.81 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.828 NodDegrees=-0.620 BeatsPlayed=9 ReducedMotion=False
+57.397 | 03-29-eat-82-ReadyToEat: t=5.50 stage=Eat pouch=(-1.240, 1.623, 14.401) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.17 camPitch=-3.24 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=-0.045 BeatsPlayed=9 ReducedMotion=False
+57.630 | BEAT 22.82 s (meal 5.51) Swallow 3 (sound)
+57.887 | 03-30-eat-90-ReadyToEat: t=5.72 stage=Eat pouch=(-1.317, 1.629, 14.409) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.24 camPitch=-3.19 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=10 ReducedMotion=False
+58.335 | 03-31-eat-97-ReadyToEat: t=5.92 stage=Eat pouch=(-1.408, 1.632, 14.427) visible=True opened=True hand=True reachShort=0mm eye-pouch=0.33 camPitch=-3.19 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=10 ReducedMotion=False
+58.649 | MEAL STATUS Stowing the empty pouch
+58.949 | 03-32-stow-25-ReadyToEat: t=6.25 stage=Stow pouch=(-1.490, 1.376, 14.413) visible=True opened=True hand=True reachShort=140mm eye-pouch=0.52 camPitch=-3.19 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=10 ReducedMotion=False
+59.487 | 03-33-stow-55-ReadyToEat: t=6.55 stage=Stow pouch=(-1.406, 1.166, 14.403) visible=True opened=True hand=True reachShort=735mm eye-pouch=0.62 camPitch=-3.19 TearProgress=1.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=10 ReducedMotion=False
+59.832 | BEAT 25.02 s (meal 6.70) Stow (sound)
+59.982 | 03-34-stow-80-ReadyToEat: t=6.80 stage=Stow pouch=(-1.389, 1.148, 14.402) visible=False opened=False hand=True reachShort=868mm eye-pouch=0.62 camPitch=-3.19 TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=11 ReducedMotion=False
+60.565 | == meal 4 real time, reduced effects
+60.566 | Reduced effects ON through I01MissionComposition.SetReducedEffects TearProgress=0.000 StripVisible=False IsOffHandHolding=False OffHandReachShortfallMetres=0.000 OffHandPinchGapMetres=0.000 StripPinchErrorMetres=0.000 Squeeze=0.000 NodDegrees=0.000 BeatsPlayed=11 ReducedMotion=True
+60.567 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+60.613 | domain SHORTCUT simulated wait until a ration is due: True Simulation advanced.
+60.663 | domain SHORTCUT domain water portion: True Drink stored water: 0.625 L
+60.779 | Prompt before E: 'Eat stored ration: 0.4575 kg' can=True target=Gameplay target - survival-ration
+60.796 | MEAL STATUS Taking a stored meal pouch from the galley drawer
+60.797 | INTERACTION True Meal started: thermostabilised, warmed, 9.5 s
+61.296 | BEAT 0.52 s (meal 0.52) Grasp (sound)
+62.179 | MEAL STATUS Warming the thermostabilised pouch in the food warmer
+64.780 | MEAL STATUS Same menu again. Opening the pouch
+65.729 | BEAT 4.95 s (meal 4.95) Pinch (silent)
+65.829 | BEAT 5.05 s (meal 5.05) Tear (sound)
+66.480 | MEAL STATUS Eating the ration
+67.062 | BEAT 6.28 s (meal 6.28) Sip 1 (sound)
+67.446 | BEAT 6.67 s (meal 6.67) Swallow 1 (sound)
+67.746 | BEAT 6.97 s (meal 6.97) Sip 2 (sound)
+68.113 | BEAT 7.33 s (meal 7.33) Swallow 2 (sound)
+68.413 | BEAT 7.63 s (meal 7.63) Sip 3 (sound)
+68.796 | BEAT 8.02 s (meal 8.02) Swallow 3 (sound)
+69.280 | MEAL STATUS Stowing the empty pouch
+69.997 | BEAT 9.22 s (meal 9.22) Stow (sound)
+70.330 | meal 4 Warmed real time: took 9.50 s for a 9.50 s timeline; worst right reach shortfall 868 mm; largest camera deviation 0.00 deg; camera back at rest within 0.000 deg
+70.330 | meal 4 beats: 0.52 s (meal 0.52) Grasp (sound) | 4.95 s (meal 4.95) Pinch (silent) | 5.05 s (meal 5.05) Tear (sound) | 6.28 s (meal 6.28) Sip 1 (sound) | 6.67 s (meal 6.67) Swallow 1 (sound) | 6.97 s (meal 6.97) Sip 2 (sound) | 7.33 s (meal 7.33) Swallow 2 (sound) | 7.63 s (meal 7.63) Sip 3 (sound) | 8.02 s (meal 8.02) Swallow 3 (sound) | 9.22 s (meal 9.22) Stow (sound)

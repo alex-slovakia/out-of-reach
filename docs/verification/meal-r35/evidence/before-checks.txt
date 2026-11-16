@@ -1,0 +1,102 @@
+PASS opening actual saved Bootstrap | The saved scene has the installed meal presenter.
+PASS play | Saved marine, cinematics, meal, body, camera and default input exist.
+PASS play | The composition's meal field points at the installed presenter.
+PASS practice | Actual Practice choice releases ordinary deck controls.
+PASS SHORTCUT domain commands until the ration is allowed | Survival is active (phase Emergency).
+PASS SHORTCUT teleport to the galley aisle | The actual habitat ration drawer surface exists.
+PASS SHORTCUT teleport to the galley aisle | Deck below the galley aisle.
+PASS SHORTCUT teleport to the galley aisle | The real survival-ration target is decorated by the meal.
+PASS meal 1 stepped | A ration is due: Prepare and eat the first packaged meal: 0.4575 kg
+PASS meal 1 stepped | meal 1: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 1 stepped | meal 1: single actual E starts the meal | Meal started: thermostabilised, warmed, 8.8 s
+PASS meal 1 stepped | E starts meal 1 as Warmed
+PASS meal 1 stepped | The composition's movement lock holds during the meal.
+PASS meal 1 stepped | meal 1 still runs at Take 0.30
+PASS meal 1 stepped | meal 1 still runs at Take 0.50
+PASS meal 1 stepped | meal 1 still runs at Take 0.80
+PASS meal 1 stepped | meal 1 still runs at Prepare 0.50
+PASS meal 1 stepped | meal 1 still runs at Prepare 0.80
+PASS meal 1 stepped | meal 1 still runs at Prepare 0.97
+PASS meal 1 stepped | meal 1 still runs at Open 0.08
+PASS meal 1 stepped | meal 1 still runs at Open 0.20
+PASS meal 1 stepped | meal 1 still runs at Open 0.30
+PASS meal 1 stepped | meal 1 still runs at Open 0.40
+PASS meal 1 stepped | meal 1 still runs at Open 0.48
+PASS meal 1 stepped | meal 1 still runs at Open 0.56
+PASS meal 1 stepped | meal 1 still runs at Open 0.64
+PASS meal 1 stepped | meal 1 still runs at Open 0.72
+PASS meal 1 stepped | meal 1 still runs at Open 0.82
+PASS meal 1 stepped | meal 1 still runs at Open 0.94
+PASS meal 1 stepped | Taking, preparing and opening grant nothing.
+PASS meal 1 stepped | meal 1 still runs at Eat 0.04
+PASS meal 1 stepped | The first bite debits exactly one ration (0.4575 kg).
+PASS meal 1 stepped | meal 1 still runs at Eat 0.10
+PASS meal 1 stepped | meal 1 still runs at Eat 0.16
+PASS meal 1 stepped | meal 1 still runs at Eat 0.22
+PASS meal 1 stepped | meal 1 still runs at Eat 0.28
+PASS meal 1 stepped | meal 1 still runs at Eat 0.34
+PASS meal 1 stepped | meal 1 still runs at Eat 0.40
+PASS meal 1 stepped | meal 1 still runs at Eat 0.46
+PASS meal 1 stepped | meal 1 still runs at Eat 0.52
+PASS meal 1 stepped | meal 1 still runs at Eat 0.58
+PASS meal 1 stepped | meal 1 still runs at Eat 0.64
+PASS meal 1 stepped | meal 1 still runs at Eat 0.70
+PASS meal 1 stepped | meal 1 still runs at Eat 0.76
+PASS meal 1 stepped | meal 1 still runs at Eat 0.82
+PASS meal 1 stepped | meal 1 still runs at Eat 0.90
+PASS meal 1 stepped | meal 1 still runs at Eat 0.97
+PASS meal 1 stepped | meal 1 still runs at Stow 0.25
+PASS meal 1 stepped | meal 1 still runs at Stow 0.55
+PASS meal 1 stepped | meal 1 still runs at Stow 0.80
+PASS meal 1 stepped | One real command for meal 1.
+PASS meal 1 stepped | After meal 1 the pouch is stowed and control returns.
+PASS meal 1 stepped | Exactly one ration debited by meal 1.
+PASS meal 2 real time | A ration is due: Eat stored ration: 0.4575 kg
+PASS meal 2 real time | meal 2: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 2 real time | meal 2: single actual E starts the meal | Meal started: rehydratable, water added, 9.0 s
+PASS meal 2 real time | E starts meal 2 as Rehydrated
+PASS meal 2 real time | One real command for meal 2.
+PASS meal 2 real time | Exactly one ration debited by meal 2.
+PASS meal 2 real time | After meal 2 the pouch is stowed and control returns.
+PASS meal 2 real time | The camera is back at its rest pose after meal 2.
+PASS meal 3 stepped | A ration is due: Eat stored ration: 0.4575 kg
+PASS meal 3 stepped | meal 3: the actual interaction ray resolves the ration drawer (Gameplay target - survival-ration)
+PASS meal 3 stepped | meal 3: single actual E starts the meal | Meal started: ready to eat, 7.0 s
+PASS meal 3 stepped | E starts meal 3 as ReadyToEat
+PASS meal 3 stepped | The composition's movement lock holds during the meal.
+PASS meal 3 stepped | meal 3 still runs at Take 0.30
+PASS meal 3 stepped | meal 3 still runs at Take 0.50
+PASS meal 3 stepped | meal 3 still runs at Take 0.80
+PASS meal 3 stepped | meal 3 still runs at Prepare 0.50
+PASS meal 3 stepped | meal 3 still runs at Prepare 0.80
+PASS meal 3 stepped | meal 3 still runs at Prepare 0.97
+PASS meal 3 stepped | meal 3 still runs at Open 0.08
+PASS meal 3 stepped | meal 3 still runs at Open 0.20
+PASS meal 3 stepped | meal 3 still runs at Open 0.30
+PASS meal 3 stepped | meal 3 still runs at Open 0.40
+PASS meal 3 stepped | meal 3 still runs at Open 0.48
+PASS meal 3 stepped | meal 3 still runs at Open 0.56
+PASS meal 3 stepped | meal 3 still runs at Open 0.64
+PASS meal 3 stepped | meal 3 still runs at Open 0.72
+PASS meal 3 stepped | meal 3 still runs at Open 0.82
+PASS meal 3 stepped | meal 3 still runs at Open 0.94
+PASS meal 3 stepped | Taking, preparing and opening grant nothing.
+PASS meal 3 stepped | meal 3 still runs at Eat 0.04
+PASS meal 3 stepped | The first bite debits exactly one ration (0.4575 kg).
+PASS meal 3 stepped | meal 3 still runs at Eat 0.10
+PASS meal 3 stepped | meal 3 still runs at Eat 0.16
+PASS meal 3 stepped | meal 3 still runs at Eat 0.22
+PASS meal 3 stepped | meal 3 still runs at Eat 0.28
+PASS meal 3 stepped | meal 3 still runs at Eat 0.34
+PASS meal 3 stepped | meal 3 still runs at Eat 0.40
+PASS meal 3 stepped | meal 3 still runs at Eat 0.46
+PASS meal 3 stepped | meal 3 still runs at Eat 0.52
+PASS meal 3 stepped | meal 3 still runs at Eat 0.58
+PASS meal 3 stepped | meal 3 still runs at Eat 0.64
+PASS meal 3 stepped | meal 3 still runs at Eat 0.70
+PASS meal 3 stepped | meal 3 still runs at Eat 0.76
+PASS meal 3 stepped | meal 3 still runs at Eat 0.82
+PASS meal 3 stepped | meal 3 still runs at Eat 0.90
+PASS meal 3 stepped | meal 3 still runs at Eat 0.97
+PASS meal 3 stepped | meal 3 still runs at Stow 0.25
+FAIL meal 3 stepped | meal 3 still runs at Stow 0.55
