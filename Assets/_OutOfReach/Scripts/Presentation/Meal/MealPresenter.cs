@@ -19,6 +19,12 @@ namespace OutOfReach.Presentation.Meal
     /// condition), the suit, the mission end or a revoked policy end it safely: the pouch is hidden and every arm bone is
     /// given back. The visible WORK right hand carries the pouch with the measured edge clasp.
     /// </para>
+    /// <para>
+    /// R35 (the readable first-person meal): the visible WORK left hand pinches the top strip and tears it off
+    /// (<see cref="MealOffHand"/>, <see cref="MealTearStrip"/>), the pouch is tipped to the mouth for three squeezed sips
+    /// with a small head nod (<see cref="MealViewNod"/>, none with reduced motion) and each beat has its own contact
+    /// sound (<see cref="MealFoley"/>). All of it follows the one unchanged meal timer; none of it issues a command.
+    /// </para>
     /// </summary>
     [DisallowMultipleComponent, DefaultExecutionOrder(260)]
     public sealed class MealPresenter : MonoBehaviour
@@ -60,14 +66,24 @@ namespace OutOfReach.Presentation.Meal
         private EmbodiedBodyPresenter body;
         private Func<bool> context;
         private MealHandClasp hand;
+        private MealOffHand offHand;
         private MealClaspData clasp;
         private MealChoreography choreography;
         private MealStations stations;
         private GameObject pouch;
+        private MealTearStrip strip;
+        private MealPouchShape shape = MealPouchShape.Default;
+        private readonly MealViewNod nod = new MealViewNod();
+        private readonly MealFoley foley = new MealFoley();
+        private FirstPersonMotionPresenter motion;
+        private MealBeatMark[] marks;
+        private int nextBeat;
         private Renderer[] sealedRenderers = Array.Empty<Renderer>(), openedRenderers = Array.Empty<Renderer>();
         private Material[] importedLabels = Array.Empty<Material>();
         private readonly Dictionary<ShipSystemId, double> conditions = new Dictionary<ShipSystemId, double>();
-        private bool focused = true, pouchVisible;
+        private bool focused = true, pouchVisible, eyeIsCamera, stripFree;
+        private Quaternion stripHand = Quaternion.identity;
+        private Vector3 stripAlong = Vector3.right, stripHeight = Vector3.up;
 
         public bool IsBound => sequence != null;
         public bool IsEating => sequence != null && sequence.IsWorking;
@@ -85,11 +101,39 @@ namespace OutOfReach.Presentation.Meal
         public float HandReachShortfallMetres => hand != null ? hand.LastReachShortfallMetres : float.NaN;
         public InteractableTarget RationTarget => rationTarget;
 
+        /// <summary>0..1 how far the top strip is torn off the pouch that is shown now.</summary>
+        public float TearProgress { get; private set; }
+        /// <summary>The torn strip is shown (on the pouch while it tears, then in the left hand).</summary>
+        public bool StripVisible => strip != null && strip.IsVisible;
+        public Transform Strip => strip != null ? strip.Transform : null;
+        /// <summary>The visible WORK left hand holds the strip (or waits beside it).</summary>
+        public bool IsOffHandHolding => offHand != null && offHand.IsHolding;
+        public float OffHandReachShortfallMetres => offHand != null ? offHand.LastReachShortfallMetres : float.NaN;
+        /// <summary>How far the closed left thumb and index pads are from touching (0 = they meet).</summary>
+        public float OffHandPinchGapMetres => offHand != null ? offHand.PinchGapMetres : float.NaN;
+        /// <summary>Distance of the strip's held point from the left fingers (0 = in the fingers).</summary>
+        public float StripPinchErrorMetres => strip != null ? strip.LastPinchErrorMetres : float.NaN;
+        /// <summary>0..1 squeeze of the pouch by the holding hand right now.</summary>
+        public float Squeeze { get; private set; }
+        /// <summary>The head nod on the view right now, degrees (0 with reduced motion).</summary>
+        public float NodDegrees => nod.Degrees;
+        /// <summary>Beats of the current meal that have played so far.</summary>
+        public int BeatsPlayed { get; private set; }
+
+        /// <summary>
+        /// Comfort setting: true keeps the view still during the meal (no head nod). Null (default) follows the mission's
+        /// first-person motion setting (<see cref="FirstPersonMotionPresenter.ReducedMotion"/> or motion switched off).
+        /// </summary>
+        public Func<bool> ReducedMotionQuery { get; set; }
+        public bool ReducedMotion => ReducedMotionQuery != null ? ReducedMotionQuery() : motion && (motion.ReducedMotion || !motion.MotionEnabled);
+
         public event Action<MealPreparation> Started;
         public event Action<string> StatusChanged;
         public event Action<CommandResult> Eaten;
         public event Action<CommandResult> Finished;
         public event Action<string, bool> Cancelled;
+        /// <summary>A beat of the meal was reached (informational). The flag says whether its sound actually played.</summary>
+        public event Action<MealBeatMark, bool> BeatPlayed;
 
         /// <summary>Scene setup (installer or tests). Call outside an active meal.</summary>
         public void ConfigureViews(InteractableTarget physicalRationTarget, Transform rationDrawer, Transform waterDispenser,
@@ -119,8 +163,12 @@ namespace OutOfReach.Presentation.Meal
                 || presentationContext == null) return false;
             inner = realRation; clock = simulationClock; state = gameState; suit = evaStatus; events = missionEvents;
             eye = interactionEye; body = visibleBody; context = presentationContext;
+            // Only a camera's own transform nods: a look pivot belongs to the player controller.
+            eyeIsCamera = eye.GetComponent<Camera>();
+            motion = FindAnyObjectByType<FirstPersonMotionPresenter>();
             if (clasp == null && claspData) clasp = MealClaspData.Parse(claspData.text);
             hand = body && clasp != null ? new MealHandClasp(body, clasp) : null;
+            offHand = body ? new MealOffHand(body) : null;
             EnsurePouch();
 
             var created = new MealSequence(inner, IsMealStillValid, () => clock != null && clock.IsPaused, DrawerBlocker,
@@ -140,7 +188,7 @@ namespace OutOfReach.Presentation.Meal
             return true;
         }
 
-        /// <summary>Ends any meal (nothing more is spent), restores the arm, hides the pouch and unbinds the session.</summary>
+        /// <summary>Ends any meal (nothing more is spent), restores the arms and the view, hides the pouch and unbinds the session.</summary>
         public void ClearBinding()
         {
             MealSequence current = sequence;
@@ -155,9 +203,12 @@ namespace OutOfReach.Presentation.Meal
             if (suit != null) suit.Changed -= OnSuitChanged;
             // Give the target back the raw action it had before this decorator, never a stale wrapper.
             if (current != null && rationTarget && ReferenceEquals(rationTarget.Interactable, current)) rationTarget.Bind(current.Inner);
+            nod.Release();
             sequence = null; inner = null; clock = null; state = null; suit = null; events = null; eye = null; body = null; context = null;
-            choreography = null;
+            motion = null; eyeIsCamera = false;
+            choreography = null; marks = null;
             hand?.Dispose(); hand = null;
+            offHand?.Dispose(); offHand = null;
             conditions.Clear();
             HidePouch();
         }
@@ -170,6 +221,7 @@ namespace OutOfReach.Presentation.Meal
         {
             if (sequence == null || !sequence.IsWorking) return;
             sequence.Advance(Math.Max(0d, realSeconds));
+            PlayBeats();
         }
 
         private void Update()
@@ -183,11 +235,17 @@ namespace OutOfReach.Presentation.Meal
             // even when nothing advances it (Advance(0) only checks).
             if (DriveFromUpdate) sequence.Advance(Math.Min(.1d, Math.Max(0d, Time.unscaledDeltaTime)));
             else sequence.Advance(0d);
+            PlayBeats();
         }
 
         private void LateUpdate()
         {
-            if (sequence == null || !sequence.IsWorking || choreography == null) { if (pouchVisible) HidePouch(); hand?.Release(); return; }
+            if (sequence == null || !sequence.IsWorking || choreography == null)
+            {
+                if (pouchVisible) HidePouch();
+                hand?.Release(); offHand?.Release(); nod.Release(); strip?.Hide();
+                return;
+            }
             MealPouchFrame frame = choreography.Sample(sequence.Stage, sequence.StageProgress01);
             var ideal = new Pose(frame.Position, frame.Rotation);
             Pose shown = ideal;
@@ -208,12 +266,70 @@ namespace OutOfReach.Presentation.Meal
                 shown = Blend(ideal, new Pose(MealChoreography.ClampReach(ideal.position, shoulder, fallbackReachMetres), ideal.rotation), frame.Attach);
             }
             ApplyPouch(shown, frame);
+            PresentOpening(shown, frame);
+            Squeeze = frame.Squeeze;
+            // The head meets the pouch and tips back while squeezing; never with reduced motion, never on a look pivot.
+            nod.Apply(eyeIsCamera ? eye : null, ReducedMotion ? 0f : frame.NodDegrees);
+            PlayBeats();
+        }
+
+        /// <summary>The left hand and the strip it tears off, on the pouch as it is actually shown.</summary>
+        private void PresentOpening(Pose shown, MealPouchFrame frame)
+        {
+            Vector3 target = Vector3.Lerp(shown.position + shown.rotation * frame.OffHandLocal, frame.OffHandAway, frame.OffHandAwayBlend);
+            Vector3 pinch = target;
+            bool pinched = false;
+            if (offHand != null && frame.OffHandWeight > .001f)
+                pinched = offHand.TryPinch(target, frame.OffHandRotation, frame.OffHandWeight, frame.OffHandPinch, stations.EyeRotation, out pinch);
+            else offHand?.Release();
+
+            bool free = frame.Tear >= 1f;
+            // Without a visible left hand the strip never peels or floats: it stays on the cut and goes when the tear ends.
+            TearProgress = !frame.Visible ? 0f : pinched || free ? frame.Tear : 0f;
+            if (strip == null || !frame.Visible || !frame.StripVisible || (free && !pinched)) { strip?.Hide(); stripFree = false; return; }
+            if (!free)
+            {
+                strip.Present(shown, pinched ? frame.Tear : 0f, pinch);
+                stripFree = false;
+                return;
+            }
+            if (!stripFree)
+            {
+                // The strip came free: from now on it is carried rigidly in the fingers.
+                stripFree = true;
+                stripHand = frame.OffHandRotation;
+                stripAlong = strip.LastAlong;
+                stripHeight = strip.LastHeight;
+            }
+            Quaternion turned = frame.OffHandRotation * Quaternion.Inverse(stripHand);
+            strip.PresentFree(pinch, turned * stripAlong, turned * stripHeight);
+        }
+
+        /// <summary>
+        /// Plays every beat the meal timer has reached, in order (called whenever the timer moved, and with the pose).
+        /// A sip is only heard after the real first bite. Beats still ahead when the meal ends are never played.
+        /// </summary>
+        private void PlayBeats()
+        {
+            while (marks != null && sequence != null && sequence.IsWorking && nextBeat < marks.Length
+                && sequence.ElapsedActiveSeconds >= marks[nextBeat].SecondsIn(sequence.Timeline))
+            {
+                MealBeatMark mark = marks[nextBeat++];
+                if ((mark.Beat == MealBeat.Sip || mark.Beat == MealBeat.Swallow) && !sequence.HasEaten) continue;
+                bool sounded = foley.Play(mark);
+                BeatsPlayed++;
+                BeatPlayed?.Invoke(mark, sounded);
+            }
         }
 
         private void OnStarted(MealPreparation kind)
         {
             stations = CaptureStations();
-            choreography = new MealChoreography(stations, kind, sequence.IsLabelCheck);
+            choreography = new MealChoreography(stations, kind, sequence.IsLabelCheck, shape);
+            marks = MealBeats.For(kind, sequence.IsLabelCheck);
+            nextBeat = 0;
+            BeatsPlayed = 0;
+            stripFree = false;
             ApplyLabel(kind);
             Started?.Invoke(kind);
         }
@@ -221,7 +337,10 @@ namespace OutOfReach.Presentation.Meal
         private void OnEnded()
         {
             choreography = null;
+            marks = null;
             hand?.Release();
+            offHand?.Release();
+            nod.Release();
             HidePouch();
         }
 
@@ -314,12 +433,54 @@ namespace OutOfReach.Presentation.Meal
             sealedRenderers = sealedList.ToArray();
             openedRenderers = openedList.ToArray();
             var labels = new List<Material>();
+            Material foil = null;
             foreach (Renderer renderer in pouch.GetComponentsInChildren<Renderer>(true))
                 foreach (Material material in renderer.sharedMaterials)
-                    if (material && material.name.StartsWith("GC_Labels", StringComparison.Ordinal) && !labels.Contains(material)) labels.Add(material);
+                {
+                    if (!material) continue;
+                    if (material.name.StartsWith("GC_Labels", StringComparison.Ordinal) && !labels.Contains(material)) labels.Add(material);
+                    if (!foil && material.name.StartsWith("GC_Foil", StringComparison.Ordinal)) foil = material;
+                }
             importedLabels = labels.ToArray();
+            if (!foil && sealedRenderers.Length > 0) foil = sealedRenderers[0].sharedMaterial;
+            // The strip that comes off is the band between the opened variant's cut and the sealed variant's top.
+            shape = MeasureShape();
+            strip = new MealTearStrip(transform, foil, shape);
             pouch.SetActive(false);
             pouchVisible = false;
+        }
+
+        private MealPouchShape MeasureShape()
+        {
+            if (!TryBoundsInPouch(sealedRenderers, out Bounds whole) || !TryBoundsInPouch(openedRenderers, out Bounds cut)) return MealPouchShape.Default;
+            // The walls at the cut stand a little closer than the pouch is thick at its middle (0.83 for the kit's pouch).
+            float walls = cut.extents.z * .83f;
+            var measured = new MealPouchShape(whole.extents.x, cut.max.y, whole.max.y, walls);
+            // A pouch without a separate cut (a primitive stand-in) tears at the kit's proportion.
+            if (measured.StripHeight < .008f) measured = new MealPouchShape(whole.extents.x, whole.max.y - whole.size.y * .23f, whole.max.y, walls);
+            return measured.IsValid ? measured : MealPouchShape.Default;
+        }
+
+        private bool TryBoundsInPouch(Renderer[] renderers, out Bounds bounds)
+        {
+            bounds = default;
+            bool any = false;
+            Matrix4x4 toPouch = pouch.transform.worldToLocalMatrix;
+            foreach (Renderer renderer in renderers)
+            {
+                MeshFilter filter = renderer ? renderer.GetComponent<MeshFilter>() : null;
+                if (!filter || !filter.sharedMesh) continue;
+                Bounds mesh = filter.sharedMesh.bounds;
+                Matrix4x4 matrix = toPouch * filter.transform.localToWorldMatrix;
+                for (int corner = 0; corner < 8; corner++)
+                {
+                    Vector3 point = matrix.MultiplyPoint3x4(mesh.center + Vector3.Scale(mesh.extents,
+                        new Vector3((corner & 1) == 0 ? -1f : 1f, (corner & 2) == 0 ? -1f : 1f, (corner & 4) == 0 ? -1f : 1f)));
+                    if (!any) { bounds = new Bounds(point, Vector3.zero); any = true; }
+                    else bounds.Encapsulate(point);
+                }
+            }
+            return any;
         }
 
         private void ApplyLabel(MealPreparation kind)
@@ -351,7 +512,7 @@ namespace OutOfReach.Presentation.Meal
             t.SetPositionAndRotation(pose.position, pose.rotation);
             t.localScale = new Vector3(1f, 1f, Mathf.Clamp(frame.Thickness, .5f, 1.2f));
             if (!pouchVisible) { pouch.SetActive(true); pouchVisible = true; }
-            // Both variants share the prop origin: the cut swaps them in place.
+            // Both variants share the prop origin: the tear swaps them in place (the strip covers the cut while it holds).
             PouchOpened = frame.Opened;
             foreach (Renderer r in sealedRenderers) if (r && r.enabled == frame.Opened) r.enabled = !frame.Opened;
             foreach (Renderer r in openedRenderers) if (r && r.enabled != frame.Opened) r.enabled = frame.Opened;
@@ -360,12 +521,17 @@ namespace OutOfReach.Presentation.Meal
         private void HidePouch()
         {
             if (pouch && pouch.activeSelf) pouch.SetActive(false);
+            strip?.Hide();
             pouchVisible = false;
             PouchOpened = false;
+            stripFree = false;
+            TearProgress = 0f;
+            Squeeze = 0f;
         }
 
         private void DestroyPouch()
         {
+            strip?.Dispose(); strip = null;
             if (!pouch) return;
             if (Application.isPlaying) Destroy(pouch); else DestroyImmediate(pouch);
             pouch = null; pouchVisible = false;

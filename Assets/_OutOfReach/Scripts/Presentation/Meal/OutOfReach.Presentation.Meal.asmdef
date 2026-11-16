@@ -4,6 +4,7 @@
   "references": [
     "OutOfReach.Contracts",
     "OutOfReach.Interaction",
+    "OutOfReach.Audio",
     "OutOfReach.Presentation.Motion"
   ],
   "includePlatforms": [],

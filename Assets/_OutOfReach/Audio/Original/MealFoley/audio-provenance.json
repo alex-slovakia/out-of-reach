@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "creator": "OUT OF REACH, original mathematical synthesis, 2026-11-16 (R35 meal foley)",
+  "source": "No recordings, voice model, sample library or external assets used.",
+  "synthesis": "Seeded noise bursts through resonances (foil crackles), filtered noise, sine glides and smooth envelopes; seeds 351116..351119; normalized to -10 dBFS peak.",
+  "use_limit": "Cabin contact sound heard by the crew member inside the pressurised habitat (the pouch in the hands, the own swallow). Never exterior airborne space sound.",
+  "listening_and_Unity_playback": "NOT VERIFIED BY EAR in the authoring session; lengths, levels and spectra checked numerically (see files).",
+  "files": [
+    {
+      "filename": "Resources/MealFoley/meal-pouch-grab.wav",
+      "duration_seconds": 0.3,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -26.840464699604677,
+      "spectral_centroid_hz": 9541,
+      "sha256": "621c93ee7a62c9042a4b16a1545769413b3fabc52e7147022c8326b29eae0cc9"
+    },
+    {
+      "filename": "Resources/MealFoley/meal-pouch-tear.wav",
+      "duration_seconds": 0.4,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -27.28299061763069,
+      "spectral_centroid_hz": 7049,
+      "sha256": "7e4aa8b984bcc5ed3a22f40f14a3feeefdec2268b29059caabc632f9b63ad4dc"
+    },
+    {
+      "filename": "Resources/MealFoley/meal-pouch-squeeze.wav",
+      "duration_seconds": 0.36,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -28.157999835943087,
+      "spectral_centroid_hz": 1322,
+      "sha256": "e6b77ee63bf7d5f1b46f9cc4b36191cbd1a9bfdc2f3a217a27062e231a1d0c2c"
+    },
+    {
+      "filename": "Resources/MealFoley/meal-swallow.wav",
+      "duration_seconds": 0.28,
+      "channels": 1,
+      "sample_rate_hz": 48000,
+      "pcm_bits": 16,
+      "peak_dbfs": -10.000126940172311,
+      "rms_dbfs": -21.33641359233746,
+      "spectral_centroid_hz": 175,
+      "sha256": "3842e4f07f6151e8ce4454f5f2f6cff77740ef266dded8f7c17ca9204fdf0958"
+    }
+  ]
+}

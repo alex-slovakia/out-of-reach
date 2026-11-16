@@ -110,6 +110,17 @@ namespace OutOfReach.Tests.Meal.PlayMode
             Assert.That(last.Value.Succeeded, Is.EqualTo(expectStart), last.Value.Explanation);
         }
 
+        /// <summary>Advances the scripted presentation clock in 0.05 s steps, one shown frame per step.</summary>
+        private IEnumerator StepTo(double seconds)
+        {
+            while (meal.IsEating && meal.Sequence.ElapsedActiveSeconds < seconds - 1e-9)
+            {
+                meal.Advance(Math.Min(.05d, seconds - meal.Sequence.ElapsedActiveSeconds));
+                yield return null;
+            }
+            yield return null;
+        }
+
         private IEnumerator AdvanceTo(double seconds)
         {
             int frames = 0;
@@ -245,6 +256,92 @@ namespace OutOfReach.Tests.Meal.PlayMode
             Assert.That(meal.IsEating || meal.PouchVisible || meal.BlocksMovement, Is.False);
             Assert.That(events[events.Count - 1], Does.StartWith("cancelled True"));
             Assert.That(Food, Is.EqualTo(food - ration).Within(1e-9), "no refund and no second ration");
+        }
+
+        [UnityTest]
+        public IEnumerator TheMealBeatsPlayInTheNewOrderAndTheTearComesBeforeTheFirstBite()
+        {
+            yield return Prepare();
+            var beats = new List<string>();
+            meal.BeatPlayed += (mark, sounded) => beats.Add(mark.ToString());
+            double food = Food, ration = Survival.RationFoodKg;
+            yield return PressE(true);
+            MealTimeline line = meal.Sequence.Timeline;
+
+            // R35: grasp, pinch and tear, all before the first bite; the strip is off and nothing is spent.
+            yield return StepTo(line.CommitAt - .02d);
+            Assert.That(beats, Is.EqualTo(new[] { "Grasp", "Pinch", "Tear" }), "the pouch is grasped, pinched and torn open before the first bite");
+            Assert.That(meal.Stage, Is.EqualTo(MealStage.Open));
+            Assert.That(meal.TearProgress, Is.EqualTo(1f).Within(1e-4f), "the strip is off");
+            Assert.That(meal.PouchOpened, Is.True);
+            Assert.That(meal.StripVisible, Is.False, "no visible left hand in this harness: the torn strip never floats");
+            Assert.That(Food, Is.EqualTo(food).Within(1e-12), "tearing the pouch open spends nothing");
+            Assert.That(meal.Sequence.CommandsIssued, Is.Zero);
+
+            // The first bite is the one real command; the first sip is heard only after it.
+            yield return StepTo(line.CommitAt + .3d);
+            Assert.That(meal.Sequence.CommandsIssued, Is.EqualTo(1));
+            Assert.That(Food, Is.EqualTo(food - ration).Within(1e-9));
+            Assert.That(beats.Count, Is.EqualTo(3), "nothing is drunk before the pouch is at the mouth");
+
+            // Three squeezed sips with their swallows; the pouch flattens; then it is stowed.
+            yield return StepTo(line.CommitAt + MealChoreography.SipProgress(1, .5f) * line.Eat);
+            Assert.That(meal.Squeeze, Is.GreaterThan(.9f), "the second sip squeezes the pouch");
+            Assert.That(meal.Pouch.localScale.z, Is.LessThan(.9f), "the pouch flattens as it is eaten");
+            yield return StepTo(line.Total + 1d);
+            Assert.That(beats, Is.EqualTo(new[] { "Grasp", "Pinch", "Tear", "Sip 1", "Swallow 1", "Sip 2", "Swallow 2", "Sip 3", "Swallow 3", "Stow" }));
+            Assert.That(meal.Sequence.CommandsIssued, Is.EqualTo(1), "the beats never repeat the ration");
+            Assert.That(Food, Is.EqualTo(food - ration).Within(1e-9));
+            Assert.That(meal.IsEating || meal.PouchVisible || meal.StripVisible, Is.False, "the meal ends cleanly");
+            Assert.That(meal.BeatsPlayed, Is.EqualTo(10));
+        }
+
+        [UnityTest]
+        public IEnumerator TheHeadNodsWhileSippingAndReducedMotionKeepsTheViewStill()
+        {
+            yield return Prepare();
+            // The meal nods only a camera's own transform (never the player's look pivot): give it one below the pivot.
+            IInteractable real = meal.Sequence.Inner;
+            var eye = new GameObject("Meal test camera");
+            eye.transform.SetParent(harness.Player.ViewPivot, false);
+            eye.AddComponent<Camera>().enabled = false;
+            Assert.That(meal.ConfigureSession(real, harness.Runtime.Clock, harness.Runtime.GameState,
+                harness.Runtime.EvaStatus, harness.Runtime.Events, eye.transform, null, () => true), Is.True);
+            Quaternion rest = eye.transform.localRotation;
+            Quaternion pivot = harness.Player.ViewPivot.localRotation;
+            bool reduced = false;
+            meal.ReducedMotionQuery = () => reduced;
+            double food = Food, ration = Survival.RationFoodKg;
+            yield return PressE(true);
+            MealTimeline line = meal.Sequence.Timeline;
+
+            yield return StepTo(line.CommitAt - .1d);
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.LessThan(1e-3f), "the view is still while the pouch is taken and opened");
+
+            // At the first squeeze the head has come down to the pouch.
+            yield return StepTo(line.CommitAt + MealChoreography.SipProgress(0, MealChoreography.SipSqueezeFrom) * line.Eat);
+            Assert.That(meal.NodDegrees, Is.EqualTo(MealChoreography.NodDown).Within(.3f));
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.EqualTo(MealChoreography.NodDown).Within(.3f), "a small nod");
+            Assert.That(Quaternion.Angle(pivot, harness.Player.ViewPivot.localRotation), Is.LessThan(1e-3f), "the player's own look pivot is never touched");
+
+            // Reduced motion: the view goes back to rest at once and stays there, while the meal goes on.
+            reduced = true;
+            yield return Frames(2);
+            Assert.That(meal.NodDegrees, Is.Zero);
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.LessThan(1e-3f), "reduced motion: no nod");
+            yield return StepTo(line.CommitAt + MealChoreography.SipProgress(1, .5f) * line.Eat);
+            Assert.That(meal.Squeeze, Is.GreaterThan(.9f), "the sip itself still plays");
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.LessThan(1e-3f), "reduced motion: the view stays still");
+
+            // With motion allowed again the nod returns, and the rest pose is given back exactly when the meal ends.
+            reduced = false;
+            yield return StepTo(line.CommitAt + MealChoreography.SipProgress(2, MealChoreography.SipSqueezeFrom) * line.Eat);
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.GreaterThan(1f));
+            yield return StepTo(line.Total + 1d);
+            Assert.That(meal.IsEating, Is.False);
+            Assert.That(eye.transform.localRotation == rest, Is.True, "the view is given back");
+            Assert.That(Quaternion.Angle(rest, eye.transform.localRotation), Is.LessThan(1e-4f));
+            Assert.That(Food, Is.EqualTo(food - ration).Within(1e-9), "the nod changes nothing about the one ration");
         }
 
         [UnityTest]
